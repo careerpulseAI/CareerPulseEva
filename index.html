@@ -1312,10 +1312,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 }
 </style>
 <!-- ══ FIREBASE AUTH ══ -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
+<!-- Firebase compat (accès global sans module) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
   const firebaseConfig = {
     apiKey: "AIzaSyBwS2sm1ROLwPp1eUBZ7bgy_j_z0oRajNA",
     authDomain: "careerpulsepro-46efb.firebaseapp.com",
@@ -1326,74 +1326,67 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     measurementId: "G-JV9TZM35CX"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const googleProvider = new GoogleAuthProvider();
+  firebase.initializeApp(firebaseConfig);
+  var fbAuth = firebase.auth();
+  var fbGoogleProvider = new firebase.auth.GoogleAuthProvider();
 
-  // ── Écoute l'état de connexion en temps réel ──
-  onAuthStateChanged(auth, (user) => {
+  // Écoute connexion/déconnexion
+  fbAuth.onAuthStateChanged(function(user) {
     window._fbUser = user || null;
     if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
   });
 
-  // ── Exposition globale des fonctions ──
-  window.fbSignup = async function() {
-    const name = (document.getElementById('cp-signup-name')?.value || '').trim();
-    const email = (document.getElementById('cp-signup-email')?.value || '').trim();
-    const pass = (document.getElementById('cp-signup-pass')?.value || '').trim();
-    if (!name || !email || !pass) { if(typeof ecShowToast==='function') ecShowToast('Remplis tous les champs'); return; }
-    if (pass.length < 6) { if(typeof ecShowToast==='function') ecShowToast('Mot de passe : 6 caractères minimum'); return; }
-    try {
-      const cred = await createUserWithEmailAndPassword(auth, email, pass);
-      await updateProfile(cred.user, { displayName: name });
-      if(typeof ecShowToast==='function') ecShowToast('🎉 Bienvenue ' + name + ' !');
-    } catch(e) {
-      const msgs = {
-        'auth/email-already-in-use': 'Cet email est déjà utilisé',
-        'auth/invalid-email': 'Email invalide',
-        'auth/weak-password': 'Mot de passe trop faible'
-      };
-      if(typeof ecShowToast==='function') ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
-    }
+  window.fbSignup = function() {
+    var name = (document.getElementById('cp-signup-name')?.value || '').trim();
+    var email = (document.getElementById('cp-signup-email')?.value || '').trim();
+    var pass = (document.getElementById('cp-signup-pass')?.value || '').trim();
+    if (!name || !email || !pass) { ecShowToast('Remplis tous les champs'); return; }
+    if (pass.length < 6) { ecShowToast('Mot de passe : 6 caractères minimum'); return; }
+    fbAuth.createUserWithEmailAndPassword(email, pass)
+      .then(function(cred) { return cred.user.updateProfile({ displayName: name }); })
+      .then(function() { ecShowToast('🎉 Bienvenue ' + name + ' !'); })
+      .catch(function(e) {
+        var msgs = {
+          'auth/email-already-in-use': 'Cet email est déjà utilisé',
+          'auth/invalid-email': 'Email invalide',
+          'auth/weak-password': 'Mot de passe trop faible'
+        };
+        ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
+      });
   };
 
-  window.fbLogin = async function() {
-    const email = (document.getElementById('cp-login-email')?.value || '').trim();
-    const pass = (document.getElementById('cp-login-pass')?.value || '').trim();
-    if (!email || !pass) { if(typeof ecShowToast==='function') ecShowToast('Renseigne ton email et ton mot de passe'); return; }
-    try {
-      await signInWithEmailAndPassword(auth, email, pass);
-      if(typeof ecShowToast==='function') ecShowToast('✅ Connexion réussie !');
-    } catch(e) {
-      const msgs = {
-        'auth/user-not-found': 'Aucun compte avec cet email',
-        'auth/wrong-password': 'Mot de passe incorrect',
-        'auth/invalid-credential': 'Email ou mot de passe incorrect',
-        'auth/invalid-email': 'Email invalide'
-      };
-      if(typeof ecShowToast==='function') ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
-    }
+  window.fbLogin = function() {
+    var email = (document.getElementById('cp-login-email')?.value || '').trim();
+    var pass = (document.getElementById('cp-login-pass')?.value || '').trim();
+    if (!email || !pass) { ecShowToast('Renseigne ton email et ton mot de passe'); return; }
+    fbAuth.signInWithEmailAndPassword(email, pass)
+      .then(function() { ecShowToast('✅ Connexion réussie !'); })
+      .catch(function(e) {
+        var msgs = {
+          'auth/user-not-found': 'Aucun compte avec cet email',
+          'auth/wrong-password': 'Mot de passe incorrect',
+          'auth/invalid-credential': 'Email ou mot de passe incorrect',
+          'auth/invalid-email': 'Email invalide'
+        };
+        ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
+      });
   };
 
-  window.fbLoginGoogle = async function() {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      if(typeof ecShowToast==='function') ecShowToast('✅ Connecté avec Google !');
-    } catch(e) {
-      if (e.code !== 'auth/popup-closed-by-user') {
-        if(typeof ecShowToast==='function') ecShowToast('Erreur Google : ' + e.message);
-      }
-    }
+  window.fbLoginGoogle = function() {
+    fbAuth.signInWithPopup(fbGoogleProvider)
+      .then(function() { ecShowToast('✅ Connecté avec Google !'); })
+      .catch(function(e) {
+        if (e.code !== 'auth/popup-closed-by-user') {
+          ecShowToast('Erreur Google : ' + e.message);
+        }
+      });
   };
 
-  window.fbLogout = async function() {
-    await signOut(auth);
-    if(typeof ecShowToast==='function') ecShowToast('À bientôt !');
+  window.fbLogout = function() {
+    fbAuth.signOut().then(function() { ecShowToast('À bientôt !'); });
   };
 
-  // ── Prêt ──
-  window._fbReady = true;
-  console.log('✅ Firebase Auth prêt');
+  console.log('✅ Firebase Auth compat prêt');
 </script>
 </head>
 <body>
