@@ -1315,25 +1315,31 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <!-- Firebase compat (accès global sans module) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
   const firebaseConfig = {
-    apiKey: "AIzaSyBwS2sm1ROLwPp1eUBZ7bgy_j_z0oRajNA",
-    authDomain: "careerpulsepro-46efb.firebaseapp.com",
-    projectId: "careerpulsepro-46efb",
-    storageBucket: "careerpulsepro-46efb.firebasestorage.app",
-    messagingSenderId: "637147133845",
-    appId: "1:637147133845:web:a55bf0c8fb195f6483e89c",
-    measurementId: "G-JV9TZM35CX"
+    apiKey: "AIzaSyB1vYhKK_tiCH0nYQO4IiyrYfBzmJ0PM7Q",
+    authDomain: "careerpulseproeva.firebaseapp.com",
+    projectId: "careerpulseproeva",
+    storageBucket: "careerpulseproeva.firebasestorage.app",
+    messagingSenderId: "735449151841",
+    appId: "1:735449151841:web:8ffc5cc9d26491e1af6d20",
+    measurementId: "G-DN2GGGCKEL"
   };
 
   firebase.initializeApp(firebaseConfig);
   var fbAuth = firebase.auth();
+  var fbDb = firebase.firestore();
   var fbGoogleProvider = new firebase.auth.GoogleAuthProvider();
 
   // Écoute connexion/déconnexion
   fbAuth.onAuthStateChanged(function(user) {
     window._fbUser = user || null;
     if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
+    // Charger le profil depuis Firestore si connecté
+    if(user && typeof loadFicheProFromFirestore === 'function'){
+      setTimeout(loadFicheProFromFirestore, 500);
+    }
   });
 
   window.fbSignup = function() {
@@ -8511,11 +8517,41 @@ function saveFichePro(){
     ville: (document.getElementById('fp-ville')||{value:''}).value.trim(),
     exp: (document.getElementById('fp-exp')||{value:''}).value,
     salaire: (document.getElementById('fp-salaire')||{value:''}).value.trim(),
-    accroche: (document.getElementById('fp-accroche')||{value:''}).value.trim()
+    accroche: (document.getElementById('fp-accroche')||{value:''}).value.trim(),
+    updatedAt: new Date().toISOString()
   };
+  // Sauvegarder en local (fallback)
   localStorage.setItem('cp_fiche_pro', JSON.stringify(d));
+  // Sauvegarder dans Firestore si connecté
+  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
+  if(user && typeof fbDb !== 'undefined'){
+    fbDb.collection('profils').doc(user.uid).set(d, {merge:true})
+      .then(function(){ ecShowToast('✅ Profil sauvegardé dans le cloud !'); })
+      .catch(function(e){ ecShowToast('Erreur cloud : ' + e.message); });
+  } else {
+    ecShowToast('✓ Fiche pro enregistrée localement');
+  }
   updateFpScore();
-  toast('✓ Fiche pro enregistrée !');
+}
+
+function loadFicheProFromFirestore(){
+  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
+  if(!user || typeof fbDb === 'undefined') return;
+  fbDb.collection('profils').doc(user.uid).get()
+    .then(function(doc){
+      if(doc.exists){
+        var d = doc.data();
+        if(d.name){ var el=document.getElementById('fp-name'); if(el) el.value=d.name; }
+        if(d.titre){ var el=document.getElementById('fp-titre'); if(el) el.value=d.titre; }
+        if(d.secteur){ var el=document.getElementById('fp-secteur'); if(el) el.value=d.secteur; }
+        if(d.ville){ var el=document.getElementById('fp-ville'); if(el) el.value=d.ville; }
+        if(d.exp){ var el=document.getElementById('fp-exp'); if(el) el.value=d.exp; }
+        if(d.salaire){ var el=document.getElementById('fp-salaire'); if(el) el.value=d.salaire; }
+        if(d.accroche){ var el=document.getElementById('fp-accroche'); if(el) el.value=d.accroche; }
+        updateFpScore();
+      }
+    })
+    .catch(function(e){ console.log('Firestore load error:', e); });
 }
 
 function toggleAccordion(id){
