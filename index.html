@@ -1333,38 +1333,37 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   // ── Écoute l'état de connexion en temps réel ──
   onAuthStateChanged(auth, (user) => {
     window._fbUser = user || null;
-    cpApplyMemberState();
+    if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
   });
 
-  // ── Inscription email/mdp ──
+  // ── Exposition globale des fonctions ──
   window.fbSignup = async function() {
     const name = (document.getElementById('cp-signup-name')?.value || '').trim();
     const email = (document.getElementById('cp-signup-email')?.value || '').trim();
     const pass = (document.getElementById('cp-signup-pass')?.value || '').trim();
-    if (!name || !email || !pass) { ecShowToast('Remplis tous les champs'); return; }
-    if (pass.length < 6) { ecShowToast('Mot de passe : 6 caractères minimum'); return; }
+    if (!name || !email || !pass) { if(typeof ecShowToast==='function') ecShowToast('Remplis tous les champs'); return; }
+    if (pass.length < 6) { if(typeof ecShowToast==='function') ecShowToast('Mot de passe : 6 caractères minimum'); return; }
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, pass);
       await updateProfile(cred.user, { displayName: name });
-      ecShowToast('🎉 Bienvenue ' + name + ' !');
+      if(typeof ecShowToast==='function') ecShowToast('🎉 Bienvenue ' + name + ' !');
     } catch(e) {
       const msgs = {
         'auth/email-already-in-use': 'Cet email est déjà utilisé',
         'auth/invalid-email': 'Email invalide',
         'auth/weak-password': 'Mot de passe trop faible'
       };
-      ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
+      if(typeof ecShowToast==='function') ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
     }
   };
 
-  // ── Connexion email/mdp ──
   window.fbLogin = async function() {
     const email = (document.getElementById('cp-login-email')?.value || '').trim();
     const pass = (document.getElementById('cp-login-pass')?.value || '').trim();
-    if (!email || !pass) { ecShowToast('Renseigne ton email et ton mot de passe'); return; }
+    if (!email || !pass) { if(typeof ecShowToast==='function') ecShowToast('Renseigne ton email et ton mot de passe'); return; }
     try {
       await signInWithEmailAndPassword(auth, email, pass);
-      ecShowToast('✅ Connexion réussie !');
+      if(typeof ecShowToast==='function') ecShowToast('✅ Connexion réussie !');
     } catch(e) {
       const msgs = {
         'auth/user-not-found': 'Aucun compte avec cet email',
@@ -1372,27 +1371,29 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         'auth/invalid-credential': 'Email ou mot de passe incorrect',
         'auth/invalid-email': 'Email invalide'
       };
-      ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
+      if(typeof ecShowToast==='function') ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
     }
   };
 
-  // ── Connexion Google ──
   window.fbLoginGoogle = async function() {
     try {
       await signInWithPopup(auth, googleProvider);
-      ecShowToast('✅ Connecté avec Google !');
+      if(typeof ecShowToast==='function') ecShowToast('✅ Connecté avec Google !');
     } catch(e) {
       if (e.code !== 'auth/popup-closed-by-user') {
-        ecShowToast('Erreur Google : ' + e.message);
+        if(typeof ecShowToast==='function') ecShowToast('Erreur Google : ' + e.message);
       }
     }
   };
 
-  // ── Déconnexion ──
   window.fbLogout = async function() {
     await signOut(auth);
-    ecShowToast('À bientôt !');
+    if(typeof ecShowToast==='function') ecShowToast('À bientôt !');
   };
+
+  // ── Prêt ──
+  window._fbReady = true;
+  console.log('✅ Firebase Auth prêt');
 </script>
 </head>
 <body>
