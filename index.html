@@ -1343,8 +1343,13 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     if (!name || !email || !pass) { ecShowToast('Remplis tous les champs'); return; }
     if (pass.length < 6) { ecShowToast('Mot de passe : 6 caractères minimum'); return; }
     fbAuth.createUserWithEmailAndPassword(email, pass)
-      .then(function(cred) { return cred.user.updateProfile({ displayName: name }); })
-      .then(function() { ecShowToast('🎉 Bienvenue ' + name + ' !'); })
+      .then(function(cred) {
+        return cred.user.updateProfile({ displayName: name }).then(function() {
+          window._fbUser = fbAuth.currentUser;
+          ecShowToast('🎉 Bienvenue ' + name + ' !');
+          if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
+        });
+      })
       .catch(function(e) {
         var msgs = {
           'auth/email-already-in-use': 'Cet email est déjà utilisé',
