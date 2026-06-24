@@ -1316,6 +1316,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyB1vYhKK_tiCH0nYQO4IiyrYfBzmJ0PM7Q",
@@ -1329,8 +1330,11 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
   firebase.initializeApp(firebaseConfig);
   var fbAuth = firebase.auth();
-  var fbDb = firebase.firestore();
+  window.fbDb = firebase.firestore();
+  window.fbStorage = firebase.storage();
   var fbGoogleProvider = new firebase.auth.GoogleAuthProvider();
+  var fbDb = window.fbDb;
+  var fbStorage = window.fbStorage;
 
   // Écoute connexion/déconnexion
   fbAuth.onAuthStateChanged(function(user) {
@@ -3010,6 +3014,50 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <!-- ═══════════════════════════════════
      CGU
 ═══════════════════════════════════ -->
+<!-- ══ PAGE PROFIL PUBLIC ══ -->
+<div class="screen" id="s-profil-public">
+  <div style="max-width:680px;margin:0 auto;padding:20px 16px 100px">
+    <!-- Header retour -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+      <button onclick="history.back()" style="background:none;border:none;cursor:pointer;padding:4px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f172a" stroke-width="2.2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <span style="font-size:.7rem;font-weight:700;color:#64748b;letter-spacing:.08em;text-transform:uppercase">Profil public</span>
+    </div>
+
+    <!-- Carte profil -->
+    <div id="pub-card" style="background:#fff;border-radius:16px;border:1px solid #e2e8f0;padding:24px;margin-bottom:16px">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px">
+        <div id="pub-avatar" style="width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#059669,#0d9488);display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;color:#fff;flex-shrink:0">?</div>
+        <div>
+          <div id="pub-name" style="font-size:1.1rem;font-weight:800;color:#0f172a">—</div>
+          <div id="pub-titre" style="font-size:.8rem;color:#059669;font-weight:600;margin-top:2px">—</div>
+          <div id="pub-location" style="font-size:.72rem;color:#64748b;margin-top:3px">—</div>
+        </div>
+      </div>
+      <div id="pub-accroche" style="font-size:.8rem;color:#475569;line-height:1.6;padding:12px;background:#f8fafc;border-radius:10px;margin-bottom:14px">—</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <span id="pub-secteur" style="background:#dcfce7;color:#059669;border-radius:20px;padding:4px 12px;font-size:.68rem;font-weight:700">—</span>
+        <span id="pub-exp" style="background:#f0fdf4;color:#15803d;border-radius:20px;padding:4px 12px;font-size:.68rem;font-weight:600">—</span>
+        <span id="pub-salaire" style="background:#f8fafc;color:#475569;border-radius:20px;padding:4px 12px;font-size:.68rem;font-weight:600">—</span>
+      </div>
+    </div>
+
+    <!-- Contact recruteur -->
+    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px;text-align:center">
+      <div style="font-size:.78rem;font-weight:700;color:#059669;margin-bottom:8px">👋 Intéressé par ce profil ?</div>
+      <div style="font-size:.7rem;color:#475569;margin-bottom:12px">Contactez CareerPulse pour entrer en relation avec ce candidat</div>
+      <a href="mailto:careerpulse-pro@outlook.com?subject=Profil candidat CareerPulse" style="display:inline-block;background:#059669;color:#fff;text-decoration:none;border-radius:8px;padding:10px 20px;font-size:.74rem;font-weight:700">Contacter CareerPulse</a>
+    </div>
+
+    <!-- Badge CareerPulse -->
+    <div style="text-align:center;margin-top:20px">
+      <div style="font-size:.62rem;color:#94a3b8">Profil vérifié par</div>
+      <div style="font-size:.78rem;font-weight:800;color:#0f172a;margin-top:2px">CareerPulse</div>
+    </div>
+  </div>
+</div>
+
 <div class="screen" id="s-cgu">
 <div class="wrap" style="padding-top:10px;padding-bottom:40px">
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
@@ -8643,6 +8691,39 @@ function handleFpPhoto(input){
   r.readAsDataURL(file);
 }
 
+function showPublicProfil(uid){
+  // Charger le profil depuis Firestore
+  if(!uid || typeof window.fbDb === 'undefined'){ ecShowToast('Profil introuvable'); return; }
+  window.fbDb.collection('profils').doc(uid).get().then(function(doc){
+    if(!doc.exists || !doc.data().visible){
+      ecShowToast('Ce profil n\'est pas public');
+      return;
+    }
+    var d = doc.data();
+    var initial = (d.name||'?').charAt(0).toUpperCase();
+    var av = document.getElementById('pub-avatar'); if(av) av.textContent=initial;
+    var nm = document.getElementById('pub-name'); if(nm) nm.textContent=d.name||'—';
+    var ti = document.getElementById('pub-titre'); if(ti) ti.textContent=d.titre||'—';
+    var lo = document.getElementById('pub-location'); if(lo) lo.textContent=(d.ville||'')+(d.ville&&d.secteur?' · ':'')+( d.secteur||'');
+    var ac = document.getElementById('pub-accroche'); if(ac) ac.textContent=d.accroche||'—';
+    var se = document.getElementById('pub-secteur'); if(se) se.textContent=d.secteur||'—';
+    var ex = document.getElementById('pub-exp'); if(ex) ex.textContent=d.exp?d.exp+' exp.':'—';
+    var sa = document.getElementById('pub-salaire'); if(sa) sa.textContent=d.salaire?d.salaire+'€/an':'—';
+    // Mettre à jour le titre de la page pour SEO
+    document.title = (d.name||'Candidat') + ' — ' + (d.titre||'Profil') + ' | CareerPulse';
+    go('s-profil-public');
+  }).catch(function(e){ ecShowToast('Erreur : ' + e.message); });
+}
+
+// Vérifier si URL contient un UID profil au chargement
+(function(){
+  var hash = window.location.hash;
+  if(hash && hash.startsWith('#profil/')){
+    var uid = hash.replace('#profil/','');
+    if(uid) setTimeout(function(){ showPublicProfil(uid); }, 1500);
+  }
+})();
+
 function toggleFpVis(){
   var name=document.getElementById('fp-name')&&document.getElementById('fp-name').value.trim();
   var sect=document.getElementById('fp-secteur')&&document.getElementById('fp-secteur').value;
@@ -8651,12 +8732,28 @@ function toggleFpVis(){
     return;
   }
   _fpVis=!_fpVis;
+  localStorage.setItem('cp_visible', _fpVis ? 'true' : 'false');
   var tog=document.getElementById('fp-vis-tog');
   var knob=document.getElementById('fp-vis-knob');
   var confirm=document.getElementById('fp-vis-confirm');
   if(tog) tog.style.background=_fpVis?'#059669':'var(--g200)';
   if(knob) knob.style.transform=_fpVis?'translateX(20px)':'none';
   if(confirm) confirm.style.display=_fpVis?'block':'none';
+  // Sauvegarder dans Firestore
+  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
+  if(user && typeof window.fbDb !== 'undefined'){
+    window.fbDb.collection('profils').doc(user.uid).set({
+      visible: _fpVis,
+      uid: user.uid,
+      updatedAt: new Date().toISOString()
+    }, {merge:true}).then(function(){
+      if(_fpVis){
+        toast('✅ Profil visible ! URL : career-pulse-eva.vercel.app/profil/' + user.uid.substring(0,8));
+      } else {
+        toast('Profil masqué');
+      }
+    });
+  }
 }
 
 // ── CV & LM files ──
@@ -8692,6 +8789,35 @@ function handleLMFile(inp){
   var info=document.getElementById('lm-file-info'); if(info) info.style.display='block';
   toast('Lettre chargée ✓');
   inp.value='';
+}
+
+function fsel(input, zoneId, nameId){
+  var file = input.files[0];
+  if(!file) return;
+  // Afficher le nom du fichier
+  var nameEl = document.getElementById(nameId);
+  if(nameEl){ nameEl.textContent = '📄 ' + file.name; nameEl.style.display='block'; }
+  var zone = document.getElementById(zoneId);
+  if(zone) zone.style.borderColor='#059669';
+  // Upload vers Firebase Storage si connecté
+  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
+  if(!user){ ecShowToast('Connecte-toi pour sauvegarder ton fichier'); return; }
+  if(typeof fbStorage === 'undefined'){ ecShowToast('Stockage non disponible'); return; }
+  var type = zoneId === 'cv-zone' ? 'cv' : 'lm';
+  var ref = fbStorage.ref('users/' + user.uid + '/' + type + '/' + file.name);
+  ecShowToast('⏳ Upload en cours...');
+  ref.put(file).then(function(){
+    return ref.getDownloadURL();
+  }).then(function(url){
+    // Sauvegarder l'URL dans Firestore
+    var data = {};
+    data[type + '_url'] = url;
+    data[type + '_name'] = file.name;
+    fbDb.collection('profils').doc(user.uid).set(data, {merge:true});
+    ecShowToast('✅ ' + (type==='cv'?'CV':'Lettre') + ' sauvegardé dans le cloud !');
+  }).catch(function(e){
+    ecShowToast('Erreur upload : ' + e.message);
+  });
 }
 
 function dov(e,id){e.preventDefault();var el=document.getElementById(id);if(el)el.classList.add('drag');}
