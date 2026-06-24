@@ -3110,12 +3110,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
       </div>
     </div>
 
-    <!-- Contact recruteur -->
-    <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:16px;text-align:center">
-      <div style="font-size:.78rem;font-weight:700;color:#059669;margin-bottom:8px">👋 Intéressé par ce profil ?</div>
-      <div style="font-size:.7rem;color:#475569;margin-bottom:12px">Contactez CareerPulse pour entrer en relation avec ce candidat</div>
-      <a href="mailto:careerpulse-pro@outlook.com?subject=Profil candidat CareerPulse" style="display:inline-block;background:#059669;color:#fff;text-decoration:none;border-radius:8px;padding:10px 20px;font-size:.74rem;font-weight:700">Contacter CareerPulse</a>
-    </div>
+    <!-- Contact direct -->
+    <div id="pub-contact-section" style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:16px"></div>
 
     <!-- Badge CareerPulse -->
     <div style="text-align:center;margin-top:20px">
@@ -8817,27 +8813,60 @@ function handleFpPhoto(input){
 }
 
 function showPublicProfil(uid){
-  // Charger le profil depuis Firestore
-  if(!uid || typeof window.fbDb === 'undefined'){ ecShowToast('Profil introuvable'); return; }
-  window.fbDb.collection('profils').doc(uid).get().then(function(doc){
-    if(!doc.exists || !doc.data().visible){
-      ecShowToast('Ce profil n\'est pas public');
-      return;
-    }
-    var d = doc.data();
-    var initial = (d.name||'?').charAt(0).toUpperCase();
-    var av = document.getElementById('pub-avatar'); if(av) av.textContent=initial;
-    var nm = document.getElementById('pub-name'); if(nm) nm.textContent=d.name||'—';
-    var ti = document.getElementById('pub-titre'); if(ti) ti.textContent=d.titre||'—';
-    var lo = document.getElementById('pub-location'); if(lo) lo.textContent=(d.ville||'')+(d.ville&&d.secteur?' · ':'')+( d.secteur||'');
-    var ac = document.getElementById('pub-accroche'); if(ac) ac.textContent=d.accroche||'—';
-    var se = document.getElementById('pub-secteur'); if(se) se.textContent=d.secteur||'—';
-    var ex = document.getElementById('pub-exp'); if(ex) ex.textContent=d.exp?d.exp+' exp.':'—';
-    var sa = document.getElementById('pub-salaire'); if(sa) sa.textContent=d.salaire?d.salaire+'€/an':'—';
-    // Mettre à jour le titre de la page pour SEO
-    document.title = (d.name||'Candidat') + ' — ' + (d.titre||'Profil') + ' | CareerPulse';
-    go('s-profil-public');
-  }).catch(function(e){ ecShowToast('Erreur : ' + e.message); });
+  if(!uid){ document.body.innerHTML='<div style="text-align:center;padding:60px;font-family:sans-serif"><h2 style="color:#dc2626">Profil introuvable</h2></div>'; return; }
+  // Masquer tout le site et montrer un loader
+  document.body.style.overflow='hidden';
+  var loader = document.createElement('div');
+  loader.id='pub-loader';
+  loader.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#f8fafc;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;';
+  loader.innerHTML='<div style="width:40px;height:40px;border:3px solid #dcfce7;border-top:3px solid #059669;border-radius:50%;animation:spin 1s linear infinite"></div><div style="font-size:.8rem;color:#64748b;font-family:sans-serif">Chargement du profil...</div><style>@keyframes spin{to{transform:rotate(360deg)}}</style>';
+  document.body.appendChild(loader);
+
+  function tryLoad(){
+    if(typeof window.fbDb === 'undefined'){ setTimeout(tryLoad, 300); return; }
+    window.fbDb.collection('profils').doc(uid).get().then(function(doc){
+      var loader=document.getElementById('pub-loader');
+      if(loader) loader.remove();
+      if(!doc.exists || !doc.data().visible){
+        document.body.innerHTML='<div style="text-align:center;padding:60px;font-family:sans-serif"><div style="font-size:3rem;margin-bottom:16px">🔒</div><h2 style="color:#0f172a">Profil non disponible</h2><p style="color:#64748b">Ce profil est privé ou n\'existe pas.</p><a href="/" style="color:#059669;font-weight:600">← Retour à CareerPulse</a></div>';
+        return;
+      }
+      var d = doc.data();
+      // Afficher uniquement la page publique — bloquer tout le reste
+      document.querySelectorAll('.screen').forEach(function(s){ s.style.display='none'; });
+      var pub = document.getElementById('s-profil-public');
+      if(pub){ pub.style.display='block'; }
+      // Remplir les infos
+      var initial = (d.name||'?').charAt(0).toUpperCase();
+      var av = document.getElementById('pub-avatar'); if(av) av.textContent=initial;
+      var nm = document.getElementById('pub-name'); if(nm) nm.textContent=d.name||'—';
+      var ti = document.getElementById('pub-titre'); if(ti) ti.textContent=d.titre||'—';
+      var lo = document.getElementById('pub-location'); if(lo) lo.textContent=(d.ville||'')+(d.ville&&d.secteur?' · ':'')+( d.secteur||'');
+      var ac = document.getElementById('pub-accroche'); if(ac) ac.textContent=d.accroche||'—';
+      var se = document.getElementById('pub-secteur'); if(se) se.textContent=d.secteur||'—';
+      var ex = document.getElementById('pub-exp'); if(ex) ex.textContent=d.exp?d.exp+' exp.':'—';
+      var sa = document.getElementById('pub-salaire'); if(sa) sa.textContent=d.salaire?d.salaire+'€/an':'—';
+      // Contact public
+      var contDiv = document.getElementById('pub-contact-section');
+      if(contDiv){
+        var html='';
+        if(d.shareEmail && d.emailPublic) html+='<a href="mailto:'+d.emailPublic+'" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f0fdf4;border-radius:9px;margin-bottom:8px;text-decoration:none;color:#059669;font-size:.76rem;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>'+d.emailPublic+'</a>';
+        if(d.shareTel && d.telPublic) html+='<a href="tel:'+d.telPublic+'" style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:#f0fdf4;border-radius:9px;margin-bottom:8px;text-decoration:none;color:#059669;font-size:.76rem;font-weight:600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .07 1.18 2 2 0 0 1 2.03 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l.36-.36a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>'+d.telPublic+'</a>';
+        if(html) contDiv.innerHTML='<div style="font-size:.65rem;font-weight:700;color:#059669;margin-bottom:8px;text-transform:uppercase;letter-spacing:.08em">Contact direct</div>'+html;
+        else contDiv.style.display='none';
+      }
+      // SEO
+      document.title=(d.name||'Candidat')+' — '+(d.titre||'Profil')+' | CareerPulse';
+      document.body.style.overflow='';
+      // Masquer navbar et footer pour mode lecture seule
+      var nav=document.getElementById('topnav'); if(nav) nav.style.display='none';
+      var tnav=document.getElementById('tnav'); if(tnav) tnav.style.display='none';
+    }).catch(function(e){
+      var loader=document.getElementById('pub-loader'); if(loader) loader.remove();
+      document.body.innerHTML='<div style="text-align:center;padding:60px;font-family:sans-serif"><h2 style="color:#dc2626">Erreur</h2><p>'+e.message+'</p></div>';
+    });
+  }
+  tryLoad();
 }
 
 // Vérifier si URL contient un UID profil au chargement
@@ -8845,7 +8874,7 @@ function showPublicProfil(uid){
   var hash = window.location.hash;
   if(hash && hash.startsWith('#profil/')){
     var uid = hash.replace('#profil/','');
-    if(uid) setTimeout(function(){ showPublicProfil(uid); }, 1500);
+    if(uid) showPublicProfil(uid);
   }
 })();
 
