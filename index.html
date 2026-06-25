@@ -1517,6 +1517,16 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     </div>
     <div style="color:#94a3b8;font-size:1rem;">›</div>
    </div>
+   <div onclick="cpMenuShow('avis')" style="display:flex;align-items:center;gap:12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:13px;padding:13px;margin-bottom:10px;cursor:pointer;">
+    <div style="width:38px;height:38px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+     <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.3a2 2 0 0 0 2-1.7l1.4-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+    </div>
+    <div style="flex:1;min-width:0;">
+     <div style="font-size:.78rem;font-weight:800;color:#0f172a;">Donne ton avis</div>
+     <div style="font-size:.62rem;color:#64748b;margin-top:1px;">3 questions · 1 minute</div>
+    </div>
+    <div style="color:#94a3b8;font-size:1rem;">›</div>
+   </div>
   </div>
 
   <!-- Espace membre -->
@@ -1629,12 +1639,6 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     CareerPulse, c'est l'accompagnement carrière nouvelle génération, accessible à tous.
    </div>
 
-   <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:13px;padding:14px;margin-bottom:12px;">
-    <div style="font-size:.74rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Clients & recruteurs</div>
-    <div style="font-size:.64rem;color:#64748b;line-height:1.5;margin-bottom:8px;">Pour nous contacter, écrivez-nous directement par email :</div>
-    <a href="mailto:careerpulse-pro@outlook.com" style="display:block;text-align:center;background:#059669;color:#fff;text-decoration:none;border-radius:8px;padding:10px;font-size:.74rem;font-weight:700;">careerpulse-pro@outlook.com</a>
-   </div>
-
    <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;">
     <div style="font-size:.74rem;font-weight:800;color:#0f172a;margin-bottom:8px;">Support technique</div>
     <label style="font-size:.6rem;font-weight:700;color:#475569;display:block;margin-bottom:5px;">Sujet</label>
@@ -1642,6 +1646,32 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <label style="font-size:.6rem;font-weight:700;color:#475569;display:block;margin-bottom:5px;">Message</label>
     <textarea id="cp-support-message" rows="3" placeholder="Décris ton problème…" style="width:100%;border:1.5px solid #e2e8f0;border-radius:9px;padding:9px 11px;font-size:.74rem;font-family:inherit;background:#f8fafc;outline:none;margin-bottom:10px;box-sizing:border-box;resize:vertical;"></textarea>
     <button onclick="cpSendSupport()" style="width:100%;background:#1e40af;border:none;border-radius:9px;padding:10px;font-size:.72rem;font-weight:700;color:#fff;font-family:inherit;cursor:pointer;">Envoyer</button>
+   </div>
+  </div>
+
+  <!-- Donne ton avis -->
+  <div id="cp-menu-avis" style="display:none;">
+   <button onclick="cpMenuShow('list')" style="background:none;border:none;color:#059669;font-size:.68rem;font-weight:700;cursor:pointer;margin-bottom:14px;font-family:inherit;padding:0;">← Retour</button>
+
+   <div style="font-size:.84rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Donne ton avis</div>
+   <div style="font-size:.66rem;color:#64748b;line-height:1.5;margin-bottom:16px;">3 questions rapides pour nous aider à améliorer CareerPulse.</div>
+
+   <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;">
+    <label style="font-size:.6rem;font-weight:700;color:#475569;display:block;margin-bottom:5px;">1. EVA t'a été utile ?</label>
+    <select id="cp-avis-q1" style="width:100%;border:1.5px solid #e2e8f0;border-radius:9px;padding:9px 11px;font-size:.74rem;font-family:inherit;background:#f8fafc;outline:none;margin-bottom:12px;box-sizing:border-box;">
+     <option value="Oui, beaucoup">Oui, beaucoup</option>
+     <option value="Un peu">Un peu</option>
+     <option value="Non, pas vraiment">Non, pas vraiment</option>
+    </select>
+    <label style="font-size:.6rem;font-weight:700;color:#475569;display:block;margin-bottom:5px;">2. CareerPulse t'a aidé dans ta recherche ?</label>
+    <select id="cp-avis-q2" style="width:100%;border:1.5px solid #e2e8f0;border-radius:9px;padding:9px 11px;font-size:.74rem;font-family:inherit;background:#f8fafc;outline:none;margin-bottom:12px;box-sizing:border-box;">
+     <option value="Oui, beaucoup">Oui, beaucoup</option>
+     <option value="Un peu">Un peu</option>
+     <option value="Non, pas vraiment">Non, pas vraiment</option>
+    </select>
+    <label style="font-size:.6rem;font-weight:700;color:#475569;display:block;margin-bottom:5px;">3. Qu'est-ce qu'on pourrait améliorer ?</label>
+    <textarea id="cp-avis-q3" rows="3" placeholder="Ton avis, en quelques mots…" style="width:100%;border:1.5px solid #e2e8f0;border-radius:9px;padding:9px 11px;font-size:.74rem;font-family:inherit;background:#f8fafc;outline:none;margin-bottom:10px;box-sizing:border-box;resize:vertical;"></textarea>
+    <button onclick="cpSendAvis()" style="width:100%;background:#7c3aed;border:none;border-radius:9px;padding:10px;font-size:.72rem;font-weight:700;color:#fff;font-family:inherit;cursor:pointer;">Envoyer mon avis</button>
    </div>
   </div>
 
@@ -11641,7 +11671,7 @@ function toggleGridMenu(){
 
 // ── Menu hamburger : navigation entre Liste / Espace membre / Abonnement (même page) ──
 function cpMenuShow(which){
-  ['list','membre','abo','contact'].forEach(function(k){
+  ['list','membre','abo','contact','avis'].forEach(function(k){
     var el=document.getElementById('cp-menu-'+k);
     if(el) el.style.display = (k===which) ? 'block' : 'none';
   });
@@ -11655,6 +11685,21 @@ function cpSendSupport(){
   var mailSubject=encodeURIComponent('[Support CareerPulse] '+subj);
   var mailBody=encodeURIComponent(msg);
   window.location.href='mailto:careerpulse-pro@outlook.com?subject='+mailSubject+'&body='+mailBody;
+}
+
+// Donne ton avis : questionnaire 3 questions envoyé par email (pas d'IA, pas de backend pour l'instant)
+function cpSendAvis(){
+  var q1=(document.getElementById('cp-avis-q1').value||'');
+  var q2=(document.getElementById('cp-avis-q2').value||'');
+  var q3=(document.getElementById('cp-avis-q3').value||'').trim();
+  var mailSubject=encodeURIComponent('[Avis CareerPulse]');
+  var mailBody=encodeURIComponent(
+    '1. EVA t\'a été utile ? '+q1+'\n'+
+    '2. CareerPulse t\'a aidé dans ta recherche ? '+q2+'\n'+
+    '3. Amélioration suggérée : '+(q3||'(non renseigné)')
+  );
+  window.location.href='mailto:careerpulse-pro@outlook.com?subject='+mailSubject+'&body='+mailBody;
+  ecShowToast('Merci pour ton avis 🙏');
 }
 
 // ── Bascule entre Se connecter / Créer un compte ──
@@ -16325,7 +16370,7 @@ function evadInitProgress(artId) {
 }
 .nova-user-text { font-size:.74rem; color:#ede9fe; line-height:1.55; font-weight:500; }
 
-/* ── Indicateur "Nova écrit..." ── */
+/* ── Indicateur "Mise en situation écrit..." ── */
 .nova-typing {
   display:flex; align-items:flex-end; gap:8px; align-self:flex-start;
   animation:nova-in .2s ease;
@@ -16411,7 +16456,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">QCM · Droits Salarié</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">QCM · Droits Salarié</div></div>
     <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="nq-sal-bar"></div></div><div class="nova-prog-meta"><span id="nq-sal-step">Question 1 / 15</span><span id="nq-sal-pct">0%</span></div></div>
@@ -16422,7 +16467,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Résultat · Salarié</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Résultat · Salarié</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="nq-sal-result"></div>
@@ -16433,7 +16478,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">QCM · Droits Demandeur</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">QCM · Droits Demandeur</div></div>
     <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="nq-dem-bar"></div></div><div class="nova-prog-meta"><span id="nq-dem-step">Question 1 / 15</span><span id="nq-dem-pct">0%</span></div></div>
@@ -16444,7 +16489,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Résultat · Demandeur</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Résultat · Demandeur</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="nq-dem-result"></div>
@@ -16455,7 +16500,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">QCM · Reconversion</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">QCM · Reconversion</div></div>
     <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="nq-rec-bar"></div></div><div class="nova-prog-meta"><span id="nq-rec-step">Question 1 / 15</span><span id="nq-rec-pct">0%</span></div></div>
@@ -16466,7 +16511,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Résultat · Reconversion</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Résultat · Reconversion</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="nq-rec-result"></div>
@@ -16477,7 +16522,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">QCM · Freelance</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">QCM · Freelance</div></div>
     <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="nq-frl-bar"></div></div><div class="nova-prog-meta"><span id="nq-frl-step">Question 1 / 15</span><span id="nq-frl-pct">0%</span></div></div>
@@ -16488,7 +16533,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Résultat · Freelance</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Résultat · Freelance</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="nq-frl-result"></div>
@@ -16501,8 +16546,8 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Sophie Martin</div><div class="nova-hd-sub">RH Accenture · Entretien en cours</div></div>
-    <div class="nova-hd-badge">LIVE</div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Entretien · Droits Salarié</div></div>
+    <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="ns-sal-bar"></div></div><div class="nova-prog-meta"><span id="ns-sal-step">Situation 1 / 6</span><span id="ns-sal-pct">0%</span></div></div>
   <div class="nova-feed" id="ns-sal-feed"></div>
@@ -16512,7 +16557,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Analyse · Entretien RH</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Analyse · Entretien RH</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="ns-sal-result"></div>
@@ -16523,8 +16568,8 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Marc Dufour</div><div class="nova-hd-sub">Responsable d'agence · Entretien</div></div>
-    <div class="nova-hd-badge">LIVE</div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Entretien · Demandeur</div></div>
+    <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="ns-dem-bar"></div></div><div class="nova-prog-meta"><span id="ns-dem-step">Situation 1 / 6</span><span id="ns-dem-pct">0%</span></div></div>
   <div class="nova-feed" id="ns-dem-feed"></div>
@@ -16534,7 +16579,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Analyse · Retour à l'emploi</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Analyse · Retour à l'emploi</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="ns-dem-result"></div>
@@ -16545,8 +16590,8 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Isabelle Renard</div><div class="nova-hd-sub">Conseillère CPF · Bilan</div></div>
-    <div class="nova-hd-badge">LIVE</div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Bilan · Reconversion</div></div>
+    <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="ns-rec-bar"></div></div><div class="nova-prog-meta"><span id="ns-rec-step">Situation 1 / 6</span><span id="ns-rec-pct">0%</span></div></div>
   <div class="nova-feed" id="ns-rec-feed"></div>
@@ -16556,7 +16601,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Analyse · Bilan de projet</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Analyse · Bilan de projet</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="ns-rec-result"></div>
@@ -16567,8 +16612,8 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Thomas Girard</div><div class="nova-hd-sub">CTO Startup · Pitch mission</div></div>
-    <div class="nova-hd-badge">LIVE</div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Pitch · Freelance</div></div>
+    <div class="nova-hd-badge">QCM</div>
   </div>
   <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="ns-frl-bar"></div></div><div class="nova-prog-meta"><span id="ns-frl-step">Situation 1 / 6</span><span id="ns-frl-pct">0%</span></div></div>
   <div class="nova-feed" id="ns-frl-feed"></div>
@@ -16578,7 +16623,7 @@ function evadInitProgress(artId) {
   <div class="nova-hd">
     <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
-    <div class="nova-hd-info"><div class="nova-hd-name">Nova</div><div class="nova-hd-sub">Analyse · Pitch client</div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Analyse · Pitch client</div></div>
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="ns-frl-result"></div>
@@ -16589,62 +16634,62 @@ function evadInitProgress(artId) {
 // ── Données QCM (EL_DATA) ──
 var EL_DATA = {
     salarie:[
-      {q:"Quelle est la durée légale maximale d'une période d'essai pour un cadre en CDI ?",opts:["1 mois","2 mois","4 mois","6 mois"],ans:2,expl:"Pour un cadre, la période d'essai est de 4 mois maximum (renouvelable une fois jusqu'à 8 mois si la convention collective le prévoit). Code du travail L1221-19."},
-      {q:"Lors d'un entretien, l'employeur peut-il légalement vous demander votre salaire actuel ?",opts:["Oui, toujours","Oui, si c'est pertinent","Non, c'est interdit par la loi","Oui, pour les CDI uniquement"],ans:2,expl:"Depuis 2023, demander le salaire actuel est considéré comme une pratique discriminatoire. Vous pouvez décliner et indiquer vos prétentions directement."},
-      {q:"Comment répondre efficacement à la question 'Quels sont vos défauts ?' ?",opts:["Dire que vous n'en avez pas","Citer un défaut réel transformé en point de travail","Citer un défaut sans impact professionnel","Refuser de répondre"],ans:1,expl:"La bonne approche : un défaut authentique mais sur lequel vous avez travaillé (ex : 'j'avais du mal à déléguer, j'ai suivi une formation management'). Cela montre maturité et progression."},
-      {q:"Quelle est la meilleure structure pour répondre à 'Parlez-moi de vous' ?",opts:["Toute votre vie depuis l'enfance","Parcours récent → compétences clés → projet actuel","Lister toutes vos expériences dans l'ordre","Parler de votre personnalité uniquement"],ans:1,expl:"La méthode PAC (Présent-Passé-Futur) ou parcours > compétences > motivation est la plus efficace. Restez en 2-3 minutes, orienté résultats."},
-      {q:"Un recruteur vous demande votre situation de famille. Que faites-vous ?",opts:["Vous répondez poliment","Vous demandez le lien avec le poste","Vous refusez et quittez l'entretien","Vous inventez une réponse neutre"],ans:1,expl:"La situation de famille est une donnée privée. Vous pouvez répondre : 'Je ne vois pas le lien direct avec les missions du poste, mais je suis totalement disponible.' C'est poli et protège vos droits."},
-      {q:"Comment justifier une période d'inactivité de 8 mois sur votre CV ?",opts:["La cacher en modifiant les dates","L'expliquer positivement (formation, projet perso, santé)","Dire que vous cherchiez le bon poste","Minimiser et passer vite dessus"],ans:1,expl:"Les recruteurs remarquent les trous. Anticipez avec une réponse préparée : formation, projet personnel, soins familiaux ou bilan de compétences. Valorisez ce que vous en avez tiré."},
-      {q:"Quel est le délai légal de réponse d'un recruteur après un entretien ?",opts:["48h","1 semaine","2 semaines","Aucun délai légal imposé"],ans:3,expl:"Légalement, aucun délai n'est imposé pour répondre. Cependant, un accusé de réception sous 2 semaines est une bonne pratique. Vous pouvez relancer après 10-15 jours sans nouvelle."},
-      {q:"Quelle question poser en fin d'entretien pour marquer les esprits ?",opts:["Quand serai-je augmenté ?","Quels sont les challenges prioritaires les 6 premiers mois ?","Est-ce que vous aimez travailler ici ?","Combien de congés ai-je ?"],ans:1,expl:"Demander les enjeux du poste montre votre orientation résultats et votre sérieux. Évitez les questions purement pratiques (congés, salaire) pour une première entrevue — ça vient après."},
-      {q:"En CDD, quelle est la durée maximale (renouvellements inclus) dans la plupart des cas ?",opts:["6 mois","12 mois","18 mois","24 mois"],ans:2,expl:"Un CDD ne peut excéder 18 mois (renouvellements inclus) dans la majorité des cas. Exceptions : contrats saisonniers, remplacement, etc. Au-delà, le contrat peut être requalifié en CDI."},
-      {q:"Lors d'une négociation salariale, quelle est la meilleure approche ?",opts:["Donner un chiffre précis en premier","Attendre que le recruteur parle en premier","Donner une fourchette haute basée sur le marché","Accepter systématiquement la première offre"],ans:2,expl:"Donnez une fourchette réaliste basée sur votre recherche (Glassdoor, LinkedIn Salary, APEC). Ancrez la fourchette haute pour laisser de la marge. Justifiez avec vos compétences et le marché."},
+      {q:"Quelle est la durée légale maximale d'une période d'essai pour un cadre en CDI ?",opts:["2 mois (durée applicable aux employés)","3 mois (durée applicable aux techniciens et agents de maîtrise)","4 mois (durée initiale applicable aux cadres)","8 mois (durée applicable aux cadres, renouvellement compris)"],ans:2,expl:"Pour un cadre, la période d'essai initiale est de 4 mois maximum, renouvelable une fois pour atteindre 8 mois si la convention collective le prévoit. Code du travail L1221-19."},
+      {q:"Lors d'un entretien, l'employeur peut-il légalement vous demander votre salaire actuel ?",opts:["Oui, c'est une pratique courante et parfaitement autorisée","Oui, mais uniquement si le poste est dans le même secteur d'activité","Non, c'est considéré comme une pratique discriminatoire depuis 2023","Oui, à condition que cela soit mentionné dans l'offre d'emploi"],ans:2,expl:"Depuis 2023, demander le salaire actuel est considéré comme une pratique discriminatoire. Vous pouvez décliner et indiquer directement vos prétentions salariales."},
+      {q:"Comment répondre efficacement à la question 'Quels sont vos défauts ?' ?",opts:["Mentionner un point d'amélioration générique, sans exemple concret","Évoquer une vraie limite et expliquer comment vous la travaillez activement","Présenter une qualité déguisée en défaut, comme « je suis trop perfectionniste »","Dire que vous manquez encore d'expérience sur certains outils techniques"],ans:1,expl:"La bonne approche : un défaut authentique mais sur lequel vous avez déjà engagé une démarche de progrès (ex : 'j'avais du mal à déléguer, j'ai suivi une formation management'). Les défauts génériques ou déguisés en qualités sonnent creux pour un recruteur expérimenté."},
+      {q:"Quelle est la meilleure structure pour répondre à 'Parlez-moi de vous' ?",opts:["Présenter votre parcours dans l'ordre chronologique, du diplôme à aujourd'hui","Partir de votre situation actuelle, vos compétences clés, puis votre motivation pour le poste","Détailler chaque expérience professionnelle avec ses missions précises","Mettre l'accent sur vos qualités personnelles et vos valeurs"],ans:1,expl:"La méthode présent → compétences clés → motivation ciblée est la plus efficace. Restez en 2-3 minutes, orienté résultats et personnalisé pour l'entreprise — pas un simple récit chronologique."},
+      {q:"Un recruteur vous demande votre situation de famille. Que faites-vous ?",opts:["Vous répondez directement et complètement à la question","Vous demandez poliment le lien avec le poste, puis confirmez votre disponibilité","Vous donnez une réponse vague sans préciser si vous avez des enfants","Vous signalez immédiatement que la question est discriminatoire"],ans:1,expl:"La situation de famille est une donnée privée. Vous pouvez répondre : 'Je ne vois pas le lien direct avec les missions du poste, mais je suis totalement disponible.' C'est poli, protège vos droits, sans tension inutile."},
+      {q:"Comment justifier une période d'inactivité de 8 mois sur votre CV ?",opts:["Ne pas la mentionner et ajuster légèrement les dates de fin de contrat","Expliquer la période de façon positive en valorisant ce qu'elle vous a apporté","Mentionner que vous étiez sélectif sur les opportunités, sans donner plus de détails","Évoquer brièvement le sujet puis détourner rapidement la conversation"],ans:1,expl:"Les recruteurs remarquent les trous. Anticipez avec une réponse préparée : formation, projet personnel, soins familiaux ou bilan de compétences. Valorisez ce que vous en avez tiré plutôt que de l'esquiver."},
+      {q:"Quel est le délai légal de réponse d'un recruteur après un entretien ?",opts:["48 heures, par usage professionnel courant","1 semaine, fixé par le code du travail","2 semaines, fixé par convention collective","Aucun délai n'est imposé légalement"],ans:3,expl:"Légalement, aucun délai n'est imposé pour répondre. Un accusé de réception sous 2 semaines reste une bonne pratique, mais ce n'est pas une obligation. Vous pouvez relancer après 10-15 jours sans nouvelle."},
+      {q:"Quelle question poser en fin d'entretien pour marquer les esprits ?",opts:["Quelles sont les perspectives d'évolution salariale à court terme ?","Quels seront les enjeux prioritaires sur les 6 premiers mois dans ce poste ?","Comment décririez-vous l'ambiance au sein de l'équipe ?","Quel est le processus pour les demandes de congés ?"],ans:1,expl:"Demander les enjeux prioritaires du poste montre votre orientation résultats et votre sérieux. L'ambiance d'équipe est une question légitime mais moins stratégique ; évitez les sujets purement pratiques (congés, salaire) en première entrevue."},
+      {q:"En CDD, quelle est la durée maximale (renouvellements inclus) dans la plupart des cas ?",opts:["12 mois, sauf accord de branche étendu","16 mois, renouvellement compris","18 mois, renouvellement inclus, dans le cas général","24 mois pour les contrats liés à l'export"],ans:2,expl:"Un CDD ne peut excéder 18 mois (renouvellements inclus) dans la majorité des cas. Des durées différentes existent pour certains cas particuliers (saisonnier, remplacement, accords de branche). Au-delà, le contrat peut être requalifié en CDI."},
+      {q:"Lors d'une négociation salariale, quelle est la meilleure approche ?",opts:["Annoncer immédiatement le salaire visé, sans marge de négociation","Laisser le recruteur annoncer une fourchette avant de vous positionner","Annoncer une fourchette ambitieuse mais argumentée par le marché et vos compétences","Indiquer votre salaire actuel et demander une légère hausse"],ans:2,expl:"Donnez une fourchette réaliste basée sur votre recherche (Glassdoor, LinkedIn Salary, APEC). Ancrez la fourchette haute pour laisser de la marge, et justifiez-la avec vos compétences et le marché — pas avec votre historique salarial."},
       {q:"Qu'est-ce que la méthode STAR en entretien ?",opts:["Situation, Tâche, Action, Résultat","Stratégie, Technique, Analyse, Réflexion","Soft skills, Technique, Aptitude, Récit","Aucune de ces réponses"],ans:0,expl:"STAR = Situation (contexte) > Tâche (votre rôle) > Action (ce que vous avez fait) > Résultat (impact chiffré si possible). C'est la structure idéale pour répondre aux questions comportementales."},
-      {q:"Un employeur peut-il consulter vos réseaux sociaux avant l'embauche ?",opts:["Non, c'est totalement interdit","Oui, les profils publics uniquement","Oui, tous vos comptes avec votre accord","Non sauf pour les postes sensibles"],ans:1,expl:"Un recruteur peut consulter ce que vous avez rendu public. Il ne peut pas vous demander vos mots de passe ni accéder à vos profils privés. Soignez votre e-réputation professionnelle (LinkedIn, Twitter public)."},
-      {q:"Comment répondre à 'Pourquoi quittez-vous votre poste actuel ?' sans parler négativement ?",opts:["Critiquer franchement votre manager","Invoquer une raison neutre et un projet positif","Inventer une raison administrative","Refuser de répondre"],ans:1,expl:"Ne critiquez jamais votre ex-employeur. Formulez positivement : 'Je cherche de nouveaux défis', 'Je souhaite évoluer vers X', 'L'entreprise a changé de direction stratégique'. Restez factuel et tourné vers l'avenir."},
-      {q:"Qu'est-ce qu'une clause de non-concurrence et quand s'applique-t-elle ?",opts:["Elle s'applique pendant le contrat","Elle s'applique après la rupture du contrat","Elle est toujours interdite en France","Elle remplace la période d'essai"],ans:1,expl:"La clause de non-concurrence s'applique après la rupture du contrat. Pour être valide : limitée dans le temps, l'espace, le domaine, et avec une contrepartie financière. Sans ces conditions, elle est nulle."},
+      {q:"Un employeur peut-il consulter vos réseaux sociaux avant l'embauche ?",opts:["Non, c'est strictement interdit quel que soit le poste","Oui, mais uniquement ce que vous avez rendu public vous-même","Oui, l'employeur peut demander l'accès à tous vos comptes avec votre accord écrit","Non, sauf pour les postes liés à la sécurité ou à la défense"],ans:1,expl:"Un recruteur peut consulter ce que vous avez rendu public. Il ne peut pas vous demander vos mots de passe ni exiger l'accès à vos comptes privés, même avec votre accord. Soignez votre e-réputation professionnelle."},
+      {q:"Comment répondre à 'Pourquoi quittez-vous votre poste actuel ?' sans parler négativement ?",opts:["Expliquer honnêtement les points négatifs qui motivent votre départ","Mettre en avant un projet positif et des perspectives d'évolution recherchées","Évoquer une réorganisation interne, même si ce n'est pas tout à fait le cas","Rester vague en évoquant des raisons personnelles"],ans:1,expl:"Ne critiquez jamais votre ex-employeur. Formulez positivement : 'Je cherche de nouveaux défis', 'Je souhaite évoluer vers X'. Restez factuel et tourné vers l'avenir plutôt que d'inventer un prétexte ou de rester flou."},
+      {q:"Qu'est-ce qu'une clause de non-concurrence et quand s'applique-t-elle ?",opts:["Elle s'applique uniquement pendant la durée du contrat","Elle s'applique après la rupture du contrat, sous conditions de validité","Elle est interdite en France depuis la réforme de 2008","Elle ne peut être prévue que pour les postes de cadre dirigeant"],ans:1,expl:"La clause de non-concurrence s'applique après la rupture du contrat. Pour être valide : limitée dans le temps, l'espace, le domaine, et assortie d'une contrepartie financière. Sans ces conditions, elle est nulle."},
       {q:"Quel est le délai de prévenance légal minimum pour convoquer un entretien préalable à licenciement ?",opts:["3 jours ouvrables","5 jours ouvrables","7 jours ouvrables","10 jours ouvrables"],ans:1,expl:"La convocation doit être remise 5 jours ouvrables minimum avant l'entretien préalable (Code du travail L1232-2). Ce délai vous permet de préparer votre défense et de vous faire assister."},
-      {q:"Qu'est-ce que le 'droit à la déconnexion' pour un salarié ?",opts:["L'obligation d'éteindre son téléphone après 18h","Le droit de ne pas répondre aux emails professionnels hors temps de travail","Le droit de refuser tout outil numérique","Un congé supplémentaire pour les métiers digitaux"],ans:1,expl:"Le droit à la déconnexion (loi El Khomri, 2017) oblige les entreprises de +50 salariés à définir des modalités d'usage des outils numériques pour préserver le temps de repos. En pratique : vous n'êtes pas tenu de répondre aux emails/appels hors horaires de travail."},
-      {q:"Un employeur peut-il modifier unilatéralement votre contrat de travail ?",opts:["Oui, à tout moment","Non, jamais","Oui pour les éléments non essentiels, non pour les éléments essentiels sans accord","Oui si un mois de préavis est respecté"],ans:2,expl:"Les éléments essentiels du contrat (salaire, qualification, lieu de travail si précisé) ne peuvent être modifiés sans votre accord. Les conditions de travail (organisation, méthodes) relèvent du pouvoir de direction. Refuser une modification essentielle n'est pas une faute."},
-      {q:"Comment répondre à 'Qu'est-ce qui vous différencie des autres candidats ?' ?",opts:["Dire que vous êtes motivé et sérieux","Identifier 2-3 atouts concrets et les relier aux enjeux du poste avec des preuves","Critiquer les autres candidats","Répondre que vous ne connaissez pas les autres candidats"],ans:1,expl:"C'est une question de différenciation. Préparez : une compétence rare + une réussite chiffrée + votre approche unique. Reliez-les directement aux enjeux du poste. Évitez les généralités (motivé, sérieux, rigoureux) — tous les candidats disent ça."},
+      {q:"Qu'est-ce que le 'droit à la déconnexion' pour un salarié ?",opts:["Une obligation pour l'employeur d'éteindre ses serveurs après 19h","Le droit de ne pas répondre aux sollicitations professionnelles hors temps de travail","Le droit de refuser l'usage de tout outil numérique au travail","Un jour de congé additionnel accordé aux métiers du numérique"],ans:1,expl:"Le droit à la déconnexion (loi El Khomri, 2017) oblige les entreprises de +50 salariés à définir des modalités d'usage des outils numériques pour préserver le temps de repos. En pratique : vous n'êtes pas tenu de répondre aux emails/appels hors horaires de travail — l'employeur n'a aucune obligation technique sur ses serveurs."},
+      {q:"Un employeur peut-il modifier unilatéralement votre contrat de travail ?",opts:["Oui, à tout moment, sans justification particulière","Non, aucune modification n'est jamais permise sans accord","Oui pour les éléments non essentiels, mais pas pour les éléments essentiels sans votre accord","Oui, à condition de respecter un préavis d'un mois"],ans:2,expl:"Les éléments essentiels du contrat (salaire, qualification, lieu de travail si précisé) ne peuvent être modifiés sans votre accord. Les conditions de travail (organisation, méthodes) relèvent du pouvoir de direction. Refuser une modification essentielle n'est pas une faute."},
+      {q:"Comment répondre à 'Qu'est-ce qui vous différencie des autres candidats ?' ?",opts:["Affirmer que vous êtes plus motivé et impliqué que la moyenne","Identifier 2-3 atouts concrets, appuyés par des résultats chiffrés, reliés aux enjeux du poste","Souligner que les autres candidats manquent probablement d'expérience","Dire que vous n'avez pas d'éléments de comparaison avec les autres candidats"],ans:1,expl:"C'est une question de différenciation. Préparez : une compétence rare + une réussite chiffrée + votre approche unique, reliées directement aux enjeux du poste. Évitez les généralités (motivé, impliqué) ou les comparaisons hasardeuses avec les autres candidats — tous les candidats se disent motivés."},
       {q:"Quelle est la règle sur le télétravail en cas de désaccord employeur/salarié ?",opts:["L'employeur peut imposer le télétravail sans accord","Le salarié peut exiger le télétravail sans accord","Le refus de télétravail par l'employeur doit être motivé par écrit","Le télétravail est automatique après 6 mois d'ancienneté"],ans:2,expl:"Depuis la loi ANI 2021, aucune partie ne peut imposer le télétravail sans accord. Le refus de l'employeur doit être motivé. En pratique, une charte ou accord collectif encadre souvent les modalités. Le refus du salarié ne peut être une cause de licenciement."},
       {q:"Qu'est-ce que le CSE (Comité Social et Économique) ?",opts:["Un organisme de formation continue","L'instance représentative du personnel obligatoire dans les entreprises de +11 salariés","Un contrat spécial pour les seniors","Un dispositif fiscal pour les PME"],ans:1,expl:"Le CSE remplace depuis 2020 le CE, les DP et le CHSCT. Obligatoire dès 11 salariés, il représente les intérêts des salariés sur les conditions de travail, l'emploi, la santé et la stratégie de l'entreprise. Il gère aussi les activités sociales et culturelles."},
-      {q:"Un recruteur vous demande si vous fumez. Comment répondez-vous ?",opts:["Vous répondez honnêtement","Vous demandez le lien avec le poste car c'est une question discriminatoire","Vous mentez pour optimiser vos chances","Vous quittez l'entretien immédiatement"],ans:1,expl:"Demander si vous fumez est une question potentiellement discriminatoire si elle n'a pas de lien direct avec le poste. Vous pouvez répondre : 'Je ne vois pas le lien avec les missions. Je respecte évidemment toutes les règles en vigueur dans l'entreprise.' Poli, ferme, protecteur."},
+      {q:"Un recruteur vous demande si vous fumez. Comment répondez-vous ?",opts:["Vous répondez honnêtement sans plus de précision","Vous demandez poliment le lien avec le poste, car c'est une question sans rapport direct","Vous évitez de répondre directement et changez de sujet","Vous répondez en insistant que ça ne vous concerne plus depuis peu"],ans:1,expl:"Demander si vous fumez est une question sans lien direct avec les compétences pour la plupart des postes. Vous pouvez répondre : 'Je ne vois pas le lien avec les missions. Je respecte évidemment toutes les règles en vigueur dans l'entreprise.' Poli, ferme, protecteur — sans pour autant dramatiser la situation."},
       {q:"Quelle est la durée minimale de préavis pour un CDI non-cadre en cas de démission ?",opts:["Aucun préavis légal","1 semaine","1 mois","3 mois"],ans:0,expl:"Pour un non-cadre, la loi ne fixe pas de durée minimale légale de préavis en cas de démission. C'est la convention collective ou le contrat qui le détermine. En pratique : 1 à 3 mois selon la convention. Vérifiez votre CCN avant de démissionner."},
       {q:"Lors d'un entretien de recrutement, comment gérer une longue pause de silence du recruteur ?",opts:["Parler immédiatement pour combler le silence","Sourire, maintenir le contact visuel et rester serein","Répéter ce que vous venez de dire","Demander si vous avez dit quelque chose de problématique"],ans:1,expl:"Le silence est parfois une technique de mise sous pression. Gardez votre calme, maintenez un contact visuel confiant et souriez légèrement. Ne combler pas le vide avec des mots qui affaiblissent votre position. Le silence géré avec assurance révèle maturité et sang-froid."},
       {q:"Qu'est-ce que le 'portage salarial' ?",opts:["Un contrat de travail temporaire","Un dispositif qui permet d'exercer en indépendant tout en étant salarié d'une société de portage","Un type de licenciement économique","Une forme de co-gérance en SARL"],ans:1,expl:"Le portage salarial permet à un consultant indépendant d'être rémunéré en salaire via une société de portage, tout en gardant sa liberté commerciale. Avantages : protection sociale de salarié, pas de gestion administrative. Contrepartie : frais de gestion (8-12% du CA)."},
-      {q:"Quelle est la différence entre un avertissement et une mise à pied disciplinaire ?",opts:["Ce sont deux mots pour la même sanction","L'avertissement est une sanction sans impact salarial ; la mise à pied entraîne une suspension du contrat et de la rémunération","L'avertissement est réservé aux cadres","La mise à pied est toujours définitive"],ans:1,expl:"L'avertissement est une sanction légère, sans impact sur le salaire ni le contrat. La mise à pied conservatoire (avant licenciement) ou disciplinaire (sanction) suspend le contrat et interrompt la rémunération. Délai de prescription : 2 mois pour toute sanction (hors faute continue)."}
+      {q:"Quelle est la différence entre un avertissement et une mise à pied disciplinaire ?",opts:["Ce sont deux termes différents pour désigner la même sanction","L'avertissement est une sanction sans impact salarial ; la mise à pied entraîne une suspension du contrat et de la rémunération","L'avertissement entraîne systématiquement une retenue sur salaire, contrairement à la mise à pied","La mise à pied disciplinaire est annulée automatiquement si le salarié contre-signe le courrier"],ans:1,expl:"L'avertissement est une sanction légère, sans impact sur le salaire ni le contrat. La mise à pied conservatoire (avant licenciement) ou disciplinaire (sanction) suspend le contrat et interrompt la rémunération. Délai de prescription : 2 mois pour toute sanction (hors faute continue)."}
     ],
     demandeur:[
       {q:"Quelle est la durée minimale de travail pour ouvrir des droits à l'ARE (Allocation de Retour à l'Emploi) ?",opts:["3 mois sur les 24 derniers mois","6 mois sur les 24 derniers mois","6 mois sur les 36 derniers mois","12 mois sur les 36 derniers mois"],ans:1,expl:"Depuis 2023, il faut avoir travaillé au minimum 6 mois (130 jours ou 910 heures) sur les 24 derniers mois pour ouvrir des droits à l'ARE. Pour les +53 ans, le calcul s'effectue sur 36 mois."},
-      {q:"Comment expliquer une longue période de chômage lors d'un entretien ?",opts:["La minimiser et ne pas en parler","Expliquer les actions menées (formations, bénévolat, projets)","Blâmer le marché de l'emploi","Mentionner une maladie fictive"],ans:1,expl:"Valorisez cette période : formation suivie, certification obtenue, projet personnel, bénévolat, ou soins familiaux. Montrez que vous êtes resté actif et que vous avez utilisé ce temps positivement."},
-      {q:"Lors d'un entretien, comment répondre à 'Pourquoi avez-vous du mal à trouver un emploi ?'",opts:["Critiquer les recruteurs","Reconnaître honnêtement vos ajustements récents","Mentir sur votre nombre de candidatures","Dire que vous n'avez pas vraiment cherché"],ans:1,expl:"Répondez avec authenticité : 'J'ai affiné ma cible', 'J'ai suivi une formation pour combler un gap technique', 'Le marché dans mon secteur est compétitif mais je maintiens ma démarche'. Montrez de la lucidité et de la résilience."},
+      {q:"Comment expliquer une longue période de chômage lors d'un entretien ?",opts:["La minimiser et passer rapidement à autre chose","Expliquer les actions menées (formations, bénévolat, projets)","Présenter cette période comme une pause bien méritée","Insister sur la difficulté du marché de l'emploi actuel"],ans:1,expl:"Valorisez cette période : formation suivie, certification obtenue, projet personnel, bénévolat, ou soins familiaux. Montrez que vous êtes resté actif et que vous avez utilisé ce temps positivement — plutôt que de l'esquiver ou de la justifier par des facteurs externes."},
+      {q:"Lors d'un entretien, comment répondre à 'Pourquoi avez-vous du mal à trouver un emploi ?'",opts:["Expliquer que le marché est particulièrement difficile actuellement","Reconnaître honnêtement vos ajustements récents et ce que vous en avez tiré","Dire que vous êtes sélectif et refusez beaucoup de propositions","Évoquer un problème de discrimination à l'âge ou à l'origine"],ans:1,expl:"Répondez avec authenticité : 'J'ai affiné ma cible', 'J'ai suivi une formation pour combler un gap technique', 'Le marché dans mon secteur est compétitif mais je maintiens ma démarche'. Montrez de la lucidité et de la résilience plutôt que d'attribuer la difficulté à des causes externes invérifiables."},
       {q:"Que signifie 'pointer à France Travail' concrètement ?",opts:["Aller physiquement signer chaque semaine","Actualiser sa situation mensuelle en ligne ou par téléphone","Envoyer son CV chaque mois","Se présenter aux offres proposées sans exception"],ans:1,expl:"L'actualisation se fait chaque mois (entre le 28 et le 15) via francetravail.fr, l'appli, ou le 39 49. Vous déclarez votre situation (en recherche, en maladie, etc.) pour maintenir vos droits ARE."},
       {q:"Peut-on travailler et percevoir l'ARE simultanément ?",opts:["Non, jamais","Oui, sans condition","Oui, selon un calcul de cumul partiel","Oui, uniquement pour les missions courtes"],ans:2,expl:"Oui, le cumul emploi-ARE est possible. Vos revenus d'activité sont déduits partiellement de votre allocation selon la formule : allocation journalière - 70% du salaire journalier brut. Déclarez toujours vos revenus."},
       {q:"Quel document devez-vous impérativement conserver après une rupture de contrat ?",opts:["Uniquement votre solde de tout compte","L'attestation France Travail (ex-Pôle Emploi)","Le règlement intérieur de l'entreprise","Vos fiches de paie uniquement"],ans:1,expl:"L'attestation employeur (attestation France Travail) est indispensable pour ouvrir vos droits ARE. L'employeur doit vous la remettre à la fin du contrat. En cas de refus, vous pouvez le contraindre via l'inspection du travail."},
-      {q:"Comment valoriser un emploi alimentaire lors d'un entretien pour un poste qualifié ?",opts:["Ne pas le mentionner","Le présenter comme preuve de motivation et d'adaptabilité","S'en excuser","Dire que c'était temporaire sans plus de détails"],ans:1,expl:"Un emploi alimentaire montre votre sens des responsabilités, votre motivation à travailler et votre adaptabilité. Formulez : 'J'ai maintenu une activité pour rester opérationnel tout en poursuivant ma recherche ciblée.'"},
-      {q:"Que faire si France Travail vous propose une offre que vous considérez inadaptée ?",opts:["Refuser sans donner d'explication","Accepter systématiquement","Justifier votre refus avec des critères objectifs","Ne pas répondre"],ans:2,expl:"Vous pouvez refuser une Offre Raisonnable d'Emploi (ORE) si elle ne correspond pas à vos qualifications, est trop éloignée géographiquement, ou le salaire est inférieur à 85% de votre ancien salaire. Justifiez par écrit."},
+      {q:"Comment valoriser un emploi alimentaire lors d'un entretien pour un poste qualifié ?",opts:["Ne pas le mentionner pour rester focalisé sur le poste qualifié","Le présenter comme preuve de motivation et d'adaptabilité","Préciser que ce n'était qu'un dépannage temporaire sans plus de détails","Expliquer que c'était nécessaire faute d'autre solution à l'époque"],ans:1,expl:"Un emploi alimentaire montre votre sens des responsabilités, votre motivation à travailler et votre adaptabilité. Formulez : 'J'ai maintenu une activité pour rester opérationnel tout en poursuivant ma recherche ciblée.' L'occulter ou le minimiser fait perdre cette occasion de valoriser une qualité réelle."},
+      {q:"Que faire si France Travail vous propose une offre que vous considérez inadaptée ?",opts:["Refuser en expliquant brièvement votre désaccord par téléphone","Accepter pour éviter tout risque de sanction, même si elle ne convient pas","Justifier votre refus par écrit avec des critères objectifs précis","Demander un délai de réflexion de plusieurs semaines avant de répondre"],ans:2,expl:"Vous pouvez refuser une Offre Raisonnable d'Emploi (ORE) si elle ne correspond pas à vos qualifications, est trop éloignée géographiquement, ou si le salaire est inférieur à 85% de votre ancien salaire — mais votre refus doit être justifié par écrit avec des critères objectifs, pas juste évoqué oralement ou laissé sans réponse formelle."},
       {q:"Quelle est la durée maximale de versement de l'ARE pour un demandeur de 50 ans ?",opts:["12 mois","18 mois","24 mois","36 mois"],ans:1,expl:"Pour les moins de 53 ans, l'ARE est versée au maximum 18 mois. De 53 à 54 ans : 22,5 mois. À partir de 55 ans : 27 mois. La durée effective correspond à la durée des droits affiliation."},
-      {q:"Comment aborder la question 'Où vous voyez-vous dans 5 ans ?' quand on revient de chômage ?",opts:["Dire que vous ne savez pas encore","Présenter un projet professionnel cohérent avec le poste","Parler de votre vie privée","Exprimer votre souhait de stabilité uniquement"],ans:1,expl:"Montrez un projet réaliste et aligné avec le poste : 'Développer mon expertise en X, prendre des responsabilités dans Y.' Cela rassure le recruteur sur votre motivation à long terme."},
+      {q:"Comment aborder la question 'Où vous voyez-vous dans 5 ans ?' quand on revient de chômage ?",opts:["Dire que vous préférez vous concentrer sur le présent pour l'instant","Présenter un projet professionnel cohérent avec le poste visé","Insister surtout sur votre besoin de stabilité après cette période","Répondre que cela dépendra surtout des opportunités qui se présenteront"],ans:1,expl:"Montrez un projet réaliste et aligné avec le poste : 'Développer mon expertise en X, prendre des responsabilités dans Y.' Cela rassure le recruteur sur votre motivation à long terme — une réponse centrée uniquement sur la stabilité ou l'absence de plan renforce au contraire l'inquiétude liée à la période de chômage."},
       {q:"Peut-on reprendre ses droits ARE si on retrouve un emploi puis le perd à nouveau ?",opts:["Non, les droits sont perdus","Oui, on reprend les droits restants (rechargement)","Oui, mais on recommence à zéro","Seulement si on a travaillé moins de 6 mois"],ans:1,expl:"Le mécanisme de rechargement permet de reprendre les droits ARE non consommés après une reprise d'activité. Si vous avez travaillé assez pour ouvrir de nouveaux droits, France Travail calcule le plus favorable."},
-      {q:"Lors d'un entretien, que répondre à 'Avez-vous d'autres processus en cours ?' ",opts:["Mentir et dire non","Dire oui si c'est vrai, sans détailler excessivement","Révéler toutes vos candidatures","Refuser de répondre"],ans:1,expl:"Soyez honnête : 'J'ai quelques processus en cours, votre poste est ma priorité pour ces raisons...' Cela montre que vous êtes demandé et crée une légère urgence sans paraître désespéré."},
+      {q:"Lors d'un entretien, que répondre à 'Avez-vous d'autres processus en cours ?' ",opts:["Dire que non, pour ne pas donner l'impression de comparer les offres","Dire oui si c'est vrai, sans détailler excessivement","Détailler précisément chaque entreprise et le stade de chaque processus","Répondre que vous préférez ne pas en parler par discrétion"],ans:1,expl:"Soyez honnête : 'J'ai quelques processus en cours, votre poste est ma priorité pour ces raisons...' Cela montre que vous êtes demandé et crée une légère urgence sans paraître désespéré — sans pour autant entrer dans le détail de chaque candidature, ce qui n'apporte rien et peut sembler maladroit."},
       {q:"Quelle est la différence entre licenciement économique et licenciement pour motif personnel ?",opts:["Il n'y a aucune différence légale","Le motif économique est lié à l'entreprise, le personnel à l'individu","Le motif économique donne moins de droits","Le motif personnel ouvre plus de droits ARE"],ans:1,expl:"Licenciement économique : suppression de poste, restructuration — lié à l'entreprise. Licenciement personnel : faute, inaptitude, insuffisance — lié au salarié. Tous deux ouvrent des droits ARE si les conditions d'affiliation sont remplies."},
-      {q:"Comment préparer efficacement les 48h avant un entretien ?",opts:["Apprendre le site de l'entreprise par cœur","Étudier l'entreprise, préparer ses réponses STAR, soigner sa tenue","Dormir beaucoup et ne rien préparer","Envoyer un email pour confirmer 10 fois"],ans:1,expl:"Checklist 48h : site + actualités de l'entreprise, offre d'emploi relue, 3-4 réponses STAR préparées, questions à poser, tenue choisie, trajet vérifié, portfolio ou book prêt. Simulation de questions à voix haute."},
+      {q:"Comment préparer efficacement les 48h avant un entretien ?",opts:["Réviser uniquement le site internet de l'entreprise en détail","Étudier l'entreprise, préparer ses réponses STAR, soigner sa tenue","Se reposer entièrement et improviser le jour J","Préparer une longue présentation écrite à lire pendant l'entretien"],ans:1,expl:"Checklist 48h : site + actualités de l'entreprise, offre d'emploi relue, 3-4 réponses STAR préparées, questions à poser, tenue choisie, trajet vérifié, portfolio ou book prêt. Se limiter au site sans préparer ses réponses, ou improviser totalement, laisse une grande partie du travail de préparation de côté."},
       {q:"Quelle est la meilleure façon de relancer après un entretien sans paraître insistant ?",opts:["Appeler chaque jour","Envoyer un email de remerciement sous 24h, puis relancer après 10-15j","Ne jamais relancer","Envoyer un courrier recommandé"],ans:1,expl:"Email de remerciement sous 24h : bref, personnalisé, rappelant votre motivation. Si pas de réponse après 10-15 jours, une relance courte et professionnelle est bienvenue. Au-delà de 2 relances sans réponse, passez à autre chose."},
       {q:"Qu'est-ce que le RSA et peut-on le cumuler avec l'ARE ?",opts:["Oui, toujours et sans plafond","Non, les deux allocations sont incompatibles","Oui, mais seulement si l'ARE est inférieure au montant du RSA socle","Oui, mais uniquement pendant 3 mois"],ans:2,expl:"Le RSA et l'ARE ne se cumulent généralement pas. Si votre ARE est inférieure au montant du RSA, la CAF peut compléter la différence. En fin de droits ARE, vous pouvez basculer sur le RSA si vos ressources le permettent. Déclarez toujours vos situations aux deux organismes."},
-      {q:"Comment utiliser LinkedIn efficacement quand on cherche un emploi ?",opts:["Envoyer des invitations en masse","Optimiser son titre, sa bannière, son résumé et activer 'Open to Work' discrètement","Commenter chaque post de recruteurs","Changer sa photo toutes les semaines"],ans:1,expl:"Stratégie LinkedIn : titre = poste cible + valeur clé, résumé = pitch de 3 lignes orienté résultats, expériences avec bullets chiffrés, compétences validées par le réseau. Activez '#OpenToWork' visible recruteurs seulement. Publiez 1-2x/semaine pour rester visible."},
+      {q:"Comment utiliser LinkedIn efficacement quand on cherche un emploi ?",opts:["Envoyer des invitations en masse à tous les recruteurs visibles","Optimiser son titre, sa bannière, son résumé et activer 'Open to Work' discrètement","Republier systématiquement les offres d'emploi qui vous intéressent","Mettre à jour sa photo de profil chaque semaine pour rester visible"],ans:1,expl:"Stratégie LinkedIn : titre = poste cible + valeur clé, résumé = pitch de 3 lignes orienté résultats, expériences avec bullets chiffrés, compétences validées par le réseau. Activez '#OpenToWork' visible recruteurs seulement. Publiez 1-2x/semaine sur votre expertise pour rester visible — l'envoi massif d'invitations ou le simple partage d'offres n'a que peu d'impact sur votre visibilité réelle."},
       {q:"Quelle est la différence entre une candidature spontanée et une réponse à une offre ?",opts:["Aucune, la démarche est identique","La candidature spontanée cible un besoin non exprimé, la réponse à offre répond à un besoin déclaré","La candidature spontanée est toujours moins efficace","La réponse à offre est réservée aux cadres"],ans:1,expl:"Candidature spontanée : vous identifiez une entreprise, ses enjeux, et proposez votre valeur sans offre publiée — fort impact si bien ciblée. Réponse à offre : vous répondez à un besoin déclaré — concurrence forte. En combinant les deux, vous couvrez 100% du marché."},
       {q:"Comment structurer un pitch de présentation de 2 minutes pour un entretien de retour à l'emploi ?",opts:["Parcours chronologique complet","Qui je suis → ce que j'apporte → pourquoi ce poste maintenant","Liste de compétences techniques","Commencer par ses défauts pour montrer l'humilité"],ans:1,expl:"Structure idéale : 1) Identité professionnelle (rôle, secteur, nb d'années) 2) Valeur ajoutée (compétences clés + 1 réussite chiffrée) 3) Transition positive (pourquoi cette recherche, ce secteur, cet employeur). Répétez à voix haute — 2 minutes max."},
       {q:"Comment gérer psychologiquement une longue période de recherche d'emploi ?",opts:["Arrêter de chercher pour décompresser","Maintenir une routine, se fixer des objectifs hebdomadaires et s'appuyer sur un réseau de soutien","Se concentrer uniquement sur les candidatures online","Accepter n'importe quel poste pour mettre fin à l'incertitude"],ans:1,expl:"La recherche d'emploi longue peut épuiser. Conseils prouvés : routine quotidienne structurée, objectifs mesurables (5 candidatures/semaine, 2 contacts réseau/semaine), activité physique, groupes de job-seekers. La résilience se construit — cherchez du soutien professionnel si besoin."},
       {q:"Quand faut-il mentionner sa situation de demandeur d'emploi à un recruteur ?",opts:["Jamais, c'est stigmatisant","Seulement si on est demandeur depuis plus de 12 mois","Seulement si le recruteur pose la question directement","Toujours, dès le premier contact"],ans:3,expl:"Être en recherche d'emploi n'est pas une honte. La plupart des recruteurs le comprennent. Soyez transparent sur votre situation — cela évite les malentendus sur votre disponibilité. Préparez votre narrative positive : 'Je prends le temps de trouver le bon poste plutôt que le premier venu.'"},
       {q:"Qu'est-ce qu'un bilan de compétences et comment le financer quand on est demandeur d'emploi ?",opts:["C'est réservé aux salariés uniquement","C'est finançable via le CPF, l'AIF de France Travail ou Transition Pro","C'est une formation diplômante","C'est gratuit automatiquement"],ans:1,expl:"Un bilan de compétences (max 24h) analyse vos aptitudes et définit un projet professionnel. Pour les demandeurs d'emploi : CPF utilisable, AIF de France Travail si CPF insuffisant, parfois pris en charge directement par France Travail si lié à votre projet de retour à l'emploi."},
-      {q:"Comment évaluer si une offre d'emploi est une arnaque ou un poste réel ?",opts:["Toutes les offres en ligne sont fiables","Vérifier l'entreprise sur LinkedIn, societe.com et refuser toute demande d'argent ou de données personnelles","Appeler directement le numéro indiqué","Postuler à toutes les offres même douteuses"],ans:1,expl:"Signaux d'alerte : offre vague sans nom d'entreprise, promesse de salaire irréaliste, demande d'argent ou de documents d'identité, processus 100% par SMS, email en @gmail. Vérifiez : société sur Infogreffe/societe.com, profil LinkedIn de l'employeur, offre aussi sur le site officiel."},
+      {q:"Comment évaluer si une offre d'emploi est une arnaque ou un poste réel ?",opts:["Se fier au fait que l'offre soit publiée sur un site connu","Vérifier l'entreprise sur LinkedIn, societe.com et refuser toute demande d'argent ou de données personnelles","Juger sur la cohérence du salaire proposé par rapport au poste","Privilégier les offres avec un processus de recrutement très rapide"],ans:1,expl:"Signaux d'alerte : offre vague sans nom d'entreprise, promesse de salaire irréaliste, demande d'argent ou de documents d'identité, processus 100% par SMS, email en @gmail. Vérifiez : société sur Infogreffe/societe.com, profil LinkedIn de l'employeur, offre aussi sur le site officiel — la présence sur un site connu ou un salaire cohérent ne suffisent pas à garantir la fiabilité d'une offre."},
       {q:"Quelle est la meilleure stratégie pour obtenir des entretiens rapidement ?",opts:["Postuler à 200 offres par semaine sans personnalisation","Cibler 5-10 offres pertinentes avec candidatures personnalisées + activation du réseau","Se concentrer uniquement sur les jobboards","Attendre que les recruteurs vous contactent sur LinkedIn"],ans:1,expl:"Qualité > quantité. Stratégie optimale : 5-10 candidatures ciblées/semaine avec CV + LM personnalisés + réseau activé en parallèle. Le réseau génère 60-70% des recrutements (postes non publiés). Combinez : candidatures directes + LinkedIn + réseau + salons emploi."},
       {q:"Qu'est-ce que le Pass IAE et à qui s'adresse-t-il ?",opts:["Un abonnement de transport pour les demandeurs d'emploi","Un dispositif d'insertion permettant d'accéder à des structures d'insertion par l'activité économique","Une aide au logement pour les chômeurs","Un crédit formation réservé aux moins de 26 ans"],ans:1,expl:"L'Insertion par l'Activité Économique (IAE) permet aux personnes éloignées de l'emploi (chômage long, RSA, handicap...) de retrouver une activité via des SIAE (ESAT, association d'insertion, entreprise adaptée). Le Pass IAE est le mécanisme d'entrée dans ces structures, financé par France Travail."}
     ],
     reconversion:[
       {q:"Qu'est-ce qu'un bilan de compétences ?",opts:["Un entretien annuel d'évaluation","Un dispositif d'analyse de compétences et d'élaboration de projet professionnel","Un test de personnalité obligatoire","Une formation certifiante de courte durée"],ans:1,expl:"Le bilan de compétences (max 24h sur 3 mois) permet d'analyser vos compétences, aptitudes et motivations pour définir un projet professionnel ou de formation. Finançable via le CPF, réalisé par un organisme agréé."},
-      {q:"Comment justifier une reconversion lors d'un entretien ?",opts:["Critiquer votre ancienne voie","Présenter un récit cohérent : déclic, analyse, projet concret","Minimiser vos années précédentes","Dire que vous vouliez gagner plus"],ans:1,expl:"Le recruteur veut comprendre votre logique, pas votre biographie. Structurez : 'Après X années en Y, j'ai réalisé que Z me manquait. J'ai suivi une formation, réalisé des projets pratiques, je suis maintenant prêt.' Cohérence + preuves concrètes."},
+      {q:"Comment justifier une reconversion lors d'un entretien ?",opts:["Insister sur les limites de votre ancien métier pour expliquer votre départ","Présenter un récit cohérent : déclic, analyse, projet concret","Mettre en avant surtout l'aspect financier de ce changement","Dire que cette nouvelle voie vous est venue presque par hasard"],ans:1,expl:"Le recruteur veut comprendre votre logique, pas votre biographie. Structurez : 'Après X années en Y, j'ai réalisé que Z me manquait. J'ai suivi une formation, réalisé des projets pratiques, je suis maintenant prêt.' Cohérence + preuves concrètes — plutôt qu'un argument centré sur l'argent, le hasard, ou la critique de l'ancien métier."},
       {q:"Le CPF (Compte Personnel de Formation) peut-il financer une reconversion ?",opts:["Non, uniquement des formations courtes","Oui, y compris des formations longues qualifiantes","Oui, mais seulement si on est en emploi","Oui, mais uniquement pour les moins de 45 ans"],ans:1,expl:"Le CPF finance formations certifiantes, titres professionnels, bilans de compétences et VAE. Pour une reconversion complète, il peut être complété par la Transition Pro (CPF de transition), POEC, ou l'AIF de France Travail."},
       {q:"Comment valoriser des compétences transverses lors d'un entretien dans un nouveau domaine ?",opts:["Ne pas en parler pour ne pas sembler novice","Les relier explicitement aux besoins du nouveau poste","Les lister sans contexte","Les comparer aux compétences des candidats seniors"],ans:1,expl:"Chaque compétence transverse a sa traduction : 'En gestion de projet, j'ai développé X qui s'applique directement à Y.' Faites le pont vous-même — ne laissez pas le recruteur deviner. Preuves concrètes obligatoires."},
       {q:"Qu'est-ce que la VAE (Validation des Acquis de l'Expérience) ?",opts:["Un examen pour valider une formation","Un dispositif pour obtenir un diplôme via l'expérience professionnelle","Une aide financière pour se former","Un contrat d'apprentissage pour adultes"],ans:1,expl:"La VAE permet d'obtenir tout ou partie d'un diplôme (du CAP au Master) en faisant reconnaître votre expérience professionnelle. Processus : recevabilité > dossier de preuves > jury. Financée via CPF ou employeur."},
@@ -18345,35 +18390,43 @@ function addFeedbackBubble(feedEl, isOk, expl, delay){
 var NQ_STATE = {};
 
 var NQ_CFG = {
-  salarie:  {key:'sal', name:'Nova', sub:'QCM · Droits Salarié',   result:'entretien-salarie-result',   retry:'entretien-salarie'},
-  demandeur:{key:'dem', name:'Nova', sub:'QCM · Demandeur',         result:'entretien-demandeur-result', retry:'entretien-demandeur'},
-  reconversion:{key:'rec', name:'Nova', sub:'QCM · Reconversion',   result:'entretien-reconversion-result',retry:'entretien-reconversion'},
-  freelance:{key:'frl', name:'Nova', sub:'QCM · Freelance',         result:'entretien-freelance-result', retry:'entretien-freelance'}
+  salarie:  {key:'sal', name:'Mise en situation', sub:'QCM · Droits Salarié',   result:'entretien-salarie-result',   retry:'entretien-salarie'},
+  demandeur:{key:'dem', name:'Mise en situation', sub:'QCM · Demandeur',         result:'entretien-demandeur-result', retry:'entretien-demandeur'},
+  reconversion:{key:'rec', name:'Mise en situation', sub:'QCM · Reconversion',   result:'entretien-reconversion-result',retry:'entretien-reconversion'},
+  freelance:{key:'frl', name:'Mise en situation', sub:'QCM · Freelance',         result:'entretien-freelance-result', retry:'entretien-freelance'}
 };
 
 function nqShuffle(arr){ var a=arr.slice(); for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;} return a; }
 
 var NQ_INTROS = [
-  'Nouvelle session, nouvelles questions. Nova renouvelle entièrement son tirage à chaque fois — jamais les mêmes, jamais dans le même ordre. C\'est parti.',
-  'Les questions de cette session ne sont pas celles d\'avant. Nova tire chaque fois un ensemble différent — parce que chaque session révèle quelque chose de nouveau sur toi.',
-  'Chaque session avec Nova est unique. Les questions changent, les formulations changent, les combinaisons ne se répètent pas. Une seule bonne réponse à chaque fois.',
-  'Nova renouvelle ses questions à chaque session. Pas les mêmes qu\'hier. Pas les mêmes que demain. Lis attentivement — la façon dont tu réponds dit quelque chose sur toi.',
-  'Session unique. Nova pioche différemment à chaque fois — les questions et leur ordre changent toujours. Montre ce que tu sais.'
+  'Nouvelle session, nouvelles questions. Mise en situation renouvelle entièrement son tirage à chaque fois — jamais les mêmes, jamais dans le même ordre. C\'est parti.',
+  'Les questions de cette session ne sont pas celles d\'avant. Mise en situation tire chaque fois un ensemble différent — parce que chaque session révèle quelque chose de nouveau sur toi.',
+  'Chaque session avec Mise en situation est unique. Les questions changent, les formulations changent, les combinaisons ne se répètent pas. Une seule bonne réponse à chaque fois.',
+  'Mise en situation renouvelle ses questions à chaque session. Pas les mêmes qu\'hier. Pas les mêmes que demain. Lis attentivement — la façon dont tu réponds dit quelque chose sur toi.',
+  'Session unique. Mise en situation pioche différemment à chaque fois — les questions et leur ordre changent toujours. Montre ce que tu sais.'
 ];
+
+function nqShuffleOpts(q){
+  var idx = q.opts.map(function(_,i){return i;});
+  for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=idx[i];idx[i]=idx[j];idx[j]=t;}
+  var newOpts = idx.map(function(i){return q.opts[i];});
+  var newAns = idx.indexOf(q.ans);
+  return {q:q.q, opts:newOpts, ans:newAns, expl:q.expl};
+}
 
 window.nqStart = function(profil){
   var cfg = NQ_CFG[profil];
-  var shuffled = nqShuffle(EL_DATA[profil]).slice(0, 20);
+  var shuffled = nqShuffle(EL_DATA[profil]).slice(0, 25).map(nqShuffleOpts);
   NQ_STATE[profil] = { questions: shuffled, idx:0, score:0, answered:false };
   var feed = $('nq-'+cfg.key+'-feed');
   var choices = $('nq-'+cfg.key+'-choices');
   if(feed) feed.innerHTML = '';
   if(choices) choices.innerHTML = '';
   nqUpdateProg(profil);
-  // Message d'accueil Nova — varié à chaque session
+  // Message d'accueil Mise en situation — varié à chaque session
   var intro = NQ_INTROS[Math.floor(Math.random()*NQ_INTROS.length)];
   setTimeout(function(){
-    addNovaBubble(feed, 'Nova', intro, 400).then(function(){
+    addNovaBubble(feed, 'Mise en situation', intro, 400).then(function(){
       nqRender(profil);
     });
   }, 200);
@@ -18437,7 +18490,7 @@ window.nqAnswer = function(profil, chosen){
   var feed = $('nq-'+cfg.key+'-feed');
   addUserBubble(feed, letters[chosen]+' · '+q.opts[chosen]);
 
-  // Feedback Nova
+  // Feedback Mise en situation
   var expl = q.expl;
   addFeedbackBubble(feed, isOk, expl, 700).then(function(){
     // Bouton suivant
@@ -18477,7 +18530,7 @@ function nqShowResult(profil){
   var level, levelColor;
   if(pct>=80){level='Expert — Tu maîtrises tes droits 🏆';levelColor='#22c55e';}
   else if(pct>=60){level='Confirmé(e) — Quelques points à consolider 👍';levelColor='#f59e0b';}
-  else if(pct>=40){level='En progression — Continue avec Nova 💪';levelColor='#f59e0b';}
+  else if(pct>=40){level='En progression — Continue avec Mise en situation 💪';levelColor='#f59e0b';}
   else{level='Débutant(e) — On va construire ça ensemble 🎯';levelColor='#f43f5e';}
 
   // Lecture de personnalité — varie à chaque tirage
@@ -18486,22 +18539,22 @@ function nqShowResult(profil){
       {min:80,texts:['Voici ce que ce tirage dit de toi : tu as une approche structurée et anticipatrice. Tu ne subis pas les situations — tu les prépares. Ce pattern révèle quelqu\'un qui navigue dans les codes du monde professionnel avec lucidité.','Ce que tes réponses révèlent : tu penses en stratège avant de parler en exécutant. Tu connais tes droits non pas pour les invoquer, mais pour savoir où tu te situes. C\'est une posture rare.']},
       {min:60,texts:['Ce tirage te révèle quelque chose : tu as les fondamentaux, mais certaines zones restent floues — et c\'est précisément là que se jouent les négociations décisives. L\'instinct est là. La précision est le prochain niveau.','Tes réponses montrent un profil hybride : solide sur les principes, moins armé sur les subtilités légales. Ça dit que tu fonctionnes souvent à l\'intuition — parfois juste, parfois insuffisant.']},
       {min:40,texts:['Ce que ce tirage révèle : tu es dans une phase d\'apprentissage actif. Tu n\'es pas perdu — tu explores. Et chaque session te donnera une carte de plus sur ce terrain que tu apprends à lire.','Tes patterns de réponse indiquent que tu t\'appuies encore sur des certitudes non vérifiées. La vraie force viendra quand tu sauras distinguer ce que tu sais de ce que tu crois savoir.']},
-      {min:0,texts:['Ce tirage révèle un point de départ honnête. Tu n\'as pas encore les outils — mais tu as décidé d\'aller chercher. C\'est déjà plus que la plupart. Nova est là pour construire ça avec toi.','Tes réponses disent quelque chose d\'important : tu explores un territoire nouveau. Chaque question ratée est une information précieuse. Le score d\'aujourd\'hui n\'est pas un jugement — c\'est une boussole.']}
+      {min:0,texts:['Ce tirage révèle un point de départ honnête. Tu n\'as pas encore les outils — mais tu as décidé d\'aller chercher. C\'est déjà plus que la plupart. Mise en situation est là pour construire ça avec toi.','Tes réponses disent quelque chose d\'important : tu explores un territoire nouveau. Chaque question ratée est une information précieuse. Le score d\'aujourd\'hui n\'est pas un jugement — c\'est une boussole.']}
     ],
     demandeur:[
       {min:80,texts:['Ce que ce tirage révèle : tu ne te laisses pas submerger par ta situation — tu la comprends et tu l\'utilises. C\'est le profil de quelqu\'un qui va rebondir, pas rester.','Tes réponses montrent une maîtrise rare pour un demandeur d\'emploi. Tu connais tes droits, tes obligations, tes leviers. Ce savoir est ton premier outil de retour à l\'emploi.']},
       {min:60,texts:['Ce tirage révèle un profil en transition consciente. Tu as saisi l\'essentiel — mais les angles morts identifiés sont précisément ceux que les recruteurs et administrations exploitent. C\'est là que ça se joue.','Tes réponses indiquent que tu navigues correctement, mais pas toujours avec assurance. Ce manque de certitude sur certains droits peut te coûter — dans les entretiens comme face à France Travail.']},
-      {min:0,texts:['Ce tirage dit quelque chose de fort : tu vis une situation complexe avec des règles que tu n\'as pas encore appris à lire. Ce n\'est pas une faiblesse — c\'est une lacune comblable. Nova est là pour ça.','Tes réponses révèlent une exposition réelle à des erreurs coûteuses sur tes droits. Pas par manque d\'intelligence — par manque d\'information. C\'est exactement ce que ce QCM est fait pour corriger.']}
+      {min:0,texts:['Ce tirage dit quelque chose de fort : tu vis une situation complexe avec des règles que tu n\'as pas encore appris à lire. Ce n\'est pas une faiblesse — c\'est une lacune comblable. Mise en situation est là pour ça.','Tes réponses révèlent une exposition réelle à des erreurs coûteuses sur tes droits. Pas par manque d\'intelligence — par manque d\'information. C\'est exactement ce que ce QCM est fait pour corriger.']}
     ],
     reconversion:[
       {min:80,texts:['Ce tirage révèle quelqu\'un qui prépare sa reconversion avec méthode, pas avec espoir. Tu connais les dispositifs, les pièges, les chemins. Tu n\'improvises pas — tu pilotes.','Tes réponses montrent un profil de reconvertisseur stratégique. Tu sais que changer de voie ça se prépare comme un projet — avec des ressources, des jalons, des plans B. Ça change tout.']},
-      {min:60,texts:['Ce tirage révèle que tu as saisi l\'architecture globale de ta reconversion — mais certaines briques manquent. En reconversion, les détails font souvent la différence entre un projet qui aboutit et un qui s\'étiole.','Tes réponses montrent quelqu\'un à mi-chemin entre la motivation et la stratégie. La première est là. La seconde se construit. Nova peut t\'aider à faire le pont.']},
+      {min:60,texts:['Ce tirage révèle que tu as saisi l\'architecture globale de ta reconversion — mais certaines briques manquent. En reconversion, les détails font souvent la différence entre un projet qui aboutit et un qui s\'étiole.','Tes réponses montrent quelqu\'un à mi-chemin entre la motivation et la stratégie. La première est là. La seconde se construit. Mise en situation peut t\'aider à faire le pont.']},
       {min:0,texts:['Ce que ce tirage révèle : tu es au début d\'un chemin qui mérite une meilleure carte. Recommencer le QCM est déjà un acte de ta reconversion — tu cherches à comprendre avant d\'agir. Continue.','Tes réponses indiquent un terrain encore peu cartographié. Mais chaque bonne question que tu te poses aujourd\'hui t\'évite une erreur coûteuse demain.']}
     ],
     freelance:[
       {min:80,texts:['Ce tirage révèle un freelance qui pense comme un entrepreneur, pas comme un prestataire. Tu maîtrises les outils juridiques, commerciaux et stratégiques qui font la différence entre survivre et performer en indépendant.','Tes réponses montrent quelqu\'un qui a déjà intégré la logique de valeur versus la logique de temps. C\'est la distinction fondamentale des freelances qui prospèrent vraiment.']},
       {min:60,texts:['Ce tirage révèle un profil freelance solide avec des zones d\'ombre. Et en indépendant, les zones d\'ombre coûtent — des clients mal cadrés, des contrats mal négociés, des protections manquantes.','Tes réponses montrent que tu gères correctement l\'opérationnel mais que le volet légal et stratégique mérite attention. C\'est là que les freelances expérimentés prennent leur avantage.']},
-      {min:0,texts:['Ce tirage révèle quelqu\'un encore dans la phase d\'exploration du statut freelance. Tu as l\'envie — mais l\'environnement légal et commercial est encore flou. Nova peut t\'aider à le cartographier avant que ça te coûte.','Tes réponses indiquent des expositions réelles en tant qu\'indépendant. Les lacunes identifiées aujourd\'hui sont des protections à mettre en place demain.']}
+      {min:0,texts:['Ce tirage révèle quelqu\'un encore dans la phase d\'exploration du statut freelance. Tu as l\'envie — mais l\'environnement légal et commercial est encore flou. Mise en situation peut t\'aider à le cartographier avant que ça te coûte.','Tes réponses indiquent des expositions réelles en tant qu\'indépendant. Les lacunes identifiées aujourd\'hui sont des protections à mettre en place demain.']}
     ]
   };
 
@@ -18590,7 +18643,7 @@ function nqShowResult(profil){
     + '<div class="nova-result-level" style="color:'+levelColor+';">'+level+'</div>'
     + '<div style="background:rgba(255,255,255,.04);border-left:3px solid '+levelColor+';padding:14px 16px;margin:16px 0;border-radius:0 8px 8px 0;font-size:.82rem;color:#cbd5e1;line-height:1.6;font-style:italic;">'+readingTxt+'</div>'
     + '<div style="margin:20px 0;">'
-    +   '<div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;color:#64748b;text-transform:uppercase;margin-bottom:10px;">Ce que Nova te conseille</div>'
+    +   '<div style="font-size:.72rem;font-weight:700;letter-spacing:.08em;color:#64748b;text-transform:uppercase;margin-bottom:10px;">Ce que Mise en situation te conseille</div>'
     +   '<div style="display:flex;gap:6px;margin-bottom:8px;"><span style="font-size:.9rem;flex-shrink:0;margin-top:1px;">→</span><span style="font-size:.82rem;color:#e2e8f0;line-height:1.5;">'+tip1+'</span></div>'
     +   '<div style="display:flex;gap:6px;"><span style="font-size:.9rem;flex-shrink:0;margin-top:1px;">→</span><span style="font-size:.82rem;color:#e2e8f0;line-height:1.5;">'+tip2+'</span></div>'
     + '</div>'
@@ -18623,28 +18676,28 @@ var NS_CFG = {
 
 var NS_INTROS = {
   salarie:[
-    'Bonjour, merci de vous être déplacé(e). Je suis Sophie Martin, responsable RH chez Accenture. Cet entretien dure environ 30 minutes. Nous allons passer en revue plusieurs situations. Répondez comme si vous étiez vraiment en entretien — je vous analyserai à chaque étape.',
-    'Asseyez-vous. Léa Fontaine, DRH Capgemini. On va aller droit au but — j\'ai votre CV, j\'ai vos lettres. Ce qui m\'intéresse maintenant, c\'est comment vous réagissez sous pression. Commençons.',
-    'Bonjour. Sophie Martin, Accenture. Je vais vous soumettre des situations réelles. Pas de bonnes réponses universelles — je cherche à comprendre comment vous pensez et comment vous vous positionnez. Prêt(e) ?',
-    'Je suis Léa Fontaine. On a reçu 80 candidatures pour ce poste. Vous avez passé le premier filtre — ce qui compte maintenant, c\'est ce que vous faites concrètement face aux situations qui se posent. Allons-y.'
+    'Tu vas être confronté(e) à des situations réelles d\'entretien d\'embauche. Réponds comme si tu y étais vraiment — chaque réponse révèle quelque chose sur ta posture.',
+    'Cet exercice simule un entretien sous pression. Pas de bonne réponse universelle — on regarde comment tu réagis concrètement, situation par situation.',
+    'Mets-toi en condition réelle d\'entretien. Je vais te soumettre plusieurs situations — à toi de choisir la réponse la plus stratégique à chaque fois.',
+    'Plusieurs recruteurs fictifs, une seule règle : répondre comme si c\'était vrai. Allons-y.'
   ],
   demandeur:[
-    'Bonjour. Marc Dufour. J\'ai votre CV devant moi. On va aller droit au but — j\'ai d\'autres candidats à voir dans l\'heure. Montrez-moi pourquoi vous.',
-    'Marc Dufour, responsable d\'agence. Vous avez 10 minutes pour me convaincre. Je ne suis pas là pour vous faire plaisir — je cherche quelqu\'un qui tiendra. Commencez.',
-    'Julie Moreau, DRH. Franchement, votre profil m\'interroge. Mais vous êtes là, alors prouvez-moi que j\'ai tort. Je vous pose des situations concrètes — je veux des réponses franches.',
-    'Bonjour. Je suis Marc Dufour. Ici on recrute vite et on coupe vite. Pas de blabla — je vais vous mettre face à des situations réelles. Vos réponses vont tout dire.'
+    'Mets-toi en condition réelle d\'entretien pour un retour à l\'emploi. Chaque situation est tirée de cas concrets — réponds comme si tu y étais.',
+    'Cet exercice simule un entretien direct, sans détour. Tu as peu de temps pour convaincre — à toi de choisir la bonne approche à chaque situation.',
+    'On va te mettre face à des situations franches, parfois inconfortables. Réponds honnêtement et stratégiquement.',
+    'Recrutement rapide, décisions rapides. Je te soumets des situations réelles — tes réponses vont tout dire.'
   ],
   reconversion:[
-    'Bonjour, je suis Isabelle Renard, votre conseillère pour ce bilan CPF. Mon rôle est de vous aider à construire un projet cohérent — pas de vous valider par défaut. Soyez honnête avec moi, c\'est la seule façon que ça fonctionne.',
-    'Isabelle Renard. Je fais des bilans depuis 12 ans. Ce qui distingue les reconversions qui aboutissent des autres, c\'est la lucidité. Je vais vous poser des questions inconfortables — c\'est pour votre bien.',
-    'Bonjour. Ce bilan est un espace de vérité. Je ne suis pas là pour valider votre rêve — je suis là pour vous aider à construire un projet solide. Certaines de mes questions vont vous bousculer. C\'est normal.',
-    'Isabelle Renard, conseillère CPF. J\'ai accompagné 200 reconversions. La plupart échouent non pas par manque de motivation mais par manque de réalisme. Je suis là pour tester le vôtre.'
+    'Cet exercice simule un bilan de reconversion exigeant. Le but n\'est pas de te valider par défaut, mais de tester la solidité de ton projet.',
+    'Plusieurs situations vont te bousculer — c\'est volontaire. La lucidité fait souvent la différence entre une reconversion qui aboutit et une qui s\'étiole.',
+    'Cet espace teste ton réalisme, pas seulement ta motivation. Réponds avec honnêteté à chaque situation.',
+    'On va tester la solidité de ton projet de reconversion à travers plusieurs situations concrètes. Sois honnête avec toi-même.'
   ],
   freelance:[
-    'Allô ? Thomas Girard. J\'ai 20 minutes. J\'ai vu votre profil LinkedIn — ça m\'a intéressé. Parlez-moi de ce que vous avez vraiment fait ces 2 dernières années.',
-    'Thomas Girard, CTO. Je n\'ai pas de temps pour les pitchs génériques. Je cherche quelqu\'un qui sait ce qu\'il fait et qui le prouve. On commence maintenant.',
-    'Nadia Chawki, Product Manager. On a besoin d\'un freelance rapidement. J\'ai 3 profils. Je vais vous poser les mêmes questions qu\'aux autres — vos réponses feront la différence.',
-    'Girard. On a eu de mauvaises expériences avec des freelances qui ne livraient pas. Je suis direct — je vais vous mettre face à des situations concrètes. Vos réponses me diront si vous êtes vraiment celui qu\'on cherche.'
+    'Cet exercice simule un échange direct avec un client potentiel. Pas de pitch générique — montre ce que tu as vraiment fait.',
+    'Peu de temps, des questions concrètes : on va tester comment tu te positionnes en tant que freelance face à des situations réelles.',
+    'Plusieurs situations vont tester ta crédibilité freelance. Réponds avec des faits, pas des intentions.',
+    'On a besoin de savoir si tu livres vraiment. Je te soumets des situations concrètes — tes réponses feront la différence.'
   ]
 };
 
@@ -18653,12 +18706,21 @@ var NS_ACCENTCOLORS = {
   salarie:'#1e40af', demandeur:'#059669', reconversion:'#7c3aed', freelance:'#d97706'
 };
 
+function nsShuffleOpts(s){
+  var idx = s.opts.map(function(_,i){return i;});
+  for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=idx[i];idx[i]=idx[j];idx[j]=t;}
+  var newOpts = idx.map(function(i){return s.opts[i];});
+  var newWhy = idx.map(function(i){return s.why[i];});
+  var newBest = idx.indexOf(s.best);
+  return {context:s.context, persona:s.persona, opts:newOpts, why:newWhy, best:newBest, skills:s.skills};
+}
+
 window.nsStart = function(profil){
   var cfg = NS_CFG[profil];
-  // Shuffle et tirage de 20 situations sur 25
+  // Shuffle et tirage de 25 situations sur le pool disponible
   var allSituations = MS_DATA[profil].slice();
   for(var i=allSituations.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=allSituations[i];allSituations[i]=allSituations[j];allSituations[j]=t;}
-  var selected = allSituations.slice(0, 20);
+  var selected = allSituations.slice(0, 25).map(nsShuffleOpts);
   NS_STATE[profil] = { situations: selected, idx:0, score:0, skillTotals:{posture:0,clarte:0,strategie:0}, answered:false };
   var feed = $('ns-'+cfg.key+'-feed');
   var choices = $('ns-'+cfg.key+'-choices');
@@ -18696,7 +18758,7 @@ function nsRender(profil){
   s.answered = false;
   choices.innerHTML = '';
 
-  addNovaBubble(feed, situation.persona.split('—')[0].trim(), '« '+situation.context+' »', 600).then(function(){
+  addNovaBubble(feed, null, '❓ '+situation.context, 600).then(function(){
     var letters = ['A','B','C'];
     situation.opts.forEach(function(opt, i){
       var btn = document.createElement('div');
@@ -18741,7 +18803,7 @@ window.nsAnswer = function(profil, chosen){
   // Bulle user
   addUserBubble(feed, situation.opts[chosen]);
 
-  // Feedback Nova
+  // Feedback Mise en situation
   var expl = '<strong>Ton choix :</strong> '+situation.why[chosen]
     + (chosen !== situation.best ? '<br><br><strong style="color:#a7f3d0;">✅ Meilleure réponse :</strong> '+situation.why[situation.best] : '');
   addFeedbackBubble(feed, isBest, expl, 700).then(function(){
@@ -18791,7 +18853,7 @@ function nsShowResult(profil){
   if(pct===100){level='Performance parfaite — Tu maîtrises chaque situation 🏆';levelColor='#22c55e';}
   else if(pct>=67){level='Très bon niveau — Quelques réglages fins 👍';levelColor='#f59e0b';}
   else if(pct>=33){level='En progression — La posture se travaille 💪';levelColor='#f59e0b';}
-  else{level='À renforcer — Nova peut te coacher sur chaque situation 🎯';levelColor='#f43f5e';}
+  else{level='À renforcer — Mise en situation peut te coacher sur chaque situation 🎯';levelColor='#f43f5e';}
 
   var maxSkill = total * 3;
   var postPct = Math.min(100, Math.round((s.skillTotals.posture/maxSkill)*100));
@@ -19272,22 +19334,6 @@ function nsShowResult(profil){
           <div class="ew-mod-card-footer">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
             <span>Chat en direct · Diagnostic personnalisé</span>
-          </div>
-        </div>
-        <div class="ew-mod-card" onclick="ewGoDocsImportants()">
-          <div class="ew-mod-card-top">
-            <div class="ew-mod-card-ico" style="background:linear-gradient(135deg,#fef3c7,#fde68a);border:1.5px solid #fbbf24;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div class="ew-mod-card-txt">
-              <div class="ew-mod-card-ttl">Documents importants</div>
-              <div class="ew-mod-card-sub">CV, lettre de motivation, dossiers administratifs — range tout, classé comme sur un ordinateur</div>
-            </div>
-            <div class="ew-mod-card-arr">›</div>
-          </div>
-          <div class="ew-mod-card-footer">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            <span>Réservé aux membres</span>
           </div>
         </div>
       </div>
