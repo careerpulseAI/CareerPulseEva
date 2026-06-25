@@ -1964,21 +1964,21 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <div class="cta-arrow"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
  </div>
 
- <!-- CARTE 3 : Fiche Pro -->
+ <!-- CARTE 3 : Mon espace personnel -->
  <div class="cta-card profil" onclick="go('profil')" onmousedown="this.style.opacity='.9'" onmouseup="this.style.opacity='1'" ontouchstart="this.style.opacity='.9'" ontouchend="this.style.opacity='1'">
   <div class="cta-head">
-   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-   <span>Profil Google</span>
+   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+   <span>Mon espace</span>
   </div>
   <div class="cta-ico-wrap">
    <div class="cta-ico">
-    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="24" height="24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h.01"/><path d="M3 9h18"/><path d="M9 3v6"/></svg>
    </div>
   </div>
   <div class="cta-body">
-   <div class="cta-title">Fiche Pro</div>
-   <div class="cta-sub">Visible sur Google · Trouvé par les recruteurs</div>
-   <div class="cta-badge" style="background:linear-gradient(135deg,#1e3a8a,#047857)">Indexé Google</div>
+   <div class="cta-title">Mon espace</div>
+   <div class="cta-sub">Profil · CV · Documents</div>
+   <div class="cta-badge" style="background:linear-gradient(135deg,#059669,#047857)">Personnel</div>
   </div>
   <div class="cta-arrow"><svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg></div>
  </div>
@@ -2447,53 +2447,60 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <div class="wrap">
 
 
- <!-- CTA Hero fusionné — blanc & vert -->
- <div style="background:#fff;border:1.5px solid rgba(5,150,105,.18);border-radius:16px;padding:11px 16px;margin-bottom:14px;box-shadow:0 2px 12px rgba(5,150,105,.08)">
+ <!-- Hero Mon espace personnel CareerPulse -->
+ <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px 16px 14px;margin-bottom:14px;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-24px;right:-24px;width:100px;height:100px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none"></div>
+  <div style="position:absolute;bottom:-18px;left:-18px;width:70px;height:70px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none"></div>
 
-  <!-- Ligne haute : statut + score -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">
-   <div style="display:flex;align-items:center;gap:6px">
-    <div id="prof-dot" style="width:7px;height:7px;background:#dc2626;border-radius:50%;flex-shrink:0"></div>
-    <span id="prof-status-lbl" style="font-size:.52rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#dc2626">Profil invisible</span>
+  <!-- Logo CareerPulse -->
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px;position:relative">
+   <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(5,150,105,.5);flex-shrink:0">
+    <span style="font-family:'DM Sans',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;line-height:1;letter-spacing:-.03em">C</span>
    </div>
-   <span style="font-size:.72rem;font-weight:800;color:#059669" id="prof-score-pct">0<span style="font-size:.52rem;color:#94a3b8">/100</span></span>
+   <div>
+    <div style="font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:800;color:#fff;letter-spacing:-.02em">CareerPulse</div>
+    <div style="font-size:.46rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)">Ton espace personnel</div>
+   </div>
   </div>
 
-  <!-- Barre progression -->
-  <div style="height:4px;background:#f1f5f9;border-radius:3px;overflow:hidden;margin-bottom:12px">
-   <div id="prof-score-bar" style="height:100%;background:linear-gradient(90deg,#059669,#34d399);border-radius:3px;width:0%;transition:width 1s cubic-bezier(.22,1,.36,1)"></div>
+  <!-- Titre hero -->
+  <div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:8px;position:relative">
+   Mon espace<br><em style="color:#6ee7b7;font-weight:400">personnel.</em>
   </div>
-
-  <!-- Titre -->
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:#0f172a;line-height:1.2;margin-bottom:3px">
-   Soyez trouvé.<br><em style="color:#059669;font-weight:400">Avant même de postuler.</em>
+  <div style="font-size:.62rem;color:rgba(255,255,255,.72);line-height:1.6;position:relative;margin-bottom:13px">
+   Crée ton profil professionnel et conserve tes documents importants — lettre de motivation et documents importants. Sauvegarde sécurisée de tes documents.
   </div>
-  <div id="prof-score-badge" style="font-size:.62rem;color:#64748b;line-height:1.5;margin-bottom:12px">Complète ton profil pour apparaître dans les recherches recruteurs.</div>
 
   <!-- Steps compacts -->
-  <div style="display:flex;align-items:center">
+  <div style="display:flex;align-items:center;position:relative">
    <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-profil" style="width:20px;height:20px;border-radius:50%;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <div id="hero-step-profil" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
+     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     </div>
-    <span style="font-size:.56rem;font-weight:600;color:#64748b">Profil</span>
+    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Profil</span>
    </div>
-   <div style="flex:1;height:1px;background:#e2e8f0;margin:0 7px"></div>
+   <div style="flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 7px"></div>
    <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-cv" style="width:20px;height:20px;border-radius:50%;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    <div id="hero-step-cv" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
+     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
     </div>
-    <span style="font-size:.56rem;font-weight:600;color:#64748b">CV & LM</span>
+    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Lettre de motivation</span>
    </div>
-   <div style="flex:1;height:1px;background:#e2e8f0;margin:0 7px"></div>
+   <div style="flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 7px"></div>
    <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-visible" style="width:20px;height:20px;border-radius:50%;background:#f1f5f9;border:1px solid #cbd5e1;display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2.5" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    <div id="hero-step-visible" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
+     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
     </div>
-    <span style="font-size:.56rem;font-weight:600;color:#64748b">Visible</span>
+    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Documents</span>
    </div>
   </div>
 
+  <!-- IDs cachés nécessaires au JS -->
+  <span id="prof-status-lbl" style="display:none">Profil invisible</span>
+  <div id="prof-dot" style="display:none"></div>
+  <span id="prof-score-pct" style="display:none">0</span>
+  <div id="prof-score-bar" style="display:none"></div>
+  <div id="prof-score-badge" style="display:none">Complète ton profil.</div>
  </div>
 
 
@@ -2560,10 +2567,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
  <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Accroche (2-3 lignes) <span style="color:#dc2626">*</span></div>
  <textarea id="fp-accroche" placeholder="Qui tu es, ce que tu cherches, ce qui te distingue…" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 12px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;resize:none;min-height:72px;line-height:1.6" oninput="updateFpScore()"></textarea>
  </div>
- <!-- CONTACT PUBLIC -->
+ <!-- CONTACT -->
  <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(5,150,105,.1)">
-  <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Contact public</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+  <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Contact</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
    <div>
     <div style="font-size:.58rem;font-weight:700;color:var(--g500);margin-bottom:4px">Email</div>
     <input type="email" id="fp-email-public" placeholder="ton@email.com" style="width:100%;background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:9px 11px;font-size:.74rem;color:var(--g900);outline:none;font-family:inherit;box-sizing:border-box">
@@ -2573,81 +2580,38 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <input type="tel" id="fp-tel-public" placeholder="06 XX XX XX XX" style="width:100%;background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:9px 11px;font-size:.74rem;color:var(--g900);outline:none;font-family:inherit;box-sizing:border-box">
    </div>
   </div>
-  <div style="font-size:.58rem;font-weight:700;color:var(--g500);margin-bottom:8px">Que partager publiquement ?</div>
-  <div style="display:flex;flex-direction:column;gap:8px">
-
-   <div style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 12px">
-    <span style="font-size:.74rem;color:var(--g700);font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> Mon adresse email</span>
-    <button id="tog-share-email" onclick="toggleShare('email')" style="width:42px;height:24px;background:#cbd5e1;border-radius:12px;border:none;position:relative;cursor:pointer;transition:background .25s;flex-shrink:0">
-     <div id="knob-share-email" style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
-    </button>
-    <input type="hidden" id="fp-share-email" value="0">
-   </div>
-
-   <div style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 12px">
-    <span style="font-size:.74rem;color:var(--g700);font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 9.81 19.79 19.79 0 0 1 .07 1.18 2 2 0 0 1 2.03 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L6.91 7.09a16 16 0 0 0 6 6l.36-.36a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Mon téléphone</span>
-    <button id="tog-share-tel" onclick="toggleShare('tel')" style="width:42px;height:24px;background:#cbd5e1;border-radius:12px;border:none;position:relative;cursor:pointer;transition:background .25s;flex-shrink:0">
-     <div id="knob-share-tel" style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
-    </button>
-    <input type="hidden" id="fp-share-tel" value="0">
-   </div>
-
-   <div style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 12px">
-    <span style="font-size:.74rem;color:var(--g700);font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Mon CV</span>
-    <button id="tog-share-cv" onclick="toggleShare('cv')" style="width:42px;height:24px;background:#cbd5e1;border-radius:12px;border:none;position:relative;cursor:pointer;transition:background .25s;flex-shrink:0">
-     <div id="knob-share-cv" style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
-    </button>
-    <input type="hidden" id="fp-share-cv" value="0">
-   </div>
-
-   <div style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:10px 12px">
-    <span style="font-size:.74rem;color:var(--g700);font-weight:600"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8"/><path d="M8 14h5"/></svg> Ma lettre de motivation</span>
-    <button id="tog-share-lm" onclick="toggleShare('lm')" style="width:42px;height:24px;background:#cbd5e1;border-radius:12px;border:none;position:relative;cursor:pointer;transition:background .25s;flex-shrink:0">
-     <div id="knob-share-lm" style="position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div>
-    </button>
-    <input type="hidden" id="fp-share-lm" value="0">
-   </div>
-
+  <!-- IDs cachés requis par le JS -->
+  <div style="display:none">
+   <input type="hidden" id="fp-share-email" value="1">
+   <input type="hidden" id="fp-share-tel" value="1">
+   <input type="hidden" id="fp-share-cv" value="1">
+   <input type="hidden" id="fp-share-lm" value="1">
+   <button id="tog-share-email"></button><div id="knob-share-email"></div>
+   <button id="tog-share-tel"></button><div id="knob-share-tel"></div>
+   <button id="tog-share-cv"></button><div id="knob-share-cv"></div>
+   <button id="tog-share-lm"></button><div id="knob-share-lm"></div>
   </div>
  </div>
  </div></div><!-- /acc-info -->
 
- <!-- ACCORDÉON 2 : CV & Lettre de motivation -->
+ <!-- ACCORDÉON 2 : Lettre de motivation -->
  <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
  <div onclick="toggleAccordion('acc-cv')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
-  <div style="display:flex;align-items:center;gap:7px">
-   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-   <span style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669">CV & Lettre de motivation</span>
+  <div style="display:flex;align-items:center;gap:8px">
+   <div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 5px rgba(5,150,105,.3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.3"/><path d="M3.5 6.5 12 12.5l8.5-6"/></svg></div>
+   <span style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669">Lettre de motivation</span>
   </div>
   <svg id="acc-cv-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
  </div>
  <div id="acc-cv" style="display:none;padding:0 16px 16px">
 
- <!-- CV -->
- <div style="margin-bottom:14px">
- <div style="font-size:.65rem;font-weight:700;color:var(--g700);margin-bottom:8px">Curriculum Vitae</div>
- <div id="fp-cv-status">
- <div class="upzone" id="cv-zone" ondragover="dov(event,'cv-zone')" ondragleave="dlv('cv-zone')" style="cursor:pointer" onclick="document.querySelector('#cv-zone input').click()">
- <input type="file" accept=".pdf,.doc,.docx" onchange="fsel(this,'cv-zone','cv-name');updateFpScore()">
- <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
- <div style="font-size:.78rem;font-weight:600;color:var(--g700);margin-bottom:3px">Dépose ton CV</div>
- <div style="font-size:.62rem;color:var(--g400)">PDF, DOC, DOCX · max 10 MB</div>
- <div id="cv-name" style="display:none;margin-top:8px;font-size:.7rem;color:var(--green);font-weight:700"></div>
- </div>
- </div>
- </div>
-
  <!-- LM -->
  <div>
  <div style="font-size:.65rem;font-weight:700;color:var(--g700);margin-bottom:8px">Lettre de motivation</div>
  <div style="display:flex;gap:7px;margin-bottom:10px">
- <button class="btn bo bsm fw" onclick="showLetterGen()">
+ <button class="btn bo bsm fw" onclick="showLetterGen()" style="width:100%">
  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
  Générer avec Eva IA
- </button>
- <button class="btn bo bsm fw" onclick="showLetterUpload()">
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
- Importer
  </button>
  </div>
  <div id="letter-gen" style="display:none">
@@ -2681,7 +2645,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
  <div class="fg"><label class="flbl">Pourquoi cette entreprise ?</label><textarea id="lmotiv" placeholder="Ce qui t'attire : culture, produit, mission, valeurs…" style="min-height:60px"></textarea></div>
  <button class="btn fw bg" id="lgenbtn" onclick="genLetter()" style="padding:14px">
  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
- Générer ma lettre (1 jeton)
+ Générer ma lettre
  </button>
  <div id="letter-out" class="letter-out" style="display:none"></div>
  <div id="letter-copy-btn" style="display:none;margin-top:8px">
@@ -2702,37 +2666,35 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
  </div>
  </div></div><!-- /acc-cv /accordéon-2 -->
 
+ <!-- ACCORDÉON 3 : Documents -->
+ <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
+ <div onclick="toggleAccordion('acc-docs')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
+  <div style="display:flex;align-items:center;gap:7px">
+   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+   <span style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669">Documents</span>
+  </div>
+  <svg id="acc-docs-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
+ </div>
+ <div id="acc-docs" style="display:none;padding:0 16px 16px">
+  <div style="font-size:.65rem;color:var(--g400);margin-bottom:10px">Ajoute autant de documents que tu veux — contrats, diplômes, justificatifs… Renomme-les comme tu veux, puis enregistre ou supprime.</div>
+  <div id="docs-list"></div>
+  <input type="file" id="docs-file-input" style="display:none" onchange="docsAddFile(this)">
+  <button class="btn bo bsm fw" onclick="document.getElementById('docs-file-input').click()" style="width:100%">
+   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+   Ajouter un document
+  </button>
+ </div>
+ </div>
+ <!-- /acc-docs /accordéon-3 -->
 
- <div id="fp-vis-wrap" style="background:#fff;border:1.5px solid rgba(5,150,105,.15);border-radius:16px;padding:16px;margin-bottom:16px;box-shadow:0 2px 10px rgba(5,150,105,.06)">
- <div style="display:flex;align-items:center;gap:12px">
- <div style="width:42px;height:42px;background:var(--gp);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
- <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
- </div>
- <div style="flex:1">
- <div style="font-size:.82rem;font-weight:700;color:var(--g900);margin-bottom:2px">Rendre ma fiche visible</div>
- <div style="font-size:.64rem;color:var(--g500);line-height:1.5">Les recruteurs CareerPulse peuvent consulter ton profil, ton CV et ta lettre</div>
- </div>
- <button id="fp-vis-tog" onclick="toggleFpVis()" style="width:46px;height:26px;background:var(--g200);border-radius:13px;border:none;position:relative;cursor:pointer;transition:background .25s;flex-shrink:0">
- <div id="fp-vis-knob" style="position:absolute;top:3px;left:3px;width:20px;height:20px;background:#fff;border-radius:50%;transition:transform .25s cubic-bezier(.34,1.56,.64,1);box-shadow:0 1px 4px rgba(0,0,0,.22)"></div>
- </button>
- </div>
- <!-- Confirmation visible -->
- <div id="fp-vis-confirm" style="display:none;margin-top:12px;background:rgba(16,124,16,.06);border:1px solid rgba(16,124,16,.2);border-radius:10px;padding:10px 12px">
- <div style="display:flex;align-items:center;gap:8px">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#107c10" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
- <div>
- <div style="font-size:.74rem;font-weight:700;color:#107c10">Profil visible aux recruteurs !</div>
- <div style="font-size:.62rem;color:#15803d;margin-top:1px">Ta fiche apparaît maintenant dans la base candidats</div>
- </div>
- </div>
- </div>
- <!-- Avertissement si profil incomplet -->
- <div id="fp-vis-warn" style="display:none;margin-top:12px;background:rgba(202,80,16,.06);border:1px solid rgba(202,80,16,.2);border-radius:10px;padding:10px 12px">
- <div style="display:flex;align-items:center;gap:8px">
- <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ca5010" stroke-width="2.5" stroke-linecap="round" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
- <div style="font-size:.68rem;color:#ca5010;line-height:1.5">Complète d'abord <strong>nom, secteur et CV</strong> pour activer la visibilité</div>
- </div>
- </div>
+
+ <!-- IDs cachés pour JS toggleFpVis -->
+ <div style="display:none">
+  <div id="fp-vis-wrap"></div>
+  <button id="fp-vis-tog" onclick="toggleFpVis()"></button>
+  <div id="fp-vis-knob"></div>
+  <div id="fp-vis-confirm"></div>
+  <div id="fp-vis-warn"></div>
  </div>
 
  <!-- Éléments JS conservés (cachés) -->
@@ -2764,11 +2726,11 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
   </div>
   <div style="font-size:.6rem;color:rgba(255,255,255,.8);line-height:1.6;position:relative;margin-bottom:9px">
-   CareerPulse ambitionne de rendre tes <strong style="color:#6ee7b7">compétences visibles auprès des recruteurs qui comptent</strong> — avant même que tu postules. Découvre notre vision du profil professionnel.
+   L'utilité de <strong style="color:#6ee7b7">créer son profil dans CareerPulse</strong> et de conserver ses documents importants — CV et lettre de motivation — dans son espace personnel.
   </div>
   <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:8px 12px;font-size:.6rem;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px">
    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
-   En savoir plus →
+   Découvrir mon espace →
   </div>
  </div>
  </div>
@@ -8970,6 +8932,59 @@ function fsel(input, zoneId, nameId){
     data[type + '_name'] = file.name;
     fbDb.collection('profils').doc(user.uid).set(data, {merge:true});
     ecShowToast('✅ ' + (type==='cv'?'CV':'Lettre') + ' sauvegardé dans le cloud !');
+  }).catch(function(e){
+    ecShowToast('Erreur upload : ' + e.message);
+  });
+}
+
+// ── Documents (accordéon 3) : ajout infini, renommage façon Windows, sauvegarde / suppression ──
+var docsCounter = 0;
+function docsAddFile(input){
+  var file = input.files[0];
+  if(!file) return;
+  docsCounter++;
+  var rowId = 'doc-row-'+docsCounter;
+  var dotIdx = file.name.lastIndexOf('.');
+  var defaultName = dotIdx > 0 ? file.name.substring(0,dotIdx) : file.name;
+  var ext = dotIdx > 0 ? file.name.substring(dotIdx) : '';
+  var row = document.createElement('div');
+  row.id = rowId;
+  row.style.cssText = 'display:flex;align-items:center;gap:8px;background:var(--g50);border:1px solid var(--g100);border-radius:12px;padding:8px 10px;margin-bottom:8px';
+  row.innerHTML =
+    '<div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 6px rgba(5,150,105,.3)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>' +
+    '<input type="text" value="'+defaultName.replace(/"/g,'&quot;')+'" style="flex:1;min-width:0;border:none;background:transparent;font-size:.74rem;font-weight:600;color:var(--g700);outline:none;font-family:inherit">' +
+    '<span style="font-size:.6rem;color:var(--g400);flex-shrink:0">'+ext+'</span>' +
+    '<button onclick="docsSaveFile(\''+rowId+'\')" title="Enregistrer" style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#059669,#047857);border:none;cursor:pointer;color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(5,150,105,.35);transition:opacity .15s" onmousedown="this.style.opacity=\'.75\'" onmouseup="this.style.opacity=\'1\'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg></button>' +
+    '<button onclick="docsDeleteFile(\''+rowId+'\')" title="Supprimer" style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#ef4444,#b91c1c);border:none;cursor:pointer;color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(220,38,38,.35);transition:opacity .15s" onmousedown="this.style.opacity=\'.75\'" onmouseup="this.style.opacity=\'1\'"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 012-2h2a2 2 0 012 2v2"/></svg></button>';
+  row._file = file;
+  row._ext = ext;
+  document.getElementById('docs-list').appendChild(row);
+  input.value = ''; // permet de réajouter le même fichier plus tard si besoin
+}
+
+function docsDeleteFile(rowId){
+  var row = document.getElementById(rowId);
+  if(row) row.remove();
+}
+
+function docsSaveFile(rowId){
+  var row = document.getElementById(rowId);
+  if(!row || !row._file) return;
+  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
+  if(!user){ ecShowToast('Connecte-toi pour sauvegarder ton fichier'); return; }
+  if(typeof fbStorage === 'undefined'){ ecShowToast('Stockage non disponible'); return; }
+  var nameInput = row.querySelector('input[type="text"]');
+  var customName = (nameInput.value || '').trim() || 'document';
+  var finalName = customName + (row._ext || '');
+  var ref = fbStorage.ref('users/' + user.uid + '/documents/' + finalName);
+  ecShowToast('⏳ Upload en cours...');
+  ref.put(row._file).then(function(){
+    return ref.getDownloadURL();
+  }).then(function(url){
+    fbDb.collection('profils').doc(user.uid).collection('documents').doc(finalName).set({
+      name: finalName, url: url, uploadedAt: new Date().toISOString()
+    });
+    ecShowToast('✅ "' + finalName + '" sauvegardé !');
   }).catch(function(e){
     ecShowToast('Erreur upload : ' + e.message);
   });
@@ -26896,82 +26911,62 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 
  <!-- Hero -->
  <div style="margin-bottom:22px">
-  <div style="font-size:.5rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#059669;margin-bottom:8px">✦ Fiche professionnelle · Notre vision</div>
+
+  <div style="font-size:.5rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#059669;margin-bottom:8px">✦ Profil Professionnel · CareerPulse</div>
   <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#0f172a;line-height:1.15;margin-bottom:10px">
-   Être trouvé,<br><em style="color:#059669">avant de chercher.</em>
+   Création de profil<br><em style="color:#059669">Professionnel.</em>
   </div>
   <div style="font-size:.74rem;color:#64748b;line-height:1.65">
-   CareerPulse a pour ambition de construire un annuaire de talents visible par les recruteurs partenaires. Une fiche complète, c'est des opportunités qui viennent à toi — sans même postuler.
+   CareerPulse te donne un espace dédié pour construire ton identité professionnelle, rédiger ton profil et conserver tes documents essentiels — CV, lettres de motivation et bien plus.
   </div>
  </div>
 
- <!-- Vision bloc 1 : Pourquoi un profil visible -->
- <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #bbf7d0;border-radius:16px;padding:16px;margin-bottom:12px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
-   <div style="width:32px;height:32px;border-radius:10px;background:#059669;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-   </div>
-   <div style="font-size:.72rem;font-weight:800;color:#065f46">Visibilité recruteurs</div>
-  </div>
-  <div style="font-size:.64rem;color:#334155;line-height:1.7">
-   CareerPulse souhaite devenir un pont entre les <strong>talents et les recruteurs sérieux</strong>. En rendant ton profil visible, tu entres dans une base de candidats qualifiés que des entreprises partenaires consultent activement — sans que tu aies besoin de postuler à chaque offre.
-  </div>
- </div>
 
- <!-- Vision bloc 2 : Ce que voit le recruteur -->
- <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669;margin-bottom:10px">Ce que voit un recruteur sur ton profil</div>
-  <div style="display:flex;flex-direction:column;gap:8px">
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:22px;height:22px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Titre professionnel & secteur</strong> — pour matcher avec les bonnes offres</div>
-   </div>
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:22px;height:22px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Accroche personnalisée</strong> — qui tu es, ce que tu cherches, ce qui te distingue</div>
-   </div>
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:22px;height:22px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>CV & Lettre joints</strong> — accessibles directement depuis ta fiche</div>
-   </div>
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:22px;height:22px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Localisation & disponibilité</strong> — pour filtrer par zone et timing</div>
-   </div>
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:22px;height:22px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Prétentions salariales</strong> — pour éviter les incompatibilités dès le départ</div>
-   </div>
-  </div>
- </div>
 
- <!-- Vision bloc 3 : Tu gardes le contrôle -->
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px;margin-bottom:20px">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px">Tu gardes le contrôle</div>
+
+
+ <!-- Bloc marketing espace perso -->
+ <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px;margin-bottom:12px">
+  <div style="font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px">Ton espace, tes documents</div>
   <div style="font-size:.64rem;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:10px">
-   Ton profil n'est visible que si tu l'actives. À tout moment tu peux le <strong style="color:#6ee7b7">rendre invisible</strong> ou mettre à jour tes informations. CareerPulse ne partage jamais tes données sans ton accord explicite — ta vie privée est une priorité absolue.
+   CareerPulse te propose un espace personnel où tu centralises tout ce qui compte pour ta carrière : <strong style="color:#6ee7b7">crée et complète ton profil professionnel</strong>, conserve ton CV, ta lettre de motivation et tous tes documents importants — accessibles à tout moment, depuis un seul endroit.
   </div>
   <div style="display:flex;flex-wrap:wrap;gap:6px">
-   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">Activable / désactivable</span>
-   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">Données protégées</span>
-   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">RGPD</span>
+   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">Profil professionnel</span>
+   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">CV & Lettre de motivation</span>
+   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">Documents sécurisés</span>
+  </div>
+ </div>
+
+ <!-- Bloc avantages espace perso -->
+ <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+  <div style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669;margin-bottom:10px">Pourquoi créer ton profil ?</div>
+  <div style="display:flex;flex-direction:column;gap:9px">
+   <div style="display:flex;align-items:flex-start;gap:9px">
+    <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Une identité professionnelle claire</strong> — titre, secteur, accroche, expérience : tout en un seul endroit.</div>
+   </div>
+   <div style="display:flex;align-items:flex-start;gap:9px">
+    <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Tes documents toujours à portée</strong> — CV, lettres de motivation stockés dans ton espace perso CareerPulse.</div>
+   </div>
+   <div style="display:flex;align-items:flex-start;gap:9px">
+    <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
+     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Généré par EVA IA</strong> — laisse notre assistante t'aider à rédiger un profil qui te ressemble vraiment.</div>
+   </div>
   </div>
  </div>
 
  <!-- Bouton retour bas -->
- <button onclick="go('home')" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-size:.72rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">
+ <button onclick="history.back()" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-size:.72rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour au menu CareerPulse
+  Crée ton profil et conserve tes documents dans ton espace perso CareerPulse →
  </button>
 
 </div>
@@ -27063,5 +27058,31 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 </div>
 </div>
 
+<!-- Toast global (hors s-eva, pour s-profil et autres écrans) -->
+<div id="cp-toast-global" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(10px);background:#1e3a5f;color:#fff;font-size:.72rem;font-weight:700;padding:10px 18px;border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.22);opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:9999;white-space:nowrap;max-width:90vw;text-align:center"></div>
+<script>
+// Patch ecShowToast pour fonctionner même hors s-eva
+(function(){
+  var _orig = window.ecShowToast;
+  window.ecShowToast = function(msg){
+    // Toast s-eva original
+    var t = document.getElementById('ec-toast');
+    if(t && t.offsetParent !== null){ // visible
+      t.textContent = msg; t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, 2200);
+      return;
+    }
+    // Toast global fallback
+    var g = document.getElementById('cp-toast-global');
+    if(!g) return;
+    g.textContent = msg;
+    g.style.opacity = '1'; g.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(g._t);
+    g._t = setTimeout(function(){
+      g.style.opacity = '0'; g.style.transform = 'translateX(-50%) translateY(10px)';
+    }, 2400);
+  };
+})();
+</script>
 </body>
 </html>
