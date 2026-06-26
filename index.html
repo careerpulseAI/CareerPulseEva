@@ -1355,9 +1355,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     window._fbUser = user || null;
     var newUid = user ? user.uid : null;
     // Si l'identité change réellement (logout, login, changement de compte) — pas au 1er chargement —
-    // on vide le cache local pour éviter qu'un compte voie les données du précédent sur le même appareil.
+    // on vide le cache local ET on recharge la page : sinon les variables JS déjà en mémoire
+    // (profil, portfolio…) garderaient les données de l'ancien compte malgré le localStorage vidé.
     if(_cpAuthInitialized && newUid !== _cpLastUid){
       cpClearLocalUserData();
+      location.reload();
+      return;
     }
     _cpLastUid = newUid;
     _cpAuthInitialized = true;
@@ -20536,10 +20539,10 @@ function pfStorageKey(tab){ return 'cp_pf_'+(EWP||'dem')+'_'+tab; }
 function pfGetList(tab){ try{ return JSON.parse(localStorage.getItem(pfStorageKey(tab))||'[]'); }catch(e){ return []; } }
 function pfSetList(tab, arr){
   try{ localStorage.setItem(pfStorageKey(tab), JSON.stringify(arr)); }catch(e){}
-  if(tab==='notes') pfSyncToFirestore(tab, arr);
+  pfSyncToFirestore(tab, arr);
 }
 
-/* ── Sync Firestore (1 doc par onglet) — démarré sur l'onglet "notes" uniquement ── */
+/* ── Sync Firestore (1 doc par onglet) — tous les onglets du portfolio ── */
 function pfFsDocRef(tab){
   var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
   if(!user || typeof window.fbDb === 'undefined') return null;
@@ -20561,17 +20564,17 @@ function pfPullFromFirestore(tab, cb){
     } else if(cb) cb(false);
   }).catch(function(e){ console.warn('pfPullFromFirestore['+tab+']', e.message); if(cb) cb(false); });
 }
-var PF_NOTES_FS_SYNCED = false;
-function pfMaybeSyncNotesFromFirestore(){
-  if(PF_NOTES_FS_SYNCED) return;
-  PF_NOTES_FS_SYNCED = true;
-  pfPullFromFirestore('notes', function(changed){
-    if(changed && PF_TAB==='notes'){
-      var el=document.getElementById('pf-content');
-      if(el) pfRenderNotes(el);
-    }
+// Tire une fois par onglet par session, puis ré-affiche si des données existent côté cloud.
+var PF_FS_SYNCED_TABS = {};
+function pfMaybeSyncTabFromFirestore(tab, renderFn){
+  if(PF_FS_SYNCED_TABS[tab]) return;
+  PF_FS_SYNCED_TABS[tab] = true;
+  pfPullFromFirestore(tab, function(changed){
+    if(changed && typeof renderFn === 'function') renderFn();
   });
 }
+
+
 
 /* ── Menu hamburger : journal de toutes les sauvegardes, accumulées, téléchargeables et partageables ── */
 function pfMenuLogKey(){ return 'cp_pf_'+(EWP||'dem')+'_menulog'; }
@@ -21115,6 +21118,7 @@ function pfOpenSOSChat(){
     +'</div>';
   fs.appendChild(overlay);
   pfRenderSOSMsgs();
+  pfMaybeSyncTabFromFirestore('sos_chat', pfRenderSOSMsgs);
 }
 
 function pfRenderSOSMsgs(){
@@ -21191,13 +21195,13 @@ function pfRenderTab(tab){
   pfRenderTabs();
   var el=document.getElementById('pf-content');
   if(!el) return;
-  if(tab==='agenda') pfRenderAgenda(el);
-  else if(tab==='notes'){ pfRenderNotes(el); pfMaybeSyncNotesFromFirestore(); }
-  else if(tab==='contacts') pfRenderContacts(el);
+  if(tab==='agenda'){ pfRenderAgenda(el); pfMaybeSyncTabFromFirestore('agenda', function(){ if(PF_TAB==='agenda') pfRenderAgenda(el); }); }
+  else if(tab==='notes'){ pfRenderNotes(el); pfMaybeSyncTabFromFirestore('notes', function(){ if(PF_TAB==='notes') pfRenderNotes(el); }); }
+  else if(tab==='contacts'){ pfRenderContacts(el); pfMaybeSyncTabFromFirestore('contacts', function(){ if(PF_TAB==='contacts') pfRenderContacts(el); }); }
   else if(tab==='guide') pfRenderGuide(el);
   else if(tab==='doc') pfRenderDoc(el);
   else if(tab==='orgpro') pfRenderOrgPro(el);
-  else pfRenderProfileList(el);
+  else { pfRenderProfileList(el); pfMaybeSyncTabFromFirestore('profil', function(){ if(PF_TAB!=='agenda'&&PF_TAB!=='notes'&&PF_TAB!=='contacts'&&PF_TAB!=='guide'&&PF_TAB!=='doc'&&PF_TAB!=='orgpro') pfRenderProfileList(el); }); }
   pfRenderEvaChatWidget(tab==='agenda'||tab==='notes'||tab==='contacts'||tab==='guide'||tab==='doc'||tab==='orgpro'?tab:'profil');
 }
 
