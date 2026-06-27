@@ -1339,10 +1339,11 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   // ── Anti-fuite de données entre comptes sur un même appareil ──
   function cpClearLocalUserData(){
     try{
+      var prefixes = ['cp_', 'es_', 'eva_'];
       var keys = [];
       for(var i=0;i<localStorage.length;i++){
         var k = localStorage.key(i);
-        if(k && k.indexOf('cp_')===0) keys.push(k);
+        if(k && prefixes.some(function(p){ return k.indexOf(p)===0; })) keys.push(k);
       }
       keys.forEach(function(k){ localStorage.removeItem(k); });
     }catch(e){}
@@ -1355,9 +1356,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     window._fbUser = user || null;
     var newUid = user ? user.uid : null;
     // Si l'identité change réellement (logout, login, changement de compte) — pas au 1er chargement —
-    // on vide le cache local pour éviter qu'un compte voie les données du précédent sur le même appareil.
+    // on vide le cache local ET on recharge la page : sinon les variables JS déjà en mémoire
+    // (profil, portfolio…) garderaient les données de l'ancien compte malgré le localStorage vidé.
     if(_cpAuthInitialized && newUid !== _cpLastUid){
       cpClearLocalUserData();
+      location.reload();
+      return;
     }
     _cpLastUid = newUid;
     _cpAuthInitialized = true;
@@ -1388,8 +1392,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         return cred.user.updateProfile({ displayName: name }).then(function() {
           window._fbUser = fbAuth.currentUser;
           cred.user.sendEmailVerification().catch(function(e){ console.warn('Email de vérification non envoyé :', e); });
-          ecShowToast('🎉 Bienvenue ' + name + ' ! Vérifie ta boîte mail (et tes spams).');
-          if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
+          // Nouveau compte : on repart sur une base saine, sans résidu d'une session précédente sur cet appareil.
+          cpClearLocalUserData();
+          location.reload();
         });
       })
       .catch(function(e) {
@@ -1407,7 +1412,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     var pass = (document.getElementById('cp-login-pass')?.value || '').trim();
     if (!email || !pass) { ecShowToast('Renseigne ton email et ton mot de passe'); return; }
     fbAuth.signInWithEmailAndPassword(email, pass)
-      .then(function() { ecShowToast('✅ Connexion réussie !'); })
+      .then(function() {
+        cpClearLocalUserData();
+        location.reload();
+      })
       .catch(function(e) {
         var msgs = {
           'auth/user-not-found': 'Aucun compte avec cet email',
@@ -1435,7 +1443,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
   window.fbLoginGoogle = function() {
     fbAuth.signInWithPopup(fbGoogleProvider)
-      .then(function() { ecShowToast('✅ Connecté avec Google !'); })
+      .then(function() {
+        cpClearLocalUserData();
+        location.reload();
+      })
       .catch(function(e) {
         if (e.code !== 'auth/popup-closed-by-user') {
           ecShowToast('Erreur Google : ' + e.message);
@@ -1444,7 +1455,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   };
 
   window.fbLogout = function() {
-    fbAuth.signOut().then(function() { ecShowToast('À bientôt !'); });
+    cpClearLocalUserData();
+    fbAuth.signOut().then(function() { location.reload(); }).catch(function() { location.reload(); });
   };
 
   console.log('✅ Firebase Auth compat prêt');
