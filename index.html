@@ -1336,34 +1336,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   var fbDb = window.fbDb;
   var fbStorage = window.fbStorage;
 
-  // ── Anti-fuite de données entre comptes sur un même appareil ──
-  function cpClearLocalUserData(){
-    try{
-      var keys = [];
-      for(var i=0;i<localStorage.length;i++){
-        var k = localStorage.key(i);
-        if(k && k.indexOf('cp_')===0) keys.push(k);
-      }
-      keys.forEach(function(k){ localStorage.removeItem(k); });
-    }catch(e){}
-  }
-  var _cpAuthInitialized = false;
-  var _cpLastUid = null;
-
   // Écoute connexion/déconnexion
   fbAuth.onAuthStateChanged(function(user) {
     window._fbUser = user || null;
-    var newUid = user ? user.uid : null;
-    // Si l'identité change réellement (logout, login, changement de compte) — pas au 1er chargement —
-    // on vide le cache local ET on recharge la page : sinon les variables JS déjà en mémoire
-    // (profil, portfolio…) garderaient les données de l'ancien compte malgré le localStorage vidé.
-    if(_cpAuthInitialized && newUid !== _cpLastUid){
-      cpClearLocalUserData();
-      location.reload();
-      return;
-    }
-    _cpLastUid = newUid;
-    _cpAuthInitialized = true;
     if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
     // Charger le profil depuis Firestore si connecté
     if(user && typeof loadFicheProFromFirestore === 'function'){
@@ -8988,25 +8963,25 @@ function fsel(input, zoneId, nameId){
   if(nameEl){ nameEl.textContent = '📄 ' + file.name; nameEl.style.display='block'; }
   var zone = document.getElementById(zoneId);
   if(zone) zone.style.borderColor='#059669';
-  // Sauvegarde en base64 dans Firestore (pas besoin de Firebase Storage / plan payant)
+  // Upload vers Firebase Storage si connecté
   var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
   if(!user){ ecShowToast('Connecte-toi pour sauvegarder ton fichier'); return; }
-  if(file.size > 700*1024){ ecShowToast('Fichier trop lourd (max ~700 Ko)'); return; }
+  if(typeof fbStorage === 'undefined'){ ecShowToast('Stockage non disponible'); return; }
   var type = zoneId === 'cv-zone' ? 'cv' : 'lm';
-  ecShowToast('⏳ Sauvegarde en cours...');
-  var r = new FileReader();
-  r.onload = function(e){
+  var ref = fbStorage.ref('users/' + user.uid + '/' + type + '/' + file.name);
+  ecShowToast('⏳ Upload en cours...');
+  ref.put(file).then(function(){
+    return ref.getDownloadURL();
+  }).then(function(url){
+    // Sauvegarder l'URL dans Firestore
     var data = {};
-    data[type + '_data'] = e.target.result; // base64
+    data[type + '_url'] = url;
     data[type + '_name'] = file.name;
-    fbDb.collection('profils').doc(user.uid).set(data, {merge:true}).then(function(){
-      ecShowToast('✅ ' + (type==='cv'?'CV':'Lettre') + ' sauvegardé !');
-    }).catch(function(err){
-      ecShowToast('Erreur sauvegarde : ' + err.message);
-    });
-  };
-  r.onerror = function(){ ecShowToast('Erreur de lecture du fichier'); };
-  r.readAsDataURL(file);
+    fbDb.collection('profils').doc(user.uid).set(data, {merge:true});
+    ecShowToast('✅ ' + (type==='cv'?'CV':'Lettre') + ' sauvegardé dans le cloud !');
+  }).catch(function(e){
+    ecShowToast('Erreur upload : ' + e.message);
+  });
 }
 
 // ── Documents (accordéon 3) : ajout infini, renommage façon Windows, sauvegarde / suppression ──
@@ -9044,23 +9019,22 @@ function docsSaveFile(rowId){
   if(!row || !row._file) return;
   var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
   if(!user){ ecShowToast('Connecte-toi pour sauvegarder ton fichier'); return; }
-  if(row._file.size > 700*1024){ ecShowToast('Fichier trop lourd (max ~700 Ko)'); return; }
+  if(typeof fbStorage === 'undefined'){ ecShowToast('Stockage non disponible'); return; }
   var nameInput = row.querySelector('input[type="text"]');
   var customName = (nameInput.value || '').trim() || 'document';
   var finalName = customName + (row._ext || '');
-  ecShowToast('⏳ Sauvegarde en cours...');
-  var r = new FileReader();
-  r.onload = function(e){
+  var ref = fbStorage.ref('users/' + user.uid + '/documents/' + finalName);
+  ecShowToast('⏳ Upload en cours...');
+  ref.put(row._file).then(function(){
+    return ref.getDownloadURL();
+  }).then(function(url){
     fbDb.collection('profils').doc(user.uid).collection('documents').doc(finalName).set({
-      name: finalName, data: e.target.result, uploadedAt: new Date().toISOString()
-    }).then(function(){
-      ecShowToast('✅ "' + finalName + '" sauvegardé !');
-    }).catch(function(err){
-      ecShowToast('Erreur sauvegarde : ' + err.message);
+      name: finalName, url: url, uploadedAt: new Date().toISOString()
     });
-  };
-  r.onerror = function(){ ecShowToast('Erreur de lecture du fichier'); };
-  r.readAsDataURL(row._file);
+    ecShowToast('✅ "' + finalName + '" sauvegardé !');
+  }).catch(function(e){
+    ecShowToast('Erreur upload : ' + e.message);
+  });
 }
 
 function dov(e,id){e.preventDefault();var el=document.getElementById(id);if(el)el.classList.add('drag');}
@@ -20537,44 +20511,7 @@ var PF_PROFILE_CFG={
 
 function pfStorageKey(tab){ return 'cp_pf_'+(EWP||'dem')+'_'+tab; }
 function pfGetList(tab){ try{ return JSON.parse(localStorage.getItem(pfStorageKey(tab))||'[]'); }catch(e){ return []; } }
-function pfSetList(tab, arr){
-  try{ localStorage.setItem(pfStorageKey(tab), JSON.stringify(arr)); }catch(e){}
-  pfSyncToFirestore(tab, arr);
-}
-
-/* ── Sync Firestore (1 doc par onglet) — tous les onglets du portfolio ── */
-function pfFsDocRef(tab){
-  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
-  if(!user || typeof window.fbDb === 'undefined') return null;
-  return window.fbDb.collection('users').doc(user.uid).collection('portfolio').doc((EWP||'dem')+'_'+tab);
-}
-function pfSyncToFirestore(tab, arr){
-  var ref = pfFsDocRef(tab);
-  if(!ref) return; // pas connecté ou Firestore indisponible : on reste en local seulement
-  ref.set({ items: arr, updatedAt: new Date().toISOString() }, {merge:true})
-    .catch(function(e){ console.warn('pfSyncToFirestore['+tab+']', e.message); });
-}
-function pfPullFromFirestore(tab, cb){
-  var ref = pfFsDocRef(tab);
-  if(!ref){ if(cb) cb(false); return; }
-  ref.get().then(function(doc){
-    if(doc.exists && doc.data() && Array.isArray(doc.data().items)){
-      localStorage.setItem(pfStorageKey(tab), JSON.stringify(doc.data().items));
-      if(cb) cb(true);
-    } else if(cb) cb(false);
-  }).catch(function(e){ console.warn('pfPullFromFirestore['+tab+']', e.message); if(cb) cb(false); });
-}
-// Tire une fois par onglet par session, puis ré-affiche si des données existent côté cloud.
-var PF_FS_SYNCED_TABS = {};
-function pfMaybeSyncTabFromFirestore(tab, renderFn){
-  if(PF_FS_SYNCED_TABS[tab]) return;
-  PF_FS_SYNCED_TABS[tab] = true;
-  pfPullFromFirestore(tab, function(changed){
-    if(changed && typeof renderFn === 'function') renderFn();
-  });
-}
-
-
+function pfSetList(tab, arr){ try{ localStorage.setItem(pfStorageKey(tab), JSON.stringify(arr)); }catch(e){} }
 
 /* ── Menu hamburger : journal de toutes les sauvegardes, accumulées, téléchargeables et partageables ── */
 function pfMenuLogKey(){ return 'cp_pf_'+(EWP||'dem')+'_menulog'; }
@@ -21118,7 +21055,6 @@ function pfOpenSOSChat(){
     +'</div>';
   fs.appendChild(overlay);
   pfRenderSOSMsgs();
-  pfMaybeSyncTabFromFirestore('sos_chat', pfRenderSOSMsgs);
 }
 
 function pfRenderSOSMsgs(){
@@ -21195,13 +21131,13 @@ function pfRenderTab(tab){
   pfRenderTabs();
   var el=document.getElementById('pf-content');
   if(!el) return;
-  if(tab==='agenda'){ pfRenderAgenda(el); pfMaybeSyncTabFromFirestore('agenda', function(){ if(PF_TAB==='agenda') pfRenderAgenda(el); }); }
-  else if(tab==='notes'){ pfRenderNotes(el); pfMaybeSyncTabFromFirestore('notes', function(){ if(PF_TAB==='notes') pfRenderNotes(el); }); }
-  else if(tab==='contacts'){ pfRenderContacts(el); pfMaybeSyncTabFromFirestore('contacts', function(){ if(PF_TAB==='contacts') pfRenderContacts(el); }); }
+  if(tab==='agenda') pfRenderAgenda(el);
+  else if(tab==='notes') pfRenderNotes(el);
+  else if(tab==='contacts') pfRenderContacts(el);
   else if(tab==='guide') pfRenderGuide(el);
   else if(tab==='doc') pfRenderDoc(el);
   else if(tab==='orgpro') pfRenderOrgPro(el);
-  else { pfRenderProfileList(el); pfMaybeSyncTabFromFirestore('profil', function(){ if(PF_TAB!=='agenda'&&PF_TAB!=='notes'&&PF_TAB!=='contacts'&&PF_TAB!=='guide'&&PF_TAB!=='doc'&&PF_TAB!=='orgpro') pfRenderProfileList(el); }); }
+  else pfRenderProfileList(el);
   pfRenderEvaChatWidget(tab==='agenda'||tab==='notes'||tab==='contacts'||tab==='guide'||tab==='doc'||tab==='orgpro'?tab:'profil');
 }
 
