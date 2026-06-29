@@ -1463,6 +1463,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 </script>
 </head>
 <body>
+<!-- Notification "compte requis" pour sauvegarder des infos personnelles — toujours au niveau racine -->
+<div id="cp-guest-notice" style="position:fixed;left:14px;right:14px;bottom:18px;max-width:420px;margin:0 auto;background:linear-gradient(135deg,#0f3d2e,#1e3a8a);color:#fff;border-radius:16px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.25);z-index:99999;opacity:0;transform:translateY(12px);transition:opacity .25s,transform .25s;pointer-events:none;"></div>
 <!-- DÉTECTION PROFIL PUBLIC - EXÉCUTÉ EN PREMIER -->
 <script>
 (function(){
@@ -2139,7 +2141,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
    <div style="flex:1;min-width:0">
     <div style="font-size:.78rem;font-weight:700;color:#0f172a">Demandeur d'emploi</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">ARE · Indemnisation · Entretien · Droits</div>
+    <div style="font-size:.58rem;color:#64748b;margin-top:1px">ARE · Indemnisation · Entretien · Droits</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
    </div>
    <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
   </div>
@@ -2175,7 +2177,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
    <div style="flex:1;min-width:0">
     <div style="font-size:.78rem;font-weight:700;color:#0f172a">Reconversion / Transition</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">CPF · Bilan de compétences · Projet · Décision</div>
+    <div style="font-size:.58rem;color:#64748b;margin-top:1px">CPF · Bilan de compétences · Projet · Décision</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
    </div>
    <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
   </div>
@@ -2211,7 +2213,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
    <div style="flex:1;min-width:0">
     <div style="font-size:.78rem;font-weight:700;color:#0f172a">Freelance / Indépendant</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Statut · Charges · Missions · Négociation</div>
+    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Statut · Charges · Missions · Négociation</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
    </div>
    <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
   </div>
@@ -2251,7 +2253,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
    <div style="flex:1;min-width:0">
     <div style="font-size:.78rem;font-weight:700;color:#0f172a">Étudiant</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Alternance · Stage · Premier emploi · Droits</div>
+    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Alternance · Stage · Premier emploi · Droits</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
    </div>
    <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
   </div>
@@ -2288,7 +2290,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
    <div style="flex:1;min-width:0">
     <div style="font-size:.78rem;font-weight:700;color:#0f172a">Nouveau poste <span style="font-size:.58rem;background:#fbbf24;color:#fff;border-radius:5px;padding:1px 6px;margin-left:4px;font-weight:800">BONUS</span></div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Droits · Période d'essai · Intégration · Ambition</div>
+    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Droits · Période d'essai · Intégration · Ambition</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
    </div>
    <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
   </div>
@@ -2691,7 +2693,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
  <div style="display:flex;gap:7px;margin-bottom:10px">
  <button class="btn bo bsm fw" onclick="showLetterGen()" style="width:100%">
  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
- Générer avec Eva IA
+ Générer avec CareerPulse
  </button>
  </div>
  <div id="letter-gen" style="display:none">
@@ -3961,6 +3963,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
           <div class="ec-feat-body">
             <div class="ec-feat-title">Simulation entretien & négociations</div>
             <div class="ec-feat-sub">Entraîne-toi face à un recruteur — questions & feedback</div>
+            <div style="font-size:.5rem;color:#94a3b8;margin-top:2px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture d'écran conseillée</span></div>
           </div>
           <div class="ec-feat-arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
         </div>
@@ -3983,6 +3986,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
           <div class="ec-feat-body">
             <div class="ec-feat-title">Motivation & Équilibre</div>
             <div class="ec-feat-sub">Un accompagnement qui s'adapte à ton énergie, pour avancer sans t'épuiser</div>
+            <div style="font-size:.5rem;color:#94a3b8;margin-top:2px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture d'écran conseillée</span></div>
           </div>
           <div class="ec-feat-arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg></div>
         </div>
@@ -8247,6 +8251,29 @@ function ecShowToast(msg){
   setTimeout(function(){t.classList.remove('show');},2200);
 }
 
+// Bloque la sauvegarde d'infos personnelles (fiche pro, documents, CV/LM) pour les non-membres
+// et redirige vers le formulaire d'inscription dans le menu CareerPulse.
+function cpRequireAccount(){
+  var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
+  if(user) return true;
+  var n = document.getElementById('cp-guest-notice');
+  if(n){
+    n.innerHTML = '<div style="font-size:.62rem;font-weight:800;margin-bottom:3px;">🔒 Compte requis</div>'
+      + '<div style="font-size:.56rem;line-height:1.4;opacity:.92;">Tes infos perso (profil, CV, documents) ne peuvent être enregistrées qu\'avec un compte — c\'est pour ta sécurité. Crée un compte gratuit en 30 secondes.</div>'
+      + '<div onclick="document.getElementById(\'cp-guest-notice\').style.opacity=0;document.getElementById(\'cp-guest-notice\').style.transform=\'translateY(12px)\';toggleGridMenu();cpMenuShow(\'membre\');cpAuthTab(\'signup\');" style="margin-top:8px;background:#fff;color:#0f3d2e;font-size:.58rem;font-weight:800;text-align:center;padding:7px;border-radius:10px;cursor:pointer;">Créer mon compte</div>';
+    n.style.opacity = 1;
+    n.style.transform = 'translateY(0)';
+    n.style.pointerEvents = 'auto';
+    clearTimeout(window._cpGuestNoticeTimer);
+    window._cpGuestNoticeTimer = setTimeout(function(){
+      n.style.opacity = 0;
+      n.style.transform = 'translateY(12px)';
+      n.style.pointerEvents = 'none';
+    }, 6000);
+  }
+  return false;
+}
+
 // Appel API centralisé
 async function _ecApiCall(userMsg){
   var _profil=window._evaCurrentProfil||'general';
@@ -8701,6 +8728,7 @@ function setShareToggle(type,val){
 }
 
 function saveFichePro(){
+  if(!cpRequireAccount()) return;
   var obligatoires = [
     {id:'fp-name', label:'Prénom & Nom'},
     {id:'fp-titre', label:'Titre professionnel'},
@@ -8992,6 +9020,7 @@ function handleLMFile(inp){
 function fsel(input, zoneId, nameId){
   var file = input.files[0];
   if(!file) return;
+  if(!cpRequireAccount()) { input.value=''; return; }
   // Afficher le nom du fichier
   var nameEl = document.getElementById(nameId);
   if(nameEl){ nameEl.textContent = '📄 ' + file.name; nameEl.style.display='block'; }
@@ -9051,8 +9080,8 @@ function docsDeleteFile(rowId){
 function docsSaveFile(rowId){
   var row = document.getElementById(rowId);
   if(!row || !row._file) return;
+  if(!cpRequireAccount()) return;
   var user = window._fbUser || (typeof fbAuth !== 'undefined' ? fbAuth.currentUser : null);
-  if(!user){ ecShowToast('Connecte-toi pour sauvegarder ton fichier'); return; }
   if(row._file.size > 700*1024){ ecShowToast('Fichier trop lourd (max ~700 Ko)'); return; }
   var nameInput = row.querySelector('input[type="text"]');
   var customName = (nameInput.value || '').trim() || 'document';
@@ -10685,6 +10714,12 @@ function buildQuizResult(answers, quizName, total){
     +'<div style="background:'+barColor+';height:6px;border-radius:99px;width:'+pct+'%;transition:width .8s ease"></div>'
     +'</div>'
     +'<div style="font-size:.56rem;color:rgba(255,255,255,.5);text-align:right">'+pct+'% maîtrisé</div>'
+    +'</div>';
+
+  // ── Disclaimer : résultats non sauvegardés ──
+  html += '<div style="display:flex;align-items:center;gap:5px;font-size:.56rem;color:#94a3b8;margin-bottom:12px;padding:0 2px;">'
+    +'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>'
+    +'<span>Ce résultat n\'est pas sauvegardé — fais une capture d\'écran si tu veux le garder.</span>'
     +'</div>';
 
   // ── Ce que tu maîtrises — section verte compacte ──
