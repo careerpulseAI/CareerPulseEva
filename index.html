@@ -4968,7 +4968,7 @@ function evaBotReply(msg){
   var profil = S.profil ? DB[S.profil].label : 'non défini';
   var ctx = S.context ? ' Institution consultée: '+S.context+'.' : '';
   var sys = 'Tu es Eva, assistante IA CareerPulse, experte des institutions françaises du travail. Profil utilisateur: '+profil+'.'+ctx+' Réponds en français, de manière concise (max 130 mots), précise, chaleureuse et professionnelle. Tu connais: France Travail, URSSAF, CPF, CAF, APEC, OPCO, CEP, VAE, PTP, CROUS, Mission Locale, BPI France, INPI, Parcoursup, DARES, CCI, ACRE, RSA, ARE, Pro-A.';
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+  fetch('/api/eva',{method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
       model:'claude-sonnet-4-20250514', max_tokens:1000, system:sys,
@@ -5521,7 +5521,7 @@ function esEvaBotReply(msg){
   var sys='Tu es Eva, assistante IA CareerPulse spécialisée dans les institutions françaises du travail.'
     +(surnom?' Prénom utilisateur: '+surnom+'.':'')+' Profil: '+profil+'.'
     +' Réponds en français, concis (max 120 mots), précis, bienveillant. Tu connais: France Travail, URSSAF, CPF, CAF, APEC, OPCO, CEP, VAE, PTP, CROUS, Mission Locale, BPI France, INPI, Parcoursup, DARES, CCI, ACRE, RSA, ARE.';
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',
+  fetch('/api/eva',{method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
       model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,
@@ -5895,7 +5895,7 @@ window.cpEvaSend=function(){
 function cpEvaBotReply(msg){
   cpEvaShowTyping();
   const profil=cpState.profile?CP_DB[cpState.profile].label:'non défini';
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
+  fetch('/api/eva',{method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
       system:`Tu es Eva, assistante IA CareerPulse spécialisée dans les institutions françaises du travail. Profil: ${profil}. Réponds en français, concis (max 120 mots), précis, bienveillant. Institutions connues: France Travail, URSSAF, CPF, CAF, APEC, OPCO, CEP, VAE, PTP, CROUS, Mission Locale, BPI France, INPI, Parcoursup, DARES.`,
       messages:[...cpState.evaMessages.slice(-6).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text})),{role:'user',content:msg}]})
@@ -7352,7 +7352,7 @@ async function ecSend(){
     });
   } else {
     // Tenter Anthropic sans clé (fonctionne dans Claude.ai artifacts)
-    EC_API_URL = 'https://api.anthropic.com/v1/messages';
+    EC_API_URL = '/api/eva';
     EC_API_BODY = JSON.stringify({
       model:'claude-sonnet-4-20250514',
       max_tokens:600,
@@ -8297,7 +8297,7 @@ async function _ecApiCall(userMsg){
     +'{"reply":"réponse ici (\\n=saut de ligne, **gras** autorisé, [texte](url) pour liens)","directions":["Sujet 1","Sujet 2","Sujet 3","Sujet 4","Sujet 5"]}\n'
     +'5 SUJETS à explorer — formule-les comme des titres intrigants ou actions concrètes (max 6 mots). Pas de questions. Pas de "💬 autre chose".\n'
     +'Prénom : '+(ecUserName||'inconnu');
-  var url='https://api.anthropic.com/v1/messages';
+  var url='/api/eva';
   var body=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,system:sys,messages:ecHistory});
   var apiReply=null, apiDirs=[];
   try{
@@ -20146,7 +20146,7 @@ async function evaBrainAsk(userText, contextPrompt, detailed){
     EC_API_URL='https://openrouter.ai/api/v1/chat/completions';
     EC_API_BODY=JSON.stringify({model:'anthropic/claude-haiku',max_tokens:maxTok,messages:[{role:'system',content:systemPrompt}].concat(messages)});
   } else {
-    EC_API_URL='https://api.anthropic.com/v1/messages';
+    EC_API_URL='/api/eva';
     EC_API_BODY=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system:systemPrompt,messages:messages});
   }
 
@@ -20379,7 +20379,7 @@ async function ewQcAsk(userText, ctx){
     EC_API_URL='https://openrouter.ai/api/v1/chat/completions';
     EC_API_BODY=JSON.stringify({model:'anthropic/claude-haiku',max_tokens:maxTok,messages:[{role:'system',content:systemPrompt}].concat(messages)});
   } else {
-    EC_API_URL='https://api.anthropic.com/v1/messages';
+    EC_API_URL='/api/eva';
     EC_API_BODY=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:maxTok,system:systemPrompt,messages:messages});
   }
 
