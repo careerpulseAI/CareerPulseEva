@@ -16722,28 +16722,28 @@ function evadInitProgress(artId) {
 var EL_DATA = {
     salarie:[
       {q:"Quelle est la durée légale maximale d'une période d'essai pour un cadre en CDI ?",opts:["2 mois (durée applicable aux employés)","3 mois (durée applicable aux techniciens et agents de maîtrise)","4 mois (durée initiale applicable aux cadres)","8 mois (durée applicable aux cadres, renouvellement compris)"],ans:2,expl:"Pour un cadre, la période d'essai initiale est de 4 mois maximum, renouvelable une fois pour atteindre 8 mois si la convention collective le prévoit. Code du travail L1221-19."},
-      {q:"Lors d'un entretien, l'employeur peut-il légalement vous demander votre salaire actuel ?",opts:["Oui, c'est une pratique courante et parfaitement autorisée","Oui, mais uniquement si le poste est dans le même secteur d'activité","Non, c'est considéré comme une pratique discriminatoire depuis 2023","Oui, à condition que cela soit mentionné dans l'offre d'emploi"],ans:2,expl:"Depuis 2023, demander le salaire actuel est considéré comme une pratique discriminatoire. Vous pouvez décliner et indiquer directement vos prétentions salariales."},
-      {q:"Comment répondre efficacement à la question 'Quels sont vos défauts ?' ?",opts:["Mentionner un point d'amélioration générique, sans exemple concret","Évoquer une vraie limite et expliquer comment vous la travaillez activement","Présenter une qualité déguisée en défaut, comme « je suis trop perfectionniste »","Dire que vous manquez encore d'expérience sur certains outils techniques"],ans:1,expl:"La bonne approche : un défaut authentique mais sur lequel vous avez déjà engagé une démarche de progrès (ex : 'j'avais du mal à déléguer, j'ai suivi une formation management'). Les défauts génériques ou déguisés en qualités sonnent creux pour un recruteur expérimenté."},
-      {q:"Quelle est la meilleure structure pour répondre à 'Parlez-moi de vous' ?",opts:["Présenter votre parcours dans l'ordre chronologique, du diplôme à aujourd'hui","Partir de votre situation actuelle, vos compétences clés, puis votre motivation pour le poste","Détailler chaque expérience professionnelle avec ses missions précises","Mettre l'accent sur vos qualités personnelles et vos valeurs"],ans:1,expl:"La méthode présent → compétences clés → motivation ciblée est la plus efficace. Restez en 2-3 minutes, orienté résultats et personnalisé pour l'entreprise — pas un simple récit chronologique."},
+      {q:"Lors d'un entretien, l'employeur peut-il légalement vous demander votre salaire actuel ?",opts:["Oui, c'est une pratique courante et parfaitement autorisée","Oui, mais uniquement si le poste est dans le même secteur d'activité","Le Code du travail ne l'interdit pas formellement, mais c'est une pratique déconseillée et bientôt encadrée par une directive européenne","Oui, à condition que cela soit mentionné dans l'offre d'emploi"],ans:2,expl:"Le Code du travail ne prohibe pas formellement cette question, mais elle est risquée pour l'employeur (terrain glissant vers la discrimination salariale). La directive européenne sur la transparence salariale (2023/970), à transposer en France au plus tard le 7 juin 2026, interdira explicitement aux employeurs de demander la rémunération antérieure d'un candidat. Vous pouvez déjà décliner poliment et indiquer directement vos prétentions."},
+      {q:"Combien de jours de congés payés un salarié acquiert-il par mois de travail effectif ?",opts:["2 jours ouvrables","2,5 jours ouvrables","3 jours ouvrables","1,5 jour ouvrable"],ans:1,expl:"Tout salarié acquiert 2,5 jours ouvrables de congés payés par mois de travail effectif, soit 30 jours ouvrables (5 semaines) pour une année complète — quel que soit le type de contrat (CDI, CDD, intérim) ou le temps de travail. Article L.3141-3 du Code du travail."},
+      {q:"Quelle est la majoration de salaire minimale légale pour les 8 premières heures supplémentaires de la semaine ?",opts:["10%","25%","50%","100%"],ans:1,expl:"Les heures supplémentaires sont majorées d'au moins 25% pour les 8 premières heures au-delà de la durée légale de 35h/semaine, puis 50% au-delà — sauf accord collectif prévoyant un taux différent (minimum 10%). Article L.3121-36 du Code du travail."},
       {q:"Un recruteur vous demande votre situation de famille. Que faites-vous ?",opts:["Vous répondez directement et complètement à la question","Vous demandez poliment le lien avec le poste, puis confirmez votre disponibilité","Vous donnez une réponse vague sans préciser si vous avez des enfants","Vous signalez immédiatement que la question est discriminatoire"],ans:1,expl:"La situation de famille est une donnée privée. Vous pouvez répondre : 'Je ne vois pas le lien direct avec les missions du poste, mais je suis totalement disponible.' C'est poli, protège vos droits, sans tension inutile."},
-      {q:"Comment justifier une période d'inactivité de 8 mois sur votre CV ?",opts:["Ne pas la mentionner et ajuster légèrement les dates de fin de contrat","Expliquer la période de façon positive en valorisant ce qu'elle vous a apporté","Mentionner que vous étiez sélectif sur les opportunités, sans donner plus de détails","Évoquer brièvement le sujet puis détourner rapidement la conversation"],ans:1,expl:"Les recruteurs remarquent les trous. Anticipez avec une réponse préparée : formation, projet personnel, soins familiaux ou bilan de compétences. Valorisez ce que vous en avez tiré plutôt que de l'esquiver."},
+      {q:"Dans quel délai la visite médicale d'embauche (visite d'information et de prévention) doit-elle avoir lieu après la prise de poste ?",opts:["1 mois","3 mois","6 mois","1 an"],ans:1,expl:"L'employeur doit organiser cette visite dans les 3 mois suivant la prise effective de poste — sauf si le salarié est mineur ou travaille de nuit, où elle doit avoir lieu avant l'embauche. Articles R.4624-10 et R.4624-18 du Code du travail."},
       {q:"Quel est le délai légal de réponse d'un recruteur après un entretien ?",opts:["48 heures, par usage professionnel courant","1 semaine, fixé par le code du travail","2 semaines, fixé par convention collective","Aucun délai n'est imposé légalement"],ans:3,expl:"Légalement, aucun délai n'est imposé pour répondre. Un accusé de réception sous 2 semaines reste une bonne pratique, mais ce n'est pas une obligation. Vous pouvez relancer après 10-15 jours sans nouvelle."},
-      {q:"Quelle question poser en fin d'entretien pour marquer les esprits ?",opts:["Quelles sont les perspectives d'évolution salariale à court terme ?","Quels seront les enjeux prioritaires sur les 6 premiers mois dans ce poste ?","Comment décririez-vous l'ambiance au sein de l'équipe ?","Quel est le processus pour les demandes de congés ?"],ans:1,expl:"Demander les enjeux prioritaires du poste montre votre orientation résultats et votre sérieux. L'ambiance d'équipe est une question légitime mais moins stratégique ; évitez les sujets purement pratiques (congés, salaire) en première entrevue."},
+      {q:"Après la signature d'une rupture conventionnelle, de combien de jours dispose chaque partie pour se rétracter ?",opts:["7 jours calendaires","15 jours calendaires","30 jours calendaires","15 jours ouvrables"],ans:1,expl:"Employeur et salarié disposent chacun de 15 jours calendaires (tous les jours, week-ends inclus) à compter de la signature pour se rétracter, sans avoir à se justifier. Article L.1237-13 du Code du travail."},
       {q:"En CDD, quelle est la durée maximale (renouvellements inclus) dans la plupart des cas ?",opts:["12 mois, sauf accord de branche étendu","16 mois, renouvellement compris","18 mois, renouvellement inclus, dans le cas général","24 mois pour les contrats liés à l'export"],ans:2,expl:"Un CDD ne peut excéder 18 mois (renouvellements inclus) dans la majorité des cas. Des durées différentes existent pour certains cas particuliers (saisonnier, remplacement, accords de branche). Au-delà, le contrat peut être requalifié en CDI."},
-      {q:"Lors d'une négociation salariale, quelle est la meilleure approche ?",opts:["Annoncer immédiatement le salaire visé, sans marge de négociation","Laisser le recruteur annoncer une fourchette avant de vous positionner","Annoncer une fourchette ambitieuse mais argumentée par le marché et vos compétences","Indiquer votre salaire actuel et demander une légère hausse"],ans:2,expl:"Donnez une fourchette réaliste basée sur votre recherche (Glassdoor, LinkedIn Salary, APEC). Ancrez la fourchette haute pour laisser de la marge, et justifiez-la avec vos compétences et le marché — pas avec votre historique salarial."},
-      {q:"Qu'est-ce que la méthode STAR en entretien ?",opts:["Situation, Tâche, Action, Résultat","Stratégie, Technique, Analyse, Réflexion","Soft skills, Technique, Aptitude, Récit","Aucune de ces réponses"],ans:0,expl:"STAR = Situation (contexte) > Tâche (votre rôle) > Action (ce que vous avez fait) > Résultat (impact chiffré si possible). C'est la structure idéale pour répondre aux questions comportementales."},
+      {q:"L'indemnité de rupture conventionnelle peut-elle être inférieure à l'indemnité légale de licenciement ?",opts:["Oui, si le salarié l'accepte par écrit","Oui, pour les contrats de moins de 2 ans d'ancienneté","Non, jamais — quel que soit l'accord entre les parties","Oui, si l'ancienneté est inférieure à 1 an"],ans:2,expl:"Le montant de l'indemnité de rupture conventionnelle ne peut jamais être inférieur à l'indemnité légale de licenciement. La DREETS refuse l'homologation si ce plancher n'est pas respecté. Articles L.1237-13 et L.1234-9 du Code du travail."},
+      {q:"Un salarié du secteur privé doit-il informer son employeur avant de se mettre en grève ?",opts:["Oui, avec un préavis de 48h","Oui, avec un préavis de 5 jours","Non, aucun préavis n'est légalement exigé dans le secteur privé","Oui, obligatoirement par lettre recommandée"],ans:2,expl:"Dans le secteur privé, le droit de grève (reconnu par le Préambule de la Constitution de 1946) ne nécessite aucun préavis ni formalité particulière, contrairement à certains services publics. L'employeur ne peut pas sanctionner un salarié pour fait de grève licite."},
       {q:"Un employeur peut-il consulter vos réseaux sociaux avant l'embauche ?",opts:["Non, c'est strictement interdit quel que soit le poste","Oui, mais uniquement ce que vous avez rendu public vous-même","Oui, l'employeur peut demander l'accès à tous vos comptes avec votre accord écrit","Non, sauf pour les postes liés à la sécurité ou à la défense"],ans:1,expl:"Un recruteur peut consulter ce que vous avez rendu public. Il ne peut pas vous demander vos mots de passe ni exiger l'accès à vos comptes privés, même avec votre accord. Soignez votre e-réputation professionnelle."},
-      {q:"Comment répondre à 'Pourquoi quittez-vous votre poste actuel ?' sans parler négativement ?",opts:["Expliquer honnêtement les points négatifs qui motivent votre départ","Mettre en avant un projet positif et des perspectives d'évolution recherchées","Évoquer une réorganisation interne, même si ce n'est pas tout à fait le cas","Rester vague en évoquant des raisons personnelles"],ans:1,expl:"Ne critiquez jamais votre ex-employeur. Formulez positivement : 'Je cherche de nouveaux défis', 'Je souhaite évoluer vers X'. Restez factuel et tourné vers l'avenir plutôt que d'inventer un prétexte ou de rester flou."},
+      {q:"Comment se calcule l'indemnité légale de licenciement au-delà de 10 ans d'ancienneté ?",opts:["1/4 de mois de salaire par année, pour toute la période","1/4 de mois par année jusqu'à 10 ans, puis 1/3 de mois par année au-delà","1/2 mois de salaire par année, sans limite","Aucune règle légale ne s'applique au-delà de 10 ans"],ans:1,expl:"L'indemnité légale de licenciement se calcule à 1/4 de mois de salaire par année d'ancienneté jusqu'à 10 ans, puis 1/3 de mois par année au-delà de 10 ans. Article R.1234-2 du Code du travail."},
       {q:"Qu'est-ce qu'une clause de non-concurrence et quand s'applique-t-elle ?",opts:["Elle s'applique uniquement pendant la durée du contrat","Elle s'applique après la rupture du contrat, sous conditions de validité","Elle est interdite en France depuis la réforme de 2008","Elle ne peut être prévue que pour les postes de cadre dirigeant"],ans:1,expl:"La clause de non-concurrence s'applique après la rupture du contrat. Pour être valide : limitée dans le temps, l'espace, le domaine, et assortie d'une contrepartie financière. Sans ces conditions, elle est nulle."},
       {q:"Quel est le délai de prévenance légal minimum pour convoquer un entretien préalable à licenciement ?",opts:["3 jours ouvrables","5 jours ouvrables","7 jours ouvrables","10 jours ouvrables"],ans:1,expl:"La convocation doit être remise 5 jours ouvrables minimum avant l'entretien préalable (Code du travail L1232-2). Ce délai vous permet de préparer votre défense et de vous faire assister."},
       {q:"Qu'est-ce que le 'droit à la déconnexion' pour un salarié ?",opts:["Une obligation pour l'employeur d'éteindre ses serveurs après 19h","Le droit de ne pas répondre aux sollicitations professionnelles hors temps de travail","Le droit de refuser l'usage de tout outil numérique au travail","Un jour de congé additionnel accordé aux métiers du numérique"],ans:1,expl:"Le droit à la déconnexion (loi El Khomri, 2017) oblige les entreprises de +50 salariés à définir des modalités d'usage des outils numériques pour préserver le temps de repos. En pratique : vous n'êtes pas tenu de répondre aux emails/appels hors horaires de travail — l'employeur n'a aucune obligation technique sur ses serveurs."},
       {q:"Un employeur peut-il modifier unilatéralement votre contrat de travail ?",opts:["Oui, à tout moment, sans justification particulière","Non, aucune modification n'est jamais permise sans accord","Oui pour les éléments non essentiels, mais pas pour les éléments essentiels sans votre accord","Oui, à condition de respecter un préavis d'un mois"],ans:2,expl:"Les éléments essentiels du contrat (salaire, qualification, lieu de travail si précisé) ne peuvent être modifiés sans votre accord. Les conditions de travail (organisation, méthodes) relèvent du pouvoir de direction. Refuser une modification essentielle n'est pas une faute."},
-      {q:"Comment répondre à 'Qu'est-ce qui vous différencie des autres candidats ?' ?",opts:["Affirmer que vous êtes plus motivé et impliqué que la moyenne","Identifier 2-3 atouts concrets, appuyés par des résultats chiffrés, reliés aux enjeux du poste","Souligner que les autres candidats manquent probablement d'expérience","Dire que vous n'avez pas d'éléments de comparaison avec les autres candidats"],ans:1,expl:"C'est une question de différenciation. Préparez : une compétence rare + une réussite chiffrée + votre approche unique, reliées directement aux enjeux du poste. Évitez les généralités (motivé, impliqué) ou les comparaisons hasardeuses avec les autres candidats — tous les candidats se disent motivés."},
+      {q:"Pendant un arrêt maladie non professionnel, un salarié continue-t-il d'acquérir des congés payés ?",opts:["Non, jamais","Oui, dans la limite de 24 jours ouvrables par période de référence","Oui, sans aucune limite","Seulement après 1 an d'ancienneté"],ans:1,expl:"Depuis la loi du 22 avril 2024, un salarié en arrêt pour maladie ou accident non professionnel acquiert 2 jours ouvrables de congés payés par mois d'arrêt, dans la limite de 24 jours ouvrables par période de référence. Pour un accident du travail ou une maladie professionnelle, l'acquisition reste à 2,5 jours/mois sans cette limite réduite. Article L.3141-5-1 du Code du travail."},
       {q:"Quelle est la règle sur le télétravail en cas de désaccord employeur/salarié ?",opts:["L'employeur peut imposer le télétravail sans accord","Le salarié peut exiger le télétravail sans accord","Le refus de télétravail par l'employeur doit être motivé par écrit","Le télétravail est automatique après 6 mois d'ancienneté"],ans:2,expl:"Depuis la loi ANI 2021, aucune partie ne peut imposer le télétravail sans accord. Le refus de l'employeur doit être motivé. En pratique, une charte ou accord collectif encadre souvent les modalités. Le refus du salarié ne peut être une cause de licenciement."},
       {q:"Qu'est-ce que le CSE (Comité Social et Économique) ?",opts:["Un organisme de formation continue","L'instance représentative du personnel obligatoire dans les entreprises de +11 salariés","Un contrat spécial pour les seniors","Un dispositif fiscal pour les PME"],ans:1,expl:"Le CSE remplace depuis 2020 le CE, les DP et le CHSCT. Obligatoire dès 11 salariés, il représente les intérêts des salariés sur les conditions de travail, l'emploi, la santé et la stratégie de l'entreprise. Il gère aussi les activités sociales et culturelles."},
       {q:"Un recruteur vous demande si vous fumez. Comment répondez-vous ?",opts:["Vous répondez honnêtement sans plus de précision","Vous demandez poliment le lien avec le poste, car c'est une question sans rapport direct","Vous évitez de répondre directement et changez de sujet","Vous répondez en insistant que ça ne vous concerne plus depuis peu"],ans:1,expl:"Demander si vous fumez est une question sans lien direct avec les compétences pour la plupart des postes. Vous pouvez répondre : 'Je ne vois pas le lien avec les missions. Je respecte évidemment toutes les règles en vigueur dans l'entreprise.' Poli, ferme, protecteur — sans pour autant dramatiser la situation."},
       {q:"Quelle est la durée minimale de préavis pour un CDI non-cadre en cas de démission ?",opts:["Aucun préavis légal","1 semaine","1 mois","3 mois"],ans:0,expl:"Pour un non-cadre, la loi ne fixe pas de durée minimale légale de préavis en cas de démission. C'est la convention collective ou le contrat qui le détermine. En pratique : 1 à 3 mois selon la convention. Vérifiez votre CCN avant de démissionner."},
-      {q:"Lors d'un entretien de recrutement, comment gérer une longue pause de silence du recruteur ?",opts:["Parler immédiatement pour combler le silence","Sourire, maintenir le contact visuel et rester serein","Répéter ce que vous venez de dire","Demander si vous avez dit quelque chose de problématique"],ans:1,expl:"Le silence est parfois une technique de mise sous pression. Gardez votre calme, maintenez un contact visuel confiant et souriez légèrement. Ne combler pas le vide avec des mots qui affaiblissent votre position. Le silence géré avec assurance révèle maturité et sang-froid."},
+      {q:"Après combien de jours d'arrêt de travail (non professionnel) la visite médicale de reprise devient-elle obligatoire ?",opts:["15 jours","30 jours","60 jours","90 jours"],ans:1,expl:"Depuis le 31 mars 2022, la visite médicale de reprise est obligatoire pour tout arrêt de travail de plus de 30 jours (contre 3 mois auparavant). Elle doit être organisée dès le retour effectif du salarié à son poste."},
       {q:"Qu'est-ce que le 'portage salarial' ?",opts:["Un contrat de travail temporaire","Un dispositif qui permet d'exercer en indépendant tout en étant salarié d'une société de portage","Un type de licenciement économique","Une forme de co-gérance en SARL"],ans:1,expl:"Le portage salarial permet à un consultant indépendant d'être rémunéré en salaire via une société de portage, tout en gardant sa liberté commerciale. Avantages : protection sociale de salarié, pas de gestion administrative. Contrepartie : frais de gestion (8-12% du CA)."},
       {q:"Quelle est la différence entre un avertissement et une mise à pied disciplinaire ?",opts:["Ce sont deux termes différents pour désigner la même sanction","L'avertissement est une sanction sans impact salarial ; la mise à pied entraîne une suspension du contrat et de la rémunération","L'avertissement entraîne systématiquement une retenue sur salaire, contrairement à la mise à pied","La mise à pied disciplinaire est annulée automatiquement si le salarié contre-signe le courrier"],ans:1,expl:"L'avertissement est une sanction légère, sans impact sur le salaire ni le contrat. La mise à pied conservatoire (avant licenciement) ou disciplinaire (sanction) suspend le contrat et interrompt la rémunération. Délai de prescription : 2 mois pour toute sanction (hors faute continue)."}
     ],
@@ -16866,8 +16866,8 @@ var MS_DATA = {
         "Sur la base de mon expérience et des niveaux du marché pour ce type de poste, je me positionne entre 42 000 et 46 000 € brut annuel.",
         "Mon salaire actuel est de 38 000 €, donc j'espère avoir une augmentation."
       ],
-      best:2,
-      why:["Dire 'je m'adapterai' vous retire tout pouvoir de négociation. Vous semblez manquer de confiance en votre valeur marché.","Annoncer une fourchette basée sur le marché (pas sur vos besoins) est la stratégie idéale. La fourchette haute donne de la marge, la justification donne de la crédibilité.","✅ Révéler votre salaire actuel vous pénalise : le recruteur peut s'en servir comme plafond. Toujours ancrer sur le marché, pas sur votre historique."],
+      best:1,
+      why:["Dire 'je m'adapterai' vous retire tout pouvoir de négociation. Vous semblez manquer de confiance en votre valeur marché.","✅ Annoncer une fourchette basée sur le marché (pas sur vos besoins) est la stratégie idéale. La fourchette haute donne de la marge, la justification donne de la crédibilité.","Révéler votre salaire actuel vous pénalise : le recruteur peut s'en servir comme plafond. Toujours ancrer sur le marché, pas sur votre historique."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -16878,8 +16878,8 @@ var MS_DATA = {
         "J'ai eu un désaccord avec un collègue sur les priorités d'un projet. J'ai demandé un échange direct, on a exposé nos points de vue, identifié le vrai problème et proposé une solution à notre manager ensemble.",
         "Une fois un collègue m'a court-circuité devant la direction. Je l'ai recadré clairement pour que ça ne se reproduise pas."
       ],
-      best:0,
-      why:["✅ Dire qu'il n'y a jamais de conflit n'est pas crédible. Ça donne l'impression que vous évitez les situations difficiles — ou que vous manquez d'introspection.","Parfait exemple STAR : Situation → Action (dialogue direct) → Résultat (solution co-construite). Ça montre maturité, communication et esprit d'équipe.","Parler de 'recadrer un collègue' sonne autoritaire et peut indiquer un manque de gestion relationnelle. Attention au ton."],
+      best:1,
+      why:["Dire qu'il n'y a jamais de conflit n'est pas crédible. Ça donne l'impression que vous évitez les situations difficiles — ou que vous manquez d'introspection.","✅ Parfait exemple STAR : Situation → Action (dialogue direct) → Résultat (solution co-construite). Ça montre maturité, communication et esprit d'équipe.","Parler de 'recadrer un collègue' sonne autoritaire et peut indiquer un manque de gestion relationnelle. Attention au ton."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -16914,8 +16914,8 @@ var MS_DATA = {
         "Je m'excuse brièvement, j'explique la raison sans m'étendre et je recentre immédiatement sur l'entretien.",
         "Je m'excuse profusément pendant 5 minutes et répète que c'est exceptionnel."
       ],
-      best:0,
-      why:["✅ Ignorer le retard est maladroit — le recruteur l'a remarqué. Ça envoie un signal de manque de conscience professionnelle.","Une excuse brève, honnête et sans sur-explication montre maturité. Recentrer vite sur l'entretien montre que vous savez gérer les imprévus avec sang-froid.","S'excuser en boucle donne l'impression que vous n'êtes pas à l'aise. Une seule excuse claire et concise suffit."],
+      best:1,
+      why:["Ignorer le retard est maladroit — le recruteur l'a remarqué. Ça envoie un signal de manque de conscience professionnelle.","✅ Une excuse brève, honnête et sans sur-explication montre maturité. Recentrer vite sur l'entretien montre que vous savez gérer les imprévus avec sang-froid.","S'excuser en boucle donne l'impression que vous n'êtes pas à l'aise. Une seule excuse claire et concise suffit."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -16926,8 +16926,8 @@ var MS_DATA = {
         "Je remercie, exprime mon enthousiasme pour le poste et demande si une révision est possible après 6 mois ou si d'autres avantages peuvent compenser.",
         "Je refuse immédiatement — mes prétentions sont non négociables."
       ],
-      best:2,
-      why:["Accepter sans négocier établit un mauvais précédent et vous prive potentiellement de revenus sur plusieurs années. Même un petit écart vaut d'être abordé.","Stratégie optimale : valider votre enthousiasme (vous voulez ce poste), ouvrir une discussion sur la révision à 6 mois ou des compensations (variable, télétravail, formation). Vous montrez maturité et sens de la négociation.","✅ Refuser catégoriquement sans discussion fait rater des opportunités. 5% d'écart peut souvent être compensé autrement."],
+      best:1,
+      why:["Accepter sans négocier établit un mauvais précédent et vous prive potentiellement de revenus sur plusieurs années. Même un petit écart vaut d'être abordé.","✅ Stratégie optimale : valider votre enthousiasme (vous voulez ce poste), ouvrir une discussion sur la révision à 6 mois ou des compensations (variable, télétravail, formation). Vous montrez maturité et sens de la négociation.","Refuser catégoriquement sans discussion fait rater des opportunités. 5% d'écart peut souvent être compensé autrement."],
       skills:{posture:2,clarte:2,strategie:3}
     },
     {
@@ -16938,8 +16938,8 @@ var MS_DATA = {
         "J'ai raté un lancement de projet à cause d'une mauvaise estimation des délais. J'ai appris à systématiser les revues de planning et à communiquer les risques plus tôt. Depuis, aucun retard majeur.",
         "On a eu un projet difficile une fois mais c'était plutôt la faute de l'équipe."
       ],
-      best:0,
-      why:["✅ Prétendre n'avoir jamais échoué n'est pas crédible. Ça donne l'impression que vous manquez d'introspection ou que vous évitez les défis.","Idéal : un vrai échec + analyse sans excuse + action corrective + résultat amélioré. Vous montrez maturité, résilience et capacité d'apprentissage — des qualités très recherchées.","Rejeter la faute sur l'équipe est un signal rouge immédiat. Le recruteur va anticiper que vous ferez pareil dans leur équipe."],
+      best:1,
+      why:["Prétendre n'avoir jamais échoué n'est pas crédible. Ça donne l'impression que vous manquez d'introspection ou que vous évitez les défis.","✅ Idéal : un vrai échec + analyse sans excuse + action corrective + résultat amélioré. Vous montrez maturité, résilience et capacité d'apprentissage — des qualités très recherchées.","Rejeter la faute sur l'équipe est un signal rouge immédiat. Le recruteur va anticiper que vous ferez pareil dans leur équipe."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -16950,8 +16950,8 @@ var MS_DATA = {
         "Je priorise les tâches par urgence et impact, je communique proactivement sur les risques et je découpe les gros livrables en étapes gérables. Je donne un exemple concret si vous le souhaitez.",
         "Je ne suis pas très à l'aise avec la pression, j'ai besoin de conditions calmes pour être efficace."
       ],
-      best:2,
-      why:["'J'adore la pression' sonne comme un cliché sans substance. Sans exemple ni méthode, c'est vide.","Méthode + offre d'exemple concret = vous montrez que vous gérez vraiment. La priorisation et la communication proactive sont des compétences concrètes et vérifiables.","✅ Dire que vous n'êtes pas à l'aise avec la pression peut être honnête, mais dans un contexte professionnel, ça peut inquiéter sur votre capacité à tenir en période intense."],
+      best:1,
+      why:["'J'adore la pression' sonne comme un cliché sans substance. Sans exemple ni méthode, c'est vide.","✅ Méthode + offre d'exemple concret = vous montrez que vous gérez vraiment. La priorisation et la communication proactive sont des compétences concrètes et vérifiables.","Dire que vous n'êtes pas à l'aise avec la pression peut être honnête, mais dans un contexte professionnel, ça peut inquiéter sur votre capacité à tenir en période intense."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -16962,8 +16962,8 @@ var MS_DATA = {
         "Mon expérience m'a permis de développer [compétences spécifiques] qui correspondent exactement à [enjeux du poste]. De plus, je suis dans une phase active de montée en compétences — ce qui se traduit par une forte adaptabilité et une motivation au-dessus de la moyenne.",
         "Parce que je suis plus jeune et donc plus dynamique et moins cher."
       ],
-      best:2,
-      why:["Se décharger sur le recruteur de la décision montre un manque de conviction sur votre propre valeur.","Vous prenez le contrôle : vous reliez votre profil aux enjeux du poste + vous retournez votre soi-disant faiblesse (moins d'expérience) en atout (motivation, adaptabilité, coût d'acquisition du savoir plus récent).","✅ Parler de dynamisme et de prix comme avantages est réducteur et peut sembler désespéré."],
+      best:1,
+      why:["Se décharger sur le recruteur de la décision montre un manque de conviction sur votre propre valeur.","✅ Vous prenez le contrôle : vous reliez votre profil aux enjeux du poste + vous retournez votre soi-disant faiblesse (moins d'expérience) en atout (motivation, adaptabilité, coût d'acquisition du savoir plus récent).","Parler de dynamisme et de prix comme avantages est réducteur et peut sembler désespéré."],
       skills:{posture:3,clarte:2,strategie:3}
     },
     {
@@ -16974,8 +16974,8 @@ var MS_DATA = {
         "Accenture est le leader mondial du conseil et des services numériques, présent dans 120 pays. J'ai suivi votre récente acquisition dans le cloud et votre engagement vers le net zéro d'ici 2025. Ce qui m'attire particulièrement, c'est votre approche [spécifique au département ciblé].",
         "Je n'ai pas eu le temps de me renseigner en détail, mais je suis prêt à apprendre rapidement."
       ],
-      best:0,
-      why:["✅ Une réponse vague sur une grande entreprise connue montre que vous n'avez pas préparé. C'est la question la plus prévisible — ne pas y répondre est éliminatoire.","Données factuelles + actualité récente + lien avec le poste ciblé = vous montrez que vous avez préparé ET que vous avez déjà réfléchi à votre contribution.","Dire qu'on n'a pas eu le temps de se renseigner est rédhibitoire. Si vous n'avez pas pu préparer un entretien, pourquoi ferez-vous mieux sur le poste ?"],
+      best:1,
+      why:["Une réponse vague sur une grande entreprise connue montre que vous n'avez pas préparé. C'est la question la plus prévisible — ne pas y répondre est éliminatoire.","✅ Données factuelles + actualité récente + lien avec le poste ciblé = vous montrez que vous avez préparé ET que vous avez déjà réfléchi à votre contribution.","Dire qu'on n'a pas eu le temps de se renseigner est rédhibitoire. Si vous n'avez pas pu préparer un entretien, pourquoi ferez-vous mieux sur le poste ?"],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17010,8 +17010,8 @@ var MS_DATA = {
         "Chez Accenture, ce qui m'attire spécifiquement c'est [culture, projet, technologie, marché] qui correspond à [mes compétences et projet]. C'est pourquoi je considère ce poste comme ma priorité dans ma recherche.",
         "Franchement, c'est la première offre qui a répondu — ça joue."
       ],
-      best:2,
-      why:["Dire que vous postulez 'partout' démotive le recruteur. Pourquoi investir dans quelqu'un qui n'a pas de préférence ?","Vous donnez une raison spécifique et sincère. Le recruteur veut sentir qu'il n'est pas interchangeable. Personnalisez — même si c'est la même logique que pour d'autres entreprises.","✅ Dire que c'est parce qu'ils ont répondu en premier est totalement honnête mais terrible pour votre image."],
+      best:1,
+      why:["Dire que vous postulez 'partout' démotive le recruteur. Pourquoi investir dans quelqu'un qui n'a pas de préférence ?","✅ Vous donnez une raison spécifique et sincère. Le recruteur veut sentir qu'il n'est pas interchangeable. Personnalisez — même si c'est la même logique que pour d'autres entreprises.","Dire que c'est parce qu'ils ont répondu en premier est totalement honnête mais terrible pour votre image."],
       skills:{posture:2,clarte:2,strategie:3}
     },
     {
@@ -17046,8 +17046,8 @@ var MS_DATA = {
         "Je suis particulièrement fort en [qualité 1 avec exemple chiffré] et [qualité 2 avec exemple concret]. Ces deux atouts m'ont permis de [résultat tangible].",
         "Je suis quelqu'un de très sympa et tout le monde m'aime bien."
       ],
-      best:2,
-      why:["Lister des adjectifs génériques (organisé, rigoureux) sans preuve ne convainct pas. Chaque qualité citée doit être appuyée d'un exemple.","Qualité + preuve concrète + résultat = une réponse mémorable. Le recruteur ne se souviendra pas des mots — il se souviendra des histoires.","✅ 'Je suis sympa' est une qualité sociale, pas professionnelle. Ça ne dit rien sur votre valeur dans le poste."],
+      best:1,
+      why:["Lister des adjectifs génériques (organisé, rigoureux) sans preuve ne convainct pas. Chaque qualité citée doit être appuyée d'un exemple.","✅ Qualité + preuve concrète + résultat = une réponse mémorable. Le recruteur ne se souviendra pas des mots — il se souviendra des histoires.","'Je suis sympa' est une qualité sociale, pas professionnelle. Ça ne dit rien sur votre valeur dans le poste."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17058,8 +17058,8 @@ var MS_DATA = {
         "C'est une opportunité. J'observe, je pose des questions ciblées, je valorise leurs expertises et je cherche à apporter ma propre valeur ajoutée sur les sujets où je suis compétent.",
         "J'affirme mes positions même si les autres ont plus d'expérience — c'est important de se faire respecter."
       ],
-      best:2,
-      why:["Rester discret par peur d'être jugé incompétent est une posture d'évitement. Elle vous empêche d'apprendre et de contribuer.","Humilité + curiosité + contribution ciblée = vous montrez que vous savez apprendre des autres tout en restant acteur. C'est la posture idéale d'un bon collaborateur.","✅ Affirmer ses positions sans tenir compte de l'expérience des autres peut être perçu comme de l'arrogance. L'assertivité se fait avec nuance et ouverture."],
+      best:1,
+      why:["Rester discret par peur d'être jugé incompétent est une posture d'évitement. Elle vous empêche d'apprendre et de contribuer.","✅ Humilité + curiosité + contribution ciblée = vous montrez que vous savez apprendre des autres tout en restant acteur. C'est la posture idéale d'un bon collaborateur.","Affirmer ses positions sans tenir compte de l'expérience des autres peut être perçu comme de l'arrogance. L'assertivité se fait avec nuance et ouverture."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -17082,8 +17082,8 @@ var MS_DATA = {
         "4 jours de télétravail me convient si les attendus sont clairs, la communication maintenue et les journées en présentiel bien utilisées pour les synergies d'équipe. J'ai déjà fonctionné ainsi avec succès.",
         "5/5 à distance, ça ne me pose aucun problème du tout."
       ],
-      best:0,
-      why:["✅ Être au bureau pour la 'visibilité' révèle une logique présentéiste dépassée. La performance, pas la présence, est ce qui compte vraiment.","Accepter avec conditions claires = maturité et professionnalisme. Mentionner une expérience positive du télétravail rassure sur votre autonomie.","5/5 à distance sans nuance peut inquiéter sur votre besoin de lien d'équipe et votre capacité à collaborer physiquement si nécessaire."],
+      best:1,
+      why:["Être au bureau pour la 'visibilité' révèle une logique présentéiste dépassée. La performance, pas la présence, est ce qui compte vraiment.","✅ Accepter avec conditions claires = maturité et professionnalisme. Mentionner une expérience positive du télétravail rassure sur votre autonomie.","5/5 à distance sans nuance peut inquiéter sur votre besoin de lien d'équipe et votre capacité à collaborer physiquement si nécessaire."],
       skills:{posture:2,clarte:3,strategie:2}
     },
     {
@@ -17093,8 +17093,8 @@ var MS_DATA = {
         "Je profite de l'instabilité pour chercher une autre opportunité moi aussi.",
         "Je maintiens mon niveau de performance, je sécurise les dossiers en cours, je communique clairement avec mon équipe et je me rends disponible pour faciliter la transition.",
         "Je postule immédiatement à son poste, même si je ne suis pas prêt."],
-      best:0,
-      why:["✅ Partir en profitant d'une période instable est compréhensible mais stratégiquement risqué. C'est aussi un signal sur votre engagement réel.","Maintenir la performance + sécuriser les dossiers + faciliter la transition = vous montrez du leadership naturel sans sur-jouer l'ambition. C'est ce que les vrais leaders font.","Postuler à un poste pour lequel vous n'êtes pas prêt peut être perçu comme de l'opportunisme. Mieux vaut exprimer votre intérêt à moyen terme."],
+      best:1,
+      why:["Partir en profitant d'une période instable est compréhensible mais stratégiquement risqué. C'est aussi un signal sur votre engagement réel.","✅ Maintenir la performance + sécuriser les dossiers + faciliter la transition = vous montrez du leadership naturel sans sur-jouer l'ambition. C'est ce que les vrais leaders font.","Postuler à un poste pour lequel vous n'êtes pas prêt peut être perçu comme de l'opportunisme. Mieux vaut exprimer votre intérêt à moyen terme."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -17105,8 +17105,8 @@ var MS_DATA = {
         "L'open space favorise la collaboration spontanée, même si la concentration demande parfois des ajustements. J'ai appris à gérer les distractions avec des plages horaires dédiées et des outils adaptés.",
         "J'adore ça ! Plus il y a de monde autour de moi, mieux je travaille."
       ],
-      best:0,
-      why:["✅ Dire que vous détestez l'open space peut être honnête, mais si le poste est en open space, c'est éliminatoire. Formulez différemment vos besoins.","Reconnaître les avantages de l'open space + montrer votre adaptabilité = vous prouvez que vous pouvez fonctionner dans des conditions variées sans vous plaindre.","Prétendre adorer le bruit et l'agitation quand ce n'est pas vrai peut se retourner contre vous — et vous allez passer 8h/jour dans cet environnement."],
+      best:1,
+      why:["Dire que vous détestez l'open space peut être honnête, mais si le poste est en open space, c'est éliminatoire. Formulez différemment vos besoins.","✅ Reconnaître les avantages de l'open space + montrer votre adaptabilité = vous prouvez que vous pouvez fonctionner dans des conditions variées sans vous plaindre.","Prétendre adorer le bruit et l'agitation quand ce n'est pas vrai peut se retourner contre vous — et vous allez passer 8h/jour dans cet environnement."],
       skills:{posture:2,clarte:3,strategie:2}
     },
     {
@@ -17117,8 +17117,8 @@ var MS_DATA = {
         "Je demande d'abord à comprendre le contexte complet. Si la demande reste incompatible avec mes valeurs, j'en parle clairement à mon manager et je propose une alternative. Si aucune solution n'est trouvée, je remonte à la hiérarchie ou aux instances compétentes.",
         "Je démissionne immédiatement sans discussion."
       ],
-      best:2,
-      why:["Obéir contre ses valeurs sans rien dire vous expose personnellement et moralement. Certaines directives peuvent aussi vous engager légalement.","Chercher à comprendre + alerter + proposer une alternative = démarche professionnelle et éthique. C'est la posture d'un salarié responsable qui sait dire non de façon constructive.","✅ Démissionner immédiatement sans dialogue est radical. Dans la plupart des cas, un dialogue interne peut résoudre le problème — sans perdre son emploi."],
+      best:1,
+      why:["Obéir contre ses valeurs sans rien dire vous expose personnellement et moralement. Certaines directives peuvent aussi vous engager légalement.","✅ Chercher à comprendre + alerter + proposer une alternative = démarche professionnelle et éthique. C'est la posture d'un salarié responsable qui sait dire non de façon constructive.","Démissionner immédiatement sans dialogue est radical. Dans la plupart des cas, un dialogue interne peut résoudre le problème — sans perdre son emploi."],
       skills:{posture:3,clarte:2,strategie:3}
     },
     {
@@ -17129,8 +17129,8 @@ var MS_DATA = {
         "Je récupère le maximum d'informations disponibles, je priorise les actions urgentes, je communique clairement et je documente tout.",
         "Je prends toutes les décisions seul — c'est l'occasion de montrer mon initiative."
       ],
-      best:2,
-      why:["Refuser d'agir en situation d'urgence parce que les informations sont incomplètes est une paralysie professionnelle.","Récupérer l'information + prioriser + communiquer + documenter = posture d'un professionnel fiable en situation dégradée. Leadership sans excès.","✅ Tout décider seul sans en référer peut créer des problèmes si vos décisions dépassent votre périmètre. L'initiative oui — l'excès, non."],
+      best:1,
+      why:["Refuser d'agir en situation d'urgence parce que les informations sont incomplètes est une paralysie professionnelle.","✅ Récupérer l'information + prioriser + communiquer + documenter = posture d'un professionnel fiable en situation dégradée. Leadership sans excès.","Tout décider seul sans en référer peut créer des problèmes si vos décisions dépassent votre périmètre. L'initiative oui — l'excès, non."],
       skills:{posture:3,clarte:3,strategie:2}
     },
     {
@@ -17264,8 +17264,8 @@ var MS_DATA = {
         "Oui, je m'y suis renseigné en postulant. Je suis disponible sur les deux créneaux et j'ai organisé mon quotidien en conséquence.",
         "Je verrai une fois en poste, en général je m'adapte."
       ],
-      best:0,
-      why:["✅ Exprimer une préférence pour des horaires fixes sur un poste décalé dès le premier entretien signale un problème de disponibilité — potentiellement éliminatoire.","Confirmer que vous avez lu les conditions AVANT de postuler montre du sérieux. Préciser que vous vous êtes organisé rassure définitivement.","'Je verrai une fois en poste' est vague et peu engageant. Ça ne lève pas le doute sur votre disponibilité réelle."],
+      best:1,
+      why:["Exprimer une préférence pour des horaires fixes sur un poste décalé dès le premier entretien signale un problème de disponibilité — potentiellement éliminatoire.","✅ Confirmer que vous avez lu les conditions AVANT de postuler montre du sérieux. Préciser que vous vous êtes organisé rassure définitivement.","'Je verrai une fois en poste' est vague et peu engageant. Ça ne lève pas le doute sur votre disponibilité réelle."],
       skills:{posture:3,clarte:3,strategie:2}
     },
     {
@@ -17276,8 +17276,8 @@ var MS_DATA = {
         "Mon objectif est d'être aligné avec la grille du poste et le marché local pour ce niveau. Ce qui compte pour moi c'est de démarrer sur une base juste et d'évoluer selon mes résultats.",
         "Je suis flexible, vous proposez quoi ?"
       ],
-      best:2,
-      why:["Révéler votre ancien salaire vous enferme — le recruteur peut se servir de ce chiffre comme plafond. Et 'au moins pareil' ne montre pas d'ambition.","Répondre sans révéler le passé, en ancrant sur le marché et en ouvrant sur l'évolution = vous restez crédible tout en gardant le pouvoir de négociation.","✅ Demander 'vous proposez quoi' vous met en position passive. Le recruteur s'attend à ce que vous ayez une idée de votre valeur."],
+      best:1,
+      why:["Révéler votre ancien salaire vous enferme — le recruteur peut se servir de ce chiffre comme plafond. Et 'au moins pareil' ne montre pas d'ambition.","✅ Répondre sans révéler le passé, en ancrant sur le marché et en ouvrant sur l'évolution = vous restez crédible tout en gardant le pouvoir de négociation.","Demander 'vous proposez quoi' vous met en position passive. Le recruteur s'attend à ce que vous ayez une idée de votre valeur."],
       skills:{posture:2,clarte:2,strategie:3}
     },
     {
@@ -17347,8 +17347,8 @@ var MS_DATA = {
         "Je structurerais mes 30 premiers jours en 3 temps : comprendre (écouter, observer, lire la documentation), contribuer (m'impliquer sur des petites tâches avec résultats visibles) et valider (faire un point avec mon manager sur mes observations et priorités).",
         "Je mettrais en place mes propres méthodes de travail pour optimiser le poste dès le départ."
       ],
-      best:2,
-      why:["'Observer et faire connaissance' est vague. Ça ne montre pas de méthode ni d'engagement à produire des résultats rapidement.","Un plan structuré en 3 temps montre que vous avez réfléchi à votre intégration. C'est la réponse d'un professionnel organisé qui pense résultats dès le premier jour.","✅ Imposer ses méthodes dès le début sans comprendre le contexte est une erreur classique. L'écoute d'abord, l'action ensuite."],
+      best:1,
+      why:["'Observer et faire connaissance' est vague. Ça ne montre pas de méthode ni d'engagement à produire des résultats rapidement.","✅ Un plan structuré en 3 temps montre que vous avez réfléchi à votre intégration. C'est la réponse d'un professionnel organisé qui pense résultats dès le premier jour.","Imposer ses méthodes dès le début sans comprendre le contexte est une erreur classique. L'écoute d'abord, l'action ensuite."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17371,8 +17371,8 @@ var MS_DATA = {
         "Non, une période d'essai est normale et me convient. Elle me permet aussi de valider que ce poste et cette entreprise correspondent à mes attentes. C'est un engagement mutuel.",
         "J'ai besoin de la sécurité du CDI immédiatement — la période d'essai m'inquiète."
       ],
-      best:2,
-      why:["Négocier la durée de la période d'essai d'entrée est malvenu et donne l'impression que vous anticipez un problème.","Présenter la période d'essai comme un engagement bilatéral montre maturité et confiance en vous. Vous ne la subissez pas — vous la choisissez aussi.","✅ Exprimer une peur de la période d'essai signale un manque de confiance en votre capacité à vous intégrer."],
+      best:1,
+      why:["Négocier la durée de la période d'essai d'entrée est malvenu et donne l'impression que vous anticipez un problème.","✅ Présenter la période d'essai comme un engagement bilatéral montre maturité et confiance en vous. Vous ne la subissez pas — vous la choisissez aussi.","Exprimer une peur de la période d'essai signale un manque de confiance en votre capacité à vous intégrer."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -17407,8 +17407,8 @@ var MS_DATA = {
         "Mon expérience est un complément à l'équipe, pas un obstacle. J'ai travaillé avec des profils junior et senior — ce qui compte, c'est la complémentarité. Et j'ai suivi régulièrement des formations pour rester à niveau sur les nouvelles pratiques.",
         "Vous avez raison de vous poser la question — ça pourrait être un sujet. On verra."
       ],
-      best:0,
-      why:["✅ Même si la question est potentiellement discriminatoire, refuser de répondre crée une tension inutile. Traitez-la avec assurance et bonne grâce.","Valoriser la complémentarité + rassurer sur votre actualisation = vous désarmez la préoccupation sans vous défendre. Vous montrez confiance et ouverture.","Valider la préoccupation de l'employeur sans y répondre est la pire des postures. Vous vous mettez vous-même en doute."],
+      best:1,
+      why:["Même si la question est potentiellement discriminatoire, refuser de répondre crée une tension inutile. Traitez-la avec assurance et bonne grâce.","✅ Valoriser la complémentarité + rassurer sur votre actualisation = vous désarmez la préoccupation sans vous défendre. Vous montrez confiance et ouverture.","Valider la préoccupation de l'employeur sans y répondre est la pire des postures. Vous vous mettez vous-même en doute."],
       skills:{posture:3,clarte:2,strategie:3}
     },
     {
@@ -17463,8 +17463,8 @@ var MS_DATA = {
         "Parce que je n'ai pas trouvé dans les grands groupes.",
         "Dans un grand groupe, j'ai appris les process et la rigueur. Maintenant, je cherche un environnement où j'ai plus d'impact direct, où je peux voir le résultat de mon travail et contribuer à la croissance d'une structure avec de vrais enjeux de développement.",
         "Les grandes entreprises ont trop de bureaucratie — j'en avais assez."],
-      best:0,
-      why:["✅ 'Je n'ai pas trouvé' révèle que la PME est un plan B. Pas motivant pour un recruteur.","Valoriser ce que la PME offre (impact, agilité, contribution à la croissance) montre un choix positif et assumé. Ça rassure l'employeur sur votre engagement.","Critiquer les grandes entreprises peut sembler arrogant ou négatif. Mieux vaut parler de ce que vous cherchez plutôt que ce que vous fuyez."],
+      best:1,
+      why:["'Je n'ai pas trouvé' révèle que la PME est un plan B. Pas motivant pour un recruteur.","✅ Valoriser ce que la PME offre (impact, agilité, contribution à la croissance) montre un choix positif et assumé. Ça rassure l'employeur sur votre engagement.","Critiquer les grandes entreprises peut sembler arrogant ou négatif. Mieux vaut parler de ce que vous cherchez plutôt que ce que vous fuyez."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17630,8 +17630,8 @@ var MS_DATA = {
         "Depuis 2 ans, je ressens un décalage entre mes valeurs et ce que mon poste me demande au quotidien. Je souhaite utiliser ce bilan pour clarifier mes forces, identifier des métiers qui y correspondent, et construire un plan d'action réaliste.",
         "On m'a dit que le CPF finançait ça, donc j'ai voulu en profiter avant que ça change."
       ],
-      best:2,
-      why:["Exprimer de la fatigue et de la frustration sans projet révèle un état émotionnel, pas une démarche. La conseillère ne peut pas vous aider si vous n'avez pas de direction.","Vous montrez de la lucidité (décalage identifié), un objectif clair (clarifier + plan) et un usage intentionnel du dispositif. C'est exactement ce qui valide un bilan sérieux.","✅ Utiliser le CPF 'avant que ça change' est un mauvais signal — la conseillère voit immédiatement que ce n'est pas une vraie démarche. Elle peut refuser l'accompagnement."],
+      best:1,
+      why:["Exprimer de la fatigue et de la frustration sans projet révèle un état émotionnel, pas une démarche. La conseillère ne peut pas vous aider si vous n'avez pas de direction.","✅ Vous montrez de la lucidité (décalage identifié), un objectif clair (clarifier + plan) et un usage intentionnel du dispositif. C'est exactement ce qui valide un bilan sérieux.","Utiliser le CPF 'avant que ça change' est un mauvais signal — la conseillère voit immédiatement que ce n'est pas une vraie démarche. Elle peut refuser l'accompagnement."],
       skills:{posture:3,clarte:3,strategie:2}
     },
     {
@@ -17654,8 +17654,8 @@ var MS_DATA = {
         "Oui, j'ai fait des projections. En démarrant en salarié dans un organisme, on est entre 28-35k. En indépendant après 2-3 ans, la fourchette monte. J'ai calculé que je peux tenir 18 mois avec mes économies si besoin.",
         "Je suppose que ça paie moins au début mais ça s'améliore avec le temps."
       ],
-      best:0,
-      why:["✅ 'Le salaire n'est pas ma priorité' sans avoir fait les calculs montre une idéalisation de la reconversion. Les conseillers entendent ça souvent — et ça cache souvent une mauvaise surprise dans 6 mois.","Avoir fait des projections chiffrées et calculé son autonomie financière démontre une maturité de projet. La conseillère peut valider et affiner — pas repartir de zéro avec vous.","Les suppositions sans chiffres montrent que la réflexion économique n'est pas faite. Un projet sérieux se prépare avec des données réelles."],
+      best:1,
+      why:["'Le salaire n'est pas ma priorité' sans avoir fait les calculs montre une idéalisation de la reconversion. Les conseillers entendent ça souvent — et ça cache souvent une mauvaise surprise dans 6 mois.","✅ Avoir fait des projections chiffrées et calculé son autonomie financière démontre une maturité de projet. La conseillère peut valider et affiner — pas repartir de zéro avec vous.","Les suppositions sans chiffres montrent que la réflexion économique n'est pas faite. Un projet sérieux se prépare avec des données réelles."],
       skills:{posture:3,clarte:3,strategie:3}
     },
     {
@@ -17726,8 +17726,8 @@ var MS_DATA = {
         "Oui. J'ai calculé mon budget minimal viable, j'ai 8 mois d'économies de sécurité et j'ai identifié que dans ce secteur, la montée en compétences permet d'atteindre mon niveau de revenus actuel en 2-3 ans. C'est un investissement temporaire avec une logique à long terme.",
         "L'argent n'est pas ma priorité — le bonheur professionnel est plus important."
       ],
-      best:0,
-      why:["✅ Ne pas avoir évalué l'impact financier est une lacune sérieuse dans un projet de reconversion. Ça suggère que la réflexion n'est pas aboutie.","Budget minimal calculé + épargne de sécurité + trajectoire de revenu projetée = vous avez fait le travail sérieux. Votre projet est ancré dans la réalité économique.","'L'argent n'est pas ma priorité' est naïf. Les contraintes financières sont réelles et peuvent ruiner une reconversion si elles ne sont pas anticipées."],
+      best:1,
+      why:["Ne pas avoir évalué l'impact financier est une lacune sérieuse dans un projet de reconversion. Ça suggère que la réflexion n'est pas aboutie.","✅ Budget minimal calculé + épargne de sécurité + trajectoire de revenu projetée = vous avez fait le travail sérieux. Votre projet est ancré dans la réalité économique.","'L'argent n'est pas ma priorité' est naïf. Les contraintes financières sont réelles et peuvent ruiner une reconversion si elles ne sont pas anticipées."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17747,8 +17747,8 @@ var MS_DATA = {
         "Non, pas vraiment — c'est pour ça que je veux me reconvertir.",
         "Oui — j'ai fait du bénévolat comme [rôle] pendant 8 mois, j'ai suivi 3 MOOC sur [sujets] et j'ai ombré un professionnel du secteur pendant une journée. Ces expériences ont confirmé mon intérêt et m'ont donné une vision réaliste du métier.",
         "J'ai regardé des vidéos et lu des articles — je me sens prêt."],
-      best:0,
-      why:["✅ 'Pas vraiment d'expériences' affaiblit votre projet. Si vous n'avez pas encore exploré le domaine, comment êtes-vous sûr que c'est le bon choix ?","Bénévolat + formation + observation terrain = vous avez déjà commencé à tester votre projet. C'est exactement ce qu'une conseillère veut entendre.","Vidéos et articles sont un début, mais pas suffisants pour confirmer un projet de reconversion sérieux. L'immersion terrain est indispensable."],
+      best:1,
+      why:["'Pas vraiment d'expériences' affaiblit votre projet. Si vous n'avez pas encore exploré le domaine, comment êtes-vous sûr que c'est le bon choix ?","✅ Bénévolat + formation + observation terrain = vous avez déjà commencé à tester votre projet. C'est exactement ce qu'une conseillère veut entendre.","Vidéos et articles sont un début, mais pas suffisants pour confirmer un projet de reconversion sérieux. L'immersion terrain est indispensable."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17758,8 +17758,8 @@ var MS_DATA = {
         "Rien — on ne peut pas garantir l'avenir, mais je suis motivé.",
         "J'ai identifié les obstacles potentiels : financiers (budget prévu), personnels (soutien de ma famille), professionnels (retour au rythme étudiant). Pour chacun, j'ai un plan de contingence. Et la clarté de mon objectif final est mon moteur principal.",
         "Je suis quelqu'un de très persévérant, ça ne m'a jamais posé problème."],
-      best:0,
-      why:["✅ 'Rien ne garantit' est honnête mais montre que vous n'avez pas anticipé les risques. Un projet sérieux intègre toujours un plan de gestion des obstacles.","Identifier les risques + plan de contingence + clarté de l'objectif = vous montrez une organisation rigoureuse et un engagement réel. La conseillère est rassurée sur la durabilité de votre projet.","'Je suis persévérant' est une affirmation sans preuve. Donnez des exemples concrets ou anticipez les vrais obstacles."],
+      best:1,
+      why:["'Rien ne garantit' est honnête mais montre que vous n'avez pas anticipé les risques. Un projet sérieux intègre toujours un plan de gestion des obstacles.","✅ Identifier les risques + plan de contingence + clarté de l'objectif = vous montrez une organisation rigoureuse et un engagement réel. La conseillère est rassurée sur la durabilité de votre projet.","'Je suis persévérant' est une affirmation sans preuve. Donnez des exemples concrets ou anticipez les vrais obstacles."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17769,8 +17769,8 @@ var MS_DATA = {
         "Oui, tout le monde peut être indépendant si on veut vraiment.",
         "C'est réaliste à condition de construire en 2 temps : d'abord quelques années en structure pour acquérir l'expertise et le réseau, puis démarrer en indépendant avec une base de clients et des preuves concrètes de compétence.",
         "Je veux être indépendant le plus vite possible — dès ma première année."],
-      best:0,
-      why:["✅ 'Tout le monde peut' est naïf. Le statut indépendant nécessite une expertise prouvée, un réseau et souvent plusieurs années d'expérience salariale d'abord.","Un plan en 2 temps (salarié d'abord, indépendant ensuite) montre du réalisme et de la stratégie. C'est la trajectoire la plus solide pour la majorité des reconversions vers l'indépendance.","Vouloir être indépendant dès la première année sans expérience dans le domaine est très risqué. La conseillère va questionner la viabilité économique."],
+      best:1,
+      why:["'Tout le monde peut' est naïf. Le statut indépendant nécessite une expertise prouvée, un réseau et souvent plusieurs années d'expérience salariale d'abord.","✅ Un plan en 2 temps (salarié d'abord, indépendant ensuite) montre du réalisme et de la stratégie. C'est la trajectoire la plus solide pour la majorité des reconversions vers l'indépendance.","Vouloir être indépendant dès la première année sans expérience dans le domaine est très risqué. La conseillère va questionner la viabilité économique."],
       skills:{posture:2,clarte:2,strategie:3}
     },
     {
@@ -17780,8 +17780,8 @@ var MS_DATA = {
         "Un burn-out il y a 18 mois qui m'a tout remis en question.",
         "Il y a eu un moment précis : [événement spécifique — un projet, une rencontre, une lecture]. Ça a cristallisé une réflexion qui couvait depuis 2-3 ans. Ce n'était pas une rupture mais une prise de conscience que le moment d'agir était venu.",
         "Franchement, je ne me rappelle plus exactement — ça s'est fait progressivement."],
-      best:2,
-      why:["Mentionner un burn-out peut inquiéter sur votre résistance et votre santé. Formulez la crise de façon plus neutre ou ne l'exposez pas dans sa forme brute.","Un déclencheur précis + réflexion de fond = vous montrez que votre projet est ancré dans une vraie trajectoire, pas dans une réaction émotionnelle ponctuelle. C'est rassurant.","✅ Ne pas se souvenir du déclencheur suggère un manque de clarté sur votre propre projet. La conseillère va douter de la solidité de votre motivation."],
+      best:1,
+      why:["Mentionner un burn-out peut inquiéter sur votre résistance et votre santé. Formulez la crise de façon plus neutre ou ne l'exposez pas dans sa forme brute.","✅ Un déclencheur précis + réflexion de fond = vous montrez que votre projet est ancré dans une vraie trajectoire, pas dans une réaction émotionnelle ponctuelle. C'est rassurant.","Ne pas se souvenir du déclencheur suggère un manque de clarté sur votre propre projet. La conseillère va douter de la solidité de votre motivation."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -17802,8 +17802,8 @@ var MS_DATA = {
         "Je suis sûr que non — j'ai vraiment envie de ce nouveau métier.",
         "C'est une question que je me suis posé sérieusement. J'ai distingué ce que je fuyais (certaines conditions de travail spécifiques) de ce que j'allais vers (des missions qui utilisent mes vraies forces). Ce bilan est justement là pour valider cette distinction.",
         "Je n'y ai pas réfléchi sous cet angle — comment je saurais ?"],
-      best:0,
-      why:["✅ 'Je suis sûr que non' sans analyse n'est pas convaincant. La certitude sans examen est le signe d'un projet non questionné.","Distinguer 'fuite de' vs 'marche vers' + utiliser le bilan comme outil de validation = vous avez intégré le bon questionnement dans votre démarche. La conseillère est rassurée sur votre lucidité.","Ne pas avoir réfléchi à cette distinction est une vraie lacune. C'est la question centrale d'un bilan de compétences."],
+      best:1,
+      why:["'Je suis sûr que non' sans analyse n'est pas convaincant. La certitude sans examen est le signe d'un projet non questionné.","✅ Distinguer 'fuite de' vs 'marche vers' + utiliser le bilan comme outil de validation = vous avez intégré le bon questionnement dans votre démarche. La conseillère est rassurée sur votre lucidité.","Ne pas avoir réfléchi à cette distinction est une vraie lacune. C'est la question centrale d'un bilan de compétences."],
       skills:{posture:3,clarte:2,strategie:3}
     },
     {
@@ -17846,8 +17846,8 @@ var MS_DATA = {
         "Je sais que ça peut être difficile, mais j'aime tellement les enfants que ça compensera.",
         "J'ai fait un stage d'observation de 3 jours en école primaire et j'ai assisté 2 après-midis en centre de loisirs. J'ai vu la réalité — c'est physiquement et émotionnellement intense. Ça n'a pas changé ma décision, ça l'a ancrée dans la réalité.",
         "Je ne m'en suis pas encore rendu compte concrètement, mais je suis prêt."],
-      best:0,
-      why:["✅ 'J'aime tellement les enfants' sans expérience concrète du milieu professionnel est naïf. L'amour des enfants ne prépare pas à la réalité du métier.","Expérience terrain qui confirme la décision = preuve que votre projet est validé dans la réalité, pas seulement dans votre tête. C'est exactement ce que recherche la conseillère.","'Je suis prêt sans l'avoir vécu' n'est pas rassurant. La conseillère va insister sur la nécessité d'une immersion avant de valider le financement."],
+      best:1,
+      why:["'J'aime tellement les enfants' sans expérience concrète du milieu professionnel est naïf. L'amour des enfants ne prépare pas à la réalité du métier.","✅ Expérience terrain qui confirme la décision = preuve que votre projet est validé dans la réalité, pas seulement dans votre tête. C'est exactement ce que recherche la conseillère.","'Je suis prêt sans l'avoir vécu' n'est pas rassurant. La conseillère va insister sur la nécessité d'une immersion avant de valider le financement."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -17857,8 +17857,8 @@ var MS_DATA = {
         "Je ne sais pas encore — d'abord je dois commencer.",
         "Dans 10 ans, je me vois avec [expertise spécifique] développée, peut-être avec des responsabilités de [coordination/formation/création de structure]. Ce métier a des trajectoires claires que j'ai identifiées en parlant avec des professionnels.",
         "Je veux juste être heureux au travail — le reste, on verra."],
-      best:0,
-      why:["✅ 'D'abord commencer' montre un manque de vision à long terme. Un projet de reconversion sans projection à 10 ans est souvent fragile.","Projection concrète + trajectoires identifiées via rencontres terrain = vous avez réfléchi au métier comme un système, pas comme un point d'entrée. La conseillère voit un projet mature.","'Être heureux' est un objectif, pas un plan. Sans vision professionnelle à long terme, la reconversion risque de décevoir quand les premières difficultés arrivent."],
+      best:1,
+      why:["'D'abord commencer' montre un manque de vision à long terme. Un projet de reconversion sans projection à 10 ans est souvent fragile.","✅ Projection concrète + trajectoires identifiées via rencontres terrain = vous avez réfléchi au métier comme un système, pas comme un point d'entrée. La conseillère voit un projet mature.","'Être heureux' est un objectif, pas un plan. Sans vision professionnelle à long terme, la reconversion risque de décevoir quand les premières difficultés arrivent."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18013,8 +18013,8 @@ var MS_DATA = {
         "J'ai livré 3 projets React en production : une SaaS RH (15k utilisateurs), un dashboard analytics avec recharts, et une PWA e-commerce. En mode hooks, context API, et j'ai migré une base legacy de class components vers fonctionnel.",
         "J'ai une bonne expertise React, je suis à l'aise avec le framework et ses écosystèmes."
       ],
-      best:2,
-      why:["Parler de 'plusieurs projets' sans détailler, c'est aussi vague que rien. Un CTO pressé a besoin de faits, pas de catégories génériques.","Chiffres concrets (15k users), noms de stack (recharts, hooks, context), et preuve d'expertise avancée (migration legacy) — vous parlez le langage d'un tech. Décisif en 20 secondes.","✅ 'Bonne expertise' et 'à l'aise' sans preuve sont des affirmations auto-déclarées. N'importe qui peut le dire — personne ne le croit sans exemples."],
+      best:1,
+      why:["Parler de 'plusieurs projets' sans détailler, c'est aussi vague que rien. Un CTO pressé a besoin de faits, pas de catégories génériques.","✅ Chiffres concrets (15k users), noms de stack (recharts, hooks, context), et preuve d'expertise avancée (migration legacy) — vous parlez le langage d'un tech. Décisif en 20 secondes.","'Bonne expertise' et 'à l'aise' sans preuve sont des affirmations auto-déclarées. N'importe qui peut le dire — personne ne le croit sans exemples."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18025,8 +18025,8 @@ var MS_DATA = {
         "Mon TJM est de 550 € pour une mission de plus de 2 mois. Pour des missions courtes ou ponctuelles, je monte à 650 €. Je peux vous présenter mes références et un devis détaillé.",
         "Je suis autour de 400-500 €, négociable selon les conditions."
       ],
-      best:0,
-      why:["✅ 'Je suis flexible' est perçu comme de l'insécurité ou de l'amateurisme. Les freelances sérieux connaissent leur valeur et la défendent.","Annoncer un TJM clair avec une logique (durée de mission) + proposer des références et un devis = posture professionnelle complète. Thomas voit quelqu'un de structuré.","Une fourchette basse 'négociable' vous positionne d'emblée en dessous du marché. Si vous commencez bas, vous n'irez pas vers le haut."],
+      best:1,
+      why:["'Je suis flexible' est perçu comme de l'insécurité ou de l'amateurisme. Les freelances sérieux connaissent leur valeur et la défendent.","✅ Annoncer un TJM clair avec une logique (durée de mission) + proposer des références et un devis = posture professionnelle complète. Thomas voit quelqu'un de structuré.","Une fourchette basse 'négociable' vous positionne d'emblée en dessous du marché. Si vous commencez bas, vous n'irez pas vers le haut."],
       skills:{posture:3,clarte:3,strategie:3}
     },
     {
@@ -18061,8 +18061,8 @@ var MS_DATA = {
         "Absolument. Je vous transmets 2 contacts dès aujourd'hui : le CTO de [client A] qui a supervisé la SaaS RH, et le Product Owner de [client B] pour la PWA. Je peux aussi vous montrer des extraits de code sur GitHub (repo privé, accès sur demande).",
         "J'ai des références mais je préfère garder l'identité de mes clients confidentielle."
       ],
-      best:2,
-      why:["'Si on avance' est flou et passif. Vous retardez une étape que Thomas veut valider maintenant. Ça freine la décision.","Proposer des références immédiates + un accès code (GitHub) donne à Thomas tout ce dont il a besoin pour décider vite. Vous réduisez les frictions à zéro.","✅ La confidentialité totale sur les références est un signal d'alarme. Même en restant général, vous pouvez proposer quelqu'un à contacter."],
+      best:1,
+      why:["'Si on avance' est flou et passif. Vous retardez une étape que Thomas veut valider maintenant. Ça freine la décision.","✅ Proposer des références immédiates + un accès code (GitHub) donne à Thomas tout ce dont il a besoin pour décider vite. Vous réduisez les frictions à zéro.","La confidentialité totale sur les références est un signal d'alarme. Même en restant général, vous pouvez proposer quelqu'un à contacter."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18085,8 +18085,8 @@ var MS_DATA = {
         "Sur mes missions, je propose un point de communication structuré : un canal défini (Slack/email), des réponses sous 2h en heures ouvrables, un résumé hebdomadaire d'avancement. Vous savez toujours où j'en suis sans devoir me relancer.",
         "Vous pouvez me contacter quand vous voulez, 7j/7 si besoin."
       ],
-      best:0,
-      why:["✅ 'Je réponds toujours' est vague et difficile à vérifier. La promesse sans méthode ne rassure pas quelqu'un qui a déjà été déçu.","Canal défini + délai de réponse précis + résumé hebdomadaire = vous proposez un protocole concret. Le client peut visualiser comment ça va fonctionner. C'est rassurant.","Promettre d'être disponible 7j/7 peut sembler excessif et peut aussi indiquer une absence de cadre pro. Mieux vaut des horaires clairs que de la disponibilité totale."],
+      best:1,
+      why:["'Je réponds toujours' est vague et difficile à vérifier. La promesse sans méthode ne rassure pas quelqu'un qui a déjà été déçu.","✅ Canal défini + délai de réponse précis + résumé hebdomadaire = vous proposez un protocole concret. Le client peut visualiser comment ça va fonctionner. C'est rassurant.","Promettre d'être disponible 7j/7 peut sembler excessif et peut aussi indiquer une absence de cadre pro. Mieux vaut des horaires clairs que de la disponibilité totale."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18097,8 +18097,8 @@ var MS_DATA = {
         "Les profils à 250€/j sont souvent des juniors ou des profils offshore. Mon TJM reflète 7 ans d'expertise React, des projets en production avec des millions d'utilisateurs, et une autonomie qui réduit votre coût de management. Le coût total d'une mission mal exécutée dépasse largement la différence de TJM.",
         "Mon tarif est non négociable — c'est ma valeur de marché."
       ],
-      best:0,
-      why:["✅ Baisser son TJM dès la première objection vous positionne comme quelqu'un qui ne croit pas en sa valeur — et établit un mauvais précédent.","Défendre son tarif en contextualisant la comparaison + chiffrant le coût d'une mauvaise mission = vous vendez de la valeur, pas de la disponibilité. C'est la posture d'un expert confiant.","'Non négociable' sans justification peut paraître arrogant. Toujours expliquer pourquoi votre tarif est ce qu'il est."],
+      best:1,
+      why:["Baisser son TJM dès la première objection vous positionne comme quelqu'un qui ne croit pas en sa valeur — et établit un mauvais précédent.","✅ Défendre son tarif en contextualisant la comparaison + chiffrant le coût d'une mauvaise mission = vous vendez de la valeur, pas de la disponibilité. C'est la posture d'un expert confiant.","'Non négociable' sans justification peut paraître arrogant. Toujours expliquer pourquoi votre tarif est ce qu'il est."],
       skills:{posture:3,clarte:2,strategie:3}
     },
     {
@@ -18119,8 +18119,8 @@ var MS_DATA = {
         "Oui, une fois — mais le bug venait d'un autre dev, pas de moi.",
         "Oui — sur [projet], une API externe a cassé en production un vendredi soir. J'ai isolé le problème en 30 minutes, déployé un fallback en attendant le correctif, communiqué à toutes les 2h avec le client, et livré le fix définitif le lendemain matin. Zéro données perdues.",
         "Non, j'ai la chance de ne jamais avoir eu de bugs critiques."],
-      best:2,
-      why:["Rejeter la faute sur un autre dev montre que vous n'êtes pas dans une posture de propriété collective du code. Pas rassurant.","Timeline précise + isolation + fallback + communication + résolution = vous montrez exactement comment vous gérez une crise. C'est ce qu'un CTO veut entendre — quelqu'un qui résout les problèmes, pas quelqu'un qui en est immunisé.","✅ Prétendre ne jamais avoir eu de bugs critiques n'est pas crédible après plusieurs années d'expérience."],
+      best:1,
+      why:["Rejeter la faute sur un autre dev montre que vous n'êtes pas dans une posture de propriété collective du code. Pas rassurant.","✅ Timeline précise + isolation + fallback + communication + résolution = vous montrez exactement comment vous gérez une crise. C'est ce qu'un CTO veut entendre — quelqu'un qui résout les problèmes, pas quelqu'un qui en est immunisé.","Prétendre ne jamais avoir eu de bugs critiques n'est pas crédible après plusieurs années d'expérience."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18130,8 +18130,8 @@ var MS_DATA = {
         "J'essaie de gérer au mieux, ça dépend des semaines.",
         "Chaque mission a ses créneaux dédiés et ses jalons clairs. Je communique en amont sur mes disponibilités et je ne prends jamais de second client si ça compromet les engagements du premier. Si un pic de charge se présente, je préviens immédiatement et on s'adapte.",
         "Je suis très organisé — ça n'a jamais posé de problème."],
-      best:0,
-      why:["✅ 'J'essaie de gérer' sans méthode inquiète. Ça suggère que vous improvise au fil des urgences.","Créneaux dédiés + engagement de transparence + prévention proactive des conflits de charge = vous êtes un freelance qui se gère comme un professionnel. Ça rassure.","'Ça n'a jamais posé de problème' sans méthode explicite n'est pas convaincant. Et si ça posait problème demain ?"],
+      best:1,
+      why:["'J'essaie de gérer' sans méthode inquiète. Ça suggère que vous improvise au fil des urgences.","✅ Créneaux dédiés + engagement de transparence + prévention proactive des conflits de charge = vous êtes un freelance qui se gère comme un professionnel. Ça rassure.","'Ça n'a jamais posé de problème' sans méthode explicite n'est pas convaincant. Et si ça posait problème demain ?"],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18152,8 +18152,8 @@ var MS_DATA = {
         "Je n'ai pas eu le temps de mettre à jour mon portfolio.",
         "Mon portfolio public ne montre que les projets dont j'ai l'autorisation de diffuser. Mes missions récentes sont sous NDA mais je peux vous décrire précisément les stacks, les problèmes résolus et les résultats — et proposer un entretien technique pour valider mes compétences actuelles.",
         "Les projets anciens montrent quand même une expertise solide — les technos changent peu."],
-      best:2,
-      why:["'Je n'ai pas eu le temps' est la pire réponse. Un portfolio est votre vitrine — ne pas le maintenir est un signal de désinvestissement.","NDA contextualisé + alternative concrète (description + entretien tech) = vous gérez la contrainte de confidentialité professionnellement tout en proposant une validation alternative. Très solide.","✅ Prétendre que les technos changent peu est dangereux en 2025. Le marché tech évolue vite — et cette réponse peut sembler defensif et déconnecté."],
+      best:1,
+      why:["'Je n'ai pas eu le temps' est la pire réponse. Un portfolio est votre vitrine — ne pas le maintenir est un signal de désinvestissement.","✅ NDA contextualisé + alternative concrète (description + entretien tech) = vous gérez la contrainte de confidentialité professionnellement tout en proposant une validation alternative. Très solide.","Prétendre que les technos changent peu est dangereux en 2025. Le marché tech évolue vite — et cette réponse peut sembler defensif et déconnecté."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18185,8 +18185,8 @@ var MS_DATA = {
         "400€ c'est très bas — je ne peux pas descendre en dessous de mon TJM.",
         "400€/j est sous mon TJM habituel. Si le projet est vraiment intéressant et la durée suffisante, on peut explorer une structure différente : TJM réduit en échange d'un engagement plus long, ou un accord sur une revalorisation après les 2 premiers mois. Qu'est-ce qui est flexible de votre côté ?",
         "D'accord pour 400€ — l'expérience vaut le sacrifice."],
-      best:2,
-      why:["Refuser net sans exploration peut faire rater une bonne mission. Mais baisser sans condition vous sous-value aussi.","Reconnaître la contrainte + proposer des structures alternatives (durée, revalorisation) + questionner les marges de manœuvre = vous négociez intelligemment. C'est de la valeur pour les deux parties.","✅ Accepter 'pour l'expérience' établit un mauvais précédent et signale un manque de confiance en votre valeur marchande."],
+      best:1,
+      why:["Refuser net sans exploration peut faire rater une bonne mission. Mais baisser sans condition vous sous-value aussi.","✅ Reconnaître la contrainte + proposer des structures alternatives (durée, revalorisation) + questionner les marges de manœuvre = vous négociez intelligemment. C'est de la valeur pour les deux parties.","Accepter 'pour l'expérience' établit un mauvais précédent et signale un manque de confiance en votre valeur marchande."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18196,8 +18196,8 @@ var MS_DATA = {
         "Je peux tout faire — je suis full-stack.",
         "Mon expertise principale est backend. Sur le frontend, je suis opérationnel sur [technologies spécifiques] mais moins rapide que sur mon cœur de métier. Si la mission nécessite du frontend avancé, il serait plus efficient d'avoir un spécialiste en complément, ou je peux prendre en charge la partie backend pur pour en faire plus.",
         "Je ferai du frontend si nécessaire — j'apprends vite."],
-      best:0,
-      why:["✅ Se déclarer 'full-stack' sans qualification est souvent perçu comme une surestimation. Les CTOs sont méfiants avec ce terme.","Honnêteté sur ses limites + niveau réel précisé + proposition alternative = vous êtes quelqu'un sur qui on peut compter pour dire la vérité. Ça crée de la confiance.","'J'apprends vite' sur un domaine pour lequel vous êtes payé à la journée ne rassure pas sur la qualité du livrable."],
+      best:1,
+      why:["Se déclarer 'full-stack' sans qualification est souvent perçu comme une surestimation. Les CTOs sont méfiants avec ce terme.","✅ Honnêteté sur ses limites + niveau réel précisé + proposition alternative = vous êtes quelqu'un sur qui on peut compter pour dire la vérité. Ça crée de la confiance.","'J'apprends vite' sur un domaine pour lequel vous êtes payé à la journée ne rassure pas sur la qualité du livrable."],
       skills:{posture:3,clarte:2,strategie:2}
     },
     {
@@ -18262,8 +18262,8 @@ var MS_DATA = {
         "La liberté — ne pas avoir de chef et faire ce que je veux.",
         "Ce qui m'anime, c'est la résolution de problèmes complexes avec un impact mesurable. Je cherche des projets où ma contribution change réellement quelque chose — une performance améliorée, un produit qui passe à l'échelle, une équipe qui monte en compétences. L'argent est important, mais c'est le marqueur de la valeur créée, pas la fin en soi.",
         "Honnêtement, j'optimise pour la rémunération — c'est logique pour un freelance."],
-      best:0,
-      why:["✅ 'Faire ce que je veux' est une réponse honnête mais peu séduisante pour un client qui veut un partenaire, pas un individualiste.","Impact mesurable + résolution de problèmes complexes + développement d'équipe = vous parlez le langage d'un professionnel qui pense valeur. C'est exactement le type de partenaire qu'un bon client cherche.","Optimiser pour la rémunération en premier semble honnête mais peut décourager des clients qui veulent de l'engagement au-delà du TJM."],
+      best:1,
+      why:["'Faire ce que je veux' est une réponse honnête mais peu séduisante pour un client qui veut un partenaire, pas un individualiste.","✅ Impact mesurable + résolution de problèmes complexes + développement d'équipe = vous parlez le langage d'un professionnel qui pense valeur. C'est exactement le type de partenaire qu'un bon client cherche.","Optimiser pour la rémunération en premier semble honnête mais peut décourager des clients qui veulent de l'engagement au-delà du TJM."],
       skills:{posture:2,clarte:3,strategie:3}
     },
     {
@@ -18311,7 +18311,7 @@ var MS_DATA = {
         "Si je ne suis pas payé d'ici 5 jours, j'arrête immédiatement toute prestation en cours. Je ne peux pas continuer à travailler sans visibilité sur le paiement. C'est une question de principe pour moi."
       ],
       best:1,
-      why:["✅ Accepter d'attendre indéfiniment sans date précise, c'est se mettre en position de créancier oublié. La gentillesse sans cadre ne sécurise rien.","Rappeler le cadre contractuel (délai, pénalités) tout en proposant une solution concrète (date, paiement partiel) garde la relation professionnelle intacte tout en faisant avancer le dossier. C'est ferme et constructif.","Une menace d'arrêt immédiat est un levier réel mais à garder en dernier recours, après une tentative de cadrage. Dégainer trop vite peut couper une relation client encore récupérable."],
+      why:["Accepter d'attendre indéfiniment sans date précise, c'est se mettre en position de créancier oublié. La gentillesse sans cadre ne sécurise rien.","✅ Rappeler le cadre contractuel (délai, pénalités) tout en proposant une solution concrète (date, paiement partiel) garde la relation professionnelle intacte tout en faisant avancer le dossier. C'est ferme et constructif.","Une menace d'arrêt immédiat est un levier réel mais à garder en dernier recours, après une tentative de cadrage. Dégainer trop vite peut couper une relation client encore récupérable."],
       skills:{posture:3,clarte:2,strategie:3}
     },
     {
@@ -18335,7 +18335,7 @@ var MS_DATA = {
         "Non, ça sort complètement du cadre, il faudra ouvrir une nouvelle mission. Je ne peux pas l'intégrer avant au moins 2 mois. Mon planning actuel ne le permet pas."
       ],
       best:1,
-      why:["✅ Dire oui systématiquement aux demandes hors scope, même 'petites', normalise le glissement de périmètre — et vous travaillez gratuitement sans vous en rendre compte.","Documenter, chiffrer via un avenant et valider avant de démarrer protège votre temps tout en restant accommodant. Le client garde le choix, vous gardez le cadre.","Refuser brutalement et renvoyer à une mission lointaine peut frustrer un client par ailleurs satisfait, alors qu'un avenant rapide aurait suffi à traiter la demande sans perdre la relation."],
+      why:["Dire oui systématiquement aux demandes hors scope, même 'petites', normalise le glissement de périmètre — et vous travaillez gratuitement sans vous en rendre compte.","✅ Documenter, chiffrer via un avenant et valider avant de démarrer protège votre temps tout en restant accommodant. Le client garde le choix, vous gardez le cadre.","Refuser brutalement et renvoyer à une mission lointaine peut frustrer un client par ailleurs satisfait, alors qu'un avenant rapide aurait suffi à traiter la demande sans perdre la relation."],
       skills:{posture:3,clarte:3,strategie:2}
     },
     {
@@ -18890,9 +18890,29 @@ window.nsAnswer = function(profil, chosen){
   // Bulle user
   addUserBubble(feed, situation.opts[chosen]);
 
-  // Feedback Mise en situation
-  var expl = '<strong>Ton choix :</strong> '+situation.why[chosen]
-    + (chosen !== situation.best ? '<br><br><strong style="color:#a7f3d0;">✅ Meilleure réponse :</strong> '+situation.why[situation.best] : '');
+  // Feedback Mise en situation — contenu toujours centré sur la bonne réponse,
+  // mais l'intro varie selon que le candidat a répondu juste (👍) ou faux (👎).
+  var bestWhyText = situation.why[situation.best].replace(/^✅\s*/, '');
+  var expl;
+  if(isBest){
+    var NS_INTRO_OK = [
+      '👍 <strong>Bonne réponse !</strong> ',
+      '👍 <strong>En effet —</strong> ',
+      '👍 <strong>Oui, exactement.</strong> ',
+      '👍 <strong>C\'est exactement ça.</strong> ',
+      '👍 <strong>Tout à fait.</strong> '
+    ];
+    var introOk = NS_INTRO_OK[Math.floor(Math.random()*NS_INTRO_OK.length)];
+    expl = introOk + bestWhyText;
+  } else {
+    var NS_INTRO_KO = [
+      '👎 <strong>La bonne réponse était :</strong> « '+situation.opts[situation.best]+' »<br><br><strong>Pourquoi :</strong> ',
+      '👎 <strong>Pas tout à fait. Il fallait répondre :</strong> « '+situation.opts[situation.best]+' »<br><br><strong>Pourquoi :</strong> ',
+      '👎 <strong>La meilleure réponse ici :</strong> « '+situation.opts[situation.best]+' »<br><br><strong>Pourquoi :</strong> '
+    ];
+    var introKo = NS_INTRO_KO[Math.floor(Math.random()*NS_INTRO_KO.length)];
+    expl = introKo + bestWhyText;
+  }
   addFeedbackBubble(feed, isBest, expl, 700).then(function(){
     var choices = $('ns-'+cfg.key+'-choices');
     choices.innerHTML = '';
