@@ -1554,7 +1554,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     </div>
     <div style="flex:1;min-width:0;">
      <div style="font-size:.78rem;font-weight:800;color:#0f172a;">Abonnement</div>
-     <div style="font-size:.62rem;color:#64748b;margin-top:1px;">EVA Premium — 2 formules</div>
+     <div style="font-size:.62rem;color:#64748b;margin-top:1px;">🔒 Bloqué — EVA gratuit pour essai</div>
     </div>
     <div style="color:#94a3b8;font-size:1rem;">›</div>
    </div>
@@ -1589,7 +1589,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     <div style="position:absolute;bottom:-30px;right:30px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.06);"></div>
     <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:1.1rem;">👋</div>
     <div style="font-size:.94rem;font-weight:800;color:#fff;margin-bottom:5px;position:relative;">Bienvenue sur CareerPulse</div>
-    <div style="font-size:.68rem;color:rgba(255,255,255,.88);line-height:1.6;position:relative;">CareerPulse t'accompagne dans ta carrière avec EVA : conseils personnalisés, CV, simulation d'entretien, quiz et un espace pour garder tous tes documents importants (accessible dès le passage à EVA Premium) — gratuit pendant le lancement.</div>
+    <div style="font-size:.68rem;color:rgba(255,255,255,.88);line-height:1.6;position:relative;">CareerPulse t'accompagne dans ta carrière avec EVA : conseils personnalisés, CV, simulation d'entretien, quiz et un espace pour garder tous tes documents importants — 🎁 offre exceptionnelle : EVA gratuit pour essai, en illimité. L'abonnement est actuellement bloqué.</div>
    </div>
 
    <div id="cp-membre-logged-out">
@@ -1645,36 +1645,35 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    <button onclick="cpMenuShow('list')" style="background:none;border:none;color:#059669;font-size:.68rem;font-weight:700;cursor:pointer;margin-bottom:14px;font-family:inherit;padding:0;">← Retour</button>
    <div style="font-size:.84rem;font-weight:800;color:#0f172a;margin-bottom:12px;">Choisis ta formule</div>
 
-   <!-- Formule 1 : Invité (gratuit) -->
-   <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;margin-bottom:10px;">
+   <!-- Formule 1 : Invité (gratuit) — Offre exceptionnelle -->
+   <div style="border:1.5px solid #059669;border-radius:13px;padding:14px;margin-bottom:10px;position:relative;">
+    <div style="position:absolute;top:-9px;right:14px;background:#059669;color:#fff;font-size:.5rem;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:10px;">OFFRE EXCEPTIONNELLE</div>
     <div style="font-size:.76rem;font-weight:800;color:#0f172a;">Invité — Gratuit</div>
-    <div style="font-size:.64rem;color:#64748b;line-height:1.6;margin:6px 0 8px;">🎁 Jusqu'au 25 juillet 2026 : EVA et Quiz gratuits & illimités.</div>
-    <div style="font-size:.62rem;font-weight:700;color:#0f172a;margin-bottom:4px;">Après le 25 juillet 2026 :</div>
+    <div style="font-size:.64rem;color:#64748b;line-height:1.6;margin:6px 0 8px;">🎁 EVA et Quiz gratuits pour essai, en illimité — offre exceptionnelle, sans date de fin annoncée.</div>
     <ul style="margin:0 0 10px;padding-left:16px;font-size:.62rem;color:#64748b;line-height:1.7;">
      <li>CV, Offres d'emploi & Profil — toujours gratuits & illimités</li>
-     <li>EVA — accès limité, crédits rechargeables</li>
-     <li>Quiz — accès limité, crédits rechargeables</li>
+     <li>EVA — gratuit pour essai, en illimité</li>
+     <li>Quiz — gratuit pour essai, en illimité</li>
     </ul>
     <div style="font-size:.6rem;color:#94a3b8;">Sans engagement</div>
    </div>
 
-   <!-- Formule 2 : Mensuel -->
-   <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;margin-bottom:10px;">
+   <!-- Formule 2 : Mensuel — BLOQUÉE pendant l'offre exceptionnelle -->
+   <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;margin-bottom:10px;opacity:.55;filter:grayscale(.3);">
     <div style="font-size:.76rem;font-weight:800;color:#0f172a;">Membre — Mensuel</div>
-    <div style="font-size:1.1rem;font-weight:900;color:#059669;margin:4px 0;">7,99€<span style="font-size:.62rem;font-weight:600;color:#94a3b8;">/mois</span></div>
+    <div style="font-size:1.1rem;font-weight:900;color:#94a3b8;margin:4px 0;">7,99€<span style="font-size:.62rem;font-weight:600;color:#94a3b8;">/mois</span></div>
     <div style="font-size:.64rem;color:#64748b;line-height:1.5;margin-bottom:6px;">Accès EVA & Quiz illimité</div>
-    <div style="font-size:.6rem;color:#94a3b8;margin-bottom:10px;">Résiliable à tout moment dans le mois</div>
-    <button onclick="ecShowToast('Bientôt disponible')" style="width:100%;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:8px;padding:9px;font-size:.7rem;font-weight:700;color:#0f172a;font-family:inherit;cursor:pointer;">Bientôt disponible</button>
+    <div style="font-size:.6rem;color:#94a3b8;margin-bottom:10px;">Formule bloquée tant qu'EVA est gratuit pour essai</div>
+    <button disabled onclick="ecShowToast('Abonnement bloqué — EVA est gratuit pour essai en ce moment')" style="width:100%;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:8px;padding:9px;font-size:.7rem;font-weight:700;color:#94a3b8;font-family:inherit;cursor:not-allowed;">🔒 Bloqué</button>
    </div>
 
-   <!-- Formule 3 : Annuel -->
-   <div style="border:1.5px solid #059669;border-radius:13px;padding:14px;position:relative;">
-    <div style="position:absolute;top:-9px;right:14px;background:#059669;color:#fff;font-size:.5rem;font-weight:800;letter-spacing:.06em;padding:3px 8px;border-radius:10px;">-38%</div>
+   <!-- Formule 3 : Annuel — BLOQUÉE pendant l'offre exceptionnelle -->
+   <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;position:relative;opacity:.55;filter:grayscale(.3);">
     <div style="font-size:.76rem;font-weight:800;color:#0f172a;">Membre — Annuel</div>
-    <div style="font-size:1.1rem;font-weight:900;color:#059669;margin:4px 0;">59€<span style="font-size:.62rem;font-weight:600;color:#94a3b8;">/an</span></div>
+    <div style="font-size:1.1rem;font-weight:900;color:#94a3b8;margin:4px 0;">59€<span style="font-size:.62rem;font-weight:600;color:#94a3b8;">/an</span></div>
     <div style="font-size:.64rem;color:#64748b;line-height:1.5;margin-bottom:6px;">Accès EVA & Quiz gratuit & illimité toute l'année</div>
-    <div style="font-size:.6rem;color:#94a3b8;margin-bottom:10px;">Engagement annuel</div>
-    <button onclick="ecShowToast('Bientôt disponible')" style="width:100%;background:#059669;border:none;border-radius:8px;padding:9px;font-size:.7rem;font-weight:700;color:#fff;font-family:inherit;cursor:pointer;">Bientôt disponible</button>
+    <div style="font-size:.6rem;color:#94a3b8;margin-bottom:10px;">Formule bloquée tant qu'EVA est gratuit pour essai</div>
+    <button disabled onclick="ecShowToast('Abonnement bloqué — EVA est gratuit pour essai en ce moment')" style="width:100%;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:8px;padding:9px;font-size:.7rem;font-weight:700;color:#94a3b8;font-family:inherit;cursor:not-allowed;">🔒 Bloqué</button>
    </div>
   </div>
 
@@ -3905,7 +3904,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     </div>
 
     <div id="eva-splash-free-badge" style="text-align:center;font-size:.62rem;font-weight:800;padding:7px 14px;margin:8px 16px 0;border-radius:20px;background:rgba(220,38,38,.12);color:#dc2626;"></div>
-    <div style="text-align:center;font-size:.52rem;color:#94a3b8;margin:5px 16px 0;line-height:1.4;">À titre indicatif, basé sur l'horloge de ton appareil — l'offre s'ouvre réellement le 25 juillet 2026.</div>
+    <div style="text-align:center;font-size:.52rem;color:#94a3b8;margin:5px 16px 0;line-height:1.4;">🎁 Offre exceptionnelle : EVA gratuit pour essai. L'abonnement est temporairement bloqué.</div>
 
     <!-- Corps -->
     <div id="ec-splash-body">
@@ -8491,21 +8490,14 @@ function ecCloseTicket(){
 }
 
 function cpRenderFreeBadges(){
-  var cutoff = new Date(2026,6,25,23,59,59); // 25 juillet 2026
-  var now = new Date();
-  var diffDays = Math.ceil((cutoff - now) / 86400000);
-  var free = diffDays > 0;
+  // Offre exceptionnelle : EVA gratuit pour essai, sans date de fin — abonnement bloqué.
+  var free = true;
   var txtSmall, txtBig;
-  if(free){
-    txtSmall = '🎁 J-'+diffDays+' · Offre de lancement';
-    txtBig   = '🎁 Offre de lancement — EVA gratuit & illimité, encore '+diffDays+' jours !';
-  } else {
-    txtSmall = '⏳ Offre terminée';
-    txtBig   = '⏳ Offre de lancement terminée — passe à l\'abonnement EVA';
-  }
-  var bg = free ? 'rgba(220,38,38,.12)' : 'rgba(100,116,139,.12)';
-  var col = free ? '#dc2626' : '#64748b';
-  var anim = free ? 'livePulse 2s ease-in-out infinite' : 'none';
+  txtSmall = '🎁 Offre exceptionnelle · EVA gratuit pour essai';
+  txtBig   = '🎁 Offre exceptionnelle — EVA gratuit pour essai, en illimité';
+  var bg = 'rgba(5,150,105,.12)';
+  var col = '#059669';
+  var anim = 'livePulse 2s ease-in-out infinite';
   [['cp-free-badge-evacard',txtSmall],['cp-free-badge-quizcard',txtSmall],['eva-splash-free-badge',txtBig],['cp-free-badge-quizhub',txtBig],['cp-free-badge-docs',txtBig]].forEach(function(pair){
     var el = document.getElementById(pair[0]);
     if(!el) return;
