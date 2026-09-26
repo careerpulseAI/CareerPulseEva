@@ -7573,10 +7573,10 @@ function go(id){
     if(bnav) bnav.style.display='none';
     if(id==='eva') try{ ecInit(); }catch(e){}
     if(id==='eva-identity'){
-      var sc=document.querySelectorAll('.evad-screen, .screen');
-      sc.forEach(function(s){s.classList.remove('active');});
+      var _scAll=document.querySelectorAll('.evad-screen, .screen');
+      _scAll.forEach(function(s){s.classList.remove('active');});
       var evaId=document.getElementById('s-eva-identity');
-      if(evaId){evaId.classList.add('active');}
+      if(evaId){evaId.classList.add('active');evaId.style.opacity='1';}
       return;
     }
   } else {
@@ -20177,66 +20177,297 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 })();
 </script>
 <style id="cp-desktop-cards">
-/* ═══ VERSION ORDINATEUR : pages en format carte, centrées et proportionnées ═══ */
+/* ═══════════════════════════════════════════════════════════════
+   VERSION ORDINATEUR — style premium (inspiration Apple / Microsoft)
+   Pages en carte plein écran, contenu centré et proportionné.
+   N'affecte pas le mobile (< 900 px).
+═══════════════════════════════════════════════════════════════ */
 @media (min-width: 900px){
-  :root{ --cp-card-w: 760px; }
-  body{ background: linear-gradient(160deg,#eef2f7 0%,#e6f4ef 100%) !important; }
-  /* Vitrine + pages classiques : même largeur que les cartes Éva */
-  .screen:not(.eva-subpage):not(#s-eva) .wrap{ max-width: var(--cp-card-w) !important; }
-  /* Éva + sous-pages Éva : une carte centrée */
+  :root{
+    --cp-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI Variable Display", "Segoe UI Variable Text", "Segoe UI", "Helvetica Neue", Inter, Arial, sans-serif;
+    --cp-bg: #f5f5f7;
+    --cp-surface: #ffffff;
+    --cp-ink: #1d1d1f;
+    --cp-ink-2: #6e6e73;
+    --cp-hair: rgba(0,0,0,.08);
+    --cp-radius: 24px;
+    --cp-gap: 16px;
+    --cp-col: 1040px;      /* colonne de contenu standard */
+    --cp-col-list: 880px;  /* pages en liste */
+    --cp-col-chat: 820px;  /* conversations */
+    --cp-shadow: 0 1px 2px rgba(0,0,0,.04), 0 12px 40px rgba(0,0,0,.08);
+    --cp-shadow-hover: 0 2px 6px rgba(0,0,0,.06), 0 18px 48px rgba(0,0,0,.12);
+    --cp-top: calc(var(--tnav, 54px) + var(--cp-gap));
+  }
+  html{ font-size: 18px; }
+  body{ background: var(--cp-bg) !important; color: var(--cp-ink); display: flow-root; }
+  body, body *{ font-family: var(--cp-font) !important; -webkit-font-smoothing: antialiased; }
+
+  /* ── Barre du haut : verre dépoli ── */
+  #tnav{
+    background: rgba(255,255,255,.72) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px) !important;
+    backdrop-filter: saturate(180%) blur(20px) !important;
+    border-bottom: 1px solid var(--cp-hair) !important;
+    box-shadow: none !important;
+    padding: 0 28px !important;
+  }
+  #tnav button[title="Menu"]{
+    background: rgba(0,0,0,.05) !important; box-shadow: none !important;
+    border-radius: 12px !important; transition: background .2s ease !important;
+  }
+  #tnav button[title="Menu"]:hover{ background: rgba(0,0,0,.09) !important; }
+  #tnav button[title="Menu"] svg, #tnav button[title="Menu"] svg *{ stroke: var(--cp-ink) !important; }
+
+  /* ── Pages vitrine : une grande carte plein écran ── */
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){
+    margin: var(--cp-top) var(--cp-gap) var(--cp-gap) !important;
+    padding: 48px 32px 56px !important;
+    min-height: calc(100vh - var(--cp-top) - var(--cp-gap)) !important;
+    background: var(--cp-surface) !important;
+    border: 1px solid var(--cp-hair);
+    border-radius: var(--cp-radius) !important;
+    box-shadow: var(--cp-shadow) !important;
+    box-sizing: border-box;
+  }
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ max-width: var(--cp-col-list) !important; padding: 0 !important; }
+  #s-home .wrap{ max-width: 1120px !important; }
+
+  /* Accueil : grille de 4 tuiles sur une ligne */
+  #s-home .cta-grid{ grid-template-columns: repeat(4, minmax(0,1fr)) !important; gap: 20px !important; }
+  #s-home .cta-card{ min-height: 260px !important; }
+  #s-home .cta-eva-rh{ margin-bottom: 24px !important; }
+
+  /* Cartes : bords fins, ombre douce, légère élévation au survol */
+  .cta-card, .cta-eva-rh, .ec-feat-row, .ei-card, .ew-ptile, .eva-id-stat, .eva-id-card{
+    border-radius: 20px !important;
+    border: 1px solid var(--cp-hair) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 20px rgba(0,0,0,.05) !important;
+    transition: transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease !important;
+  }
+  .cta-card:hover, .cta-eva-rh:hover, .ec-feat-row:hover, .ei-card:hover, .ew-ptile:hover{
+    transform: translateY(-3px);
+    box-shadow: var(--cp-shadow-hover) !important;
+  }
+
+  /* ── Éva et toutes ses pages : carte plein écran sous la barre ── */
   #s-eva, .eva-subpage, .evad-screen, .nova-screen,
   #s-eva-workspace, #s-eva-bienetre, #s-eva-tracker, #s-eva-identity{
-    top: calc(var(--tnav, 54px) + 20px) !important; bottom: 20px !important;
-    min-height: 0 !important;
-    left: calc(50% - var(--cp-card-w) / 2) !important;
-    right: calc(50% - var(--cp-card-w) / 2) !important;
-    width: auto !important; height: auto !important; max-height: none !important;
-    border-radius: 22px !important;
+    top: var(--cp-top) !important; bottom: var(--cp-gap) !important;
+    left: var(--cp-gap) !important; right: var(--cp-gap) !important;
+    width: auto !important; height: auto !important; max-height: none !important; min-height: 0 !important;
+    border-radius: var(--cp-radius) !important;
+    border: 1px solid var(--cp-hair) !important;
     overflow: hidden !important;
-    box-shadow: 0 20px 60px rgba(15,23,42,.18), 0 2px 8px rgba(15,23,42,.06) !important;
+    box-shadow: var(--cp-shadow) !important;
     transform: translateZ(0);
   }
-  #eva-fullscreen{ border-radius: 22px; }
+  #eva-fullscreen{ border-radius: var(--cp-radius); }
+
+  /* En-têtes des pages Éva : barre claire façon macOS / Windows 11 */
+  .evad-hd, .eva-sub-header, .ew-hdr{
+    background: rgba(255,255,255,.82) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid var(--cp-hair) !important;
+    box-shadow: none !important;
+    height: 60px !important;
+  }
+  .evad-hd-title, .eva-sub-title, .ew-hdr-ttl{ color: var(--cp-ink) !important; font-size: .9rem !important; font-weight: 600 !important; letter-spacing: -.01em !important; }
+  .evad-hd-back, .eva-sub-back, .ew-hdr-back{ background: rgba(0,0,0,.05) !important; border-radius: 10px !important; }
+  .evad-hd-back svg, .evad-hd-back svg *, .eva-sub-back svg, .eva-sub-back svg *, .ew-hdr-back svg, .ew-hdr-back svg *{ stroke: var(--cp-ink) !important; }
+  .eb-hdr, .jnl-hdr{ height: auto; min-height: 60px; box-shadow: none !important; }
+
+  /* Colonne de contenu centrée dans chaque carte Éva */
+  #ec-splash-topbar, #ec-splash-body,
+  .evad-hd, .evad-scroll, .az-search-wrap, #evad-list-hero,
+  .eva-sub-header, .eva-sub-body,
+  .ew-hdr, .ew-panel,
+  .eb-hdr, .jnl-hdr, .jnl-tabs, .jnl-body{
+    padding-left: max(28px, calc((100% - var(--cp-col)) / 2)) !important;
+    padding-right: max(28px, calc((100% - var(--cp-col)) / 2)) !important;
+    box-sizing: border-box !important;
+  }
+  .eb-body, .nova-hd, .nova-prog, .nova-feed, .nova-choices{
+    padding-left: max(28px, calc((100% - var(--cp-col-chat)) / 2)) !important;
+    padding-right: max(28px, calc((100% - var(--cp-col-chat)) / 2)) !important;
+    box-sizing: border-box !important;
+  }
+  #eva-splash-free-badge{ max-width: var(--cp-col); margin-left: auto !important; margin-right: auto !important; }
+
+  /* Accueil Éva : thèmes en grille 2 × 2 */
+  #ec-splash-body{ padding-top: 28px !important; }
+  #ec-splash-features{ display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px !important; }
+  #ec-splash-features > .ec-feat-row{ margin: 0 !important; min-height: 120px; padding: 22px !important; background: #fff; }
+  #ec-splash-hero{ border-radius: 20px !important; }
+
+  /* Grands bandeaux (hero) arrondis dans la colonne */
+  .ei-hero, .ew-hero, .eva-id-hero{ border-radius: 22px !important; margin-top: 24px !important; }
+  .ei-grid, .ew-ptiles{ gap: 16px !important; }
+  .ei-card, .ew-ptile{ padding: 26px 18px !important; }
+
+  /* Correctifs carte Éva */
+  #s-eva{ background: transparent !important; }
+  #ec-splash-features{ align-content: start !important; grid-auto-rows: min-content !important; flex: 0 0 auto !important; height: auto !important; }
+  #ec-splash-features > .ec-feat-row{ min-height: 104px !important; height: auto !important; }
+}
+@media (min-width: 1440px){
+  html{ font-size: 19px; }
+  :root{ --cp-gap: 20px; }
 }
 </style>
+<style id="cp-scroll-arrows">
+/* ═══ Flèches de défilement (toutes les pages) ═══ */
+#cp-scroll-arrows{position:fixed;top:76px;right:10px;z-index:9000;display:flex;flex-direction:column;gap:6px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+#cp-scroll-arrows.on{opacity:1;pointer-events:auto;}
+#cp-scroll-arrows button{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  background:rgba(37,99,235,.82);color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.3);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  transition:transform .15s ease,background .2s ease,opacity .2s ease;position:static !important;padding:0;}
+#cp-scroll-arrows button:hover{background:#1d4ed8;transform:scale(1.06);}
+#cp-scroll-arrows button:active{transform:scale(.94);}
+#cp-scroll-arrows button[disabled]{opacity:.35;cursor:default;transform:none;}
+#cp-scroll-arrows svg{width:16px;height:16px;}
+@media (min-width:900px){
+  #cp-scroll-arrows{top:calc(var(--cp-top, 70px) + 76px);right:calc(var(--cp-gap, 16px) + 14px);}
+  #cp-scroll-arrows button{width:36px;height:36px;}
+}
+/* Fluidité du défilement */
+.evad-scroll,.eva-sub-body,.ew-panel,.ew-p0-scroll,.eb-body,.jnl-body,.nova-feed,#ec-splash-body{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+@media (prefers-reduced-motion: reduce){ #cp-scroll-arrows button{transition:none;} }
+</style>
 <script>
-/* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (vitrine / menu / eva) ═══ */
+/* ═══ Flèches haut / bas : défilent la page active ═══ */
 (function(){
-  var PART='vitrine';
-  var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
-  function fileFor(id){
-    var sid='s-'+id;
-    if(VITRINE.indexOf(sid)>-1) return 'index.html';
-    return 'eva.html';
+  if(window.self!==window.top) return; // pas dans le menu intégré
+  var box=document.createElement('div'); box.id='cp-scroll-arrows';
+  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
+    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+  document.body.appendChild(box);
+  var up=box.children[0], down=box.children[1];
+  function activeScreen(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
+  function target(){
+    var sc=activeScreen(); if(!sc) return null;
+    var fixed=getComputedStyle(sc).position==='fixed';
+    if(!fixed){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
+    var best=null, bestGap=40;
+    sc.querySelectorAll('*').forEach(function(el){
+      if(el.clientHeight<120) return;
+      var gap=el.scrollHeight-el.clientHeight; if(gap<=bestGap) return;
+      var oy=getComputedStyle(el).overflowY; if(oy!=='auto'&&oy!=='scroll') return;
+      if(!el.offsetParent && el!==sc) return;
+      best=el; bestGap=gap;
+    });
+    return best;
   }
-  var _go=window.go;
-  window.go=go=function(id){
-    if(document.getElementById('s-'+id)) return _go.apply(this,arguments);
-    // Redirection vers l'autre fichier uniquement après une action de l'utilisateur
-    if(Date.now()-_lastUserAct<3000) location.href=fileFor(id)+'#'+id;
-  };
+  var cur=null;
+  function refresh(){
+    cur=target();
+    var menuOpen=document.getElementById('cp-menu-frame'); menuOpen=menuOpen&&menuOpen.style.display==='block';
+    if(!cur || menuOpen){ box.classList.remove('on'); return; }
+    box.classList.add('on');
+    var top=cur.scrollTop, max=cur.scrollHeight-cur.clientHeight;
+    up.disabled = top<4; down.disabled = top>max-4;
+  }
+  box.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b||b.disabled||!cur) return;
+    var step=Math.max(200, cur.clientHeight*.75) * (+b.getAttribute('data-d'));
+    if(cur===document.scrollingElement) window.scrollBy({top:step,behavior:'smooth'});
+    else cur.scrollBy({top:step,behavior:'smooth'});
+    setTimeout(refresh,450);
+  });
+  var t=null; function soon(){ if(t) return; t=setTimeout(function(){t=null;refresh();},120); }
+  document.addEventListener('scroll',soon,true);
+  window.addEventListener('resize',soon);
+  document.addEventListener('click',function(){ setTimeout(refresh,500); },true);
+  setInterval(refresh,1500);
+  window.addEventListener('load',function(){ setTimeout(refresh,600); });
+})();
+</script>
+<script>
+/* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
+(function(){
+  var PART='index';
+  var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
+  var EMBED=(PART==='menu' && window.self!==window.top);
+  function fileFor(id){ return VITRINE.indexOf('s-'+id)>-1 ? 'index.html' : 'eva.html'; }
   var _lastUserAct=0;
   ['click','touchend','keydown'].forEach(function(t){
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
   });
-  var _unused=function(){
+  var _go=window.go;
+  window.go=go=function(id){
+    if(EMBED){ if(Date.now()-_lastUserAct<3000) window.parent.postMessage({cpGo:id},'*'); return; }
+    if(document.getElementById('s-'+id)) return _go.apply(this,arguments);
+    if(Date.now()-_lastUserAct<3000) location.href=fileFor(id)+'#'+id;
   };
-  window.toggleGridMenu=toggleGridMenu=(function(orig){
-    return function(){
-      if(PART==='menu'){ history.length>1 ? history.back() : (location.href='index.html'); return; }
-      if(!document.getElementById('grid-panel')){ location.href='menu.html'; return; }
-      return orig.apply(this,arguments);
+
+  /* ── Menu burger ── */
+  if(PART==='menu'){
+    var panelOpen=function(){
+      var p=document.getElementById('grid-panel'),o=document.getElementById('grid-overlay');
+      if(!p) return;
+      if(typeof cpMenuShow==='function') cpMenuShow('list');
+      requestAnimationFrame(function(){
+        p.style.transform='translateX(0)';
+        if(o){o.style.opacity='1';o.style.pointerEvents='auto';}
+      });
     };
-  })(window.toggleGridMenu);
+    var panelClose=function(){
+      var p=document.getElementById('grid-panel'),o=document.getElementById('grid-overlay');
+      if(p) p.style.transform='translateX(100%)';
+      if(o){o.style.opacity='0';o.style.pointerEvents='none';}
+      setTimeout(function(){
+        if(EMBED) window.parent.postMessage('cp-menu-close','*');
+        else location.href='index.html';
+      },330);
+    };
+    window.toggleGridMenu=toggleGridMenu=panelClose;
+    if(EMBED){
+      var st=document.createElement('style');
+      st.textContent='html,body{background:transparent !important;opacity:1 !important}'
+        +'body>*:not(#grid-panel):not(#grid-overlay):not(script):not(style){visibility:hidden !important}';
+      document.head.appendChild(st);
+      window.addEventListener('message',function(e){ if(e.data==='cp-menu-open') panelOpen(); });
+      window.addEventListener('load',function(){ window.parent.postMessage('cp-menu-ready','*'); });
+    } else {
+      window.addEventListener('load',function(){
+        var bg=document.createElement('iframe');
+        bg.src='index.html';bg.tabIndex=-1;bg.setAttribute('aria-hidden','true');
+        bg.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0;z-index:700;pointer-events:none';
+        document.body.appendChild(bg);
+        panelOpen();
+      });
+    }
+    return;
+  }
+
+  /* ── Pages index / eva : le menu s'ouvre par-dessus, sans changer de page ── */
+  var frame=null, ready=false, wantOpen=false;
+  function ensureFrame(){
+    if(frame) return frame;
+    frame=document.createElement('iframe');
+    frame.id='cp-menu-frame';frame.src='menu.html';frame.title='Menu';
+    frame.setAttribute('allowtransparency','true');
+    frame.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0;z-index:100000;background:transparent;display:none';
+    document.body.appendChild(frame);
+    return frame;
+  }
+  function openMenu(){
+    ensureFrame(); frame.style.display='block';
+    if(ready) frame.contentWindow.postMessage('cp-menu-open','*'); else wantOpen=true;
+  }
+  window.addEventListener('message',function(e){
+    if(!frame || e.source!==frame.contentWindow) return;
+    if(e.data==='cp-menu-ready'){ ready=true; if(wantOpen){wantOpen=false;frame.contentWindow.postMessage('cp-menu-open','*');} }
+    else if(e.data==='cp-menu-close'){ frame.style.display='none'; }
+    else if(e.data && e.data.cpGo){ frame.style.display='none'; _lastUserAct=Date.now(); go(e.data.cpGo); }
+  });
+  window.toggleGridMenu=toggleGridMenu=openMenu;
+  // Pré-chargement discret du menu pour une ouverture instantanée
+  window.addEventListener('load',function(){ setTimeout(ensureFrame,1200); });
+
   window.addEventListener('load',function(){
     var h=(location.hash||'').replace('#','');
-    if(PART==='menu'){
-      var p=document.getElementById('grid-panel'),o=document.getElementById('grid-overlay');
-      if(p){p.style.transform='translateX(0)';}
-      if(o){o.style.opacity='1';o.style.pointerEvents='auto';}
-      cpMenuShow(h||'list');
-      return;
-    }
     if(h && document.getElementById('s-'+h)){ _go(h); }
     else if(PART==='eva'){ _go('eva'); }
   });
