@@ -20176,6 +20176,29 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   };
 })();
 </script>
+<style id="cp-desktop-cards">
+/* ═══ VERSION ORDINATEUR : pages en format carte, centrées et proportionnées ═══ */
+@media (min-width: 900px){
+  :root{ --cp-card-w: 760px; }
+  body{ background: linear-gradient(160deg,#eef2f7 0%,#e6f4ef 100%) !important; }
+  /* Vitrine + pages classiques : même largeur que les cartes Éva */
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ max-width: var(--cp-card-w) !important; }
+  /* Éva + sous-pages Éva : une carte centrée */
+  #s-eva, .eva-subpage, .evad-screen, .nova-screen,
+  #s-eva-workspace, #s-eva-bienetre, #s-eva-tracker, #s-eva-identity{
+    top: calc(var(--tnav, 54px) + 20px) !important; bottom: 20px !important;
+    min-height: 0 !important;
+    left: calc(50% - var(--cp-card-w) / 2) !important;
+    right: calc(50% - var(--cp-card-w) / 2) !important;
+    width: auto !important; height: auto !important; max-height: none !important;
+    border-radius: 22px !important;
+    overflow: hidden !important;
+    box-shadow: 0 20px 60px rgba(15,23,42,.18), 0 2px 8px rgba(15,23,42,.06) !important;
+    transform: translateZ(0);
+  }
+  #eva-fullscreen{ border-radius: 22px; }
+}
+</style>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (vitrine / menu / eva) ═══ */
 (function(){
