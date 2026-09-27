@@ -22685,7 +22685,7 @@ function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math
 function setProgress(cur,tot){if(!$prog())return;$prog().style.display='block';$fill().style.width=Math.round((cur/tot)*100)+'%';$ptxt().textContent='Question '+cur+' / '+tot;}
 
 /* Typing dots */
-var EBD=function(ms){ return window.innerWidth>=900 ? Math.round(ms*1.7) : ms; }; /* ordinateur : rythme plus posé */
+var EBD=function(ms){ return Math.round(ms*1.7); }; /* ordinateur : rythme plus posé */
 function typing(cb,delay){
   delay=EBD(delay||600);
   var d=document.createElement('div');
@@ -23478,7 +23478,7 @@ function ebShowQuestion(){
   setTimeout(function(){
     // Afficher la question avec numéro
     var qWrap=null;
-    var DESK=window.innerWidth>=900;
+    var DESK=true; /* cartes sur ordinateur ET mobile */
     (DESK ? function(cb){ setTimeout(cb,250); } : typing)(function(){
       var sepQ=document.createElement('div');
       sepQ.className='eb-q-sep';
@@ -24096,7 +24096,7 @@ window.ebRestart=function(){
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b5e54" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
     <div class="jnl-hdr-info">
-      <div class="jnl-hdr-title">Mon Journal du Jour</div>
+      <div class="jnl-hdr-title">Suivi de ma motivation</div>
       <div class="jnl-hdr-sub" id="jnl-hdr-sub">Ton bilan personnel quotidien</div>
     </div>
     <div class="jnl-hdr-streak" id="jnl-streak">
@@ -24705,7 +24705,7 @@ function jnlRenderSemaine(){
   chart.innerHTML='<div class="jnl-chart-title">📅 Évolution sur 7 jours</div>';
   var barsWrap=document.createElement('div');
   barsWrap.className='jnl-bars-week';
-  var maxH=window.innerWidth>=900?150:68;
+  var maxH=window.innerWidth>=900?150:120;
   entries.forEach(function(e){
     var col=levelColor(e.avg);
     var h=Math.round((e.avg/10)*maxH);
@@ -24841,7 +24841,7 @@ function jnlRenderEvaParle(){
 
 /* ════ RADAR CANVAS ════ */
 function drawRadar(canvas, vals){
-  if(window.innerWidth>=900 && canvas && canvas.parentNode){ return drawRadarPremium(canvas, vals); }
+  if(canvas && canvas.parentNode){ return drawRadarPremium(canvas, vals); }
   setTimeout(function(){
     var ctx=canvas.getContext('2d');
     var cx=130,cy=130,r=95;
@@ -24917,7 +24917,7 @@ function drawRadarPremium(canvas, vals){
       +'<text x="'+(w/2)+'" y="28" text-anchor="middle" font-size="11.5" font-weight="800" fill="'+colors[i]+'" font-family="DM Sans,sans-serif">'+v+'<tspan font-size="8.5" fill="#94a3b8" font-weight="600">/10</tspan></text></g>';
   });
   var mood=avg>=7.5?'Excellent équilibre':avg>=5.5?'Bon équilibre':avg>=4?'À surveiller':'Prends soin de toi';
-  var svg='<svg class="rp-svg" viewBox="0 0 320 320" width="100%" role="img" aria-label="Radar de ton équilibre">'
+  var svg='<svg class="rp-svg" viewBox="-26 0 372 320" width="100%" role="img" aria-label="Radar de ton équilibre">'
     +'<defs>'
     +'<linearGradient id="'+uid+'g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6366f1" stop-opacity=".55"/><stop offset=".55" stop-color="#8b5cf6" stop-opacity=".42"/><stop offset="1" stop-color="#ec4899" stop-opacity=".45"/></linearGradient>'
     +'<linearGradient id="'+uid+'l" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f46e5"/><stop offset="1" stop-color="#db2777"/></linearGradient>'
@@ -25542,7 +25542,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     avis:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H4V10zM7 10l4-7a2.5 2.5 0 0 1 2.5 2.5V9h5.2a2 2 0 0 1 2 2.3l-1.3 8a2 2 0 0 1-2 1.7H7"/></svg>',
     membre:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></svg>'
   };
-  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de mon état et de ma motivation',I.suivi],['eva-identity','À propos d\'EVA',I.about]];
+  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de ma motivation',I.suivi],['eva-identity','À propos d\'EVA',I.about]];
   var CP=[['membre','Espace membre',I.membre],['abo','Abonnement',I.abo],['contact','Contact CareerPulse',I.contact],['avis','Donne ton avis',I.avis]];
   var LOGO='<svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 4v-4H9a3 3 0 0 1-3-3z" fill="rgba(255,255,255,.2)"/><path d="M16 9l1.35 3.15L20.5 13.5l-3.15 1.35L16 18l-1.35-3.15L11.5 13.5l3.15-1.35z" fill="#fff" stroke="none"/></svg>';
   var CPMARK='<svg viewBox="0 0 32 32" width="15" height="15" fill="none"><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -25820,7 +25820,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 <style id="eb-desk">
 /* ═══ Motivation & Équilibre (ordinateur) : étapes séparées, questions en cartes ═══ */
 .eb-q-sep{ display:none; }
-@media (min-width: 900px){
+@media all{
   .eb-q-sep{ display:flex; align-items:center; gap:12px; margin:26px 0 14px; }
   .eb-q-sep::before, .eb-q-sep::after{ content:""; flex:1; height:1px; background:#e2e8f0; }
   .eb-q-sep span{ font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#059669; background:#ecfdf5; border:1px solid #bbf7d0; padding:5px 12px; border-radius:99px; }
@@ -25843,8 +25843,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 }
 </style>
 <style id="jnl-premium">
-/* ═══ Journal du Jour (ordinateur) : design premium, graphiques modernes ═══ */
-@media (min-width: 900px){
+/* ═══ Journal du Jour (ordinateur + mobile) : design premium, graphiques modernes ═══ */
+@media all{
   #s-eva-tracker{ background: linear-gradient(180deg,#f7f8fc 0%,#f3f5fb 100%) !important; }
   .jnl-hdr{ background:#fff !important; border-bottom:1px solid #eceff5 !important; }
   .jnl-hdr-streak{ background:linear-gradient(135deg,#fff7ed,#ffedd5) !important; border:1px solid #fed7aa !important; color:#c2410c !important; border-radius:99px !important; }
@@ -25937,7 +25937,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 <style id="evh-css">
 /* ═══ ACCUEIL EVA (ordinateur) : chat de présentation en direct + diaporama ═══ */
 #evh{ display:none; }
-@media (min-width: 900px){
+@media all{
   #eva-fullscreen:not(.chat-mode) #ec-splash{ display:none !important; }
   #eva-fullscreen:not(.chat-mode) #evh{ display:flex; }
   #evh{ position:absolute; inset:0; z-index:40; flex-direction:column; background:
@@ -26057,9 +26057,9 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       title:'Motivation & Équilibre', lead:'Un petit rituel quotidien pour faire le point avant ou après ta journée, et repartir du bon pied.',
       pts:['Des questions guidées selon ton profil et ton moment de la journée','Un bilan personnalisé et des pistes concrètes','Un espace pour souffler, à ton rythme'],
       chips:['Confiance','Stress','Organisation'], cta:'Faire le point' },
-    { key:'suivi', step:'Suivi de mon état', go:'eva-tracker', grad:'linear-gradient(145deg,#312e81,#6d28d9 60%,#a21caf)', ic:'suivi',
+    { key:'suivi', step:'Suivi de ma motivation', go:'eva-tracker', grad:'linear-gradient(145deg,#312e81,#6d28d9 60%,#a21caf)', ic:'suivi',
       msg:'Et pour voir ton chemin parcouru, il y a ton <b>journal</b> : tu suis ton état et ta motivation jour après jour.',
-      title:'Suivi de mon état et de ma motivation', lead:'Deux minutes par jour pour noter tes 4 piliers et visualiser ton évolution.',
+      title:'Suivi de ma motivation', lead:'Deux minutes par jour pour noter tes 4 piliers et visualiser ton évolution.',
       pts:['Bilan du jour sur 4 piliers essentiels','Graphique de ta semaine et série de jours consécutifs','Des actions concrètes proposées par EVA'],
       chips:['Journal','Évolution','Actions'], cta:'Ouvrir mon journal' },
     { key:'profils', step:'Pour qui ?', msg:'EVA s\'adapte à <b>ton profil</b>. Voici ce que je t\'apporte selon ta situation :' },
@@ -26155,7 +26155,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function showUntil(n){ clearTimeout(timer); feed.innerHTML=''; for(var i=0;i<=n;i++) renderStatic(SLIDES[i]); idx=n+1; mark(); if(idx>=SLIDES.length){ done=true; } else if(playing){ timer=setTimeout(next,1400); } }
   function showAll(){ showUntil(SLIDES.length-1); done=true; sc(); }
   function restart(){ clearTimeout(timer); feed.innerHTML=''; idx=0; done=false; playing=true; var p=root.querySelector('[data-a="pause"]'); if(p) p.textContent='Pause'; mark(); next(); }
-  function visible(){ var s=document.getElementById('s-eva'), fs=document.getElementById('eva-fullscreen'); return window.innerWidth>=900 && s && s.classList.contains('active') && fs && !fs.classList.contains('chat-mode'); }
+  function visible(){ var s=document.getElementById('s-eva'), fs=document.getElementById('eva-fullscreen'); return s && s.classList.contains('active') && fs && !fs.classList.contains('chat-mode'); }
   function check(){
     if(!root) build(); if(!root) return;
     if(visible()){ if(!started){ started=true; restart(); } else if(!done && !playing){ /* reste en pause */ } }
@@ -26163,6 +26163,527 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   }
   function init(){ build(); check(); try{ new MutationObserver(function(){ clearTimeout(window._evhT); window._evhT=setTimeout(check,80); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){} }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<style id="eva-mobile">
+/* ═══════════════════════════════════════════════════════════════
+   EVA — version MOBILE premium (même application que l'ordinateur)
+   Barre d'onglets en bas + feuille « Plus » (= barre latérale ordinateur)
+═══════════════════════════════════════════════════════════════ */
+#eva-tab, #eva-sheet{ display:none; }
+@media (max-width: 899px){
+  :root{
+    --ev-blue:#2563eb; --ev-blue2:#1d4ed8; --ev-soft:#eff6ff; --ev-ink:#0f172a; --ev-ink2:#475569; --ev-line:#e5e9f2;
+    --ev-hero: linear-gradient(118deg,#1d4ed8 0%,#2563eb 45%,#3b82f6 75%,#60a5fa 100%);
+    --ev-tab-h: calc(62px + env(safe-area-inset-bottom, 0px));
+  }
+  body{ background:#f5f7fb !important; }
+
+  /* ── Barre d'onglets ── */
+  #eva-tab{ position:fixed; z-index:270; left:0; right:0; bottom:0; height:var(--ev-tab-h); padding:6px 6px env(safe-area-inset-bottom,0px);
+    display:grid; grid-template-columns:repeat(5,1fr); box-sizing:border-box;
+    background:rgba(255,255,255,.88); -webkit-backdrop-filter:saturate(180%) blur(20px); backdrop-filter:saturate(180%) blur(20px);
+    border-top:1px solid rgba(15,23,42,.07); box-shadow:0 -8px 30px rgba(15,23,42,.06);
+    transform:translateY(110%); transition:transform .35s cubic-bezier(.2,.8,.2,1); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Arial,sans-serif; }
+  html.ev-tabs #eva-tab{ transform:none; }
+  #eva-tab button{ position:relative !important; border:none; background:none; padding:0; margin:0; cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:3px;
+    color:#64748b; font:600 .6rem/1.1 inherit; letter-spacing:-.005em; -webkit-tap-highlight-color:transparent; }
+  #eva-tab .ti{ width:52px; height:30px; border-radius:16px; display:flex; align-items:center; justify-content:center; transition:background .25s ease, transform .2s ease; }
+  #eva-tab svg{ width:21px; height:21px; stroke:currentColor; fill:none; }
+  #eva-tab button.on{ color:var(--ev-blue2); }
+  #eva-tab button.on .ti{ background:var(--ev-soft); }
+  #eva-tab button:active .ti{ transform:scale(.9); }
+  /* Les pages laissent la place à la barre */
+  html.ev-tabs #s-eva.active, html.ev-tabs .eva-subpage.active, html.ev-tabs .evad-screen.active,
+  html.ev-tabs #s-eva-workspace.active, html.ev-tabs #s-eva-bienetre.active, html.ev-tabs #s-eva-tracker.active, html.ev-tabs #s-eva-identity.active{ bottom:var(--ev-tab-h) !important; height:auto !important; min-height:0 !important; }
+  html.ev-tabs #cp-guest-notice{ bottom:calc(var(--ev-tab-h) + 10px) !important; }
+
+  /* ── Feuille « Plus » (menu complet d'EVA) ── */
+  #eva-sheet{ display:block; position:fixed; inset:0; z-index:300; pointer-events:none; }
+  #eva-sheet .sh-bg{ position:absolute; inset:0; background:rgba(15,23,42,.38); opacity:0; transition:opacity .3s ease; -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px); }
+  #eva-sheet .sh-pan{ position:absolute; left:0; right:0; bottom:0; max-height:88vh; overflow-y:auto; background:#fff; border-radius:26px 26px 0 0; box-sizing:border-box;
+    padding:8px 14px calc(16px + env(safe-area-inset-bottom,0px)); transform:translateY(100%); transition:transform .38s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 -20px 50px rgba(15,23,42,.18); font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Arial,sans-serif; overscroll-behavior:contain; }
+  #eva-sheet.open{ pointer-events:auto; }
+  #eva-sheet.open .sh-bg{ opacity:1; }
+  #eva-sheet.open .sh-pan{ transform:none; }
+  #eva-sheet .sh-grab{ width:40px; height:5px; border-radius:99px; background:#e2e8f0; margin:2px auto 12px; }
+  #eva-sheet .evs-brand{ display:flex; align-items:center; gap:12px; padding:2px 6px 14px; border-bottom:1px solid var(--ev-line); margin-bottom:8px; }
+  #eva-sheet .evs-logo{ width:42px; height:42px; border-radius:14px; background:var(--ev-hero); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 8px 18px -8px rgba(37,99,235,.7); flex-shrink:0; }
+  #eva-sheet .evs-name{ font-size:1.2rem; font-weight:800; color:var(--ev-ink); letter-spacing:-.02em; line-height:1; }
+  #eva-sheet .evs-by{ font-size:.66rem; color:#94a3b8; font-weight:600; margin-top:4px; }
+  #eva-sheet .sh-x{ margin-left:auto; width:34px; height:34px; border-radius:50%; border:none; background:#f1f5f9; color:#475569; display:flex; align-items:center; justify-content:center; position:static !important; }
+  #eva-sheet .sh-x svg{ width:16px; height:16px; }
+  #eva-sheet .evs-label{ font-size:.6rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#94a3b8; padding:14px 10px 6px; }
+  #eva-sheet .evs-item{ display:flex; align-items:center; gap:13px; width:100%; border:none; background:none; cursor:pointer; text-align:left; position:static !important;
+    padding:12px 10px; border-radius:14px; font:600 .86rem/1.25 inherit; color:#1e293b; -webkit-tap-highlight-color:transparent; transition:background .15s; }
+  #eva-sheet .evs-item svg{ width:20px; height:20px; flex-shrink:0; stroke:#475569; }
+  #eva-sheet .evs-item::after{ content:""; margin-left:auto; width:16px; height:16px; flex-shrink:0; opacity:.35;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/14px no-repeat; }
+  #eva-sheet .evs-item:active{ background:#f1f5f9; }
+  #eva-sheet .evs-item.on{ background:var(--ev-soft); color:var(--ev-blue2); }
+  #eva-sheet .evs-item.on svg{ stroke:var(--ev-blue); }
+  #eva-sheet .evs-foot{ border-top:1px solid var(--ev-line); margin-top:8px; padding-top:12px; }
+  #eva-sheet .evs-back{ display:flex; align-items:center; justify-content:center; gap:9px; width:100%; padding:15px 10px; border:none; cursor:pointer; position:static !important;
+    border-radius:16px; font:700 .84rem/1 inherit; color:#fff; background:linear-gradient(135deg,#0b1e36,#0a5a49); box-shadow: inset 0 1px 0 rgba(255,255,255,.15), 0 10px 24px -12px rgba(10,90,73,.8); }
+  #eva-sheet .evs-cp{ width:22px; height:22px; border-radius:7px; background:linear-gradient(150deg,#15c08f,#0a9a74 48%,#067357); display:flex; align-items:center; justify-content:center; }
+
+  /* ── En-têtes de page : titre + sous-titre, retour bleu (comme l'ordinateur) ── */
+  .evad-hd, .eva-sub-header, .ew-hdr, .eb-hdr, .jnl-hdr{ height:auto !important; min-height:62px !important; padding:10px 14px !important; gap:10px !important;
+    padding-top:calc(10px + env(safe-area-inset-top,0px)) !important;
+    background:rgba(255,255,255,.92) !important; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); border-bottom:1px solid var(--ev-line) !important; box-shadow:none !important; }
+  .evad-hd-title, .eva-sub-title, .ew-hdr-ttl, .eb-hdr-title, .jnl-hdr-title{ font-size:1rem !important; font-weight:800 !important; color:var(--ev-ink) !important; letter-spacing:-.02em !important; line-height:1.2 !important;
+    white-space:normal !important; min-width:0; flex:1 1 auto; overflow:hidden; }
+  .ev-sub{ display:block; font-size:.68rem; font-weight:500; color:var(--ev-ink2); margin-top:2px; letter-spacing:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .evad-hd-back, .eva-sub-back, .ew-hdr-back, .eb-hdr-back, .jnl-hdr-back{ width:36px !important; height:36px !important; min-width:36px !important; flex:0 0 36px !important; border-radius:50% !important; background:var(--ev-soft) !important; border:none !important; }
+  .evad-hd-back svg, .evad-hd-back svg *, .eva-sub-back svg, .eva-sub-back svg *, .ew-hdr-back svg, .ew-hdr-back svg *, .eb-hdr-back svg, .eb-hdr-back svg *, .jnl-hdr-back svg, .jnl-hdr-back svg *{ stroke:var(--ev-blue) !important; }
+  .evad-hd-eva, .eb-hdr-badge, .eva-sub-badge{ background:var(--ev-soft) !important; color:var(--ev-blue2) !important; border:1px solid #dbeafe !important; border-radius:99px !important; padding:5px 10px !important; flex-shrink:0; }
+  .evad-hd-eva *{ color:var(--ev-blue2) !important; }
+
+  /* ── Bandeaux bleus ── */
+  .ei-hero, .ew-hero, .ev-hero, .eva-id-hero{
+    background: radial-gradient(90% 140% at 100% 0%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 55%), var(--ev-hero) !important;
+    border-radius:22px !important; padding:20px 88px 20px 18px !important; color:#fff; box-shadow:0 14px 30px -16px rgba(37,99,235,.6) !important; position:relative; overflow:hidden; min-height:0 !important; }
+  .eva-id-hero{ padding-right:18px !important; margin:14px !important; }
+  .ei-hero{ margin:14px 14px 0 !important; }
+  .ei-hero *, .ew-hero *, .ev-hero *{ color:#fff !important; }
+  .ei-hero > svg, .ew-hero > svg, .ei-hero > [class*="deco"], .ew-hero > [class*="deco"]{ display:none !important; }
+  .ei-h, .ew-hero-ttl, .ev-hero-ttl{ font-size:1.28rem !important; font-weight:800 !important; letter-spacing:-.02em !important; line-height:1.18 !important; }
+  .ei-p, .ew-hero-sub, .ev-hero-sub{ font-size:.78rem !important; line-height:1.5 !important; opacity:.92; margin-top:6px; }
+  .ev-hero-ico{ position:absolute; right:16px; top:18px; width:56px; height:56px; border-radius:18px; background:rgba(255,255,255,.16);
+    display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+  .ev-hero-ico svg{ width:28px !important; height:28px !important; }
+  .ei-label, .ew-sec-lbl{ font-size:.92rem !important; font-weight:800 !important; color:var(--ev-ink) !important; letter-spacing:-.01em !important; text-transform:none !important; margin:18px 2px 10px !important; }
+
+  /* Quiz et mises en situation : même bandeau que l'ordinateur */
+  #s-eva-entretien .eva-sub-body > .ev-hero + div{ display:none !important; }
+  #s-eva-entretien .eva-sub-body > .ev-hero{ flex-shrink:0 !important; margin:16px 14px 6px !important; }
+
+  /* ── Cartes de profil : une par ligne, icône à gauche, chevron rond à droite ── */
+  .ei-grid, .ew-ptiles{ grid-template-columns:1fr !important; gap:10px !important; }
+  .ei-card, .ew-ptile{ display:flex !important; flex-direction:row !important; align-items:center !important; text-align:left !important; gap:13px !important;
+    padding:14px 52px 14px 14px !important; position:relative; background:#fff !important; border:1px solid var(--ev-line) !important; border-radius:18px !important;
+    box-shadow:0 1px 2px rgba(15,23,42,.03), 0 8px 22px -14px rgba(15,23,42,.18) !important; min-height:0 !important; transition:transform .15s ease; }
+  .ei-card:active, .ew-ptile:active{ transform:scale(.985); }
+  .ei-card::after, .ew-ptile::after{ content:""; position:absolute; right:14px; top:50%; margin-top:-14px; width:28px; height:28px; border-radius:50%;
+    background: var(--ev-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/13px no-repeat; }
+  .ew-ptile > *{ margin:0 !important; }
+  .ei-card, .ew-ptile{ display:grid !important; grid-template-columns:46px 1fr; column-gap:14px !important; row-gap:3px !important; align-items:center !important; }
+  .ei-card-ico, .ew-ptile-ico{ grid-row:1 / span 3; width:46px !important; height:46px !important; border-radius:14px !important; }
+  .ei-card-name, .ei-card-sub, .ei-card-pill, .ew-ptile-nom, .ew-ptile-sub{ grid-column:2; justify-self:start; }
+  .ei-card-name, .ew-ptile-nom{ font-size:.92rem !important; font-weight:700 !important; color:var(--ev-ink) !important; }
+  .ei-card-sub, .ew-ptile-sub{ font-size:.74rem !important; line-height:1.4 !important; color:#64748b !important; }
+  .ei-card-pill{ font-size:.62rem !important; padding:3px 10px !important; margin-top:4px !important; color:var(--ev-blue2) !important; background:var(--ev-soft) !important; border-color:#dbeafe !important; }
+
+  /* Boutons principaux en bleu EVA */
+  .eb-body button[style*="#059669"], .jnl-body button[style*="#059669"]{ background:var(--ev-blue) !important; }
+
+  /* ── Accueil EVA : présentation en direct, adaptée au téléphone ── */
+  .evh-top{ flex-wrap:wrap; gap:10px 12px !important; padding:calc(12px + env(safe-area-inset-top,0px)) 14px 10px !important; }
+  .evh-av{ width:40px !important; height:40px !important; border-radius:13px !important; }
+  .evh-av svg{ width:22px !important; height:22px !important; }
+  .evh-id b{ font-size:.98rem !important; }
+  .evh-ctrl{ gap:6px !important; }
+  .evh-id{ min-width:0; flex:1 1 auto; }
+  .evh-id span{ white-space:nowrap; }
+  .evh-ctrl button{ padding:0 12px !important; height:34px; font-size:.68rem !important; }
+  .evh-ctrl [data-a="skip"]{ font-size:0 !important; }
+  .evh-ctrl [data-a="skip"]::after{ content:"Tout voir"; font-size:.68rem; }
+  .evh-ctrl [data-a="replay"]{ font-size:0 !important; width:34px; padding:0 !important;
+    background:#2563eb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 3-6.7L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E") center/16px no-repeat !important; }
+  .evh-offer{ order:5; flex:1 1 100%; text-align:center; padding:7px 11px !important; font-size:.66rem !important; }
+  .evh-steps{ padding:10px 14px !important; scroll-snap-type:x proximity; scroll-padding:0 14px;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent); mask-image:linear-gradient(90deg,#000 88%,transparent); }
+  .evh-step{ scroll-snap-align:start; padding:8px 12px !important; font-size:.7rem !important; }
+  .evh-prog{ margin:0 14px !important; }
+  .evh-feed{ padding:16px 14px 28px !important; }
+  .evh-msg{ gap:9px !important; margin-bottom:12px !important; }
+  .evh-msg .evh-mini{ width:28px !important; height:28px !important; border-radius:9px !important; }
+  .evh-bub{ font-size:.88rem !important; line-height:1.55 !important; padding:12px 14px !important; max-width:100% !important; }
+  .evh-slide{ margin:4px 0 18px !important; grid-template-columns:1fr !important; border-radius:22px !important; }
+  .evh-art{ display:grid !important; grid-template-columns:52px 1fr; align-items:center; gap:8px 14px; min-height:0 !important; padding:18px !important; }
+  .evh-art .n{ grid-column:1 / -1; }
+  .evh-art .ic{ width:52px !important; height:52px !important; border-radius:16px !important; }
+  .evh-art .ic svg{ width:26px !important; height:26px !important; }
+  .evh-art .t{ font-size:1.06rem !important; }
+  .evh-body{ padding:16px 16px 18px !important; }
+  .evh-body .lead{ font-size:.86rem !important; }
+  .evh-body li{ font-size:.82rem !important; }
+  .evh-foot{ flex-direction:column; align-items:stretch !important; gap:12px !important; }
+  .evh-open{ width:100%; padding:14px 16px !important; font-size:.84rem !important; border-radius:14px !important; }
+  .evh-prof{ margin:4px 0 18px !important; grid-template-columns:1fr !important; gap:10px !important; }
+  .evh-pc h4{ font-size:.9rem !important; } .evh-pc p{ font-size:.8rem !important; }
+  .evh-trust, .evh-quick{ margin:4px 0 14px !important; }
+  .evh-quick{ display:grid !important; grid-template-columns:1fr 1fr; }
+  .evh-quick button{ padding:12px 10px !important; font-size:.76rem !important; border-radius:14px !important; text-align:center; }
+
+  /* ── Motivation & Équilibre : cartes adaptées ── */
+  .eb-q-card{ padding:14px 14px 12px !important; border-radius:18px !important; }
+  .eb-q-card .eb-bub-eva{ font-size:.92rem !important; line-height:1.45 !important; }
+  .eb-q-sep{ margin:20px 0 12px !important; }
+  .eb-nb-choice{ flex-direction:column; }
+  .eb-q-opt{ min-height:46px; }
+  .eb-q-ans{ font-size:.8rem !important; flex-wrap:wrap; }
+
+  /* ── Journal : onglets, graphiques ── */
+  .jnl-tabs{ width:auto !important; margin:12px 14px 4px !important; display:flex !important; }
+  .jnl-tab{ flex:1 1 0 !important; min-width:0 !important; padding:9px 4px !important; font-size:.68rem !important; white-space:nowrap; }
+  .jnl-welcome-card, .jnl-result-hero{ padding:22px 20px !important; border-radius:22px !important; }
+  .jnl-welcome-title{ font-size:1.22rem !important; }
+  .jnl-card{ padding:18px !important; }
+  .jnl-chart-card{ padding:18px 14px !important; }
+  .jnl-bars-week{ gap:6px !important; height:170px !important; }
+  .jnl-bar-day{ flex:1 1 0 !important; min-width:0; }
+  .jnl-bar-day-col{ width:22px !important; }
+  .rp-bars{ gap:8px 12px !important; }
+  .rp-bar{ font-size:.68rem !important; gap:6px !important; }
+}
+</style>
+<script>
+/* ═══ EVA mobile : barre d'onglets + feuille « Plus » (reprend la barre latérale ordinateur) ═══ */
+(function(){
+  if(window.self!==window.top) return;
+  var MQ=window.matchMedia('(max-width: 899px)');
+  var PLUS='<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg>';
+  var X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
+  var TABS=[['eva','Accueil'],['eva-droits','Droits'],['eva-entretien','Quiz'],['eva-bienetre','Motivation'],['plus','Plus']];
+  var SHOW=/^(eva|eva-droits|eva-workspace|eva-entretien|eva-bienetre|eva-tracker|eva-identity)$/;
+  var tab, sheet;
+  function side(){ return document.getElementById('eva-side'); }
+  function svgOf(id){ var b=side() && side().querySelector('[data-go="'+id+'"] svg'); return b ? b.outerHTML : ''; }
+  function build(){
+    if(tab || !side()) return !!tab;
+    tab=document.createElement('nav'); tab.id='eva-tab'; tab.setAttribute('aria-label','Navigation EVA');
+    tab.innerHTML=TABS.map(function(t){ return '<button type="button" data-t="'+t[0]+'"><span class="ti">'+(t[0]==='plus'?PLUS:svgOf(t[0]))+'</span>'+t[1]+'</button>'; }).join('');
+    document.body.appendChild(tab);
+    sheet=document.createElement('div'); sheet.id='eva-sheet'; sheet.setAttribute('aria-hidden','true');
+    sheet.innerHTML='<div class="sh-bg"></div><div class="sh-pan" role="dialog" aria-label="Menu EVA"><div class="sh-grab"></div><div class="sh-body"></div></div>';
+    document.body.appendChild(sheet);
+    tab.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      var t=b.getAttribute('data-t');
+      if(t==='plus'){ openSheet(); return; }
+      window._lastUserActEva=Date.now();
+      var fs=document.getElementById('eva-fullscreen');
+      if(t==='eva' && fs) fs.classList.remove('chat-mode');
+      go(t);
+    });
+    sheet.addEventListener('click',function(e){
+      if(e.target.classList.contains('sh-bg') || e.target.closest('.sh-x')){ closeSheet(); return; }
+      var b=e.target.closest('button'); if(!b) return;
+      if(b.getAttribute('data-go')){ closeSheet(); window._lastUserActEva=Date.now(); var id=b.getAttribute('data-go'); setTimeout(function(){ go(id); },120); }
+      else if(b.getAttribute('data-menu')){ closeSheet(); var m=b.getAttribute('data-menu'); setTimeout(function(){ if(window.cpOpenMenu) window.cpOpenMenu(m); },160); }
+      else if(b.getAttribute('data-cp')){ if(('CSSViewTransitionRule' in window)){ location.href='index.html'; } else { document.documentElement.classList.add('cp-leaving'); setTimeout(function(){ location.href='index.html'; },170); } }
+    });
+    // glisser vers le bas pour fermer
+    var pan=sheet.querySelector('.sh-pan'), y0=null, dy=0;
+    pan.addEventListener('touchstart',function(e){ if(pan.scrollTop>0) return; y0=e.touches[0].clientY; dy=0; pan.style.transition='none'; },{passive:true});
+    pan.addEventListener('touchmove',function(e){ if(y0==null) return; dy=Math.max(0,e.touches[0].clientY-y0); pan.style.transform='translateY('+dy+'px)'; },{passive:true});
+    pan.addEventListener('touchend',function(){ if(y0==null) return; pan.style.transition=''; pan.style.transform=''; if(dy>90) closeSheet(); y0=null; });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeSheet(); });
+    return true;
+  }
+  function openSheet(){
+    var s=side(); if(!s) return;
+    var body=sheet.querySelector('.sh-body');
+    var brand=s.querySelector('.evs-brand').cloneNode(true);
+    var x=document.createElement('button'); x.type='button'; x.className='sh-x'; x.setAttribute('aria-label','Fermer'); x.innerHTML=X; brand.appendChild(x);
+    body.innerHTML=''; body.appendChild(brand);
+    var nav=s.querySelector('.evs-nav').cloneNode(true);
+    var lbl=document.createElement('div'); lbl.className='evs-label'; lbl.textContent='EVA'; nav.insertBefore(lbl,nav.firstChild);
+    body.appendChild(nav); body.appendChild(s.querySelector('.evs-foot').cloneNode(true));
+    sheet.classList.add('open'); sheet.setAttribute('aria-hidden','false');
+  }
+  function closeSheet(){ if(!sheet) return; sheet.classList.remove('open'); sheet.setAttribute('aria-hidden','true'); }
+  var typing=false;
+  function current(){
+    var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active');
+    return a ? a.id.replace('s-','') : '';
+  }
+  function refresh(){
+    if(!build()) return;
+    var id=current(), fs=document.getElementById('eva-fullscreen');
+    var chat=id==='eva' && fs && fs.classList.contains('chat-mode');
+    var pf=document.getElementById('ec-pf-overlay');
+    var menu=document.getElementById('cp-menu-frame'); var menuOpen=menu && menu.offsetParent && getComputedStyle(menu).visibility!=='hidden' && getComputedStyle(menu).opacity!=='0';
+    var show=MQ.matches && SHOW.test(id) && !chat && !(pf && pf.offsetParent) && !typing && !menuOpen;
+    document.documentElement.classList.toggle('ev-tabs', !!show);
+    var on=id; if(/^eva-droits/.test(id)) on='eva-droits'; if(/^(entretien-|mise-situation-)/.test(id)) on='eva-entretien';
+    var inTabs=TABS.some(function(t){ return t[0]===on; });
+    [].forEach.call(tab.children,function(b){ var t=b.getAttribute('data-t'); b.classList.toggle('on', t===on || (t==='plus' && !inTabs)); });
+    if(!MQ.matches) closeSheet();
+  }
+  // clavier ouvert : on cache la barre pour ne pas gêner la saisie
+  document.addEventListener('focusin',function(e){ if(e.target.matches && e.target.matches('input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,[contenteditable="true"]')){ typing=true; refresh(); } });
+  document.addEventListener('focusout',function(){ setTimeout(function(){ var a=document.activeElement; typing=!!(a && a.matches && a.matches('input:not([type=range]):not([type=checkbox]):not([type=radio]),textarea,[contenteditable="true"]')); refresh(); },60); });
+  function init(){
+    refresh();
+    try{ new MutationObserver(function(m){ for(var i=0;i<m.length;i++){ if(tab && (m[i].target===tab || tab.contains(m[i].target))) return; } clearTimeout(window._evTb); window._evTb=setTimeout(refresh,40); }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']}); }catch(e){}
+    if(MQ.addEventListener) MQ.addEventListener('change',refresh); else if(MQ.addListener) MQ.addListener(refresh);
+  }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,0); });
+})();
+</script>
+<style id="evx-css">
+/* ═══ Pages EVA en « chat streaming » (même design que la présentation de l'accueil) ═══ */
+.evx-park{ display:none !important; }
+.evx-hid{ display:none !important; }
+.evx-page{ background:
+    radial-gradient(60% 50% at 100% 0%, rgba(96,165,250,.16) 0%, rgba(96,165,250,0) 70%),
+    radial-gradient(50% 40% at 0% 100%, rgba(167,139,250,.14) 0%, rgba(167,139,250,0) 70%), #f7f9fd !important; }
+.evx-page .evad-scroll, .evx-page .ew-p0-scroll, .evx-page .eva-sub-body, .evx-page .evx-scroll{ background:transparent !important; }
+.evx-page .ew-p0-scroll, .evx-page .eva-sub-body{ padding:0 !important; }
+.evx-scroll{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; min-height:0; }
+.evx{ font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Inter,Arial,sans-serif; }
+.evx *{ box-sizing:border-box; }
+.evx-bar{ position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:12px; padding:12px 26px; background:rgba(247,249,253,.82);
+  -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); border-bottom:1px solid #e8edf6; }
+.evx-av{ position:relative; width:36px; height:36px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#1d4ed8,#3b82f6 55%,#60a5fa); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 8px 18px -8px rgba(37,99,235,.7); }
+.evx-av::after{ content:""; position:absolute; right:-2px; bottom:-2px; width:10px; height:10px; border-radius:50%; background:#22c55e; border:2px solid #fff; }
+.evx-av svg{ width:20px; height:20px; }
+.evx-id{ min-width:0; }
+.evx-id b{ display:block; font-size:.86rem; font-weight:800; color:#0f172a; letter-spacing:-.01em; }
+.evx-id span{ font-size:.64rem; color:#16a34a; font-weight:600; display:inline-flex; align-items:center; gap:6px; white-space:nowrap; }
+.evx-id span::before{ content:""; width:7px; height:7px; border-radius:50%; background:#22c55e; animation: evhPulse 1.6s ease-in-out infinite; }
+.evx-ctrl{ margin-left:auto; display:flex; gap:8px; }
+.evx-ctrl button{ position:static !important; border:1px solid #dbe3f0; background:#fff; color:#1e293b; border-radius:99px; height:32px; padding:0 14px; font:600 .66rem/1 inherit; cursor:pointer; transition:background .18s; }
+.evx-ctrl button:hover{ background:#f1f5fb; }
+.evx-ctrl button.pri{ background:#2563eb; border-color:#2563eb; color:#fff; }
+.evx-ctrl button.pri:hover{ background:#1d4ed8; }
+.evx-prog{ height:3px; background:#e8edf6; }
+.evx-prog b{ display:block; height:100%; width:0; background:linear-gradient(90deg,#2563eb,#8b5cf6); transition:width .6s ease; }
+.evx-feed{ padding:22px 26px 40px; }
+.evx .evh-col{ max-width:860px; margin:0 auto; }
+.evx-att{ margin:4px 0 22px 42px; animation: evhSlide .6s cubic-bezier(.2,.8,.2,1) both; }
+.evx-att .ei-body{ padding:0 !important; }
+.evx-att .ei-grid, .evx-att .ew-ptiles{ margin:0 !important; }
+.evx-att > div[style*="padding:16px 16px 40px"]{ padding:0 !important; }
+/* Journal intégré au chat */
+.evx-att .jnl-tabs{ margin:0 auto 12px !important; }
+.evx-att .jnl-body{ flex:none !important; overflow:visible !important; height:auto !important; background:transparent !important; }
+.evx-att .jnl-body > *{ margin-left:0 !important; margin-right:0 !important; }
+.evx-page .ev-hero, .evx-page .ei-hero, .evx-page .ew-hero, .evx-page .ew-sec-lbl{ display:none !important; }
+
+/* ═══ Motivation & Équilibre : même design que la présentation ═══ */
+#s-eva-bienetre{ background:
+    radial-gradient(60% 50% at 100% 0%, rgba(96,165,250,.16) 0%, rgba(96,165,250,0) 70%),
+    radial-gradient(50% 40% at 0% 100%, rgba(167,139,250,.14) 0%, rgba(167,139,250,0) 70%), #f7f9fd !important; }
+#s-eva-bienetre .eb-body{ background:transparent !important; padding:22px 26px 40px !important; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Inter,Arial,sans-serif; }
+#s-eva-bienetre .eb-body > *{ width:100%; max-width:860px; margin-left:auto !important; margin-right:auto !important; }
+#s-eva-bienetre .eb-prog-wrap{ background:rgba(247,249,253,.85); padding:10px 26px 0 !important; border-bottom:1px solid #e8edf6; }
+#s-eva-bienetre .eb-prog-bar{ height:3px !important; background:#e8edf6 !important; border-radius:99px !important; }
+#s-eva-bienetre .eb-prog-fill{ background:linear-gradient(90deg,#2563eb,#8b5cf6) !important; }
+#s-eva-bienetre .eb-prog-txt{ color:#1e3a8a !important; font-size:.56rem !important; padding:7px 0 8px !important; }
+/* message EVA = mini avatar + bulle */
+#eb-body > div:not(.eb-q-card):has(> .eb-eva-name){ display:grid !important; grid-template-columns:30px minmax(0,1fr); column-gap:12px; margin-bottom:14px !important; animation: evhIn .45s cubic-bezier(.2,.8,.2,1) both; }
+#eb-body > div:not(.eb-q-card):has(> .eb-eva-name) > *{ grid-column:2; }
+#eb-body > div:not(.eb-q-card):has(> .eb-eva-name) > .eb-eva-name{ grid-column:1; grid-row:1 / span 4; align-self:start; margin:2px 0 0 !important; width:30px; height:30px; border-radius:10px; font-size:0 !important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 6.5a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h.5A2.5 2.5 0 0 1 5 13.5z'/%3E%3Cpath d='m12 7 .9 2.1L15 10l-2.1.9L12 13l-.9-2.1L9 10l2.1-.9z' fill='%23fff' stroke='none'/%3E%3C/svg%3E") center/17px no-repeat, linear-gradient(135deg,#1d4ed8,#60a5fa); }
+#s-eva-bienetre .eb-bub-eva{ background:#fff !important; border:1px solid #e8edf6 !important; border-radius:4px 18px 18px 18px !important; padding:13px 16px !important; font-size:.84rem !important; line-height:1.6 !important; color:#1e293b !important;
+  box-shadow:0 1px 2px rgba(15,23,42,.04), 0 8px 22px rgba(15,23,42,.05) !important; max-width:680px !important; margin-bottom:0 !important; justify-self:start; }
+#s-eva-bienetre .eb-bub-user{ background:linear-gradient(135deg,#2563eb,#1d4ed8) !important; border-radius:18px 18px 4px 18px !important; padding:12px 16px !important; font-size:.84rem !important; line-height:1.5 !important;
+  box-shadow:0 10px 22px -12px rgba(37,99,235,.8) !important; animation: evhIn .4s cubic-bezier(.2,.8,.2,1) both; }
+#s-eva-bienetre .eb-typing{ margin-left:42px !important; background:#fff !important; border:1px solid #e8edf6 !important; border-radius:4px 18px 18px 18px !important; padding:12px 14px !important; box-shadow:0 8px 22px rgba(15,23,42,.05) !important; width:auto !important; }
+#s-eva-bienetre .eb-typing span{ background:#94a3b8 !important; animation: evhDot 1.2s infinite ease-in-out !important; }
+#s-eva-bienetre .eb-typing span:nth-child(2){ animation-delay:.15s !important; } #s-eva-bienetre .eb-typing span:nth-child(3){ animation-delay:.3s !important; }
+/* cartes, choix, résultats : alignés sous les bulles, style « diapositive » */
+#eb-body > .eb-q-card, #eb-body > .eb-q-wrap, #eb-body > .eb-profil-grid, #eb-body > .eb-theme-grid, #eb-body > .eb-result-card, #eb-body > .eb-section{ padding-left:0; }
+#eb-body > .eb-q-card, #eb-body > .eb-q-wrap, #eb-body > .eb-profil-grid, #eb-body > .eb-theme-grid, #eb-body > .eb-result-card{ width:calc(100% - 42px) !important; max-width:818px !important; margin-left:max(42px, calc((100% - 860px) / 2 + 42px)) !important; }
+#s-eva-bienetre .eb-q-card{ border:1px solid #e3e9f4 !important; border-radius:22px !important; padding:18px 20px 16px !important; box-shadow:0 2px 4px rgba(15,23,42,.04), 0 22px 50px -20px rgba(15,23,42,.18) !important; }
+#s-eva-bienetre .eb-q-card .eb-eva-name{ color:#2563eb !important; font-size:.56rem !important; }
+#s-eva-bienetre .eb-q-card .eb-bub-eva{ background:transparent !important; border:none !important; box-shadow:none !important; padding:2px 0 12px !important; font-size:.94rem !important; font-weight:700 !important; color:#0f172a !important; line-height:1.45 !important; }
+#s-eva-bienetre .eb-q-sep span{ color:#1e3a8a !important; background:#eff6ff !important; border-color:#dbeafe !important; }
+#s-eva-bienetre .eb-q-ans{ color:#1e3a8a; }
+#s-eva-bienetre .eb-q-opt{ border:1px solid #e2e8f0 !important; border-left:1px solid #e2e8f0 !important; border-radius:14px !important; padding:13px 16px !important; font-size:.82rem !important; box-shadow:0 1px 2px rgba(15,23,42,.04) !important; background:#fff !important; color:#0f172a !important; }
+#s-eva-bienetre .eb-q-opt:hover{ border-color:#93c5fd !important; background:#f8fbff !important; }
+#s-eva-bienetre .eb-q-opt::before{ border-color:#cbd5e1 !important; background:#fff !important; }
+#s-eva-bienetre .eb-q-opt:hover::before{ border-color:#2563eb !important; }
+#s-eva-bienetre .eb-q-opt.sel{ border-color:#2563eb !important; background:#eff6ff !important; color:#1e3a8a !important; font-weight:600 !important; }
+#s-eva-bienetre .eb-q-opt.sel::before{ background:#2563eb !important; border-color:#2563eb !important; box-shadow: inset 0 0 0 3px #fff; }
+#s-eva-bienetre .eb-profil-card, #s-eva-bienetre .eb-theme-btn, #s-eva-bienetre .eb-result-card{ border:1px solid #e3e9f4 !important; border-radius:18px !important; box-shadow:0 10px 26px -16px rgba(15,23,42,.2) !important; }
+#s-eva-bienetre .eb-profil-card{ padding:16px !important; }
+#s-eva-bienetre .eb-theme-btn{ padding:13px 14px !important; }
+#s-eva-bienetre .eb-profil-card:hover, #s-eva-bienetre .eb-theme-btn:hover{ border-color:#bfdbfe !important; box-shadow:0 12px 28px -14px rgba(37,99,235,.35) !important; }
+#s-eva-bienetre .ep-ico, #s-eva-bienetre .et-ico{ background:#eff6ff !important; border-color:#dbeafe !important; border-radius:12px !important; }
+#s-eva-bienetre .ep-lbl, #s-eva-bienetre .et-lbl{ font-size:.8rem !important; }
+#s-eva-bienetre .ep-sub, #s-eva-bienetre .et-sub{ font-size:.66rem !important; }
+#s-eva-bienetre .eb-theme-arr{ color:#2563eb !important; }
+#s-eva-bienetre .eb-body input{ border:1px solid #dbe3f0 !important; border-radius:14px !important; background:#fff !important; font-size:.84rem !important; }
+#s-eva-bienetre .eb-body input:focus{ border-color:#2563eb !important; box-shadow:0 0 0 4px rgba(37,99,235,.14) !important; outline:none; }
+#s-eva-bienetre .eb-body button[style*="#059669"]{ background:#2563eb !important; border-radius:14px !important; }
+#s-eva-bienetre .eb-body input + button, #s-eva-bienetre .eb-body input ~ button{ background:linear-gradient(135deg,#2563eb,#1d4ed8) !important; border:none !important; border-radius:14px !important; box-shadow:0 10px 22px -12px rgba(37,99,235,.8) !important; color:#fff !important; }
+
+@media (max-width: 899px){
+  .evx-bar{ padding:10px 14px; gap:10px; }
+  .evx-ctrl button{ height:32px; padding:0 12px; font-size:.66rem; }
+  .evx-ctrl [data-a="skip"]{ font-size:0; }
+  .evx-ctrl [data-a="skip"]::after{ content:"Tout voir"; font-size:.66rem; }
+  .evx-ctrl [data-a="replay"]{ font-size:0; width:32px; padding:0;
+    background:#2563eb url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 3-6.7L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E") center/15px no-repeat !important; }
+  .evx-feed{ padding:16px 14px 28px; }
+  .evx-att{ margin:4px 0 18px 0; }
+  #s-eva-bienetre .eb-body{ padding:16px 14px 28px !important; }
+  #s-eva-bienetre .eb-prog-wrap{ padding:10px 14px 0 !important; }
+  #eb-body > div:not(.eb-q-card):has(> .eb-eva-name){ grid-template-columns:28px minmax(0,1fr); column-gap:9px; }
+  #eb-body > div:not(.eb-q-card):has(> .eb-eva-name) > .eb-eva-name{ width:28px; height:28px; border-radius:9px; }
+  #s-eva-bienetre .eb-bub-eva{ font-size:.88rem !important; line-height:1.55 !important; padding:12px 14px !important; }
+  #s-eva-bienetre .eb-bub-user{ font-size:.88rem !important; }
+  #s-eva-bienetre .eb-typing{ margin-left:37px !important; }
+  #eb-body > .eb-q-card, #eb-body > .eb-q-wrap, #eb-body > .eb-profil-grid, #eb-body > .eb-theme-grid, #eb-body > .eb-result-card{ width:100% !important; margin-left:0 !important; }
+  #s-eva-bienetre .eb-q-card{ padding:16px 16px 14px !important; }
+  #s-eva-bienetre .eb-q-opt{ font-size:.86rem !important; }
+}
+</style>
+<script>
+/* ═══ Droits · Conseils · Quiz · Suivi : EVA présente chaque page en direct (chat streaming) ═══ */
+(function(){
+  if(window.self!==window.top) return;
+  var S=function(p,c){ return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#fff')+'" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
+  var IC={
+    eva:'<path d="M5 6.5a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h.5A2.5 2.5 0 0 1 5 13.5z"/><path d="m12 7 .9 2.1L15 10l-2.1.9L12 13l-.9-2.1L9 10l2.1-.9z" fill="#fff" stroke="none"/>',
+    droits:'<path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/>',
+    quiz:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+    conseils:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/>',
+    suivi:'<path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 3 5-6"/>'
+  };
+  function q(s,r){ return (r||document).querySelector(s); }
+  var PAGES={
+    'eva-droits':{ label:'Droits & aides', scroll:function(sc){ return q('.evad-scroll',sc); },
+      nodes:function(sc){ return { grid:q('.ei-grid',sc) }; },
+      hide:function(sc){ return [q('.ei-label',sc), q('.ei-note',sc)]; },
+      steps:[
+        { msg:'Bienvenue dans <b>Droits & aides</b> 👋 Ici, je t\'explique tes droits simplement : chômage, contrat, congés, statut d\'indépendant, aides étudiantes…' },
+        { slide:{ grad:'linear-gradient(145deg,#1d4ed8,#3b82f6 60%,#60a5fa)', ic:'droits', n:'Droits & Protections sociales', t:'Connaître ses droits, c\'est déjà agir.',
+          lead:'Une encyclopédie claire, rangée de A à Z, pour comprendre ce à quoi tu as droit et comment le demander.',
+          pts:['Articles complets, sourcés et mis à jour 2026','12 thèmes par profil, classés de A à Z','Des explications concrètes, sans jargon'],
+          chips:['Légifrance','service-public.fr','France Travail','URSSAF','CAF'] } },
+        { msg:'Pour commencer, <b>choisis ton profil</b> : je t\'ouvre les 12 thèmes qui te concernent 👇' },
+        { node:'grid' },
+        { msg:'Bon à savoir : chaque article cite ses <b>sources officielles</b> — Légifrance, service-public.fr, France Travail, URSSAF, CAF, ameli.fr. Données vérifiées 2026.' }
+      ] },
+    'eva-workspace':{ label:'Conseils & pro', scroll:function(sc){ return q('#ew-p0 .ew-p0-scroll',sc); },
+      nodes:function(sc){ return { tiles:q('.ew-ptiles',sc) }; },
+      hide:function(){ return []; },
+      steps:[
+        { msg:'Bienvenue dans tes <b>Conseils pratiques & professionnels</b> 💡 Je te donne des conseils sur-mesure et des diagnostics personnalisés, selon ta situation.' },
+        { slide:{ grad:'linear-gradient(145deg,#0f766e,#0d9488 60%,#2dd4bf)', ic:'conseils', n:'Conseils & Portfolio', t:'Des conseils qui te ressemblent',
+          lead:'Des conseils adaptés à ton profil, et tous tes outils de travail réunis au même endroit.',
+          pts:['Diagnostics personnalisés et plans d\'action concrets','Agenda, documents pro prêts à remplir (CV, lettre, facture, devis…)','Contacts et organismes utiles selon ton profil'],
+          chips:['Organisation','Documents pro','Entrepreneuriat'] } },
+        { msg:'Dis-moi où tu en es : <b>choisis ton profil</b> 👇' },
+        { node:'tiles' }
+      ] },
+    'eva-entretien':{ label:'Quiz et mises en situation', scroll:function(sc){ return q('.eva-sub-body',sc); },
+      nodes:function(sc){ var b=q('.eva-sub-body',sc), list=null; if(b) [].forEach.call(b.children,function(c){ if(!list && /padding:16px 16px 40px/.test(c.getAttribute('style')||'')) list=c; }); return { list:list }; },
+      hide:function(sc){ var b=q('.eva-sub-body',sc), out=[]; if(b) [].forEach.call(b.children,function(c){ if(/#0f2447/.test(c.getAttribute('style')||'')) out.push(c); }); var l=this.nodes(sc).list; if(l && l.firstElementChild) out.push(l.firstElementChild); return out; },
+      steps:[
+        { msg:'Prêt(e) à t\'entraîner ? 🎯 Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
+        { slide:{ grad:'linear-gradient(145deg,#4f46e5,#7c3aed 60%,#a78bfa)', ic:'quiz', n:'Quiz et mises en situation', t:'Réussis tes entretiens avec EVA',
+          lead:'Des QCM pour vérifier tes connaissances, et des scénarios réalistes pour t\'entraîner face à un recruteur.',
+          pts:['QCM de 25 questions avec feedback immédiat','Mises en situation immersives, dialogue réel','Un retour clair pour progresser à chaque session'],
+          chips:['Entretien d\'embauche','Retour à l\'emploi','Négociation'] } },
+        { msg:'Choisis ton profil, puis lance un <b>QCM</b> ou une <b>mise en situation</b> 👇' },
+        { node:'list' }
+      ] },
+    'eva-tracker':{ label:'Suivi de ma motivation', wrap:true,
+      nodes:function(sc){ var w=document.createElement('div'); w.className='evx-jnl'; return { jnl:w }; },
+      hide:function(){ return []; },
+      steps:[
+        { msg:'Bienvenue dans ton <b>Suivi de ma motivation</b> 📈 Deux minutes par jour pour faire le point sur tes 4 piliers : énergie, finances, mental et confiance.' },
+        { slide:{ grad:'linear-gradient(145deg,#312e81,#6d28d9 60%,#a21caf)', ic:'suivi', n:'Suivi de ma motivation', t:'Ton chemin, jour après jour',
+          lead:'Note ton état, visualise ton évolution et reçois des actions concrètes proposées par EVA.',
+          pts:['Bilan du jour sur 4 piliers essentiels','Graphique de ta semaine et radar de ton équilibre','Des actions concrètes et une série de jours consécutifs'],
+          chips:['Journal','Évolution','Actions'] } },
+        { msg:'C\'est parti — ton journal est juste ici 👇' },
+        { node:'jnl' }
+      ] }
+  };
+  function el(t,c,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
+
+  function Chat(id,P){
+    var sc=document.getElementById('s-'+id); if(!sc) return null;
+    var scroll;
+    var nodes=P.nodes(sc);
+    if(P.wrap){ // Journal : on crée la zone de défilement et on y range onglets + contenu
+      var tabs=q('.jnl-tabs',sc), body=q('.jnl-body',sc); if(!tabs||!body) return null;
+      scroll=el('div','evx-scroll'); sc.insertBefore(scroll,tabs);
+      nodes.jnl.appendChild(tabs); nodes.jnl.appendChild(body);
+    } else scroll=P.scroll(sc);
+    if(!scroll) return null;
+    for(var k in nodes){ if(!nodes[k]) return null; }
+    P.hide(sc).forEach(function(h){ if(h) h.classList.add('evx-hid'); });
+    sc.classList.add('evx-page');
+    var root=el('div','evx');
+    root.innerHTML='<div class="evx-bar"><div class="evx-av">'+S(IC.eva)+'</div><div class="evx-id"><b>EVA</b><span>En ligne · '+P.label+'</span></div>'
+      +'<div class="evx-ctrl"><button type="button" data-a="skip">Tout afficher</button><button type="button" class="pri" data-a="replay" aria-label="Rejouer">Rejouer</button></div></div>'
+      +'<div class="evx-prog"><b></b></div><div class="evx-feed"><div class="evh-col"></div></div>';
+    var park=el('div','evx-park');
+    scroll.insertBefore(root, scroll.firstChild); scroll.appendChild(park);
+    for(var k2 in nodes) park.appendChild(nodes[k2]);
+    var feed=q('.evh-col',root), prog=q('.evx-prog b',root), idx=0, timer=null, done=false, started=false;
+    root.addEventListener('click',function(e){ var b=e.target.closest('.evx-ctrl button'); if(!b) return; if(b.getAttribute('data-a')==='skip') showAll(); else restart(); });
+    function sc2(){ scroll.scrollTo({top:scroll.scrollHeight, behavior:'smooth'}); }
+    function mark(){ prog.style.width=Math.round(idx/P.steps.length*100)+'%'; }
+    function msgRow(){ var r=el('div','evh-msg','<div class="evh-mini">'+S(IC.eva)+'</div>'); var b=el('div','evh-bub'); r.appendChild(b); return [r,b]; }
+    function slide(s){
+      var c=el('div','evh-slide');
+      c.innerHTML='<div class="evh-art" style="background:'+s.grad+'"><div class="n">'+s.n+'</div><div class="ic">'+S(IC[s.ic])+'</div><div class="t">'+s.t+'</div></div>'
+        +'<div class="evh-body"><div class="lead">'+s.lead+'</div><ul>'+s.pts.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul>'
+        +'<div class="evh-foot"><div class="evh-chips">'+s.chips.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div></div></div>';
+      return c;
+    }
+    function att(key){ var a=el('div','evx-att'); a.appendChild(nodes[key]); return a; }
+    function renderStatic(s){
+      if(s.msg){ var m=msgRow(); m[1].innerHTML=s.msg; feed.appendChild(m[0]); }
+      else if(s.slide) feed.appendChild(slide(s.slide));
+      else if(s.node) feed.appendChild(att(s.node));
+    }
+    function stream(bub,html,cb){
+      var parts=html.split(/(<[^>]+>|\s+)/).filter(function(x){return x!=='';}), i=0, out='', caret='<span class="evh-caret"></span>';
+      (function tick(){
+        if(i>=parts.length){ bub.innerHTML=out; cb(); return; }
+        var p=parts[i++]; out+=p; bub.innerHTML=out+caret;
+        timer=setTimeout(tick, /^</.test(p)||/^\s+$/.test(p) ? 0 : 42);
+      })();
+    }
+    function next(){
+      if(done) return;
+      if(idx>=P.steps.length){ done=true; return; }
+      var s=P.steps[idx]; idx++; mark();
+      if(s.msg){
+        var m=msgRow(); m[1].innerHTML='<span class="evh-typing"><span></span><span></span><span></span></span>'; feed.appendChild(m[0]); sc2();
+        timer=setTimeout(function(){ stream(m[1],s.msg,function(){ timer=setTimeout(next,650); }); },700);
+      } else {
+        timer=setTimeout(function(){ renderStatic(s); sc2(); timer=setTimeout(next, s.slide?1500:500); },250);
+      }
+    }
+    function reset(){ clearTimeout(timer); for(var k in nodes) park.appendChild(nodes[k]); feed.innerHTML=''; idx=0; done=false; }
+    function showAll(){ reset(); P.steps.forEach(renderStatic); idx=P.steps.length; done=true; mark(); }
+    function restart(){ reset(); scroll.scrollTop=0; mark(); next(); }
+    return {
+      enter:function(){ if(!started){ started=true; restart(); } },
+      leave:function(){ if(started && !done) showAll(); }
+    };
+  }
+  var chats={}, cur=null;
+  function active(){ var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); return a?a.id.replace('s-',''):''; }
+  function check(){
+    var id=active();
+    if(cur && cur!==id && chats[cur]) chats[cur].leave();
+    if(PAGES[id]){
+      if(chats[id]===undefined) chats[id]=Chat(id,PAGES[id]);
+      if(chats[id]) chats[id].enter();
+    }
+    cur=id;
+  }
+  function init(){
+    // mise en place immédiate (évite l'apparition de l'ancien contenu)
+    Object.keys(PAGES).forEach(function(id){ if(chats[id]===undefined) chats[id]=Chat(id,PAGES[id]); });
+    check();
+    try{ new MutationObserver(function(){ clearTimeout(window._evxT); window._evxT=setTimeout(check,30); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){}
+  }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,0); });
 })();
 </script>
 <script>
