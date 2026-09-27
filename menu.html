@@ -12251,7 +12251,7 @@ go=function(page){
 @media (max-width: 899px){
   #cp-scroll-arrows, #cp-menu-arrows{ display: none !important; }
   :root{ --cp-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-  body{ background: #f5f5f7 !important; }
+  body{ background: #f5f5f7 !important; display: flow-root; }
   body, body *{ font-family: var(--cp-font) !important; -webkit-font-smoothing: antialiased; }
 
   /* Barre du haut : verre dépoli clair */
@@ -12374,7 +12374,10 @@ go=function(page){
         +'body>*:not(#grid-panel):not(#grid-overlay):not(script):not(style){visibility:hidden !important}';
       document.head.appendChild(st);
       var _p0=document.getElementById('grid-panel'); if(_p0) _p0.style.transform='translateX(calc(100% + 24px))';
-      window.addEventListener('message',function(e){ if(e.data==='cp-menu-open') panelOpen(); });
+      window.addEventListener('message',function(e){
+        if(e.data==='cp-menu-open') panelOpen();
+        else if(e.data && e.data.cpMenuOpen){ panelOpen(); var k=e.data.cpMenuOpen; setTimeout(function(){ if(typeof cpMenuShow==='function') cpMenuShow(k); },30); }
+      });
       window.addEventListener('load',function(){ window.parent.postMessage('cp-menu-ready','*'); });
     } else {
       window.addEventListener('load',function(){
