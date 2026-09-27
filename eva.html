@@ -22685,8 +22685,9 @@ function shuffle(arr){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math
 function setProgress(cur,tot){if(!$prog())return;$prog().style.display='block';$fill().style.width=Math.round((cur/tot)*100)+'%';$ptxt().textContent='Question '+cur+' / '+tot;}
 
 /* Typing dots */
+var EBD=function(ms){ return window.innerWidth>=900 ? Math.round(ms*1.7) : ms; }; /* ordinateur : rythme plus posé */
 function typing(cb,delay){
-  delay=delay||600;
+  delay=EBD(delay||600);
   var d=document.createElement('div');
   d.className='eb-typing';
   d.innerHTML='<span></span><span></span><span></span>';
@@ -23290,7 +23291,7 @@ window.ebStart=function(){
         wrap.remove();
         setTimeout(function(){
           addEva('Bonjour <strong>'+n+'</strong> ! 🌿<br><br>On est plutôt à quel moment de ta journée là ?',400);
-          setTimeout(ebShowMomentChoix,1500);
+          setTimeout(ebShowMomentChoix,EBD(1500));
         },400);
       };
       inp.addEventListener('keydown',function(e){if(e.key==='Enter')btn.click();});
@@ -23321,7 +23322,7 @@ function ebShowMomentChoix(){
       setTimeout(function(){
         wrap.remove();
         addEva('Tu te retrouves dans quel profil en ce moment ?',400);
-        setTimeout(ebShowProfilChoix,1500);
+        setTimeout(ebShowProfilChoix,EBD(1500));
       },400);
     };
     wrap.appendChild(card);
@@ -23349,10 +23350,10 @@ function ebShowProfilChoix(){
         grid.remove();
         if(key==='demandeur'){
           addEva('Pour mieux t\'accompagner 🌟<br><br>Tu es plutôt dans quelle situation en ce moment ?',400);
-          setTimeout(ebShowDemandeurSituation,1500);
+          setTimeout(ebShowDemandeurSituation,EBD(1500));
         } else {
           addEva('Parfait 🌟<br><br>Et aujourd\'hui, tu veux qu\'on explore quel domaine de ta vie ?',400);
-          setTimeout(ebShowThemeChoix,1500);
+          setTimeout(ebShowThemeChoix,EBD(1500));
         }
       },400);
     };
@@ -23382,7 +23383,7 @@ function ebShowDemandeurSituation(){
       setTimeout(function(){
         wrap.remove();
         addEva('Parfait 🌟<br><br>Et aujourd\'hui, tu veux qu\'on explore quel domaine de ta vie ?',400);
-        setTimeout(ebShowThemeChoix,1500);
+        setTimeout(ebShowThemeChoix,EBD(1500));
       },400);
     };
     wrap.appendChild(card);
@@ -23448,7 +23449,7 @@ function ebShowQuestion(){
     if(qTxt.charAt(0).charCodeAt(0)>255) qTxt=qTxt.slice(0,2)+pi+qTxt.slice(2,3).toLowerCase()+qTxt.slice(3);
   }
 
-  var delay=300;
+  var delay=EBD(300);
   // Réaction EVA tous les 5 questions
   if(EB.qIdx>0&&EB.qIdx%5===0){
     var types=['validation','encourage','console'];
@@ -23457,16 +23458,22 @@ function ebShowQuestion(){
     // Personnaliser la réaction avec le prénom
     if(name && Math.random()>.5) reaction=reaction.replace(/\. /,' '+name+'. ');
     addEva(reaction,0);
-    delay=1400;
+    delay=EBD(1400);
   }
 
   setTimeout(function(){
     // Afficher la question avec numéro
+    var qWrap=null;
     typing(function(){
-      var qWrap=document.createElement('div');
+      var sepQ=document.createElement('div');
+      sepQ.className='eb-q-sep';
+      sepQ.innerHTML='<span>Question '+cur+' / '+total+'</span>';
+      $b().appendChild(sepQ);
+      qWrap=document.createElement('div');
+      qWrap.className='eb-q-card';
       qWrap.style.cssText='margin-bottom:4px;';
       qWrap.innerHTML='<div class="eb-eva-name">✦ EVA</div>'
-        +'<div style="font-size:.44rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;padding-left:1px;">Question '+cur+' / '+total+'</div>'
+        +'<div class="eb-q-num" style="font-size:.44rem;font-weight:700;color:#059669;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;padding-left:1px;">Question '+cur+' / '+total+'</div>'
         +'<div class="eb-bub-eva">'+qTxt+'</div>';
       $b().appendChild(qWrap);scroll();
     },500);
@@ -23510,12 +23517,12 @@ function ebShowQuestion(){
               EB.qIdx++;
               ebShowQuestion();
             },250);
-          },400);
+          },EBD(400));
         };
         wrap.appendChild(btn);
       });
-      append(wrap);
-    },900);
+      if(qWrap && window.innerWidth>=900){ qWrap.appendChild(wrap); scroll(); } else append(wrap);
+    },EBD(900)+EBD(500));
   },delay);
 }
 
@@ -24680,7 +24687,7 @@ function jnlRenderSemaine(){
   chart.innerHTML='<div class="jnl-chart-title">📅 Évolution sur 7 jours</div>';
   var barsWrap=document.createElement('div');
   barsWrap.className='jnl-bars-week';
-  var maxH=68;
+  var maxH=window.innerWidth>=900?150:68;
   entries.forEach(function(e){
     var col=levelColor(e.avg);
     var h=Math.round((e.avg/10)*maxH);
@@ -25447,7 +25454,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     avis:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H4V10zM7 10l4-7a2.5 2.5 0 0 1 2.5 2.5V9h5.2a2 2 0 0 1 2 2.3l-1.3 8a2 2 0 0 1-2 1.7H7"/></svg>',
     membre:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></svg>'
   };
-  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Mon suivi',I.suivi],['eva-identity','À propos d\'EVA',I.about]];
+  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de mon état et de ma motivation',I.suivi],['eva-identity','À propos d\'EVA',I.about]];
   var CP=[['membre','Espace membre',I.membre],['abo','Abonnement',I.abo],['contact','Contact CareerPulse',I.contact],['avis','Donne ton avis',I.avis]];
   var LOGO='<svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 4v-4H9a3 3 0 0 1-3-3z" fill="rgba(255,255,255,.2)"/><path d="M16 9l1.35 3.15L20.5 13.5l-3.15 1.35L16 18l-1.35-3.15L11.5 13.5l3.15-1.35z" fill="#fff" stroke="none"/></svg>';
   var CPMARK='<svg viewBox="0 0 32 32" width="15" height="15" fill="none"><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -25504,7 +25511,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 @media (min-width: 900px){
   #ev-arrows{ display:flex; align-items:center; gap:6px; flex-shrink:0; margin:0 10px 0 auto; opacity:0; pointer-events:none; transition:opacity .2s ease; }
   #ev-arrows.on{ opacity:1; pointer-events:auto; }
-  #ev-arrows.ev-float{ position:absolute !important; top:18px; right:22px; margin:0; z-index:20; }
+  #ev-arrows.ev-float{ position:absolute !important; top:18px; right:22px; margin:0; z-index:80; }
   #ev-arrows button{ width:32px; height:32px; border-radius:50%; border:none; background:#059669; color:#fff; cursor:pointer; padding:0; box-shadow:0 3px 10px rgba(5,150,105,.35);
     display:flex; align-items:center; justify-content:center; position:static !important; transition:background .18s ease, opacity .18s ease, transform .12s ease;
     touch-action:none; user-select:none; -webkit-user-select:none; }
@@ -25516,6 +25523,12 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   /* Portfolio (chat EVA + outils) : flèches rouges */
   #ev-arrows.ev-red button{ background:#dc2626; box-shadow:0 3px 10px rgba(220,38,38,.35); color:#fff; }
   #ev-arrows.ev-red button:hover{ background:#b91c1c; }
+  #ev-arrows.ev-violet button{ background:#7c3aed; box-shadow:0 3px 10px rgba(124,58,237,.35); color:#fff; }
+  #ev-arrows.ev-violet button:hover{ background:#6d28d9; }
+  #ev-arrows button[disabled]{ opacity:.35 !important; box-shadow:none !important; }
+  #ev-arrows{ transition:none; }
+  /* Document : champs Police / Taille à une largeur normale */
+  #pf-ribbon select{ width:auto !important; min-width:0 !important; max-width:118px !important; flex:0 0 auto !important; }
   #ec-pf-overlay > div:nth-child(2){ position:sticky !important; top:0; z-index:30 !important; background:rgba(255,255,255,.85) !important; }
   /* Listes horizontales : flèches gauche / droite à côté de la liste (jamais dessus) */
   .evh-wrap{ display:flex; align-items:center; gap:6px; }
@@ -25556,7 +25569,9 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function place(sc){
     var ov=pfOverlay();
     var chat=document.querySelector('#eva-fullscreen.chat-mode');
-    box.classList.toggle('ev-red', !!(ov || (chat && sc.id==='s-eva')));
+    var pfMenu=!!(ov && (window.PF_MENU_LIST_OPEN || window.PF_MENU_RECORD_OPEN));
+    box.classList.toggle('ev-violet', pfMenu);
+    box.classList.toggle('ev-red', !pfMenu && !!(ov || (chat && sc.id==='s-eva')));
     if(ov){
       var oh=ov.children[1], menuBtn=oh && oh.lastElementChild;
       box.classList.remove('ev-float');
@@ -25571,7 +25586,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       else if(box.parentElement!==hd || hd.lastElementChild!==box) hd.appendChild(box);
     } else {
       box.classList.add('ev-float');
-      if(box.parentElement!==sc) sc.appendChild(box);
+      var host=sc.querySelector('#eva-fullscreen')||sc;
+      if(box.parentElement!==host) host.appendChild(box);
     }
   }
   function refresh(){
@@ -25580,9 +25596,11 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var sc=screen(); if(!sc) return;
     place(sc);
     var mf=document.getElementById('cp-menu-frame');
+    // Pas de flèches dans les chats « Quiz et mises en situation » ni quand le menu CareerPulse est ouvert
+    if(sc.classList.contains('nova-screen') || (mf && mf.style.display==='block')){ box.classList.remove('on'); return; }
     cur=target(sc);
-    if(!cur || (mf && mf.style.display==='block')){ box.classList.remove('on'); return; }
     box.classList.add('on');
+    if(!cur){ up.disabled=true; down.disabled=true; return; }
     var max=cur.scrollHeight-cur.clientHeight;
     up.disabled=cur.scrollTop<4; down.disabled=cur.scrollTop>max-4;
   }
@@ -25709,6 +25727,343 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       window.pfOpenMenuList._pfw=true;
     }
   }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<style id="eb-desk">
+/* ═══ Motivation & Équilibre (ordinateur) : étapes séparées, questions en cartes ═══ */
+.eb-q-sep{ display:none; }
+@media (min-width: 900px){
+  .eb-q-sep{ display:flex; align-items:center; gap:12px; margin:26px 0 14px; }
+  .eb-q-sep::before, .eb-q-sep::after{ content:""; flex:1; height:1px; background:#e2e8f0; }
+  .eb-q-sep span{ font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#059669; background:#ecfdf5; border:1px solid #bbf7d0; padding:5px 12px; border-radius:99px; }
+  .eb-q-card{ background:#fff; border:1px solid #e5e9f2; border-radius:18px; padding:16px 18px 14px; box-shadow:0 6px 20px rgba(15,23,42,.06); margin-bottom:14px !important; }
+  .eb-q-card .eb-q-num{ display:none; }
+  .eb-q-card .eb-bub-eva{ background:transparent !important; border:none !important; box-shadow:none !important; padding:4px 0 10px !important; font-size:.86rem !important; font-weight:600; color:#0f172a; max-width:100% !important; }
+  .eb-q-card .eb-q-wrap{ border-top:1px solid #f1f5f9; padding-top:10px; margin-top:4px; }
+  .eb-bub-user{ margin-bottom:6px; }
+  #eb-body > div{ animation: ebIn .35s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes ebIn{ from{ opacity:0; transform: translateY(6px); } }
+}
+</style>
+<style id="jnl-premium">
+/* ═══ Journal du Jour (ordinateur) : design premium, graphiques modernes ═══ */
+@media (min-width: 900px){
+  #s-eva-tracker{ background: linear-gradient(180deg,#f7f8fc 0%,#f3f5fb 100%) !important; }
+  .jnl-hdr{ background:#fff !important; border-bottom:1px solid #eceff5 !important; }
+  .jnl-hdr-streak{ background:linear-gradient(135deg,#fff7ed,#ffedd5) !important; border:1px solid #fed7aa !important; color:#c2410c !important; border-radius:99px !important; }
+  /* Onglets : contrôle segmenté */
+  .jnl-tabs{ background:transparent !important; border:none !important; justify-content:center; padding:14px 0 4px !important; gap:0; }
+  .jnl-tabs{ --w: 520px; }
+  .jnl-tab{ flex:0 0 auto !important; min-width:150px; padding:9px 18px !important; font-size:.72rem !important; font-weight:600 !important; color:#475569 !important;
+    border:none !important; border-radius:10px !important; background:transparent; transition:background .2s, color .2s, box-shadow .2s !important; }
+  .jnl-tabs{ width:max-content; margin:14px auto 4px !important; padding:4px !important; background:#eceef4 !important; border-radius:13px !important; }
+  .jnl-tab.active{ background:#fff !important; color:#0f172a !important; box-shadow:0 1px 3px rgba(15,23,42,.12), 0 4px 12px rgba(15,23,42,.06) !important; }
+  .jnl-body{ background:transparent !important; }
+  .jnl-body button[style*="background:#f"], .jnl-body button[style*="rgba(0,0,0"]{ background:#fff !important; border:1px solid #e2e8f0 !important; border-radius:14px !important; }
+  .jnl-body [onclick*="go('eva')"], .jnl-body [onclick*='go("eva")']{ background:#fff !important; border:1px solid #e2e8f0 !important; border-radius:14px !important; }
+  /* Flèches du Journal : bleu foncé */
+  #s-eva-tracker #ev-arrows button{ background:#1e3a8a !important; box-shadow:0 3px 10px rgba(30,58,138,.35) !important; }
+  #s-eva-tracker #ev-arrows button:hover{ background:#172554 !important; }
+  /* Bandeaux : dégradé profond façon « mesh » */
+  .jnl-welcome-card, .jnl-result-hero{
+    background: radial-gradient(120% 140% at 0% 0%, #6366f1 0%, rgba(99,102,241,0) 55%),
+                radial-gradient(120% 140% at 100% 100%, #ec4899 0%, rgba(236,72,153,0) 50%),
+                linear-gradient(135deg,#312e81 0%,#6d28d9 55%,#a21caf 100%) !important;
+    border-radius:24px !important; padding:28px 30px !important; box-shadow:0 18px 40px -18px rgba(109,40,217,.55) !important;
+  }
+  .jnl-welcome-card::before, .jnl-welcome-card::after, .jnl-result-hero::before{ background:rgba(255,255,255,.10) !important; }
+  .jnl-welcome-title{ font-size:1.45rem !important; font-weight:800 !important; letter-spacing:-.02em !important; }
+  .jnl-welcome-sub{ font-size:.8rem !important; opacity:.9; }
+  .jnl-result-avg{ font-size:3rem !important; font-weight:800 !important; letter-spacing:-.03em; }
+  /* Cartes blanches épurées */
+  .jnl-card, .jnl-name-prompt, .jnl-radar-card, .jnl-chart-card, .jnl-eva-card, .jnl-tip-card, .jnl-stat-box{
+    background:#fff !important; border:1px solid #eceff5 !important; border-radius:20px !important;
+    box-shadow:0 1px 2px rgba(15,23,42,.04), 0 10px 30px rgba(15,23,42,.05) !important;
+  }
+  .jnl-card{ padding:22px 24px !important; }
+  .jnl-card-ico{ border-radius:14px !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.6); }
+  .jnl-card-name{ font-size:.95rem !important; font-weight:700 !important; color:#0f172a !important; }
+  .jnl-score-num{ font-size:2.2rem !important; font-weight:800 !important; letter-spacing:-.03em; }
+  /* Curseurs plus modernes */
+  .jnl-slider{ height:10px !important; border-radius:99px !important; }
+  .jnl-slider::-webkit-slider-thumb{ width:26px !important; height:26px !important; border-radius:50% !important; background:#fff !important; border:none !important;
+    box-shadow:0 0 0 1px rgba(15,23,42,.08), 0 4px 12px rgba(15,23,42,.18) !important; }
+  .jnl-note-input, .jnl-name-input{ border:1px solid #e2e8f0 !important; border-radius:14px !important; background:#f8fafc !important; }
+  .jnl-note-input:focus, .jnl-name-input:focus{ border-color:#8b5cf6 !important; box-shadow:0 0 0 4px rgba(139,92,246,.15) !important; background:#fff !important; outline:none; }
+  .jnl-validate-btn, .jnl-name-btn{ border-radius:14px !important; background:linear-gradient(135deg,#6d28d9,#a21caf) !important; box-shadow:0 10px 24px -10px rgba(109,40,217,.7) !important; }
+  /* Statistiques */
+  .jnl-stat-grid{ gap:14px !important; }
+  .jnl-stat-box{ padding:20px 16px !important; }
+  .jnl-stat-val{ font-size:2rem !important; font-weight:800 !important; letter-spacing:-.03em; }
+  .jnl-stat-lbl{ font-size:.62rem !important; letter-spacing:.08em !important; color:#64748b !important; }
+  /* Graphique 7 jours : colonnes fines, arrondies, grille légère */
+  .jnl-chart-card{ padding:22px 24px !important; }
+  .jnl-chart-title, .jnl-radar-title{ font-size:.8rem !important; font-weight:700 !important; color:#0f172a !important; letter-spacing:0 !important; text-transform:none !important; margin-bottom:14px !important; }
+  .jnl-bars-week{ height:190px !important; justify-content:center; gap:22px !important; padding-top:6px;
+    background-image: repeating-linear-gradient(to top, #f1f5f9 0 1px, transparent 1px 38px); background-position: 0 -26px; }
+  .jnl-bar-day{ flex:0 0 56px !important; }
+  .jnl-bar-day-col{ width:30px !important; margin:0 auto; border-radius:10px 10px 6px 6px !important; min-height:6px !important;
+    background-image: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0)) !important; box-shadow:0 8px 18px -8px rgba(15,23,42,.35); }
+  .jnl-bar-day-lbl{ font-size:.6rem !important; font-weight:700 !important; color:#64748b !important; text-transform:uppercase; }
+  .jnl-bar-day-num{ font-size:.8rem !important; font-weight:800 !important; }
+  /* Barres par pilier */
+  .jnl-theme-bar-track{ height:10px !important; border-radius:99px !important; background:#f1f5f9 !important; }
+  .jnl-theme-bar-fill{ border-radius:99px !important; }
+  .jnl-action-item{ border-radius:14px !important; }
+}
+</style>
+<style>@media (min-width: 900px){ #eva-tl-close{ display:none !important; } }</style>
+<script>
+/* Ordinateur : dans le chat / Portfolio EVA, la flèche retour ramène au menu d'où l'on vient (sans quitter EVA) */
+(function(){
+  if(window.self!==window.top) return;
+  var prev=null;
+  function track(){
+    var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active');
+    if(a && a.id!=='s-eva') prev=a.id.replace('s-','');
+  }
+  try{ new MutationObserver(function(){ clearTimeout(window._evPrT); window._evPrT=setTimeout(track,30); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){}
+  document.addEventListener('click',function(e){
+    if(window.innerWidth<900) return;
+    var b=e.target.closest && e.target.closest('#eva-fs-back');
+    if(!b) return;
+    var fs=document.getElementById('eva-fullscreen');
+    if(!fs || !fs.classList.contains('chat-mode')) return;
+    e.preventDefault(); e.stopPropagation();
+    var bub=document.getElementById('pf-eva-bubble-root'); if(bub) bub.remove();
+    var ov=document.getElementById('ec-pf-overlay'); if(ov) ov.remove();
+    fs.classList.remove('chat-mode');
+    go(prev||'eva');
+  },true);
+})();
+</script>
+<style id="evh-css">
+/* ═══ ACCUEIL EVA (ordinateur) : chat de présentation en direct + diaporama ═══ */
+#evh{ display:none; }
+@media (min-width: 900px){
+  #eva-fullscreen:not(.chat-mode) #ec-splash{ display:none !important; }
+  #eva-fullscreen:not(.chat-mode) #evh{ display:flex; }
+  #evh{ position:absolute; inset:0; z-index:40; flex-direction:column; background:
+      radial-gradient(60% 50% at 100% 0%, rgba(96,165,250,.16) 0%, rgba(96,165,250,0) 70%),
+      radial-gradient(50% 40% at 0% 100%, rgba(167,139,250,.14) 0%, rgba(167,139,250,0) 70%), #f7f9fd;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Inter, Arial, sans-serif; }
+  #evh *{ box-sizing:border-box; }
+  .evh-top{ flex-shrink:0; display:flex; align-items:center; gap:14px; padding:16px 120px 12px 26px; border-bottom:1px solid #e8edf6; background:rgba(255,255,255,.75); -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); }
+  .evh-av{ position:relative; width:44px; height:44px; border-radius:14px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg,#1d4ed8,#3b82f6 55%,#60a5fa); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 8px 18px -8px rgba(37,99,235,.7); }
+  .evh-av::after{ content:""; position:absolute; right:-2px; bottom:-2px; width:12px; height:12px; border-radius:50%; background:#22c55e; border:2px solid #fff; }
+  .evh-id b{ display:block; font-size:1rem; font-weight:800; color:#0f172a; letter-spacing:-.01em; }
+  .evh-id span{ font-size:.66rem; color:#16a34a; font-weight:600; display:inline-flex; align-items:center; gap:6px; }
+  .evh-id span::before{ content:""; width:7px; height:7px; border-radius:50%; background:#22c55e; animation: evhPulse 1.6s ease-in-out infinite; }
+  @keyframes evhPulse{ 50%{ opacity:.3; } }
+  .evh-ctrl{ margin-left:auto; display:flex; gap:8px; }
+  .evh-ctrl button{ border:1px solid #dbe3f0; background:#fff; color:#1e293b; border-radius:99px; padding:7px 14px; font:600 .68rem/1 inherit; cursor:pointer; position:static !important; transition:background .18s; }
+  .evh-ctrl button:hover{ background:#f1f5fb; }
+  .evh-ctrl button.pri{ background:#2563eb; border-color:#2563eb; color:#fff; }
+  .evh-ctrl button.pri:hover{ background:#1d4ed8; }
+  /* Diaporama : étapes */
+  .evh-steps{ flex-shrink:0; display:flex; gap:6px; padding:10px 26px; overflow-x:auto; scrollbar-width:none; }
+  .evh-steps::-webkit-scrollbar{ display:none; }
+  .evh-step{ flex-shrink:0; display:flex; align-items:center; gap:7px; border:1px solid #e2e8f0; background:#fff; color:#64748b; border-radius:99px; padding:6px 12px; font:600 .64rem/1 inherit; cursor:pointer; position:static !important; transition:all .25s; }
+  .evh-step i{ width:18px; height:18px; border-radius:50%; background:#eef2f7; color:#64748b; display:inline-flex; align-items:center; justify-content:center; font-style:normal; font-size:.56rem; font-weight:800; }
+  .evh-step.done{ color:#1e3a8a; border-color:#c7d7fb; }
+  .evh-step.done i{ background:#dbeafe; color:#1d4ed8; }
+  .evh-step.on{ background:#2563eb; border-color:#2563eb; color:#fff; box-shadow:0 6px 16px -8px rgba(37,99,235,.8); }
+  .evh-step.on i{ background:rgba(255,255,255,.25); color:#fff; }
+  .evh-prog{ height:3px; margin:0 26px; background:#e8edf6; border-radius:99px; overflow:hidden; flex-shrink:0; }
+  .evh-prog b{ display:block; height:100%; width:0; background:linear-gradient(90deg,#2563eb,#8b5cf6); transition:width .6s ease; }
+  /* Fil de discussion */
+  .evh-feed{ flex:1; overflow-y:auto; padding:22px 26px 40px; scroll-behavior:smooth; }
+  .evh-col{ max-width:860px; margin:0 auto; }
+  .evh-msg{ display:flex; gap:12px; margin-bottom:14px; animation: evhIn .45s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes evhIn{ from{ opacity:0; transform:translateY(10px); } }
+  .evh-msg .evh-mini{ width:30px; height:30px; border-radius:10px; flex-shrink:0; background:linear-gradient(135deg,#1d4ed8,#60a5fa); display:flex; align-items:center; justify-content:center; margin-top:2px; }
+  .evh-mini svg{ width:17px; height:17px; } .evh-av svg{ width:24px; height:24px; }
+  .evh-bub{ background:#fff; border:1px solid #e8edf6; border-radius:4px 18px 18px 18px; padding:13px 16px; font-size:.84rem; line-height:1.6; color:#1e293b; box-shadow:0 1px 2px rgba(15,23,42,.04), 0 8px 22px rgba(15,23,42,.05); max-width:680px; }
+  .evh-bub b{ color:#0f172a; }
+  .evh-caret{ display:inline-block; width:7px; height:1.05em; vertical-align:-2px; margin-left:2px; background:#2563eb; border-radius:2px; animation: evhBlink 1s steps(2) infinite; }
+  @keyframes evhBlink{ 50%{ opacity:0; } }
+  .evh-typing{ display:inline-flex; gap:4px; padding:4px 2px; }
+  .evh-typing span{ width:7px; height:7px; border-radius:50%; background:#94a3b8; animation: evhDot 1.2s infinite ease-in-out; }
+  .evh-typing span:nth-child(2){ animation-delay:.15s; } .evh-typing span:nth-child(3){ animation-delay:.3s; }
+  @keyframes evhDot{ 0%,80%,100%{ transform:translateY(0); opacity:.4; } 40%{ transform:translateY(-4px); opacity:1; } }
+  /* Carte « diapositive » */
+  .evh-slide{ margin:6px 0 22px 42px; display:grid; grid-template-columns:230px 1fr; border-radius:22px; overflow:hidden; background:#fff; border:1px solid #e3e9f4;
+    box-shadow:0 2px 4px rgba(15,23,42,.04), 0 22px 50px -20px rgba(15,23,42,.18); animation: evhSlide .6s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes evhSlide{ from{ opacity:0; transform:translateY(16px) scale(.985); } }
+  .evh-art{ position:relative; padding:24px 22px; color:#fff; display:flex; flex-direction:column; justify-content:space-between; min-height:220px; overflow:hidden; }
+  .evh-art::before{ content:""; position:absolute; width:220px; height:220px; right:-80px; top:-80px; border-radius:50%; background:rgba(255,255,255,.14); }
+  .evh-art::after{ content:""; position:absolute; width:140px; height:140px; left:-50px; bottom:-60px; border-radius:50%; background:rgba(255,255,255,.08); }
+  .evh-art .n{ font-size:.62rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.85; position:relative; }
+  .evh-art .ic{ width:64px; height:64px; border-radius:20px; background:rgba(255,255,255,.18); display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 0 rgba(255,255,255,.35); position:relative; }
+  .evh-art .ic svg{ width:32px; height:32px; }
+  .evh-art .t{ font-size:1.15rem; font-weight:800; letter-spacing:-.02em; line-height:1.2; position:relative; }
+  .evh-body{ padding:22px 24px; }
+  .evh-body .lead{ font-size:.82rem; color:#334155; line-height:1.6; margin-bottom:12px; }
+  .evh-body ul{ list-style:none; margin:0 0 14px; padding:0; display:grid; gap:8px; }
+  .evh-body li{ display:flex; gap:10px; align-items:flex-start; font-size:.78rem; color:#1e293b; line-height:1.5; }
+  .evh-body li::before{ content:""; flex-shrink:0; width:18px; height:18px; margin-top:1px; border-radius:50%; background:#dbeafe url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231d4ed8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L20 7'/%3E%3C/svg%3E") center/11px no-repeat; }
+  .evh-foot{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+  .evh-chips{ display:flex; gap:6px; flex-wrap:wrap; }
+  .evh-chips span{ font-size:.6rem; font-weight:700; color:#475569; background:#f1f5f9; border-radius:99px; padding:5px 10px; }
+  .evh-open{ border:none; cursor:pointer; border-radius:12px; padding:10px 16px; font:700 .72rem/1 inherit; color:#fff; background:#2563eb; box-shadow:0 8px 18px -8px rgba(37,99,235,.8); position:static !important; transition:filter .2s, transform .15s; }
+  .evh-open:hover{ filter:brightness(1.08); } .evh-open:active{ transform:scale(.98); }
+  /* Profils */
+  .evh-prof{ margin:6px 0 22px 42px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; animation: evhSlide .6s cubic-bezier(.2,.8,.2,1) both; }
+  .evh-pc{ background:#fff; border:1px solid #e3e9f4; border-radius:18px; padding:16px 18px; box-shadow:0 10px 26px -16px rgba(15,23,42,.2); }
+  .evh-pc h4{ margin:0 0 6px; display:flex; align-items:center; gap:10px; font-size:.86rem; color:#0f172a; }
+  .evh-pc h4 i{ width:32px; height:32px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; font-style:normal; }
+  .evh-pc p{ margin:0; font-size:.74rem; color:#475569; line-height:1.55; }
+  .evh-trust{ margin:4px 0 22px 42px; display:flex; flex-wrap:wrap; gap:8px; animation: evhSlide .6s both; }
+  .evh-trust span{ font-size:.66rem; font-weight:700; color:#1e3a8a; background:#eff6ff; border:1px solid #dbeafe; border-radius:99px; padding:6px 12px; }
+  .evh-quick{ margin:4px 0 10px 42px; display:flex; flex-wrap:wrap; gap:8px; animation: evhSlide .6s both; }
+  .evh-quick button{ border:1px solid #c7d7fb; background:#fff; color:#1d4ed8; border-radius:99px; padding:9px 14px; font:700 .72rem/1 inherit; cursor:pointer; position:static !important; transition:all .18s; }
+  .evh-quick button:hover{ background:#2563eb; color:#fff; border-color:#2563eb; }
+  .evh-offer{ font-size:.62rem; color:#15803d; background:#ecfdf5; border:1px solid #bbf7d0; padding:5px 11px; border-radius:99px; font-weight:700; }
+}
+</style>
+<script>
+/* ═══ Accueil EVA : présentation en direct (chat + diaporama) — ordinateur uniquement ═══ */
+(function(){
+  if(window.self!==window.top) return;
+  var S=function(p,c){ return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#fff')+'" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
+  var IC={
+    eva:'<path d="M5 6.5a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h.5A2.5 2.5 0 0 1 5 13.5z"/><path d="m12 7 .9 2.1L15 10l-2.1.9L12 13l-.9-2.1L9 10l2.1-.9z" fill="#fff" stroke="none"/>',
+    droits:'<path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/>',
+    quiz:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+    conseils:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/>',
+    motiv:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    suivi:'<path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 3 5-6"/>',
+    users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c-.5-2.6-2-4.5-4.2-5.2"/>'
+  };
+  var SLIDES=[
+    { key:'intro', step:'Bienvenue', msg:'Bonjour 👋 Je suis <b>EVA</b>, ton espace de préparation professionnelle et entrepreneuriale. En une minute, je te présente tout ce que je peux faire pour toi — installe-toi, je m\'occupe du reste.' },
+    { key:'droits', step:'Droits & aides', go:'eva-droits', grad:'linear-gradient(145deg,#1d4ed8,#3b82f6 60%,#60a5fa)', ic:'droits',
+      msg:'Commençons par l\'essentiel : <b>connaître tes droits</b>. Chômage, contrat, congés, statut d\'indépendant, aides étudiantes… je t\'explique tout, simplement.',
+      title:'Droits & Protections sociales', lead:'Une encyclopédie claire, rangée de A à Z, pour comprendre ce à quoi tu as droit et comment le demander.',
+      pts:['Articles fondés sur les sources officielles : Légifrance, service-public.fr, France Travail, URSSAF, CAF','12 thèmes par profil, classés de A à Z','Des explications concrètes, sans jargon'],
+      chips:['Salarié','Demandeur d\'emploi','Freelance','Étudiant'], cta:'Découvrir mes droits' },
+    { key:'quiz', step:'Quiz & mises en situation', go:'eva-entretien', grad:'linear-gradient(145deg,#4f46e5,#7c3aed 60%,#a78bfa)', ic:'quiz',
+      msg:'Ensuite, on <b>s\'entraîne</b>. Parce que connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.',
+      title:'Quiz et mises en situation', lead:'Des QCM pour vérifier tes connaissances, et des scénarios réalistes pour préparer tes entretiens.',
+      pts:['QCM de 25 questions sur tes droits et ta préparation','Mises en situation face à un recruteur, dialogue immersif','Un retour clair pour progresser à chaque session'],
+      chips:['Entretien d\'embauche','Retour à l\'emploi','Négociation'], cta:'M\'entraîner' },
+    { key:'conseils', step:'Conseils & Portfolio', go:'eva-workspace', grad:'linear-gradient(145deg,#0f766e,#0d9488 60%,#2dd4bf)', ic:'conseils',
+      msg:'Pour avancer au quotidien, je te donne des <b>conseils adaptés à ta situation</b> et un espace pour tout organiser : ton <b>Portfolio</b>.',
+      title:'Conseils pratiques & Portfolio', lead:'Des conseils personnalisés selon ton profil, et tous tes outils de travail réunis au même endroit.',
+      pts:['Agenda de suivi pour tes rendez-vous et échéances','Documents prêts à remplir : CV, lettre de motivation, facture, devis, business plan, compte-rendu…','Contacts, analyse de document et organismes utiles selon ton profil'],
+      chips:['Organisation','Documents pro','Entrepreneuriat'], cta:'Ouvrir mes conseils' },
+    { key:'motiv', step:'Motivation & Équilibre', go:'eva-bienetre', grad:'linear-gradient(145deg,#be185d,#db2777 60%,#f472b6)', ic:'motiv',
+      msg:'Une recherche ou un projet, ça demande de l\'énergie. Je t\'accompagne aussi sur ton <b>équilibre</b>, avec bienveillance et sans jugement.',
+      title:'Motivation & Équilibre', lead:'Un petit rituel quotidien pour faire le point avant ou après ta journée, et repartir du bon pied.',
+      pts:['Des questions guidées selon ton profil et ton moment de la journée','Un bilan personnalisé et des pistes concrètes','Un espace pour souffler, à ton rythme'],
+      chips:['Confiance','Stress','Organisation'], cta:'Faire le point' },
+    { key:'suivi', step:'Suivi de mon état', go:'eva-tracker', grad:'linear-gradient(145deg,#312e81,#6d28d9 60%,#a21caf)', ic:'suivi',
+      msg:'Et pour voir ton chemin parcouru, il y a ton <b>journal</b> : tu suis ton état et ta motivation jour après jour.',
+      title:'Suivi de mon état et de ma motivation', lead:'Deux minutes par jour pour noter tes 4 piliers et visualiser ton évolution.',
+      pts:['Bilan du jour sur 4 piliers essentiels','Graphique de ta semaine et série de jours consécutifs','Des actions concrètes proposées par EVA'],
+      chips:['Journal','Évolution','Actions'], cta:'Ouvrir mon journal' },
+    { key:'profils', step:'Pour qui ?', msg:'EVA s\'adapte à <b>ton profil</b>. Voici ce que je t\'apporte selon ta situation :' },
+    { key:'fin', step:'On commence', msg:'Voilà ! Mes qualités : <b>sources officielles</b>, <b>disponible 24h/24</b>, <b>à ton rythme</b>, <b>sans jugement</b>. Utilisé seul ou accompagné par ton centre de formation. Par où veux-tu commencer ?' }
+  ];
+  var PROFILS=[
+    ['#dbeafe','#1d4ed8','Salarié','Connaître tes droits au travail, préparer un entretien annuel ou une évolution, négocier sereinement.'],
+    ['#dcfce7','#15803d','Demandeur d\'emploi','Comprendre l\'ARE et tes démarches, t\'entraîner aux entretiens, organiser ta recherche.'],
+    ['#fef3c7','#b45309','Freelance / Entrepreneur','Statut, URSSAF, devis et factures, business plan : les bases pour lancer et gérer ton activité.'],
+    ['#ede9fe','#6d28d9','Étudiant / Reconversion','Stage, alternance, CPF, bilan de compétences : préparer ton premier poste ou ton nouveau projet.']
+  ];
+  var root, feed, steps, prog, playing=false, idx=0, timer=null, done=false, started=false;
+  function el(t,c,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
+  function build(){
+    var fs=document.getElementById('eva-fullscreen'); if(!fs || document.getElementById('evh')) return;
+    root=el('div'); root.id='evh';
+    root.innerHTML='<div class="evh-top"><div class="evh-av">'+S(IC.eva)+'</div><div class="evh-id"><b>EVA</b><span>En ligne · présentation</span></div>'
+      +'<span class="evh-offer">🎁 EVA gratuit pour essai, en illimité</span>'
+      +'<div class="evh-ctrl"><button type="button" data-a="pause">Pause</button><button type="button" data-a="skip">Tout afficher</button><button type="button" class="pri" data-a="replay">Rejouer</button></div></div>'
+      +'<div class="evh-steps"></div><div class="evh-prog"><b></b></div><div class="evh-feed"><div class="evh-col"></div></div>';
+    fs.appendChild(root);
+    feed=root.querySelector('.evh-col'); steps=root.querySelector('.evh-steps'); prog=root.querySelector('.evh-prog b');
+    SLIDES.forEach(function(s,i){ var b=el('button','evh-step','<i>'+(i+1)+'</i>'+s.step); b.type='button'; b.setAttribute('data-i',i); steps.appendChild(b); });
+    root.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      var a=b.getAttribute('data-a');
+      if(a==='pause'){ playing=!playing; b.textContent=playing?'Pause':'Reprendre'; if(playing && !done) next(); else clearTimeout(timer); }
+      else if(a==='skip'){ showAll(); }
+      else if(a==='replay'){ restart(); }
+      else if(b.hasAttribute('data-i')){ var i=+b.getAttribute('data-i'); if(i>=idx) showUntil(i); var t=feed.querySelector('[data-k="'+SLIDES[i].key+'"]'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'}); }
+      else if(b.hasAttribute('data-go')){ go(b.getAttribute('data-go')); }
+    });
+  }
+  function mark(){
+    [].forEach.call(steps.children,function(b,i){ b.classList.toggle('on',i===idx-1); b.classList.toggle('done',i<idx-1); });
+    prog.style.width=Math.round(idx/SLIDES.length*100)+'%';
+    var on=steps.children[idx-1]; if(on) on.scrollIntoView({block:'nearest',inline:'center'});
+  }
+  function sc(){ var f=root.querySelector('.evh-feed'); f.scrollTop=f.scrollHeight; }
+  function msgRow(){ var r=el('div','evh-msg','<div class="evh-mini">'+S(IC.eva)+'</div>'); var b=el('div','evh-bub'); r.appendChild(b); return [r,b]; }
+  function extra(s){
+    if(s.title){
+      var c=el('div','evh-slide'); c.setAttribute('data-k',s.key);
+      c.innerHTML='<div class="evh-art" style="background:'+s.grad+'"><div class="n">Étape '+(SLIDES.indexOf(s)+1)+'</div><div class="ic">'+S(IC[s.ic])+'</div><div class="t">'+s.title+'</div></div>'
+        +'<div class="evh-body"><div class="lead">'+s.lead+'</div><ul>'+s.pts.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul>'
+        +'<div class="evh-foot"><div class="evh-chips">'+s.chips.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div><button type="button" class="evh-open" data-go="'+s.go+'">'+s.cta+' →</button></div></div>';
+      return c;
+    }
+    if(s.key==='profils'){
+      var g=el('div','evh-prof'); g.setAttribute('data-k',s.key);
+      g.innerHTML=PROFILS.map(function(p){ return '<div class="evh-pc"><h4><i style="background:'+p[0]+'">'+S(IC.users,p[1])+'</i>'+p[2]+'</h4><p>'+p[3]+'</p></div>'; }).join('');
+      g.querySelectorAll('svg').forEach(function(v){ v.style.width='18px'; v.style.height='18px'; });
+      return g;
+    }
+    if(s.key==='fin'){
+      var w=el('div'); w.setAttribute('data-k',s.key);
+      var t=el('div','evh-trust','<span>Légifrance</span><span>service-public.fr</span><span>France Travail</span><span>URSSAF</span><span>CAF</span>');
+      var q=el('div','evh-quick');
+      SLIDES.filter(function(x){return x.go;}).forEach(function(x){ var b=el('button',null,x.step); b.type='button'; b.setAttribute('data-go',x.go); q.appendChild(b); });
+      w.appendChild(t); w.appendChild(q); return w;
+    }
+    return null;
+  }
+  function stream(bub,html,cb){
+    // écrit mot par mot (le HTML reste intact)
+    var parts=html.split(/(<[^>]+>|\s+)/).filter(function(x){return x!=='';}), i=0, out='';
+    var caret='<span class="evh-caret"></span>';
+    (function tick(){
+      if(!playing){ timer=setTimeout(tick,200); return; }
+      if(i>=parts.length){ bub.innerHTML=out; cb(); return; }
+      var p=parts[i++]; out+=p; bub.innerHTML=out+caret;
+      timer=setTimeout(tick, /^</.test(p)||/^\s+$/.test(p) ? 0 : 55);
+    })();
+  }
+  function renderStatic(s){
+    var m=msgRow(); m[1].innerHTML=s.msg; if(!s.title && s.key!=='profils' && s.key!=='fin') m[0].setAttribute('data-k',s.key);
+    feed.appendChild(m[0]); var x=extra(s); if(x) feed.appendChild(x);
+  }
+  function next(){
+    if(!playing || done) return;
+    if(idx>=SLIDES.length){ done=true; return; }
+    var s=SLIDES[idx]; idx++; mark();
+    var m=msgRow(); if(!s.title && s.key!=='profils' && s.key!=='fin') m[0].setAttribute('data-k',s.key);
+    m[1].innerHTML='<span class="evh-typing"><span></span><span></span><span></span></span>'; feed.appendChild(m[0]); sc();
+    timer=setTimeout(function(){
+      stream(m[1],s.msg,function(){
+        var x=extra(s);
+        timer=setTimeout(function(){ if(x){ feed.appendChild(x); sc(); } timer=setTimeout(next, x?2600:1200); }, 500);
+      });
+      sc();
+    },900);
+  }
+  function showUntil(n){ clearTimeout(timer); feed.innerHTML=''; for(var i=0;i<=n;i++) renderStatic(SLIDES[i]); idx=n+1; mark(); if(idx>=SLIDES.length){ done=true; } else if(playing){ timer=setTimeout(next,1400); } }
+  function showAll(){ showUntil(SLIDES.length-1); done=true; sc(); }
+  function restart(){ clearTimeout(timer); feed.innerHTML=''; idx=0; done=false; playing=true; var p=root.querySelector('[data-a="pause"]'); if(p) p.textContent='Pause'; mark(); next(); }
+  function visible(){ var s=document.getElementById('s-eva'), fs=document.getElementById('eva-fullscreen'); return window.innerWidth>=900 && s && s.classList.contains('active') && fs && !fs.classList.contains('chat-mode'); }
+  function check(){
+    if(!root) build(); if(!root) return;
+    if(visible()){ if(!started){ started=true; restart(); } else if(!done && !playing){ /* reste en pause */ } }
+    else { if(started && !done){ /* garde l'état */ } }
+  }
+  function init(){ build(); check(); try{ new MutationObserver(function(){ clearTimeout(window._evhT); window._evhT=setTimeout(check,80); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){} }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
