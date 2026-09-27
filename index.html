@@ -1784,7 +1784,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cta-eva-rh-arrow-ico svg{width:11px;height:11px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
 </style>
 
-<div class="cta-eva-rh" onclick="go('eva')" onmousedown="this.style.opacity='.92'" onmouseup="this.style.opacity='1'" ontouchstart="this.style.opacity='.92'" ontouchend="this.style.opacity='1'">
+<div class="cta-eva-rh" onclick="toggleGridMenu()" title="Accès à EVA via le menu" onmousedown="this.style.opacity='.92'" onmouseup="this.style.opacity='1'" ontouchstart="this.style.opacity='.92'" ontouchend="this.style.opacity='1'">
   <div class="cta-eva-rh-stripe"></div>
   <div class="cta-eva-rh-avatar">
     <div class="cta-eva-rh-ring">
@@ -1796,8 +1796,13 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <div class="cta-eva-rh-body">
     <div class="cta-eva-rh-name">EVA</div>
     <div class="cta-eva-rh-sub">Ton espace de préparation professionnelle et entrepreneuriale</div>
-    <div class="cta-eva-rh-avail">Disponible 24h/24</div>
-    <div id="cp-free-badge-evacard" style="display:inline-block;margin-top:6px;font-size:.56rem;font-weight:800;padding:3px 9px;border-radius:20px;background:rgba(220,38,38,.12);color:#dc2626;"></div>
+    <div class="cta-eva-rh-avail" style="color:#475569">Entretiens · Droits &amp; contrats · Création d'activité · Lexique · Bien-être</div>
+    <div class="cta-eva-rh-cta" style="display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:.58rem;font-weight:800;padding:4px 11px;border-radius:20px;background:rgba(10,154,116,.1);color:#067357">
+      <svg width="12" height="12" viewBox="0 0 24 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><line x1="1" y1="2" x2="23" y2="2"/><line x1="1" y1="9" x2="17" y2="9"/><line x1="1" y1="16" x2="23" y2="16"/></svg>
+      Accède à EVA via le menu
+    </div>
+    <div class="cta-eva-rh-cf" style="margin-top:6px;font-size:.54rem;font-weight:500;color:#6b7280">Centres de formation : une offre à la carte, parlons-en.</div>
+    <div id="cp-free-badge-evacard" style="display:none"></div>
   </div>
   <div class="cta-eva-rh-arrow">
     <div class="cta-eva-rh-arrow-ico">
@@ -13877,7 +13882,7 @@ go=function(page){
    ORDINATEUR — finitions façon Apple : typographie, couleurs,
    icônes et interactions (vitrine, quiz, menu). Mobile inchangé.
 ═══════════════════════════════════════════════════════════════ */
-@media (min-width: 900px){
+@media all{
   :root{
     --ap-ink:#1d1d1f; --ap-ink2:#6e6e73; --ap-ink3:#86868b;
     --ap-blue:#0071e3; --ap-blue-h:#0077ed; --ap-green:#0a9a74;
@@ -14355,6 +14360,61 @@ go=function(page){
 .cp-leaving .screen.active > *, .cp-leaving .evad-screen.active > *, .cp-leaving .eva-subpage.active > *,
 .cp-leaving .nova-screen.active > *, .cp-leaving #s-eva.active > *{
   opacity: 0 !important; transform: translateY(-4px); transition: opacity .16s ease, transform .16s ease !important;
+}
+</style>
+<style>#s-home .cta-body{ padding-bottom: 34px !important; }</style>
+<style id="cp-mobile">
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE — même format premium que l'ordinateur, tailles adaptées au tactile.
+   Pas de flèches bleues (on fait défiler au doigt).
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 899px){
+  #cp-scroll-arrows, #cp-menu-arrows{ display: none !important; }
+  :root{ --cp-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  body{ background: #f5f5f7 !important; }
+  body, body *{ font-family: var(--cp-font) !important; -webkit-font-smoothing: antialiased; }
+
+  /* Barre du haut : verre dépoli clair */
+  #tnav{
+    background: rgba(255,255,255,.82) !important;
+    -webkit-backdrop-filter: saturate(180%) blur(20px) !important; backdrop-filter: saturate(180%) blur(20px) !important;
+    border-bottom: 1px solid rgba(0,0,0,.08) !important; box-shadow: none !important;
+  }
+  #tnav button[title="Menu"]{ background: rgba(0,0,0,.05) !important; box-shadow: none !important; border-radius: 12px !important; }
+  #tnav button[title="Menu"] svg, #tnav button[title="Menu"] svg *{ stroke: #1d1d1f !important; }
+
+  /* Pages vitrine : une grande carte, bords arrondis */
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){
+    margin: calc(var(--tnav, 54px) + 10px) 10px 12px !important;
+    padding: 18px 14px 22px !important;
+    min-height: calc(100vh - var(--tnav, 54px) - 22px) !important;
+    background: #fff !important; border: 1px solid rgba(0,0,0,.07);
+    border-radius: 22px !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.06) !important;
+    box-sizing: border-box;
+  }
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ padding: 0 !important; max-width: 100% !important; }
+
+  /* Cartes de l'accueil : couleurs de marque et textes lisibles */
+  .cta-grid{ gap: 10px !important; }
+  .cta-card, .cta-eva-rh{ border: 1px solid rgba(0,0,0,.07) !important; box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 6px 18px rgba(0,0,0,.06) !important; border-radius: 20px !important; }
+  .cta-card:active, .cta-eva-rh:active{ transform: scale(.98) !important; }
+  .cta-grid .cta-card[class] .cta-ico{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; width: 56px !important; height: 56px !important; border-radius: 17px !important; }
+  .cta-grid .cta-card[class] .cta-head, .cta-grid .cta-card[class] .cta-arrow{ background: var(--cp-deep) !important; }
+  .cta-arrow{ width: 22px !important; height: 22px !important; }
+  #s-home .cta-body{ padding-bottom: 36px !important; }
+  .cta-title{ font-size: .95rem !important; font-weight: 700 !important; color: #1d1d1f !important; letter-spacing: -.015em !important; line-height: 1.22 !important; }
+  .cta-sub{ font-size: .72rem !important; font-weight: 500 !important; color: #475569 !important; line-height: 1.45 !important; }
+  .cta-head span{ font-size: .54rem !important; font-weight: 700 !important; letter-spacing: .1em !important; }
+  #s-home .cta-card [id^="cp-free-badge"]{ font-size: .6rem !important; }
+  .cta-eva-rh-ring{ background: var(--cp-tile-night) !important; box-shadow: var(--cp-gloss) !important; }
+  .cta-eva-rh-stripe{ background: linear-gradient(180deg,#15c08f,#0b1e36) !important; }
+  .cta-eva-rh-arrow-ico{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+  .cta-eva-rh-name{ font-size: 1.2rem !important; font-weight: 800 !important; letter-spacing: -.01em !important; }
+  #s-home .cta-eva-rh-sub{ font-size: .8rem !important; font-weight: 600 !important; color: #1f2937 !important; }
+  .cta-eva-rh-avail{ font-size: .66rem !important; font-weight: 700 !important; }
+  #s-home .cta-eva-rh-body{ align-items: center !important; text-align: center !important; padding-right: 6px !important; }
+  #s-home #cp-free-badge-evacard{ align-self: center; font-size: .6rem !important; }
 }
 </style>
 <script>
