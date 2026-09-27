@@ -19,7 +19,7 @@
 html body{ opacity:1 !important; }
 </style>
 <script type="speculationrules">
-{"prefetch":[{"source":"list","urls":["index.html","eva.html","quiz.html","menu.html"],"eagerness":"moderate"}]}
+{"prerender":[{"source":"list","urls":["index.html","eva.html","quiz.html","monespace.html"],"eagerness":"moderate"}],"prefetch":[{"source":"list","urls":["index.html","quiz.html","monespace.html","eva.html"],"eagerness":"eager"}]}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
@@ -18916,10 +18916,11 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* ═══ Logo CareerPulse et bouton Accueil : même tuile émeraude que le hero ═══ */
 #tnav .logo > div:first-child, #tnav-home-btn{
   width: 34px !important; height: 34px !important; border-radius: 11px !important;
-  background: linear-gradient(135deg,#059669,#047857) !important;
-  box-shadow: 0 3px 10px rgba(5,150,105,.45), inset 0 1px 0 rgba(255,255,255,.22) !important;
-  border: none !important;
+  background: linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px -6px rgba(6,90,70,.55) !important;
+  border: none !important; display: flex !important; align-items: center; justify-content: center;
 }
+#tnav-home-btn[style*="display:none"], #tnav-home-btn[style*="display: none"]{ display: none !important; }
 #tnav .logo > div:first-child span{ font-size: 1.2rem !important; font-weight: 900 !important; letter-spacing: -.03em; }
 #tnav-home-btn{ transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important; }
 #tnav-home-btn:hover{ filter: brightness(1.08); box-shadow: 0 5px 14px rgba(5,150,105,.5), inset 0 1px 0 rgba(255,255,255,.22) !important; }
@@ -18929,9 +18930,9 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* Menu : tuile logo devant « CareerPulse » */
 #grid-panel > div:first-child [style*="text-transform:uppercase"]{ display: flex !important; align-items: center; gap: 8px; }
 #grid-panel > div:first-child [style*="text-transform:uppercase"]::before{
-  content: "C"; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-  width: 22px; height: 22px; border-radius: 7px; letter-spacing: 0; text-transform: none;
-  background: linear-gradient(135deg,#059669,#047857); color: #fff; font-size: 13px; font-weight: 900;
+  content: ""; display: inline-block; flex-shrink: 0;
+  width: 24px; height: 24px; border-radius: 7px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7' stroke='%23fff' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2' stroke='%23a7f3d0' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/72% no-repeat, linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%);
   box-shadow: 0 2px 6px rgba(5,150,105,.4), inset 0 1px 0 rgba(255,255,255,.22);
 }
 
@@ -18992,14 +18993,144 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   try{ new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
 })();
 </script>
+<style id="cp-identity">
+/* ═══════════════════════════════════════════════════════════════
+   IDENTITÉ CareerPulse — bleu nuit + émeraude + menthe
+   Tailles uniformes : elles dépendent seulement de la taille de l'écran,
+   jamais de la page ou du bouton touché.
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --cp-night:#0b1e36; --cp-night2:#0e3a50; --cp-emer:#0a9a74; --cp-emer2:#067a5c; --cp-mint:#6ee7b7;
+  --cp-deep: linear-gradient(135deg,#0b1e36 0%,#0e3a50 55%,#0a5a49 100%);
+  --cp-tile: linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%);
+  --cp-tile-night: linear-gradient(150deg,#16365c 0%,#0e2a47 50%,#0a1c33 100%);
+  --cp-gloss: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px -6px rgba(6,90,70,.55);
+}
+@media (min-width: 900px){
+  /* Échelle unique selon la hauteur de l'écran */
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: 1; }
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 40px !important; padding-bottom: 40px !important; }
+  /* Pages « Notre vision » : même largeur et même taille de texte partout */
+  #s-vision-emploi .wrap, #s-vision-cv .wrap, #s-vision-profil .wrap, #s-vision-quiz .wrap{ max-width: 1040px !important; }
+  #s-vision-emploi .wrap, #s-vision-cv .wrap{ padding-top: 0 !important; padding-bottom: 0 !important; }
+  #s-vision-emploi .wrap > div[style*="margin-bottom:22px"], #s-vision-cv .wrap > div[style*="margin-bottom:22px"]{ margin-bottom: 14px !important; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"], #s-vision-cv .wrap > div[style*="border:1.5px solid"]{ padding: 14px 16px !important; margin-bottom: 12px !important; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"] > div[style*="margin-bottom:10px"], #s-vision-cv .wrap > div[style*="border:1.5px solid"] > div[style*="margin-bottom:10px"]{ margin-bottom: 7px !important; }
+  #s-vision-emploi .wrap > button, #s-vision-cv .wrap > button{ margin-top: 2px !important; margin-bottom: 0 !important; }
+  #s-vision-emploi .wrap [style*="line-height:1.7"], #s-vision-cv .wrap [style*="line-height:1.7"]{ line-height: 1.5 !important; margin-bottom: 8px !important; }
+  #s-vision-emploi .wrap [style*="Cormorant"], #s-vision-cv .wrap [style*="Cormorant"]{ margin-bottom: 6px !important; }
+  #s-vision-emploi .wrap > div[style*="margin-bottom:22px"] [style*="line-height:1.65"], #s-vision-cv .wrap > div[style*="margin-bottom:22px"] [style*="line-height:1.65"]{ line-height: 1.5 !important; }
+  #s-vision-emploi .wrap > button[onclick^="go("][style*="background:none"], #s-vision-cv .wrap > button[onclick^="go("][style*="background:none"]{ margin-bottom: 8px !important; }
+}
+@media (min-width: 900px) and (max-height: 900px){
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: .9; }
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 30px !important; padding-bottom: 28px !important; }
+}
+@media (min-width: 900px) and (max-height: 720px){
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: .8; }
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 24px !important; padding-bottom: 22px !important; }
+}
+@media (min-width: 900px) and (max-height: 680px){
+  .screen:not(.eva-subpage):not(#s-eva):not(#s-home) .wrap{ zoom: .74 !important; }
+  #s-home .wrap{ zoom: .9 !important; }
+}
+
+
+/* ═══ Tuiles d'icônes : émeraude brillante, comme le logo ═══ */
+@media (min-width: 900px){
+  .cta-grid .cta-card[class] .cta-ico{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+  .cta-grid .cta-card[class] .cta-head, .cta-grid .cta-card[class] .cta-arrow{ background: var(--cp-deep) !important; }
+  .cta-grid .cta-card[class] .cta-arrow{ box-shadow: 0 2px 6px rgba(11,30,54,.35); }
+  .cta-eva-rh-ring{ background: var(--cp-tile-night) !important; box-shadow: var(--cp-gloss) !important; }
+  .cta-eva-rh-stripe{ background: linear-gradient(180deg,#15c08f,#0b1e36) !important; }
+  .cta-eva-rh-arrow-ico{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+  .screen .wrap > div > div[style*="width:38px;height:38px"][style*="gradient"],
+  .screen .wrap div[onclick] > div[style*="width:38px;height:38px"][style*="gradient"],
+  .screen .wrap div[onclick] > div[style*="width:36px;height:36px"][style*="gradient"]{ box-shadow: var(--cp-gloss) !important; }
+}
+
+/* ═══ MENU : identité premium et tailles uniformes ═══ */
+#grid-panel > div:first-child{
+  background: radial-gradient(120% 140% at 100% 0%, rgba(21,192,143,.28) 0%, rgba(21,192,143,0) 55%), var(--cp-deep) !important;
+  border-bottom: none !important;
+}
+#grid-panel > div:first-child [style*="text-transform:uppercase"]{ color: rgba(255,255,255,.72) !important; }
+#cp-menu-clock{ color: #fff !important; }
+#cp-menu-date{ color: rgba(255,255,255,.62) !important; }
+#grid-panel > div:first-child button{ background: rgba(255,255,255,.12) !important; border: 1px solid rgba(255,255,255,.16) !important; border-radius: 50% !important; }
+#grid-panel > div:first-child button:hover{ background: rgba(255,255,255,.2) !important; }
+#grid-panel > div:first-child button svg, #grid-panel > div:first-child button svg *{ stroke: #fff !important; }
+#cp-menu-arrows button{ background: rgba(255,255,255,.18) !important; box-shadow: none !important; }
+#cp-menu-arrows button:hover{ background: rgba(255,255,255,.3) !important; }
+/* Icônes du menu : même tuile de marque pour toutes */
+#cp-menu-list > div[onclick] > div[style*="width:38px;height:38px"]{ background: var(--cp-tile-night) !important; box-shadow: var(--cp-gloss) !important; border-radius: 11px !important; }
+#cp-menu-list > div[onclick] > div[style*="width:38px;height:38px"] svg, #cp-menu-list > div[onclick] > div[style*="width:38px;height:38px"] svg *{ stroke: var(--cp-mint) !important; }
+#cp-menu-body > div[onclick*="go('eva')"] > div:first-child{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+/* Typographie identique dans toutes les sous-pages */
+#cp-menu-membre, #cp-menu-abo, #cp-menu-contact, #cp-menu-avis{ font-size: 16px; }
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is([style*="font-size:.84rem"],[style*="font-size:.94rem"]){
+  font-size: 1rem !important; font-weight: 700 !important; letter-spacing: -.015em !important; line-height: 1.3 !important; color: #0b1e36;
+}
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(div,span,ul,li,p):is([style*="font-size:.6rem"],[style*="font-size:.62rem"],[style*="font-size:.64rem"],[style*="font-size:.66rem"],[style*="font-size:.68rem"]){
+  font-size: .72rem !important; line-height: 1.6 !important;
+}
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) label{ font-size: .66rem !important; font-weight: 600 !important; color: #4b5563 !important; margin-bottom: 6px !important; display: block; }
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(input,select,textarea){
+  font-size: .8rem !important; padding: 11px 14px !important; border-radius: 12px !important; border: 1px solid #d9dee5 !important; background: #fff !important; box-sizing: border-box;
+}
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(input,select){ min-height: 46px; }
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(input,select,textarea):focus{ border-color: var(--cp-emer) !important; box-shadow: 0 0 0 4px rgba(10,154,116,.16) !important; outline: none !important; }
+/* Tous les boutons principaux du menu : même taille, même couleur de marque */
+:is(#cp-menu-membre,#cp-menu-contact,#cp-menu-avis) button:is([onclick="fbLogin()"],[onclick="fbSignup()"],[onclick="cpSendSupport()"],[onclick="cpSendAvis()"]){
+  background: var(--cp-tile) !important; color: #fff !important; border: none !important;
+  min-height: 46px; border-radius: 12px !important; font-size: .78rem !important; font-weight: 600 !important;
+  box-shadow: var(--cp-gloss) !important;
+}
+/* Blocs (formules, support, avis) : mêmes dimensions */
+:is(#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) > div[style*="border-radius"][style*="padding"]{ border-radius: 16px !important; padding: 16px !important; margin-bottom: 12px !important; }
+/* Champs mot de passe (champ + œil dans un même cadre) */
+#cp-menu-membre div:has(> input[type="password"]){ border: 1px solid #d9dee5 !important; border-radius: 12px !important; background: #fff !important; min-height: 46px; overflow: hidden; }
+#cp-menu-membre div:has(> input[type="password"]):focus-within{ border-color: var(--cp-emer) !important; box-shadow: 0 0 0 4px rgba(10,154,116,.16) !important; }
+#cp-menu-membre div:has(> input[type="password"]) > input{ border: none !important; box-shadow: none !important; min-height: 44px; background: transparent !important; }
+#cp-menu-membre > div[style*="linear-gradient"]{ background: radial-gradient(120% 140% at 100% 0%, rgba(21,192,143,.25) 0%, rgba(21,192,143,0) 55%), var(--cp-deep) !important; border-radius: 16px !important; }
+</style>
+<script>
+/* ═══ Logo CareerPulse : monogramme « C » + ligne de pouls (SVG) ═══ */
+(function(){
+  var MARK='<svg viewBox="0 0 32 32" width="70%" height="70%" fill="none" aria-hidden="true" style="display:block">'
+    +'<path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>'
+    +'<path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function run(){
+    var spans=document.querySelectorAll('#tnav .logo span, .screen div[style*="gradient"] > span, #grid-panel span');
+    for(var i=0;i<spans.length;i++){
+      var sp=spans[i], t=(sp.textContent||'').trim();
+      if(t!=='C' || sp.getAttribute('data-cp-mark')) continue;
+      var tile=sp.parentElement; if(!tile) continue;
+      var r=tile.getBoundingClientRect(); if(r.width>64) continue;
+      sp.setAttribute('data-cp-mark','1'); sp.style.display='none';
+      tile.insertAdjacentHTML('beforeend',MARK);
+      tile.style.display='flex'; tile.style.alignItems='center'; tile.style.justifyContent='center';
+      tile.style.background='linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%)';
+      tile.style.boxShadow='inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px -6px rgba(6,90,70,.55)';
+    }
+  }
+  if(document.readyState!=='loading') run(); else document.addEventListener('DOMContentLoaded',run);
+  window.addEventListener('load',run);
+  var t=null; try{ new MutationObserver(function(){ clearTimeout(t); t=setTimeout(run,200); }).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
+})();
+</script>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
   var PART='menu';
   var QUIZ=['s-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-qcm-entretien', 's-qcm-entretien-result', 's-qcm-strategie', 's-qcm-strategie-result', 's-qcm-leadership', 's-qcm-leadership-result', 's-qcm-stress', 's-qcm-stress-result', 's-qcm-digital', 's-qcm-digital-result', 's-qcm-orientation', 's-qcm-orientation-result', 's-qcm-are', 's-qcm-are-result', 's-qcm-demandeur-entretien', 's-qcm-demandeur-entretien-result', 's-qcm-cpf', 's-qcm-cpf-result', 's-qcm-reconversion', 's-qcm-reconversion-result', 's-qcm-freelance-statut', 's-qcm-freelance-statut-result', 's-qcm-freelance-missions', 's-qcm-freelance-missions-result', 's-qcm-etudiant-alternance', 's-qcm-etudiant-alternance-result', 's-qcm-etudiant-emploi', 's-qcm-etudiant-emploi-result', 's-qcm-poste-droits', 's-qcm-poste-droits-result', 's-qcm-poste-integration', 's-qcm-poste-integration-result', 's-vision-quiz'];
+  var MON=['s-profil','s-vision-profil'];
   var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
   var EMBED=(PART==='menu' && window.self!==window.top);
-  function fileFor(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
+  function fileOf(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; if(MON.indexOf(k)>-1) return 'monespace.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
+  // Adresse propre (sans #) pour la page d'accueil de chaque fichier : ouverture instantanée (pré-chargée)
+  function urlFor(id){ return HOMES[id]===fileOf(id) ? HOMES[id] : fileOf(id)+'#'+id; }
+  var HOMES={'home':'index.html','eva':'eva.html','quiz-hub':'quiz.html','profil':'monespace.html'};
   var _lastUserAct=0;
   ['click','touchend','keydown'].forEach(function(t){
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
@@ -19009,7 +19140,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function swap(args){
     var r=_go.apply(window,args);
     var sc=document.querySelector('.screen.active');
-    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+    if(sc && (PART==='index'||PART==='quiz'||PART==='monespace')) sc.classList.add('page-visible');
     return r;
   }
   window.go=go=function(id){
@@ -19017,13 +19148,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(EMBED){ if(user && window.cpMenuLeave) window.cpMenuLeave(id); return; }
     if(document.getElementById('s-'+id)){
       // Transition douce entre deux pages du même fichier (vitrine / quiz)
-      if(user && (PART==='index'||PART==='quiz') && document.startViewTransition && !REDUCE){
+      if(user && (PART==='index'||PART==='quiz'||PART==='monespace') && document.startViewTransition && !REDUCE){
         var args=arguments;
         try{ document.startViewTransition(function(){ swap(args); }); return; }catch(e){}
       }
       return _go.apply(this,arguments);
     }
-    if(user) location.href=fileFor(id)+'#'+id;
+    if(user) location.href=urlFor(id);
   };
 
   /* ── Menu burger ── */
@@ -19051,7 +19182,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     window.cpMenuLeave=function(id){
       panelClose(function(){
         if(EMBED) window.parent.postMessage({cpGo:id},'*');
-        else location.href=fileFor(id)+'#'+id;
+        else location.href=urlFor(id);
       });
     };
     window.toggleGridMenu=toggleGridMenu=function(){ panelClose(); };
@@ -19103,14 +19234,14 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   // Affiche tout de suite la bonne page (pas d'écran vide au chargement)
   function route(){
     var h=(location.hash||'').replace('#','');
-    var id=(h && document.getElementById('s-'+h)) ? h : (PART==='eva'?'eva':PART==='quiz'?'quiz-hub':null);
+    var id=(h && document.getElementById('s-'+h)) ? h : (PART==='eva'?'eva':PART==='quiz'?'quiz-hub':PART==='monespace'?'profil':null);
     if(!id) return;
     var sc=document.getElementById('s-'+id);
     if(sc && sc.classList.contains('active')) return;
     _go(id);
-    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+    if(sc && (PART==='index'||PART==='quiz'||PART==='monespace')) sc.classList.add('page-visible');
   }
-  if(PART==='eva'||PART==='quiz') route();
+  if(PART==='eva'||PART==='quiz'||PART==='monespace') route();
   document.addEventListener('DOMContentLoaded',function(){ route(); });
 })();
 </script>
