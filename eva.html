@@ -2,6 +2,24 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
+<link rel="expect" href="#cp-end" blocking="render">
+<style id="cp-transitions">
+@view-transition { navigation: auto; }
+#tnav{ view-transition-name: cp-tnav; }
+::view-transition-old(root){ animation: cpVtOut .22s cubic-bezier(.4,0,1,1) both; }
+::view-transition-new(root){ animation: cpVtIn .34s cubic-bezier(.2,.8,.2,1) both; }
+::view-transition-group(cp-tnav){ animation-duration: 0s; }
+@keyframes cpVtOut{ to{ opacity:0; } }
+@keyframes cpVtIn{ from{ opacity:0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce){
+  ::view-transition-old(root), ::view-transition-new(root){ animation: none; }
+}
+html body{ opacity:1 !important; }
+</style>
+<script type="speculationrules">
+{"prefetch":[{"source":"list","urls":["index.html","eva.html","quiz.html","menu.html"],"eagerness":"moderate"}]}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -3294,7 +3312,7 @@ function evaSuggestions(){
 
 /* ══ FERMER MENUS ══ */
 document.addEventListener('click',function(e){
-  if(!e.target.closest('#eva-profil-selector')) document.getElementById('eva-profil-menu').style.display='none';
+  if(!e.target.closest('#eva-profil-selector')){ var _pm=document.getElementById('eva-profil-menu'); if(_pm) _pm.style.display='none'; }
 });
 
 })();
@@ -24992,100 +25010,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   :root{ --cp-gap: 20px; }
 }
 </style>
-<style id="cp-scroll-arrows-css">
-/* ═══ Flèches de défilement discrètes (toutes les pages) ═══ */
-#cp-scroll-arrows{position:fixed;top:76px;right:10px;z-index:9000;display:flex;flex-direction:column;gap:5px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
-#cp-scroll-arrows.on{opacity:1;pointer-events:auto;}
-#cp-scroll-arrows button{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  background:rgba(37,99,235,.55);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.22);
-  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  transition:background .2s ease,opacity .2s ease,transform .15s ease;position:static !important;padding:0;
-  touch-action:none;user-select:none;-webkit-user-select:none;}
-#cp-scroll-arrows button:hover{background:rgba(37,99,235,.85);}
-#cp-scroll-arrows button:active{transform:scale(.92);}
-#cp-scroll-arrows button[disabled]{opacity:.3;cursor:default;}
-#cp-scroll-arrows svg{width:13px;height:13px;pointer-events:none;}
-@media (min-width:900px){
-  #cp-scroll-arrows{top:calc(var(--cp-top, 70px) + 76px);right:calc(var(--cp-gap, 16px) + 14px);}
-  #cp-scroll-arrows button{width:28px;height:28px;}
-}
-.evad-scroll,.eva-sub-body,.ew-panel,.ew-p0-scroll,.eb-body,.jnl-body,.nova-feed,#ec-splash-body{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
-</style>
-<script>
-/* ═══ Flèches haut / bas : lecture progressive ═══
-   Un clic = quelques lignes en douceur. Rester appuyé = défilement lent et continu. */
-(function(){
-  if(window.self!==window.top) return;
-  var STEP=140, SPEED=260; // px par clic, px par seconde en maintien
-  var box=document.createElement('div'); box.id='cp-scroll-arrows';
-  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
-    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
-  document.body.appendChild(box);
-  var up=box.children[0], down=box.children[1];
-  function activeScreen(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
-  function target(){
-    var sc=activeScreen(); if(!sc) return null;
-    if(getComputedStyle(sc).position!=='fixed'){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
-    var best=null, bestGap=40;
-    sc.querySelectorAll('*').forEach(function(el){
-      if(el.clientHeight<120) return;
-      var gap=el.scrollHeight-el.clientHeight; if(gap<=bestGap) return;
-      var oy=getComputedStyle(el).overflowY; if(oy!=='auto'&&oy!=='scroll') return;
-      if(!el.offsetParent) return;
-      best=el; bestGap=gap;
-    });
-    return best;
-  }
-  var cur=null;
-  function refresh(){
-    if(pressed) return;
-    cur=target();
-    var mf=document.getElementById('cp-menu-frame'); var menuOpen=mf&&mf.style.display==='block';
-    if(!cur || menuOpen){ box.classList.remove('on'); return; }
-    box.classList.add('on');
-    var top=cur.scrollTop, max=cur.scrollHeight-cur.clientHeight;
-    up.disabled = top<4; down.disabled = top>max-4;
-  }
-  function move(dy,smooth){
-    var opt={top:dy,behavior:smooth?'smooth':'instant'};
-    if(cur===document.scrollingElement) window.scrollBy(opt); else cur.scrollBy(opt);
-  }
-  var pressed=false, held=false, dir=0, holdT=null, last=0;
-  function loop(ts){
-    if(!pressed||!held) return;
-    var dt=last?Math.min(50,ts-last):16; last=ts;
-    move(dir*SPEED*dt/1000,false);
-    requestAnimationFrame(loop);
-  }
-  box.addEventListener('pointerdown',function(e){
-    var b=e.target.closest('button'); if(!b||b.disabled) return;
-    cur=target(); if(!cur) return;
-    e.preventDefault();
-    pressed=true; held=false; dir=+b.getAttribute('data-d'); last=0;
-    try{ b.setPointerCapture(e.pointerId); }catch(_){}
-    holdT=setTimeout(function(){ held=true; requestAnimationFrame(loop); },280);
-  });
-  function release(){
-    if(!pressed) return;
-    clearTimeout(holdT);
-    if(!held && cur) move(dir*STEP,true);
-    pressed=false; held=false;
-    setTimeout(refresh,420);
-  }
-  ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){ box.addEventListener(t,release); });
-  box.addEventListener('keydown',function(e){
-    var b=e.target.closest('button'); if(!b||(e.key!=='Enter'&&e.key!==' ')) return;
-    e.preventDefault(); cur=target(); if(cur) move(+b.getAttribute('data-d')*STEP,true); setTimeout(refresh,420);
-  });
-  var t=null; function soon(){ if(t) return; t=setTimeout(function(){t=null;refresh();},120); }
-  document.addEventListener('scroll',soon,true);
-  window.addEventListener('resize',soon);
-  document.addEventListener('click',function(){ setTimeout(refresh,500); },true);
-  setInterval(refresh,1500);
-  try{ new MutationObserver(soon).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(_){}
-  window.addEventListener('load',function(){ setTimeout(refresh,600); });
-})();
-</script>
+
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
@@ -25099,10 +25024,25 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
   });
   var _go=window.go;
+  var REDUCE=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function swap(args){
+    var r=_go.apply(window,args);
+    var sc=document.querySelector('.screen.active');
+    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+    return r;
+  }
   window.go=go=function(id){
-    if(EMBED){ if(Date.now()-_lastUserAct<3000) window.parent.postMessage({cpGo:id},'*'); return; }
-    if(document.getElementById('s-'+id)) return _go.apply(this,arguments);
-    if(Date.now()-_lastUserAct<3000) location.href=fileFor(id)+'#'+id;
+    var user=Date.now()-_lastUserAct<3000;
+    if(EMBED){ if(user && window.cpMenuLeave) window.cpMenuLeave(id); return; }
+    if(document.getElementById('s-'+id)){
+      // Transition douce entre deux pages du même fichier (vitrine / quiz)
+      if(user && (PART==='index'||PART==='quiz') && document.startViewTransition && !REDUCE){
+        var args=arguments;
+        try{ document.startViewTransition(function(){ swap(args); }); return; }catch(e){}
+      }
+      return _go.apply(this,arguments);
+    }
+    if(user) location.href=fileFor(id)+'#'+id;
   };
 
   /* ── Menu burger ── */
@@ -25116,16 +25056,24 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
         if(o){o.style.opacity='1';o.style.pointerEvents='auto';}
       });
     };
-    var panelClose=function(){
+    var panelClose=function(next){
       var p=document.getElementById('grid-panel'),o=document.getElementById('grid-overlay');
-      if(p) p.style.transform='translateX(100%)';
+      if(p) p.style.transform='translateX(calc(100% + 24px))';
       if(o){o.style.opacity='0';o.style.pointerEvents='none';}
       setTimeout(function(){
+        if(typeof next==='function') return next();
         if(EMBED) window.parent.postMessage('cp-menu-close','*');
         else location.href='index.html';
-      },330);
+      },340);
     };
-    window.toggleGridMenu=toggleGridMenu=panelClose;
+    // Depuis le menu : on referme d'abord en douceur, puis on ouvre la page
+    window.cpMenuLeave=function(id){
+      panelClose(function(){
+        if(EMBED) window.parent.postMessage({cpGo:id},'*');
+        else location.href=fileFor(id)+'#'+id;
+      });
+    };
+    window.toggleGridMenu=toggleGridMenu=function(){ panelClose(); };
     if(EMBED){
       var st=document.createElement('style');
       st.textContent='html,body{background:transparent !important;opacity:1 !important}'
@@ -25170,13 +25118,20 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   // Pré-chargement discret du menu pour une ouverture instantanée
   window.addEventListener('load',function(){ setTimeout(ensureFrame,1200); });
 
-  window.addEventListener('load',function(){
+  // Affiche tout de suite la bonne page (pas d'écran vide au chargement)
+  function route(){
     var h=(location.hash||'').replace('#','');
-    if(h && document.getElementById('s-'+h)){ _go(h); }
-    else if(PART==='eva'){ _go('eva'); }
-    else if(PART==='quiz'){ _go('quiz-hub'); }
-  });
+    var id=(h && document.getElementById('s-'+h)) ? h : (PART==='eva'?'eva':PART==='quiz'?'quiz-hub':null);
+    if(!id) return;
+    var sc=document.getElementById('s-'+id);
+    if(sc && sc.classList.contains('active')) return;
+    _go(id);
+    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+  }
+  if(PART==='eva'||PART==='quiz') route();
+  document.addEventListener('DOMContentLoaded',function(){ route(); });
 })();
 </script>
+<div id="cp-end" hidden></div>
 </body>
 </html>
