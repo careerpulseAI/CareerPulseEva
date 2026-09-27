@@ -14675,17 +14675,19 @@ go=function(page){
     document.body.appendChild(frame);
     return frame;
   }
-  function openMenu(){
+  function openMenu(sec){
     ensureFrame(); frame.style.display='block';
-    if(ready) frame.contentWindow.postMessage('cp-menu-open','*'); else wantOpen=true;
+    var msg=(typeof sec==='string')?{cpMenuOpen:sec}:'cp-menu-open';
+    if(ready) frame.contentWindow.postMessage(msg,'*'); else wantOpen=msg;
   }
+  window.cpOpenMenu=openMenu;
   window.addEventListener('message',function(e){
     if(!frame || e.source!==frame.contentWindow) return;
-    if(e.data==='cp-menu-ready'){ ready=true; if(wantOpen){wantOpen=false;frame.contentWindow.postMessage('cp-menu-open','*');} }
+    if(e.data==='cp-menu-ready'){ ready=true; if(wantOpen){var m=wantOpen;wantOpen=false;frame.contentWindow.postMessage(m,'*');} }
     else if(e.data==='cp-menu-close'){ frame.style.display='none'; }
     else if(e.data && e.data.cpGo){ frame.style.display='none'; _lastUserAct=Date.now(); go(e.data.cpGo); }
   });
-  window.toggleGridMenu=toggleGridMenu=openMenu;
+  window.toggleGridMenu=toggleGridMenu=function(){ openMenu(); };
   // Pré-chargement discret du menu pour une ouverture instantanée
   window.addEventListener('load',function(){ setTimeout(ensureFrame,1200); });
 
