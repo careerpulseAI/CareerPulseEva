@@ -5,6 +5,7 @@
 <!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
 <link rel="expect" href="#cp-end" blocking="render">
 <style id="cp-transitions">
+@keyframes cpQiIn{ from{ opacity:0; transform: translateY(12px) scale(.98); } }
 @view-transition { navigation: auto; }
 #tnav{ view-transition-name: cp-tnav; }
 ::view-transition-old(root){ animation: cpVtOut .22s cubic-bezier(.4,0,1,1) both; }
@@ -8382,20 +8383,21 @@ function quizIntro(onConfirm){
   _showRules(function(){
     var old=document.getElementById('_qiOv');if(old)old.remove();
     var ov=document.createElement('div');ov.id='_qiOv';
-    ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9990;display:flex;align-items:flex-end;justify-content:center';
+    ov.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9990;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box';
     ov.innerHTML=''
-      +'<div style="background:#fff;border-radius:20px 20px 0 0;padding:22px 18px 28px;max-width:440px;width:100%">'
+      +'<div id="_qiBox" style="background:#fff;border-radius:22px;padding:24px 20px 22px;max-width:440px;width:100%;box-shadow:0 24px 70px rgba(15,23,42,.28);animation:cpQiIn .32s cubic-bezier(.2,.8,.2,1) both">'
       +'<div style="font-size:.56rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#059669;margin-bottom:14px">&#127919; Avant de commencer</div>'
       +'<div style="margin-bottom:12px">'
       +'<label style="font-size:.66rem;font-weight:700;color:#374151;display:block;margin-bottom:6px">Ton prénom</label>'
-      +'<input id="_qiP" type="text" placeholder="Sophie, Karim, Léa…" maxlength="30" style="width:100%;box-sizing:border-box;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:11px 13px;font-size:.84rem;color:#0f172a;outline:none;font-family:inherit">'
+      +'<input id="_qiP" type="text" placeholder="Sophie, Karim, Léa…" maxlength="30" autocomplete="given-name" oninput="_qiCheck()" onkeydown="if(event.key===\'Enter\')_qiConfirm()" style="width:100%;box-sizing:border-box;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:11px 13px;font-size:.84rem;color:#0f172a;outline:none;font-family:inherit;transition:border-color .2s,box-shadow .2s">'
+      +'<div id="_qiErr" style="display:none;margin-top:7px;font-size:.62rem;font-weight:600;color:#dc2626">Indique ton prénom pour commencer le quiz.</div>'
       +'</div>'
       +'<div onclick="_qiToggle()" style="display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:11px 13px;margin-bottom:16px;cursor:pointer">'
       +'<div style="font-size:.76rem;font-weight:600;color:#374151">&#9201; Activer le chrono <span style="font-size:.62rem;color:#9ca3af;font-weight:400">(optionnel · 10s/question)</span></div>'
       +'<div id="_qiTog" style="width:42px;height:24px;background:#d1d5db;border-radius:99px;position:relative;transition:background .2s;flex-shrink:0">'
       +'<div id="_qiKnob" style="position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)"></div></div>'
       +'</div>'
-      +'<button onclick="_qiConfirm()" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-family:inherit;font-size:.84rem;font-weight:700;color:#fff;cursor:pointer">C\'est parti !</button>'
+      +'<button id="_qiGo" onclick="_qiConfirm()" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-family:inherit;font-size:.84rem;font-weight:700;color:#fff;cursor:pointer;opacity:.45;transition:opacity .2s">C\'est parti !</button>'
       +'</div>';
     document.body.appendChild(ov);
     window._qiCb=onConfirm;window._qiChOn=false;
@@ -8408,7 +8410,21 @@ function _qiToggle(){
   if(t) t.style.background=window._qiChOn?'#059669':'#d1d5db';
   if(k) k.style.left=window._qiChOn?'21px':'3px';
 }
+// Blocage : le quiz ne démarre pas sans prénom
+function _qiValid(){ var p=document.getElementById('_qiP'); var v=p?(p.value||'').trim():''; return v.length>=2 && /[A-Za-zÀ-ÖØ-öø-ÿ]/.test(v); }
+function _qiCheck(){
+  var ok=_qiValid(), b=document.getElementById('_qiGo'), e=document.getElementById('_qiErr'), p=document.getElementById('_qiP');
+  if(b) b.style.opacity=ok?'1':'.45';
+  if(ok){ if(e) e.style.display='none'; if(p){ p.style.setProperty('border-color','#e5e7eb'); p.style.setProperty('box-shadow','none'); } }
+}
 function _qiConfirm(){
+  if(!_qiValid()){
+    var p=document.getElementById('_qiP'), e=document.getElementById('_qiErr'), bx=document.getElementById('_qiBox');
+    if(e) e.style.display='block';
+    if(p){ p.style.setProperty('border-color','#dc2626','important'); p.style.setProperty('box-shadow','0 0 0 4px rgba(220,38,38,.12)','important'); p.focus(); }
+    if(bx && bx.animate) bx.animate([{transform:'translateX(0)'},{transform:'translateX(-8px)'},{transform:'translateX(8px)'},{transform:'translateX(-5px)'},{transform:'translateX(0)'}],{duration:320});
+    return;
+  }
   _QSession.prenom=(document.getElementById('_qiP').value||'').trim();
   _QSession.chrono=!!window._qiChOn;
   _QJokers={cinqcinq:true,ami:true,pct:true};
@@ -19976,9 +19992,11 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 
   /* ── Titres : grands, nets, sans italique ── */
   .screen [style*="Cormorant"]{
-    font-weight: 700 !important; letter-spacing: -.028em !important; line-height: 1.08 !important; color: var(--ap-ink) !important;
+    font-weight: 700 !important; letter-spacing: -.028em !important; line-height: 1.08 !important;
   }
-  .screen [style*="Cormorant"] em, .screen [style*="Cormorant"] i{
+  .screen [style*="Cormorant"] em, .screen [style*="Cormorant"] i{ font-style: normal !important; }
+  /* Dégradé sur le mot clé uniquement quand le titre est sur fond clair */
+  .screen [style*="Cormorant"][style*="color:#0f172a"] em, .screen [style*="Cormorant"][style*="color:#0f172a"] i{
     font-style: normal !important;
     background: linear-gradient(90deg, #0071e3 0%, #0a9a74 100%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent !important;
@@ -20109,8 +20127,113 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   }
   #cp-menu-body button:hover{ filter: brightness(1.05); }
   #cp-menu-body button:active{ transform: scale(.985); }
+
+  /* ═══ Harmonie des couleurs : un seul dégradé profond, des accents sobres ═══ */
+  :root{ --ap-deep: linear-gradient(135deg,#0b1e36 0%,#0e3a50 55%,#0a5a49 100%); --ap-violet: linear-gradient(135deg,#4f46e5 0%,#7c3aed 100%); }
+  .screen [style*="linear-gradient(135deg,#1e3a5f,#059669)"],
+  .screen [style*="linear-gradient(135deg,#1e3a5f,#065f46)"],
+  .screen [style*="linear-gradient(135deg,#0f766e,#1e40af)"],
+  .screen [style*="linear-gradient(135deg,#1e3a5f,#1e40af)"],
+  .screen [style*="linear-gradient(135deg,#0a1628,#052e16)"],
+  .screen [style*="linear-gradient(135deg,#1e3a5f,#3b82f6)"],
+  .screen [style*="linear-gradient(135deg,#0f2447,#1e3a5f)"],
+  .screen [style*="linear-gradient(135deg,#0f172a,#059669)"],
+  .screen [style*="linear-gradient(135deg,#1e3a8a,#047857)"]{ background: var(--ap-deep) !important; }
+  .screen [style*="linear-gradient(135deg,#7c3aed,#f43f5e)"],
+  .screen [style*="linear-gradient(135deg,#8b5cf6,#d946ef)"],
+  .screen [style*="linear-gradient(135deg,#667eea,#764ba2)"],
+  .screen [style*="linear-gradient(135deg,#4c1d95,#7c3aed)"]{ background: var(--ap-violet) !important; }
+
+  /* ═══ Typographie : tailles lisibles et régulières ═══ */
+  .screen .wrap [style*="font-size:.42rem"], .screen .wrap [style*="font-size:.44rem"], .screen .wrap [style*="font-size:.46rem"],
+  .screen .wrap [style*="font-size:.48rem"], .screen .wrap [style*="font-size:.5rem"]{ font-size: .56rem !important; }
+  .screen .wrap [style*="font-size:.52rem"], .screen .wrap [style*="font-size:.54rem"], .screen .wrap [style*="font-size:.56rem"]{ font-size: .62rem !important; }
+  .screen .wrap [style*="font-size:.58rem"], .screen .wrap [style*="font-size:.6rem"]{ font-size: .66rem !important; }
+  .screen .wrap [style*="text-transform:uppercase"]{ letter-spacing: .1em !important; }
+  .screen .wrap p, .screen .wrap [style*="line-height:1.7"], .screen .wrap [style*="line-height:1.65"]{ line-height: 1.6 !important; }
+  .screen .wrap strong, .screen .wrap b{ font-weight: 600 !important; color: inherit; }
 }
 </style>
+<style id="cp-brand">
+/* ═══ Logo CareerPulse et bouton Accueil : même tuile émeraude que le hero ═══ */
+#tnav .logo > div:first-child, #tnav-home-btn{
+  width: 34px !important; height: 34px !important; border-radius: 11px !important;
+  background: linear-gradient(135deg,#059669,#047857) !important;
+  box-shadow: 0 3px 10px rgba(5,150,105,.45), inset 0 1px 0 rgba(255,255,255,.22) !important;
+  border: none !important;
+}
+#tnav .logo > div:first-child span{ font-size: 1.2rem !important; font-weight: 900 !important; letter-spacing: -.03em; }
+#tnav-home-btn{ transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important; }
+#tnav-home-btn:hover{ filter: brightness(1.08); box-shadow: 0 5px 14px rgba(5,150,105,.5), inset 0 1px 0 rgba(255,255,255,.22) !important; }
+#tnav-home-btn:active{ transform: scale(.95); }
+#tnav-home-btn svg{ width: 19px !important; height: 19px !important; }
+#tnav-home-btn svg path{ stroke: #fff !important; }
+/* Menu : tuile logo devant « CareerPulse » */
+#grid-panel > div:first-child [style*="text-transform:uppercase"]{ display: flex !important; align-items: center; gap: 8px; }
+#grid-panel > div:first-child [style*="text-transform:uppercase"]::before{
+  content: "C"; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 7px; letter-spacing: 0; text-transform: none;
+  background: linear-gradient(135deg,#059669,#047857); color: #fff; font-size: 13px; font-weight: 900;
+  box-shadow: 0 2px 6px rgba(5,150,105,.4), inset 0 1px 0 rgba(255,255,255,.22);
+}
+
+/* ═══ Liens « Retour » : chevron SVG premium + texte soigné ═══ */
+.cp-back{ align-items: center !important; gap: 9px !important; font-weight: 600 !important; letter-spacing: -.005em; cursor: pointer; }
+.cp-back:not(.cp-back--fill){ color: #0071e3 !important; }
+.cp-back-ico{
+  width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(0,113,227,.1); color: inherit;
+  transition: transform .28s cubic-bezier(.2,.8,.2,1), background .2s ease;
+}
+.cp-back-ico svg{ width: 13px; height: 13px; display: block; }
+.cp-back:hover .cp-back-ico{ transform: translateX(-3px); background: rgba(0,113,227,.17); }
+.cp-back:active .cp-back-ico{ transform: translateX(-1px) scale(.94); }
+.cp-back--fill .cp-back-ico{ background: rgba(255,255,255,.2); }
+.cp-back--fill:hover .cp-back-ico{ background: rgba(255,255,255,.3); }
+.cp-back--dark .cp-back-ico{ background: rgba(255,255,255,.14); }
+</style>
+<script>
+/* ═══ Transforme tous les liens « Retour … » en liens premium (chevron SVG) ═══ */
+(function(){
+  var RX=/^\s*(?:[←‹<◀«]|&lt;)?\s*Retour\b/i;
+  var ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg>';
+  function isFilled(el){
+    var bg=getComputedStyle(el).backgroundColor, bi=getComputedStyle(el).backgroundImage;
+    if(bi && bi!=='none') return true;
+    var m=bg.match(/rgba?\(([^)]+)\)/); if(!m) return false;
+    var p=m[1].split(',').map(parseFloat); if(p.length===4 && p[3]<.2) return false;
+    return !(p[0]>235&&p[1]>235&&p[2]>235); // fond blanc = pas « plein »
+  }
+  function enhance(){
+    var list=document.querySelectorAll('button,a,[onclick]');
+    for(var i=0;i<list.length;i++){
+      var el=list[i];
+      if(el.getAttribute('data-cp-back')) continue;
+      var txt=(el.textContent||'').replace(/\s+/g,' ').trim();
+      if(!txt || txt.length>60 || !RX.test(txt)) continue;
+      if(el.querySelector('[data-cp-back]')) continue;
+      if(el.closest('[data-cp-back]')) continue;
+      el.setAttribute('data-cp-back','1');
+      // retire l'ancienne flèche (SVG ou caractère)
+      [].slice.call(el.children).forEach(function(c){ if(c.tagName && c.tagName.toLowerCase()==='svg') c.remove(); });
+      var w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false), n;
+      while((n=w.nextNode())){ if(n.nodeValue.trim()){ n.nodeValue=n.nodeValue.replace(/^\s*[←‹<◀«]\s*/,''); break; } }
+      var cs=getComputedStyle(el);
+      if(cs.display==='inline'||cs.display==='inline-block') el.style.display='inline-flex';
+      else if(cs.display==='block'){ el.style.display='flex'; el.style.justifyContent=(cs.textAlign==='center')?'center':'flex-start'; }
+      el.classList.add('cp-back');
+      if(isFilled(el)) el.classList.add('cp-back--fill');
+      var ico=document.createElement('span'); ico.className='cp-back-ico'; ico.innerHTML=ICO;
+      el.insertBefore(ico, el.firstChild);
+    }
+  }
+  var t=null; function soon(){ clearTimeout(t); t=setTimeout(enhance,180); }
+  if(document.readyState!=='loading') enhance(); else document.addEventListener('DOMContentLoaded',enhance);
+  window.addEventListener('load',enhance);
+  try{ new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
+})();
+</script>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
