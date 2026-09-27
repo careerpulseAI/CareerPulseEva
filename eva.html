@@ -2214,7 +2214,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
           </svg>
         </div>
         <div id="ec-splash-hero-text">
-          <div id="ec-splash-hero-name">Votre assistante carrière</div>
+          <div id="ec-splash-hero-name">Ton espace de préparation professionnelle ou entrepreneuriale</div>
           <div id="ec-splash-hero-desc">Disponible 24h/24 — droits, emploi,<br>reconversion, CPF, freelance</div>
         </div>
       </div>
@@ -9868,160 +9868,34 @@ document.addEventListener('DOMContentLoaded', function(){
 ═══════════════════════════════════════════════════════ -->
 
 <!-- QCM Entretien -->
-<div class="screen" id="s-qcm-entretien">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#1e40af;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1e40af" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour
- </button>
- <div style="background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#1e40af;margin-bottom:4px">🎯 Quiz Pro</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#1e3a8a;font-weight:600;margin-bottom:2px">Entretien d'embauche</div>
-  <div style="font-size:.66rem;color:#1e40af;margin-bottom:12px">10 questions · Basé sur des expériences réelles</div>
-  <div style="background:rgba(30,64,175,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm1-bar" style="height:100%;background:#1e40af;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm1-step" style="font-size:.58rem;color:#1e40af;font-weight:700">Question 1 / 10</span>
-   <span id="qcm1-pct" style="font-size:.58rem;color:#1e40af;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm1-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-entretien-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm1-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Stratégie -->
-<div class="screen" id="s-qcm-strategie">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#059669;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour
- </button>
- <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px">
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#059669;margin-bottom:4px">🎯 Quiz Pro</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#064e3b;font-weight:600;margin-bottom:2px">Stratégie emploi</div>
-  <div style="font-size:.66rem;color:#047857;margin-bottom:12px">10 questions · Shuffle · Score /10</div>
-  <div style="background:rgba(5,150,105,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm2-bar" style="height:100%;background:#059669;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm2-step" style="font-size:.58rem;color:#059669;font-weight:700">Question 1 / 10</span>
-   <span id="qcm2-pct" style="font-size:.58rem;color:#059669;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm2-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-strategie-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm2-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Leadership -->
-<div class="screen" id="s-qcm-leadership">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#7c3aed;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour
- </button>
- <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px">
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#7c3aed;margin-bottom:4px">🎯 Quiz Pro</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#4c1d95;font-weight:600;margin-bottom:2px">Leadership &amp; Management</div>
-  <div style="font-size:.66rem;color:#7c3aed;margin-bottom:12px">10 questions · Shuffle · Score /10</div>
-  <div style="background:rgba(124,58,237,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm3-bar" style="height:100%;background:#7c3aed;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm3-step" style="font-size:.58rem;color:#7c3aed;font-weight:700">Question 1 / 10</span>
-   <span id="qcm3-pct" style="font-size:.58rem;color:#7c3aed;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm3-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-leadership-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm3-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Stress -->
-<div class="screen" id="s-qcm-stress">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#b45309;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour
- </button>
- <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px">
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#b45309;margin-bottom:4px">🎯 Quiz Pro</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#78350f;font-weight:600;margin-bottom:2px">Gestion du stress</div>
-  <div style="font-size:.66rem;color:#b45309;margin-bottom:12px">10 questions · Shuffle · Score /10</div>
-  <div style="background:rgba(180,83,9,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm4-bar" style="height:100%;background:#b45309;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm4-step" style="font-size:.58rem;color:#b45309;font-weight:700">Question 1 / 10</span>
-   <span id="qcm4-pct" style="font-size:.58rem;color:#b45309;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm4-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-stress-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm4-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Digital -->
-<div class="screen" id="s-qcm-digital">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#0891b2;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour
- </button>
- <div style="background:linear-gradient(135deg,#cffafe,#a5f3fc);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px">
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#0891b2;margin-bottom:4px">🎯 Quiz Pro</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#164e63;font-weight:600;margin-bottom:2px">Compétences digitales</div>
-  <div style="font-size:.66rem;color:#0891b2;margin-bottom:12px">10 questions · Shuffle · Score /10</div>
-  <div style="background:rgba(8,145,178,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm5-bar" style="height:100%;background:#0891b2;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm5-step" style="font-size:.58rem;color:#0891b2;font-weight:700">Question 1 / 10</span>
-   <span id="qcm5-pct" style="font-size:.58rem;color:#0891b2;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm5-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-digital-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm5-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Orientation -->
-<div class="screen" id="s-qcm-orientation">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('home')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#dc2626;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour
- </button>
- <div style="background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px">
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#dc2626;margin-bottom:4px">🎯 Quiz Pro</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#7f1d1d;font-weight:600;margin-bottom:2px">Orientation métier</div>
-  <div style="font-size:.66rem;color:#dc2626;margin-bottom:12px">10 questions · Shuffle · Score /10</div>
-  <div style="background:rgba(220,38,38,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm6-bar" style="height:100%;background:#dc2626;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm6-step" style="font-size:.58rem;color:#dc2626;font-weight:700">Question 1 / 10</span>
-   <span id="qcm6-pct" style="font-size:.58rem;color:#dc2626;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm6-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-orientation-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm6-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- ═══════════════════════════════════════════
      JS — GRID MENU + 6 QCM PRO ENGINE
@@ -11056,278 +10930,58 @@ go=function(page){
 </script>
 
 <!-- QCM ARE & Indemnisation chômage -->
-<div class="screen" id="s-qcm-are">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#002395;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#002395" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#dbeafe,#93c5fd);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(0,35,149,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#002395;margin-bottom:4px">🔍 Demandeur d'emploi</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#001a6e;font-weight:600;margin-bottom:2px">ARE & Indemnisation chômage</div>
-  <div style="font-size:.66rem;color:#002395;margin-bottom:12px">ARE · Droits · Indemnisation · France Travail</div>
-  <div style="background:rgba(0,35,149,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm7-bar" style="height:100%;background:#002395;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm7-step" style="font-size:.58rem;color:#002395;font-weight:700">Question 1 / 10</span>
-   <span id="qcm7-pct" style="font-size:.58rem;color:#002395;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm7-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-are-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm7-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Entretien Demandeur d'emploi -->
-<div class="screen" id="s-qcm-demandeur-entretien">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#0891b2;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#cffafe,#67e8f9);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(8,145,178,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#0891b2;margin-bottom:4px">🔍 Demandeur d'emploi</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#0e4f60;font-weight:600;margin-bottom:2px">Entretien d'embauche</div>
-  <div style="font-size:.66rem;color:#0891b2;margin-bottom:12px">Entretien · Négociation · Posture · Stratégie</div>
-  <div style="background:rgba(8,145,178,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm8-bar" style="height:100%;background:#0891b2;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm8-step" style="font-size:.58rem;color:#0891b2;font-weight:700">Question 1 / 10</span>
-   <span id="qcm8-pct" style="font-size:.58rem;color:#0891b2;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm8-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-demandeur-entretien-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm8-result-content"></div>
-</div>
-</div>
+
+
 
 
 <!-- QCM CPF & Bilan de compétences -->
-<div class="screen" id="s-qcm-cpf">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#7c3aed;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(124,58,237,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#7c3aed;margin-bottom:4px">🔄 Reconversion</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#4c1d95;font-weight:600;margin-bottom:2px">CPF & Bilan de compétences</div>
-  <div style="font-size:.66rem;color:#7c3aed;margin-bottom:12px">Formation · Financement · Droits · Dispositifs</div>
-  <div style="background:rgba(124,58,237,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm9-bar" style="height:100%;background:#7c3aed;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm9-step" style="font-size:.58rem;color:#7c3aed;font-weight:700">Question 1 / 10</span>
-   <span id="qcm9-pct" style="font-size:.58rem;color:#7c3aed;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm9-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-cpf-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm9-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Reconversion & Transition -->
-<div class="screen" id="s-qcm-reconversion">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#059669;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#d1fae5,#a7f3d0);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(5,150,105,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#059669;margin-bottom:4px">🔄 Reconversion</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#064e3b;font-weight:600;margin-bottom:2px">Reconversion & Transition</div>
-  <div style="font-size:.66rem;color:#059669;margin-bottom:12px">Projet · Décision · Posture · Changement</div>
-  <div style="background:rgba(5,150,105,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm10-bar" style="height:100%;background:#059669;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm10-step" style="font-size:.58rem;color:#059669;font-weight:700">Question 1 / 10</span>
-   <span id="qcm10-pct" style="font-size:.58rem;color:#059669;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm10-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-reconversion-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm10-result-content"></div>
-</div>
-</div>
+
+
 
 
 <!-- QCM Freelance Statut -->
-<div class="screen" id="s-qcm-freelance-statut">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#f59e0b;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(245,158,11,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#d97706;margin-bottom:4px">🚀 Freelance</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#78350f;font-weight:600;margin-bottom:2px">Statut & Protection sociale</div>
-  <div style="font-size:.66rem;color:#d97706;margin-bottom:12px">Micro-entreprise · Charges · Mutuelle · Retraite</div>
-  <div style="background:rgba(245,158,11,.2);border-radius:4px;height:4px;overflow:hidden"><div id="qcm11-bar" style="height:100%;background:#f59e0b;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm11-step" style="font-size:.58rem;color:#d97706;font-weight:700">Question 1 / 10</span>
-   <span id="qcm11-pct" style="font-size:.58rem;color:#d97706;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm11-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-freelance-statut-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm11-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Freelance Missions -->
-<div class="screen" id="s-qcm-freelance-missions">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#ea580c;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#ffedd5,#fed7aa);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(234,88,12,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#ea580c;margin-bottom:4px">🚀 Freelance</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#7c2d12;font-weight:600;margin-bottom:2px">Missions & Négociation</div>
-  <div style="font-size:.66rem;color:#ea580c;margin-bottom:12px">Clients · Tarifs · Contrats · Stratégie</div>
-  <div style="background:rgba(234,88,12,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm12-bar" style="height:100%;background:#ea580c;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm12-step" style="font-size:.58rem;color:#ea580c;font-weight:700">Question 1 / 10</span>
-   <span id="qcm12-pct" style="font-size:.58rem;color:#ea580c;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm12-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-freelance-missions-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm12-result-content"></div>
-</div>
-</div>
+
+
 
 
 <!-- QCM Étudiant Alternance -->
-<div class="screen" id="s-qcm-etudiant-alternance">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#0ea5e9;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#e0f2fe,#bae6fd);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(14,165,233,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#0284c7;margin-bottom:4px">🎓 Étudiant</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#0c4a6e;font-weight:600;margin-bottom:2px">Alternance & Stage</div>
-  <div style="font-size:.66rem;color:#0284c7;margin-bottom:12px">Droits · Contrat · Gratification · Formation</div>
-  <div style="background:rgba(14,165,233,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm13-bar" style="height:100%;background:#0ea5e9;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm13-step" style="font-size:.58rem;color:#0284c7;font-weight:700">Question 1 / 10</span>
-   <span id="qcm13-pct" style="font-size:.58rem;color:#0284c7;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm13-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-etudiant-alternance-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm13-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Étudiant Premier emploi -->
-<div class="screen" id="s-qcm-etudiant-emploi">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#8b5cf6;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#ede9fe,#ddd6fe);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(139,92,246,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#7c3aed;margin-bottom:4px">🎓 Étudiant</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#4c1d95;font-weight:600;margin-bottom:2px">Premier emploi & Orientation</div>
-  <div style="font-size:.66rem;color:#7c3aed;margin-bottom:12px">Prise de poste · Équipe · Décisions · Évolution</div>
-  <div style="background:rgba(139,92,246,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm14-bar" style="height:100%;background:#8b5cf6;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm14-step" style="font-size:.58rem;color:#7c3aed;font-weight:700">Question 1 / 10</span>
-   <span id="qcm14-pct" style="font-size:.58rem;color:#7c3aed;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm14-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-etudiant-emploi-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm14-result-content"></div>
-</div>
-</div>
+
+
 
 
 <!-- QCM Nouveau Poste Droits -->
-<div class="screen" id="s-qcm-poste-droits">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#0f766e;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#ccfbf1,#99f6e4);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(15,118,110,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#0f766e;margin-bottom:4px">🏆 Nouveau poste</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#134e4a;font-weight:600;margin-bottom:2px">Droits nouveau salarié</div>
-  <div style="font-size:.66rem;color:#0f766e;margin-bottom:12px">Période d'essai · Contrat · Congés · Mutuelle</div>
-  <div style="background:rgba(15,118,110,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm15-bar" style="height:100%;background:#0f766e;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm15-step" style="font-size:.58rem;color:#0f766e;font-weight:700">Question 1 / 10</span>
-   <span id="qcm15-pct" style="font-size:.58rem;color:#0f766e;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm15-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-poste-droits-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm15-result-content"></div>
-</div>
-</div>
+
+
 
 <!-- QCM Nouveau Poste Intégration -->
-<div class="screen" id="s-qcm-poste-integration">
-<div class="wrap" style="padding-top:10px;padding-bottom:40px">
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#dc2626;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:14px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>Retour aux quiz
- </button>
- <div style="background:linear-gradient(135deg,#fee2e2,#fecaca);border-radius:18px;padding:18px 16px 14px;margin-bottom:16px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(220,38,38,.08);border-radius:50%"></div>
-  <div style="font-size:.48rem;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#dc2626;margin-bottom:4px">🏆 Nouveau poste</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#7f1d1d;font-weight:600;margin-bottom:2px">Prise de poste & Intégration</div>
-  <div style="font-size:.66rem;color:#dc2626;margin-bottom:12px">Manager · Équipe · Décisions · Ambition</div>
-  <div style="background:rgba(220,38,38,.15);border-radius:4px;height:4px;overflow:hidden"><div id="qcm16-bar" style="height:100%;background:#dc2626;border-radius:4px;width:0%;transition:width .4s ease"></div></div>
-  <div style="display:flex;justify-content:space-between;margin-top:4px">
-   <span id="qcm16-step" style="font-size:.58rem;color:#dc2626;font-weight:700">Question 1 / 10</span>
-   <span id="qcm16-pct" style="font-size:.58rem;color:#dc2626;font-weight:700">0%</span>
-  </div>
- </div>
- <div id="qcm16-zone"></div>
-</div>
-</div>
 
-<div class="screen" id="s-qcm-poste-integration-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:40px">
- <div id="qcm16-result-content"></div>
-</div>
-</div>
+
+
 
 
 <!-- ══ SOUS-PAGES EVA ══ -->
@@ -25316,77 +24970,119 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #s-eva{ background: transparent !important; }
   #ec-splash-features{ align-content: start !important; grid-auto-rows: min-content !important; flex: 0 0 auto !important; height: auto !important; }
   #ec-splash-features > .ec-feat-row{ min-height: 104px !important; height: auto !important; }
+
+  /* Carte Éva de l'accueil : textes centrés */
+  #s-home .cta-eva-rh-body{ align-items: center !important; text-align: center !important; padding-right: 38px !important; }
+  #s-home .cta-eva-rh-sub{ font-size: .8rem !important; }
+  #s-home #cp-free-badge-evacard{ align-self: center; }
+
+  /* Pages courtes : un seul écran, marges resserrées */
+  .screen.active.cp-fit{ padding-top: 28px !important; padding-bottom: 24px !important; }
+
+  /* Pages « Notre vision » : les 4 profils en grille 2 × 2 pour tenir sur un écran */
+  #s-vision-emploi .wrap, #s-vision-cv .wrap{
+    display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 16px;
+    max-width: 1040px !important; align-items: stretch;
+  }
+  #s-vision-emploi .wrap > *, #s-vision-cv .wrap > *{ grid-column: 1 / -1; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"], #s-vision-cv .wrap > div[style*="border:1.5px solid"]{ grid-column: auto; margin-bottom: 16px !important; }
 }
 @media (min-width: 1440px){
   html{ font-size: 19px; }
   :root{ --cp-gap: 20px; }
 }
 </style>
-<style id="cp-scroll-arrows">
-/* ═══ Flèches de défilement (toutes les pages) ═══ */
-#cp-scroll-arrows{position:fixed;top:76px;right:10px;z-index:9000;display:flex;flex-direction:column;gap:6px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+<style id="cp-scroll-arrows-css">
+/* ═══ Flèches de défilement discrètes (toutes les pages) ═══ */
+#cp-scroll-arrows{position:fixed;top:76px;right:10px;z-index:9000;display:flex;flex-direction:column;gap:5px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
 #cp-scroll-arrows.on{opacity:1;pointer-events:auto;}
-#cp-scroll-arrows button{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  background:rgba(37,99,235,.82);color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.3);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  transition:transform .15s ease,background .2s ease,opacity .2s ease;position:static !important;padding:0;}
-#cp-scroll-arrows button:hover{background:#1d4ed8;transform:scale(1.06);}
-#cp-scroll-arrows button:active{transform:scale(.94);}
-#cp-scroll-arrows button[disabled]{opacity:.35;cursor:default;transform:none;}
-#cp-scroll-arrows svg{width:16px;height:16px;}
+#cp-scroll-arrows button{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  background:rgba(37,99,235,.55);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.22);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  transition:background .2s ease,opacity .2s ease,transform .15s ease;position:static !important;padding:0;
+  touch-action:none;user-select:none;-webkit-user-select:none;}
+#cp-scroll-arrows button:hover{background:rgba(37,99,235,.85);}
+#cp-scroll-arrows button:active{transform:scale(.92);}
+#cp-scroll-arrows button[disabled]{opacity:.3;cursor:default;}
+#cp-scroll-arrows svg{width:13px;height:13px;pointer-events:none;}
 @media (min-width:900px){
   #cp-scroll-arrows{top:calc(var(--cp-top, 70px) + 76px);right:calc(var(--cp-gap, 16px) + 14px);}
-  #cp-scroll-arrows button{width:36px;height:36px;}
+  #cp-scroll-arrows button{width:28px;height:28px;}
 }
-/* Fluidité du défilement */
 .evad-scroll,.eva-sub-body,.ew-panel,.ew-p0-scroll,.eb-body,.jnl-body,.nova-feed,#ec-splash-body{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
-@media (prefers-reduced-motion: reduce){ #cp-scroll-arrows button{transition:none;} }
 </style>
 <script>
-/* ═══ Flèches haut / bas : défilent la page active ═══ */
+/* ═══ Flèches haut / bas : lecture progressive ═══
+   Un clic = quelques lignes en douceur. Rester appuyé = défilement lent et continu. */
 (function(){
-  if(window.self!==window.top) return; // pas dans le menu intégré
+  if(window.self!==window.top) return;
+  var STEP=140, SPEED=260; // px par clic, px par seconde en maintien
   var box=document.createElement('div'); box.id='cp-scroll-arrows';
-  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
-    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
+    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
   document.body.appendChild(box);
   var up=box.children[0], down=box.children[1];
   function activeScreen(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
   function target(){
     var sc=activeScreen(); if(!sc) return null;
-    var fixed=getComputedStyle(sc).position==='fixed';
-    if(!fixed){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
+    if(getComputedStyle(sc).position!=='fixed'){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
     var best=null, bestGap=40;
     sc.querySelectorAll('*').forEach(function(el){
       if(el.clientHeight<120) return;
       var gap=el.scrollHeight-el.clientHeight; if(gap<=bestGap) return;
       var oy=getComputedStyle(el).overflowY; if(oy!=='auto'&&oy!=='scroll') return;
-      if(!el.offsetParent && el!==sc) return;
+      if(!el.offsetParent) return;
       best=el; bestGap=gap;
     });
     return best;
   }
   var cur=null;
   function refresh(){
+    if(pressed) return;
     cur=target();
-    var menuOpen=document.getElementById('cp-menu-frame'); menuOpen=menuOpen&&menuOpen.style.display==='block';
+    var mf=document.getElementById('cp-menu-frame'); var menuOpen=mf&&mf.style.display==='block';
     if(!cur || menuOpen){ box.classList.remove('on'); return; }
     box.classList.add('on');
     var top=cur.scrollTop, max=cur.scrollHeight-cur.clientHeight;
     up.disabled = top<4; down.disabled = top>max-4;
   }
-  box.addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b||b.disabled||!cur) return;
-    var step=Math.max(200, cur.clientHeight*.75) * (+b.getAttribute('data-d'));
-    if(cur===document.scrollingElement) window.scrollBy({top:step,behavior:'smooth'});
-    else cur.scrollBy({top:step,behavior:'smooth'});
-    setTimeout(refresh,450);
+  function move(dy,smooth){
+    var opt={top:dy,behavior:smooth?'smooth':'instant'};
+    if(cur===document.scrollingElement) window.scrollBy(opt); else cur.scrollBy(opt);
+  }
+  var pressed=false, held=false, dir=0, holdT=null, last=0;
+  function loop(ts){
+    if(!pressed||!held) return;
+    var dt=last?Math.min(50,ts-last):16; last=ts;
+    move(dir*SPEED*dt/1000,false);
+    requestAnimationFrame(loop);
+  }
+  box.addEventListener('pointerdown',function(e){
+    var b=e.target.closest('button'); if(!b||b.disabled) return;
+    cur=target(); if(!cur) return;
+    e.preventDefault();
+    pressed=true; held=false; dir=+b.getAttribute('data-d'); last=0;
+    try{ b.setPointerCapture(e.pointerId); }catch(_){}
+    holdT=setTimeout(function(){ held=true; requestAnimationFrame(loop); },280);
+  });
+  function release(){
+    if(!pressed) return;
+    clearTimeout(holdT);
+    if(!held && cur) move(dir*STEP,true);
+    pressed=false; held=false;
+    setTimeout(refresh,420);
+  }
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){ box.addEventListener(t,release); });
+  box.addEventListener('keydown',function(e){
+    var b=e.target.closest('button'); if(!b||(e.key!=='Enter'&&e.key!==' ')) return;
+    e.preventDefault(); cur=target(); if(cur) move(+b.getAttribute('data-d')*STEP,true); setTimeout(refresh,420);
   });
   var t=null; function soon(){ if(t) return; t=setTimeout(function(){t=null;refresh();},120); }
   document.addEventListener('scroll',soon,true);
   window.addEventListener('resize',soon);
   document.addEventListener('click',function(){ setTimeout(refresh,500); },true);
   setInterval(refresh,1500);
+  try{ new MutationObserver(soon).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(_){}
   window.addEventListener('load',function(){ setTimeout(refresh,600); });
 })();
 </script>
@@ -25394,9 +25090,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
   var PART='eva';
+  var QUIZ=['s-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-qcm-entretien', 's-qcm-entretien-result', 's-qcm-strategie', 's-qcm-strategie-result', 's-qcm-leadership', 's-qcm-leadership-result', 's-qcm-stress', 's-qcm-stress-result', 's-qcm-digital', 's-qcm-digital-result', 's-qcm-orientation', 's-qcm-orientation-result', 's-qcm-are', 's-qcm-are-result', 's-qcm-demandeur-entretien', 's-qcm-demandeur-entretien-result', 's-qcm-cpf', 's-qcm-cpf-result', 's-qcm-reconversion', 's-qcm-reconversion-result', 's-qcm-freelance-statut', 's-qcm-freelance-statut-result', 's-qcm-freelance-missions', 's-qcm-freelance-missions-result', 's-qcm-etudiant-alternance', 's-qcm-etudiant-alternance-result', 's-qcm-etudiant-emploi', 's-qcm-etudiant-emploi-result', 's-qcm-poste-droits', 's-qcm-poste-droits-result', 's-qcm-poste-integration', 's-qcm-poste-integration-result', 's-vision-quiz'];
   var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
   var EMBED=(PART==='menu' && window.self!==window.top);
-  function fileFor(id){ return VITRINE.indexOf('s-'+id)>-1 ? 'index.html' : 'eva.html'; }
+  function fileFor(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
   var _lastUserAct=0;
   ['click','touchend','keydown'].forEach(function(t){
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
@@ -25477,6 +25174,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var h=(location.hash||'').replace('#','');
     if(h && document.getElementById('s-'+h)){ _go(h); }
     else if(PART==='eva'){ _go('eva'); }
+    else if(PART==='quiz'){ _go('quiz-hub'); }
   });
 })();
 </script>
