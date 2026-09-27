@@ -25324,6 +25324,180 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   opacity: 0 !important; transform: translateY(-4px); transition: opacity .16s ease, transform .16s ease !important;
 }
 </style>
+<style id="eva-app-shell">
+/* ═══════════════════════════════════════════════════════════════
+   EVA — application à part entière (ordinateur uniquement)
+   Plus de barre CareerPulse : EVA a sa propre identité (bleu) et sa barre latérale.
+═══════════════════════════════════════════════════════════════ */
+#eva-side{ display:none; }
+@media (min-width: 900px){
+  :root{
+    --ev-blue:#2563eb; --ev-blue2:#1d4ed8; --ev-sky:#60a5fa; --ev-soft:#eff6ff; --ev-ink:#0f172a; --ev-ink2:#475569; --ev-line:#e5e9f2;
+    --ev-hero: linear-gradient(118deg,#1d4ed8 0%,#2563eb 45%,#3b82f6 75%,#60a5fa 100%);
+    --ev-side-w: 236px;
+  }
+  body{ background: #eef2f8 !important; }
+  #tnav{ display: none !important; }
+
+  /* Barre latérale EVA */
+  #eva-side{
+    display:flex; flex-direction:column; position:fixed; z-index:260; top:16px; bottom:16px; left:16px; width:var(--ev-side-w);
+    background:#fff; border:1px solid var(--ev-line); border-radius:24px; box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 40px rgba(15,23,42,.08);
+    padding:18px 14px 14px; box-sizing:border-box; font-family:var(--cp-font, -apple-system, "Segoe UI", sans-serif);
+  }
+  #eva-side .evs-brand{ display:flex; align-items:center; gap:10px; padding:4px 8px 16px; border-bottom:1px solid var(--ev-line); margin-bottom:12px; }
+  #eva-side .evs-logo{ width:38px; height:38px; border-radius:12px; background:var(--ev-hero); display:flex; align-items:center; justify-content:center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 6px 16px -6px rgba(37,99,235,.6); flex-shrink:0; }
+  #eva-side .evs-name{ font-size:1.15rem; font-weight:800; color:var(--ev-ink); letter-spacing:-.02em; line-height:1; }
+  #eva-side .evs-by{ font-size:.58rem; color:#94a3b8; font-weight:600; margin-top:3px; letter-spacing:.02em; }
+  #eva-side .evs-label{ font-size:.54rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#94a3b8; padding:10px 10px 6px; }
+  #eva-side .evs-item{ display:flex; align-items:center; gap:11px; width:100%; border:none; background:none; cursor:pointer; text-align:left;
+    padding:9px 10px; border-radius:12px; font-family:inherit; font-size:.74rem; font-weight:600; color:#334155; transition:background .18s ease, color .18s ease; position:static !important; }
+  #eva-side .evs-item svg{ width:18px; height:18px; flex-shrink:0; stroke:currentColor; }
+  #eva-side .evs-item:hover{ background:#f5f7fb; }
+  #eva-side .evs-item.on{ background:var(--ev-soft); color:var(--ev-blue2); }
+  #eva-side .evs-item.on svg{ stroke:var(--ev-blue); }
+  #eva-side .evs-nav{ flex:1; overflow-y:auto; }
+  #eva-side .evs-foot{ border-top:1px solid var(--ev-line); padding-top:10px; }
+  #eva-side .evs-back{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin-top:8px; padding:11px 10px; border:none; cursor:pointer;
+    border-radius:13px; font-family:inherit; font-size:.72rem; font-weight:700; color:#fff; position:static !important;
+    background:linear-gradient(135deg,#0b1e36,#0a5a49); box-shadow: inset 0 1px 0 rgba(255,255,255,.15); transition: filter .2s ease; }
+  #eva-side .evs-back:hover{ filter:brightness(1.12); }
+  #eva-side .evs-back .evs-cp{ width:20px; height:20px; border-radius:6px; background:linear-gradient(150deg,#15c08f,#0a9a74 48%,#067357); display:flex; align-items:center; justify-content:center; }
+
+  /* Les pages EVA occupent l'espace à droite de la barre latérale */
+  #s-eva, .eva-subpage, .evad-screen, .nova-screen,
+  #s-eva-workspace, #s-eva-bienetre, #s-eva-tracker, #s-eva-identity{
+    top:16px !important; bottom:16px !important; right:16px !important;
+    left: calc(16px + var(--ev-side-w) + 16px) !important;
+    border-color: var(--ev-line) !important;
+  }
+
+  /* En-têtes de page : titre + sous-titre, bouton retour bleu */
+  .evad-hd, .eva-sub-header, .ew-hdr, .eb-hdr, .jnl-hdr{ height:auto !important; min-height:76px !important; padding-top:12px !important; padding-bottom:12px !important; background:#fff !important; border-bottom:1px solid var(--ev-line) !important; }
+  .evad-hd-title, .eva-sub-title, .ew-hdr-ttl, .eb-hdr-title, .jnl-hdr-title{ font-size:1.12rem !important; font-weight:800 !important; color:var(--ev-ink) !important; letter-spacing:-.02em !important; white-space:normal !important; }
+  .ev-sub{ display:block; font-size:.7rem; font-weight:500; color:var(--ev-ink2); margin-top:3px; letter-spacing:0; }
+  .evad-hd-back, .eva-sub-back, .ew-hdr-back, .eb-hdr-back, .jnl-hdr-back{ width:38px !important; height:38px !important; border-radius:50% !important; background:var(--ev-soft) !important; border:none !important; }
+  .evad-hd-back svg, .evad-hd-back svg *, .eva-sub-back svg, .eva-sub-back svg *, .ew-hdr-back svg, .ew-hdr-back svg *, .eb-hdr-back svg, .eb-hdr-back svg *, .jnl-hdr-back svg, .jnl-hdr-back svg *{ stroke:var(--ev-blue) !important; }
+  .evad-hd-eva, .eb-hdr-badge, .eva-sub-badge{ background:var(--ev-soft) !important; color:var(--ev-blue2) !important; border:1px solid #dbeafe !important; border-radius:99px !important; padding:6px 12px !important; }
+  .evad-hd-eva *{ color:var(--ev-blue2) !important; }
+
+  /* Bandeaux (hero) bleus façon EVA */
+  .ei-hero, .ew-hero, .ev-hero, .eva-id-hero{
+    background: radial-gradient(90% 140% at 100% 0%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 55%), var(--ev-hero) !important;
+    border-radius:22px !important; padding:26px 28px !important; color:#fff; box-shadow:0 14px 34px -14px rgba(37,99,235,.55); position:relative; overflow:hidden;
+  }
+  .ei-hero *, .ew-hero *, .ev-hero *{ color:#fff !important; }
+  .ei-hero .ei-tag, .ev-hero .ev-hero-tag{ opacity:.85; }
+  .ei-h, .ew-hero-ttl, .ev-hero-ttl{ font-size:1.5rem !important; font-weight:800 !important; letter-spacing:-.02em !important; line-height:1.15 !important; }
+  .ei-p, .ew-hero-sub, .ev-hero-sub{ font-size:.8rem !important; opacity:.92; margin-top:6px; }
+  .ev-hero-ico{ position:absolute; right:28px; top:50%; transform:translateY(-50%); width:86px; height:86px; border-radius:26px; background:rgba(255,255,255,.16);
+    display:flex; align-items:center; justify-content:center; box-shadow: inset 0 1px 0 rgba(255,255,255,.35); }
+  .ev-hero-ico svg{ width:44px; height:44px; }
+  .ev-hero{ margin: 22px 0 18px; padding-right:140px !important; }
+  .ei-hero, .ew-hero{ padding-right:140px !important; }
+  .ei-label, .ew-sec-lbl{ font-size:.9rem !important; font-weight:800 !important; color:var(--ev-ink) !important; letter-spacing:-.01em !important; text-transform:none !important; margin:18px 0 12px !important; }
+
+  /* Cartes de profil : icône à gauche, chevron rond à droite */
+  .ei-card, .ew-ptile{ flex-direction:row !important; align-items:center !important; text-align:left !important; gap:14px !important; padding:18px 56px 18px 18px !important; position:relative; background:#fff !important; border:1px solid var(--ev-line) !important; border-radius:18px !important; }
+  .ei-card::after, .ew-ptile::after{ content:""; position:absolute; right:16px; top:50%; margin-top:-15px; width:30px; height:30px; border-radius:50%;
+    background: var(--ev-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6l6 6-6 6'/%3E%3C/svg%3E") center/14px no-repeat; }
+  .ei-card:hover, .ew-ptile:hover{ border-color:#bfdbfe !important; box-shadow:0 10px 26px rgba(37,99,235,.10) !important; }
+  .ew-ptile{ display:flex !important; }
+  .ew-ptile > *{ margin:0 !important; }
+
+  /* Accueil EVA */
+  #ec-splash-topbar{ display:none !important; }
+  #ec-splash-home-btn{ display:none !important; }
+  #ec-splash-hero{ background: radial-gradient(90% 140% at 100% 0%, rgba(255,255,255,.22) 0%, rgba(255,255,255,0) 55%), var(--ev-hero) !important;
+    border:none !important; border-radius:22px !important; padding:26px 28px !important; box-shadow:0 14px 34px -14px rgba(37,99,235,.55); }
+  #ec-splash-hero *{ color:#fff !important; }
+  #ec-splash-hero-name{ font-size:1.45rem !important; font-weight:800 !important; letter-spacing:-.02em; }
+  #ec-splash-hero-desc{ font-size:.8rem !important; opacity:.92; }
+  #ec-splash-hero-icon{ background:rgba(255,255,255,.18) !important; width:64px !important; height:64px !important; border-radius:20px !important; }
+  #ec-splash-hero-icon svg{ width:30px !important; height:30px !important; }
+  #ec-splash-section-label{ font-size:.9rem !important; font-weight:800 !important; color:var(--ev-ink) !important; text-transform:none !important; letter-spacing:-.01em !important; margin:20px 0 12px !important; }
+  #ec-splash-features > .ec-feat-row{ border:1px solid var(--ev-line) !important; border-radius:18px !important; }
+  #ec-splash-features > .ec-feat-row:hover{ border-color:#bfdbfe !important; box-shadow:0 10px 26px rgba(37,99,235,.10) !important; }
+  #ec-splash-features .ec-feat-ico{ background:var(--ev-soft) !important; border-color:#dbeafe !important; border-radius:14px !important; }
+  #ec-splash-features .ec-feat-ico svg, #ec-splash-features .ec-feat-ico svg *{ stroke:var(--ev-blue) !important; }
+  #ec-splash-body{ padding-top:20px !important; }
+
+  /* Entretien Lab : l'ancien bandeau sombre est remplacé par le bandeau bleu */
+  #s-eva-entretien .eva-sub-body > .ev-hero + div{ display:none !important; }
+  #s-eva-entretien .eva-sub-body > .ev-hero{ flex-shrink:0 !important; margin:22px 16px 8px !important; }
+  /* Boutons principaux en bleu EVA */
+  .eb-body button[style*="#059669"], .jnl-body button[style*="#059669"]{ background:var(--ev-blue) !important; }
+}
+</style>
+<script>
+/* ═══ EVA : barre latérale + sous-titres + bandeaux (ordinateur) ═══ */
+(function(){
+  if(window.self!==window.top) return;
+  var I={
+    home:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h5v-5h4v5h5V9.5"/></svg>',
+    droits:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg>',
+    conseils:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg>',
+    entretien:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+    bienetre:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>',
+    suivi:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 3 5-6"/></svg>',
+    about:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+    abo:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg>',
+    contact:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>',
+    avis:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H4V10zM7 10l4-7a2.5 2.5 0 0 1 2.5 2.5V9h5.2a2 2 0 0 1 2 2.3l-1.3 8a2 2 0 0 1-2 1.7H7"/></svg>',
+    membre:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></svg>'
+  };
+  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Entretien Lab',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Mon suivi',I.suivi],['eva-identity','À propos d\'EVA',I.about]];
+  var CP=[['membre','Espace membre',I.membre],['abo','Abonnement',I.abo],['contact','Contact CareerPulse',I.contact],['avis','Donne ton avis',I.avis]];
+  var LOGO='<svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 4v-4H9a3 3 0 0 1-3-3z" fill="rgba(255,255,255,.2)"/><path d="M16 9l1.35 3.15L20.5 13.5l-3.15 1.35L16 18l-1.35-3.15L11.5 13.5l3.15-1.35z" fill="#fff" stroke="none"/></svg>';
+  var CPMARK='<svg viewBox="0 0 32 32" width="15" height="15" fill="none"><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function build(){
+    if(document.getElementById('eva-side')) return;
+    var s=document.createElement('aside'); s.id='eva-side';
+    var h='<div class="evs-brand"><div class="evs-logo">'+LOGO+'</div><div><div class="evs-name">EVA</div><div class="evs-by">Préparation pro &amp; entrepreneuriale</div></div></div><div class="evs-nav">';
+    NAV.forEach(function(n){ h+='<button type="button" class="evs-item" data-go="'+n[0]+'">'+n[2]+'<span>'+n[1]+'</span></button>'; });
+    h+='<div class="evs-label">CareerPulse</div>';
+    CP.forEach(function(n){ h+='<button type="button" class="evs-item" data-menu="'+n[0]+'">'+n[2]+'<span>'+n[1]+'</span></button>'; });
+    h+='</div><div class="evs-foot"><button type="button" class="evs-back" data-cp="1" data-cp-back="1"><span class="evs-cp">'+CPMARK+'</span>Retour sur CareerPulse</button></div>';
+    s.innerHTML=h; document.body.appendChild(s);
+    s.addEventListener('click',function(e){
+      var b=e.target.closest('button'); if(!b) return;
+      if(b.getAttribute('data-go')){ window._lastUserActEva=Date.now(); go(b.getAttribute('data-go')); }
+      else if(b.getAttribute('data-menu')){ if(window.cpOpenMenu) window.cpOpenMenu(b.getAttribute('data-menu')); }
+      else if(b.getAttribute('data-cp')){ document.documentElement.classList.add('cp-leaving'); setTimeout(function(){ location.href='index.html'; },170); }
+    });
+  }
+  var SUB={ 'eva-droits':'Comprendre ses droits pour mieux avancer.', 'eva-workspace':'Des conseils concrets, adaptés à ta situation.', 'eva-entretien':'Prépare tes entretiens avec des mises en situation réalistes.', 'eva-tracker':'Suis ton énergie et tes progrès, jour après jour.', 'eva-identity':'Qui est EVA et comment elle t\'accompagne.' };
+  function decorate(){
+    Object.keys(SUB).forEach(function(id){
+      var sc=document.getElementById('s-'+id); if(!sc) return;
+      var t=sc.querySelector('.evad-hd-title,.eva-sub-title,.ew-hdr-ttl,.eb-hdr-title,.jnl-hdr-title');
+      if(t && !t.querySelector('.ev-sub')){ var sp=document.createElement('span'); sp.className='ev-sub'; sp.textContent=SUB[id]; t.appendChild(sp); }
+    });
+    // Entretien Lab : bandeau bleu
+    var body=document.querySelector('#s-eva-entretien .eva-sub-body');
+    if(body && !body.querySelector('.ev-hero')){
+      var hero=document.createElement('div'); hero.className='ev-hero';
+      hero.innerHTML='<div class="ev-hero-ttl">Réussis tes entretiens avec EVA</div><div class="ev-hero-sub">Simulations, conseils et feedback personnalisés — choisis ton profil, on adapte tout le reste.</div>'
+        +'<div class="ev-hero-ico">'+I.entretien.replace('stroke-width="2"','stroke-width="1.8" stroke="#fff"')+'</div>';
+      var first=body.firstElementChild; body.insertBefore(hero, first);
+    }
+    // Droits : icône dans le bandeau
+    [['#s-eva-droits .ei-hero',I.droits],['#s-eva-workspace .ew-hero',I.conseils]].forEach(function(p){
+      var el=document.querySelector(p[0]); if(el && !el.querySelector('.ev-hero-ico')){ var d=document.createElement('div'); d.className='ev-hero-ico'; d.innerHTML=p[1].replace('stroke-width="2"','stroke-width="1.8" stroke="#fff"'); el.appendChild(d); }
+    });
+  }
+  function mark(){
+    var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active');
+    var id=a?a.id.replace('s-',''):'';
+    if(/^eva-droits/.test(id)) id='eva-droits';
+    if(/^(entretien-|mise-situation-)/.test(id)) id='eva-entretien';
+    document.querySelectorAll('#eva-side .evs-item[data-go]').forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-go')===id); });
+  }
+  function init(){ build(); decorate(); mark(); try{ new MutationObserver(function(){ clearTimeout(window._evMk); window._evMk=setTimeout(mark,60); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){} }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
@@ -25425,17 +25599,19 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     document.body.appendChild(frame);
     return frame;
   }
-  function openMenu(){
+  function openMenu(sec){
     ensureFrame(); frame.style.display='block';
-    if(ready) frame.contentWindow.postMessage('cp-menu-open','*'); else wantOpen=true;
+    var msg=(typeof sec==='string')?{cpMenuOpen:sec}:'cp-menu-open';
+    if(ready) frame.contentWindow.postMessage(msg,'*'); else wantOpen=msg;
   }
+  window.cpOpenMenu=openMenu;
   window.addEventListener('message',function(e){
     if(!frame || e.source!==frame.contentWindow) return;
-    if(e.data==='cp-menu-ready'){ ready=true; if(wantOpen){wantOpen=false;frame.contentWindow.postMessage('cp-menu-open','*');} }
+    if(e.data==='cp-menu-ready'){ ready=true; if(wantOpen){var m=wantOpen;wantOpen=false;frame.contentWindow.postMessage(m,'*');} }
     else if(e.data==='cp-menu-close'){ frame.style.display='none'; }
     else if(e.data && e.data.cpGo){ frame.style.display='none'; _lastUserAct=Date.now(); go(e.data.cpGo); }
   });
-  window.toggleGridMenu=toggleGridMenu=openMenu;
+  window.toggleGridMenu=toggleGridMenu=function(){ openMenu(); };
   // Pré-chargement discret du menu pour une ouverture instantanée
   window.addEventListener('load',function(){ setTimeout(ensureFrame,1200); });
 
