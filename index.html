@@ -14417,6 +14417,70 @@ go=function(page){
   #s-home #cp-free-badge-evacard{ align-self: center; font-size: .6rem !important; }
 }
 </style>
+<style id="cp-mobile-fit">
+/* ═══ MOBILE : les pages des 4 cartes et leurs pages explicatives tiennent sur un écran ═══ */
+@media (max-width: 899px){
+  /* Même taille et même style de texte sur toutes ces pages */
+  :is(#s-cvlettre,#s-emploi,#s-profil,#s-quiz-hub,#s-vision-cv,#s-vision-emploi,#s-vision-profil,#s-vision-quiz) .wrap [style*="Cormorant"]{ font-size: 1.55rem !important; line-height: 1.12 !important; }
+  :is(#s-vision-cv,#s-vision-emploi,#s-vision-profil,#s-vision-quiz) .wrap > div[style*="margin-bottom:22px"]{ margin-bottom: 12px !important; }
+  :is(#s-vision-cv,#s-vision-emploi,#s-vision-profil,#s-vision-quiz) .wrap > div[style*="margin-bottom:22px"] > div:last-child{ font-size: .8rem !important; line-height: 1.5 !important; }
+  :is(#s-vision-cv,#s-vision-emploi,#s-vision-profil,#s-vision-quiz) .wrap > button:first-child{ margin-bottom: 10px !important; }
+  /* Blocs explicatifs en accordéon : titre visible, on touche pour lire la suite */
+  .cp-acc{ cursor: pointer; position: relative; padding-top: 14px !important; padding-bottom: 14px !important; margin-bottom: 10px !important; transition: box-shadow .2s ease; }
+  .cp-acc > *:not(:first-child){ display: none !important; }
+  .cp-acc.cp-open > *:not(:first-child){ display: revert !important; }
+  .cp-acc.cp-open > div:not(:first-child){ display: block !important; }
+  .cp-acc > *:first-child{ margin-bottom: 0 !important; padding-right: 30px; }
+  .cp-acc.cp-open > *:first-child{ margin-bottom: 10px !important; }
+  .cp-acc::after{
+    content: ""; position: absolute; right: 14px; top: 50%; margin-top: -11px; width: 22px; height: 22px; border-radius: 50%;
+    background: rgba(10,154,116,.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23067357' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") center/12px no-repeat;
+    transition: transform .25s ease;
+  }
+  .cp-acc.cp-open::after{ transform: rotate(180deg); top: 18px; margin-top: 0; }
+  .cp-acc > *:first-child{ min-height: 22px; display: flex !important; align-items: center; }
+  .cp-acc[style*="#1e3a5f"]::after, .cp-acc[style*="#0f172a"]::after{ background-color: rgba(255,255,255,.18); filter: brightness(0) invert(1); }
+}
+/* Petits téléphones : même échelle réduite partout */
+@media (max-width: 899px) and (max-height: 760px){
+  :is(#s-cvlettre,#s-emploi,#s-profil,#s-quiz-hub,#s-vision-cv,#s-vision-emploi,#s-vision-profil,#s-vision-quiz) .wrap{ zoom: .88; }
+}
+@media (max-width: 899px) and (max-height: 700px){
+  :is(#s-cvlettre,#s-emploi,#s-profil,#s-quiz-hub,#s-vision-cv,#s-vision-emploi,#s-vision-profil,#s-vision-quiz) .wrap{ zoom: .84 !important; }
+}
+</style>
+<script>
+/* Accordéons des pages explicatives (mobile uniquement) */
+(function(){
+  var IDS=['s-vision-cv','s-vision-emploi','s-vision-profil','s-vision-quiz'];
+  function setup(){
+    var mobile=window.innerWidth<900;
+    IDS.forEach(function(id){
+      var sc=document.getElementById(id); if(!sc) return;
+      var w=sc.querySelector('.wrap'); if(!w) return;
+      [].slice.call(w.children).forEach(function(b){
+        if(b.tagName!=='DIV' || b.children.length<2) return;
+        var st=b.getAttribute('style')||'';
+        if(!/border|background/.test(st)) return;   // bloc titre : on ne touche pas
+        if(mobile){
+          if(!b.classList.contains('cp-acc')){
+            b.classList.add('cp-acc');
+            b.addEventListener('click',function(e){
+              if(!b.classList.contains('cp-acc')) return;
+              if(e.target.closest('a,button,input,[onclick]') && e.target.closest('[onclick]')!==b) return;
+              var open=!b.classList.contains('cp-open');
+              [].slice.call(w.querySelectorAll('.cp-acc.cp-open')).forEach(function(o){ o.classList.remove('cp-open'); });
+              if(open){ b.classList.add('cp-open'); setTimeout(function(){ b.scrollIntoView({behavior:'smooth',block:'nearest'}); },60); }
+            });
+          }
+        } else { b.classList.remove('cp-acc','cp-open'); }
+      });
+    });
+  }
+  if(document.readyState!=='loading') setup(); else document.addEventListener('DOMContentLoaded',setup);
+  window.addEventListener('resize',function(){ clearTimeout(window._cpAccT); window._cpAccT=setTimeout(setup,200); });
+})();
+</script>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
