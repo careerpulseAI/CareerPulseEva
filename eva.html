@@ -8,11 +8,13 @@
 @keyframes cpQiIn{ from{ opacity:0; transform: translateY(12px) scale(.98); } }
 @view-transition { navigation: auto; }
 #tnav{ view-transition-name: cp-tnav; }
-::view-transition-old(root){ animation: cpVtOut .22s cubic-bezier(.4,0,1,1) both; }
-::view-transition-new(root){ animation: cpVtIn .34s cubic-bezier(.2,.8,.2,1) both; }
+/* Fondu en 2 temps : l'ancienne page disparaît d'abord, puis la nouvelle apparaît (jamais superposées) */
+::view-transition-old(root){ animation: cpVtOut .14s ease-in both; }
+::view-transition-new(root){ animation: cpVtIn .3s cubic-bezier(.2,.8,.2,1) .12s both; }
+::view-transition-image-pair(root){ isolation: auto; }
 ::view-transition-group(cp-tnav){ animation-duration: 0s; }
 @keyframes cpVtOut{ to{ opacity:0; } }
-@keyframes cpVtIn{ from{ opacity:0; transform: translateY(10px); } }
+@keyframes cpVtIn{ from{ opacity:0; transform: translateY(8px); } }
 @media (prefers-reduced-motion: reduce){
   ::view-transition-old(root), ::view-transition-new(root){ animation: none; }
 }
@@ -2233,7 +2235,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
           </svg>
         </div>
         <div id="ec-splash-hero-text">
-          <div id="ec-splash-hero-name">Ton espace de préparation professionnelle ou entrepreneuriale</div>
+          <div id="ec-splash-hero-name">Ton espace de préparation professionnelle et entrepreneuriale</div>
           <div id="ec-splash-hero-desc">Disponible 24h/24 — droits, emploi,<br>reconversion, CPF, freelance</div>
         </div>
       </div>
@@ -8165,6 +8167,13 @@ function quizIntro(onConfirm){
       +'<input id="_qiP" type="text" placeholder="Sophie, Karim, Léa…" maxlength="30" autocomplete="given-name" oninput="_qiCheck()" onkeydown="if(event.key===\'Enter\')_qiConfirm()" style="width:100%;box-sizing:border-box;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:11px 13px;font-size:.84rem;color:#0f172a;outline:none;font-family:inherit;transition:border-color .2s,box-shadow .2s">'
       +'<div id="_qiErr" style="display:none;margin-top:7px;font-size:.62rem;font-weight:600;color:#dc2626">Indique ton prénom pour commencer le quiz.</div>'
       +'</div>'
+      +'<div style="margin-bottom:12px">'
+      +'<label style="font-size:.66rem;font-weight:700;color:#374151;display:block;margin-bottom:6px">Nombre de questions</label>'
+      +'<div style="display:flex;gap:6px;background:#f3f4f6;border-radius:12px;padding:4px">'
+      +'<button type="button" id="_qiN15" onclick="_qiSetN(15)" style="flex:1;border:none;border-radius:9px;padding:9px 6px;font-family:inherit;cursor:pointer;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.12);color:#0f172a;transition:all .2s"><div style="font-size:.8rem;font-weight:800">15 questions</div><div style="font-size:.58rem;color:#6b7280;margin-top:1px">≈ 5 min · format court</div></button>'
+      +'<button type="button" id="_qiN25" onclick="_qiSetN(25)" style="flex:1;border:none;border-radius:9px;padding:9px 6px;font-family:inherit;cursor:pointer;background:transparent;box-shadow:none;color:#6b7280;transition:all .2s"><div style="font-size:.8rem;font-weight:800">25 questions</div><div style="font-size:.58rem;color:#6b7280;margin-top:1px">≈ 8 min · format complet</div></button>'
+      +'</div>'
+      +'</div>'
       +'<div onclick="_qiToggle()" style="display:flex;align-items:center;justify-content:space-between;background:#f9fafb;border:1.5px solid #e5e7eb;border-radius:10px;padding:11px 13px;margin-bottom:16px;cursor:pointer">'
       +'<div style="font-size:.76rem;font-weight:600;color:#374151">&#9201; Activer le chrono <span style="font-size:.62rem;color:#9ca3af;font-weight:400">(optionnel · 10s/question)</span></div>'
       +'<div id="_qiTog" style="width:42px;height:24px;background:#d1d5db;border-radius:99px;position:relative;transition:background .2s;flex-shrink:0">'
@@ -8173,7 +8182,7 @@ function quizIntro(onConfirm){
       +'<button id="_qiGo" onclick="_qiConfirm()" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-family:inherit;font-size:.84rem;font-weight:700;color:#fff;cursor:pointer;opacity:.45;transition:opacity .2s">C\'est parti !</button>'
       +'</div>';
     document.body.appendChild(ov);
-    window._qiCb=onConfirm;window._qiChOn=false;
+    window._qiCb=onConfirm;window._qiChOn=false;window._qiNb=15;
     setTimeout(function(){var p=document.getElementById('_qiP');if(p)p.focus();},100);
   });
 }
@@ -8182,6 +8191,15 @@ function _qiToggle(){
   var t=document.getElementById('_qiTog'),k=document.getElementById('_qiKnob');
   if(t) t.style.background=window._qiChOn?'#059669':'#d1d5db';
   if(k) k.style.left=window._qiChOn?'21px':'3px';
+}
+// Choix du nombre de questions (15 ou 25)
+function _qiSetN(n){
+  window._qiNb=n;
+  [15,25].forEach(function(k){
+    var b=document.getElementById('_qiN'+k); if(!b) return;
+    var on=(k===n);
+    b.style.background=on?'#fff':'transparent'; b.style.boxShadow=on?'0 1px 3px rgba(0,0,0,.12)':'none'; b.style.color=on?'#0f172a':'#6b7280';
+  });
 }
 // Blocage : le quiz ne démarre pas sans prénom
 function _qiValid(){ var p=document.getElementById('_qiP'); var v=p?(p.value||'').trim():''; return v.length>=2 && /[A-Za-zÀ-ÖØ-öø-ÿ]/.test(v); }
@@ -8200,6 +8218,7 @@ function _qiConfirm(){
   }
   _QSession.prenom=(document.getElementById('_qiP').value||'').trim();
   _QSession.chrono=!!window._qiChOn;
+  _QSession.nb=(window._qiNb===25)?25:15;
   _QJokers={cinqcinq:true,ami:true,pct:true};
   var ov=document.getElementById('_qiOv');if(ov)ov.remove();
   if(window._qiCb)window._qiCb();
@@ -10040,7 +10059,7 @@ function shuffleArr(arr){
   }
   return a;
 }
-function pick10(bank){ return shuffleArr(bank); }
+function pick10(bank){ var n=(window._QSession&&_QSession.nb)||25; return shuffleArr(bank).slice(0,n); }
 
 // ── Partage WhatsApp + Telegram ──
 function shareQCM(platform, quizName, score){
@@ -10451,7 +10470,11 @@ function qcmEngine(cfg){
         +'</div>';
     }).join('');
     zone.innerHTML=
-      _jokersBar(NS)
+      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap">'
+      +_jokersBar(NS)
+      +'<button type="button" onclick="qcmPause_'+cfg.id+'()" style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid #e2e8f0;border-radius:99px;padding:7px 13px;font-family:inherit;font-size:.66rem;font-weight:700;color:#475569;cursor:pointer;margin-bottom:8px;box-shadow:0 1px 3px rgba(0,0,0,.06)">'
+      +'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="9" y1="6" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="18"/></svg>Je dois interrompre</button>'
+      +'</div>'
       +'<div style="background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:16px;box-shadow:0 2px 8px rgba(0,0,0,.05)">'
       +'<div style="font-size:.58rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:'+cfg.color+';margin-bottom:10px">Question '+(state.cur+1)+'</div>'
       +'<div style="font-family:\'Cormorant Garamond\',serif;font-size:1.18rem;color:#0f172a;line-height:1.5;margin-bottom:18px">'+q.q+'</div>'
@@ -10468,6 +10491,36 @@ function qcmEngine(cfg){
       _qcmSelect(NS, idx, cfg.color, function(){ next(); });
     };
   }
+
+  // ── Pause : « On poursuit ou on arrête ? » ──
+  window['qcmPause_'+cfg.id]=function(){
+    _chronoStop();
+    var old=document.getElementById('_qpOv'); if(old) old.remove();
+    var tot=state.questions.length, done=state.cur;
+    var ov=document.createElement('div'); ov.id='_qpOv';
+    ov.style.cssText='position:fixed;inset:0;background:rgba(15,23,42,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);z-index:9991;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box';
+    ov.innerHTML='<div style="background:#fff;border-radius:22px;padding:24px 20px 20px;max-width:400px;width:100%;box-shadow:0 24px 70px rgba(15,23,42,.28);text-align:center;animation:cpQiIn .3s cubic-bezier(.2,.8,.2,1) both">'
+      +'<div style="width:48px;height:48px;border-radius:14px;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,#15c08f,#0a9a74 48%,#067357);box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 6px 16px -6px rgba(6,90,70,.55)">'
+      +'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><line x1="9" y1="6" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="18"/></svg></div>'
+      +'<div style="font-size:.95rem;font-weight:800;color:#0f172a;margin-bottom:6px">Quiz en pause</div>'
+      +'<div style="font-size:.72rem;color:#4b5563;line-height:1.55;margin-bottom:18px">Tu en es à la question <b>'+(done+1)+' / '+tot+'</b>.<br>On poursuit ou on arrête ?</div>'
+      +'<div style="display:flex;gap:8px">'
+      +'<button type="button" onclick="qcmStop_'+cfg.id+'()" style="flex:1;background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;font-family:inherit;font-size:.78rem;font-weight:700;color:#b91c1c;cursor:pointer">Arrêter</button>'
+      +'<button type="button" onclick="qcmResume_'+cfg.id+'()" style="flex:1.4;background:#059669;border:none;border-radius:12px;padding:12px;font-family:inherit;font-size:.78rem;font-weight:700;color:#fff;cursor:pointer">On poursuit</button>'
+      +'</div></div>';
+    document.body.appendChild(ov);
+  };
+  window['qcmResume_'+cfg.id]=function(){
+    var ov=document.getElementById('_qpOv'); if(ov) ov.remove();
+    render();
+  };
+  window['qcmStop_'+cfg.id]=function(){
+    var ov=document.getElementById('_qpOv'); if(ov) ov.remove();
+    _chronoStop();
+    reset();
+    if(typeof _jToast==='function') _jToast('Quiz arrêté — tu pourras le reprendre quand tu veux.');
+    go('quiz-hub');
+  };
 
   window['qcmReset_'+cfg.id]=function(){
     _rulesShown=true;
@@ -25138,7 +25191,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #s-vision-emploi .wrap > button[onclick^="go("][style*="background:none"], #s-vision-cv .wrap > button[onclick^="go("][style*="background:none"]{ margin-bottom: 8px !important; }
 }
 @media (min-width: 900px) and (max-height: 900px){
-  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: .9; }
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: .86; }
   .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 30px !important; padding-bottom: 28px !important; }
 }
 @media (min-width: 900px) and (max-height: 720px){
@@ -25146,7 +25199,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 24px !important; padding-bottom: 22px !important; }
 }
 @media (min-width: 900px) and (max-height: 680px){
-  .screen:not(.eva-subpage):not(#s-eva):not(#s-home) .wrap{ zoom: .74 !important; }
+  .screen:not(.eva-subpage):not(#s-eva):not(#s-home) .wrap{ zoom: .72 !important; }
   #s-home .wrap{ zoom: .9 !important; }
 }
 
