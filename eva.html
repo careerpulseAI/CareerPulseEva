@@ -9,8 +9,8 @@
 @view-transition { navigation: auto; }
 #tnav{ view-transition-name: cp-tnav; }
 /* Fondu en 2 temps : l'ancienne page disparaît d'abord, puis la nouvelle apparaît (jamais superposées) */
-::view-transition-old(root){ animation: cpVtOut .14s ease-in both; }
-::view-transition-new(root){ animation: cpVtIn .3s cubic-bezier(.2,.8,.2,1) .12s both; }
+::view-transition-old(root){ animation: cpVtOut .18s ease-out both; }
+::view-transition-new(root){ animation: cpVtIn .28s cubic-bezier(.2,.8,.2,1) .06s both; }
 ::view-transition-image-pair(root){ isolation: auto; }
 ::view-transition-group(cp-tnav){ animation-duration: 0s; }
 @keyframes cpVtOut{ to{ opacity:0; } }
@@ -21,7 +21,7 @@
 html body{ opacity:1 !important; }
 </style>
 <script type="speculationrules">
-{"prerender":[{"source":"list","urls":["index.html","eva.html"],"eagerness":"moderate"}],"prefetch":[{"source":"list","urls":["index.html","eva.html"],"eagerness":"eager"}]}
+{"prerender":[{"source":"list","urls":["index.html"],"eagerness":"eager"}],"prefetch":[{"source":"list","urls":["index.html"],"eagerness":"eager"}]}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
@@ -25464,7 +25464,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       var b=e.target.closest('button'); if(!b) return;
       if(b.getAttribute('data-go')){ window._lastUserActEva=Date.now(); go(b.getAttribute('data-go')); }
       else if(b.getAttribute('data-menu')){ if(window.cpOpenMenu) window.cpOpenMenu(b.getAttribute('data-menu')); }
-      else if(b.getAttribute('data-cp')){ document.documentElement.classList.add('cp-leaving'); setTimeout(function(){ location.href='index.html'; },170); }
+      else if(b.getAttribute('data-cp')){ if(('CSSViewTransitionRule' in window)){ location.href='index.html'; } else { document.documentElement.classList.add('cp-leaving'); setTimeout(function(){ location.href='index.html'; },170); } }
     });
   }
   var SUB={ 'eva-droits':'Comprendre ses droits pour mieux avancer.', 'eva-workspace':'Des conseils concrets, adaptés à ta situation.', 'eva-entretien':'Prépare tes entretiens avec des mises en situation réalistes.', 'eva-tracker':'Suis ton énergie et tes progrès, jour après jour.', 'eva-identity':'Qui est EVA et comment elle t\'accompagne.' };
@@ -25505,16 +25505,27 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #ev-arrows{ display:flex; align-items:center; gap:6px; flex-shrink:0; margin:0 10px 0 auto; opacity:0; pointer-events:none; transition:opacity .2s ease; }
   #ev-arrows.on{ opacity:1; pointer-events:auto; }
   #ev-arrows.ev-float{ position:absolute !important; top:18px; right:22px; margin:0; z-index:20; }
-  #ev-arrows button{ width:32px; height:32px; border-radius:50%; border:1px solid #dbeafe; background:#eff6ff; color:#2563eb; cursor:pointer; padding:0;
+  #ev-arrows button{ width:32px; height:32px; border-radius:50%; border:none; background:#059669; color:#fff; cursor:pointer; padding:0; box-shadow:0 3px 10px rgba(5,150,105,.35);
     display:flex; align-items:center; justify-content:center; position:static !important; transition:background .18s ease, opacity .18s ease, transform .12s ease;
     touch-action:none; user-select:none; -webkit-user-select:none; }
-  #ev-arrows button:hover{ background:#dbeafe; }
+  #ev-arrows button:hover{ background:#047857; }
   #ev-arrows button:active{ transform:scale(.92); }
   #ev-arrows button[disabled]{ opacity:.35; cursor:default; }
   #ev-arrows svg{ width:15px; height:15px; pointer-events:none; }
   #eva-tl-header #ev-arrows{ margin:0 8px 0 auto; }
-  #eva-tl-header #ev-arrows button{ background:rgba(255,255,255,.18); border-color:rgba(255,255,255,.28); color:#fff; }
-  #eva-tl-header #ev-arrows button:hover{ background:rgba(255,255,255,.3); }
+  /* Portfolio (chat EVA + outils) : flèches rouges */
+  #ev-arrows.ev-red button{ background:#dc2626; box-shadow:0 3px 10px rgba(220,38,38,.35); color:#fff; }
+  #ev-arrows.ev-red button:hover{ background:#b91c1c; }
+  #ec-pf-overlay > div:nth-child(2){ position:sticky !important; top:0; z-index:30 !important; background:rgba(255,255,255,.85) !important; }
+  /* Listes horizontales : flèches gauche / droite à côté de la liste (jamais dessus) */
+  .evh-wrap{ display:flex; align-items:center; gap:6px; }
+  .evh-wrap > .evh-row{ flex:1 1 auto; min-width:0; }
+  .evh-btn{ width:28px; height:28px; flex:0 0 28px; border-radius:50%; border:none; background:#dc2626; color:#fff; cursor:pointer; padding:0;
+    display:flex; align-items:center; justify-content:center; box-shadow:0 3px 10px rgba(220,38,38,.3); position:static !important; transition:opacity .18s ease, background .18s ease; }
+  .evh-btn:hover{ background:#b91c1c; }
+  .evh-btn[disabled]{ opacity:.3; cursor:default; }
+  .evh-btn svg{ width:14px; height:14px; pointer-events:none; }
+  .evh-wrap.evh-off > .evh-btn{ display:none; }
   #eva-tl-header #eva-subscribe-btn{ margin-left:0 !important; }
 }
 </style>
@@ -25531,6 +25542,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   var BADGE='#eva-subscribe-btn,.evad-hd-eva,.eva-sub-badge,.eb-hdr-badge,.jnl-hdr-streak,.nova-hd-badge';
   function screen(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
   function target(sc){
+    var ov=pfOverlay(); if(ov){ if(ov.scrollHeight-ov.clientHeight>40) return ov; sc=ov; }
     var best=null, gap=40;
     sc.querySelectorAll('*').forEach(function(el){
       if(el.clientHeight<120 || !el.offsetParent) return;
@@ -25540,7 +25552,17 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     });
     return best;
   }
+  function pfOverlay(){ var o=document.getElementById('ec-pf-overlay'); return (o && o.offsetParent) ? o : null; }
   function place(sc){
+    var ov=pfOverlay();
+    var chat=document.querySelector('#eva-fullscreen.chat-mode');
+    box.classList.toggle('ev-red', !!(ov || (chat && sc.id==='s-eva')));
+    if(ov){
+      var oh=ov.children[1], menuBtn=oh && oh.lastElementChild;
+      box.classList.remove('ev-float');
+      if(oh && (box.parentElement!==oh || box.nextSibling!==menuBtn)) oh.insertBefore(box,menuBtn);
+      return;
+    }
     var hd=sc.querySelector(HDR);
     if(hd && hd.offsetParent){
       box.classList.remove('ev-float');
@@ -25585,6 +25607,112 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 })();
 </script>
 <script>
+/* ═══ Portfolio EVA : flèches gauche/droite des listes horizontales + bulle message déplaçable ═══ */
+(function(){
+  if(window.self!==window.top) return;
+  var L='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+  var R='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+  function upd(w){
+    var row=w.querySelector('.evh-row'); if(!row) return;
+    var max=row.scrollWidth-row.clientWidth;
+    w.classList.toggle('evh-off', max<10 || window.innerWidth<900);
+    w.firstChild.disabled=row.scrollLeft<4; w.lastChild.disabled=row.scrollLeft>max-4;
+  }
+  function scan(){
+    var ov=document.getElementById('ec-pf-overlay');
+    document.querySelectorAll('.evh-wrap').forEach(upd);
+    if(!ov || window.innerWidth<900) return;
+    ov.querySelectorAll('div,nav').forEach(function(el){
+      if(el.classList.contains('evh-row') || !el.offsetParent || el.children.length<3) return;
+      var ox=getComputedStyle(el).overflowX; if(ox!=='auto'&&ox!=='scroll') return;
+      if(el.scrollWidth-el.clientWidth<10) return;
+      var w=document.createElement('div'); w.className='evh-wrap';
+      var mb=getComputedStyle(el).marginBottom; w.style.marginBottom=mb; el.style.marginBottom='0';
+      el.parentNode.insertBefore(w,el);
+      var bl=document.createElement('button'); bl.type='button'; bl.className='evh-btn'; bl.setAttribute('aria-label','Défiler à gauche'); bl.innerHTML=L;
+      var br=document.createElement('button'); br.type='button'; br.className='evh-btn'; br.setAttribute('aria-label','Défiler à droite'); br.innerHTML=R;
+      el.classList.add('evh-row');
+      w.appendChild(bl); w.appendChild(el); w.appendChild(br);
+      function go(d){ el.scrollBy({left:d*Math.max(160,el.clientWidth*.6),behavior:'smooth'}); setTimeout(function(){upd(w);},380); }
+      bl.addEventListener('click',function(e){ e.stopPropagation(); go(-1); });
+      br.addEventListener('click',function(e){ e.stopPropagation(); go(1); });
+      el.addEventListener('scroll',function(){ upd(w); },{passive:true});
+      upd(w);
+    });
+  }
+  // Bulle message : glisser à gauche / à droite
+  var drag=null, blockClick=false;
+  document.addEventListener('pointerdown',function(e){
+    var btn=e.target.closest && e.target.closest('#pf-eva-bubble-btn'); if(!btn) return;
+    var root=document.getElementById('pf-eva-bubble-root'), fs=document.getElementById('eva-fullscreen'); if(!root||!fs) return;
+    drag={x:e.clientX, left:root.offsetLeft, root:root, fs:fs, moved:false, id:e.pointerId, btn:btn};
+  },true);
+  document.addEventListener('pointermove',function(e){
+    if(!drag) return;
+    var dx=e.clientX-drag.x;
+    if(!drag.moved && Math.abs(dx)<6) return;
+    if(!drag.moved){ drag.moved=true; try{ drag.btn.setPointerCapture(drag.id); }catch(_){} drag.btn.style.cursor='grabbing'; }
+    var max=drag.fs.clientWidth-drag.root.offsetWidth-8;
+    drag.root.style.left=Math.max(8,Math.min(max,drag.left+dx))+'px';
+    drag.root.style.right='auto';
+  },true);
+  function end(){ if(!drag) return; if(drag.moved){ blockClick=true; drag.btn.style.cursor=''; setTimeout(function(){ blockClick=false; },0); } drag=null; }
+  document.addEventListener('pointerup',end,true);
+  document.addEventListener('pointercancel',end,true);
+  document.addEventListener('click',function(e){ if(blockClick && e.target.closest && e.target.closest('#pf-eva-bubble-btn')){ e.stopPropagation(); e.preventDefault(); blockClick=false; } },true);
+  var st=document.createElement('style'); st.textContent='#pf-eva-bubble-btn{cursor:grab;touch-action:none}';
+  document.head.appendChild(st);
+  var t=null; function soon(){ clearTimeout(t); t=setTimeout(scan,150); }
+  try{ new MutationObserver(soon).observe(document.body,{childList:true,subtree:true}); }catch(e){}
+  window.addEventListener('resize',soon);
+})();
+</script>
+<style id="pf-fix-css">
+/* ═══ Portfolio (ordinateur) : agenda compact + ouverture des sauvegardes sans à-coup ═══ */
+@media (min-width: 900px){
+  #pf-agenda-view{ margin-left: auto; margin-right: auto; }
+  #pf-agenda-view{ max-width: 460px; }
+  #pf-agenda-view [style*="grid-template-columns:repeat(7,1fr)"]{ justify-items: center; }
+  #pf-agenda-view [style*="grid-template-columns:repeat(7,1fr)"] > button{ width: 40px !important; height: 40px !important; aspect-ratio: auto !important; }
+  #pf-content.pf-in > *{ animation: pfIn .22s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes pfIn{ from{ opacity:0; transform: translateY(4px); } }
+}
+</style>
+<script>
+/* Sauvegardes du portfolio : le bouton ☰ ouvre / ferme la liste, le « Retour » est prêt tout de suite (pas de décalage) */
+(function(){
+  var ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg>';
+  function prep(){
+    var el=document.getElementById('pf-content'); if(!el) return;
+    el.querySelectorAll('button').forEach(function(b){
+      if(b.getAttribute('data-cp-back') || !/^\s*←\s*Retour/.test(b.textContent||'')) return;
+      b.setAttribute('data-cp-back','1');
+      b.textContent=(b.textContent||'').replace(/^\s*←\s*/,'');
+      b.classList.add('cp-back'); b.style.display='inline-flex';
+      var s=document.createElement('span'); s.className='cp-back-ico'; s.innerHTML=ICO; b.insertBefore(s,b.firstChild);
+    });
+    var ov=document.getElementById('ec-pf-overlay'); if(ov) ov.scrollTop=0;
+    el.classList.remove('pf-in'); void el.offsetWidth; el.classList.add('pf-in');
+  }
+  function wrap(name){
+    var f=window[name]; if(typeof f!=='function' || f._pfw) return;
+    var g=function(){ var r=f.apply(this,arguments); prep(); return r; }; g._pfw=true; window[name]=g;
+  }
+  function init(){
+    ['pfRenderMenuListPage','pfRenderMenuRecordView'].forEach(wrap);
+    var open=window.pfOpenMenuList;
+    if(typeof open==='function' && !open._pfw){
+      window.pfOpenMenuList=function(){
+        if(window.PF_MENU_LIST_OPEN){ PF_MENU_LIST_OPEN=false; if(typeof pfRenderTab==='function') pfRenderTab(PF_TAB); prep(); return; }
+        return open.apply(this,arguments);
+      };
+      window.pfOpenMenuList._pfw=true;
+    }
+  }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
   var PART='eva';
@@ -25621,8 +25749,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     }
     if(user){
       // la page actuelle s'efface d'abord (pas de superposition), puis la suivante apparaît en fondu
-      document.documentElement.classList.add('cp-leaving');
-      var u=urlFor(id); setTimeout(function(){ location.href=u; },170);
+      if(!('CSSViewTransitionRule' in window)) document.documentElement.classList.add('cp-leaving');
+      var u=urlFor(id); if(('CSSViewTransitionRule' in window)){ location.href=u; } else { setTimeout(function(){ location.href=u; },170); }
     }
   };
 
