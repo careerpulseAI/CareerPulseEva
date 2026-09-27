@@ -18677,6 +18677,22 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #s-eva{ background: transparent !important; }
   #ec-splash-features{ align-content: start !important; grid-auto-rows: min-content !important; flex: 0 0 auto !important; height: auto !important; }
   #ec-splash-features > .ec-feat-row{ min-height: 104px !important; height: auto !important; }
+
+  /* Carte Éva de l'accueil : textes centrés */
+  #s-home .cta-eva-rh-body{ align-items: center !important; text-align: center !important; padding-right: 38px !important; }
+  #s-home .cta-eva-rh-sub{ font-size: .8rem !important; }
+  #s-home #cp-free-badge-evacard{ align-self: center; }
+
+  /* Pages courtes : un seul écran, marges resserrées */
+  .screen.active.cp-fit{ padding-top: 28px !important; padding-bottom: 24px !important; }
+
+  /* Pages « Notre vision » : les 4 profils en grille 2 × 2 pour tenir sur un écran */
+  #s-vision-emploi .wrap, #s-vision-cv .wrap{
+    display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 16px;
+    max-width: 1040px !important; align-items: stretch;
+  }
+  #s-vision-emploi .wrap > *, #s-vision-cv .wrap > *{ grid-column: 1 / -1; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"], #s-vision-cv .wrap > div[style*="border:1.5px solid"]{ grid-column: auto; margin-bottom: 16px !important; }
 }
 @media (min-width: 1440px){
   html{ font-size: 19px; }
@@ -18687,9 +18703,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
   var PART='menu';
+  var QUIZ=['s-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-qcm-entretien', 's-qcm-entretien-result', 's-qcm-strategie', 's-qcm-strategie-result', 's-qcm-leadership', 's-qcm-leadership-result', 's-qcm-stress', 's-qcm-stress-result', 's-qcm-digital', 's-qcm-digital-result', 's-qcm-orientation', 's-qcm-orientation-result', 's-qcm-are', 's-qcm-are-result', 's-qcm-demandeur-entretien', 's-qcm-demandeur-entretien-result', 's-qcm-cpf', 's-qcm-cpf-result', 's-qcm-reconversion', 's-qcm-reconversion-result', 's-qcm-freelance-statut', 's-qcm-freelance-statut-result', 's-qcm-freelance-missions', 's-qcm-freelance-missions-result', 's-qcm-etudiant-alternance', 's-qcm-etudiant-alternance-result', 's-qcm-etudiant-emploi', 's-qcm-etudiant-emploi-result', 's-qcm-poste-droits', 's-qcm-poste-droits-result', 's-qcm-poste-integration', 's-qcm-poste-integration-result', 's-vision-quiz'];
   var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
   var EMBED=(PART==='menu' && window.self!==window.top);
-  function fileFor(id){ return VITRINE.indexOf('s-'+id)>-1 ? 'index.html' : 'eva.html'; }
+  function fileFor(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
   var _lastUserAct=0;
   ['click','touchend','keydown'].forEach(function(t){
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
@@ -18770,6 +18787,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var h=(location.hash||'').replace('#','');
     if(h && document.getElementById('s-'+h)){ _go(h); }
     else if(PART==='eva'){ _go('eva'); }
+    else if(PART==='quiz'){ _go('quiz-hub'); }
   });
 })();
 </script>
