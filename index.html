@@ -1774,7 +1774,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   </div>
   <div class="cta-eva-rh-body">
     <div class="cta-eva-rh-name">EVA</div>
-    <div class="cta-eva-rh-sub">Votre assistante carrière</div>
+    <div class="cta-eva-rh-sub">Ton espace de préparation professionnelle ou entrepreneuriale</div>
     <div class="cta-eva-rh-avail">Disponible 24h/24</div>
     <div id="cp-free-badge-evacard" style="display:inline-block;margin-top:6px;font-size:.56rem;font-weight:800;padding:3px 9px;border-radius:20px;background:rgba(220,38,38,.12);color:#dc2626;"></div>
   </div>
@@ -1885,425 +1885,21 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 </div>
 
 
-<div class="screen" id="s-quiz-hub">
-<div class="wrap" style="padding-top:10px">
-
- <!-- Header -->
- <div style="margin-bottom:18px">
- <div style="font-size:.52rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#059669;margin-bottom:5px;display:flex;align-items:center;justify-content:space-between">
-  <div style="display:flex;align-items:center;gap:6px">
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".6" fill="#059669"/></svg>
-  Quiz &amp; Dossiers
-  </div>
-  <!-- Drapeau + label -->
-  <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-  <span style="font-size:.44rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#002395;line-height:1.2;text-align:right">Contenu 100% français<br>& droit du travail</span>
-  <svg width="32" height="22" viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg" style="border-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.18);flex-shrink:0">
-    <rect width="30" height="60" x="0" fill="#002395"/>
-    <rect width="30" height="60" x="30" fill="#fff"/>
-    <rect width="30" height="60" x="60" fill="#ED2939"/>
-  </svg>
-  </div>
- </div>
- <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:#0f172a;font-weight:400;line-height:1.2">Quiz <em style="color:#059669;font-style:italic">Professionnel</em></div>
- <div style="font-size:.7rem;color:#64748b;margin-top:4px">Droit · Contrat · Emploi · Diagnostic gratuit</div>
- <div id="cp-free-badge-quizhub" style="margin-top:8px;font-size:.62rem;font-weight:800;padding:6px 12px;border-radius:20px;background:rgba(220,38,38,.12);color:#dc2626;display:inline-block;"></div>
- </div>
-
-
- <!-- ── PROFILS QUIZ PROFESSIONNEL — ACCORDÉONS ── -->
-
- <!-- DEMANDEUR D'EMPLOI -->
- <div style="border:1.5px solid rgba(0,35,149,.15);border-radius:14px;margin-bottom:10px;overflow:hidden">
-  <div onclick="(function(el){var b=el.parentNode.querySelector('.acc-body');var a=el.querySelector('.acc-arr');var open=b.style.display!=='none';b.style.display=open?'none':'block';a.style.transform=open?'rotate(0deg)':'rotate(90deg)'})(this)" style="display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:#fff">
-   <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#dbeafe,#93c5fd);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
-   </div>
-   <div style="flex:1;min-width:0">
-    <div style="font-size:.78rem;font-weight:700;color:#0f172a">Demandeur d'emploi</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">ARE · Indemnisation · Entretien · Droits</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
-   </div>
-   <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
-  </div>
-  <div class="acc-body" style="display:none;border-top:1px solid rgba(0,35,149,.08);background:#f8faff">
-   <div onclick="go('qcm-are')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(0,35,149,.06)" onmousedown="this.style.background='rgba(0,35,149,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(0,35,149,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#dbeafe,#93c5fd);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#002395" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">ARE & Indemnisation chômage</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Droits · Calcul · Délais · France Travail</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-   <div onclick="go('qcm-demandeur-entretien')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer" onmousedown="this.style.background='rgba(8,145,178,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(8,145,178,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#cffafe,#67e8f9);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0891b2" stroke-width="1.8" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Entretien d'embauche</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Préparation · Réponses · Négociation · Posture</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-  </div>
- </div>
-
- <!-- RECONVERSION -->
- <div style="border:1.5px solid rgba(124,58,237,.15);border-radius:14px;margin-bottom:10px;overflow:hidden">
-  <div onclick="(function(el){var b=el.parentNode.querySelector('.acc-body');var a=el.querySelector('.acc-arr');var open=b.style.display!=='none';b.style.display=open?'none':'block';a.style.transform=open?'rotate(0deg)':'rotate(90deg)'})(this)" style="display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:#fff">
-   <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-   </div>
-   <div style="flex:1;min-width:0">
-    <div style="font-size:.78rem;font-weight:700;color:#0f172a">Reconversion / Transition</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">CPF · Bilan de compétences · Projet · Décision</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
-   </div>
-   <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
-  </div>
-  <div class="acc-body" style="display:none;border-top:1px solid rgba(124,58,237,.08);background:#faf8ff">
-   <div onclick="go('qcm-cpf')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(124,58,237,.06)" onmousedown="this.style.background='rgba(124,58,237,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(124,58,237,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">CPF & Bilan de compétences</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Formation · Financement · Droits · Dispositifs</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-   <div onclick="go('qcm-reconversion')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer" onmousedown="this.style.background='rgba(5,150,105,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Reconversion & Transition</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Projet · Décision · Posture · Changement</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-  </div>
- </div>
-
- <!-- FREELANCE -->
- <div style="border:1.5px solid rgba(245,158,11,.2);border-radius:14px;margin-bottom:10px;overflow:hidden">
-  <div onclick="(function(el){var b=el.parentNode.querySelector('.acc-body');var a=el.querySelector('.acc-arr');var open=b.style.display!=='none';b.style.display=open?'none':'block';a.style.transform=open?'rotate(0deg)':'rotate(90deg)'})(this)" style="display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:#fff">
-   <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
-   </div>
-   <div style="flex:1;min-width:0">
-    <div style="font-size:.78rem;font-weight:700;color:#0f172a">Freelance / Indépendant</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Statut · Charges · Missions · Négociation</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
-   </div>
-   <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
-  </div>
-  <div class="acc-body" style="display:none;border-top:1px solid rgba(245,158,11,.1);background:#fffdf5">
-   <div onclick="go('qcm-freelance-statut')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(245,158,11,.08)" onmousedown="this.style.background='rgba(245,158,11,.05)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(245,158,11,.05)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#fef3c7,#fde68a);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="1.8" stroke-linecap="round"><path d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><circle cx="12" cy="12" r="2"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Statut & Protection sociale</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Micro-entreprise · Charges · Mutuelle · Retraite</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-   <div onclick="go('qcm-freelance-missions')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer" onmousedown="this.style.background='rgba(234,88,12,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(234,88,12,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#ffedd5,#fed7aa);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="1.8" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.15 1.18 2 2 0 012.12 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Missions & Négociation</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Clients · Tarifs · Contrats · Stratégie</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-  </div>
- </div>
 
 
 
 
 
- <!-- ÉTUDIANT -->
- <div style="border:1.5px solid rgba(14,165,233,.18);border-radius:14px;margin-bottom:10px;overflow:hidden">
-  <div onclick="(function(el){var b=el.parentNode.querySelector('.acc-body');var a=el.querySelector('.acc-arr');var open=b.style.display!=='none';b.style.display=open?'none':'block';a.style.transform=open?'rotate(0deg)':'rotate(90deg)'})(this)" style="display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:#fff">
-   <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#e0f2fe,#bae6fd);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-   </div>
-   <div style="flex:1;min-width:0">
-    <div style="font-size:.78rem;font-weight:700;color:#0f172a">Étudiant</div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Alternance · Stage · Premier emploi · Droits</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
-   </div>
-   <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
-  </div>
-  <div class="acc-body" style="display:none;border-top:1px solid rgba(14,165,233,.08);background:#f0f9ff">
-   <div onclick="go('qcm-etudiant-alternance')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(14,165,233,.06)" onmousedown="this.style.background='rgba(14,165,233,.05)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(14,165,233,.05)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#e0f2fe,#bae6fd);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0284c7" stroke-width="1.8" stroke-linecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Alternance & Stage</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Droits · Contrat · Gratification · Formation</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-   <div onclick="go('qcm-etudiant-emploi')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer" onmousedown="this.style.background='rgba(139,92,246,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(139,92,246,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#ede9fe,#ddd6fe);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="1.8" stroke-linecap="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Premier emploi & Orientation</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Prise de poste · Équipe · Décisions · Évolution</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-  </div>
- </div>
-
-
- <!-- NOUVEAU POSTE BONUS -->
- <div style="border:1.5px solid rgba(15,118,110,.18);border-radius:14px;margin-bottom:16px;overflow:hidden">
-  <div onclick="(function(el){var b=el.parentNode.querySelector('.acc-body');var a=el.querySelector('.acc-arr');var open=b.style.display!=='none';b.style.display=open?'none':'block';a.style.transform=open?'rotate(0deg)':'rotate(90deg)'})(this)" style="display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer;background:#fff">
-   <div style="width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#ccfbf1,#99f6e4);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 01-2-2V5h4"/><path d="M18 9h2a2 2 0 002-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 9a6 6 0 0012 0V3H6z"/></svg>
-   </div>
-   <div style="flex:1;min-width:0">
-    <div style="font-size:.78rem;font-weight:700;color:#0f172a">Nouveau poste <span style="font-size:.58rem;background:#fbbf24;color:#fff;border-radius:5px;padding:1px 6px;margin-left:4px;font-weight:800">BONUS</span></div>
-    <div style="font-size:.58rem;color:#64748b;margin-top:1px">Droits · Période d'essai · Intégration · Ambition</div><div style="font-size:.5rem;color:#94a3b8;margin-top:1px;display:flex;align-items:center;gap:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><span>Résultat non sauvegardé — capture conseillée</span></div>
-   </div>
-   <svg class="acc-arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .2s;transform:rotate(0deg);flex-shrink:0"><path d="M9 18l6-6-6-6"/></svg>
-  </div>
-  <div class="acc-body" style="display:none;border-top:1px solid rgba(15,118,110,.08);background:#f0fdfa">
-   <div onclick="go('qcm-poste-droits')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer;border-bottom:1px solid rgba(15,118,110,.06)" onmousedown="this.style.background='rgba(15,118,110,.05)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(15,118,110,.05)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#ccfbf1,#99f6e4);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f766e" stroke-width="1.8" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Droits nouveau salarié</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Période d'essai · Contrat · Congés · Mutuelle</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-   <div onclick="go('qcm-poste-integration')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;cursor:pointer" onmousedown="this.style.background='rgba(220,38,38,.04)'" onmouseup="this.style.background=''" ontouchstart="this.style.background='rgba(220,38,38,.04)'" ontouchend="this.style.background=''">
-    <div style="width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,#fee2e2,#fecaca);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="1.8" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-    </div>
-    <div style="flex:1;min-width:0">
-     <div style="font-size:.8rem;font-weight:700;color:#0f172a">Prise de poste & Intégration</div>
-     <div style="font-size:.6rem;color:#64748b;margin-top:1px">Manager · Équipe · Décisions · Ambition</div>
-    </div>
-    <span style="font-size:.52rem;font-weight:800;color:#059669;background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.2);border-radius:6px;padding:2px 7px;flex-shrink:0">GRATUIT</span>
-   </div>
-  </div>
- </div>
 
 
 
- <!-- CTA marketing partage -->
- <div onclick="go('vision-quiz')" style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:14px;padding:12px 14px;margin-top:4px;margin-bottom:8px;cursor:pointer" ontouchstart="this.style.opacity='.88'" ontouchend="this.style.opacity='1'">
-  <div style="display:flex;align-items:center;gap:10px">
-   <!-- Dé -->
-   <svg width="32" height="32" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
-    <polygon points="22,4 40,14 40,30 22,40 4,30 4,14" fill="url(#diceGrad2)" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
-    <polygon points="22,4 40,14 40,30 22,40" fill="rgba(0,0,0,.2)"/>
-    <polygon points="22,4 4,14 4,30 22,40" fill="rgba(255,255,255,.07)"/>
-    <circle cx="15" cy="17" r="2.2" fill="white" opacity=".95"/>
-    <circle cx="22" cy="22" r="2.2" fill="white" opacity=".95"/>
-    <circle cx="29" cy="27" r="2.2" fill="white" opacity=".95"/>
-    <circle cx="29" cy="17" r="2.2" fill="white" opacity=".95"/>
-    <circle cx="15" cy="27" r="2.2" fill="white" opacity=".95"/>
-    <defs><linearGradient id="diceGrad2" x1="4" y1="4" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#059669"/></linearGradient></defs>
-   </svg>
-   <!-- Texte + boutons -->
-   <div style="flex:1;min-width:0">
-    <div style="font-size:.68rem;font-weight:700;color:#fff;line-height:1.35;margin-bottom:5px">Réponds aux quiz et partage tes résultats avec tes proches, tes amis et tes futurs collègues — ou tes camarades si tu es étudiant.</div>
-    <div style="display:flex;align-items:center;gap:7px">
-     <div style="width:28px;height:28px;background:#25d366;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-     </div>
-     <div style="width:28px;height:28px;background:#2AABEE;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-     </div>
-     <span style="font-size:.56rem;color:rgba(255,255,255,.55);line-height:1.3">À chaque session, 10 nouvelles questions 🎲<br>Disponible après chaque quiz</span>
-    </div>
-    <div style="font-size:.58rem;font-weight:700;color:#6ee7b7;margin-top:7px;display:flex;align-items:center;gap:4px">
-     En savoir plus sur notre approche pédagogique →
-    </div>
-   </div>
-  </div>
- </div>
 
 
 
-</div>
-</div>
 
 
-<div class="screen" id="s-quiz-admin">
-<div class="wrap" style="padding-top:10px">
-
- <!-- Bouton retour -->
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#059669;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:12px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour aux quiz
- </button>
-
- <div style="background:linear-gradient(135deg,#dbeafe,#93c5fd);border-radius:18px;padding:18px 16px 16px;margin-bottom:18px;position:relative;overflow:hidden">
- <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(0,35,149,.08);border-radius:50%"></div>
- <div style="font-size:.52rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#002395;margin-bottom:6px">🗂️ Quiz gratuit</div>
- <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#001a6e;font-weight:600;margin-bottom:4px">Démarches administratives</div>
- <div style="font-size:.7rem;color:#002395;line-height:1.5">25 questions · Chômage · Pôle Emploi · Droits · CAF</div>
- <div style="margin-top:12px;background:rgba(0,35,149,.15);border-radius:4px;height:4px;overflow:hidden">
- <div id="qad-bar" style="height:100%;background:#002395;border-radius:4px;width:0%;transition:width .4s ease"></div>
- </div>
- <div style="display:flex;justify-content:space-between;margin-top:4px">
- <span id="qad-step" style="font-size:.58rem;color:#002395;font-weight:700">Question 1 / 25</span>
- <span id="qad-pct" style="font-size:.58rem;color:#002395;font-weight:700">0%</span>
- </div>
- </div>
- <div id="qad-zone"></div>
-</div>
-</div>
-
-<div class="screen" id="s-quiz-admin-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:36px">
-
- <!-- Score -->
- <div style="text-align:center;margin-bottom:20px">
-  <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 6px 24px rgba(5,150,105,.3)">
-   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-  </div>
-  <div style="font-size:.52rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#059669;margin-bottom:6px">Résultat</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:#0f172a;line-height:1"><span id="qad-score">0</span><span style="font-size:1.3rem;color:#94a3b8">/25</span></div>
-  <div id="qad-level" style="font-size:.82rem;font-weight:700;color:#059669;margin-top:8px"></div>
- </div>
-
- <!-- Analyse + partage + réponses injectés par JS -->
- <div id="qad-detail" style="text-align:left"></div>
-
- <!-- CTA Eva -->
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center">
-  <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px;line-height:1.5">Tu as une question sur ta recherche<br>d'emploi ou tes démarches ?</div>
-  <button onclick="evaOpenWithMessage('coach')" style="width:100%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:10px;padding:12px;font-size:.78rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit">💬 Parler à Eva →</button>
- </div>
-
- <button onclick="resetQuizAdmin();go('quiz-admin')" style="width:100%;background:#fff;border:1.5px solid #e2e8f0;border-radius:11px;padding:12px;font-size:.76rem;font-weight:700;color:#059669;cursor:pointer;font-family:inherit;margin-bottom:8px">↺ Recommencer</button>
- <button onclick="go('quiz-hub')" style="width:100%;background:none;border:none;font-size:.7rem;color:#94a3b8;cursor:pointer;font-family:'DM Sans',sans-serif">← Retour aux quiz</button>
-
-</div>
-</div>
 
 
-<div class="screen" id="s-quiz-rh">
-<div class="wrap" style="padding-top:10px">
-
- <!-- Bouton retour -->
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#059669;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:12px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour aux quiz
- </button>
-
- <!-- Header -->
- <div style="background:linear-gradient(135deg,#fee2e2,#fca5a5);border-radius:18px;padding:18px 16px 16px;margin-bottom:18px;position:relative;overflow:hidden">
- <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(237,41,57,.08);border-radius:50%"></div>
- <div style="font-size:.52rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#ED2939;margin-bottom:6px">🎯 Mini-test gratuit</div>
- <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#7f0000;font-weight:600;margin-bottom:4px">Entretien RH</div>
- <div style="font-size:.7rem;color:#ED2939;line-height:1.5">25 questions · Évalue ton niveau recrutement · Score &amp; analyse offerts</div>
- <!-- Progress -->
- <div style="margin-top:12px;background:rgba(237,41,57,.15);border-radius:4px;height:4px;overflow:hidden">
- <div id="qrh-bar" style="height:100%;background:#ED2939;border-radius:4px;width:0%;transition:width .4s ease"></div>
- </div>
- <div style="display:flex;justify-content:space-between;margin-top:4px">
- <span id="qrh-step" style="font-size:.58rem;color:#ED2939;font-weight:700">Question 1 / 25</span>
- <span id="qrh-pct" style="font-size:.58rem;color:#ED2939;font-weight:700">0%</span>
- </div>
- </div>
-
- <!-- Zone question -->
- <div id="qrh-zone"></div>
-
-</div>
-</div>
-
-
-<div class="screen" id="s-quiz-rh-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:36px">
-
- <!-- Score -->
- <div style="text-align:center;margin-bottom:20px">
-  <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 6px 24px rgba(5,150,105,.3)">
-   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-  </div>
-  <div style="font-size:.52rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#059669;margin-bottom:6px">Résultat</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:#0f172a;line-height:1"><span id="qrh-score">0</span><span style="font-size:1.3rem;color:#94a3b8">/25</span></div>
-  <div id="qrh-level" style="font-size:.82rem;font-weight:700;color:#059669;margin-top:8px"></div>
- </div>
-
- <!-- Analyse + partage + réponses injectés par JS -->
- <div id="qrh-detail" style="text-align:left"></div>
-
- <!-- CTA Eva -->
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center">
-  <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px;line-height:1.5">Tu as une question sur ta recherche<br>d'emploi ou tes démarches ?</div>
-  <button onclick="evaOpenWithMessage('coach')" style="width:100%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:10px;padding:12px;font-size:.78rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit">💬 Parler à Eva →</button>
- </div>
-
- <button onclick="resetQuizRH();go('quiz-rh')" style="width:100%;background:#fff;border:1.5px solid #e2e8f0;border-radius:11px;padding:12px;font-size:.76rem;font-weight:700;color:#059669;cursor:pointer;font-family:inherit;margin-bottom:8px">↺ Recommencer</button>
- <button onclick="go('quiz-hub')" style="width:100%;background:none;border:none;font-size:.7rem;color:#94a3b8;cursor:pointer;font-family:'DM Sans',sans-serif">← Retour aux quiz</button>
-
-</div>
-</div>
-<div class="screen" id="s-quiz-rupture">
-<div class="wrap" style="padding-top:10px">
-
- <!-- Bouton retour -->
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:#7c3aed;font-size:.75rem;font-weight:700;font-family:inherit;margin-bottom:12px;padding:0">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour aux quiz
- </button>
-
- <div style="background:linear-gradient(135deg,#ede9fe,#c4b5fd);border-radius:18px;padding:18px 16px 16px;margin-bottom:18px;position:relative;overflow:hidden">
- <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;background:rgba(124,58,237,.08);border-radius:50%"></div>
- <div style="font-size:.52rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#7c3aed;margin-bottom:6px">📋 Quiz gratuit</div>
- <div style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:#4c1d95;font-weight:600;margin-bottom:4px">Rupture conventionnelle</div>
- <div style="font-size:.7rem;color:#7c3aed;line-height:1.5">25 questions · Procédure · Indemnités · Droits · CAF</div>
- <div style="margin-top:12px;background:rgba(124,58,237,.15);border-radius:4px;height:4px;overflow:hidden">
- <div id="qrup-bar" style="height:100%;background:#7c3aed;border-radius:4px;width:0%;transition:width .4s ease"></div>
- </div>
- <div style="display:flex;justify-content:space-between;margin-top:4px">
- <span id="qrup-step" style="font-size:.58rem;color:#7c3aed;font-weight:700">Question 1 / 25</span>
- <span id="qrup-pct" style="font-size:.58rem;color:#7c3aed;font-weight:700">0%</span>
- </div>
- </div>
- <div id="qrup-zone"></div>
-</div>
-</div>
-
-<div class="screen" id="s-quiz-rupture-result">
-<div class="wrap" style="padding-top:16px;padding-bottom:36px">
-
- <div style="text-align:center;margin-bottom:20px">
-  <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#6d28d9);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;box-shadow:0 6px 24px rgba(124,58,237,.3)">
-   <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-  </div>
-  <div style="font-size:.52rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:#7c3aed;margin-bottom:6px">Résultat</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;color:#0f172a;line-height:1"><span id="qrup-score">0</span><span style="font-size:1.3rem;color:#94a3b8">/25</span></div>
-  <div id="qrup-level" style="font-size:.82rem;font-weight:700;color:#7c3aed;margin-top:8px"></div>
- </div>
-
- <div id="qrup-detail" style="text-align:left"></div>
-
- <div style="background:linear-gradient(135deg,#1e3a5f,#4c1d95);border-radius:14px;padding:16px;margin-bottom:14px;text-align:center">
-  <div style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.85);margin-bottom:10px;line-height:1.5">Tu as une question sur ta<br>rupture conventionnelle ?</div>
-  <button onclick="evaOpenWithMessage('coach')" style="width:100%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);border-radius:10px;padding:12px;font-size:.78rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit">💬 Parler à Eva →</button>
- </div>
-
- <button onclick="resetQuizRupture();go('quiz-rupture')" style="width:100%;background:#fff;border:1.5px solid #e2e8f0;border-radius:11px;padding:12px;font-size:.76rem;font-weight:700;color:#7c3aed;cursor:pointer;font-family:inherit;margin-bottom:8px">↺ Recommencer</button>
- <button onclick="go('quiz-hub')" style="width:100%;background:none;border:none;font-size:.7rem;color:#94a3b8;cursor:pointer;font-family:'DM Sans',sans-serif">← Retour aux quiz</button>
-
-</div>
-</div>
 
 <div class="screen" id="s-profil">
 <div class="wrap">
@@ -20068,87 +19664,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 <!-- ═══════════════════════════════════════════════════════
      VISION QUIZ & JEUX ÉDUCATIFS
 ═══════════════════════════════════════════════════════ -->
-<div class="screen" id="s-vision-quiz">
-<div class="wrap" style="padding-top:16px;padding-bottom:24px">
 
- <button onclick="go('quiz-hub')" style="display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;color:#059669;font-size:.72rem;font-weight:700;font-family:inherit;padding:0;margin-bottom:18px">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour aux quiz
- </button>
-
- <div style="margin-bottom:22px">
-  <div style="font-size:.5rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#059669;margin-bottom:8px">✦ Quiz & Jeux · Notre vision pédagogique</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#0f172a;line-height:1.15;margin-bottom:10px">
-   Apprendre ses droits,<br><em style="color:#059669">en jouant.</em>
-  </div>
-  <div style="font-size:.74rem;color:#64748b;line-height:1.65">
-   CareerPulse est convaincu qu'un salarié ou un chercheur d'emploi qui connaît ses droits est plus fort, plus serein et moins vulnérable. Les quiz et jeux éducatifs sont notre outil principal pour y parvenir.
-  </div>
- </div>
-
- <div style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #bbf7d0;border-radius:16px;padding:16px;margin-bottom:12px">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-   <div style="width:32px;height:32px;border-radius:10px;background:#059669;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4a2 2 0 01-2-2V5h4"/><path d="M18 9h2a2 2 0 002-2V5h-4"/><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 9a6 6 0 0012 0V3H6z"/></svg>
-   </div>
-   <div style="font-size:.72rem;font-weight:800;color:#065f46">Pourquoi apprendre par le jeu ?</div>
-  </div>
-  <div style="font-size:.64rem;color:#334155;line-height:1.7">
-   Le jeu active la <strong>mémoire à long terme</strong> bien plus efficacement que la lecture passive. Un quiz crée une tension cognitive positive — s'auto-tester est la méthode d'apprentissage la plus puissante connue à ce jour selon les sciences cognitives : le <em>« testing effect »</em>.
-  </div>
- </div>
-
- <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669;margin-bottom:12px">Ce que dit la recherche</div>
-  <div style="display:flex;flex-direction:column;gap:10px">
-   <div style="background:#f8fafc;border-left:3px solid #059669;border-radius:0 10px 10px 0;padding:10px 12px">
-    <div style="font-size:.62rem;font-weight:800;color:#0f172a;margin-bottom:3px">🏛️ MIT & Harvard — Testing Effect (Roediger & Karpicke, 2006)</div>
-    <div style="font-size:.6rem;color:#475569;line-height:1.6">Les étudiants qui s'auto-testent retiennent <strong style="color:#059669">50% d'informations en plus</strong> après une semaine que ceux qui relisent leurs cours.</div>
-   </div>
-   <div style="background:#f8fafc;border-left:3px solid #3b82f6;border-radius:0 10px 10px 0;padding:10px 12px">
-    <div style="font-size:.62rem;font-weight:800;color:#0f172a;margin-bottom:3px">🎮 HEC Paris — Gamification en formation pro (2019)</div>
-    <div style="font-size:.6rem;color:#475569;line-height:1.6">La gamification augmente l'<strong style="color:#3b82f6">engagement de 60%</strong> et le taux de complétion de <strong style="color:#3b82f6">40%</strong> vs les modules e-learning classiques.</div>
-   </div>
-   <div style="background:#f8fafc;border-left:3px solid #7c3aed;border-radius:0 10px 10px 0;padding:10px 12px">
-    <div style="font-size:.62rem;font-weight:800;color:#0f172a;margin-bottom:3px">⚖️ Sciences Po Paris — Droits des salariés (2021)</div>
-    <div style="font-size:.6rem;color:#475569;line-height:1.6"><strong style="color:#7c3aed">73% des salariés français</strong> méconnaissent leurs droits fondamentaux. Cette méconnaissance coûte <strong style="color:#7c3aed">2 400 €/an</strong> en droits non réclamés par actif.</div>
-   </div>
-   <div style="background:#f8fafc;border-left:3px solid #f59e0b;border-radius:0 10px 10px 0;padding:10px 12px">
-    <div style="font-size:.62rem;font-weight:800;color:#0f172a;margin-bottom:3px">📱 Duolingo Research — Micro-learning (2020)</div>
-    <div style="font-size:.6rem;color:#475569;line-height:1.6">Sessions courtes et fréquentes (5-10 min) : <strong style="color:#f59e0b">2x plus efficaces</strong> que des sessions longues espacées. Exactement notre format — 10 questions par session.</div>
-   </div>
-  </div>
- </div>
-
- <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669;margin-bottom:10px">Ce que nos quiz t'enseignent</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
-   <div style="background:#f0fdf4;border-radius:10px;padding:9px 10px"><div style="font-size:.6rem;font-weight:800;color:#065f46;margin-bottom:2px">⚖️ Droit du travail</div><div style="font-size:.54rem;color:#475569;line-height:1.5">Contrat, licenciement, rupture, préavis</div></div>
-   <div style="background:#eff6ff;border-radius:10px;padding:9px 10px"><div style="font-size:.6rem;font-weight:800;color:#1e40af;margin-bottom:2px">💰 Indemnisation</div><div style="font-size:.54rem;color:#475569;line-height:1.5">ARE, ASS, calcul allocation, carence</div></div>
-   <div style="background:#fdf4ff;border-radius:10px;padding:9px 10px"><div style="font-size:.6rem;font-weight:800;color:#7c3aed;margin-bottom:2px">🎓 Formation</div><div style="font-size:.54rem;color:#475569;line-height:1.5">CPF, bilan compétences, VAE</div></div>
-   <div style="background:#fffbeb;border-radius:10px;padding:9px 10px"><div style="font-size:.6rem;font-weight:800;color:#b45309;margin-bottom:2px">🚀 Freelance</div><div style="font-size:.54rem;color:#475569;line-height:1.5">Statut, charges, protection sociale</div></div>
-   <div style="background:#f0f9ff;border-radius:10px;padding:9px 10px"><div style="font-size:.6rem;font-weight:800;color:#0284c7;margin-bottom:2px">🎒 Étudiant</div><div style="font-size:.54rem;color:#475569;line-height:1.5">Stage, alternance, premier emploi</div></div>
-   <div style="background:#f0fdfa;border-radius:10px;padding:9px 10px"><div style="font-size:.6rem;font-weight:800;color:#0f766e;margin-bottom:2px">🏆 Nouveau poste</div><div style="font-size:.54rem;color:#475569;line-height:1.5">Période d'essai, mutuelle, congés</div></div>
-  </div>
- </div>
-
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px;margin-bottom:20px">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px">Apprendre ensemble</div>
-  <div style="font-size:.64rem;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:10px">Le partage de résultats crée une <strong style="color:#6ee7b7">dynamique d'apprentissage collectif</strong> — la pédagogie par les pairs, validée dans les grandes écoles et universités françaises.</div>
-  <div style="display:flex;gap:8px;align-items:center">
-   <div style="width:32px;height:32px;background:#25d366;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-   <div style="width:32px;height:32px;background:#2AABEE;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="#fff"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></div>
-   <div style="font-size:.56rem;color:rgba(255,255,255,.6);line-height:1.4">Partage tes résultats · 10 nouvelles questions à chaque session</div>
-  </div>
- </div>
-
- <button onclick="go('home')" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-size:.72rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour au menu CareerPulse
- </button>
-
-</div>
-</div>
 
 <!-- Toast global (hors s-eva, pour s-profil et autres écrans) -->
 <div id="cp-toast-global" style="position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(10px);background:#1e3a5f;color:#fff;font-size:.72rem;font-weight:700;padding:10px 18px;border-radius:22px;box-shadow:0 4px 16px rgba(0,0,0,.22);opacity:0;transition:opacity .22s,transform .22s;pointer-events:none;z-index:9999;white-space:nowrap;max-width:90vw;text-align:center"></div>
@@ -20309,77 +19825,119 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #s-eva{ background: transparent !important; }
   #ec-splash-features{ align-content: start !important; grid-auto-rows: min-content !important; flex: 0 0 auto !important; height: auto !important; }
   #ec-splash-features > .ec-feat-row{ min-height: 104px !important; height: auto !important; }
+
+  /* Carte Éva de l'accueil : textes centrés */
+  #s-home .cta-eva-rh-body{ align-items: center !important; text-align: center !important; padding-right: 38px !important; }
+  #s-home .cta-eva-rh-sub{ font-size: .8rem !important; }
+  #s-home #cp-free-badge-evacard{ align-self: center; }
+
+  /* Pages courtes : un seul écran, marges resserrées */
+  .screen.active.cp-fit{ padding-top: 28px !important; padding-bottom: 24px !important; }
+
+  /* Pages « Notre vision » : les 4 profils en grille 2 × 2 pour tenir sur un écran */
+  #s-vision-emploi .wrap, #s-vision-cv .wrap{
+    display: grid !important; grid-template-columns: repeat(2, minmax(0,1fr)); column-gap: 16px;
+    max-width: 1040px !important; align-items: stretch;
+  }
+  #s-vision-emploi .wrap > *, #s-vision-cv .wrap > *{ grid-column: 1 / -1; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"], #s-vision-cv .wrap > div[style*="border:1.5px solid"]{ grid-column: auto; margin-bottom: 16px !important; }
 }
 @media (min-width: 1440px){
   html{ font-size: 19px; }
   :root{ --cp-gap: 20px; }
 }
 </style>
-<style id="cp-scroll-arrows">
-/* ═══ Flèches de défilement (toutes les pages) ═══ */
-#cp-scroll-arrows{position:fixed;top:76px;right:10px;z-index:9000;display:flex;flex-direction:column;gap:6px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+<style id="cp-scroll-arrows-css">
+/* ═══ Flèches de défilement discrètes (toutes les pages) ═══ */
+#cp-scroll-arrows{position:fixed;top:76px;right:10px;z-index:9000;display:flex;flex-direction:column;gap:5px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
 #cp-scroll-arrows.on{opacity:1;pointer-events:auto;}
-#cp-scroll-arrows button{width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  background:rgba(37,99,235,.82);color:#fff;box-shadow:0 4px 14px rgba(37,99,235,.3);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  transition:transform .15s ease,background .2s ease,opacity .2s ease;position:static !important;padding:0;}
-#cp-scroll-arrows button:hover{background:#1d4ed8;transform:scale(1.06);}
-#cp-scroll-arrows button:active{transform:scale(.94);}
-#cp-scroll-arrows button[disabled]{opacity:.35;cursor:default;transform:none;}
-#cp-scroll-arrows svg{width:16px;height:16px;}
+#cp-scroll-arrows button{width:26px;height:26px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  background:rgba(37,99,235,.55);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.22);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  transition:background .2s ease,opacity .2s ease,transform .15s ease;position:static !important;padding:0;
+  touch-action:none;user-select:none;-webkit-user-select:none;}
+#cp-scroll-arrows button:hover{background:rgba(37,99,235,.85);}
+#cp-scroll-arrows button:active{transform:scale(.92);}
+#cp-scroll-arrows button[disabled]{opacity:.3;cursor:default;}
+#cp-scroll-arrows svg{width:13px;height:13px;pointer-events:none;}
 @media (min-width:900px){
   #cp-scroll-arrows{top:calc(var(--cp-top, 70px) + 76px);right:calc(var(--cp-gap, 16px) + 14px);}
-  #cp-scroll-arrows button{width:36px;height:36px;}
+  #cp-scroll-arrows button{width:28px;height:28px;}
 }
-/* Fluidité du défilement */
 .evad-scroll,.eva-sub-body,.ew-panel,.ew-p0-scroll,.eb-body,.jnl-body,.nova-feed,#ec-splash-body{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
-@media (prefers-reduced-motion: reduce){ #cp-scroll-arrows button{transition:none;} }
 </style>
 <script>
-/* ═══ Flèches haut / bas : défilent la page active ═══ */
+/* ═══ Flèches haut / bas : lecture progressive ═══
+   Un clic = quelques lignes en douceur. Rester appuyé = défilement lent et continu. */
 (function(){
-  if(window.self!==window.top) return; // pas dans le menu intégré
+  if(window.self!==window.top) return;
+  var STEP=140, SPEED=260; // px par clic, px par seconde en maintien
   var box=document.createElement('div'); box.id='cp-scroll-arrows';
-  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
-    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
+    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
   document.body.appendChild(box);
   var up=box.children[0], down=box.children[1];
   function activeScreen(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
   function target(){
     var sc=activeScreen(); if(!sc) return null;
-    var fixed=getComputedStyle(sc).position==='fixed';
-    if(!fixed){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
+    if(getComputedStyle(sc).position!=='fixed'){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
     var best=null, bestGap=40;
     sc.querySelectorAll('*').forEach(function(el){
       if(el.clientHeight<120) return;
       var gap=el.scrollHeight-el.clientHeight; if(gap<=bestGap) return;
       var oy=getComputedStyle(el).overflowY; if(oy!=='auto'&&oy!=='scroll') return;
-      if(!el.offsetParent && el!==sc) return;
+      if(!el.offsetParent) return;
       best=el; bestGap=gap;
     });
     return best;
   }
   var cur=null;
   function refresh(){
+    if(pressed) return;
     cur=target();
-    var menuOpen=document.getElementById('cp-menu-frame'); menuOpen=menuOpen&&menuOpen.style.display==='block';
+    var mf=document.getElementById('cp-menu-frame'); var menuOpen=mf&&mf.style.display==='block';
     if(!cur || menuOpen){ box.classList.remove('on'); return; }
     box.classList.add('on');
     var top=cur.scrollTop, max=cur.scrollHeight-cur.clientHeight;
     up.disabled = top<4; down.disabled = top>max-4;
   }
-  box.addEventListener('click',function(e){
-    var b=e.target.closest('button'); if(!b||b.disabled||!cur) return;
-    var step=Math.max(200, cur.clientHeight*.75) * (+b.getAttribute('data-d'));
-    if(cur===document.scrollingElement) window.scrollBy({top:step,behavior:'smooth'});
-    else cur.scrollBy({top:step,behavior:'smooth'});
-    setTimeout(refresh,450);
+  function move(dy,smooth){
+    var opt={top:dy,behavior:smooth?'smooth':'instant'};
+    if(cur===document.scrollingElement) window.scrollBy(opt); else cur.scrollBy(opt);
+  }
+  var pressed=false, held=false, dir=0, holdT=null, last=0;
+  function loop(ts){
+    if(!pressed||!held) return;
+    var dt=last?Math.min(50,ts-last):16; last=ts;
+    move(dir*SPEED*dt/1000,false);
+    requestAnimationFrame(loop);
+  }
+  box.addEventListener('pointerdown',function(e){
+    var b=e.target.closest('button'); if(!b||b.disabled) return;
+    cur=target(); if(!cur) return;
+    e.preventDefault();
+    pressed=true; held=false; dir=+b.getAttribute('data-d'); last=0;
+    try{ b.setPointerCapture(e.pointerId); }catch(_){}
+    holdT=setTimeout(function(){ held=true; requestAnimationFrame(loop); },280);
+  });
+  function release(){
+    if(!pressed) return;
+    clearTimeout(holdT);
+    if(!held && cur) move(dir*STEP,true);
+    pressed=false; held=false;
+    setTimeout(refresh,420);
+  }
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){ box.addEventListener(t,release); });
+  box.addEventListener('keydown',function(e){
+    var b=e.target.closest('button'); if(!b||(e.key!=='Enter'&&e.key!==' ')) return;
+    e.preventDefault(); cur=target(); if(cur) move(+b.getAttribute('data-d')*STEP,true); setTimeout(refresh,420);
   });
   var t=null; function soon(){ if(t) return; t=setTimeout(function(){t=null;refresh();},120); }
   document.addEventListener('scroll',soon,true);
   window.addEventListener('resize',soon);
   document.addEventListener('click',function(){ setTimeout(refresh,500); },true);
   setInterval(refresh,1500);
+  try{ new MutationObserver(soon).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(_){}
   window.addEventListener('load',function(){ setTimeout(refresh,600); });
 })();
 </script>
@@ -20387,9 +19945,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
   var PART='index';
+  var QUIZ=['s-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-qcm-entretien', 's-qcm-entretien-result', 's-qcm-strategie', 's-qcm-strategie-result', 's-qcm-leadership', 's-qcm-leadership-result', 's-qcm-stress', 's-qcm-stress-result', 's-qcm-digital', 's-qcm-digital-result', 's-qcm-orientation', 's-qcm-orientation-result', 's-qcm-are', 's-qcm-are-result', 's-qcm-demandeur-entretien', 's-qcm-demandeur-entretien-result', 's-qcm-cpf', 's-qcm-cpf-result', 's-qcm-reconversion', 's-qcm-reconversion-result', 's-qcm-freelance-statut', 's-qcm-freelance-statut-result', 's-qcm-freelance-missions', 's-qcm-freelance-missions-result', 's-qcm-etudiant-alternance', 's-qcm-etudiant-alternance-result', 's-qcm-etudiant-emploi', 's-qcm-etudiant-emploi-result', 's-qcm-poste-droits', 's-qcm-poste-droits-result', 's-qcm-poste-integration', 's-qcm-poste-integration-result', 's-vision-quiz'];
   var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
   var EMBED=(PART==='menu' && window.self!==window.top);
-  function fileFor(id){ return VITRINE.indexOf('s-'+id)>-1 ? 'index.html' : 'eva.html'; }
+  function fileFor(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
   var _lastUserAct=0;
   ['click','touchend','keydown'].forEach(function(t){
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
@@ -20470,7 +20029,33 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var h=(location.hash||'').replace('#','');
     if(h && document.getElementById('s-'+h)){ _go(h); }
     else if(PART==='eva'){ _go('eva'); }
+    else if(PART==='quiz'){ _go('quiz-hub'); }
   });
+})();
+</script>
+<script>
+/* ═══ Ordinateur : les pages courtes tiennent sur un seul écran ═══ */
+(function(){
+  var FIT=['cvlettre','emploi','profil','vision-emploi','vision-cv','vision-profil'];
+  function fit(){
+    var sc=document.querySelector('.screen.active'); if(!sc) return;
+    var kids=[].slice.call(sc.children).filter(function(k){return k.tagName!=='SCRIPT'&&k.tagName!=='STYLE';});
+    kids.forEach(function(k){ k.style.zoom=''; });
+    sc.classList.remove('cp-fit');
+    if(window.innerWidth<900 || FIT.indexOf(sc.id.replace('s-',''))<0 || !kids.length) return;
+    sc.classList.add('cp-fit');
+    var cs=getComputedStyle(sc);
+    var avail=window.innerHeight - sc.getBoundingClientRect().top - parseFloat(cs.marginBottom) - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 6;
+    var first=kids[0].getBoundingClientRect().top, lastB=0;
+    kids.forEach(function(k){ var r=k.getBoundingClientRect(); if(r.height) lastB=Math.max(lastB,r.bottom+parseFloat(getComputedStyle(k).marginBottom||0)); });
+    var need=lastB-first;
+    if(need>avail){ var z=Math.max(.72, avail/need); kids.forEach(function(k){ k.style.zoom=z.toFixed(3); }); }
+  }
+  var _g=window.go;
+  window.go=go=function(){ var r=_g.apply(this,arguments); setTimeout(fit,60); setTimeout(fit,450); return r; };
+  window.addEventListener('resize',function(){ clearTimeout(window._cpFitT); window._cpFitT=setTimeout(fit,150); });
+  window.addEventListener('load',function(){ setTimeout(fit,300); setTimeout(fit,1200); });
+  document.addEventListener('click',function(){ setTimeout(fit,380); },true);
 })();
 </script>
 </body>
