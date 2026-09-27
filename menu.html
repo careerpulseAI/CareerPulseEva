@@ -2,6 +2,24 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
+<link rel="expect" href="#cp-end" blocking="render">
+<style id="cp-transitions">
+@view-transition { navigation: auto; }
+#tnav{ view-transition-name: cp-tnav; }
+::view-transition-old(root){ animation: cpVtOut .22s cubic-bezier(.4,0,1,1) both; }
+::view-transition-new(root){ animation: cpVtIn .34s cubic-bezier(.2,.8,.2,1) both; }
+::view-transition-group(cp-tnav){ animation-duration: 0s; }
+@keyframes cpVtOut{ to{ opacity:0; } }
+@keyframes cpVtIn{ from{ opacity:0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce){
+  ::view-transition-old(root), ::view-transition-new(root){ animation: none; }
+}
+html body{ opacity:1 !important; }
+</style>
+<script type="speculationrules">
+{"prefetch":[{"source":"list","urls":["index.html","eva.html","quiz.html","menu.html"],"eagerness":"moderate"}]}
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -2659,7 +2677,7 @@ function evaSuggestions(){
 
 /* ══ FERMER MENUS ══ */
 document.addEventListener('click',function(e){
-  if(!e.target.closest('#eva-profil-selector')) document.getElementById('eva-profil-menu').style.display='none';
+  if(!e.target.closest('#eva-profil-selector')){ var _pm=document.getElementById('eva-profil-menu'); if(_pm) _pm.style.display='none'; }
 });
 
 })();
@@ -7496,7 +7514,7 @@ window.addEventListener('popstate',function(e){
     evaQuitterGuard();
   }
 });
-history.pushState(null,'',location.href);
+// (retiré hors Éva : créait une entrée d'historique en double → il fallait appuyer 2 fois sur Retour)
 
 function quizIntro(onConfirm){
   _showRules(function(){
@@ -18699,6 +18717,158 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   :root{ --cp-gap: 20px; }
 }
 </style>
+<style id="cp-apple">
+/* ═══════════════════════════════════════════════════════════════
+   ORDINATEUR — finitions façon Apple : typographie, couleurs,
+   icônes et interactions (vitrine, quiz, menu). Mobile inchangé.
+═══════════════════════════════════════════════════════════════ */
+@media (min-width: 900px){
+  :root{
+    --ap-ink:#1d1d1f; --ap-ink2:#6e6e73; --ap-ink3:#86868b;
+    --ap-blue:#0071e3; --ap-blue-h:#0077ed; --ap-green:#0a9a74;
+    --ap-line:#d2d2d7; --ap-fill:#f5f5f7;
+    --ap-ease:cubic-bezier(.2,.8,.2,1);
+    --ap-tile:inset 0 1px 0 rgba(255,255,255,.38), inset 0 -1px 0 rgba(0,0,0,.10), 0 6px 14px -4px rgba(0,40,90,.28);
+  }
+  body{ -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; font-feature-settings: "kern","liga"; }
+
+  /* ── Titres : grands, nets, sans italique ── */
+  .screen [style*="Cormorant"]{
+    font-weight: 700 !important; letter-spacing: -.028em !important; line-height: 1.08 !important; color: var(--ap-ink) !important;
+  }
+  .screen [style*="Cormorant"] em, .screen [style*="Cormorant"] i{
+    font-style: normal !important;
+    background: linear-gradient(90deg, #0071e3 0%, #0a9a74 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent !important;
+  }
+  /* Sur-titres (petites capitales) plus sobres */
+  .screen .wrap [style*="text-transform:uppercase"][style*="letter-spacing:.2"]{ letter-spacing: .12em !important; font-weight: 600 !important; }
+  /* Textes secondaires : gris Apple */
+  .screen .wrap [style*="color:#64748b"]{ color: var(--ap-ink2) !important; }
+  .screen .wrap [style*="color:#94a3b8"]{ color: var(--ap-ink3) !important; }
+  .screen .wrap [style*="color:#0f172a"]{ color: var(--ap-ink) !important; }
+
+  /* ── Accueil : cartes et couleurs affinées ── */
+  .cta-title{ font-weight: 600 !important; letter-spacing: -.022em !important; color: var(--ap-ink) !important; }
+  .cta-sub{ color: var(--ap-ink2) !important; }
+  .cta-head span{ font-weight: 700 !important; letter-spacing: .12em !important; }
+  .cta-card.cv .cta-head, .cta-card.cv .cta-arrow{ background: linear-gradient(120deg,#0060df,#0a9a74) !important; }
+  .cta-card.cv .cta-ico{ background: linear-gradient(160deg,#3d9bff 0%,#0071e3 48%,#0a9a74 100%) !important; }
+  .cta-card.emploi .cta-head, .cta-card.emploi .cta-arrow{ background: linear-gradient(120deg,#0a9a74,#0060df) !important; }
+  .cta-card.emploi .cta-ico{ background: linear-gradient(160deg,#2fd19a 0%,#0a9a74 48%,#0060df 100%) !important; }
+  .cta-card.profil .cta-head, .cta-card.profil .cta-arrow{ background: linear-gradient(120deg,#1d4fd8,#087f63) !important; }
+  .cta-card.profil .cta-ico{ background: linear-gradient(160deg,#5b95ff 0%,#1d5fe8 50%,#0a9a74 100%) !important; }
+  .cta-card.coach .cta-head, .cta-card.coach .cta-arrow{ background: linear-gradient(120deg,#087f63,#1d62f0) !important; }
+  .cta-card.coach .cta-ico{ background: linear-gradient(160deg,#36d6a3 0%,#0a9a74 45%,#1d6cff 100%) !important; }
+  .cta-card{ transition: transform .35s var(--ap-ease), box-shadow .35s var(--ap-ease) !important; }
+  .cta-card:active, .cta-eva-rh:active{ transform: scale(.985) !important; transition-duration: .12s !important; }
+
+  /* ── Icônes : tuiles façon app iOS / macOS (reflet doux, ombre fine) ── */
+  .cta-ico, .cta-eva-rh-ring,
+  .screen .wrap div[style*="width:38px;height:38px"][style*="gradient"],
+  .screen .wrap div[style*="width:36px;height:36px"][style*="gradient"],
+  #grid-panel div[style*="width:38px;height:38px"][style*="gradient"]{
+    position: relative; overflow: hidden;
+    border-radius: 28% !important;
+    box-shadow: var(--ap-tile) !important;
+  }
+  .cta-eva-rh-ring{ border-radius: 50% !important; }
+  .cta-ico::after, .cta-eva-rh-ring::after,
+  .screen .wrap div[style*="width:38px;height:38px"][style*="gradient"]::after,
+  .screen .wrap div[style*="width:36px;height:36px"][style*="gradient"]::after,
+  #grid-panel div[style*="width:38px;height:38px"][style*="gradient"]::after{
+    content:""; position:absolute; inset:0; pointer-events:none; border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,.26) 0%, rgba(255,255,255,.06) 46%, rgba(255,255,255,0) 52%);
+  }
+  .cta-ico svg, .screen .wrap div[style*="gradient"] > svg, #grid-panel div[style*="gradient"] > svg{
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,.18));
+  }
+
+  /* ── Lignes cliquables (partenaires, quiz, menus) : survol et appui façon Apple ── */
+  .screen .wrap div[onclick][style*="border-radius"]{
+    transition: transform .3s var(--ap-ease), box-shadow .3s var(--ap-ease), background-color .2s ease !important;
+  }
+  .screen .wrap div[onclick][style*="border-radius"]:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0,0,0,.05), 0 14px 32px rgba(0,0,0,.08) !important;
+  }
+  .screen .wrap div[onclick][style*="border-radius"]:active{ transform: scale(.99); transition-duration: .1s !important; }
+
+  /* Boutons pleins : arrondis et reflet discret */
+  .screen .wrap button[style*="background:#059669"], .screen .wrap div[onclick][style*="background:#059669"]{
+    border-radius: 14px !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 6px 16px -6px rgba(5,150,105,.6) !important;
+    transition: filter .2s ease, transform .15s ease !important;
+  }
+  .screen .wrap button[style*="background:#059669"]:hover{ filter: brightness(1.06); }
+  .screen .wrap button[style*="background:#059669"]:active{ transform: scale(.985); }
+
+  /* Liens de retour en bleu Apple */
+  .screen .wrap > button[onclick^="go("][style*="background:none"]{ color: var(--ap-blue) !important; font-weight: 500 !important; }
+  .screen .wrap > button[onclick^="go("][style*="background:none"] svg, .screen .wrap > button[onclick^="go("][style*="background:none"] svg *{ stroke: var(--ap-blue) !important; }
+
+  /* ═══ MENU (panneau) — style Réglages macOS ═══ */
+  #grid-panel{ background: rgba(251,251,253,.94) !important; -webkit-backdrop-filter: saturate(180%) blur(30px); backdrop-filter: saturate(180%) blur(30px); }
+  #grid-panel > div:first-child{
+    background: rgba(255,255,255,.72) !important; border-bottom: 1px solid rgba(0,0,0,.07);
+    padding: 22px 22px 18px !important;
+  }
+  #grid-panel > div:first-child [style*="text-transform:uppercase"]{ color: var(--ap-ink3) !important; letter-spacing: .12em !important; font-weight: 600 !important; }
+  #cp-menu-clock{ color: var(--ap-ink) !important; font-weight: 600 !important; letter-spacing: -.02em !important; font-variant-numeric: tabular-nums; }
+  #cp-menu-date{ color: var(--ap-ink2) !important; }
+  #grid-panel > div:first-child button{
+    background: rgba(0,0,0,.06) !important; border: none !important; border-radius: 50% !important; width: 30px !important; height: 30px !important;
+    transition: background .2s ease !important;
+  }
+  #grid-panel > div:first-child button:hover{ background: rgba(0,0,0,.1) !important; }
+  #grid-panel > div:first-child button svg, #grid-panel > div:first-child button svg *{ stroke: var(--ap-ink2) !important; }
+  #cp-menu-body{ padding: 18px 20px !important; }
+
+  /* Carte Éva du menu */
+  #cp-menu-body > div[onclick*="go('eva')"]{
+    background: linear-gradient(135deg, rgba(0,113,227,.07), rgba(10,154,116,.08)) !important;
+    border: 1px solid rgba(10,154,116,.18) !important; border-radius: 16px !important;
+    transition: transform .3s var(--ap-ease), box-shadow .3s var(--ap-ease) !important;
+  }
+  #cp-menu-body > div[onclick*="go('eva')"]:hover{ transform: translateY(-1px); box-shadow: 0 10px 26px rgba(0,0,0,.07); }
+  #cp-menu-body > div[onclick*="go('eva')"] > div:nth-child(2){ color: var(--ap-ink) !important; }
+
+  /* Lignes du menu : liste groupée façon Réglages */
+  #cp-menu-list{ background: #fff; border: 1px solid rgba(0,0,0,.07); border-radius: 16px; overflow: hidden; box-shadow: 0 1px 2px rgba(0,0,0,.03); }
+  #cp-menu-list > div[onclick]{
+    background: transparent !important; border: none !important; border-radius: 0 !important; margin: 0 !important;
+    padding: 12px 14px !important; position: relative !important;
+    transition: background-color .18s ease !important;
+  }
+  #cp-menu-list > div[onclick] + div[onclick]::before{
+    content:""; position:absolute; top:0; left:64px; right:0; height:1px; background: rgba(0,0,0,.07);
+  }
+  #cp-menu-list > div[onclick]:hover{ background: rgba(0,0,0,.035) !important; }
+  #cp-menu-list > div[onclick]:active{ background: rgba(0,0,0,.06) !important; }
+  #cp-menu-list [style*="font-weight:800"]{ font-weight: 600 !important; color: var(--ap-ink) !important; letter-spacing: -.01em; }
+  #cp-menu-list [style*="color:#64748b"]{ color: var(--ap-ink3) !important; }
+  #cp-menu-list [style*="color:#94a3b8"]{ color: #c7c7cc !important; font-weight: 600; }
+  /* Couleurs des icônes du menu (système Apple) */
+  #cp-menu-list div[style*="#1e3a5f,#059669"]{ background: linear-gradient(180deg,#2fd19a,#0a9a74) !important; }
+  #cp-menu-list div[style*="#b45309,#d97706"]{ background: linear-gradient(180deg,#ffb340,#ff8a00) !important; }
+  #cp-menu-list div[style*="#2563eb,#1e40af"]{ background: linear-gradient(180deg,#3d9bff,#0060df) !important; }
+  #cp-menu-list div[style*="#7c3aed,#a855f7"]{ background: linear-gradient(180deg,#c17cff,#8e44f0) !important; }
+
+  /* Sous-pages du menu : titres, champs, boutons */
+  #cp-menu-body [onclick*="cpMenuShow('list')"]{ color: var(--ap-blue) !important; font-weight: 500 !important; }
+  #cp-menu-body input, #cp-menu-body textarea, #cp-menu-body select{
+    border: 1px solid var(--ap-line) !important; border-radius: 12px !important; background: #fff !important;
+    transition: border-color .2s ease, box-shadow .2s ease !important;
+  }
+  #cp-menu-body input:focus, #cp-menu-body textarea:focus, #cp-menu-body select:focus{
+    outline: none !important; border-color: var(--ap-blue) !important; box-shadow: 0 0 0 4px rgba(0,113,227,.18) !important;
+  }
+  #cp-menu-body button[style*="background:#059669"], #cp-menu-body button[style*="background:#7c3aed"], #cp-menu-body button[style*="background:linear-gradient"]{
+    border-radius: 12px !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.18) !important; transition: filter .2s ease, transform .15s ease !important;
+  }
+  #cp-menu-body button:hover{ filter: brightness(1.05); }
+  #cp-menu-body button:active{ transform: scale(.985); }
+}
+</style>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
@@ -18712,10 +18882,25 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
   });
   var _go=window.go;
+  var REDUCE=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function swap(args){
+    var r=_go.apply(window,args);
+    var sc=document.querySelector('.screen.active');
+    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+    return r;
+  }
   window.go=go=function(id){
-    if(EMBED){ if(Date.now()-_lastUserAct<3000) window.parent.postMessage({cpGo:id},'*'); return; }
-    if(document.getElementById('s-'+id)) return _go.apply(this,arguments);
-    if(Date.now()-_lastUserAct<3000) location.href=fileFor(id)+'#'+id;
+    var user=Date.now()-_lastUserAct<3000;
+    if(EMBED){ if(user && window.cpMenuLeave) window.cpMenuLeave(id); return; }
+    if(document.getElementById('s-'+id)){
+      // Transition douce entre deux pages du même fichier (vitrine / quiz)
+      if(user && (PART==='index'||PART==='quiz') && document.startViewTransition && !REDUCE){
+        var args=arguments;
+        try{ document.startViewTransition(function(){ swap(args); }); return; }catch(e){}
+      }
+      return _go.apply(this,arguments);
+    }
+    if(user) location.href=fileFor(id)+'#'+id;
   };
 
   /* ── Menu burger ── */
@@ -18729,21 +18914,30 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
         if(o){o.style.opacity='1';o.style.pointerEvents='auto';}
       });
     };
-    var panelClose=function(){
+    var panelClose=function(next){
       var p=document.getElementById('grid-panel'),o=document.getElementById('grid-overlay');
-      if(p) p.style.transform='translateX(100%)';
+      if(p) p.style.transform='translateX(calc(100% + 24px))';
       if(o){o.style.opacity='0';o.style.pointerEvents='none';}
       setTimeout(function(){
+        if(typeof next==='function') return next();
         if(EMBED) window.parent.postMessage('cp-menu-close','*');
         else location.href='index.html';
-      },330);
+      },340);
     };
-    window.toggleGridMenu=toggleGridMenu=panelClose;
+    // Depuis le menu : on referme d'abord en douceur, puis on ouvre la page
+    window.cpMenuLeave=function(id){
+      panelClose(function(){
+        if(EMBED) window.parent.postMessage({cpGo:id},'*');
+        else location.href=fileFor(id)+'#'+id;
+      });
+    };
+    window.toggleGridMenu=toggleGridMenu=function(){ panelClose(); };
     if(EMBED){
       var st=document.createElement('style');
       st.textContent='html,html body{background:transparent !important;opacity:1 !important}'
         +'body>*:not(#grid-panel):not(#grid-overlay):not(script):not(style){visibility:hidden !important}';
       document.head.appendChild(st);
+      var _p0=document.getElementById('grid-panel'); if(_p0) _p0.style.transform='translateX(calc(100% + 24px))';
       window.addEventListener('message',function(e){ if(e.data==='cp-menu-open') panelOpen(); });
       window.addEventListener('load',function(){ window.parent.postMessage('cp-menu-ready','*'); });
     } else {
@@ -18783,13 +18977,83 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   // Pré-chargement discret du menu pour une ouverture instantanée
   window.addEventListener('load',function(){ setTimeout(ensureFrame,1200); });
 
-  window.addEventListener('load',function(){
+  // Affiche tout de suite la bonne page (pas d'écran vide au chargement)
+  function route(){
     var h=(location.hash||'').replace('#','');
-    if(h && document.getElementById('s-'+h)){ _go(h); }
-    else if(PART==='eva'){ _go('eva'); }
-    else if(PART==='quiz'){ _go('quiz-hub'); }
-  });
+    var id=(h && document.getElementById('s-'+h)) ? h : (PART==='eva'?'eva':PART==='quiz'?'quiz-hub':null);
+    if(!id) return;
+    var sc=document.getElementById('s-'+id);
+    if(sc && sc.classList.contains('active')) return;
+    _go(id);
+    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+  }
+  if(PART==='eva'||PART==='quiz') route();
+  document.addEventListener('DOMContentLoaded',function(){ route(); });
 })();
 </script>
+<style id="cp-menu-anim">
+/* Sous-pages du menu : apparition douce */
+#cp-menu-list,#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis{ animation: cpMenuIn .3s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes cpMenuIn{ from{ opacity:0; transform: translateX(14px); } }
+@media (prefers-reduced-motion: reduce){ #cp-menu-list,#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis{ animation:none; } }
+/* Flèches discrètes dans le menu */
+#cp-menu-arrows{position:absolute;right:62px;z-index:5;display:flex;flex-direction:row;gap:6px;opacity:0;pointer-events:none;transition:opacity .25s ease;}
+#cp-menu-arrows.on{opacity:1;pointer-events:auto;}
+#cp-menu-arrows button{width:24px;height:24px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;
+  background:rgba(37,99,235,.55);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.22);position:static !important;
+  transition:background .2s ease,opacity .2s ease,transform .15s ease;touch-action:none;user-select:none;-webkit-user-select:none;}
+#cp-menu-arrows button:hover{background:rgba(37,99,235,.85);}
+#cp-menu-arrows button:active{transform:scale(.92);}
+#cp-menu-arrows button[disabled]{opacity:.3;cursor:default;}
+#cp-menu-arrows svg{width:12px;height:12px;pointer-events:none;}
+</style>
+<script>
+/* ═══ Menu : flèches de lecture + sous-pages qui repartent en haut ═══ */
+(function(){
+  var panel=document.getElementById('grid-panel'), body=document.getElementById('cp-menu-body');
+  if(!panel||!body) return;
+  var STEP=120, SPEED=240;
+  var box=document.createElement('div'); box.id='cp-menu-arrows';
+  box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
+    +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+  panel.appendChild(box);
+  var up=box.children[0], down=box.children[1];
+  function place(){
+    // Dans l'en-tête du menu, à gauche du bouton fermer : ne cache jamais le contenu
+    var h=panel.firstElementChild, x=h&&h.querySelector('button');
+    if(x){ var pr=panel.getBoundingClientRect(), br=x.getBoundingClientRect();
+      box.style.top=(br.top-pr.top+(br.height-24)/2)+'px'; box.style.right=(pr.right-br.left+10)+'px'; }
+  }
+  function refresh(){
+    if(pressed) return;
+    place();
+    var max=body.scrollHeight-body.clientHeight;
+    if(max<30){ box.classList.remove('on'); return; }
+    box.classList.add('on');
+    up.disabled=body.scrollTop<4; down.disabled=body.scrollTop>max-4;
+  }
+  var pressed=false, held=false, dir=0, holdT=null, last=0;
+  function loop(ts){ if(!pressed||!held) return; var dt=last?Math.min(50,ts-last):16; last=ts; body.scrollTop+=dir*SPEED*dt/1000; requestAnimationFrame(loop); }
+  box.addEventListener('pointerdown',function(e){
+    var b=e.target.closest('button'); if(!b||b.disabled) return;
+    e.preventDefault(); pressed=true; held=false; dir=+b.getAttribute('data-d'); last=0;
+    try{ b.setPointerCapture(e.pointerId); }catch(_){}
+    holdT=setTimeout(function(){ held=true; requestAnimationFrame(loop); },280);
+  });
+  function release(){ if(!pressed) return; clearTimeout(holdT); if(!held) body.scrollBy({top:dir*STEP,behavior:'smooth'}); pressed=false; held=false; setTimeout(refresh,420); }
+  ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){ box.addEventListener(t,release); });
+  body.addEventListener('scroll',function(){ clearTimeout(window._cpMaT); window._cpMaT=setTimeout(refresh,100); });
+  window.addEventListener('resize',refresh);
+  // Chaque sous-page du menu repart en haut
+  var _show=window.cpMenuShow;
+  if(typeof _show==='function'){
+    window.cpMenuShow=cpMenuShow=function(){ var r=_show.apply(this,arguments); body.scrollTop=0; setTimeout(refresh,60); setTimeout(refresh,400); return r; };
+  }
+  document.addEventListener('click',function(){ setTimeout(refresh,350); },true);
+  setInterval(refresh,1500);
+  setTimeout(refresh,300);
+})();
+</script>
+<div id="cp-end" hidden></div>
 </body>
 </html>
