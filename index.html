@@ -19,7 +19,7 @@
 html body{ opacity:1 !important; }
 </style>
 <script type="speculationrules">
-{"prefetch":[{"source":"list","urls":["index.html","eva.html","quiz.html","menu.html"],"eagerness":"moderate"}]}
+{"prerender":[{"source":"list","urls":["index.html","eva.html","quiz.html","monespace.html"],"eagerness":"moderate"}],"prefetch":[{"source":"list","urls":["index.html","quiz.html","monespace.html","eva.html"],"eagerness":"eager"}]}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
@@ -1920,298 +1920,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
 
 
-<div class="screen" id="s-profil">
-<div class="wrap">
 
-
- <!-- Hero Mon espace personnel CareerPulse -->
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px 16px 14px;margin-bottom:14px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-24px;right:-24px;width:100px;height:100px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none"></div>
-  <div style="position:absolute;bottom:-18px;left:-18px;width:70px;height:70px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none"></div>
-
-  <!-- Logo CareerPulse -->
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px;position:relative">
-   <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(5,150,105,.5);flex-shrink:0">
-    <span style="font-family:'DM Sans',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;line-height:1;letter-spacing:-.03em">C</span>
-   </div>
-   <div>
-    <div style="font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:800;color:#fff;letter-spacing:-.02em">CareerPulse</div>
-    <div style="font-size:.46rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)">Ton espace personnel</div>
-   </div>
-  </div>
-
-  <!-- Titre hero -->
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:8px;position:relative">
-   Mon espace<br><em style="color:#6ee7b7;font-weight:400">personnel.</em>
-  </div>
-  <div style="font-size:.62rem;color:rgba(255,255,255,.72);line-height:1.6;position:relative;margin-bottom:13px">
-   Crée ton profil professionnel et conserve tes documents importants — lettre de motivation et documents importants. Sauvegarde sécurisée de tes documents.
-  </div>
-
-  <!-- Steps compacts -->
-  <div style="display:flex;align-items:center;position:relative">
-   <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-profil" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    </div>
-    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Profil</span>
-   </div>
-   <div style="flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 7px"></div>
-   <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-cv" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    </div>
-    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Lettre de motivation</span>
-   </div>
-   <div style="flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 7px"></div>
-   <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-visible" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    </div>
-    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Documents</span>
-   </div>
-  </div>
-
-  <!-- IDs cachés nécessaires au JS -->
-  <span id="prof-status-lbl" style="display:none">Profil invisible</span>
-  <div id="prof-dot" style="display:none"></div>
-  <span id="prof-score-pct" style="display:none">0</span>
-  <div id="prof-score-bar" style="display:none"></div>
-  <div id="prof-score-badge" style="display:none">Complète ton profil.</div>
- </div>
-
-
- <!-- ACCORDÉON 1 : Informations essentielles -->
- <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
- <div onclick="toggleAccordion('acc-info')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
-  <div style="display:flex;align-items:center;gap:7px">
-   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-   <span style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669">Informations essentielles</span>
-  </div>
-  <svg id="acc-info-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
- </div>
- <div id="acc-info" style="display:none;padding:0 16px 16px">
- <div style="display:flex;justify-content:flex-end;margin-bottom:12px">
- <button onclick="saveFichePro()" style="background:#059669;color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:.68rem;font-weight:700;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(5,150,105,.28)">Enregistrer</button>
- </div>
- <!-- Photo + Nom -->
- <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
- <div style="position:relative;flex-shrink:0">
- <div id="fp-avatar-wrap" onclick="document.getElementById('fp-photo').click()" style="width:60px;height:60px;border-radius:50%;background:var(--gp);border:2px solid rgba(5,150,105,.25);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#059669" id="fp-av-init">+</div>
- <input type="file" id="fp-photo" accept="image/*" style="display:none" onchange="handleFpPhoto(this)">
- <div style="position:absolute;bottom:0;right:0;width:20px;height:20px;background:#059669;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;pointer-events:none">
- <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
- </div>
- </div>
- <div style="flex:1;min-width:0">
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Prénom & Nom <span style="color:#dc2626">*</span></div>
- <input type="text" id="fp-name" placeholder="Ex : Sophie Martin" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 12px;font-size:.84rem;color:var(--g900);outline:none;width:100%;font-family:inherit;margin-bottom:7px" oninput="updateFpScore()">
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px">Titre professionnel <span style="color:#dc2626">*</span></div>
- <input type="text" id="fp-titre" placeholder="Ex : Développeur React Senior" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 12px;font-size:.78rem;color:var(--g900);outline:none;width:100%;font-family:'DM Sans',sans-serif" oninput="updateFpScore()">
- </div>
- </div>
- <!-- Infos rapides -->
- <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
- <div>
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Secteur <span style="color:#dc2626">*</span></div>
- <select id="fp-secteur" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 28px 10px 10px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center" onchange="updateFpScore()">
- <option value="">Secteur…</option>
- <option>Tech & Dev</option><option>Data / IA</option><option>Marketing Digital</option>
- <option>Commercial & Vente</option><option>Finance</option><option>RH & Recrutement</option>
- <option>Design / UX</option><option>Chef de projet</option><option>Luxe & Mode</option>
- <option>Santé</option><option>Juridique</option><option>Autre</option>
- </select>
- </div>
- <div>
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Ville / Remote <span style="color:#dc2626">*</span></div>
- <input type="text" id="fp-ville" placeholder="Paris · Remote…" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 12px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:'DM Sans',sans-serif" oninput="updateFpScore()">
- </div>
- <div>
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Exp. <span style="color:#dc2626">*</span></div>
- <select id="fp-exp" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 28px 10px 10px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center" onchange="updateFpScore()">
- <option value="">Années…</option>
- <option>Moins de 1 an</option><option>1-3 ans</option><option>3-5 ans</option>
- <option>5-10 ans</option><option>10+ ans</option>
- </select>
- </div>
- <div>
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Salaire souhaité <span style="color:#dc2626">*</span></div>
- <input type="text" id="fp-salaire" placeholder="45 000 €/an" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 12px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:'DM Sans',sans-serif" oninput="updateFpScore()">
- </div>
- </div>
- <!-- Accroche -->
- <div>
- <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Accroche (2-3 lignes) <span style="color:#dc2626">*</span></div>
- <textarea id="fp-accroche" placeholder="Qui tu es, ce que tu cherches, ce qui te distingue…" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:10px 12px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;resize:none;min-height:72px;line-height:1.6" oninput="updateFpScore()"></textarea>
- </div>
- <!-- CONTACT -->
- <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(5,150,105,.1)">
-  <div style="font-size:.58rem;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Contact</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-   <div>
-    <div style="font-size:.58rem;font-weight:700;color:var(--g500);margin-bottom:4px">Email</div>
-    <input type="email" id="fp-email-public" placeholder="ton@email.com" style="width:100%;background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:9px 11px;font-size:.74rem;color:var(--g900);outline:none;font-family:inherit;box-sizing:border-box">
-   </div>
-   <div>
-    <div style="font-size:.58rem;font-weight:700;color:var(--g500);margin-bottom:4px">Téléphone</div>
-    <input type="tel" id="fp-tel-public" placeholder="06 XX XX XX XX" style="width:100%;background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:9px;padding:9px 11px;font-size:.74rem;color:var(--g900);outline:none;font-family:inherit;box-sizing:border-box">
-   </div>
-  </div>
-  <!-- IDs cachés requis par le JS -->
-  <div style="display:none">
-   <input type="hidden" id="fp-share-email" value="1">
-   <input type="hidden" id="fp-share-tel" value="1">
-   <input type="hidden" id="fp-share-cv" value="1">
-   <input type="hidden" id="fp-share-lm" value="1">
-   <button id="tog-share-email"></button><div id="knob-share-email"></div>
-   <button id="tog-share-tel"></button><div id="knob-share-tel"></div>
-   <button id="tog-share-cv"></button><div id="knob-share-cv"></div>
-   <button id="tog-share-lm"></button><div id="knob-share-lm"></div>
-  </div>
- </div>
- </div></div><!-- /acc-info -->
-
- <!-- ACCORDÉON 2 : Lettre de motivation -->
- <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
- <div onclick="toggleAccordion('acc-cv')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
-  <div style="display:flex;align-items:center;gap:8px">
-   <div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 5px rgba(5,150,105,.3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.3"/><path d="M3.5 6.5 12 12.5l8.5-6"/></svg></div>
-   <span style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669">Lettre de motivation</span>
-  </div>
-  <svg id="acc-cv-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
- </div>
- <div id="acc-cv" style="display:none;padding:0 16px 16px">
-
- <!-- LM -->
- <div>
- <div style="font-size:.65rem;font-weight:700;color:var(--g700);margin-bottom:8px">Lettre de motivation</div>
- <div style="display:flex;gap:7px;margin-bottom:10px">
- <button class="btn bo bsm fw" onclick="showLetterGen()" style="width:100%">
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
- Générer avec CareerPulse
- </button>
- </div>
- <div id="letter-gen" style="display:none">
- <!-- Expéditeur (gauche) + Destinataire (droite) -->
- <div style="background:var(--g50);border:1px solid var(--g100);border-radius:12px;padding:12px;margin-bottom:12px">
- <div style="font-size:.58rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#059669;margin-bottom:10px"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18 2 2 0 012.03 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.36-.36a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>Coordonnées</div>
- <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
- <div>
- <label class="flbl" style="color:#059669">Expéditeur — Vous</label>
- <input type="text" id="l-from-name" placeholder="Prénom Nom *" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;margin-bottom:6px">
- <input type="text" id="l-from-titre" placeholder="Titre pro" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;margin-bottom:6px">
- <input type="text" id="l-from-ville" placeholder="Ville" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;margin-bottom:6px">
- <input type="email" id="l-from-email" placeholder="Email" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:'DM Sans',sans-serif">
- </div>
- <div>
- <!-- Labels dynamiques -->
- <label id="dest-lbl" class="flbl" style="color:var(--g500)">Destinataire</label>
- <div id="dest-hint-emploi" style="display:none"></div>
- <div id="dest-hint-rh" style="font-size:.55rem;color:#059669;font-weight:600;margin-bottom:5px;display:none">Entretiens · Recruteurs · Suivi</div>
- <input type="text" id="l-to-name" placeholder="Mme/M. Nom, RH" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;margin-bottom:6px">
- <input type="text" id="l-to-co" placeholder="Entreprise" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:inherit;margin-bottom:6px">
- <input type="text" id="l-to-adresse" placeholder="Adresse (optionnel)" style="background:#fff;border:1.5px solid rgba(5,150,105,.2);border-radius:8px;padding:9px 11px;font-size:.76rem;color:var(--g900);outline:none;width:100%;font-family:'DM Sans',sans-serif">
- </div>
- </div>
- </div>
-
- <div class="fg"><label class="flbl">Poste visé *</label><input type="text" id="lp" placeholder="ex: Développeur React chez LVMH"></div>
- <div class="fg"><label class="flbl">Entreprise cible</label><input type="text" id="lent" placeholder="ex: LVMH, Google, BNP Paribas…"></div>
- <div class="fg"><label class="flbl">Ton atout principal *</label><input type="text" id="la" placeholder="ex: 4 ans React + TypeScript, leadership équipe"></div>
- <div class="fg"><label class="flbl">Tes 2-3 expériences clés</label><textarea id="lexp" placeholder="ex: Lead dev chez Criteo 3 ans, créé une API gérant 50k req/j&#10;Stage chez Capgemini, livré projet en avance de 2 semaines" style="min-height:70px"></textarea></div>
- <div class="fg"><label class="flbl">Pourquoi cette entreprise ?</label><textarea id="lmotiv" placeholder="Ce qui t'attire : culture, produit, mission, valeurs…" style="min-height:60px"></textarea></div>
- <button class="btn fw bg" id="lgenbtn" onclick="genLetter()" style="padding:14px">
- <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
- Générer ma lettre
- </button>
- <div id="letter-out" class="letter-out" style="display:none"></div>
- <div id="letter-copy-btn" style="display:none;margin-top:8px">
- <button class="btn fw bo bsm" onclick="navigator.clipboard.writeText(document.getElementById('letter-out').innerText).then(()=>toast('Lettre copiée ✓'))">
- <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
- Copier la lettre
- </button>
- </div>
- </div>
- <div id="letter-upl" style="display:none">
- <div class="upzone" id="lt-zone" ondragover="dov(event,'lt-zone')" ondragleave="dlv('lt-zone')">
- <input type="file" accept=".pdf,.doc,.docx" onchange="fsel(this,'lt-zone','lt-name');updateFpScore()">
- <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
- <div style="font-size:.78rem;font-weight:600;color:var(--g700)">Importe ta lettre</div>
- <div id="lt-name" style="display:none;margin-top:8px;font-size:.7rem;color:var(--green);font-weight:700"></div>
- </div>
- </div>
- </div>
- </div></div><!-- /acc-cv /accordéon-2 -->
-
- <!-- ACCORDÉON 3 : Documents -->
- <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
- <div onclick="toggleAccordion('acc-docs')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
-  <div style="display:flex;align-items:center;gap:7px">
-   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-   <span style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669">Documents</span>
-  </div>
-  <svg id="acc-docs-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
- </div>
- <div id="acc-docs" style="display:none;padding:0 16px 16px">
-  <div style="font-size:.65rem;color:var(--g400);margin-bottom:10px">Ajoute autant de documents que tu veux — contrats, diplômes, justificatifs… Renomme-les comme tu veux, puis enregistre ou supprime.</div>
-  <div id="docs-list"></div>
-  <input type="file" id="docs-file-input" style="display:none" onchange="docsAddFile(this)">
-  <button class="btn bo bsm fw" onclick="document.getElementById('docs-file-input').click()" style="width:100%">
-   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-   Ajouter un document
-  </button>
- </div>
- </div>
- <!-- /acc-docs /accordéon-3 -->
-
-
- <!-- IDs cachés pour JS toggleFpVis -->
- <div style="display:none">
-  <div id="fp-vis-wrap"></div>
-  <button id="fp-vis-tog" onclick="toggleFpVis()"></button>
-  <div id="fp-vis-knob"></div>
-  <div id="fp-vis-confirm"></div>
-  <div id="fp-vis-warn"></div>
- </div>
-
- <!-- Éléments JS conservés (cachés) -->
- <div style="display:none">
- <span id="prof-name"></span><span id="prof-headline"></span>
- <span id="prof-loc-txt"></span><span id="prof-av-init"></span>
- <div id="prof-av-el"></div>
- <input type="file" id="avatar-file" accept="image/*" onchange="handleAvatarUpload(this)">
- <div id="prof-score-badge-hidden"></div><div id="prof-open-badge"></div>
- <span id="otw-lbl"></span><div id="vis-tog"></div>
- <div id="vis-btn-all"></div><div id="vis-btn-none"></div>
- </div>
-
-</div>
-
- <!-- CareerPulse CTA Profil -->
- <div class="wrap" style="padding-top:0;padding-bottom:16px">
- <div onclick="go('vision-profil')" style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:14px;padding:13px 14px;text-align:left;position:relative;overflow:hidden;cursor:pointer" onmouseover="this.style.opacity='.92'" onmouseout="this.style.opacity='1'" ontouchstart="this.style.opacity='.88'" ontouchend="this.style.opacity='1'">
-  <div style="position:absolute;top:-20px;right:-20px;width:90px;height:90px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none"></div>
-  <div style="position:absolute;bottom:-14px;left:-14px;width:70px;height:70px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none"></div>
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;position:relative">
-   <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(5,150,105,.4)">
-    <span style="font-size:.9rem;font-weight:900;color:#fff;font-family:'DM Sans',sans-serif;line-height:1">C</span>
-   </div>
-   <div style="flex:1">
-    <div style="font-size:.64rem;font-weight:900;color:#fff;letter-spacing:-.01em">CareerPulse</div>
-    <div style="font-size:.46rem;color:rgba(255,255,255,.55);margin-top:1px">Fiche professionnelle · Notre vision</div>
-   </div>
-   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
-  </div>
-  <div style="font-size:.6rem;color:rgba(255,255,255,.8);line-height:1.6;position:relative;margin-bottom:9px">
-   L'utilité de <strong style="color:#6ee7b7">créer son profil dans CareerPulse</strong> et de conserver ses documents importants — CV et lettre de motivation — dans son espace personnel.
-  </div>
-  <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:8px 12px;font-size:.6rem;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px">
-   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
-   Découvrir mon espace →
-  </div>
- </div>
- </div>
-</div>
 
 <div class="screen" id="s-cvlettre">
 <div class="wrap" style="padding-top:20px;text-align:center">
@@ -19622,77 +19331,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 <!-- ═══════════════════════════════════════════════════════
      VISION PROFIL PROFESSIONNEL
 ═══════════════════════════════════════════════════════ -->
-<div class="screen" id="s-vision-profil">
-<div class="wrap" style="padding-top:16px;padding-bottom:24px">
 
- <!-- Bouton retour -->
- <button onclick="go('profil')" style="display:flex;align-items:center;gap:5px;background:none;border:none;cursor:pointer;color:#059669;font-size:.72rem;font-weight:700;font-family:inherit;padding:0;margin-bottom:18px">
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Retour à ma fiche
- </button>
-
- <!-- Hero -->
- <div style="margin-bottom:22px">
-
-  <div style="font-size:.5rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#059669;margin-bottom:8px">✦ Profil Professionnel · CareerPulse</div>
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:#0f172a;line-height:1.15;margin-bottom:10px">
-   Création de profil<br><em style="color:#059669">Professionnel.</em>
-  </div>
-  <div style="font-size:.74rem;color:#64748b;line-height:1.65">
-   CareerPulse te donne un espace dédié pour construire ton identité professionnelle, rédiger ton profil et conserver tes documents essentiels — CV, lettres de motivation et bien plus.
-  </div>
- </div>
-
-
-
-
-
- <!-- Bloc marketing espace perso -->
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px;margin-bottom:12px">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:8px">Ton espace, tes documents</div>
-  <div style="font-size:.64rem;color:rgba(255,255,255,.85);line-height:1.7;margin-bottom:10px">
-   CareerPulse te propose un espace personnel où tu centralises tout ce qui compte pour ta carrière : <strong style="color:#6ee7b7">crée et complète ton profil professionnel</strong>, conserve ton CV, ta lettre de motivation et tous tes documents importants — accessibles à tout moment, depuis un seul endroit.
-  </div>
-  <div style="display:flex;flex-wrap:wrap;gap:6px">
-   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">Profil professionnel</span>
-   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">CV & Lettre de motivation</span>
-   <span style="font-size:.52rem;font-weight:700;background:rgba(255,255,255,.12);color:#fff;border-radius:6px;padding:3px 8px">Documents sécurisés</span>
-  </div>
- </div>
-
- <!-- Bloc avantages espace perso -->
- <div style="background:#fff;border:1.5px solid #e2e8f0;border-radius:16px;padding:16px;margin-bottom:20px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
-  <div style="font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#059669;margin-bottom:10px">Pourquoi créer ton profil ?</div>
-  <div style="display:flex;flex-direction:column;gap:9px">
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Une identité professionnelle claire</strong> — titre, secteur, accroche, expérience : tout en un seul endroit.</div>
-   </div>
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Tes documents toujours à portée</strong> — CV, lettres de motivation stockés dans ton espace perso CareerPulse.</div>
-   </div>
-   <div style="display:flex;align-items:flex-start;gap:9px">
-    <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
-     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Généré par EVA IA</strong> — laisse notre assistante t'aider à rédiger un profil qui te ressemble vraiment.</div>
-   </div>
-  </div>
- </div>
-
- <!-- Bouton retour bas -->
- <button onclick="history.back()" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-size:.72rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
-  Crée ton profil et conserve tes documents dans ton espace perso CareerPulse →
- </button>
-
-</div>
-</div>
 
 
 <!-- ═══════════════════════════════════════════════════════
@@ -20158,10 +19797,11 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* ═══ Logo CareerPulse et bouton Accueil : même tuile émeraude que le hero ═══ */
 #tnav .logo > div:first-child, #tnav-home-btn{
   width: 34px !important; height: 34px !important; border-radius: 11px !important;
-  background: linear-gradient(135deg,#059669,#047857) !important;
-  box-shadow: 0 3px 10px rgba(5,150,105,.45), inset 0 1px 0 rgba(255,255,255,.22) !important;
-  border: none !important;
+  background: linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px -6px rgba(6,90,70,.55) !important;
+  border: none !important; display: flex !important; align-items: center; justify-content: center;
 }
+#tnav-home-btn[style*="display:none"], #tnav-home-btn[style*="display: none"]{ display: none !important; }
 #tnav .logo > div:first-child span{ font-size: 1.2rem !important; font-weight: 900 !important; letter-spacing: -.03em; }
 #tnav-home-btn{ transition: transform .2s ease, box-shadow .2s ease, filter .2s ease !important; }
 #tnav-home-btn:hover{ filter: brightness(1.08); box-shadow: 0 5px 14px rgba(5,150,105,.5), inset 0 1px 0 rgba(255,255,255,.22) !important; }
@@ -20171,9 +19811,9 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 /* Menu : tuile logo devant « CareerPulse » */
 #grid-panel > div:first-child [style*="text-transform:uppercase"]{ display: flex !important; align-items: center; gap: 8px; }
 #grid-panel > div:first-child [style*="text-transform:uppercase"]::before{
-  content: "C"; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
-  width: 22px; height: 22px; border-radius: 7px; letter-spacing: 0; text-transform: none;
-  background: linear-gradient(135deg,#059669,#047857); color: #fff; font-size: 13px; font-weight: 900;
+  content: ""; display: inline-block; flex-shrink: 0;
+  width: 24px; height: 24px; border-radius: 7px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' fill='none'%3E%3Cpath d='M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7' stroke='%23fff' stroke-width='3.2' stroke-linecap='round'/%3E%3Cpath d='M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2' stroke='%23a7f3d0' stroke-width='2.1' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/72% no-repeat, linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%);
   box-shadow: 0 2px 6px rgba(5,150,105,.4), inset 0 1px 0 rgba(255,255,255,.22);
 }
 
@@ -20234,14 +19874,144 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   try{ new MutationObserver(soon).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
 })();
 </script>
+<style id="cp-identity">
+/* ═══════════════════════════════════════════════════════════════
+   IDENTITÉ CareerPulse — bleu nuit + émeraude + menthe
+   Tailles uniformes : elles dépendent seulement de la taille de l'écran,
+   jamais de la page ou du bouton touché.
+═══════════════════════════════════════════════════════════════ */
+:root{
+  --cp-night:#0b1e36; --cp-night2:#0e3a50; --cp-emer:#0a9a74; --cp-emer2:#067a5c; --cp-mint:#6ee7b7;
+  --cp-deep: linear-gradient(135deg,#0b1e36 0%,#0e3a50 55%,#0a5a49 100%);
+  --cp-tile: linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%);
+  --cp-tile-night: linear-gradient(150deg,#16365c 0%,#0e2a47 50%,#0a1c33 100%);
+  --cp-gloss: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px -6px rgba(6,90,70,.55);
+}
+@media (min-width: 900px){
+  /* Échelle unique selon la hauteur de l'écran */
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: 1; }
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 40px !important; padding-bottom: 40px !important; }
+  /* Pages « Notre vision » : même largeur et même taille de texte partout */
+  #s-vision-emploi .wrap, #s-vision-cv .wrap, #s-vision-profil .wrap, #s-vision-quiz .wrap{ max-width: 1040px !important; }
+  #s-vision-emploi .wrap, #s-vision-cv .wrap{ padding-top: 0 !important; padding-bottom: 0 !important; }
+  #s-vision-emploi .wrap > div[style*="margin-bottom:22px"], #s-vision-cv .wrap > div[style*="margin-bottom:22px"]{ margin-bottom: 14px !important; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"], #s-vision-cv .wrap > div[style*="border:1.5px solid"]{ padding: 14px 16px !important; margin-bottom: 12px !important; }
+  #s-vision-emploi .wrap > div[style*="border:1.5px solid"] > div[style*="margin-bottom:10px"], #s-vision-cv .wrap > div[style*="border:1.5px solid"] > div[style*="margin-bottom:10px"]{ margin-bottom: 7px !important; }
+  #s-vision-emploi .wrap > button, #s-vision-cv .wrap > button{ margin-top: 2px !important; margin-bottom: 0 !important; }
+  #s-vision-emploi .wrap [style*="line-height:1.7"], #s-vision-cv .wrap [style*="line-height:1.7"]{ line-height: 1.5 !important; margin-bottom: 8px !important; }
+  #s-vision-emploi .wrap [style*="Cormorant"], #s-vision-cv .wrap [style*="Cormorant"]{ margin-bottom: 6px !important; }
+  #s-vision-emploi .wrap > div[style*="margin-bottom:22px"] [style*="line-height:1.65"], #s-vision-cv .wrap > div[style*="margin-bottom:22px"] [style*="line-height:1.65"]{ line-height: 1.5 !important; }
+  #s-vision-emploi .wrap > button[onclick^="go("][style*="background:none"], #s-vision-cv .wrap > button[onclick^="go("][style*="background:none"]{ margin-bottom: 8px !important; }
+}
+@media (min-width: 900px) and (max-height: 900px){
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: .9; }
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 30px !important; padding-bottom: 28px !important; }
+}
+@media (min-width: 900px) and (max-height: 720px){
+  .screen:not(.eva-subpage):not(#s-eva) .wrap{ zoom: .8; }
+  .screen.active:not(.eva-subpage):not(#s-eva):not(.evad-screen):not(.nova-screen){ padding-top: 24px !important; padding-bottom: 22px !important; }
+}
+@media (min-width: 900px) and (max-height: 680px){
+  .screen:not(.eva-subpage):not(#s-eva):not(#s-home) .wrap{ zoom: .74 !important; }
+  #s-home .wrap{ zoom: .9 !important; }
+}
+
+
+/* ═══ Tuiles d'icônes : émeraude brillante, comme le logo ═══ */
+@media (min-width: 900px){
+  .cta-grid .cta-card[class] .cta-ico{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+  .cta-grid .cta-card[class] .cta-head, .cta-grid .cta-card[class] .cta-arrow{ background: var(--cp-deep) !important; }
+  .cta-grid .cta-card[class] .cta-arrow{ box-shadow: 0 2px 6px rgba(11,30,54,.35); }
+  .cta-eva-rh-ring{ background: var(--cp-tile-night) !important; box-shadow: var(--cp-gloss) !important; }
+  .cta-eva-rh-stripe{ background: linear-gradient(180deg,#15c08f,#0b1e36) !important; }
+  .cta-eva-rh-arrow-ico{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+  .screen .wrap > div > div[style*="width:38px;height:38px"][style*="gradient"],
+  .screen .wrap div[onclick] > div[style*="width:38px;height:38px"][style*="gradient"],
+  .screen .wrap div[onclick] > div[style*="width:36px;height:36px"][style*="gradient"]{ box-shadow: var(--cp-gloss) !important; }
+}
+
+/* ═══ MENU : identité premium et tailles uniformes ═══ */
+#grid-panel > div:first-child{
+  background: radial-gradient(120% 140% at 100% 0%, rgba(21,192,143,.28) 0%, rgba(21,192,143,0) 55%), var(--cp-deep) !important;
+  border-bottom: none !important;
+}
+#grid-panel > div:first-child [style*="text-transform:uppercase"]{ color: rgba(255,255,255,.72) !important; }
+#cp-menu-clock{ color: #fff !important; }
+#cp-menu-date{ color: rgba(255,255,255,.62) !important; }
+#grid-panel > div:first-child button{ background: rgba(255,255,255,.12) !important; border: 1px solid rgba(255,255,255,.16) !important; border-radius: 50% !important; }
+#grid-panel > div:first-child button:hover{ background: rgba(255,255,255,.2) !important; }
+#grid-panel > div:first-child button svg, #grid-panel > div:first-child button svg *{ stroke: #fff !important; }
+#cp-menu-arrows button{ background: rgba(255,255,255,.18) !important; box-shadow: none !important; }
+#cp-menu-arrows button:hover{ background: rgba(255,255,255,.3) !important; }
+/* Icônes du menu : même tuile de marque pour toutes */
+#cp-menu-list > div[onclick] > div[style*="width:38px;height:38px"]{ background: var(--cp-tile-night) !important; box-shadow: var(--cp-gloss) !important; border-radius: 11px !important; }
+#cp-menu-list > div[onclick] > div[style*="width:38px;height:38px"] svg, #cp-menu-list > div[onclick] > div[style*="width:38px;height:38px"] svg *{ stroke: var(--cp-mint) !important; }
+#cp-menu-body > div[onclick*="go('eva')"] > div:first-child{ background: var(--cp-tile) !important; box-shadow: var(--cp-gloss) !important; }
+/* Typographie identique dans toutes les sous-pages */
+#cp-menu-membre, #cp-menu-abo, #cp-menu-contact, #cp-menu-avis{ font-size: 16px; }
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is([style*="font-size:.84rem"],[style*="font-size:.94rem"]){
+  font-size: 1rem !important; font-weight: 700 !important; letter-spacing: -.015em !important; line-height: 1.3 !important; color: #0b1e36;
+}
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(div,span,ul,li,p):is([style*="font-size:.6rem"],[style*="font-size:.62rem"],[style*="font-size:.64rem"],[style*="font-size:.66rem"],[style*="font-size:.68rem"]){
+  font-size: .72rem !important; line-height: 1.6 !important;
+}
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) label{ font-size: .66rem !important; font-weight: 600 !important; color: #4b5563 !important; margin-bottom: 6px !important; display: block; }
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(input,select,textarea){
+  font-size: .8rem !important; padding: 11px 14px !important; border-radius: 12px !important; border: 1px solid #d9dee5 !important; background: #fff !important; box-sizing: border-box;
+}
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(input,select){ min-height: 46px; }
+:is(#cp-menu-membre,#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) :is(input,select,textarea):focus{ border-color: var(--cp-emer) !important; box-shadow: 0 0 0 4px rgba(10,154,116,.16) !important; outline: none !important; }
+/* Tous les boutons principaux du menu : même taille, même couleur de marque */
+:is(#cp-menu-membre,#cp-menu-contact,#cp-menu-avis) button:is([onclick="fbLogin()"],[onclick="fbSignup()"],[onclick="cpSendSupport()"],[onclick="cpSendAvis()"]){
+  background: var(--cp-tile) !important; color: #fff !important; border: none !important;
+  min-height: 46px; border-radius: 12px !important; font-size: .78rem !important; font-weight: 600 !important;
+  box-shadow: var(--cp-gloss) !important;
+}
+/* Blocs (formules, support, avis) : mêmes dimensions */
+:is(#cp-menu-abo,#cp-menu-contact,#cp-menu-avis) > div[style*="border-radius"][style*="padding"]{ border-radius: 16px !important; padding: 16px !important; margin-bottom: 12px !important; }
+/* Champs mot de passe (champ + œil dans un même cadre) */
+#cp-menu-membre div:has(> input[type="password"]){ border: 1px solid #d9dee5 !important; border-radius: 12px !important; background: #fff !important; min-height: 46px; overflow: hidden; }
+#cp-menu-membre div:has(> input[type="password"]):focus-within{ border-color: var(--cp-emer) !important; box-shadow: 0 0 0 4px rgba(10,154,116,.16) !important; }
+#cp-menu-membre div:has(> input[type="password"]) > input{ border: none !important; box-shadow: none !important; min-height: 44px; background: transparent !important; }
+#cp-menu-membre > div[style*="linear-gradient"]{ background: radial-gradient(120% 140% at 100% 0%, rgba(21,192,143,.25) 0%, rgba(21,192,143,0) 55%), var(--cp-deep) !important; border-radius: 16px !important; }
+</style>
+<script>
+/* ═══ Logo CareerPulse : monogramme « C » + ligne de pouls (SVG) ═══ */
+(function(){
+  var MARK='<svg viewBox="0 0 32 32" width="70%" height="70%" fill="none" aria-hidden="true" style="display:block">'
+    +'<path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>'
+    +'<path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function run(){
+    var spans=document.querySelectorAll('#tnav .logo span, .screen div[style*="gradient"] > span, #grid-panel span');
+    for(var i=0;i<spans.length;i++){
+      var sp=spans[i], t=(sp.textContent||'').trim();
+      if(t!=='C' || sp.getAttribute('data-cp-mark')) continue;
+      var tile=sp.parentElement; if(!tile) continue;
+      var r=tile.getBoundingClientRect(); if(r.width>64) continue;
+      sp.setAttribute('data-cp-mark','1'); sp.style.display='none';
+      tile.insertAdjacentHTML('beforeend',MARK);
+      tile.style.display='flex'; tile.style.alignItems='center'; tile.style.justifyContent='center';
+      tile.style.background='linear-gradient(150deg,#15c08f 0%,#0a9a74 48%,#067357 100%)';
+      tile.style.boxShadow='inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 1px rgba(255,255,255,.08), 0 6px 16px -6px rgba(6,90,70,.55)';
+    }
+  }
+  if(document.readyState!=='loading') run(); else document.addEventListener('DOMContentLoaded',run);
+  window.addEventListener('load',run);
+  var t=null; try{ new MutationObserver(function(){ clearTimeout(t); t=setTimeout(run,200); }).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
+})();
+</script>
 <script>
 /* ═══ ROUTEUR MULTI-FICHIERS CareerPulse (index / menu / eva) ═══ */
 (function(){
   var PART='index';
   var QUIZ=['s-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-qcm-entretien', 's-qcm-entretien-result', 's-qcm-strategie', 's-qcm-strategie-result', 's-qcm-leadership', 's-qcm-leadership-result', 's-qcm-stress', 's-qcm-stress-result', 's-qcm-digital', 's-qcm-digital-result', 's-qcm-orientation', 's-qcm-orientation-result', 's-qcm-are', 's-qcm-are-result', 's-qcm-demandeur-entretien', 's-qcm-demandeur-entretien-result', 's-qcm-cpf', 's-qcm-cpf-result', 's-qcm-reconversion', 's-qcm-reconversion-result', 's-qcm-freelance-statut', 's-qcm-freelance-statut-result', 's-qcm-freelance-missions', 's-qcm-freelance-missions-result', 's-qcm-etudiant-alternance', 's-qcm-etudiant-alternance-result', 's-qcm-etudiant-emploi', 's-qcm-etudiant-emploi-result', 's-qcm-poste-droits', 's-qcm-poste-droits-result', 's-qcm-poste-integration', 's-qcm-poste-integration-result', 's-vision-quiz'];
+  var MON=['s-profil','s-vision-profil'];
   var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
   var EMBED=(PART==='menu' && window.self!==window.top);
-  function fileFor(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
+  function fileOf(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1) return 'quiz.html'; if(MON.indexOf(k)>-1) return 'monespace.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
+  // Adresse propre (sans #) pour la page d'accueil de chaque fichier : ouverture instantanée (pré-chargée)
+  function urlFor(id){ return HOMES[id]===fileOf(id) ? HOMES[id] : fileOf(id)+'#'+id; }
+  var HOMES={'home':'index.html','eva':'eva.html','quiz-hub':'quiz.html','profil':'monespace.html'};
   var _lastUserAct=0;
   ['click','touchend','keydown'].forEach(function(t){
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
@@ -20251,7 +20021,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function swap(args){
     var r=_go.apply(window,args);
     var sc=document.querySelector('.screen.active');
-    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+    if(sc && (PART==='index'||PART==='quiz'||PART==='monespace')) sc.classList.add('page-visible');
     return r;
   }
   window.go=go=function(id){
@@ -20259,13 +20029,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(EMBED){ if(user && window.cpMenuLeave) window.cpMenuLeave(id); return; }
     if(document.getElementById('s-'+id)){
       // Transition douce entre deux pages du même fichier (vitrine / quiz)
-      if(user && (PART==='index'||PART==='quiz') && document.startViewTransition && !REDUCE){
+      if(user && (PART==='index'||PART==='quiz'||PART==='monespace') && document.startViewTransition && !REDUCE){
         var args=arguments;
         try{ document.startViewTransition(function(){ swap(args); }); return; }catch(e){}
       }
       return _go.apply(this,arguments);
     }
-    if(user) location.href=fileFor(id)+'#'+id;
+    if(user) location.href=urlFor(id);
   };
 
   /* ── Menu burger ── */
@@ -20293,7 +20063,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     window.cpMenuLeave=function(id){
       panelClose(function(){
         if(EMBED) window.parent.postMessage({cpGo:id},'*');
-        else location.href=fileFor(id)+'#'+id;
+        else location.href=urlFor(id);
       });
     };
     window.toggleGridMenu=toggleGridMenu=function(){ panelClose(); };
@@ -20344,42 +20114,18 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   // Affiche tout de suite la bonne page (pas d'écran vide au chargement)
   function route(){
     var h=(location.hash||'').replace('#','');
-    var id=(h && document.getElementById('s-'+h)) ? h : (PART==='eva'?'eva':PART==='quiz'?'quiz-hub':null);
+    var id=(h && document.getElementById('s-'+h)) ? h : (PART==='eva'?'eva':PART==='quiz'?'quiz-hub':PART==='monespace'?'profil':null);
     if(!id) return;
     var sc=document.getElementById('s-'+id);
     if(sc && sc.classList.contains('active')) return;
     _go(id);
-    if(sc && (PART==='index'||PART==='quiz')) sc.classList.add('page-visible');
+    if(sc && (PART==='index'||PART==='quiz'||PART==='monespace')) sc.classList.add('page-visible');
   }
-  if(PART==='eva'||PART==='quiz') route();
+  if(PART==='eva'||PART==='quiz'||PART==='monespace') route();
   document.addEventListener('DOMContentLoaded',function(){ route(); });
 })();
 </script>
-<script>
-/* ═══ Ordinateur : les pages courtes tiennent sur un seul écran ═══ */
-(function(){
-  var FIT=['cvlettre','emploi','profil','vision-emploi','vision-cv','vision-profil'];
-  function fit(){
-    var sc=document.querySelector('.screen.active'); if(!sc) return;
-    var kids=[].slice.call(sc.children).filter(function(k){return k.tagName!=='SCRIPT'&&k.tagName!=='STYLE';});
-    kids.forEach(function(k){ k.style.zoom=''; });
-    sc.classList.remove('cp-fit');
-    if(window.innerWidth<900 || FIT.indexOf(sc.id.replace('s-',''))<0 || !kids.length) return;
-    sc.classList.add('cp-fit');
-    var cs=getComputedStyle(sc);
-    var avail=window.innerHeight - sc.getBoundingClientRect().top - parseFloat(cs.marginBottom) - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 6;
-    var first=kids[0].getBoundingClientRect().top, lastB=0;
-    kids.forEach(function(k){ var r=k.getBoundingClientRect(); if(r.height) lastB=Math.max(lastB,r.bottom+parseFloat(getComputedStyle(k).marginBottom||0)); });
-    var need=lastB-first;
-    if(need>avail){ var z=Math.max(.72, avail/need); kids.forEach(function(k){ k.style.zoom=z.toFixed(3); }); }
-  }
-  var _g=window.go;
-  window.go=go=function(){ var r=_g.apply(this,arguments); setTimeout(fit,60); setTimeout(fit,450); return r; };
-  window.addEventListener('resize',function(){ clearTimeout(window._cpFitT); window._cpFitT=setTimeout(fit,150); });
-  window.addEventListener('load',function(){ setTimeout(fit,300); setTimeout(fit,1200); });
-  document.addEventListener('click',function(){ setTimeout(fit,380); },true);
-})();
-</script>
+
 <div id="cp-end" hidden></div>
 </body>
 </html>
