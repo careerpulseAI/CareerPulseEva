@@ -9,8 +9,8 @@
 @view-transition { navigation: auto; }
 #tnav{ view-transition-name: cp-tnav; }
 /* Fondu en 2 temps : l'ancienne page disparaît d'abord, puis la nouvelle apparaît (jamais superposées) */
-::view-transition-old(root){ animation: cpVtOut .14s ease-in both; }
-::view-transition-new(root){ animation: cpVtIn .3s cubic-bezier(.2,.8,.2,1) .12s both; }
+::view-transition-old(root){ animation: cpVtOut .18s ease-out both; }
+::view-transition-new(root){ animation: cpVtIn .28s cubic-bezier(.2,.8,.2,1) .06s both; }
 ::view-transition-image-pair(root){ isolation: auto; }
 ::view-transition-group(cp-tnav){ animation-duration: 0s; }
 @keyframes cpVtOut{ to{ opacity:0; } }
@@ -21,7 +21,7 @@
 html body{ opacity:1 !important; }
 </style>
 <script type="speculationrules">
-{"prerender":[{"source":"list","urls":["index.html","eva.html"],"eagerness":"moderate"}],"prefetch":[{"source":"list","urls":["index.html","eva.html"],"eagerness":"eager"}]}
+{"prerender":[{"source":"list","urls":["eva.html"],"eagerness":"eager"}],"prefetch":[{"source":"list","urls":["eva.html"],"eagerness":"eager"}]}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
@@ -14611,8 +14611,8 @@ go=function(page){
     }
     if(user){
       // la page actuelle s'efface d'abord (pas de superposition), puis la suivante apparaît en fondu
-      document.documentElement.classList.add('cp-leaving');
-      var u=urlFor(id); setTimeout(function(){ location.href=u; },170);
+      if(!('CSSViewTransitionRule' in window)) document.documentElement.classList.add('cp-leaving');
+      var u=urlFor(id); if(('CSSViewTransitionRule' in window)){ location.href=u; } else { setTimeout(function(){ location.href=u; },170); }
     }
   };
 
