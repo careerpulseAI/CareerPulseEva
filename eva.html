@@ -25554,9 +25554,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     abo:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg>',
     contact:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>',
     avis:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10v11H4V10zM7 10l4-7a2.5 2.5 0 0 1 2.5 2.5V9h5.2a2 2 0 0 1 2 2.3l-1.3 8a2 2 0 0 1-2 1.7H7"/></svg>',
+    school:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/></svg>',
     membre:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></svg>'
   };
-  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de ma motivation',I.suivi],['eva-identity','À propos d\'EVA',I.about]];
+  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de ma motivation',I.suivi],['eva-of','Organismes de formation',I.school],['eva-identity','À propos d\'EVA',I.about]];
   var CP=[['membre','Espace membre',I.membre],['abo','Abonnement',I.abo],['contact','Contact CareerPulse',I.contact],['avis','Donne ton avis',I.avis]];
   var LOGO='<svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 4v-4H9a3 3 0 0 1-3-3z" fill="rgba(255,255,255,.2)"/><path d="M16 9l1.35 3.15L20.5 13.5l-3.15 1.35L16 18l-1.35-3.15L11.5 13.5l3.15-1.35z" fill="#fff" stroke="none"/></svg>';
   var CPMARK='<svg viewBox="0 0 32 32" width="15" height="15" fill="none"><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -25576,7 +25577,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       else if(b.getAttribute('data-cp')){ if(('CSSViewTransitionRule' in window)){ location.href='index.html'; } else { document.documentElement.classList.add('cp-leaving'); setTimeout(function(){ location.href='index.html'; },170); } }
     });
   }
-  var SUB={ 'eva-droits':'Comprendre ses droits pour mieux avancer.', 'eva-workspace':'Des conseils concrets, adaptés à ta situation.', 'eva-entretien':'Prépare tes entretiens avec des mises en situation réalistes.', 'eva-tracker':'Suis ton énergie et tes progrès, jour après jour.', 'eva-identity':'Qui est EVA et comment elle t\'accompagne.' };
+  var SUB={ 'eva-droits':'Comprendre ses droits pour mieux avancer.', 'eva-workspace':'Des conseils concrets, adaptés à ta situation.', 'eva-entretien':'Prépare tes entretiens avec des mises en situation réalistes.', 'eva-tracker':'Suis ton énergie et tes progrès, jour après jour.', 'eva-identity':'Qui est EVA et comment elle t\'accompagne.', 'eva-of':'Des formations proposées par des organismes, avec ton accord.' };
   function decorate(){
     Object.keys(SUB).forEach(function(id){
       var sc=document.getElementById('s-'+id); if(!sc) return;
@@ -26361,7 +26362,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   var PLUS='<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="2"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="2"/></svg>';
   var X='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>';
   var TABS=[['eva','Accueil'],['eva-droits','Droits'],['eva-entretien','Quiz'],['eva-bienetre','Motivation'],['plus','Plus']];
-  var SHOW=/^(eva|eva-droits|eva-workspace|eva-entretien|eva-bienetre|eva-tracker|eva-identity)$/;
+  var SHOW=/^(eva|eva-droits|eva-workspace|eva-entretien|eva-bienetre|eva-tracker|eva-identity|eva-of)$/;
   var tab, sheet;
   function side(){ return document.getElementById('eva-side'); }
   function svgOf(id){ var b=side() && side().querySelector('[data-go="'+id+'"] svg'); return b ? b.outerHTML : ''; }
@@ -26939,6 +26940,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/>',
     flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+    school:'<path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/>',
     bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/>'
   };
   var TH={
@@ -26948,6 +26950,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     motiv:{c1:'#be185d',c2:'#f472b6',cs:'#fdf2f8',ic:'motiv',h:'@eva.equilibre'},
     suivi:{c1:'#4c1d95',c2:'#c026d3',cs:'#faf5ff',ic:'suivi',h:'@eva.suivi'},
     eva:{c1:'#1e3a8a',c2:'#38bdf8',cs:'#eff6ff',ic:'eva',h:'@eva'},
+    of:{c1:'#b45309',c2:'#f59e0b',cs:'#fffbeb',ic:'school',h:'@eva.formation'},
     pf:{c1:'#6d28d9',c2:'#06b6d4',cs:'#f5f3ff',ic:'folder',h:'@eva.portfolio'}
   };
   function el(t,c,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
@@ -27081,7 +27084,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   var PAGES={
     'eva-droits':['droits','Droits & aides'], 'eva-droits-list':['droits','Droits · Encyclopédie'], 'eva-droits-article':['droits','Droits · Article'],
     'eva-workspace':['conseils','Conseils & pro'], 'eva-entretien':['quiz','Quiz & mises en situation'],
-    'eva-bienetre':['motiv','Motivation & Équilibre'], 'eva-tracker':['suivi','Suivi de ma motivation'], 'eva-identity':['eva','À propos']
+    'eva-bienetre':['motiv','Motivation & Équilibre'], 'eva-tracker':['suivi','Suivi de ma motivation'], 'eva-identity':['eva','À propos'], 'eva-of':['of','Espace formation']
   };
   var EMO=/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\s]+/u;
   function strip(t){ if(!t) return; var n=t.firstChild; if(n && n.nodeType===3 && EMO.test(n.nodeValue)) n.nodeValue=n.nodeValue.replace(EMO,''); }
@@ -27545,6 +27548,386 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     try{ new MutationObserver(function(){ clearTimeout(window._evx3T); window._evx3T=setTimeout(check,40); }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']}); }catch(e){}
   }
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,0); });
+})();
+</script>
+<!-- ═══════════════════════════════════════════════════════════════
+     EVA · ORGANISMES DE FORMATION (espace pro + vue candidat)
+     Base interne CareerPulse (Firestore) — aucune API externe
+═══════════════════════════════════════════════════════════════ -->
+<div class="evad-screen screen" id="s-eva-of">
+  <div class="evad-hd">
+    <button class="evad-hd-back" onclick="history.back()" aria-label="Retour"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="evad-hd-title">Organismes de formation</div>
+  </div>
+  <div class="evad-scroll"><div id="of-root"></div></div>
+</div>
+<style id="of-css">
+[data-evt="of"]{ --t1:#b45309; --t2:#f59e0b; --ts:#fffbeb; --tb:#fde68a; }
+#s-eva-of{ background: radial-gradient(60% 50% at 100% 0%, rgba(245,158,11,.10) 0%, rgba(245,158,11,0) 70%), #f7f9fd !important; }
+#of-root{ max-width:860px; margin:0 auto; padding:18px 18px 60px; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Arial,sans-serif; color:#0f172a; }
+#of-root *{ box-sizing:border-box; }
+.of-hero{ position:relative; overflow:hidden; border-radius:22px; padding:20px 20px 18px; color:#fff; background:radial-gradient(90% 140% at 100% 0%,rgba(255,255,255,.22),rgba(255,255,255,0) 55%),linear-gradient(120deg,#92400e,#b45309 45%,#f59e0b); box-shadow:0 16px 36px -18px rgba(180,83,9,.7); margin-bottom:14px; }
+.of-hero::after{ content:""; position:absolute; top:0; bottom:0; left:0; width:40%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent); transform:translateX(-130%); animation: ofSweep 1.3s .4s ease-out both; }
+@keyframes ofSweep{ to{ transform:translateX(330%); } }
+.of-hero .k{ font-size:.58rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; opacity:.85; }
+.of-hero h3{ margin:6px 0 6px; font-size:1.25rem; font-weight:800; letter-spacing:-.02em; line-height:1.2; }
+.of-hero p{ margin:0; font-size:.8rem; line-height:1.5; opacity:.92; }
+.of-card{ background:#fff; border:1px solid #eceff5; border-radius:18px; padding:16px; margin-bottom:12px; box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 26px -18px rgba(15,23,42,.25); animation: ofIn .45s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes ofIn{ from{ opacity:0; transform:translateY(10px); } }
+.of-card h4{ margin:0 0 10px; font-size:.9rem; font-weight:800; display:flex; align-items:center; gap:8px; }
+.of-card h4 svg{ width:18px; height:18px; color:#b45309; }
+.of-muted{ font-size:.76rem; color:#64748b; line-height:1.5; }
+.of-tabs{ display:flex; gap:4px; background:#eef0f5; border-radius:14px; padding:4px; margin:0 0 14px; overflow-x:auto; scrollbar-width:none; }
+.of-tabs::-webkit-scrollbar{ display:none; }
+.of-tabs button{ position:static !important; flex:1 0 auto; border:none; background:none; border-radius:10px; padding:9px 12px; font:700 .74rem/1 inherit; color:#475569; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; white-space:nowrap; }
+.of-tabs button svg{ width:15px; height:15px; }
+.of-tabs button.on{ background:#fff; color:#92400e; box-shadow:0 1px 3px rgba(15,23,42,.12); }
+.of-tabs .n{ background:#b45309; color:#fff; border-radius:99px; padding:2px 6px; font-size:.6rem; }
+.of-f{ display:grid; gap:10px; }
+.of-f label{ display:grid; gap:5px; font-size:.7rem; font-weight:700; color:#334155; }
+.of-f input, .of-f select, .of-f textarea{ width:100%; border:1px solid #dbe3f0; border-radius:12px; padding:11px 12px; font:500 .84rem/1.3 inherit; color:#0f172a; background:#fff; }
+.of-f textarea{ min-height:74px; resize:vertical; }
+.of-f input:focus, .of-f select:focus, .of-f textarea:focus{ outline:none; border-color:#f59e0b; box-shadow:0 0 0 4px rgba(245,158,11,.15); }
+.of-row{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.of-check{ display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; cursor:pointer; font-size:.82rem; line-height:1.45; color:#1e293b; }
+.of-check input, #of-fp input{ -webkit-appearance:checkbox !important; appearance:auto !important; display:inline-block !important; opacity:1 !important; position:static !important; visibility:visible !important; pointer-events:auto !important; }
+.of-check input{ width:20px !important; height:20px !important; margin:1px 0 0; flex-shrink:0; accent-color:#b45309; }
+#of-fp input{ width:16px !important; height:16px !important; accent-color:#b45309; }
+.of-btn{ position:static !important; border:1px solid #fcd34d; background:#fff; color:#92400e; border-radius:12px; padding:10px 14px; font:700 .76rem/1 inherit; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:all .15s; }
+.of-btn.pri{ background:linear-gradient(135deg,#b45309,#f59e0b); border-color:transparent; color:#fff; box-shadow:0 10px 22px -12px rgba(180,83,9,.9); }
+.of-btn.ok{ background:#059669; border-color:#059669; color:#fff; }
+.of-btn.no{ background:#fff; border-color:#e2e8f0; color:#64748b; }
+.of-btn:disabled{ opacity:.5; cursor:default; }
+.of-btn svg{ width:14px; height:14px; }
+.of-btns{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.of-search{ display:flex; gap:8px; }
+.of-search textarea{ flex:1; }
+.of-cand{ display:grid; grid-template-columns:44px 1fr; gap:12px; }
+.of-av{ width:44px; height:44px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; color:#fff; background:linear-gradient(135deg,#b45309,#f59e0b); }
+.of-name{ font-weight:800; font-size:.9rem; }
+.of-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.of-chips span{ font-size:.64rem; font-weight:700; color:#92400e; background:#fffbeb; border:1px solid #fde68a; border-radius:99px; padding:4px 9px; }
+.of-proj{ font-size:.78rem; color:#334155; margin-top:8px; line-height:1.45; }
+.of-score{ display:flex; align-items:center; gap:10px; margin-top:10px; }
+.of-bar{ flex:1; height:8px; border-radius:99px; background:#f1f5f9; overflow:hidden; }
+.of-bar i{ display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#f59e0b,#16a34a); }
+.of-pct{ font-size:1rem; font-weight:800; min-width:48px; text-align:right; }
+.of-why{ list-style:none; margin:8px 0 0; padding:0; display:grid; gap:5px; }
+.of-why li{ font-size:.74rem; color:#334155; display:flex; gap:7px; align-items:flex-start; line-height:1.4; }
+.of-why li b{ flex-shrink:0; width:16px; height:16px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; font-size:.6rem; margin-top:1px; }
+.of-why li.y b{ background:#dcfce7; color:#15803d; } .of-why li.n b{ background:#fef3c7; color:#b45309; }
+.of-prop-msg{ font-size:.86rem; line-height:1.55; color:#0f172a; padding:12px 14px; border-radius:4px 16px 16px 16px; background:#fffbeb; border:1px solid #fde68a; }
+.of-st{ display:inline-flex; align-items:center; gap:6px; font-size:.66rem; font-weight:800; border-radius:99px; padding:4px 10px; }
+.of-st.envoyee{ background:#eff6ff; color:#1d4ed8; } .of-st.acceptee{ background:#dcfce7; color:#15803d; } .of-st.refusee{ background:#f1f5f9; color:#64748b; }
+.of-det{ margin-top:10px; padding:12px; border-radius:12px; background:#f8fafc; border:1px solid #eef2f7; font-size:.76rem; line-height:1.55; color:#334155; display:none; }
+.of-det.on{ display:block; }
+.of-empty{ text-align:center; padding:26px 14px; color:#64748b; font-size:.8rem; line-height:1.5; }
+.of-empty svg{ width:34px; height:34px; color:#f59e0b; display:block; margin:0 auto 8px; }
+.of-contact{ margin-top:10px; padding:12px; border-radius:12px; background:#ecfdf5; border:1px solid #bbf7d0; font-size:.78rem; color:#065f46; line-height:1.55; }
+.of-link{ background:none; border:none; color:#b45309; font:700 .74rem/1.2 inherit; cursor:pointer; padding:0; text-decoration:underline; position:static !important; }
+.of-sel{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+.of-sel select{ flex:1; min-width:160px; border:1px solid #dbe3f0; border-radius:12px; padding:9px 10px; font:600 .76rem/1.2 inherit; background:#fff; }
+.of-badge{ display:inline-flex; min-width:18px; height:18px; padding:0 5px; border-radius:99px; background:#dc2626; color:#fff; font-size:.6rem; font-weight:800; align-items:center; justify-content:center; margin-left:auto; }
+@media (max-width: 899px){
+  #of-root{ padding:14px 14px 40px; }
+  .of-row{ grid-template-columns:1fr; }
+  .of-search{ flex-direction:column; }
+  .of-tabs{ display:grid; grid-template-columns:1fr 1fr; overflow:visible; }
+  .of-tabs button{ padding:10px 8px; font-size:.72rem; }
+}
+</style>
+<script>
+/* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
+(function(){
+  if(window.self!==window.top) return;
+  var S=function(p,c,w){ return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'currentColor')+'" stroke-width="'+(w||2)+'" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
+  var I={
+    school:'<path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/>',
+    users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c-.5-2.6-2-4.5-4.2-5.2"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+    target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+    send:'<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>',
+    eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/>',
+    check:'<path d="m5 12 5 5L20 7"/>', x:'<path d="M6 6l12 12M18 6 6 18"/>', plus:'<path d="M12 5v14M5 12h14"/>',
+    book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
+    lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>', inbox:'<path d="M3 12h5l2 3h4l2-3h5"/><path d="M5 5h14l2 7v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-6z"/>'
+  };
+  var STATUTS=[['reconversion','Reconversion'],['demandeur','Demandeur d\'emploi'],['salarie','Salarié'],['etudiant','Étudiant'],['freelance','Freelance / Indépendant']];
+  var STATUT_WORDS={ reconversion:['reconversion','reconvertir','changer de metier','nouveau metier'], demandeur:['demandeur','chomage','chomeur','sans emploi','recherche d emploi','france travail'], salarie:['salarie','en poste','cdi'], etudiant:['etudiant','alternance','stage','alternant'], freelance:['freelance','independant','auto entrepreneur','auto-entrepreneur','micro entrepreneur'] };
+  var STOP='je,tu,il,nous,vous,ils,cherche,cherchons,recherche,recherchons,des,les,la,le,un,une,de,du,a,au,aux,en,et,ou,pour,par,sur,avec,dans,qui,que,sont,est,personnes,personne,candidats,candidat,profils,profil,interesses,interessees,interesse,interessee,formation,formations,veut,veulent,souhaitent,souhaite,souhaitant,motives,motivees,motive,ville,region,autour,pres,proche,etre'.split(',');
+  function norm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9 ]+/g,' ').replace(/\s+/g,' ').trim(); }
+  function stems(t){ return norm(t).split(' ').filter(function(w){ return w.length>2 && STOP.indexOf(w)<0; }).map(function(w){ return w.slice(0,6); }); }
+  function words(t){ return String(t||'').split(/[^A-Za-zÀ-ÿ0-9']+/).filter(function(w){ var n=norm(w); return n.length>2 && STOP.indexOf(n)<0; }); }
+  function readable(stemList,text){ var out=[]; words(text).forEach(function(w){ var st=norm(w).slice(0,6); if(stemList.indexOf(st)>-1 && out.indexOf(w.toLowerCase())<0) out.push(w.toLowerCase()); }); return out; }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function el(t,c,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
+  function db(){ return window.fbDb; }
+  function user(){ return window._fbUser || (window.fbAuth && fbAuth.currentUser) || null; }
+  function toast(m){ if(typeof window.ecShowToast==='function') window.ecShowToast(m); }
+  function stLabel(k){ for(var i=0;i<STATUTS.length;i++) if(STATUTS[i][0]===k) return STATUTS[i][1]; return ''; }
+  function uid(){ return 'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+  /* ── Matching : pourcentage + raisons ── */
+  function match(c,f){
+    var fs=stems((f.titre||'')+' '+(f.domaine||'')+' '+(f.motscles||'')), cs=stems((c.projet||'')+' '+(c.titre||'')+' '+(c.secteur||'')+' '+(c.competences||''));
+    var hit=fs.filter(function(w,i){ return fs.indexOf(w)===i && cs.indexOf(w)>-1; });
+    var why=[], sc=0;
+    var d=Math.min(1,hit.length/2); sc+=Math.round(45*d);
+    if(hit.length) why.push(['y','Projet en lien avec la formation : '+esc(readable(hit,(f.titre||'')+' '+(f.domaine||'')).slice(0,3).join(', '))]); else why.push(['n','Projet du candidat différent du domaine de la formation']);
+    var fv=norm(f.ville), cv=norm(c.ville);
+    if(/distan|ligne|remote/.test(fv)){ sc+=25; why.push(['y','Formation à distance : accessible partout']); }
+    else if(fv && cv && (fv===cv || fv.indexOf(cv)>-1 || cv.indexOf(fv)>-1)){ sc+=25; why.push(['y','Même ville : '+esc(c.ville)]); }
+    else why.push(['n','Ville différente ('+esc(c.ville||'non précisée')+' / '+esc(f.ville||'?')+')']);
+    var pub=(f.publics||[]);
+    if(!pub.length){ sc+=12; } else if(pub.indexOf(c.statut)>-1){ sc+=20; why.push(['y','Public visé : '+esc(stLabel(c.statut))]); } else why.push(['n','Statut hors du public visé ('+esc(stLabel(c.statut)||'non précisé')+')']);
+    if(c.dispo==='immediate'){ sc+=10; why.push(['y','Disponible immédiatement']); } else if(c.dispo==='1-3'){ sc+=6; why.push(['y','Disponible sous 1 à 3 mois']); } else sc+=2;
+    return { pct:Math.max(5,Math.min(99,sc)), why:why };
+  }
+  /* ── Recherche en langage naturel (locale, sans API externe) ── */
+  function search(q,list){
+    var nq=norm(q), words=stems(q), res=[];
+    var statut=null; Object.keys(STATUT_WORDS).forEach(function(k){ STATUT_WORDS[k].forEach(function(w){ if(nq.indexOf(norm(w))>-1) statut=k; }); });
+    var villes={}; list.forEach(function(c){ var v=norm(c.ville); if(v && (' '+nq+' ').indexOf(' '+v+' ')>-1) villes[v]=1; });
+    var villeWords=Object.keys(villes).join(' ').split(' ');
+    var dom=words.filter(function(w){ return villeWords.indexOf(w)<0 && !Object.keys(STATUT_WORDS).some(function(k){ return STATUT_WORDS[k].some(function(x){ return norm(x).slice(0,6)===w; }); }); });
+    list.forEach(function(c){
+      var why=[], sc=0, ok=true;
+      if(statut){ if(c.statut===statut){ sc+=35; why.push(['y',esc(stLabel(statut))]); } else ok=false; }
+      if(Object.keys(villes).length){ if(villes[norm(c.ville)]){ sc+=30; why.push(['y','Ville : '+esc(c.ville)]); } else ok=false; }
+      if(dom.length){ var cs=stems((c.projet||'')+' '+(c.titre||'')+' '+(c.secteur||'')+' '+(c.competences||'')); var h=dom.filter(function(w){ return cs.indexOf(w)>-1; });
+        if(h.length){ sc+=35*Math.min(1,h.length/dom.length*1.5); why.push(['y','Intérêt : '+esc(readable(h,q).join(', '))]); } else ok=false; }
+      if(ok) res.push({ c:c, pct:Math.round(Math.min(99,sc||50)), why:why });
+    });
+    res.sort(function(a,b){ return b.pct-a.pct; });
+    return { res:res, crit:{ statut:statut, villes:Object.keys(villes), dom:readable(dom,q) } };
+  }
+
+  /* ── Accès données ── */
+  var ST={ role:null, org:null, cands:[], props:[], tab:'cands', lastQ:'', matchF:null };
+  function loadRole(){
+    var u=user(); if(!u || !db()) return Promise.resolve(null);
+    return db().collection('organismes').doc(u.uid).get().then(function(d){ ST.org=d.exists ? d.data() : null; ST.role=d.exists?'org':'cand'; return ST.role; }).catch(function(){ ST.role='cand'; return 'cand'; });
+  }
+  function loadCands(){ return db().collection('candidats_of').where('visible','==',true).limit(300).get().then(function(q){ ST.cands=q.docs.map(function(d){ return d.data(); }); }); }
+  function loadPropsOrg(){ return db().collection('propositions').where('orgUid','==',user().uid).get().then(function(q){ ST.props=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return (b.createdAt||'').localeCompare(a.createdAt||''); }); }); }
+  function loadPropsCand(){ return db().collection('propositions').where('candUid','==',user().uid).get().then(function(q){ ST.props=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return (b.createdAt||'').localeCompare(a.createdAt||''); }); }); }
+  function err(e){ toast('Connexion à la base impossible : '+((e&&e.message)||e)); }
+
+  /* Visibilité du candidat (utilisé aussi par la fiche profil) */
+  window.cpOfSetVisible=function(on,extra){
+    var u=user(); if(!u || !db()){ toast('Connecte-toi pour gérer ta visibilité'); return Promise.reject('no-user'); }
+    var ref=db().collection('candidats_of').doc(u.uid);
+    return db().collection('profils').doc(u.uid).get().then(function(p){
+      var d=p.exists?p.data():{};
+      var nm=(d.name||'').trim().split(/\s+/), prenom=nm[0]||'Candidat', ini=nm[1]?nm[1][0].toUpperCase()+'.':'';
+      var pub=Object.assign({ uid:u.uid, prenom:prenom+(ini?' '+ini:''), titre:d.titre||'', secteur:d.secteur||'', ville:d.ville||'', competences:(d.accroche||'').slice(0,240) }, extra||{}, { visible:!!on, updatedAt:new Date().toISOString() });
+      var w=[db().collection('profils').doc(u.uid).set({ ofVisible:!!on }, {merge:true})];
+      w.push(on ? ref.set(pub,{merge:true}) : ref.delete());
+      return Promise.all(w);
+    });
+  };
+
+  /* ═════ RENDUS ═════ */
+  var root;
+  function hero(k,t,p){ return '<div class="of-hero"><div class="k">'+k+'</div><h3>'+t+'</h3><p>'+p+'</p></div>'; }
+  function render(){
+    root=document.getElementById('of-root'); if(!root) return;
+    var u=user();
+    if(!u){ renderGuest(); return; }
+    root.innerHTML='<div class="of-empty">'+S(I.school)+'Chargement de ton espace…</div>';
+    loadRole().then(function(r){ if(r==='org') renderOrg(); else renderCand(); });
+  }
+  function renderGuest(){
+    root.innerHTML=hero('EVA · Organismes de formation','Les formations viennent à toi','Rends ton profil visible par des organismes de formation : ils te proposent des formations adaptées, et <b>tu décides</b> de leur répondre ou non.')
+      +'<div class="of-card"><h4>'+S(I.lock)+'Connexion nécessaire</h4><p class="of-muted">Pour utiliser cet espace (candidat ou organisme), connecte-toi à ton espace membre CareerPulse.</p><div class="of-btns"><button class="of-btn pri" data-a="login">Me connecter</button></div></div>';
+    root.onclick=function(e){ var b=e.target.closest('[data-a="login"]'); if(b && window.cpOpenMenu) window.cpOpenMenu('membre'); };
+  }
+
+  /* ── Vue CANDIDAT ── */
+  function renderCand(){
+    var u=user();
+    Promise.all([ db().collection('candidats_of').doc(u.uid).get(), db().collection('profils').doc(u.uid).get(), loadPropsCand() ]).then(function(r){
+      var me=r[0].exists?r[0].data():{}, pf=r[1].exists?r[1].data():{};
+      var vis=!!me.visible, pend=ST.props.filter(function(p){ return p.statut==='envoyee'; }).length;
+      var opt=STATUTS.map(function(s){ return '<option value="'+s[0]+'"'+(me.statut===s[0]?' selected':'')+'>'+s[1]+'</option>'; }).join('');
+      var h=hero('EVA · Organismes de formation','Des formations qui viennent à toi','Les organismes de formation partenaires peuvent te proposer une formation. Ils ne reçoivent <b>jamais tes coordonnées</b> sans ton accord.');
+      h+='<div class="of-card"><h4>'+S(I.eye)+'Ma visibilité</h4>'
+        +'<label class="of-check"><input type="checkbox" id="of-vis"'+(vis?' checked':'')+'><span>J\'accepte que mon profil soit visible par des organismes de formation et qu\'ils puissent me proposer des formations.</span></label>'
+        +'<div class="of-f" id="of-candf" style="margin-top:12px;'+(vis?'':'display:none')+'">'
+        +'<div class="of-row"><label>Ville<input id="of-ville" value="'+esc(me.ville||pf.ville||'')+'" placeholder="Ex : Caen"></label><label>Ma situation<select id="of-statut"><option value="">Choisir…</option>'+opt+'</select></label></div>'
+        +'<label>Formation ou projet recherché<input id="of-projet" value="'+esc(me.projet||'')+'" placeholder="Ex : formation comptabilité, assistant comptable"></label>'
+        +'<div class="of-row"><label>Disponibilité<select id="of-dispo"><option value="immediate"'+(me.dispo==='immediate'?' selected':'')+'>Immédiate</option><option value="1-3"'+(me.dispo==='1-3'?' selected':'')+'>Dans 1 à 3 mois</option><option value="plus"'+(me.dispo==='plus'?' selected':'')+'>Plus tard</option></select></label><label>Métier / titre<input id="of-titre" value="'+esc(me.titre||pf.titre||'')+'" placeholder="Ex : Vendeur"></label></div>'
+        +'<p class="of-muted">Les organismes voient seulement ton prénom, ta ville, ta situation et ton projet. Tes coordonnées restent privées.</p>'
+        +'<div class="of-btns"><button class="of-btn pri" data-a="save">'+S(I.check)+'Enregistrer</button></div></div></div>';
+      h+='<div class="of-card"><h4>'+S(I.inbox)+'Propositions reçues'+(pend?'<span class="of-badge">'+pend+'</span>':'')+'</h4>'+(ST.props.length?ST.props.map(propCand).join(''):'<div class="of-empty">'+S(I.inbox)+'Aucune proposition pour le moment.'+(vis?'':'<br>Active ta visibilité pour recevoir des propositions.')+'</div>')+'</div>';
+      h+='<p class="of-muted" style="text-align:center">Tu représentes un organisme de formation ? <button class="of-link" data-a="become">Créer mon espace organisme</button></p>';
+      root.innerHTML=h;
+      root.onclick=candClick; root.onchange=function(e){ if(e.target.id==='of-vis'){ document.getElementById('of-candf').style.display=e.target.checked?'':'none'; if(!e.target.checked) window.cpOfSetVisible(false).then(function(){ toast('Ton profil n\'est plus visible par les organismes'); }).catch(err); } };
+      badge();
+    }).catch(err);
+  }
+  function propCand(p){
+    var f=p.formation||{};
+    var h='<div class="of-card" data-p="'+p.id+'" style="box-shadow:none;border-color:#fde68a">'
+      +'<div class="of-prop-msg">L\'organisme <b>'+esc(p.orgNom)+'</b> souhaite vous proposer la formation <b>'+esc(f.titre)+'</b> à <b>'+esc(f.ville)+'</b>.</div>'
+      +'<div class="of-det" id="of-det-'+p.id+'"><b>'+esc(f.titre)+'</b><br>'+(f.ville?'Lieu : '+esc(f.ville)+'<br>':'')+(f.duree?'Durée : '+esc(f.duree)+'<br>':'')+(f.financement?'Financement : '+esc(f.financement)+'<br>':'')+(f.description?'<br>'+esc(f.description):'')+'</div>';
+    if(p.statut==='envoyee') h+='<div class="of-btns"><button class="of-btn" data-a="voir">'+S(I.book)+'Voir la formation</button><button class="of-btn" data-a="ask">'+S(I.chat)+'Poser une question à EVA</button><button class="of-btn ok" data-a="acc">'+S(I.check)+'Accepter</button><button class="of-btn no" data-a="ref">'+S(I.x)+'Refuser</button></div>';
+    else h+='<div class="of-btns"><span class="of-st '+p.statut+'">'+(p.statut==='acceptee'?'Acceptée · mise en relation créée':'Refusée')+'</span><button class="of-btn" data-a="voir">'+S(I.book)+'Voir la formation</button></div>'
+      +(p.statut==='acceptee'?'<div class="of-contact">L\'organisme <b>'+esc(p.orgNom)+'</b> peut maintenant te contacter'+(p.orgEmail?' — contact : <b>'+esc(p.orgEmail)+'</b>':'')+'.</div>':'');
+    return h+'</div>';
+  }
+  function candClick(e){
+    var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a'), card=b.closest('[data-p]'), id=card&&card.getAttribute('data-p');
+    var p=ST.props.filter(function(x){ return x.id===id; })[0];
+    if(a==='save'){
+      var ex={ ville:val('of-ville'), statut:val('of-statut'), projet:val('of-projet'), dispo:val('of-dispo'), titre:val('of-titre') };
+      if(!ex.ville || !ex.projet){ toast('Indique au moins ta ville et la formation recherchée'); return; }
+      b.disabled=true; window.cpOfSetVisible(true,ex).then(function(){ toast('Ton profil est visible par les organismes de formation'); b.disabled=false; }).catch(function(x){ b.disabled=false; err(x); });
+    } else if(a==='voir'){ var d=document.getElementById('of-det-'+id); if(d) d.classList.toggle('on'); }
+    else if(a==='ask' && p){ askEva('Un organisme ('+p.orgNom+') me propose la formation « '+(p.formation||{}).titre+' » à '+(p.formation||{}).ville+'. Est-ce une bonne idée pour mon projet, et quelles questions dois-je poser avant d\'accepter ?'); }
+    else if((a==='acc' || a==='ref') && p){
+      var u=user(); b.disabled=true;
+      var ops=[db().collection('propositions').doc(id).update({ statut:a==='acc'?'acceptee':'refusee', repondueAt:new Date().toISOString() })];
+      if(a==='acc'){ ops.push(db().collection('profils').doc(u.uid).get().then(function(pf){ var d=pf.exists?pf.data():{};
+        return db().collection('relations').doc(id).set({ propId:id, orgUid:p.orgUid, candUid:u.uid, nom:d.name||'', email:d.emailPublic||u.email||'', tel:d.telPublic||'', formation:(p.formation||{}).titre||'', createdAt:new Date().toISOString() }); })); }
+      Promise.all(ops).then(function(){ toast(a==='acc'?'Mise en relation créée avec '+p.orgNom:'Proposition refusée'); renderCand(); }).catch(function(x){ b.disabled=false; err(x); });
+    } else if(a==='become'){ renderBecome(); }
+  }
+  function val(id){ var e=document.getElementById(id); return e ? e.value.trim() : ''; }
+  function askEva(q){
+    try{
+      go('eva');
+      var sp=document.getElementById('ec-splash'); if(sp){ sp.classList.add('hide'); sp.style.display='none'; }
+      var hd=document.getElementById('eva-fs-header'); if(hd) hd.style.display='flex';
+      if(typeof evaActivateTLMode==='function') evaActivateTLMode();
+      if(typeof ecOpenFreeInput==='function') ecOpenFreeInput();
+      setTimeout(function(){ var i=document.getElementById('ec-input'); if(i){ i.value=q; i.dispatchEvent(new Event('input')); if(typeof ecSend==='function') ecSend(); } },500);
+    }catch(e){}
+  }
+
+  /* ── Création de l'espace organisme ── */
+  function renderBecome(){
+    root.innerHTML=hero('EVA · Espace professionnel','Créer mon espace organisme','Trouve des candidats motivés dans la base CareerPulse, mesure la correspondance avec tes formations et envoie-leur une proposition.')
+      +'<div class="of-card"><h4>'+S(I.school)+'Mon organisme</h4><div class="of-f"><div class="of-row"><label>Nom de l\'organisme<input id="of-onom" placeholder="Ex : ABC Formation"></label><label>Ville<input id="of-oville" placeholder="Ex : Caen"></label></div>'
+      +'<label>E-mail de contact (partagé après acceptation)<input id="of-omail" type="email" value="'+esc((user()||{}).email||'')+'"></label>'
+      +'<div class="of-btns"><button class="of-btn pri" data-a="create">'+S(I.check)+'Créer mon espace</button><button class="of-btn no" data-a="cancel">Annuler</button></div></div></div>';
+    root.onclick=function(e){ var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a');
+      if(a==='cancel') renderCand();
+      if(a==='create'){ var o={ nom:val('of-onom'), ville:val('of-oville'), email:val('of-omail'), formations:[], createdAt:new Date().toISOString(), uid:user().uid };
+        if(!o.nom){ toast('Indique le nom de ton organisme'); return; }
+        b.disabled=true; db().collection('organismes').doc(user().uid).set(o).then(function(){ ST.org=o; ST.role='org'; toast('Espace organisme créé'); renderOrg(); }).catch(function(x){ b.disabled=false; err(x); }); } };
+  }
+
+  /* ── Vue ORGANISME : 4 fonctions ── */
+  var TABS=[['cands','Candidats',I.users],['search','Rechercher',I.search],['match','Matching',I.target],['props','Propositions',I.send]];
+  function renderOrg(){
+    root.innerHTML='<div class="of-empty">'+S(I.users)+'Chargement des candidats…</div>';
+    Promise.all([loadCands(), loadPropsOrg()]).then(drawOrg).catch(function(x){ err(x); drawOrg(); });
+  }
+  function drawOrg(){
+    var o=ST.org||{};
+    var h=hero('EVA · Espace '+esc(o.nom||'organisme'),'Organismes de formation',ST.cands.length+' candidat'+(ST.cands.length>1?'s':'')+' visible'+(ST.cands.length>1?'s':'')+' dans la base CareerPulse. Les coordonnées ne sont partagées qu\'après acceptation du candidat.');
+    h+='<div class="of-tabs">'+TABS.map(function(t){ return '<button data-tab="'+t[0]+'" class="'+(ST.tab===t[0]?'on':'')+'">'+S(t[2])+t[1]+(t[0]==='props'&&ST.props.length?' <span class="n">'+ST.props.length+'</span>':'')+'</button>'; }).join('')+'</div><div id="of-tab"></div>';
+    root.innerHTML=h; root.onclick=orgClick; root.onchange=null;
+    drawTab();
+  }
+  function formOpts(){ var fs=(ST.org&&ST.org.formations)||[]; return fs.map(function(f){ return '<option value="'+f.id+'">'+esc(f.titre)+' — '+esc(f.ville)+'</option>'; }).join(''); }
+  function candCard(c,extra){
+    var fs=(ST.org&&ST.org.formations)||[], best=null;
+    fs.forEach(function(f){ var m=match(c,f); if(!best || m.pct>best.m.pct) best={ f:f, m:m }; });
+    var m=extra&&extra.m ? extra.m : (best&&best.m), why=extra&&extra.why ? extra.why : (m&&m.why)||[];
+    var h='<div class="of-card" data-c="'+esc(c.uid)+'"><div class="of-cand"><div class="of-av">'+esc((c.prenom||'?')[0])+'</div><div><div class="of-name">'+esc(c.prenom)+'</div>'
+      +'<div class="of-chips">'+(c.statut?'<span>'+esc(stLabel(c.statut))+'</span>':'')+(c.ville?'<span>'+esc(c.ville)+'</span>':'')+(c.dispo==='immediate'?'<span>Dispo immédiate</span>':'')+(c.titre?'<span>'+esc(c.titre)+'</span>':'')+'</div>'
+      +(c.projet?'<div class="of-proj"><b>Projet :</b> '+esc(c.projet)+'</div>':'')
+      +(m?'<div class="of-score"><div class="of-bar"><i style="width:'+m.pct+'%"></i></div><div class="of-pct">'+m.pct+' %</div></div><div class="of-muted" style="font-size:.66rem">'+(extra&&extra.label?extra.label:(best?'Meilleure correspondance : '+esc(best.f.titre):''))+'</div>':'')
+      +(why.length?'<ul class="of-why">'+why.map(function(w){ return '<li class="'+w[0]+'"><b>'+(w[0]==='y'?'✓':'!')+'</b><span>'+w[1]+'</span></li>'; }).join('')+'</ul>':'')
+      +(fs.length?'<div class="of-sel"><select data-sel>'+formOpts()+'</select><button class="of-btn pri" data-a="propose">'+S(I.send)+'Proposer cette formation</button></div>':'<p class="of-muted" style="margin-top:10px">Ajoute une formation dans l\'onglet Matching pour pouvoir proposer.</p>')
+      +'</div></div></div>';
+    return h;
+  }
+  function drawTab(){
+    var t=document.getElementById('of-tab'); if(!t) return; var h='';
+    if(ST.tab==='cands'){
+      h=ST.cands.length ? ST.cands.map(function(c){ return candCard(c); }).join('') : '<div class="of-card"><div class="of-empty">'+S(I.users)+'Aucun candidat visible pour le moment.<br>Les candidats apparaissent ici dès qu\'ils acceptent d\'être visibles.</div></div>';
+    } else if(ST.tab==='search'){
+      h='<div class="of-card"><h4>'+S(I.search)+'Rechercher en une phrase</h4><div class="of-f of-search"><textarea id="of-q" placeholder="Ex : Je cherche des personnes en reconversion à Caen intéressées par une formation comptabilité.">'+esc(ST.lastQ)+'</textarea><button class="of-btn pri" data-a="go">'+S(I.search)+'Rechercher</button></div></div><div id="of-res"></div>';
+    } else if(ST.tab==='match'){
+      var fs=(ST.org&&ST.org.formations)||[];
+      h='<div class="of-card"><h4>'+S(I.book)+'Mes formations</h4>'+(fs.length?fs.map(function(f){ return '<div class="of-chips" style="margin:0 0 6px"><span style="font-size:.72rem">'+esc(f.titre)+' · '+esc(f.ville)+'</span><button class="of-link" data-a="delf" data-f="'+f.id+'">Retirer</button></div>'; }).join(''):'<p class="of-muted">Aucune formation. Ajoute ta première formation ci-dessous.</p>')
+        +'<details style="margin-top:8px"'+(fs.length?'':' open')+'><summary class="of-link" style="list-style:none;cursor:pointer">+ Ajouter une formation</summary><div class="of-f" style="margin-top:10px"><div class="of-row"><label>Intitulé<input id="of-ft" placeholder="Ex : Assistant Comptable"></label><label>Ville (ou « À distance »)<input id="of-fv" placeholder="Ex : Caen"></label></div>'
+        +'<label>Domaine et mots-clés<input id="of-fd" placeholder="Ex : comptabilité, gestion, paie"></label><div class="of-row"><label>Durée<input id="of-fdu" placeholder="Ex : 6 mois"></label><label>Financement<input id="of-ffi" placeholder="Ex : CPF, France Travail"></label></div>'
+        +'<label>Public visé</label><div class="of-chips" id="of-fp">'+STATUTS.map(function(s){ return '<label style="display:inline-flex;gap:5px;align-items:center;font-size:.72rem;font-weight:600"><input type="checkbox" value="'+s[0]+'" style="width:auto">'+s[1]+'</label>'; }).join('')+'</div>'
+        +'<label>Description<textarea id="of-fdesc" placeholder="Objectifs, contenu, débouchés…"></textarea></label><div class="of-btns"><button class="of-btn pri" data-a="addf">'+S(I.plus)+'Ajouter la formation</button></div></div></details></div>';
+      if(fs.length){ var f=fs.filter(function(x){ return x.id===ST.matchF; })[0]||fs[0]; ST.matchF=f.id;
+        h+='<div class="of-card"><h4>'+S(I.target)+'Matching</h4><div class="of-sel" style="margin-top:0"><select id="of-mf">'+fs.map(function(x){ return '<option value="'+x.id+'"'+(x.id===f.id?' selected':'')+'>'+esc(x.titre)+' — '+esc(x.ville)+'</option>'; }).join('')+'</select></div><p class="of-muted" style="margin-top:8px">EVA compare chaque candidat visible avec cette formation : projet, ville, public visé et disponibilité.</p></div>';
+        var list=ST.cands.map(function(c){ return { c:c, m:match(c,f) }; }).sort(function(a,b){ return b.m.pct-a.m.pct; });
+        h+=list.length?list.map(function(x){ return candCard(x.c,{ m:x.m, why:x.m.why, label:'Correspondance avec '+esc(f.titre), fid:f.id }); }).join(''):'<div class="of-card"><div class="of-empty">'+S(I.users)+'Aucun candidat visible pour le moment.</div></div>';
+      }
+    } else if(ST.tab==='props'){
+      h=ST.props.length ? ST.props.map(function(p){ var f=p.formation||{};
+        return '<div class="of-card" data-pid="'+p.id+'"><div class="of-name">'+esc(p.candPrenom||'Candidat')+' · '+esc(f.titre)+'</div><div class="of-btns" style="margin-top:8px"><span class="of-st '+p.statut+'">'+(p.statut==='envoyee'?'En attente de réponse':p.statut==='acceptee'?'Acceptée':'Refusée')+'</span></div>'+(p.statut==='acceptee'?'<div class="of-contact" data-rel="'+p.id+'">Mise en relation créée — chargement du contact…</div>':'')+'</div>'; }).join('')
+        : '<div class="of-card"><div class="of-empty">'+S(I.send)+'Aucune proposition envoyée.<br>Propose une formation depuis Candidats, Rechercher ou Matching.</div></div>';
+    }
+    t.innerHTML=h;
+    if(ST.tab==='match'){ var fsel=document.getElementById('of-mf'); if(fsel) fsel.onchange=function(){ ST.matchF=fsel.value; drawTab(); };
+      t.querySelectorAll('[data-sel]').forEach(function(s){ if(ST.matchF) s.value=ST.matchF; }); }
+    if(ST.tab==='props') t.querySelectorAll('[data-rel]').forEach(function(d){ db().collection('relations').doc(d.getAttribute('data-rel')).get().then(function(r){ var x=r.exists?r.data():null;
+      d.innerHTML=x?'Mise en relation créée — <b>'+esc(x.nom||'Candidat')+'</b>'+(x.email?' · '+esc(x.email):'')+(x.tel?' · '+esc(x.tel):''):'Mise en relation créée.'; }).catch(function(){ d.textContent='Mise en relation créée.'; }); });
+    if(ST.tab==='search' && ST.lastQ) runSearch();
+  }
+  function runSearch(){
+    var q=ST.lastQ, out=document.getElementById('of-res'); if(!out) return;
+    var r=search(q,ST.cands), c=r.crit;
+    var crit=[]; if(c.statut) crit.push(stLabel(c.statut)); c.villes.forEach(function(v){ crit.push(v.replace(/\b\w/g,function(x){return x.toUpperCase();})); }); if(c.dom.length) crit.push(c.dom.join(', '));
+    out.innerHTML='<div class="of-card" style="box-shadow:none"><div class="of-muted">EVA a compris : <b>'+(crit.length?esc(crit.join(' · ')):'tous les candidats')+'</b> — '+r.res.length+' résultat'+(r.res.length>1?'s':'')+'.</div></div>'
+      +(r.res.length?r.res.map(function(x){ return candCard(x.c,{ m:{ pct:x.pct }, why:x.why, label:'Pertinence par rapport à ta recherche' }); }).join(''):'<div class="of-card"><div class="of-empty">'+S(I.search)+'Aucun candidat ne correspond exactement. Essaie une recherche plus large.</div></div>');
+  }
+  function orgClick(e){
+    var tb=e.target.closest('[data-tab]'); if(tb){ ST.tab=tb.getAttribute('data-tab'); root.querySelectorAll('.of-tabs button').forEach(function(b){ b.classList.toggle('on',b===tb); }); drawTab(); return; }
+    var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a');
+    if(a==='go'){ ST.lastQ=val('of-q'); if(!ST.lastQ){ toast('Écris ta recherche en une phrase'); return; } runSearch(); }
+    else if(a==='addf'){
+      var f={ id:uid(), titre:val('of-ft'), ville:val('of-fv'), domaine:val('of-fd'), motscles:val('of-fd'), duree:val('of-fdu'), financement:val('of-ffi'), description:val('of-fdesc'), publics:[].map.call(document.querySelectorAll('#of-fp input:checked'),function(i){ return i.value; }) };
+      if(!f.titre || !f.ville){ toast('Indique au moins l\'intitulé et la ville'); return; }
+      var fs=((ST.org&&ST.org.formations)||[]).concat([f]); b.disabled=true;
+      db().collection('organismes').doc(user().uid).set({ formations:fs },{merge:true}).then(function(){ ST.org.formations=fs; ST.matchF=f.id; toast('Formation ajoutée'); drawTab(); }).catch(function(x){ b.disabled=false; err(x); });
+    } else if(a==='delf'){
+      var id=b.getAttribute('data-f'), fs2=(ST.org.formations||[]).filter(function(x){ return x.id!==id; });
+      db().collection('organismes').doc(user().uid).set({ formations:fs2 },{merge:true}).then(function(){ ST.org.formations=fs2; drawTab(); }).catch(err);
+    } else if(a==='propose'){
+      var card=b.closest('[data-c]'), cu=card.getAttribute('data-c'), sel=card.querySelector('[data-sel]'), f=(ST.org.formations||[]).filter(function(x){ return x.id===sel.value; })[0];
+      var c=ST.cands.filter(function(x){ return x.uid===cu; })[0]; if(!f||!c) return;
+      if(ST.props.some(function(p){ return p.candUid===cu && (p.formation||{}).id===f.id && p.statut==='envoyee'; })){ toast('Proposition déjà envoyée à ce candidat'); return; }
+      b.disabled=true;
+      var m=match(c,f), p={ orgUid:user().uid, orgNom:ST.org.nom, orgEmail:ST.org.email||'', candUid:cu, candPrenom:c.prenom, formation:f, score:m.pct, statut:'envoyee', createdAt:new Date().toISOString() };
+      db().collection('propositions').add(p).then(function(ref){ p.id=ref.id; ST.props.unshift(p); toast('Proposition envoyée à '+c.prenom); b.innerHTML=S(I.check)+'Proposition envoyée'; }).catch(function(x){ b.disabled=false; err(x); });
+    }
+  }
+
+  /* Pastille « propositions en attente » dans la navigation du candidat */
+  function badge(){
+    var u=user(); if(!u || !db() || ST.role==='org') return;
+    var n=ST.props.filter(function(p){ return p.statut==='envoyee'; }).length;
+    document.querySelectorAll('#eva-side [data-go="eva-of"]').forEach(function(b){ var x=b.querySelector('.of-badge'); if(!x){ x=el('span','of-badge'); b.appendChild(x); } x.textContent=n; x.style.display=n?'':'none'; });
+  }
+  function checkInbox(){
+    var u=user(); if(!u || !db()) return;
+    db().collection('propositions').where('candUid','==',u.uid).where('statut','==','envoyee').get().then(function(q){
+      ST.props=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }); badge();
+      if(q.size && !sessionStorage.getItem('of-notified')){ sessionStorage.setItem('of-notified','1'); toast('Nouvelle proposition de formation : ouvre « Organismes de formation »'); }
+    }).catch(function(){});
+  }
+  /* Branchement : rendu à l'ouverture de la page */
+  var was=false;
+  function tick(){ var s=document.getElementById('s-eva-of'); var on=s && s.classList.contains('active'); if(on && !was) render(); was=!!on; }
+  function init(){
+    try{ new MutationObserver(function(){ clearTimeout(window._ofT); window._ofT=setTimeout(tick,40); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){}
+    var n=0; (function wait(){ if(user() && db()){ checkInbox(); return; } if(++n<40) setTimeout(wait,500); })();
+    tick();
+  }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+  window.cpOfRender=render;
 })();
 </script>
 <script>
