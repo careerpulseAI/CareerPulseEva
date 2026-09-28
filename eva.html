@@ -26856,6 +26856,53 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   .evx-pop{ bottom:calc(14px + env(safe-area-inset-bottom,0px)); }
   html.ev-tabs .evx-pop{ bottom:calc(var(--ev-tab-h) + 12px); }
 }
+
+/* ═══ MOBILE v5 : barre EVA en icônes, entrées premium, cartes teintées, réflexions ═══ */
+@media (max-width: 899px){
+  .evx-bar{ gap:10px !important; }
+  .evx-id{ flex:1 1 auto; min-width:0; }
+  .evx-id span{ display:block !important; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%; }
+  .evx-id span::before{ display:inline-block; vertical-align:1px; margin-right:6px; }
+  .evx-ctrl{ gap:6px !important; flex-shrink:0; }
+  .evx-ctrl button{ width:34px !important; height:34px !important; padding:0 !important; font-size:0 !important; border-radius:50% !important; flex:0 0 34px; }
+  .evx-ctrl button::after{ content:none !important; }
+  .evx-ctrl [data-a="pause"]{ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 5v14M15 5v14'/%3E%3C/svg%3E") center/15px no-repeat !important; }
+  .evx-ctrl [data-a="pause"].on{ background:#fff7ed url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c2410c' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 5l12 7-12 7z'/%3E%3C/svg%3E") center/15px no-repeat !important; border-color:#fed7aa !important; }
+  .evx-ctrl [data-a="skip"]{ background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23334155' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l8 6-8 6zM12 6l8 6-8 6z'/%3E%3C/svg%3E") center/15px no-repeat !important; }
+  .evx-mbar .evx-ctrl{ margin-left:auto; }
+  /* Entrée de page : bande de lumière sur le titre */
+  [data-evt] .evx-in{ overflow:hidden; }
+  [data-evt] .evx-in::before{ content:""; position:absolute; top:0; bottom:0; left:0; width:45%; z-index:3; pointer-events:none;
+    background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent); transform:translateX(-120%); animation: evxSweep 1.1s .15s cubic-bezier(.4,0,.2,1) both; }
+  @keyframes evxSweep{ to{ transform:translateX(330%); } }
+  [data-evt] .evx-in .evt-ico{ animation: evxPop .6s cubic-bezier(.2,1.4,.4,1) both; }
+  [data-evt] .evx-in [data-eb]{ animation: evhIn .6s .1s ease both; }
+  /* Cartes teintées aux couleurs du menu */
+  .pfs-post{ border-color:color-mix(in srgb,var(--c1,#2563eb) 22%,#e3e9f4) !important; background:linear-gradient(180deg,color-mix(in srgb,var(--c1,#2563eb) 7%,#fff) 0,#fff 90px) !important;
+    box-shadow:0 14px 34px -20px color-mix(in srgb,var(--c1,#2563eb) 60%,transparent) !important; }
+  .pfs-card{ box-shadow:0 18px 40px -20px color-mix(in srgb,var(--c1,#2563eb) 55%,transparent) !important; }
+  .pfs-md{ overflow:hidden; }
+  .pfs-md::after{ content:""; position:absolute; top:0; bottom:0; left:0; width:40%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:translateX(-130%); animation: evxSweep 1.2s .55s ease-out both; }
+  .pfs-st .rg{ position:relative; overflow:hidden; }
+  .evx-count{ color:var(--c1,#0f172a); }
+  /* Bulle de réflexion d'EVA */
+  .evx-think{ margin:0 0 14px 0 !important; display:flex; align-items:center; gap:9px; font-style:normal !important; }
+  .evx-tav{ width:28px; height:28px; border-radius:9px; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1d4ed8,#60a5fa); opacity:.85; }
+  .evx-tav svg{ width:16px; height:16px; }
+  .evx-think .evx-spin{ display:none; }
+  .evx-tt{ background:#fff; border:1px dashed #c7d2fe; color:#4338ca; font-size:.76rem; font-weight:600; padding:9px 12px; border-radius:4px 16px 16px 16px; line-height:1.4; }
+  .evx-dots{ display:inline-flex; gap:3px; }
+  .evx-dots i{ width:5px; height:5px; border-radius:50%; background:#818cf8; animation: evhDot 1.2s infinite ease-in-out; }
+  .evx-dots i:nth-child(2){ animation-delay:.15s } .evx-dots i:nth-child(3){ animation-delay:.3s }
+  /* Accès direct QCM / Simulation */
+  .evx-quick{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:0 0 18px; }
+  .evx-quick button{ position:static !important; display:flex; align-items:center; gap:9px; text-align:left; border:1px solid color-mix(in srgb,var(--c1) 22%,#e3e9f4); background:#fff; border-radius:14px; padding:10px; cursor:pointer; font:600 .7rem/1.25 inherit; color:#334155; animation: evxPop .5s cubic-bezier(.2,1.4,.4,1) both; }
+  .evx-quick button:nth-child(odd) i{ background:var(--cs); color:var(--c1); } .evx-quick button:nth-child(even) i{ background:var(--c1); color:#fff; }
+  .evx-quick i{ width:30px; height:30px; border-radius:10px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+  .evx-quick i svg{ width:15px; height:15px; }
+  .evx-quick b{ display:block; font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--c1); }
+  .evx-quick button:active{ transform:scale(.97); }
+}
 </style>
 <script>
 /* ═══ EVA v3 : une seule mise en scène pour toutes les pages (file indienne, rythme posé, décor réseau social) ═══ */
@@ -26913,6 +26960,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       +'<div class="pfs-nm">'+o.name+' <i>'+S(IC.check,'#fff',3)+'</i></div><div class="pfs-hd">'+esc(o.handle||t.h)+'</div>'
       +'<div class="pfs-bio">'+o.bio+'</div>'
       +'<div class="pfs-stats">'+(o.stats||[]).map(function(s){ return '<div><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'; }).join('')+'</div></div>';
+    if(M()) setTimeout(function(){ c.querySelectorAll('.pfs-stats b').forEach(function(b){ var v=b.textContent.trim(); if(!/^\d{1,3}$/.test(v)) return; var n=+v, t0=performance.now(); if(!n) return;
+      b.classList.add('evx-count'); (function step(){ var k=Math.min(1,(performance.now()-t0)/900); b.textContent=Math.round(n*(1-Math.pow(1-k,3))); if(k<1) requestAnimationFrame(step); else b.textContent=v; })(); }); },700);
     return c;
   }
   function post(t,it){
@@ -26943,7 +26992,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 
   /* ── Moteur : une scène après l'autre ── */
   var SEEN={};
-  var SP=function(){ return window.innerWidth<900 ? 1.4 : 1; };
+  var SP=function(){ return 1; };
+  var M=function(){ return window.innerWidth<900; };
+  function mob(x){ return M() ? x : null; }
+  function pick(a){ return Array.isArray(a) ? a[Math.floor(Math.random()*a.length)] : a; }
   function later(st,fn,ms){
     st.t=setTimeout(function g(){ if(st.dead) return; if(st.paused){ st.t=setTimeout(g,200); return; } fn(); }, ms*SP()); }
   function stream(bub,html,st,cb){
@@ -26960,6 +27012,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function readTime(html){ var n=(html||'').replace(/<[^>]+>/g,'').length; return Math.min(3200, 1100+n*16); }
   function mount(o){
     if(!o.host) return null;
+    o.steps=(o.steps||[]).filter(Boolean);
     var slot=o.host.querySelector(':scope > .evx[data-slot="'+o.id+'"]');
     if(!slot){
       slot=el('div','evx'+(o.bar?'':' evx-inline')); slot.setAttribute('data-slot',o.id);
@@ -26988,7 +27041,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     function build(s){
       if(s.msg!=null) return msgRow(s.msg)[0];
       if(s.think!=null) return null;
-      if(s.node){ var a=el('div','evx-att'); a.appendChild(s.node); return a; }
+      if(s.node){ var a=el('div','evx-att'); s.node.classList.remove('evx-hid2'); a.appendChild(s.node); return a; }
       if(s.make){ var m=s.make(); return s.feed===false ? m : wrapFeed(m); }
       return null;
     }
@@ -27000,7 +27053,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
         if(i>=steps.length){ fin(false); return; }
         var s=steps[i++]; mark(i);
         if(s.think!=null){
-          var th=el('div','evx-think','<span class="evx-spin"></span>'+s.think); feed.appendChild(th); reveal(th);
+          var th=el('div','evx-think','<span class="evx-tav">'+S(IC.eva)+'</span><span class="evx-spin"></span><span class="evx-tt">'+pick(s.think)+'</span><span class="evx-dots"><i></i><i></i><i></i></span>'); feed.appendChild(th); reveal(th);
           later(st,function(){ th.classList.add('out'); later(st,function(){ th.remove(); next(); },300); }, s.wait||1500);
         } else if(s.msg!=null){
           var m=msgRow('<span class="evh-typing"><span></span><span></span><span></span></span>'); feed.appendChild(m[0]); reveal(m[0]);
@@ -27061,6 +27114,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { msg:'Je te présente les <b>'+items.length+' profils</b>, un par un 👇' }
     ];
     items.forEach(function(it,i){ steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length, tag:'Droits', txt:esc(it.sub)+' — 12 thèmes classés de A à Z, avec estimateur et quiz.', tip:'Commence par le thème qui te concerne aujourd\'hui : 3 minutes suffisent.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+    steps.push(mob({ think:['Je repère le profil qui te ressemble…','Je croise ta situation avec tous mes thèmes…','Je vérifie que tout est bien à jour 2026…'] }));
+    steps.push(mob({ msg:pick(['Franchement ? La plupart des gens passent à côté de droits qu\'ils ont <b>déjà</b>. Avec moi, pas toi 😉','Tu sais ce qui me rend fière ? Quand quelqu\'un découvre une aide qu\'il ignorait. Ça arrive <b>tous les jours</b> ici 💙']) }));
     steps.push({ make:function(){ return plus(t,'Un moteur de recherche te donne 100 réponses contradictoires. Moi, je te donne <b>une réponse claire, sourcée et à jour 2026</b>, adaptée à ton profil. ✨'); } });
     steps.push({ msg:'À toi de jouer : <b>quel profil te correspond ?</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items); } });
@@ -27123,6 +27178,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { msg:'Voici les <b>'+items.length+' profils</b> que j\'accompagne, un par un 👇' }
     ];
     items.forEach(function(it,i){ steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length, tag:'Conseils', txt:esc(it.sub)+'. Conseils détaillés, contacts utiles et Portfolio.', tip:'Choisis le profil qui décrit ta situation actuelle, pas celle que tu vises.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+    steps.push(mob({ think:['Je prépare des conseils qui collent à ta réalité…','Je sélectionne les contacts utiles pour toi…'] }));
+    steps.push(mob({ msg:pick(['Un coach carrière, c\'est souvent 80 € la séance. Moi, je suis là <b>24h/24</b>, sans rendez-vous 😉','Pas de blabla : je te dis quoi faire, <b>dans quel ordre</b>, et avec qui 🎯']) }));
     steps.push({ make:function(){ return plus(t,'Pas de conseils génériques : je pars de <b>ta</b> situation, et je te donne les bons contacts, les bons documents et la prochaine action. 🎯'); } });
     steps.push({ msg:'À toi : <b>quel profil te ressemble ?</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items); } });
@@ -27194,6 +27251,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { msg:'Je te présente tes outils, <b>dans l\'ordre</b> 👇' }
     ];
     items.forEach(function(it,i){ var d=PF_TXT[it.k]||['',it.ttl,'']; steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.ico, ttl:esc(it.ttl), c1:it.c1, c2:it.c2, meta:'Outil '+(i+1)+'/'+items.length, tag:d[1], txt:esc(d[0]), tip:d[2], actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+    steps.push(mob({ think:['Je range déjà tout pour toi…','Je prépare ton espace de travail…'] }));
+    steps.push(mob({ msg:pick(['Imagine : plus jamais « il est où mon CV ? » la veille d\'un entretien 😅','Un espace pro bien rangé, c\'est <b>la moitié du stress</b> en moins. Promis 🙌']) }));
     steps.push({ make:function(){ return plus(t,'Tout ton parcours dans <b>un seul espace</b> : documents, agenda, contacts et analyses. Plus de fichiers perdus, plus d\'oublis. ✨'); } });
     steps.push({ msg:'À toi de jouer : <b>par quoi on commence ?</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items.map(function(it){ return { ico:it.ico, ttl:esc(it.ttl), c1:it.c1, fn:it.fn }; })); } });
@@ -27205,7 +27264,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var body=q('.eva-sub-body',sc); if(!body) return;
     var list=null, dark=null; [].forEach.call(body.children,function(c){ var s=c.getAttribute('style')||''; if(/padding:16px 16px 40px/.test(s)) list=c; if(/#0f2447/.test(s)) dark=c; });
     if(!list) return;
-    hide([dark, list, q('.ev-hero',body)]); body.classList.add('evx-pad0'); sc.classList.add('evx-page');
+    hide([dark, M()?null:list, q('.ev-hero',body)]); body.classList.add('evx-pad0'); sc.classList.add('evx-page');
     var blocks=[].filter.call(list.children,function(c){ return c.querySelectorAll('[onclick^="go("]').length>=2; });
     var note=[].filter.call(list.children,function(c){ return /Eva vous dit/.test(c.textContent||''); })[0];
     var items=blocks.map(function(b){
@@ -27218,6 +27277,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var steps=[
       { make:function(){ return cover(t,{ name:'Quiz & mises en situation', bio:'Des QCM pour vérifier tes connaissances, et des simulations réalistes pour t\'entraîner face à un recruteur.', stats:[[items.length,'profils'],['QCM','+ simulation'],['Bilan','à la fin']] }); }, feed:false, wait:2000 },
       { think:'EVA prépare ton entraînement…' },
+      mob({ msg:'Pressé(e) ? Voici <b>l\'accès direct</b> à tes 8 sessions 👇' }),
+      mob({ make:function(){ var g=vars(el('div','evx-quick'),t); items.forEach(function(it){ [['QCM',it.qcm,IC.check],['Simulation',it.sim,IC.target]].forEach(function(x){ var b=el('button',null,'<i>'+S(x[2],'currentColor',2.2)+'</i><span><b>'+x[0]+'</b>'+it.ttl+'</span>'); b.type='button'; b.onclick=x[1]; g.appendChild(b); }); }); return g; } }),
       { msg:'Prêt(e) à t\'entraîner ? 💪 Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
       { make:function(){ return example(t,'<b>Léa, 26 ans</b>, bloquait sur « Parlez-moi de vous ». Après 3 simulations avec EVA, elle a décroché son CDI. 🎉'); } },
       { msg:'Pour chaque profil, tu as un <b>QCM</b> et une <b>mise en situation</b>. Je te les présente 👇' }
@@ -27225,10 +27286,14 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     items.forEach(function(it,i){ steps.push({ make:function(){ var p=post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length+' · '+it.sub, tag:'Entraînement',
       txt:'<ul><li><i>'+S(IC.check,'currentColor',2.6)+'</i><span><b>QCM :</b> '+esc(it.d1)+'</span></li><li><i>'+S(IC.target,'currentColor',2.2)+'</i><span><b>Mise en situation :</b> '+esc(it.d2)+'</span></li></ul>',
       tip:'Commence par le QCM, puis passe à la simulation : tu seras plus à l\'aise.', actions:[{l:'QCM',fn:it.qcm},{l:'Simulation',pri:true,fn:it.sim}] }); posts[i]=p; return p; } }); });
+    steps.push(mob({ think:['Je prépare des recruteurs… exigeants mais bienveillants 😄','Je mélange les questions pour que ce soit jamais pareil…'] }));
+    steps.push(mob({ msg:pick(['Un entretien raté, ça ne se rattrape pas. Ici, tu peux te tromper autant que tu veux — c\'est fait pour ça 💪','Le jour J, tu auras déjà vécu la scène. C\'est ça, <b>la vraie confiance</b> ✨']) }));
     steps.push({ make:function(){ return plus(t,'Un entraînement <b>réaliste et sans jugement</b>, disponible 24h/24, avec un bilan personnalisé à chaque session. 🎯'); } });
     steps.push({ msg:'À toi : <b>choisis ton profil</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items.map(function(it,i){ return { ico:it.ico, ttl:it.ttl, fn:function(){ scrollToEl(posts[i]); } }; })); } });
     if(note) steps.push({ msg:esc(txt(note).replace(/^Eva vous dit\s*:\s*/,'')) });
+    steps.push(mob({ msg:'Et voici <b>tous tes QCM et mises en situation</b>, réunis ici. Choisis et lance-toi 👇' }));
+    steps.push(mob({ node:list }));
     mount({ host:body, id:'hub', key:'hub-quiz', label:'Quiz & mises en situation', bar:true, steps:steps });
   }
   // QUIZ : briefing + bilan
@@ -27311,6 +27376,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { msg:'Ton journal a 3 espaces. Je te les présente 👇' }
     ];
     tabsInfo.forEach(function(x,i){ steps.push({ make:function(){ return post(t,{ ico:S(x[0],t.c1,2), big:S(x[0]), ttl:x[1], meta:'Espace '+(i+1)+'/3', tag:'Suivi', txt:x[2], actions:[{l:'Ouvrir',pri:true,fn:function(){ var sl=q('.evx[data-slot="trk"]',sc); if(jw.parentNode && jw.parentNode.classList.contains('evx-park') && sl && sl._static) sl._static(); jnlTab(i); setTimeout(function(){ scrollToEl(jw); },120); }}] }); } }); });
+    steps.push(mob({ think:['Je regarde comment tu te sens ces derniers jours…','Je prépare ton tableau de bord…'] }));
     steps.push({ make:function(){ return plus(t,'Je ne me contente pas de stocker tes notes : <b>je lis tes tendances</b> et je te conseille dès ta 2e évaluation. 💜'); } });
     steps.push({ msg:'C\'est parti : ton journal est juste ici 👇' });
     steps.push({ node:jw });
@@ -27404,6 +27470,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { make:function(){ return cover(t,{ name:'EVA', handle:'@eva · by CareerPulse', bio:'L\'intelligence au service de tes droits professionnels. Je t\'aide à comprendre, anticiper et agir.', stats:[['29','articles'],['4','profils'],['2026','à jour']] }); }, feed:false, wait:2000 },
       { msg:'Enchantée 👋 Moi, c\'est <b>EVA</b>, ton assistante RH et droit du travail. Je ne remplace pas un avocat : je te donne les clés pour décider en connaissance de cause.' },
       { make:function(){ return post(t,{ ttl:'Mes 3 engagements', meta:'Ce qui me guide', media:false, txt:tipsList(['Des réponses fondées sur les sources officielles.','Des explications simples, adaptées à ton profil.','Disponible 24h/24, à ton rythme et sans jugement.']) }); } },
+      mob({ msg:'Je ne dors jamais, je ne juge jamais… et je connais le Code du travail par cœur 😉' }),
       { msg:'Voici qui je suis, en chiffres et en principes 👇' },
       { node:body }
     ]});
@@ -27438,7 +27505,12 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(id==='eva-droits') droitsHub(); else if(id==='eva-workspace'){ if(window.EWS===0 || !window.EWS) wsHub(); } else if(id==='eva-entretien') quizHub();
     else if(id==='eva-tracker') tracker(); else if(id==='eva-identity') identity();
   }
-  function check(){ var id=active(); if(id!==last){ last=id; var pp=document.getElementById('evx-pop'); if(pp && id!=='eva-droits-article') pp.classList.remove('show'); try{ enter(id); }catch(e){} } ebHero(); document.querySelectorAll('.nova-result').forEach(bilan); }
+  function headIn(id){ if(!M()) return; var sc=document.getElementById('s-'+id); var hd=sc && sc.querySelector('.evad-hd,.eva-sub-header,.ew-hdr,.eb-hdr,.jnl-hdr,.nova-hd'); if(!hd || !sc.hasAttribute('data-evt')) return;
+    hd.classList.remove('evx-in'); void hd.offsetWidth; hd.classList.add('evx-in'); clearTimeout(hd._evxIn); hd._evxIn=setTimeout(function(){ hd.classList.remove('evx-in'); },1600); }
+  function ebCards(){ if(!M()) return; var b=document.getElementById('eb-body'); if(!b) return; var cs=b.querySelectorAll('.eb-q-card:not(.eb-q-done)'), c=cs[cs.length-1]; if(!c) return;
+    var br=b.getBoundingClientRect(), r=c.getBoundingClientRect(); if(r.top<br.top+6) b.scrollTop-= (br.top+10-r.top); }
+  function check(){ var id=active(); if(id!==last){ last=id; var pp=document.getElementById('evx-pop'); if(pp && id!=='eva-droits-article') pp.classList.remove('show'); headIn(id); try{ enter(id); }catch(e){} }
+    if(id==='eva-bienetre') setTimeout(ebCards,120); ebHero(); document.querySelectorAll('.nova-result').forEach(bilan); }
   function init(){
     titles();
     // Préparation immédiate des pages (pas d'apparition de l'ancien contenu)
