@@ -26903,6 +26903,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   .evx-quick b{ display:block; font-size:.62rem; letter-spacing:.06em; text-transform:uppercase; color:var(--c1); }
   .evx-quick button:active{ transform:scale(.97); }
 }
+
+@media (max-width: 899px){
+  .evx-quick-wrap{ padding:14px 14px 0; }
+  .evx-quick-wrap .evx-quick{ margin:0; }
+  .evx-qh{ display:flex; align-items:center; gap:7px; font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--c1); margin:0 2px 8px; }
+  .evx-qh svg{ width:14px; height:14px; }
+}
 </style>
 <script>
 /* ═══ EVA v3 : une seule mise en scène pour toutes les pages (file indienne, rythme posé, décor réseau social) ═══ */
@@ -26948,7 +26955,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function vars(n,t){ n.style.setProperty('--c1',t.c1); n.style.setProperty('--c2',t.c2); n.style.setProperty('--cs',t.cs); return n; }
   function scroller(n){ while(n && n!==document.body){ var o=getComputedStyle(n).overflowY; if(o==='auto'||o==='scroll') return n; n=n.parentElement; } return null; }
-  function reveal(n){ if(!n || !n.isConnected) return; var s=scroller(n); if(!s) return;
+  var TOUCH=0; document.addEventListener('touchstart',function(){ TOUCH=Date.now(); },{passive:true,capture:true});
+  function reveal(n){ if(!n || !n.isConnected) return; if(Date.now()-TOUCH<7000) return; var s=scroller(n); if(!s) return;
     var r=n.getBoundingClientRect(), sr=s.getBoundingClientRect();
     if(r.bottom>sr.bottom-16){ var d=Math.min(r.bottom-sr.bottom+24, r.top-sr.top-70); if(d>0) s.scrollBy({top:d,behavior:'smooth'}); } }
 
@@ -27277,8 +27285,6 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var steps=[
       { make:function(){ return cover(t,{ name:'Quiz & mises en situation', bio:'Des QCM pour vérifier tes connaissances, et des simulations réalistes pour t\'entraîner face à un recruteur.', stats:[[items.length,'profils'],['QCM','+ simulation'],['Bilan','à la fin']] }); }, feed:false, wait:2000 },
       { think:'EVA prépare ton entraînement…' },
-      mob({ msg:'Pressé(e) ? Voici <b>l\'accès direct</b> à tes 8 sessions 👇' }),
-      mob({ make:function(){ var g=vars(el('div','evx-quick'),t); items.forEach(function(it){ [['QCM',it.qcm,IC.check],['Simulation',it.sim,IC.target]].forEach(function(x){ var b=el('button',null,'<i>'+S(x[2],'currentColor',2.2)+'</i><span><b>'+x[0]+'</b>'+it.ttl+'</span>'); b.type='button'; b.onclick=x[1]; g.appendChild(b); }); }); return g; } }),
       { msg:'Prêt(e) à t\'entraîner ? 💪 Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
       { make:function(){ return example(t,'<b>Léa, 26 ans</b>, bloquait sur « Parlez-moi de vous ». Après 3 simulations avec EVA, elle a décroché son CDI. 🎉'); } },
       { msg:'Pour chaque profil, tu as un <b>QCM</b> et une <b>mise en situation</b>. Je te les présente 👇' }
@@ -27294,7 +27300,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(note) steps.push({ msg:esc(txt(note).replace(/^Eva vous dit\s*:\s*/,'')) });
     steps.push(mob({ msg:'Et voici <b>tous tes QCM et mises en situation</b>, réunis ici. Choisis et lance-toi 👇' }));
     steps.push(mob({ node:list }));
-    mount({ host:body, id:'hub', key:'hub-quiz', label:'Quiz & mises en situation', bar:true, steps:steps });
+    var hs=mount({ host:body, id:'hub', key:'hub-quiz', label:'Quiz & mises en situation', bar:true, steps:steps });
+    // Mobile : accès direct aux 8 sessions, visible tout de suite (sans attendre la présentation)
+    if(M() && hs && !q('.evx-quick-wrap',hs)){
+      var qw=vars(el('div','evx-quick-wrap','<div class="evx-qh">'+S(IC.target,'currentColor',2.2)+'Accès direct · 8 sessions</div>'),t), g=el('div','evx-quick');
+      items.forEach(function(it){ [['QCM',it.qcm,IC.check],['Simulation',it.sim,IC.target]].forEach(function(x){ var b=el('button',null,'<i>'+S(x[2],'currentColor',2.2)+'</i><span><b>'+x[0]+'</b>'+it.ttl+'</span>'); b.type='button'; b.onclick=x[1]; g.appendChild(b); }); });
+      qw.appendChild(g); var fd=q('.evx-feed',hs); hs.insertBefore(qw,fd);
+    }
   }
   // QUIZ : briefing + bilan
   var KEY={salarie:'sal',demandeur:'dem',reconversion:'rec',freelance:'frl'};
@@ -27328,12 +27340,15 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { make:function(){ return post(t,{ ttl:'Mes 3 conseils', meta:'Pour réussir', media:false, txt:tipsList(sim.tips) }); } },
       { msg:'Respire… on y va quand tu es prêt(e) 💪' }
     ];
-    mount({ host:host, id:'brief', key:kind+'-'+profil, bar:false, steps:steps, done:function(){
+    var slot=null;
+    function goBtn(){
       if(ch.querySelector('.evx-go')) return;
       var b=el('button','evx-go',kind==='qcm'?'Commencer le QCM':'Entrer dans la simulation'); b.type='button';
-      b.onclick=function(){ ch.innerHTML=''; orig(profil); feed.insertBefore(host,feed.firstChild); };
+      b.onclick=function(){ if(b._on) return; b._on=1; if(slot && slot._static && !slot.classList.contains('evx-done')) slot._static(); ch.innerHTML=''; orig(profil); feed.insertBefore(host,feed.firstChild); };
       ch.appendChild(b);
-    }});
+    }
+    slot=mount({ host:host, id:'brief', key:kind+'-'+profil, bar:false, steps:steps, done:goBtn });
+    if(M()) goBtn();
   }
   function bilan(res){
     if(!res || res.querySelector('.evx-bilan-wrap') || !res.querySelector('.nova-result-score')) return;
