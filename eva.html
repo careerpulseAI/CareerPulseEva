@@ -1,6 +1,20 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+<script>
+/* EVA : prénoms, journal et réponses gardés seulement pendant la session (on repart de zéro à chaque visite) */
+(function(){
+  var KEYS={'jnl_v2':1,'eb_jnl_v1':1,'es_surnom':1};
+  try{ Object.keys(KEYS).forEach(function(k){ localStorage.removeItem(k); }); }catch(e){}
+  try{
+    var P=Storage.prototype, g=P.getItem, st=P.setItem, rm=P.removeItem;
+    P.getItem=function(k){ if(this===window.localStorage && KEYS[k]) return g.call(window.sessionStorage,k); return g.apply(this,arguments); };
+    P.setItem=function(k,v){ if(this===window.localStorage && KEYS[k]) return st.call(window.sessionStorage,k,v); return st.apply(this,arguments); };
+    P.removeItem=function(k){ if(this===window.localStorage && KEYS[k]) return rm.call(window.sessionStorage,k); return rm.apply(this,arguments); };
+  }catch(e){}
+})();
+</script>
+
 <meta charset="UTF-8">
 <!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
 <link rel="expect" href="#cp-end" blocking="render">
@@ -25682,7 +25696,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     place(sc);
     var mf=document.getElementById('cp-menu-frame');
     // Pas de flèches dans les chats « Quiz et mises en situation » ni quand le menu CareerPulse est ouvert
-    if(sc.classList.contains('nova-screen') || (mf && mf.style.display==='block')){ box.classList.remove('on'); return; }
+    if(mf && mf.style.display==='block'){ box.classList.remove('on'); return; }
     cur=target(sc);
     box.classList.add('on');
     if(!cur){ up.disabled=true; down.disabled=true; return; }
@@ -26764,6 +26778,84 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   .jnl-hdr-streak{ flex-shrink:0 !important; white-space:nowrap; }
   .jnl-hdr-info{ min-width:0; }
 }
+
+/* ═══ v4 : contrôles partout, réflexion, animations pro, titres premium, mobile soigné ═══ */
+.evx-ctrl button.on{ background:#fff7ed; border-color:#fed7aa; color:#c2410c; }
+.evx-mbar{ display:flex; align-items:center; gap:10px; margin:0 0 12px; padding:8px 10px 8px 12px; background:rgba(255,255,255,.8); border:1px solid #e8edf6; border-radius:16px; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); }
+.evx-live{ display:inline-flex; align-items:center; gap:7px; font-size:.64rem; font-weight:700; color:#16a34a; white-space:nowrap; }
+.evx-live i{ width:7px; height:7px; border-radius:50%; background:#22c55e; animation: evhPulse 1.6s ease-in-out infinite; }
+.evx-done .evx-live{ color:#64748b; } .evx-done .evx-live i{ background:#94a3b8; animation:none; }
+.evx-mbar .evx-ctrl button{ height:30px; padding:0 12px; font-size:.64rem; }
+.evx-think{ display:flex; align-items:center; gap:10px; margin:0 0 14px 42px; font-size:.74rem; font-style:italic; color:#64748b; animation: evhIn .4s ease both; transition:opacity .3s, transform .3s; }
+.evx-think.out{ opacity:0; transform:translateY(-4px); }
+.evx-spin{ width:16px; height:16px; border-radius:50%; border:2px solid #dbeafe; border-top-color:#2563eb; animation: evxSpin .8s linear infinite; }
+@keyframes evxSpin{ to{ transform:rotate(360deg); } }
+/* Animations pro */
+.pfs-card{ position:relative; }
+.pfs-card .pfs-cv::after{ content:""; position:absolute; inset:0; background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%); transform:translateX(-100%); animation: evxShine 2.2s .5s ease-out both; }
+@keyframes evxShine{ to{ transform:translateX(100%); } }
+.pfs-av{ animation: evxPop .7s .25s cubic-bezier(.2,1.4,.4,1) both; }
+@keyframes evxPop{ from{ transform:scale(.4); opacity:0; } }
+.pfs-av::before, .pfs-pa::before{ content:""; position:absolute; inset:-3px; border-radius:50%; background:inherit; filter:blur(8px); opacity:.35; z-index:-1; }
+.pfs-pa{ position:relative; }
+.pfs-stats div{ animation: evhIn .5s both; } .pfs-stats div:nth-child(2){ animation-delay:.12s; } .pfs-stats div:nth-child(3){ animation-delay:.24s; }
+.pfs-post{ animation: pfsIn2 .8s cubic-bezier(.2,.8,.2,1) both !important; }
+@keyframes pfsIn2{ from{ opacity:0; transform:translateY(26px) scale(.96); filter:blur(4px); } }
+.pfs-md .ic{ animation: evxFloat 3.6s ease-in-out infinite; }
+@keyframes evxFloat{ 50%{ transform:translateY(-5px); } }
+.pfs-st button{ animation: evxPop .55s cubic-bezier(.2,1.4,.4,1) both; }
+.pfs-st button:nth-child(2){ animation-delay:.08s } .pfs-st button:nth-child(3){ animation-delay:.16s } .pfs-st button:nth-child(4){ animation-delay:.24s } .pfs-st button:nth-child(5){ animation-delay:.32s } .pfs-st button:nth-child(6){ animation-delay:.4s } .pfs-st button:nth-child(7){ animation-delay:.48s }
+.pfs-st .rg{ animation: evxRing 6s linear infinite; }
+@keyframes evxRing{ to{ filter:hue-rotate(40deg); } }
+/* Titres encore plus premium */
+[data-evt] [data-eb]::before{ display:flex; align-items:center; width:max-content; max-width:100%; padding:3px 9px 3px 8px; margin-bottom:5px; border-radius:99px; color:var(--t1);
+  background:var(--ts); -webkit-background-clip:border-box; background-clip:border-box; border:1px solid var(--tb); font-size:.52rem; letter-spacing:.13em; }
+[data-evt] .evad-hd-title, [data-evt] .eva-sub-title, [data-evt] .ew-hdr-ttl, [data-evt] .eb-hdr-title, [data-evt] .jnl-hdr-title, [data-evt] .nova-hd-name{ font-size:1.16rem !important; line-height:1.15 !important; }
+.evt-ico{ position:relative; overflow:hidden; }
+.evt-ico::after{ content:""; position:absolute; inset:0; background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.5) 50%,transparent 65%); transform:translateX(-120%); animation: evxShine 3s 1s ease-in-out infinite; }
+/* Pop-up (conseils) : au centre, lisible, sur deux lignes */
+#ec-toast{ position:fixed !important; left:50% !important; top:50% !important; bottom:auto !important; right:auto !important; transform:translate(-50%,-46%) scale(.96) !important;
+  width:max-content !important; max-width:min(84vw,360px) !important; white-space:normal !important; text-align:center !important; font-size:.8rem !important; font-weight:600 !important; line-height:1.5 !important;
+  padding:14px 18px !important; border-radius:18px !important; background:rgba(15,23,42,.94) !important; color:#fff !important; box-shadow:0 20px 50px -12px rgba(15,23,42,.5) !important;
+  z-index:100000 !important; opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease !important; }
+#ec-toast.show{ opacity:1 !important; transform:translate(-50%,-50%) scale(1) !important; }
+/* Pop-up discrète fin d'article (droit) */
+.evx-pop{ position:fixed; left:50%; bottom:22px; z-index:9000; transform:translate(-50%,20px); opacity:0; pointer-events:none; width:min(92vw,420px); background:#fff; border:1px solid #dbeafe; border-radius:20px; padding:14px 14px 12px 16px;
+  box-shadow:0 24px 60px -18px rgba(15,23,42,.35); transition:opacity .35s ease, transform .35s cubic-bezier(.2,.8,.2,1); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif; }
+@media (min-width: 900px){ .evx-pop{ left:calc(50% + 134px); } }
+.evx-pop.show{ opacity:1; transform:translate(-50%,0); pointer-events:auto; }
+.evx-pop p{ margin:0 26px 10px 0; font-size:.8rem; line-height:1.45; color:#1e293b; }
+.evx-pop .x{ position:absolute !important; top:10px !important; right:10px !important; left:auto !important; width:26px; height:26px; border:none; border-radius:50%; background:#f1f5f9; color:#64748b; cursor:pointer; font-size:.9rem; line-height:1; }
+.evx-pop .b{ display:flex; gap:8px; }
+.evx-pop .b button{ flex:1; border:1px solid #c7d7fb; background:#fff; color:#1d4ed8; border-radius:12px; padding:10px; font:700 .72rem/1 inherit; cursor:pointer; }
+.evx-pop .b button.pri{ background:#2563eb; border-color:#2563eb; color:#fff; }
+@media (max-width: 899px){
+  /* Les pages tiennent dans l'écran réel du téléphone */
+  #s-eva, .eva-subpage, .evad-screen, .nova-screen{ height:auto !important; min-height:0 !important; top:0 !important; bottom:0 !important; }
+  /* Publications : boutons compacts, rien ne déborde */
+  .pfs-ac{ gap:6px !important; padding:10px 10px 12px !important; }
+  .pfs-ac button{ padding:8px 10px !important; font-size:.68rem !important; gap:5px !important; min-width:0; }
+  .pfs-ac button:not(.pri) span{ display:none; }
+  .pfs-ac button:not(.pri){ width:36px; height:36px; padding:0 !important; justify-content:center; flex-shrink:0; }
+  .pfs-ac button:not(.pri):not([data-l]){ width:auto; padding:0 12px !important; }
+  .pfs-ac button.pri{ padding:9px 14px !important; white-space:nowrap; }
+  .pfs-ac button svg{ width:15px !important; height:15px !important; }
+  .evx-mbar{ flex-wrap:wrap; gap:8px; }
+  .evx-ctrl button{ white-space:nowrap; }
+  .evx-bar .evx-ctrl button[data-a="pause"]{ padding:0 10px; }
+  .evx-mbar .evx-ctrl{ margin-left:auto; }
+  .evx-mbar .evx-ctrl [data-a="skip"]{ font-size:0; } .evx-mbar .evx-ctrl [data-a="skip"]::after{ content:"Tout voir"; font-size:.64rem; }
+  .evx-think{ margin-left:37px; }
+  /* Motivation : champ prénom confortable et toujours visible */
+  #s-eva-bienetre .eb-body{ padding-bottom:110px !important; scroll-padding-bottom:110px; }
+  #s-eva-bienetre .eb-body input{ min-height:50px !important; font-size:16px !important; padding:0 16px !important; }
+  #s-eva-bienetre .eb-body input ~ button, #s-eva-bienetre .eb-body input + button{ min-height:50px !important; padding:0 18px !important; font-size:.86rem !important; flex-shrink:0; }
+  /* Documents : champs Police / Taille compacts */
+  #pf-ribbon select{ width:auto !important; min-width:0 !important; max-width:92px !important; flex:0 0 auto !important; height:34px !important; font-size:.66rem !important; }
+  #pf-ribbon input{ max-width:92px !important; flex:0 0 auto !important; }
+  .evx-pop{ bottom:calc(14px + env(safe-area-inset-bottom,0px)); }
+  html.ev-tabs .evx-pop{ bottom:calc(var(--ev-tab-h) + 12px); }
+}
 </style>
 <script>
 /* ═══ EVA v3 : une seule mise en scène pour toutes les pages (file indienne, rythme posé, décor réseau social) ═══ */
@@ -26830,10 +26922,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       +(it.media===false?'':'<div class="pfs-md" style="background:linear-gradient(135deg,'+(it.c1||t.c1)+','+(it.c2||t.c2)+')"><div class="ic">'+(it.big||S(IC[t.ic]))+'</div><div><span class="tg">#'+esc(it.tag||'EVA')+'</span><div class="tt">'+it.ttl+'</div></div></div>');
     var ac=el('div','pfs-ac');
     if(it.like!==false){
-      var lk=el('button',null,S(IC.heart,'currentColor',2.2)+'<span>Utile</span>'); lk.type='button';
+      var lk=el('button',null,S(IC.heart,'currentColor',2.2)+'<span>Utile</span>'); lk.type='button'; lk.setAttribute('data-l','1'); lk.setAttribute('aria-label','Utile');
       lk.onclick=function(e){ e.stopPropagation(); lk.classList.toggle('on'); lk.querySelector('svg').setAttribute('fill',lk.classList.contains('on')?'currentColor':'none'); }; ac.appendChild(lk);
     }
-    if(it.tip){ var tp=el('button',null,S(IC.chat,'currentColor',2.2)+'<span>Conseil</span>'); tp.type='button'; tp.onclick=function(e){ e.stopPropagation(); if(typeof window.ecShowToast==='function') window.ecShowToast(it.tip); }; ac.appendChild(tp); }
+    if(it.tip){ var tp=el('button',null,S(IC.chat,'currentColor',2.2)+'<span>Conseil</span>'); tp.type='button'; tp.setAttribute('data-l','1'); tp.setAttribute('aria-label','Conseil'); tp.onclick=function(e){ e.stopPropagation(); if(typeof window.ecShowToast==='function') window.ecShowToast(it.tip); }; ac.appendChild(tp); }
     (it.actions||[]).forEach(function(a){ var b=el('button',a.pri?'pri':'',(a.l)+(a.pri?' '+S(IC.arrow,'currentColor',2.4):'')); b.type='button'; b.onclick=function(e){ e.stopPropagation(); a.fn(); }; ac.appendChild(b); });
     if(ac.children.length) c.appendChild(ac);
     return c;
@@ -26843,32 +26935,42 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     items.forEach(function(it){ var b=el('button',null,'<span class="rg"><b style="color:'+(it.c1||t.c1)+'">'+(it.ico||S(IC[t.ic],t.c1))+'</b></span>'+it.ttl); b.type='button'; b.onclick=it.fn; s.appendChild(b); });
     return s;
   }
+  function plus(t,x){ return post(t,{ ico:S(IC.star,t.c1,2), ttl:'Le + EVA', meta:'Pourquoi EVA fait la différence', media:false, like:true, txt:x }); }
+  function example(t,x){ return post(t,{ ico:S(IC.user,t.c1,2), ttl:'Exemple concret', meta:'Un cas réel, pour mieux comprendre', media:false, like:true, txt:x }); }
   function wrapFeed(n){ var f=el('div','pfs-feed'); f.appendChild(n); return f; }
   function svgOf(node,col){ var v=node && node.querySelector('svg'); if(!v) return null; v=v.cloneNode(true); v.removeAttribute('width'); v.removeAttribute('height'); v.style.cssText=''; if(col){ v.setAttribute('stroke',col); v.querySelectorAll('[stroke]').forEach(function(x){ x.setAttribute('stroke',col); }); } return v.outerHTML; }
   function txt(n){ return n ? (n.textContent||'').replace(/\s+/g,' ').trim() : ''; }
 
   /* ── Moteur : une scène après l'autre ── */
   var SEEN={};
+  var SP=function(){ return window.innerWidth<900 ? 1.4 : 1; };
+  function later(st,fn,ms){
+    st.t=setTimeout(function g(){ if(st.dead) return; if(st.paused){ st.t=setTimeout(g,200); return; } fn(); }, ms*SP()); }
   function stream(bub,html,st,cb){
     var parts=html.split(/(<[^>]+>|\s+)/).filter(function(x){return x!=='';}), i=0, out='', caret='<span class="evh-caret"></span>';
     (function tick(){
       if(st.dead) return;
       if(i>=parts.length){ bub.innerHTML=out; cb(); return; }
       var p=parts[i++]; out+=p; bub.innerHTML=out+caret;
-      st.t=setTimeout(tick, /^</.test(p)||/^\s+$/.test(p) ? 0 : 48);
+      var d= /^</.test(p)||/^\s+$/.test(p) ? 0 : 42+Math.random()*30;
+      if(/[.!?…]$/.test(p)) d+=420; else if(/[,;:]$/.test(p)) d+=190;
+      later(st,tick,d);
     })();
   }
-  function readTime(html){ var n=(html||'').replace(/<[^>]+>/g,'').length; return Math.min(2800, 900+n*14); }
+  function readTime(html){ var n=(html||'').replace(/<[^>]+>/g,'').length; return Math.min(3200, 1100+n*16); }
   function mount(o){
     if(!o.host) return null;
     var slot=o.host.querySelector(':scope > .evx[data-slot="'+o.id+'"]');
     if(!slot){
       slot=el('div','evx'+(o.bar?'':' evx-inline')); slot.setAttribute('data-slot',o.id);
-      slot.innerHTML=(o.bar?'<div class="evx-bar"><div class="evx-av">'+S(IC.eva)+'</div><div class="evx-id"><b>EVA</b><span></span></div>'
-        +'<div class="evx-ctrl"><button type="button" data-a="skip">Tout afficher</button><button type="button" class="pri" data-a="replay" aria-label="Rejouer">Rejouer</button></div></div><div class="evx-prog"><b></b></div>':'')
+      var CTRL='<div class="evx-ctrl"><button type="button" data-a="pause" aria-label="Pause">Pause</button><button type="button" data-a="skip">Tout afficher</button><button type="button" class="pri" data-a="replay" aria-label="Rejouer">Rejouer</button></div>';
+      slot.innerHTML=(o.bar?'<div class="evx-bar"><div class="evx-av">'+S(IC.eva)+'</div><div class="evx-id"><b>EVA</b><span></span></div>'+CTRL+'</div><div class="evx-prog"><b></b></div>'
+        :(o.ctrl===false?'':'<div class="evx-mbar"><span class="evx-live"><i></i>EVA te présente</span>'+CTRL+'</div>'))
         +'<div class="evx-feed"><div class="evh-col"></div></div><div class="evx-park"></div>';
       slot._st={};
-      slot.addEventListener('click',function(e){ var b=e.target.closest('.evx-ctrl button'); if(!b || !slot._static) return; if(b.getAttribute('data-a')==='skip') slot._static(); else slot._play(); });
+      slot.addEventListener('click',function(e){ var b=e.target.closest('.evx-ctrl button'); if(!b || !slot._static) return; var a=b.getAttribute('data-a');
+        if(a==='pause'){ var st=slot._st||{}; if(st.done) return; st.paused=!st.paused; b.textContent=st.paused?'Reprendre':'Pause'; b.classList.toggle('on',!!st.paused); }
+        else if(a==='skip') slot._static(); else slot._play(); });
     }
     if(o.before && o.before.parentNode===o.host){ if(slot.nextSibling!==o.before) o.host.insertBefore(slot,o.before); }
     else if(slot.parentNode!==o.host) o.host.insertBefore(slot,o.host.firstChild);
@@ -26880,26 +26982,31 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var feed=q('.evh-col',slot), prog=q('.evx-prog b',slot), steps=o.steps;
     slot._steps=steps;
     function mark(n){ if(prog) prog.style.width=Math.round(n/steps.length*100)+'%'; }
-    function kill(){ if(slot._st){ slot._st.dead=true; clearTimeout(slot._st.t); } slot._st={}; }
+    function kill(){ if(slot._st){ slot._st.dead=true; clearTimeout(slot._st.t); } slot._st={}; var pb=q('[data-a="pause"]',slot); if(pb){ pb.textContent='Pause'; pb.classList.remove('on'); } slot.classList.remove('evx-done'); }
+    function fin(stat){ if(slot._st) slot._st.done=true; slot.classList.add('evx-done'); if(o.done) o.done(stat); }
     function clear(){ steps.forEach(function(s){ if(s.node) park.appendChild(s.node); }); feed.innerHTML=''; }
     function build(s){
       if(s.msg!=null) return msgRow(s.msg)[0];
+      if(s.think!=null) return null;
       if(s.node){ var a=el('div','evx-att'); a.appendChild(s.node); return a; }
       if(s.make){ var m=s.make(); return s.feed===false ? m : wrapFeed(m); }
       return null;
     }
-    slot._static=function(){ kill(); clear(); steps.forEach(function(s){ var n=build(s); if(n) feed.appendChild(n); }); mark(steps.length); if(o.done) o.done(true); };
+    slot._static=function(){ kill(); clear(); steps.forEach(function(s){ var n=build(s); if(n) feed.appendChild(n); }); mark(steps.length); fin(true); };
     slot._play=function(){
       kill(); clear(); var st=slot._st, i=0; mark(0);
       (function next(){
         if(st.dead) return;
-        if(i>=steps.length){ if(o.done) o.done(false); return; }
+        if(i>=steps.length){ fin(false); return; }
         var s=steps[i++]; mark(i);
-        if(s.msg!=null){
+        if(s.think!=null){
+          var th=el('div','evx-think','<span class="evx-spin"></span>'+s.think); feed.appendChild(th); reveal(th);
+          later(st,function(){ th.classList.add('out'); later(st,function(){ th.remove(); next(); },300); }, s.wait||1500);
+        } else if(s.msg!=null){
           var m=msgRow('<span class="evh-typing"><span></span><span></span><span></span></span>'); feed.appendChild(m[0]); reveal(m[0]);
-          st.t=setTimeout(function(){ stream(m[1],s.msg,st,function(){ reveal(m[0]); st.t=setTimeout(next, s.wait||readTime(s.msg)); }); },850);
+          later(st,function(){ stream(m[1],s.msg,st,function(){ reveal(m[0]); later(st,next, s.wait||readTime(s.msg)); }); },950);
         } else {
-          st.t=setTimeout(function(){ var n=build(s); if(n){ feed.appendChild(n); setTimeout(function(){ reveal(n); },80); } st.t=setTimeout(next, s.wait || (s.node?600:1700)); },300);
+          later(st,function(){ var n=build(s); if(n){ feed.appendChild(n); setTimeout(function(){ reveal(n); },80); } later(st,next, s.wait || (s.node?700:2000)); },320);
         }
       })();
     };
@@ -26948,13 +27055,16 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var items=cards.map(function(c){ return { ico:svgOf(q('.ei-card-ico',c),t.c1), big:svgOf(q('.ei-card-ico',c),'#fff'), ttl:esc(txt(q('.ei-card-name',c))), sub:txt(q('.ei-card-sub',c)), fn:function(){ c.click(); } }; });
     var steps=[
       { make:function(){ return cover(t,{ name:'Droits & aides', bio:'Tes droits expliqués simplement, sourcés et classés de A à Z. Chômage, contrat, congés, statut d\'indépendant, aides étudiantes.', stats:[[items.length,'profils'],['A → Z','classement'],['2026','données']] }); }, feed:false, wait:2000 },
-      { msg:'Bienvenue dans <b>Droits & aides</b>. Ici, je t\'explique tes droits simplement, avec des articles fondés sur les sources officielles.' },
-      { msg:'Je te présente les <b>'+items.length+' profils</b>, un par un.' }
+      { think:'EVA prépare ta visite guidée…' },
+      { msg:'Bienvenue dans <b>Droits & aides</b> 👋 Ici, je t\'explique tes droits simplement… avec des articles fondés sur les sources officielles.' },
+      { make:function(){ return example(t,'<b>Sarah, 34 ans</b>, sort d\'une rupture conventionnelle après 6 ans de CDI. En 3 minutes, elle découvre qu\'elle a droit à l\'ARE, estime son indemnité et prépare son rendez-vous France Travail. 🙌'); } },
+      { msg:'Je te présente les <b>'+items.length+' profils</b>, un par un 👇' }
     ];
     items.forEach(function(it,i){ steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length, tag:'Droits', txt:esc(it.sub)+' — 12 thèmes classés de A à Z, avec estimateur et quiz.', tip:'Commence par le thème qui te concerne aujourd\'hui : 3 minutes suffisent.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
-    steps.push({ msg:'À toi de jouer : <b>quel profil te correspond ?</b>' });
+    steps.push({ make:function(){ return plus(t,'Un moteur de recherche te donne 100 réponses contradictoires. Moi, je te donne <b>une réponse claire, sourcée et à jour 2026</b>, adaptée à ton profil. ✨'); } });
+    steps.push({ msg:'À toi de jouer : <b>quel profil te correspond ?</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items); } });
-    steps.push({ msg:'Bon à savoir : chaque article cite ses <b>sources officielles</b> — Légifrance, service-public.fr, France Travail, URSSAF, CAF, ameli.fr.' });
+    steps.push({ msg:'Bon à savoir 💡 chaque article cite ses <b>sources officielles</b> — Légifrance, service-public.fr, France Travail, URSSAF, CAF, ameli.fr.' });
     mount({ host:host, id:'hub', key:'hub-droits', label:'Droits & aides', bar:true, steps:steps });
   }
   // DROITS (liste A → Z)
@@ -26969,8 +27079,9 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(body.parentNode!==pack) pack.appendChild(body);
     mount({ host:host, id:'dlist', key:'dlist-'+title, label:'Droits · Encyclopédie', bar:true, steps:[
       { make:function(){ return cover(t,{ name:esc(h), handle:t.h+' · encyclopédie', bio:esc(p), stats:[[n||'A → Z','thèmes'],['2-4 min','par lecture'],['2026','à jour']] }); }, feed:false, wait:2000 },
-      { msg:'Voici ton encyclopédie <b>'+esc(h)+'</b>. '+esc(count)+', vérifiés sur les sources officielles.' },
-      { msg:'Filtre par lettre ou choisis directement le thème qui te concerne.' },
+      { think:'EVA classe tes thèmes de A à Z…' },
+      { msg:'Voici ton encyclopédie <b>'+esc(h)+'</b> 📚 '+esc(count)+', vérifiés sur les sources officielles.' },
+      { msg:'Mon conseil : commence par le thème qui te concerne <b>aujourd\'hui</b>. Filtre par lettre ou choisis directement 👇' },
       { node:pack }
     ]});
   }
@@ -26990,9 +27101,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var chips=sub.split('·').map(function(x){return x.trim();}).filter(Boolean);
     mount({ host:host, before:hd, id:'dart', key:'dart-'+id, label:'Droits · Article', bar:true, steps:[
       { make:function(){ return cover(t,{ name:esc(title), handle:t.h+' · article', ic:'book', bio:esc(chips.join(' · ')), stats:[['5','questions quiz'],['Sources','officielles'],['2026','à jour']] }); }, feed:false, wait:1900 },
-      { msg:'On regarde ensemble <b>'+esc(title)+'</b>. Je te donne l\'essentiel, puis ce que tu peux faire concrètement.' },
+      { msg:'On regarde ensemble <b>'+esc(title)+'</b> 👌 Je te donne l\'essentiel… puis ce que tu peux faire concrètement.' },
+      { think:'EVA lit l\'article pour toi…' },
       first ? { msg:'<b>L\'essentiel :</b> '+esc(first) } : { msg:'Lis à ton rythme, je reste avec toi.' },
-      { msg:'L\'article complet est juste en dessous, avec l\'estimateur et le quiz.' },
+      { msg:'L\'article complet est juste en dessous 👇 avec l\'estimateur et le quiz. Prends ton temps.' },
       { node:body }
     ]});
   }
@@ -27005,11 +27117,14 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var items=tiles.map(function(c){ return { ico:svgOf(q('.ew-ptile-ico',c)), big:svgOf(q('.ew-ptile-ico',c),'#fff'), ttl:esc(txt(q('.ew-ptile-nom',c))), sub:txt(q('.ew-ptile-sub',c)), fn:function(){ c.click(); } }; });
     var steps=[
       { make:function(){ return cover(t,{ name:'Conseils pratiques & pro', bio:'Des conseils sur-mesure, des diagnostics personnalisés et ton Portfolio pour t\'organiser.', stats:[[items.length,'profils'],['Portfolio','inclus'],['24h/24','avec EVA']] }); }, feed:false, wait:2000 },
-      { msg:'Bienvenue dans tes <b>Conseils pratiques & professionnels</b>. Je t\'accompagne selon ta situation, avec des conseils concrets.' },
-      { msg:'Voici les <b>'+items.length+' profils</b> que j\'accompagne, un par un.' }
+      { think:'EVA prépare tes conseils…' },
+      { msg:'Bienvenue dans tes <b>Conseils pratiques & professionnels</b> 💡 Je t\'accompagne selon ta situation… avec des conseils vraiment concrets.' },
+      { make:function(){ return example(t,'<b>Karim, freelance</b>, ne savait pas quoi facturer. Avec EVA, il a posé son tarif, préparé son devis dans le Portfolio et signé son premier client en 10 jours. 🚀'); } },
+      { msg:'Voici les <b>'+items.length+' profils</b> que j\'accompagne, un par un 👇' }
     ];
     items.forEach(function(it,i){ steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length, tag:'Conseils', txt:esc(it.sub)+'. Conseils détaillés, contacts utiles et Portfolio.', tip:'Choisis le profil qui décrit ta situation actuelle, pas celle que tu vises.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
-    steps.push({ msg:'À toi : <b>quel profil te ressemble ?</b>' });
+    steps.push({ make:function(){ return plus(t,'Pas de conseils génériques : je pars de <b>ta</b> situation, et je te donne les bons contacts, les bons documents et la prochaine action. 🎯'); } });
+    steps.push({ msg:'À toi : <b>quel profil te ressemble ?</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items); } });
     mount({ host:host, id:'hub', key:'hub-ws', label:'Conseils & pro', bar:true, steps:steps });
   }
@@ -27022,10 +27137,10 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       var its=cards.map(function(c){ return { ico:svgOf(q('.ew-mod-card-ico',c)), big:svgOf(q('.ew-mod-card-ico',c),'#fff'), ttl:esc(txt(q('.ew-mod-card-ttl',c))), sub:txt(q('.ew-mod-card-sub',c)), fn:function(){ c.click(); } }; });
       var st=[
         { make:function(){ return cover(t,{ name:esc(who)||'Mon espace', handle:t.h+' · mon espace', bio:'Ton espace de travail : mes conseils sur-mesure et ton Portfolio pour gérer tes documents.', stats:[[its.length,'outils'],['100 %','personnalisé'],['24h/24','avec EVA']] }); }, feed:false, wait:1900 },
-        { msg:'Voici ton espace <b>'+esc(who)+'</b>. Deux outils t\'attendent, je te les présente.' }
+        { msg:'Voici ton espace <b>'+esc(who)+'</b> 🙌 Deux outils t\'attendent… je te les présente.' }
       ];
       its.forEach(function(it,i){ st.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Outil '+(i+1)+'/'+its.length, tag:i?'Portfolio':'Conseils', txt:esc(it.sub)+'.', tip:i?'Le Portfolio devient vraiment utile quand tu y ranges tout, dès aujourd\'hui.':'Lis un sujet par jour : c\'est la meilleure façon de progresser.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
-      st.push({ msg:'Par où on commence ?' });
+      st.push({ msg:'Par où on commence ? 😊' });
       st.push({ make:function(){ return stories(t,its); } });
       mount({ host:host, id:'ws1', key:key, label:'Conseils & pro', bar:true, steps:st });
     } else if(n===2){
@@ -27040,14 +27155,14 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       hide([q('.ew-ana-hero',h4)]);
       mount({ host:h4, id:'ws4', key:'ws4', bar:false, steps:[
         { make:function(){ return cover(t,{ name:'Analyse de document', handle:t.h+' · analyse', ic:'doc', bio:'Dépose ton CV, ta lettre ou ton contrat : je le lis comme un recruteur et je te donne une note sur 10.', stats:[['/10','note'],['Points','forts'],['Conseils','précis']] }); }, feed:false, wait:1500 },
-        { msg:'Choisis ton document juste en dessous, je m\'occupe du reste.' }
+        { msg:'Choisis ton document juste en dessous 👇 je m\'occupe du reste.' }
       ]});
     } else if(n===6){
       var h6=P.firstElementChild; if(!h6) return;
       var f=h6.firstElementChild; if(f && !f.classList.contains('evx')) hide([f]);
       mount({ host:h6, id:'ws6', key:'ws6', bar:false, steps:[
         { make:function(){ return cover(TH.pf,{ name:'Documents importants', handle:TH.pf.h+' · documents', bio:'Un classeur numérique simple : CV, lettres, dossiers administratifs, classés par type et par date.', stats:[['CV','par date'],['Lettres','par offre'],['Privé','100 %']] }); }, feed:false, wait:1500 },
-        { msg:'Ici, tu ranges tous tes <b>documents importants</b> au même endroit. Fini les recherches interminables.' }
+        { msg:'Ici, tu ranges tous tes <b>documents importants</b> au même endroit 📂 Fini les recherches interminables !' }
       ]});
     }
   }
@@ -27074,11 +27189,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var w=el('div','pfs'); w.id='ec-pf-inline-wrap'; msgs.appendChild(w);
     var steps=[
       { make:function(){ return cover(t,{ name:'Mon Portfolio', handle:t.h+' · '+(nom()||'mon espace'), badge:'ESPACE PRIVÉ', bio:'Ton espace de travail et la gestion de tes documents. Organise-toi, range tout, retrouve tout.', stats:[[items.length,'outils'],['100 %','privé'],['24h/24','avec EVA']] }); }, feed:false, wait:2000 },
-      { msg:'Bienvenue dans ton <b>Portfolio</b>. C\'est ton espace de travail : tu ranges tes documents, tu t\'organises et tu gardes tout au même endroit.' },
-      { msg:'Je te présente tes outils, <b>dans l\'ordre</b>.' }
+      { msg:'Bienvenue dans ton <b>Portfolio</b> 📂 C\'est ton espace de travail : tu ranges tes documents, tu t\'organises… et tu gardes tout au même endroit.' },
+      { think:'EVA ouvre tes outils…' },
+      { msg:'Je te présente tes outils, <b>dans l\'ordre</b> 👇' }
     ];
     items.forEach(function(it,i){ var d=PF_TXT[it.k]||['',it.ttl,'']; steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.ico, ttl:esc(it.ttl), c1:it.c1, c2:it.c2, meta:'Outil '+(i+1)+'/'+items.length, tag:d[1], txt:esc(d[0]), tip:d[2], actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
-    steps.push({ msg:'À toi de jouer : <b>par quoi on commence ?</b>' });
+    steps.push({ make:function(){ return plus(t,'Tout ton parcours dans <b>un seul espace</b> : documents, agenda, contacts et analyses. Plus de fichiers perdus, plus d\'oublis. ✨'); } });
+    steps.push({ msg:'À toi de jouer : <b>par quoi on commence ?</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items.map(function(it){ return { ico:it.ico, ttl:esc(it.ttl), c1:it.c1, fn:it.fn }; })); } });
     mount({ host:w, id:'pf', key:'pf', bar:false, steps:steps });
   }
@@ -27100,13 +27217,16 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var posts=[];
     var steps=[
       { make:function(){ return cover(t,{ name:'Quiz & mises en situation', bio:'Des QCM pour vérifier tes connaissances, et des simulations réalistes pour t\'entraîner face à un recruteur.', stats:[[items.length,'profils'],['QCM','+ simulation'],['Bilan','à la fin']] }); }, feed:false, wait:2000 },
-      { msg:'Prêt(e) à t\'entraîner ? Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
-      { msg:'Pour chaque profil, tu as un <b>QCM</b> et une <b>mise en situation</b>. Je te les présente.' }
+      { think:'EVA prépare ton entraînement…' },
+      { msg:'Prêt(e) à t\'entraîner ? 💪 Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
+      { make:function(){ return example(t,'<b>Léa, 26 ans</b>, bloquait sur « Parlez-moi de vous ». Après 3 simulations avec EVA, elle a décroché son CDI. 🎉'); } },
+      { msg:'Pour chaque profil, tu as un <b>QCM</b> et une <b>mise en situation</b>. Je te les présente 👇' }
     ];
     items.forEach(function(it,i){ steps.push({ make:function(){ var p=post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length+' · '+it.sub, tag:'Entraînement',
       txt:'<ul><li><i>'+S(IC.check,'currentColor',2.6)+'</i><span><b>QCM :</b> '+esc(it.d1)+'</span></li><li><i>'+S(IC.target,'currentColor',2.2)+'</i><span><b>Mise en situation :</b> '+esc(it.d2)+'</span></li></ul>',
       tip:'Commence par le QCM, puis passe à la simulation : tu seras plus à l\'aise.', actions:[{l:'QCM',fn:it.qcm},{l:'Simulation',pri:true,fn:it.sim}] }); posts[i]=p; return p; } }); });
-    steps.push({ msg:'À toi : <b>choisis ton profil</b>.' });
+    steps.push({ make:function(){ return plus(t,'Un entraînement <b>réaliste et sans jugement</b>, disponible 24h/24, avec un bilan personnalisé à chaque session. 🎯'); } });
+    steps.push({ msg:'À toi : <b>choisis ton profil</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items.map(function(it,i){ return { ico:it.ico, ttl:it.ttl, fn:function(){ scrollToEl(posts[i]); } }; })); } });
     if(note) steps.push({ msg:esc(txt(note).replace(/^Eva vous dit\s*:\s*/,'')) });
     mount({ host:body, id:'hub', key:'hub-quiz', label:'Quiz & mises en situation', bar:true, steps:steps });
@@ -27131,15 +27251,17 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var sim=SIM[profil]||SIM.salarie, steps;
     if(kind==='qcm') steps=[
       { make:function(){ return cover(t,{ name:'QCM · '+LBL[profil], handle:t.h+' · qcm', ic:'quiz', bio:'Des questions tirées au hasard sur tes droits et ta préparation. Une seule bonne réponse, et l\'explication juste après.', stats:[['25','questions'],['Direct','correction'],['Bilan','EVA']] }); }, feed:false, wait:2000 },
-      { msg:'Avant de commencer, je te présente ton défi.' },
+      { think:'EVA tire tes questions au hasard…' },
+      { msg:'Avant de commencer, je te présente ton défi 🎯' },
       { make:function(){ return post(t,{ ttl:'Mes 3 conseils', meta:'Avant de répondre', media:false, txt:tipsList(['Lis chaque proposition jusqu\'au bout.','Méfie-toi des chiffres proches : jours ouvrables ou calendaires.','Si tu hésites, élimine d\'abord les réponses trop absolues.']) }); } },
-      { msg:'Prêt(e) ? Quand tu veux.' }
+      { msg:'Prêt(e) ? Quand tu veux 💪' }
     ]; else steps=[
       { make:function(){ return cover(t,{ name:'Face à '+esc(sim.who), handle:t.h+' · simulation', ic:'target', bio:'Une simulation réaliste d\'entretien : réponds comme si tu y étais vraiment.', stats:[[esc(sim.who),esc(sim.role)],['Réaliste','dialogue'],['Bilan','EVA']] }); }, feed:false, wait:2000 },
-      { msg:'Avant l\'entretien, je te briefe.' },
+      { think:'EVA prépare ton interlocuteur…' },
+      { msg:'Avant l\'entretien, je te briefe 🎬' },
       { make:function(){ return post(t,{ ttl:'Ton brief', meta:'Mise en situation · '+LBL[profil], media:false, txt:'<ul><li><i>'+S(IC.user,'currentColor',2.2)+'</i><span><b>Ton interlocuteur :</b> '+esc(sim.who)+', '+esc(sim.role)+'</span></li><li><i>'+S(IC.flag,'currentColor',2.2)+'</i><span><b>Ton objectif :</b> '+esc(sim.goal)+'</span></li><li><i>'+S(IC.star,'currentColor',2.2)+'</i><span><b>À la fin :</b> ton bilan et tes axes de progrès</span></li></ul>' }); } },
       { make:function(){ return post(t,{ ttl:'Mes 3 conseils', meta:'Pour réussir', media:false, txt:tipsList(sim.tips) }); } },
-      { msg:'Respire, on y va quand tu es prêt(e).' }
+      { msg:'Respire… on y va quand tu es prêt(e) 💪' }
     ];
     mount({ host:host, id:'brief', key:kind+'-'+profil, bar:false, steps:steps, done:function(){
       if(ch.querySelector('.evx-go')) return;
@@ -27169,7 +27291,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(b.firstElementChild.classList.contains('evx-ebh')) return;
     var old=b.querySelector('.evx-ebh'); if(old) old.remove();
     var h=el('div','evx-ebh'); h.appendChild(cover(TH.motiv,{ name:'Motivation & Équilibre', bio:'Un petit rituel pour faire le point, avec bienveillance et sans jugement. Des questions guidées selon ton profil et ton moment de la journée.', stats:[['15 ou 25','questions'],['5 min','environ'],['100 %','bienveillant']] }));
-    b.insertBefore(h,b.firstChild);
+    var atEnd=b.scrollHeight-b.scrollTop-b.clientHeight<40; b.insertBefore(h,b.firstChild); if(atEnd || b.children.length<6) b.scrollTop=b.scrollHeight;
   }
   // SUIVI DE MA MOTIVATION
   function jload(){ try{ return JSON.parse(localStorage.getItem('jnl_v2')||'{}')||{}; }catch(e){ return {}; } }
@@ -27184,11 +27306,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var tabsInfo=[[IC.pen,'Bilan du jour','Deux minutes pour noter tes 4 piliers : énergie, finances, mental et confiance.'],[IC.suivi,'Mon suivi','Ta courbe par semaine, par mois et par année, et la moyenne de chaque pilier.'],[IC.chat,'EVA parle','Mon analyse de tes bilans et mes conseils, dès ta 2e évaluation.']];
     var steps=[
       { make:function(){ return cover(t,{ name:'Suivi de ma motivation', bio:'Note ton état, visualise ton évolution et reçois mes conseils, jour après jour.', stats:[[d.streak||0,'jours de suite'],[n,'bilans'],[last,'dernier score']] }); }, feed:false, wait:2000 },
-      { msg:'Bienvenue dans ton <b>Suivi de ma motivation</b>. Deux minutes par jour suffisent pour voir ton chemin parcouru.' },
-      { msg:'Ton journal a 3 espaces. Je te les présente.' }
+      { msg:'Bienvenue dans ton <b>Suivi de ma motivation</b> 📈 Deux minutes par jour suffisent… pour voir ton chemin parcouru.' },
+      { make:function(){ return example(t,'<b>Nadia</b> notait son énergie chaque matin. En 3 semaines, elle a vu que ses pires jours suivaient ses soirées tardives… et a tout changé. 🌱'); } },
+      { msg:'Ton journal a 3 espaces. Je te les présente 👇' }
     ];
     tabsInfo.forEach(function(x,i){ steps.push({ make:function(){ return post(t,{ ico:S(x[0],t.c1,2), big:S(x[0]), ttl:x[1], meta:'Espace '+(i+1)+'/3', tag:'Suivi', txt:x[2], actions:[{l:'Ouvrir',pri:true,fn:function(){ var sl=q('.evx[data-slot="trk"]',sc); if(jw.parentNode && jw.parentNode.classList.contains('evx-park') && sl && sl._static) sl._static(); jnlTab(i); setTimeout(function(){ scrollToEl(jw); },120); }}] }); } }); });
-    steps.push({ msg:'C\'est parti : ton journal est juste ici.' });
+    steps.push({ make:function(){ return plus(t,'Je ne me contente pas de stocker tes notes : <b>je lis tes tendances</b> et je te conseille dès ta 2e évaluation. 💜'); } });
+    steps.push({ msg:'C\'est parti : ton journal est juste ici 👇' });
     steps.push({ node:jw });
     mount({ host:scroll, id:'trk', key:'trk', label:'Suivi de ma motivation', bar:true, steps:steps });
   }
@@ -27269,7 +27393,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     } else if(i===2){ b.insertBefore(wrapFeed(adviceCard()),b.firstChild); }
     b.querySelectorAll('.jnl-chart-title,.jnl-radar-title,.jnl-stat-lbl,.jnl-analyse-title').forEach(function(n){ n.childNodes.forEach(function(x){ if(x.nodeType===3) x.nodeValue=x.nodeValue.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu,'').replace(/^\s+/,''); }); });
     if(i){ var host=el('div'); b.insertBefore(host,b.firstChild);
-      mount({ host:host, id:'jnl'+i, key:'jnl'+i, bar:false, steps:[{ msg: i===1 ? 'Voici <b>ton suivi</b> : choisis la semaine, le mois ou l\'année. Regarde surtout ton pilier le plus bas : c\'est là qu\'une petite action change tout.' : 'Ici, <b>je te parle</b> : mon analyse de tes bilans, et mes conseils pour les prochains jours.' }] }); }
+      mount({ host:host, id:'jnl'+i, key:'jnl'+i, bar:false, ctrl:false, steps:[{ msg: i===1 ? 'Voici <b>ton suivi</b> : choisis la semaine, le mois ou l\'année. Regarde surtout ton pilier le plus bas : c\'est là qu\'une petite action change tout.' : 'Ici, <b>je te parle</b> : mon analyse de tes bilans, et mes conseils pour les prochains jours.' }] }); }
   }
   // À PROPOS D'EVA
   function identity(){
@@ -27278,12 +27402,33 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     hide([q('.eva-id-hero',sc)]); sc.classList.add('evx-page');
     mount({ host:host, id:'id', key:'identity', label:'À propos d\'EVA', bar:true, steps:[
       { make:function(){ return cover(t,{ name:'EVA', handle:'@eva · by CareerPulse', bio:'L\'intelligence au service de tes droits professionnels. Je t\'aide à comprendre, anticiper et agir.', stats:[['29','articles'],['4','profils'],['2026','à jour']] }); }, feed:false, wait:2000 },
-      { msg:'Enchantée. Moi, c\'est <b>EVA</b>, ton assistante RH et droit du travail. Je ne remplace pas un avocat : je te donne les clés pour décider en connaissance de cause.' },
+      { msg:'Enchantée 👋 Moi, c\'est <b>EVA</b>, ton assistante RH et droit du travail. Je ne remplace pas un avocat : je te donne les clés pour décider en connaissance de cause.' },
       { make:function(){ return post(t,{ ttl:'Mes 3 engagements', meta:'Ce qui me guide', media:false, txt:tipsList(['Des réponses fondées sur les sources officielles.','Des explications simples, adaptées à ton profil.','Disponible 24h/24, à ton rythme et sans jugement.']) }); } },
-      { msg:'Voici qui je suis, en chiffres et en principes.' },
+      { msg:'Voici qui je suis, en chiffres et en principes 👇' },
       { node:body }
     ]});
   }
+
+  /* Pop-up discrète en fin d'article : lien vers le QCM, sans friction */
+  var POPPED={};
+  function artPop(id){
+    var host=document.getElementById('evad-art-scroll'); if(!host) return;
+    if(!host._evxPop){ host._evxPop=1; host.addEventListener('scroll',function(){
+      var aid=host._aid; if(!aid || POPPED[aid]) return;
+      var qz=q('.art-quiz-wrap',host); if(!qz || !qz.offsetParent) return;
+      if(qz.getBoundingClientRect().top < host.getBoundingClientRect().bottom-40){ POPPED[aid]=1; showPop(); }
+    },{passive:true}); }
+    host._aid=id;
+  }
+  function showPop(){
+    var p=document.getElementById('evx-pop');
+    if(!p){ p=el('div','evx-pop'); p.id='evx-pop'; document.body.appendChild(p); }
+    p.innerHTML='<button type="button" class="x" aria-label="Fermer">×</button><p>Tu as lu l\'essentiel ✅ Envie de vérifier que tout est clair ? Le <b>QCM Droits</b> t\'attend.</p><div class="b"><button type="button" data-a="stay">Continuer ici</button><button type="button" class="pri" data-a="qcm">Faire le QCM</button></div>';
+    p.onclick=function(e){ var b=e.target.closest('button'); if(!b) return; p.classList.remove('show'); if(b.getAttribute('data-a')==='qcm') go('eva-entretien'); };
+    requestAnimationFrame(function(){ p.classList.add('show'); });
+    clearTimeout(p._t); p._t=setTimeout(function(){ p.classList.remove('show'); },10000);
+  }
+  function toast(msg){ var t=document.getElementById('ec-toast'); if(!t) return; if(t.parentNode!==document.body) document.body.appendChild(t); t.textContent=msg; t.classList.add('show'); clearTimeout(t._evx); t._evx=setTimeout(function(){ t.classList.remove('show'); }, Math.min(6000, 2400+String(msg).length*45)); }
 
   /* ═════ Branchements ═════ */
   function wrap(name,after){ var f=window[name]; if(typeof f!=='function' || f._evx) return; var g=function(){ var r=f.apply(this,arguments), a=arguments; try{ after.apply(null,a); }catch(e){} return r; }; g._evx=true; window[name]=g; }
@@ -27293,14 +27438,15 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(id==='eva-droits') droitsHub(); else if(id==='eva-workspace'){ if(window.EWS===0 || !window.EWS) wsHub(); } else if(id==='eva-entretien') quizHub();
     else if(id==='eva-tracker') tracker(); else if(id==='eva-identity') identity();
   }
-  function check(){ var id=active(); if(id!==last){ last=id; try{ enter(id); }catch(e){} } ebHero(); document.querySelectorAll('.nova-result').forEach(bilan); }
+  function check(){ var id=active(); if(id!==last){ last=id; var pp=document.getElementById('evx-pop'); if(pp && id!=='eva-droits-article') pp.classList.remove('show'); try{ enter(id); }catch(e){} } ebHero(); document.querySelectorAll('.nova-result').forEach(bilan); }
   function init(){
     titles();
     // Préparation immédiate des pages (pas d'apparition de l'ancien contenu)
     ['s-eva-droits','s-eva-entretien'].forEach(function(id){ var s=document.getElementById(id); if(s) s.classList.add('evx-page'); });
     hide([q('#s-eva-droits .ei-hero'), q('#s-eva-droits .ei-body'), q('#ew-p0 .ew-hero'), q('#ew-p0 .ew-sec-lbl'), q('#ew-p0 .ew-ptiles'), q('#s-eva-identity .eva-id-hero')]);
     wrap('evadShowList',function(){ setTimeout(droitsList,0); });
-    wrap('evadShowArticle',function(id){ setTimeout(function(){ droitsArticle(id); },60); });
+    wrap('evadShowArticle',function(id){ setTimeout(function(){ droitsArticle(id); artPop(id); },60); });
+    window.ecShowToast=toast;
     wrap('ewGo',function(n){ n=+n; if(n===0) wsHub(); else ws(n); });
     if(typeof window.ewShowPortfolioInline==='function') window.ewShowPortfolioInline=pfShow;
     ['nqStart','nsStart'].forEach(function(n){
