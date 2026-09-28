@@ -27272,7 +27272,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var body=q('.eva-sub-body',sc); if(!body) return;
     var list=null, dark=null; [].forEach.call(body.children,function(c){ var s=c.getAttribute('style')||''; if(/padding:16px 16px 40px/.test(s)) list=c; if(/#0f2447/.test(s)) dark=c; });
     if(!list) return;
-    hide([dark, M()?null:list, q('.ev-hero',body)]); body.classList.add('evx-pad0'); sc.classList.add('evx-page');
+    hide([dark, list, q('.ev-hero',body)]); body.classList.add('evx-pad0'); sc.classList.add('evx-page');
     var blocks=[].filter.call(list.children,function(c){ return c.querySelectorAll('[onclick^="go("]').length>=2; });
     var note=[].filter.call(list.children,function(c){ return /Eva vous dit/.test(c.textContent||''); })[0];
     var items=blocks.map(function(b){
@@ -27298,8 +27298,6 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     steps.push({ msg:'À toi : <b>choisis ton profil</b> 🤔' });
     steps.push({ make:function(){ return stories(t,items.map(function(it,i){ return { ico:it.ico, ttl:it.ttl, fn:function(){ scrollToEl(posts[i]); } }; })); } });
     if(note) steps.push({ msg:esc(txt(note).replace(/^Eva vous dit\s*:\s*/,'')) });
-    steps.push(mob({ msg:'Et voici <b>tous tes QCM et mises en situation</b>, réunis ici. Choisis et lance-toi 👇' }));
-    steps.push(mob({ node:list }));
     var hs=mount({ host:body, id:'hub', key:'hub-quiz', label:'Quiz & mises en situation', bar:true, steps:steps });
     // Mobile : accès direct aux 8 sessions, visible tout de suite (sans attendre la présentation)
     if(M() && hs && !q('.evx-quick-wrap',hs)){
