@@ -26535,157 +26535,6 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #s-eva-bienetre .eb-q-opt{ font-size:.86rem !important; }
 }
 </style>
-<script>
-/* ═══ Droits · Conseils · Quiz · Suivi : EVA présente chaque page en direct (chat streaming) ═══ */
-(function(){
-  if(window.self!==window.top) return;
-  var S=function(p,c){ return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#fff')+'" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
-  var IC={
-    eva:'<path d="M5 6.5a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h.5A2.5 2.5 0 0 1 5 13.5z"/><path d="m12 7 .9 2.1L15 10l-2.1.9L12 13l-.9-2.1L9 10l2.1-.9z" fill="#fff" stroke="none"/>',
-    droits:'<path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/>',
-    quiz:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
-    conseils:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/>',
-    suivi:'<path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 3 5-6"/>'
-  };
-  function q(s,r){ return (r||document).querySelector(s); }
-  var PAGES={
-    'eva-droits':{ label:'Droits & aides', scroll:function(sc){ return q('.evad-scroll',sc); },
-      nodes:function(sc){ return { grid:q('.ei-grid',sc) }; },
-      hide:function(sc){ return [q('.ei-label',sc), q('.ei-note',sc)]; },
-      steps:[
-        { msg:'Bienvenue dans <b>Droits & aides</b> 👋 Ici, je t\'explique tes droits simplement : chômage, contrat, congés, statut d\'indépendant, aides étudiantes…' },
-        { slide:{ grad:'linear-gradient(145deg,#1d4ed8,#3b82f6 60%,#60a5fa)', ic:'droits', n:'Droits & Protections sociales', t:'Connaître ses droits, c\'est déjà agir.',
-          lead:'Une encyclopédie claire, rangée de A à Z, pour comprendre ce à quoi tu as droit et comment le demander.',
-          pts:['Articles complets, sourcés et mis à jour 2026','12 thèmes par profil, classés de A à Z','Des explications concrètes, sans jargon'],
-          chips:['Légifrance','service-public.fr','France Travail','URSSAF','CAF'] } },
-        { msg:'Pour commencer, <b>choisis ton profil</b> : je t\'ouvre les 12 thèmes qui te concernent 👇' },
-        { node:'grid' },
-        { msg:'Bon à savoir : chaque article cite ses <b>sources officielles</b> — Légifrance, service-public.fr, France Travail, URSSAF, CAF, ameli.fr. Données vérifiées 2026.' }
-      ] },
-    'eva-workspace':{ label:'Conseils & pro', scroll:function(sc){ return q('#ew-p0 .ew-p0-scroll',sc); },
-      nodes:function(sc){ return { tiles:q('.ew-ptiles',sc) }; },
-      hide:function(){ return []; },
-      steps:[
-        { msg:'Bienvenue dans tes <b>Conseils pratiques & professionnels</b> 💡 Je te donne des conseils sur-mesure et des diagnostics personnalisés, selon ta situation.' },
-        { slide:{ grad:'linear-gradient(145deg,#0f766e,#0d9488 60%,#2dd4bf)', ic:'conseils', n:'Conseils & Portfolio', t:'Des conseils qui te ressemblent',
-          lead:'Des conseils adaptés à ton profil, et tous tes outils de travail réunis au même endroit.',
-          pts:['Diagnostics personnalisés et plans d\'action concrets','Agenda, documents pro prêts à remplir (CV, lettre, facture, devis…)','Contacts et organismes utiles selon ton profil'],
-          chips:['Organisation','Documents pro','Entrepreneuriat'] } },
-        { msg:'Dis-moi où tu en es : <b>choisis ton profil</b> 👇' },
-        { node:'tiles' }
-      ] },
-    'eva-entretien':{ label:'Quiz et mises en situation', scroll:function(sc){ return q('.eva-sub-body',sc); },
-      nodes:function(sc){ var b=q('.eva-sub-body',sc), list=null; if(b) [].forEach.call(b.children,function(c){ if(!list && /padding:16px 16px 40px/.test(c.getAttribute('style')||'')) list=c; }); return { list:list }; },
-      hide:function(sc){ var b=q('.eva-sub-body',sc), out=[]; if(b) [].forEach.call(b.children,function(c){ if(/#0f2447/.test(c.getAttribute('style')||'')) out.push(c); }); var l=this.nodes(sc).list; if(l && l.firstElementChild) out.push(l.firstElementChild); return out; },
-      steps:[
-        { msg:'Prêt(e) à t\'entraîner ? 🎯 Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
-        { slide:{ grad:'linear-gradient(145deg,#4f46e5,#7c3aed 60%,#a78bfa)', ic:'quiz', n:'Quiz et mises en situation', t:'Réussis tes entretiens avec EVA',
-          lead:'Des QCM pour vérifier tes connaissances, et des scénarios réalistes pour t\'entraîner face à un recruteur.',
-          pts:['QCM de 25 questions avec feedback immédiat','Mises en situation immersives, dialogue réel','Un retour clair pour progresser à chaque session'],
-          chips:['Entretien d\'embauche','Retour à l\'emploi','Négociation'] } },
-        { msg:'Choisis ton profil, puis lance un <b>QCM</b> ou une <b>mise en situation</b> 👇' },
-        { node:'list' }
-      ] },
-    'eva-tracker':{ label:'Suivi de ma motivation', wrap:true,
-      nodes:function(sc){ var w=document.createElement('div'); w.className='evx-jnl'; return { jnl:w }; },
-      hide:function(){ return []; },
-      steps:[
-        { msg:'Bienvenue dans ton <b>Suivi de ma motivation</b> 📈 Deux minutes par jour pour faire le point sur tes 4 piliers : énergie, finances, mental et confiance.' },
-        { slide:{ grad:'linear-gradient(145deg,#312e81,#6d28d9 60%,#a21caf)', ic:'suivi', n:'Suivi de ma motivation', t:'Ton chemin, jour après jour',
-          lead:'Note ton état, visualise ton évolution et reçois des actions concrètes proposées par EVA.',
-          pts:['Bilan du jour sur 4 piliers essentiels','Graphique de ta semaine et radar de ton équilibre','Des actions concrètes et une série de jours consécutifs'],
-          chips:['Journal','Évolution','Actions'] } },
-        { msg:'C\'est parti — ton journal est juste ici 👇' },
-        { node:'jnl' }
-      ] }
-  };
-  function el(t,c,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
-
-  function Chat(id,P){
-    var sc=document.getElementById('s-'+id); if(!sc) return null;
-    var scroll;
-    var nodes=P.nodes(sc);
-    if(P.wrap){ // Journal : on crée la zone de défilement et on y range onglets + contenu
-      var tabs=q('.jnl-tabs',sc), body=q('.jnl-body',sc); if(!tabs||!body) return null;
-      scroll=el('div','evx-scroll'); sc.insertBefore(scroll,tabs);
-      nodes.jnl.appendChild(tabs); nodes.jnl.appendChild(body);
-    } else scroll=P.scroll(sc);
-    if(!scroll) return null;
-    for(var k in nodes){ if(!nodes[k]) return null; }
-    P.hide(sc).forEach(function(h){ if(h) h.classList.add('evx-hid'); });
-    sc.classList.add('evx-page');
-    var root=el('div','evx');
-    root.innerHTML='<div class="evx-bar"><div class="evx-av">'+S(IC.eva)+'</div><div class="evx-id"><b>EVA</b><span>En ligne · '+P.label+'</span></div>'
-      +'<div class="evx-ctrl"><button type="button" data-a="skip">Tout afficher</button><button type="button" class="pri" data-a="replay" aria-label="Rejouer">Rejouer</button></div></div>'
-      +'<div class="evx-prog"><b></b></div><div class="evx-feed"><div class="evh-col"></div></div>';
-    var park=el('div','evx-park');
-    scroll.insertBefore(root, scroll.firstChild); scroll.appendChild(park);
-    for(var k2 in nodes) park.appendChild(nodes[k2]);
-    var feed=q('.evh-col',root), prog=q('.evx-prog b',root), idx=0, timer=null, done=false, started=false;
-    root.addEventListener('click',function(e){ var b=e.target.closest('.evx-ctrl button'); if(!b) return; if(b.getAttribute('data-a')==='skip') showAll(); else restart(); });
-    function sc2(){ scroll.scrollTo({top:scroll.scrollHeight, behavior:'smooth'}); }
-    function mark(){ prog.style.width=Math.round(idx/P.steps.length*100)+'%'; }
-    function msgRow(){ var r=el('div','evh-msg','<div class="evh-mini">'+S(IC.eva)+'</div>'); var b=el('div','evh-bub'); r.appendChild(b); return [r,b]; }
-    function slide(s){
-      var c=el('div','evh-slide');
-      c.innerHTML='<div class="evh-art" style="background:'+s.grad+'"><div class="n">'+s.n+'</div><div class="ic">'+S(IC[s.ic])+'</div><div class="t">'+s.t+'</div></div>'
-        +'<div class="evh-body"><div class="lead">'+s.lead+'</div><ul>'+s.pts.map(function(p){return '<li>'+p+'</li>';}).join('')+'</ul>'
-        +'<div class="evh-foot"><div class="evh-chips">'+s.chips.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div></div></div>';
-      return c;
-    }
-    function att(key){ var a=el('div','evx-att'); a.appendChild(nodes[key]); return a; }
-    function renderStatic(s){
-      if(s.msg){ var m=msgRow(); m[1].innerHTML=s.msg; feed.appendChild(m[0]); }
-      else if(s.slide) feed.appendChild(slide(s.slide));
-      else if(s.node) feed.appendChild(att(s.node));
-    }
-    function stream(bub,html,cb){
-      var parts=html.split(/(<[^>]+>|\s+)/).filter(function(x){return x!=='';}), i=0, out='', caret='<span class="evh-caret"></span>';
-      (function tick(){
-        if(i>=parts.length){ bub.innerHTML=out; cb(); return; }
-        var p=parts[i++]; out+=p; bub.innerHTML=out+caret;
-        timer=setTimeout(tick, /^</.test(p)||/^\s+$/.test(p) ? 0 : 42);
-      })();
-    }
-    function next(){
-      if(done) return;
-      if(idx>=P.steps.length){ done=true; return; }
-      var s=P.steps[idx]; idx++; mark();
-      if(s.msg){
-        var m=msgRow(); m[1].innerHTML='<span class="evh-typing"><span></span><span></span><span></span></span>'; feed.appendChild(m[0]); sc2();
-        timer=setTimeout(function(){ stream(m[1],s.msg,function(){ timer=setTimeout(next,650); }); },700);
-      } else {
-        timer=setTimeout(function(){ renderStatic(s); sc2(); timer=setTimeout(next, s.slide?1500:500); },250);
-      }
-    }
-    function reset(){ clearTimeout(timer); for(var k in nodes) park.appendChild(nodes[k]); feed.innerHTML=''; idx=0; done=false; }
-    function showAll(){ reset(); P.steps.forEach(renderStatic); idx=P.steps.length; done=true; mark(); }
-    function restart(){ reset(); scroll.scrollTop=0; mark(); next(); }
-    return {
-      enter:function(){ if(!started){ started=true; restart(); } },
-      leave:function(){ if(started && !done) showAll(); }
-    };
-  }
-  var chats={}, cur=null;
-  function active(){ var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); return a?a.id.replace('s-',''):''; }
-  function check(){
-    var id=active();
-    if(cur && cur!==id && chats[cur]) chats[cur].leave();
-    if(PAGES[id]){
-      if(chats[id]===undefined) chats[id]=Chat(id,PAGES[id]);
-      if(chats[id]) chats[id].enter();
-    }
-    cur=id;
-  }
-  function init(){
-    // mise en place immédiate (évite l'apparition de l'ancien contenu)
-    Object.keys(PAGES).forEach(function(id){ if(chats[id]===undefined) chats[id]=Chat(id,PAGES[id]); });
-    check();
-    try{ new MutationObserver(function(){ clearTimeout(window._evxT); window._evxT=setTimeout(check,30); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){}
-  }
-  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,0); });
-})();
-</script>
 <style id="evx2-css">
 /* ═══ EVA guide partout : même hero, même présentation, même qualité (ordinateur + mobile) ═══ */
 .evx-pad0{ padding:0 !important; }
@@ -26831,13 +26680,98 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   .nova-feed .evh-slide{ margin-left:0 !important; }
 }
 </style>
+<style id="evx3-css">
+/* ═══ EVA v3 : titres premium par couleur de menu + pages façon réseau social (ordinateur + mobile) ═══ */
+[data-evt]{ --t1:#1d4ed8; --t2:#60a5fa; --ts:#eff6ff; --tb:#dbeafe; }
+[data-evt="droits"]{ --t1:#1d4ed8; --t2:#60a5fa; --ts:#eff6ff; --tb:#dbeafe; }
+[data-evt="conseils"]{ --t1:#0f766e; --t2:#2dd4bf; --ts:#f0fdfa; --tb:#ccfbf1; }
+[data-evt="quiz"]{ --t1:#4f46e5; --t2:#a78bfa; --ts:#f5f3ff; --tb:#e0e7ff; }
+[data-evt="motiv"]{ --t1:#be185d; --t2:#f472b6; --ts:#fdf2f8; --tb:#fce7f3; }
+[data-evt="suivi"]{ --t1:#4c1d95; --t2:#c026d3; --ts:#faf5ff; --tb:#ede9fe; }
+[data-evt="eva"]{ --t1:#1e3a8a; --t2:#38bdf8; --ts:#eff6ff; --tb:#dbeafe; }
+/* En-têtes */
+[data-evt] .evad-hd, [data-evt] .eva-sub-header, [data-evt] .ew-hdr, [data-evt] .eb-hdr, [data-evt] .jnl-hdr, [data-evt] .nova-hd{ position:relative; }
+[data-evt] .evad-hd::after, [data-evt] .eva-sub-header::after, [data-evt] .ew-hdr::after, [data-evt] .eb-hdr::after, [data-evt] .jnl-hdr::after, [data-evt] .nova-hd::after{
+  content:""; position:absolute; left:0; right:0; bottom:-1px; height:2px; background:linear-gradient(90deg,var(--t1),var(--t2),transparent 85%); }
+.evt-ico{ width:40px; height:40px; border-radius:13px; flex-shrink:0; display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,var(--t1),var(--t2)); box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 8px 18px -8px var(--t1); }
+.evt-ico svg{ width:21px; height:21px; }
+[data-evt] .evad-hd-title, [data-evt] .eva-sub-title, [data-evt] .ew-hdr-ttl, [data-evt] .eb-hdr-title, [data-evt] .jnl-hdr-title, [data-evt] .nova-hd-name{
+  color:#0f172a !important; font-weight:800 !important; letter-spacing:-.025em !important; }
+[data-evt] [data-eb]::before{ content:attr(data-eb); display:block; margin-bottom:3px; font-size:.56rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase;
+  background:linear-gradient(90deg,var(--t1),var(--t2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+[data-evt] .ev-sub, [data-evt] .eb-hdr-sub, [data-evt] .jnl-hdr-sub, [data-evt] .nova-hd-sub{ color:#64748b !important; font-weight:500 !important; }
+[data-evt] .evad-hd-back, [data-evt] .eva-sub-back, [data-evt] .ew-hdr-back, [data-evt] .eb-hdr-back, [data-evt] .jnl-hdr-back, [data-evt] .nova-hd-back{ background:var(--ts) !important; }
+[data-evt] .evad-hd-back svg, [data-evt] .evad-hd-back svg *, [data-evt] .eva-sub-back svg, [data-evt] .eva-sub-back svg *, [data-evt] .ew-hdr-back svg, [data-evt] .ew-hdr-back svg *, [data-evt] .eb-hdr-back svg, [data-evt] .eb-hdr-back svg *, [data-evt] .jnl-hdr-back svg, [data-evt] .jnl-hdr-back svg *, [data-evt] .nova-hd-back svg{ stroke:var(--t1) !important; }
+[data-evt] .evad-hd-eva, [data-evt] .eb-hdr-badge, [data-evt] .nova-hd-badge{ background:var(--ts) !important; border:1px solid var(--tb) !important; color:var(--t1) !important; }
+[data-evt] .evad-hd-eva *{ color:var(--t1) !important; }
+.eb-hdr-badge svg{ width:12px; height:12px; vertical-align:-2px; margin-right:4px; }
+[data-evt] .evx-prog b, [data-evt] .nova-prog-bar, [data-evt] .eb-prog-fill{ background:linear-gradient(90deg,var(--t1),var(--t2)) !important; }
+[data-evt] .evx-ctrl button.pri{ background:var(--t1); border-color:var(--t1); }
+.jnl-tab svg{ width:14px; height:14px; vertical-align:-2px; margin-right:6px; }
+/* Couverture & publications (réseau social) aux couleurs du menu */
+.pfs-card .pfs-cv{ background:radial-gradient(circle at 20% 30%, rgba(255,255,255,.25) 0 2px, transparent 3px) 0 0/22px 22px, linear-gradient(120deg,var(--c1,#7c3aed) 0%,var(--c2,#06b6d4) 100%); }
+.pfs-av{ background:conic-gradient(from 200deg,var(--c2,#f472b6),var(--c1,#7c3aed),var(--c2,#06b6d4),var(--c1,#7c3aed)) !important; }
+.pfs-av b{ background:linear-gradient(135deg,var(--c1,#1d4ed8),var(--c2,#60a5fa)) !important; }
+.pfs-nm i{ background:var(--c1,#2563eb) !important; }
+.pfs-pa, .pfs-st .rg{ background:conic-gradient(from 200deg,var(--c2),var(--c1),var(--c2),var(--c1)) !important; }
+.pfs-pa b svg{ width:18px; height:18px; }
+.pfs-st .rg b svg{ width:24px; height:24px; }
+.pfs-md .ic svg{ width:28px; height:28px; }
+.pfs-ac button svg{ width:14px; height:14px; }
+.pfs-ac button.pri{ background:var(--c1,#2563eb) !important; box-shadow:0 8px 18px -8px var(--c1,#2563eb) !important; }
+.pfs-tx ul{ margin:8px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.pfs-tx li{ display:flex; gap:10px; align-items:flex-start; }
+.pfs-tx li i{ flex-shrink:0; width:22px; height:22px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; font-style:normal; font-size:.66rem; font-weight:800; background:var(--cs,#eff6ff); color:var(--c1,#1d4ed8); }
+.pfs-tx li i svg{ width:13px; height:13px; }
+.evx-page2 .evx-feed{ padding-top:18px; }
+.evx-park{ display:none !important; }
+.evx .evx-att{ margin:6px 0 22px 42px; }
+@keyframes evxReveal{ from{ opacity:0; transform:translateY(18px); } }
+.evx-att{ animation: evxReveal .8s cubic-bezier(.2,.8,.2,1) both; }
+/* Suivi : semaine / mois / année + conseils d'EVA */
+.trk{ background:#fff; border:1px solid #eceff5; border-radius:22px; padding:18px 18px 14px; margin:0 0 14px; box-shadow:0 1px 2px rgba(15,23,42,.04), 0 10px 30px rgba(15,23,42,.05); }
+.trk-hd{ display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:12px; }
+.trk-hd h4{ margin:0; font-size:.86rem; font-weight:800; color:#0f172a; letter-spacing:-.01em; }
+.trk-seg{ display:inline-flex; background:#f1f5f9; border-radius:12px; padding:3px; }
+.trk-seg button{ position:static !important; border:none; background:none; border-radius:9px; padding:7px 14px; font:700 .68rem/1 inherit; color:#475569; cursor:pointer; }
+.trk-seg button.on{ background:#fff; color:#0f172a; box-shadow:0 1px 3px rgba(15,23,42,.12); }
+.trk-kpi{ display:flex; gap:18px; align-items:baseline; margin:2px 0 8px; }
+.trk-kpi b{ font-size:2rem; font-weight:800; color:#0f172a; letter-spacing:-.03em; }
+.trk-kpi span{ font-size:.7rem; color:#64748b; font-weight:600; }
+.trk svg.trk-ch{ width:100%; height:auto; display:block; overflow:visible; }
+.trk-ch .pt{ cursor:pointer; }
+.trk-ch .pt:hover circle.v{ r:6; }
+.trk-tip{ position:absolute; pointer-events:none; background:#0f172a; color:#fff; font-size:.66rem; font-weight:700; padding:6px 9px; border-radius:8px; transform:translate(-50%,-120%); white-space:nowrap; opacity:0; transition:opacity .15s; }
+.trk-pl{ display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; margin-top:12px; padding-top:12px; border-top:1px solid #f1f5f9; }
+.trk-pl div{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; font-size:.7rem; font-weight:600; color:#334155; }
+.trk-pl i{ display:block; height:6px; border-radius:99px; background:#f1f5f9; overflow:hidden; }
+.trk-pl i b{ display:block; height:100%; border-radius:99px; }
+.trk-pl em{ font-style:normal; font-weight:800; color:#0f172a; }
+.trk-empty{ font-size:.78rem; color:#64748b; line-height:1.5; padding:8px 0 4px; }
+.tadv .evx-act i svg{ width:14px; height:14px; }
+.tadv-dots{ display:flex; gap:6px; margin-top:10px; }
+.tadv-dots span{ width:28px; height:6px; border-radius:99px; background:#e2e8f0; }
+.tadv-dots span.on{ background:linear-gradient(90deg,#4c1d95,#c026d3); }
+@media (max-width: 899px){
+  [data-evt] .evad-hd-eva{ display:none !important; }
+  .evt-ico{ width:36px; height:36px; border-radius:12px; }
+  .evt-ico svg{ width:19px; height:19px; }
+  [data-evt] [data-eb]::before{ font-size:.54rem; }
+  .evx .evx-att{ margin:6px 0 18px 0; }
+  .trk{ padding:16px 14px 12px; }
+  .trk-pl{ grid-template-columns:1fr; }
+  .jnl-hdr-streak{ flex-shrink:0 !important; white-space:nowrap; }
+  .jnl-hdr-info{ min-width:0; }
+}
+</style>
 <script>
-/* ═══ EVA, guide virtuel sur toutes les pages (moteur unique) ═══ */
+/* ═══ EVA v3 : une seule mise en scène pour toutes les pages (file indienne, rythme posé, décor réseau social) ═══ */
 (function(){
   if(window.self!==window.top) return;
-  var S=function(p,c){ return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#fff')+'" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
+  var S=function(p,c,w){ return '<svg viewBox="0 0 24 24" fill="none" stroke="'+(c||'#fff')+'" stroke-width="'+(w||1.9)+'" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
   var IC={
-    eva:'<path d="M5 6.5a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h.5A2.5 2.5 0 0 1 5 13.5z"/><path d="m12 7 .9 2.1L15 10l-2.1.9L12 13l-.9-2.1L9 10l2.1-.9z" fill="#fff" stroke="none"/>',
+    eva:'<path d="M5 6.5a2.5 2.5 0 0 1 2.5-2.5h9A2.5 2.5 0 0 1 19 6.5v7a2.5 2.5 0 0 1-2.5 2.5H11l-4 3.5V16h.5A2.5 2.5 0 0 1 5 13.5z"/><path d="m12 7 .9 2.1L15 10l-2.1.9L12 13l-.9-2.1L9 10l2.1-.9z" fill="currentColor" stroke="none"/>',
     droits:'<path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/>',
     book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/>',
     quiz:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
@@ -26846,83 +26780,126 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
     folder:'<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
     motiv:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
-    suivi:'<path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 3 5-6"/>'
+    suivi:'<path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 3 5-6"/>',
+    heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+    chat:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/>',
+    arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+    check:'<path d="m5 12 5 5L20 7"/>',
+    up:'<path d="m4 16 6-6 4 4 6-6"/><path d="M14 8h6v6"/>',
+    down:'<path d="m4 8 6 6 4-4 6 6"/><path d="M14 16h6v-6"/>',
+    flat:'<path d="M4 12h16M15 7l5 5-5 5"/>',
+    pen:'<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>',
+    cal:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+    star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/>',
+    flag:'<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+    bulb:'<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.6 10.8c.7.5 1.1 1.3 1.1 2.2h5c0-.9.4-1.7 1.1-2.2A6 6 0 0 0 12 3z"/>'
   };
-  var G={ droits:'linear-gradient(145deg,#1d4ed8,#3b82f6 60%,#60a5fa)', conseils:'linear-gradient(145deg,#0f766e,#0d9488 60%,#2dd4bf)', quiz:'linear-gradient(145deg,#4f46e5,#7c3aed 60%,#a78bfa)',
-    motiv:'linear-gradient(145deg,#be185d,#db2777 60%,#f472b6)', suivi:'linear-gradient(145deg,#312e81,#6d28d9 60%,#a21caf)', eva:'linear-gradient(145deg,#1e3a8a,#2563eb 55%,#38bdf8)',
-    pf:'linear-gradient(145deg,#6d28d9,#2563eb 55%,#06b6d4)' };
+  var TH={
+    droits:{c1:'#1d4ed8',c2:'#60a5fa',cs:'#eff6ff',ic:'droits',h:'@eva.droits'},
+    conseils:{c1:'#0f766e',c2:'#2dd4bf',cs:'#f0fdfa',ic:'conseils',h:'@eva.conseils'},
+    quiz:{c1:'#4f46e5',c2:'#a78bfa',cs:'#f5f3ff',ic:'quiz',h:'@eva.entrainement'},
+    motiv:{c1:'#be185d',c2:'#f472b6',cs:'#fdf2f8',ic:'motiv',h:'@eva.equilibre'},
+    suivi:{c1:'#4c1d95',c2:'#c026d3',cs:'#faf5ff',ic:'suivi',h:'@eva.suivi'},
+    eva:{c1:'#1e3a8a',c2:'#38bdf8',cs:'#eff6ff',ic:'eva',h:'@eva'},
+    pf:{c1:'#6d28d9',c2:'#06b6d4',cs:'#f5f3ff',ic:'folder',h:'@eva.portfolio'}
+  };
   function el(t,c,h){ var e=document.createElement(t); if(c) e.className=c; if(h!=null) e.innerHTML=h; return e; }
   function q(s,r){ return (r||document).querySelector(s); }
   function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function scroller(n){ while(n && n!==document.body){ var o=getComputedStyle(n).overflowY; if((o==='auto'||o==='scroll')) return n; n=n.parentElement; } return null; }
-  var SEEN={};
+  function vars(n,t){ n.style.setProperty('--c1',t.c1); n.style.setProperty('--c2',t.c2); n.style.setProperty('--cs',t.cs); return n; }
+  function scroller(n){ while(n && n!==document.body){ var o=getComputedStyle(n).overflowY; if(o==='auto'||o==='scroll') return n; n=n.parentElement; } return null; }
+  function reveal(n){ if(!n || !n.isConnected) return; var s=scroller(n); if(!s) return;
+    var r=n.getBoundingClientRect(), sr=s.getBoundingClientRect();
+    if(r.bottom>sr.bottom-16){ var d=Math.min(r.bottom-sr.bottom+24, r.top-sr.top-70); if(d>0) s.scrollBy({top:d,behavior:'smooth'}); } }
+
+  /* ── Briques visuelles ── */
   function msgRow(html){ var r=el('div','evh-msg','<div class="evh-mini">'+S(IC.eva)+'</div>'); var b=el('div','evh-bub'); if(html!=null) b.innerHTML=html; r.appendChild(b); return [r,b]; }
-  function slide(s){
-    var c=el('div','evh-slide');
-    c.innerHTML='<div class="evh-art" style="background:'+(G[s.g]||s.g)+'"><div class="n">'+s.n+'</div><div class="ic">'+S(IC[s.ic]||IC.eva)+'</div><div class="t">'+s.t+'</div></div>'
-      +'<div class="evh-body"><div class="lead">'+s.lead+'</div>'+(s.pts&&s.pts.length?'<ul>'+s.pts.map(function(p){return '<li><span>'+p+'</span></li>';}).join('')+'</ul>':'')
-      +(s.chips&&s.chips.length?'<div class="evh-foot"><div class="evh-chips">'+s.chips.map(function(x){return '<span>'+x+'</span>';}).join('')+'</div></div>':'')+'</div>';
+  function cover(t,o){
+    var c=vars(el('div','pfs-card'),t);
+    c.innerHTML='<div class="pfs-cv"><span>'+esc(o.badge||'EVA · EN DIRECT')+'</span></div><div class="pfs-in"><div class="pfs-av"><b>'+S(IC[o.ic||t.ic])+'</b></div>'
+      +'<div class="pfs-nm">'+o.name+' <i>'+S(IC.check,'#fff',3)+'</i></div><div class="pfs-hd">'+esc(o.handle||t.h)+'</div>'
+      +'<div class="pfs-bio">'+o.bio+'</div>'
+      +'<div class="pfs-stats">'+(o.stats||[]).map(function(s){ return '<div><b>'+s[0]+'</b><span>'+s[1]+'</span></div>'; }).join('')+'</div></div>';
     return c;
   }
-  function actions(title,list,btns,cls){
-    var c=el('div','evx-actions'+(cls?' '+cls:''));
-    var h='<h5>'+title+'</h5>'+list.map(function(a,i){ return '<div class="evx-act"><i>'+(a.i||i+1)+'</i><div>'+a.t+'</div></div>'; }).join('');
-    c.innerHTML=h;
-    if(btns&&btns.length){ var w=el('div','evx-btns'); btns.forEach(function(b){ var x=el('button',b.pri?'pri':'',b.l); x.type='button'; x.onclick=b.fn; w.appendChild(x); }); c.appendChild(w); }
+  function post(t,it){
+    var c=vars(el('div','pfs-post'),{c1:it.c1||t.c1,c2:it.c2||t.c2,cs:t.cs});
+    c.innerHTML='<div class="pfs-ph"><div class="pfs-pa"><b style="color:'+(it.c1||t.c1)+'">'+(it.ico||S(IC[t.ic],t.c1))+'</b></div><div class="pfs-pn"><strong>'+it.ttl+'</strong><span>'+esc(it.meta||'EVA te présente')+'</span></div><div class="pfs-dots">•••</div></div>'
+      +'<div class="pfs-tx">'+it.txt+'</div>'
+      +(it.media===false?'':'<div class="pfs-md" style="background:linear-gradient(135deg,'+(it.c1||t.c1)+','+(it.c2||t.c2)+')"><div class="ic">'+(it.big||S(IC[t.ic]))+'</div><div><span class="tg">#'+esc(it.tag||'EVA')+'</span><div class="tt">'+it.ttl+'</div></div></div>');
+    var ac=el('div','pfs-ac');
+    if(it.like!==false){
+      var lk=el('button',null,S(IC.heart,'currentColor',2.2)+'<span>Utile</span>'); lk.type='button';
+      lk.onclick=function(e){ e.stopPropagation(); lk.classList.toggle('on'); lk.querySelector('svg').setAttribute('fill',lk.classList.contains('on')?'currentColor':'none'); }; ac.appendChild(lk);
+    }
+    if(it.tip){ var tp=el('button',null,S(IC.chat,'currentColor',2.2)+'<span>Conseil</span>'); tp.type='button'; tp.onclick=function(e){ e.stopPropagation(); if(typeof window.ecShowToast==='function') window.ecShowToast(it.tip); }; ac.appendChild(tp); }
+    (it.actions||[]).forEach(function(a){ var b=el('button',a.pri?'pri':'',(a.l)+(a.pri?' '+S(IC.arrow,'currentColor',2.4):'')); b.type='button'; b.onclick=function(e){ e.stopPropagation(); a.fn(); }; ac.appendChild(b); });
+    if(ac.children.length) c.appendChild(ac);
     return c;
   }
-  function render(s){
-    if(s.msg!=null) return msgRow(s.msg)[0];
-    if(s.slide) return slide(s.slide);
-    if(s.node){ var a=el('div','evx-att'); a.appendChild(s.node); return a; }
-    if(s.make) return s.make();
-    return null;
+  function stories(t,items){
+    var s=vars(el('div','pfs-st'),t);
+    items.forEach(function(it){ var b=el('button',null,'<span class="rg"><b style="color:'+(it.c1||t.c1)+'">'+(it.ico||S(IC[t.ic],t.c1))+'</b></span>'+it.ttl); b.type='button'; b.onclick=it.fn; s.appendChild(b); });
+    return s;
   }
+  function wrapFeed(n){ var f=el('div','pfs-feed'); f.appendChild(n); return f; }
+  function svgOf(node,col){ var v=node && node.querySelector('svg'); if(!v) return null; v=v.cloneNode(true); v.removeAttribute('width'); v.removeAttribute('height'); v.style.cssText=''; if(col){ v.setAttribute('stroke',col); v.querySelectorAll('[stroke]').forEach(function(x){ x.setAttribute('stroke',col); }); } return v.outerHTML; }
+  function txt(n){ return n ? (n.textContent||'').replace(/\s+/g,' ').trim() : ''; }
+
+  /* ── Moteur : une scène après l'autre ── */
+  var SEEN={};
   function stream(bub,html,st,cb){
     var parts=html.split(/(<[^>]+>|\s+)/).filter(function(x){return x!=='';}), i=0, out='', caret='<span class="evh-caret"></span>';
     (function tick(){
       if(st.dead) return;
       if(i>=parts.length){ bub.innerHTML=out; cb(); return; }
       var p=parts[i++]; out+=p; bub.innerHTML=out+caret;
-      st.t=setTimeout(tick, /^</.test(p)||/^\s+$/.test(p) ? 0 : 40);
+      st.t=setTimeout(tick, /^</.test(p)||/^\s+$/.test(p) ? 0 : 48);
     })();
   }
-  /* mount : place le bloc guide d'EVA dans « host », avant « before ».
-     Options : id, key, label, steps, bar (true/false), follow (défilement du chat), pad0 */
+  function readTime(html){ var n=(html||'').replace(/<[^>]+>/g,'').length; return Math.min(2800, 900+n*14); }
   function mount(o){
     if(!o.host) return null;
-    var slot=o.host.querySelector('.evx[data-slot="'+o.id+'"]');
+    var slot=o.host.querySelector(':scope > .evx[data-slot="'+o.id+'"]');
     if(!slot){
       slot=el('div','evx'+(o.bar?'':' evx-inline')); slot.setAttribute('data-slot',o.id);
-      slot.innerHTML=(o.bar?'<div class="evx-bar"><div class="evx-av">'+S(IC.eva)+'</div><div class="evx-id"><b>EVA</b><span>En ligne · '+esc(o.label||'')+'</span></div>'
+      slot.innerHTML=(o.bar?'<div class="evx-bar"><div class="evx-av">'+S(IC.eva)+'</div><div class="evx-id"><b>EVA</b><span></span></div>'
         +'<div class="evx-ctrl"><button type="button" data-a="skip">Tout afficher</button><button type="button" class="pri" data-a="replay" aria-label="Rejouer">Rejouer</button></div></div><div class="evx-prog"><b></b></div>':'')
-        +'<div class="evx-feed"><div class="evh-col"></div></div>';
+        +'<div class="evx-feed"><div class="evh-col"></div></div><div class="evx-park"></div>';
       slot._st={};
-      slot.addEventListener('click',function(e){ var b=e.target.closest('.evx-ctrl button'); if(!b) return; if(b.getAttribute('data-a')==='skip') slot._static(); else slot._play(); });
+      slot.addEventListener('click',function(e){ var b=e.target.closest('.evx-ctrl button'); if(!b || !slot._static) return; if(b.getAttribute('data-a')==='skip') slot._static(); else slot._play(); });
     }
-    if(o.before && o.before.parentNode===o.host) o.host.insertBefore(slot,o.before);
-    else if(!slot.parentNode || slot.parentNode!==o.host) o.host.insertBefore(slot,o.host.firstChild);
-    if(o.pad0) o.host.classList.add('evx-pad0');
+    if(o.before && o.before.parentNode===o.host){ if(slot.nextSibling!==o.before) o.host.insertBefore(slot,o.before); }
+    else if(slot.parentNode!==o.host) o.host.insertBefore(slot,o.host.firstChild);
     if(o.bar){ var lb=q('.evx-id span',slot); if(lb) lb.textContent='En ligne · '+(o.label||''); }
+    var park=q('.evx-park',slot);
+    (o.steps||[]).forEach(function(s){ if(s.node && s.node.parentNode!==park && !slot.contains(s.node)) park.appendChild(s.node); });
     if(slot.getAttribute('data-key')===o.key && slot._steps) return slot;
     slot.setAttribute('data-key',o.key);
     var feed=q('.evh-col',slot), prog=q('.evx-prog b',slot), steps=o.steps;
     slot._steps=steps;
     function mark(n){ if(prog) prog.style.width=Math.round(n/steps.length*100)+'%'; }
     function kill(){ if(slot._st){ slot._st.dead=true; clearTimeout(slot._st.t); } slot._st={}; }
-    function follow(){ if(!o.follow) return; var s=scroller(slot); if(s) s.scrollTo({top:s.scrollHeight,behavior:'smooth'}); }
-    slot._static=function(){ kill(); feed.innerHTML=''; steps.forEach(function(s){ var n=render(s); if(n) feed.appendChild(n); }); mark(steps.length); if(o.done) o.done(); follow(); };
+    function clear(){ steps.forEach(function(s){ if(s.node) park.appendChild(s.node); }); feed.innerHTML=''; }
+    function build(s){
+      if(s.msg!=null) return msgRow(s.msg)[0];
+      if(s.node){ var a=el('div','evx-att'); a.appendChild(s.node); return a; }
+      if(s.make){ var m=s.make(); return s.feed===false ? m : wrapFeed(m); }
+      return null;
+    }
+    slot._static=function(){ kill(); clear(); steps.forEach(function(s){ var n=build(s); if(n) feed.appendChild(n); }); mark(steps.length); if(o.done) o.done(true); };
     slot._play=function(){
-      kill(); feed.innerHTML=''; var st=slot._st, i=0; mark(0);
+      kill(); clear(); var st=slot._st, i=0; mark(0);
       (function next(){
         if(st.dead) return;
-        if(i>=steps.length){ if(o.done) o.done(); return; }
+        if(i>=steps.length){ if(o.done) o.done(false); return; }
         var s=steps[i++]; mark(i);
         if(s.msg!=null){
-          var m=msgRow('<span class="evh-typing"><span></span><span></span><span></span></span>'); feed.appendChild(m[0]); follow();
-          st.t=setTimeout(function(){ stream(m[1],s.msg,st,function(){ follow(); st.t=setTimeout(next,s.wait||600); }); },650);
+          var m=msgRow('<span class="evh-typing"><span></span><span></span><span></span></span>'); feed.appendChild(m[0]); reveal(m[0]);
+          st.t=setTimeout(function(){ stream(m[1],s.msg,st,function(){ reveal(m[0]); st.t=setTimeout(next, s.wait||readTime(s.msg)); }); },850);
         } else {
-          st.t=setTimeout(function(){ var n=render(s); if(n){ feed.appendChild(n); follow(); } st.t=setTimeout(next, s.wait || (s.slide?1300:450)); },220);
+          st.t=setTimeout(function(){ var n=build(s); if(n){ feed.appendChild(n); setTimeout(function(){ reveal(n); },80); } st.t=setTimeout(next, s.wait || (s.node?600:1700)); },300);
         }
       })();
     };
@@ -26930,262 +26907,402 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     return slot;
   }
   function hide(list){ (list||[]).forEach(function(n){ if(n) n.classList.add('evx-hid2'); }); }
-  window.EVX={ mount:mount, slide:slide, msgRow:msgRow, actions:actions, S:S, IC:IC, G:G };
+  function scrollToEl(n){ if(!n) return; var s=scroller(n); if(s){ s.scrollTo({top:n.getBoundingClientRect().top-s.getBoundingClientRect().top+s.scrollTop-80,behavior:'smooth'}); } }
 
-  /* ───────── DROITS : liste A → Z ───────── */
+  /* ═════ Titres premium des pages ═════ */
+  var PAGES={
+    'eva-droits':['droits','Droits & aides'], 'eva-droits-list':['droits','Droits · Encyclopédie'], 'eva-droits-article':['droits','Droits · Article'],
+    'eva-workspace':['conseils','Conseils & pro'], 'eva-entretien':['quiz','Quiz & mises en situation'],
+    'eva-bienetre':['motiv','Motivation & Équilibre'], 'eva-tracker':['suivi','Suivi de ma motivation'], 'eva-identity':['eva','À propos']
+  };
+  var EMO=/^[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}\s]+/u;
+  function strip(t){ if(!t) return; var n=t.firstChild; if(n && n.nodeType===3 && EMO.test(n.nodeValue)) n.nodeValue=n.nodeValue.replace(EMO,''); }
+  function titles(){
+    Object.keys(PAGES).forEach(function(id){ deco(document.getElementById('s-'+id), PAGES[id][0], PAGES[id][1]); });
+    document.querySelectorAll('.nova-screen').forEach(function(sc){ deco(sc,'quiz', /mise-situation/.test(sc.id)?'Simulation · Entretien':'QCM · Quiz EVA'); });
+    var bd=q('#s-eva-bienetre .eb-hdr-badge'); if(bd && !bd.querySelector('svg')) bd.innerHTML=S(IC.heart,'currentColor',2.4)+'COACH';
+    var JT=[[IC.pen,'Bilan du jour'],[IC.suivi,'Mon suivi'],[IC.chat,'EVA parle']];
+    JT.forEach(function(x,i){ var b=document.getElementById('jnl-t'+i); if(b && !b.querySelector('svg')) b.innerHTML=S(x[0],'currentColor',2.2)+x[1]; });
+  }
+  function deco(sc,theme,eb){
+    if(!sc) return;
+    sc.setAttribute('data-evt',theme);
+    var hd=q('.evad-hd,.eva-sub-header,.ew-hdr,.eb-hdr,.jnl-hdr,.nova-hd',sc); if(!hd) return;
+    var tt=q('.evad-hd-title,.eva-sub-title,.ew-hdr-ttl,.eb-hdr-title,.jnl-hdr-title,.nova-hd-name',hd); if(!tt) return;
+    tt.setAttribute('data-eb',eb); strip(tt);
+    if(!hd.classList.contains('nova-hd') && !q('.evt-ico',hd)){
+      var anchor=q('.eb-hdr-info,.jnl-hdr-info',hd) || tt;
+      var ic=el('div','evt-ico',S(IC[TH[theme].ic])); hd.insertBefore(ic,anchor);
+    }
+    if(!tt._evtObs){ tt._evtObs=1; try{ new MutationObserver(function(){ strip(tt); }).observe(tt,{childList:true,characterData:true,subtree:true}); }catch(e){} }
+  }
+
+  /* ═════ Pages ═════ */
+  function nom(){ try{ return (EWC[EWP]||{}).nom||''; }catch(e){ return ''; } }
+
+  // DROITS (accueil)
+  function droitsHub(){
+    var sc=document.getElementById('s-eva-droits'); if(!sc) return; var t=TH.droits;
+    var host=q('.evad-scroll',sc), cards=[].slice.call(sc.querySelectorAll('.ei-card')); if(!host||!cards.length) return;
+    hide([q('.ei-hero',sc), q('.ei-body',sc)]); sc.classList.add('evx-page');
+    var items=cards.map(function(c){ return { ico:svgOf(q('.ei-card-ico',c),t.c1), big:svgOf(q('.ei-card-ico',c),'#fff'), ttl:esc(txt(q('.ei-card-name',c))), sub:txt(q('.ei-card-sub',c)), fn:function(){ c.click(); } }; });
+    var steps=[
+      { make:function(){ return cover(t,{ name:'Droits & aides', bio:'Tes droits expliqués simplement, sourcés et classés de A à Z. Chômage, contrat, congés, statut d\'indépendant, aides étudiantes.', stats:[[items.length,'profils'],['A → Z','classement'],['2026','données']] }); }, feed:false, wait:2000 },
+      { msg:'Bienvenue dans <b>Droits & aides</b>. Ici, je t\'explique tes droits simplement, avec des articles fondés sur les sources officielles.' },
+      { msg:'Je te présente les <b>'+items.length+' profils</b>, un par un.' }
+    ];
+    items.forEach(function(it,i){ steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length, tag:'Droits', txt:esc(it.sub)+' — 12 thèmes classés de A à Z, avec estimateur et quiz.', tip:'Commence par le thème qui te concerne aujourd\'hui : 3 minutes suffisent.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+    steps.push({ msg:'À toi de jouer : <b>quel profil te correspond ?</b>' });
+    steps.push({ make:function(){ return stories(t,items); } });
+    steps.push({ msg:'Bon à savoir : chaque article cite ses <b>sources officielles</b> — Légifrance, service-public.fr, France Travail, URSSAF, CAF, ameli.fr.' });
+    mount({ host:host, id:'hub', key:'hub-droits', label:'Droits & aides', bar:true, steps:steps });
+  }
+  // DROITS (liste A → Z)
   function droitsList(){
-    var sc=document.getElementById('s-eva-droits-list'); if(!sc) return;
+    var sc=document.getElementById('s-eva-droits-list'); if(!sc) return; var t=TH.droits;
     var host=q('.evad-scroll',sc), body=document.getElementById('evad-list-body'); if(!host||!body) return;
-    var title=(document.getElementById('evad-list-title')||{}).textContent||'';
-    var h=(document.getElementById('evad-list-h')||{}).textContent||title;
-    var p=(document.getElementById('evad-list-p')||{}).textContent||'';
-    var count=(document.getElementById('evad-list-count')||{}).textContent||'';
+    var title=txt(document.getElementById('evad-list-title')).replace(EMO,''), h=txt(document.getElementById('evad-list-h'))||title, p=txt(document.getElementById('evad-list-p')), count=txt(document.getElementById('evad-list-count'));
+    var n=(count.match(/\d+/)||[''])[0];
     hide([document.getElementById('evad-list-hero')]);
-    var srch=q('.az-search-wrap',sc);
-    mount({ host:host, before:body, id:'dlist', key:'dlist-'+title, label:'Droits & aides', bar:true, steps:[
-      { msg:'Voici ton encyclopédie <b>'+esc(h)+'</b> 📚 '+esc(count)+', vérifiés sur les sources officielles.' },
-      { slide:{ g:'droits', ic:'droits', n:'Droits · Encyclopédie', t:esc(h), lead:esc(p), pts:[esc(count)||'Thèmes classés de A à Z','Chaque thème se lit en 2 à 4 minutes','Estimateur, quiz et sources à la fin de chaque article'], chips:['A → Z','Sources officielles','2026'] } },
-      { msg:'Filtre par lettre ou choisis directement le thème qui te concerne 👇' },
-      srch ? { node:srch } : { msg:'' }
+    var srch=q('.az-search-wrap',sc), pack=srch && srch._pack;
+    if(!pack){ pack=el('div','evx-pack'); if(srch){ pack.appendChild(srch); srch._pack=pack; } }
+    if(body.parentNode!==pack) pack.appendChild(body);
+    mount({ host:host, id:'dlist', key:'dlist-'+title, label:'Droits · Encyclopédie', bar:true, steps:[
+      { make:function(){ return cover(t,{ name:esc(h), handle:t.h+' · encyclopédie', bio:esc(p), stats:[[n||'A → Z','thèmes'],['2-4 min','par lecture'],['2026','à jour']] }); }, feed:false, wait:2000 },
+      { msg:'Voici ton encyclopédie <b>'+esc(h)+'</b>. '+esc(count)+', vérifiés sur les sources officielles.' },
+      { msg:'Filtre par lettre ou choisis directement le thème qui te concerne.' },
+      { node:pack }
     ]});
   }
-  /* ───────── DROITS : article ───────── */
+  // DROITS (article)
   function droitsArticle(id){
-    var host=document.getElementById('evad-art-scroll'), body=document.getElementById('evad-art-body'); if(!host||!body) return;
-    var title=(document.getElementById('evad-art-title')||{}).textContent||'';
-    var sub=(document.getElementById('evad-art-sub')||{}).textContent||'';
-    var first=''; var lines=(body.innerText||body.textContent||'').split(/\n+/); for(var i=0;i<lines.length;i++){ var t=lines[i].trim(); if(t.length>80 && !/^[❓🎯]/.test(t)){ first=t; break; } }
+    var host=document.getElementById('evad-art-scroll'), body=document.getElementById('evad-art-body'); if(!host||!body) return; var t=TH.droits;
+    var title=txt(document.getElementById('evad-art-title')), sub=txt(document.getElementById('evad-art-sub'));
+    var first=''; (body.innerText||body.textContent||'').split(/\n+/).some(function(l){ l=l.trim(); if(l.length>80 && !EMO.test(l)){ first=l; return true; } return false; });
     if(first.length>230) first=first.slice(0,first.lastIndexOf(' ',225))+'…';
     var hd=q('.art-hd-bar',host); hide([hd]);
-    var chips=sub.split('·').map(function(x){return x.trim();}).filter(Boolean).slice(0,4).map(esc);
-    mount({ host:host, before:hd||host.firstChild, id:'dart', key:'dart-'+id, label:'Droits & aides', bar:true, steps:[
-      { msg:'On regarde ensemble <b>'+esc(title)+'</b> 👌 Je te donne l\'essentiel, puis ce que tu peux faire concrètement.' },
-      { slide:{ g:'droits', ic:'book', n:'Article · Droits', t:esc(title), lead:'Tout ce qu\'il faut savoir, expliqué simplement et sourcé.', pts:['L\'essentiel en quelques minutes','Un estimateur pour ta situation','Un quiz de 5 questions pour valider'], chips:chips } },
-      first ? { msg:'<b>L\'essentiel :</b> '+esc(first) } : { msg:'Lis la suite tranquillement, je reste là 👇' }
-    ]});
-    // « Ce que tu peux faire maintenant » avant le quiz
     var old=body.querySelector('.evx-now'); if(old) old.remove();
-    var quiz=q('.art-quiz-wrap',body);
-    var box=el('div','evx-now'); var m=msgRow('Et maintenant ? Voici ce que je te conseille de faire 👇')[0]; box.appendChild(m);
-    box.appendChild(actions('Ce que tu peux faire maintenant',[
-      { t:'<b>Vérifie ta situation</b> avec l\'estimateur ci-dessus : c\'est le plus rapide pour savoir où tu en es.' },
-      { t:'<b>Valide tes connaissances</b> avec le quiz de 5 questions juste en dessous.' },
-      { t:'<b>Passe à l\'action</b> : prépare tes documents et entraîne-toi face à un recruteur avec EVA.' }
-    ],[{ l:'M\'entraîner avec EVA →', pri:true, fn:function(){ go('eva-entretien'); } },{ l:'Mes conseils', fn:function(){ go('eva-workspace'); } }]));
-    if(quiz) body.insertBefore(box,quiz); else body.appendChild(box);
+    var now=el('div','evx-now'); now.appendChild(msgRow('Et maintenant ? Voici ce que je te conseille de faire.')[0]);
+    now.appendChild(wrapFeed(post(t,{ ttl:'Ce que tu peux faire maintenant', meta:'Le plan d\'action d\'EVA', media:false, like:true,
+      txt:'<ul><li><i>1</i><span><b>Vérifie ta situation</b> avec l\'estimateur ci-dessus.</span></li><li><i>2</i><span><b>Valide tes connaissances</b> avec le quiz de 5 questions juste en dessous.</span></li><li><i>3</i><span><b>Passe à l\'action</b> : prépare tes documents et entraîne-toi face à un recruteur.</span></li></ul>',
+      actions:[{l:'Mes conseils',fn:function(){ go('eva-workspace'); }},{l:'M\'entraîner',pri:true,fn:function(){ go('eva-entretien'); }}] })));
+    var qz=q('.art-quiz-wrap',body); if(qz) body.insertBefore(now,qz); else body.appendChild(now);
+    var chips=sub.split('·').map(function(x){return x.trim();}).filter(Boolean);
+    mount({ host:host, before:hd, id:'dart', key:'dart-'+id, label:'Droits · Article', bar:true, steps:[
+      { make:function(){ return cover(t,{ name:esc(title), handle:t.h+' · article', ic:'book', bio:esc(chips.join(' · ')), stats:[['5','questions quiz'],['Sources','officielles'],['2026','à jour']] }); }, feed:false, wait:1900 },
+      { msg:'On regarde ensemble <b>'+esc(title)+'</b>. Je te donne l\'essentiel, puis ce que tu peux faire concrètement.' },
+      first ? { msg:'<b>L\'essentiel :</b> '+esc(first) } : { msg:'Lis à ton rythme, je reste avec toi.' },
+      { msg:'L\'article complet est juste en dessous, avec l\'estimateur et le quiz.' },
+      { node:body }
+    ]});
   }
-  function wrap(name,after){
-    var f=window[name]; if(typeof f!=='function' || f._evx) return;
-    var g=function(){ var r=f.apply(this,arguments); var a=arguments; try{ after.apply(null,a); }catch(e){} return r; }; g._evx=true; window[name]=g;
+  // CONSEILS (accueil + panneaux)
+  function wsHub(){
+    var P=document.getElementById('ew-p0'); if(!P) return; var t=TH.conseils;
+    var host=q('.ew-p0-scroll',P), tiles=[].slice.call(P.querySelectorAll('.ew-ptile')); if(!host||!tiles.length) return;
+    hide([q('.ew-hero',P), q('.ew-sec-lbl',P), q('.ew-ptiles',P)]); host.classList.add('evx-pad0');
+    document.getElementById('s-eva-workspace').classList.add('evx-page');
+    var items=tiles.map(function(c){ return { ico:svgOf(q('.ew-ptile-ico',c)), big:svgOf(q('.ew-ptile-ico',c),'#fff'), ttl:esc(txt(q('.ew-ptile-nom',c))), sub:txt(q('.ew-ptile-sub',c)), fn:function(){ c.click(); } }; });
+    var steps=[
+      { make:function(){ return cover(t,{ name:'Conseils pratiques & pro', bio:'Des conseils sur-mesure, des diagnostics personnalisés et ton Portfolio pour t\'organiser.', stats:[[items.length,'profils'],['Portfolio','inclus'],['24h/24','avec EVA']] }); }, feed:false, wait:2000 },
+      { msg:'Bienvenue dans tes <b>Conseils pratiques & professionnels</b>. Je t\'accompagne selon ta situation, avec des conseils concrets.' },
+      { msg:'Voici les <b>'+items.length+' profils</b> que j\'accompagne, un par un.' }
+    ];
+    items.forEach(function(it,i){ steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length, tag:'Conseils', txt:esc(it.sub)+'. Conseils détaillés, contacts utiles et Portfolio.', tip:'Choisis le profil qui décrit ta situation actuelle, pas celle que tu vises.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+    steps.push({ msg:'À toi : <b>quel profil te ressemble ?</b>' });
+    steps.push({ make:function(){ return stories(t,items); } });
+    mount({ host:host, id:'hub', key:'hub-ws', label:'Conseils & pro', bar:true, steps:steps });
   }
-
-  /* ───────── CONSEILS & PRO : panneaux ───────── */
-  function nom(){ try{ return (EWC[EWP]||{}).nom||''; }catch(e){ return ''; } }
   function ws(n){
-    var P=document.getElementById('ew-p'+n); if(!P) return;
+    var P=document.getElementById('ew-p'+n); if(!P) return; var t=TH.conseils;
     var who=nom(), key='ws'+n+'-'+(window.EWP||'')+'-'+(window.EWDS||'');
     if(n===1){
-      var host=q('.ew-p1-scroll',P), cards=q('.ew-mod-cards',P); if(!host||!cards) return;
-      hide([q('.ew-pbar',P)]);
-      mount({ host:host, id:'ws1', key:key, label:'Conseils & pro', bar:true, pad0:true, steps:[
-        { msg:'Voici ton espace <b>'+esc(who)+'</b> 🙌 Deux outils t\'attendent : mes conseils sur-mesure, et ton <b>Portfolio</b> pour gérer tes documents.' },
-        { slide:{ g:'conseils', ic:'conseils', n:'Mon espace · '+esc(who), t:'Ton espace de travail', lead:'Tout ce qu\'il te faut pour avancer, adapté à ton profil.', pts:['Conseils pratiques et diagnostics personnalisés','Portfolio : documents, agenda, contacts au même endroit','Un accompagnement EVA à chaque étape'], chips:['Conseils','Portfolio','Organisation'] } },
-        { msg:'Par où on commence ? 👇' },
-        { node:cards }
-      ]});
+      var host=q('.ew-p1-scroll',P), cards=[].slice.call(P.querySelectorAll('.ew-mod-card')); if(!host||!cards.length) return;
+      hide([q('.ew-pbar',P), q('.ew-mod-cards',P)]); host.classList.add('evx-pad0');
+      var its=cards.map(function(c){ return { ico:svgOf(q('.ew-mod-card-ico',c)), big:svgOf(q('.ew-mod-card-ico',c),'#fff'), ttl:esc(txt(q('.ew-mod-card-ttl',c))), sub:txt(q('.ew-mod-card-sub',c)), fn:function(){ c.click(); } }; });
+      var st=[
+        { make:function(){ return cover(t,{ name:esc(who)||'Mon espace', handle:t.h+' · mon espace', bio:'Ton espace de travail : mes conseils sur-mesure et ton Portfolio pour gérer tes documents.', stats:[[its.length,'outils'],['100 %','personnalisé'],['24h/24','avec EVA']] }); }, feed:false, wait:1900 },
+        { msg:'Voici ton espace <b>'+esc(who)+'</b>. Deux outils t\'attendent, je te les présente.' }
+      ];
+      its.forEach(function(it,i){ st.push({ make:function(){ return post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Outil '+(i+1)+'/'+its.length, tag:i?'Portfolio':'Conseils', txt:esc(it.sub)+'.', tip:i?'Le Portfolio devient vraiment utile quand tu y ranges tout, dès aujourd\'hui.':'Lis un sujet par jour : c\'est la meilleure façon de progresser.', actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+      st.push({ msg:'Par où on commence ?' });
+      st.push({ make:function(){ return stories(t,its); } });
+      mount({ host:host, id:'ws1', key:key, label:'Conseils & pro', bar:true, steps:st });
     } else if(n===2){
-      var h2=q('.ew-p2-scroll',P), tp=document.getElementById('ew-topics'); if(!h2||!tp) return;
-      mount({ host:h2, id:'ws2', key:key, label:'Conseils & pro', bar:true, pad0:true, steps:[
-        { msg:(window.EWP==='dem' && !window.EWDS) ? 'Pour te donner les bons conseils, dis-moi d\'abord <b>ta situation</b> 👇' : 'J\'ai préparé ces sujets pour toi, <b>'+esc(who)+'</b>. Choisis celui qui te concerne : je t\'explique tout en détail.' },
-        { slide:{ g:'conseils', ic:'conseils', n:'Conseils · '+esc(who), t:'Des conseils qui te ressemblent', lead:'Organismes, entretiens, négociation, contrats, droits : tout en détail pour ton profil.', pts:['Des explications concrètes, étape par étape','Les bons contacts et organismes','Des actions à faire tout de suite'], chips:['Sur-mesure','Concret','2026'] } },
+      var h2=q('.ew-p2-scroll',P), tp=document.getElementById('ew-topics'); if(!h2||!tp) return; h2.classList.add('evx-pad0');
+      mount({ host:h2, id:'ws2', key:key, label:'Conseils & pro', bar:true, steps:[
+        { make:function(){ return cover(t,{ name:'Conseils · '+esc(who), handle:t.h+' · sujets', bio:'Organismes, entretiens, négociation, contrats, droits : tout en détail pour ton profil.', stats:[['Concret','étape par étape'],['Contacts','utiles'],['2026','à jour']] }); }, feed:false, wait:1800 },
+        { msg:(window.EWP==='dem' && !window.EWDS) ? 'Pour te donner les bons conseils, dis-moi d\'abord <b>ta situation</b>.' : 'J\'ai préparé ces sujets pour toi. Choisis celui qui te concerne : je t\'explique tout en détail.' },
         { node:tp }
       ]});
     } else if(n===4){
       var h4=document.getElementById('ew-p4-scroll'); if(!h4) return;
       hide([q('.ew-ana-hero',h4)]);
-      mount({ host:h4, id:'ws4', key:'ws4', label:'Analyse', bar:false, steps:[
-        { msg:'Dépose ton <b>CV</b>, ta <b>lettre</b> ou ton <b>contrat</b> : je l\'analyse et je te donne une note sur 10, avec des conseils précis pour l\'améliorer.' },
-        { slide:{ g:'conseils', ic:'doc', n:'Analyse de document', t:'Ton document, noté par EVA', lead:'Une lecture attentive, point par point, comme le ferait un recruteur.', pts:['Note sur 10 et points forts','Ce qu\'il faut corriger en priorité','Des formulations prêtes à l\'emploi'], chips:['CV','Lettre','Contrat'] } }
+      mount({ host:h4, id:'ws4', key:'ws4', bar:false, steps:[
+        { make:function(){ return cover(t,{ name:'Analyse de document', handle:t.h+' · analyse', ic:'doc', bio:'Dépose ton CV, ta lettre ou ton contrat : je le lis comme un recruteur et je te donne une note sur 10.', stats:[['/10','note'],['Points','forts'],['Conseils','précis']] }); }, feed:false, wait:1500 },
+        { msg:'Choisis ton document juste en dessous, je m\'occupe du reste.' }
       ]});
     } else if(n===6){
       var h6=P.firstElementChild; if(!h6) return;
-      hide([h6.firstElementChild && !h6.firstElementChild.classList.contains('evx') ? h6.firstElementChild : null]);
-      mount({ host:h6, id:'ws6', key:'ws6', label:'Documents', bar:false, steps:[
-        { msg:'Ici, tu ranges tous tes <b>documents importants</b> au même endroit 📂 CV, lettres, dossiers administratifs : fini les recherches interminables.' },
-        { slide:{ g:'pf', ic:'folder', n:'Documents importants', t:'Tes documents, bien rangés', lead:'Un classeur numérique simple, classé par type et par date.', pts:['Tes versions de CV, rangées par date','Une lettre par candidature','Tes dossiers administratifs'], chips:['Privé','Organisé','Accessible'] } }
+      var f=h6.firstElementChild; if(f && !f.classList.contains('evx')) hide([f]);
+      mount({ host:h6, id:'ws6', key:'ws6', bar:false, steps:[
+        { make:function(){ return cover(TH.pf,{ name:'Documents importants', handle:TH.pf.h+' · documents', bio:'Un classeur numérique simple : CV, lettres, dossiers administratifs, classés par type et par date.', stats:[['CV','par date'],['Lettres','par offre'],['Privé','100 %']] }); }, feed:false, wait:1500 },
+        { msg:'Ici, tu ranges tous tes <b>documents importants</b> au même endroit. Fini les recherches interminables.' }
       ]});
     }
   }
-
-  /* ───────── PORTFOLIO : décor réseau social, présentation des outils dans l'ordre ───────── */
+  // PORTFOLIO (réseau social)
   var PF_TXT={
-    agenda:['Tes rendez-vous, entretiens et échéances au même endroit. Je t\'aide à ne rien oublier.','Organisation','Bloque 30 min chaque lundi pour planifier ta semaine.'],
+    agenda:['Tes rendez-vous, entretiens et échéances au même endroit. Je t\'aide à ne rien oublier.','Organisation','Bloque 30 minutes chaque lundi pour planifier ta semaine.'],
     notes:['Tes documents et notes perso : CV, lettres, idées… tout est rangé et retrouvé en 2 secondes.','Documents','Donne un nom clair à chaque document : « CV_Poste_Date ».'],
-    contacts:['Ton réseau pro : recruteurs, conseillers, clients. Garde une trace de chaque échange.','Réseau','Note la date et le sujet de chaque échange, c\'est ce qui fait la différence.'],
+    contacts:['Ton réseau pro : recruteurs, conseillers, clients. Garde une trace de chaque échange.','Réseau','Note la date et le sujet de chaque échange.'],
     profil:['Ton suivi personnalisé selon ton profil : les étapes clés et où tu en es.','Suivi','Mets à jour ton suivi à chaud, juste après chaque étape.'],
-    guide:['Mon guide pratique : des conseils concrets, adaptés à ta situation.','Guide','Lis un chapitre par jour, c\'est plus efficace qu\'une lecture d\'un coup.'],
+    guide:['Mon guide pratique : des conseils concrets, adaptés à ta situation.','Guide','Lis un chapitre par jour, c\'est plus efficace.'],
     doc:['Dépose un CV, une lettre ou un contrat : je l\'analyse et je te donne une note sur 10.','Analyse','Fais analyser ton CV avant chaque candidature importante.'],
-    orgpro:['Les organismes utiles à ton profil, avec téléphone et site en un clic.','Contacts pro','Appelle en début de matinée : c\'est là qu\'on obtient le plus vite une réponse.']
+    orgpro:['Les organismes utiles à ton profil, avec téléphone et site en un clic.','Contacts pro','Appelle en début de matinée : c\'est là qu\'on répond le plus vite.']
   };
-  function pfItems(){
-    var cfg={emoji:'🎯',label:'Suivi'}; try{ cfg=PF_PROFILE_CFG[EWP]||PF_PROFILE_CFG['dem']; }catch(e){}
-    var I={}; try{ I=PF_ICONS; }catch(e){}
-    return [
-      {k:'agenda',ico:I.agenda||'📅',ttl:'Agenda',col:'#60a5fa',c2:'#2563eb'},
-      {k:'notes',ico:I.notes||'📝',ttl:'Documents',col:'#a78bfa',c2:'#7c3aed'},
-      {k:'contacts',ico:I.contacts||'👥',ttl:'Contacts',col:'#22d3ee',c2:'#0891b2'},
-      {k:'profil',ico:cfg.emoji,ttl:cfg.label,col:'#34d399',c2:'#059669'},
-      {k:'guide',ico:I.book||'📘',ttl:'Guide pratique',col:'#f472b6',c2:'#db2777'},
-      {k:'doc',ico:I.doc||'📄',ttl:'Analyser un document',col:'#94a3b8',c2:'#475569'},
-      {k:'orgpro',ico:I['case']||'💼',ttl:'Contacts professionnels',col:'#38bdf8',c2:'#0284c7'}
-    ];
-  }
-  function pfOpen(k){ if(typeof window.ewOpenPortfolioToTab==='function') window.ewOpenPortfolioToTab(k); }
-  function pfPost(it,i,n){
-    var t=PF_TXT[it.k]||['', it.ttl, ''];
-    var c=el('div','pfs-post');
-    c.innerHTML='<div class="pfs-ph"><div class="pfs-pa"><b style="color:'+it.c2+'">'+it.ico+'</b></div><div class="pfs-pn"><strong>'+esc(it.ttl)+'</strong><span>EVA te présente · outil '+(i+1)+'/'+n+'</span></div><div class="pfs-dots">•••</div></div>'
-      +'<div class="pfs-tx">'+esc(t[0])+'</div>'
-      +'<div class="pfs-md" style="background:linear-gradient(135deg,'+it.c2+','+it.col+')"><div class="ic">'+it.ico+'</div><div><span class="tg">#'+esc(t[1])+'</span><div class="tt">'+esc(it.ttl)+'</div></div></div>'
-      +'<div class="pfs-ac"><button type="button" data-a="like">♡ Utile</button><button type="button" data-a="tip">💬 Conseil</button><button type="button" class="pri" data-a="open">Ouvrir →</button></div>';
-    c.addEventListener('click',function(e){
-      var b=e.target.closest('button'); if(!b) return; e.stopPropagation();
-      var a=b.getAttribute('data-a');
-      if(a==='open') pfOpen(it.k);
-      else if(a==='like'){ b.classList.toggle('on'); b.textContent=b.classList.contains('on')?'♥ Utile':'♡ Utile'; }
-      else if(a==='tip'){ if(typeof window.ecShowToast==='function') window.ecShowToast('💡 '+t[2]); }
-    });
-    return c;
-  }
   function pfShow(){
-    var msgs=document.getElementById('ec-msgs'); if(!msgs) return;
+    var msgs=document.getElementById('ec-msgs'); if(!msgs) return; var t=TH.pf;
     var old=document.getElementById('ec-pf-inline-wrap'); if(old) old.remove();
-    var items=pfItems(), who=nom()||'toi';
+    var cfg={emoji:'',label:'Suivi'}, I={}; try{ cfg=PF_PROFILE_CFG[EWP]||PF_PROFILE_CFG['dem']; I=PF_ICONS; }catch(e){}
+    var items=[
+      {k:'agenda',ico:I.agenda,ttl:'Agenda',c1:'#2563eb',c2:'#60a5fa'},{k:'notes',ico:I.notes,ttl:'Documents',c1:'#7c3aed',c2:'#a78bfa'},
+      {k:'contacts',ico:I.contacts,ttl:'Contacts',c1:'#0891b2',c2:'#22d3ee'},{k:'profil',ico:cfg.emoji,ttl:cfg.label,c1:'#059669',c2:'#34d399'},
+      {k:'guide',ico:I.book,ttl:'Guide pratique',c1:'#db2777',c2:'#f472b6'},{k:'doc',ico:I.doc,ttl:'Analyser un document',c1:'#475569',c2:'#94a3b8'},
+      {k:'orgpro',ico:I['case'],ttl:'Contacts professionnels',c1:'#0284c7',c2:'#38bdf8'}
+    ].map(function(it){ it.ico=it.ico||S(IC.folder,'currentColor'); it.fn=function(){ if(typeof window.ewOpenPortfolioToTab==='function') window.ewOpenPortfolioToTab(it.k); }; return it; });
     var w=el('div','pfs'); w.id='ec-pf-inline-wrap'; msgs.appendChild(w);
-    var cover=function(){
-      var c=el('div','pfs-card');
-      c.innerHTML='<div class="pfs-cv"><span>✦ ESPACE PRIVÉ</span></div><div class="pfs-in"><div class="pfs-av"><b>'+S(IC.eva)+'</b></div>'
-        +'<div class="pfs-nm">Mon Portfolio <i>'+S('<path d="m5 12 5 5L20 7"/>')+'</i></div><div class="pfs-hd">@eva.portfolio · '+esc(who)+'</div>'
-        +'<div class="pfs-bio">Ton espace de travail et la gestion de tes documents. Organise-toi, range tout, retrouve tout — EVA t\'accompagne à chaque étape.</div>'
-        +'<div class="pfs-stats"><div><b>'+items.length+'</b><span>outils</span></div><div><b>100 %</b><span>privé</span></div><div><b>24h/24</b><span>avec EVA</span></div></div></div>';
-      return c;
-    };
     var steps=[
-      { make:cover, wait:900 },
-      { msg:'Bienvenue dans ton <b>Portfolio</b> 📂 C\'est ton espace de travail : tu ranges tes documents, tu t\'organises et tu gardes tout au même endroit.' },
-      { msg:'Je te présente tes outils, <b>dans l\'ordre</b> 👇' }
+      { make:function(){ return cover(t,{ name:'Mon Portfolio', handle:t.h+' · '+(nom()||'mon espace'), badge:'ESPACE PRIVÉ', bio:'Ton espace de travail et la gestion de tes documents. Organise-toi, range tout, retrouve tout.', stats:[[items.length,'outils'],['100 %','privé'],['24h/24','avec EVA']] }); }, feed:false, wait:2000 },
+      { msg:'Bienvenue dans ton <b>Portfolio</b>. C\'est ton espace de travail : tu ranges tes documents, tu t\'organises et tu gardes tout au même endroit.' },
+      { msg:'Je te présente tes outils, <b>dans l\'ordre</b>.' }
     ];
-    items.forEach(function(it,i){ steps.push({ make:function(){ var f=el('div','pfs-feed'); f.appendChild(pfPost(it,i,items.length)); return f; }, wait:1100 }); });
-    steps.push({ msg:'À toi de jouer : <b>par quoi on commence ?</b> ✨' });
-    steps.push({ make:function(){
-      var s=el('div','pfs-st');
-      items.forEach(function(it){ var b=el('button',null,'<span class="rg"><b style="color:'+it.c2+'">'+it.ico+'</b></span>'+esc(it.ttl)); b.type='button'; b.onclick=function(){ pfOpen(it.k); }; s.appendChild(b); });
-      return s;
-    } });
-    mount({ host:w, id:'pf', key:'pf', bar:false, follow:true, steps:steps });
+    items.forEach(function(it,i){ var d=PF_TXT[it.k]||['',it.ttl,'']; steps.push({ make:function(){ return post(t,{ ico:it.ico, big:it.ico, ttl:esc(it.ttl), c1:it.c1, c2:it.c2, meta:'Outil '+(i+1)+'/'+items.length, tag:d[1], txt:esc(d[0]), tip:d[2], actions:[{l:'Ouvrir',pri:true,fn:it.fn}] }); } }); });
+    steps.push({ msg:'À toi de jouer : <b>par quoi on commence ?</b>' });
+    steps.push({ make:function(){ return stories(t,items.map(function(it){ return { ico:it.ico, ttl:esc(it.ttl), c1:it.c1, fn:it.fn }; })); } });
+    mount({ host:w, id:'pf', key:'pf', bar:false, steps:steps });
   }
-
-  /* ───────── QUIZ & MISES EN SITUATION : briefing avant, bilan après ───────── */
+  // QUIZ (accueil)
+  function quizHub(){
+    var sc=document.getElementById('s-eva-entretien'); if(!sc) return; var t=TH.quiz;
+    var body=q('.eva-sub-body',sc); if(!body) return;
+    var list=null, dark=null; [].forEach.call(body.children,function(c){ var s=c.getAttribute('style')||''; if(/padding:16px 16px 40px/.test(s)) list=c; if(/#0f2447/.test(s)) dark=c; });
+    if(!list) return;
+    hide([dark, list, q('.ev-hero',body)]); body.classList.add('evx-pad0'); sc.classList.add('evx-page');
+    var blocks=[].filter.call(list.children,function(c){ return c.querySelectorAll('[onclick^="go("]').length>=2; });
+    var note=[].filter.call(list.children,function(c){ return /Eva vous dit/.test(c.textContent||''); })[0];
+    var items=blocks.map(function(b){
+      var head=b.firstElementChild, acts=b.querySelectorAll('[onclick^="go("]');
+      var nm=head ? txt(head.querySelector('div[style*="font-weight:700"]')) : '', sub=head ? txt(head.querySelector('div[style*=".54rem"]')) : '';
+      var d1=txt(acts[0].querySelector('div[style*=".64rem"]')), d2=txt(acts[1].querySelector('div[style*=".64rem"]'));
+      return { ico:svgOf(head), big:svgOf(head,'#fff'), ttl:esc(nm), sub:sub, d1:d1, d2:d2, qcm:function(){ acts[0].click(); }, sim:function(){ acts[1].click(); } };
+    });
+    var posts=[];
+    var steps=[
+      { make:function(){ return cover(t,{ name:'Quiz & mises en situation', bio:'Des QCM pour vérifier tes connaissances, et des simulations réalistes pour t\'entraîner face à un recruteur.', stats:[[items.length,'profils'],['QCM','+ simulation'],['Bilan','à la fin']] }); }, feed:false, wait:2000 },
+      { msg:'Prêt(e) à t\'entraîner ? Ici, on prépare tes <b>entretiens</b> : connaître la théorie, c\'est bien — savoir réagir face à un recruteur, c\'est mieux.' },
+      { msg:'Pour chaque profil, tu as un <b>QCM</b> et une <b>mise en situation</b>. Je te les présente.' }
+    ];
+    items.forEach(function(it,i){ steps.push({ make:function(){ var p=post(t,{ ico:it.ico, big:it.big, ttl:it.ttl, meta:'Profil '+(i+1)+'/'+items.length+' · '+it.sub, tag:'Entraînement',
+      txt:'<ul><li><i>'+S(IC.check,'currentColor',2.6)+'</i><span><b>QCM :</b> '+esc(it.d1)+'</span></li><li><i>'+S(IC.target,'currentColor',2.2)+'</i><span><b>Mise en situation :</b> '+esc(it.d2)+'</span></li></ul>',
+      tip:'Commence par le QCM, puis passe à la simulation : tu seras plus à l\'aise.', actions:[{l:'QCM',fn:it.qcm},{l:'Simulation',pri:true,fn:it.sim}] }); posts[i]=p; return p; } }); });
+    steps.push({ msg:'À toi : <b>choisis ton profil</b>.' });
+    steps.push({ make:function(){ return stories(t,items.map(function(it,i){ return { ico:it.ico, ttl:it.ttl, fn:function(){ scrollToEl(posts[i]); } }; })); } });
+    if(note) steps.push({ msg:esc(txt(note).replace(/^Eva vous dit\s*:\s*/,'')) });
+    mount({ host:body, id:'hub', key:'hub-quiz', label:'Quiz & mises en situation', bar:true, steps:steps });
+  }
+  // QUIZ : briefing + bilan
   var KEY={salarie:'sal',demandeur:'dem',reconversion:'rec',freelance:'frl'};
   var LBL={salarie:'Salarié',demandeur:'Demandeur d\'emploi',reconversion:'Reconversion',freelance:'Freelance'};
   var SIM={
-    salarie:{who:'Claire, DRH d\'une PME',goal:'convaincre sur ton expérience et ta posture',tips:['Réponds avec la méthode STAR : situation, tâche, action, résultat.','Donne un chiffre ou un exemple concret à chaque fois.','Reste positif(ve), même sur une question piège.']},
-    demandeur:{who:'Marc, recruteur terrain',goal:'présenter ta période de recherche avec assurance',tips:['Présente ta recherche comme un projet, pas comme un vide.','Montre ce que tu as appris ou fait pendant cette période.','Termine chaque réponse sur ta motivation pour le poste.']},
-    reconversion:{who:'Sophie, conseillère bilan',goal:'défendre ton projet de reconversion',tips:['Explique ton « pourquoi » en une phrase claire.','Relie tes compétences d\'avant à ton nouveau métier.','Montre que ton projet est préparé : formation, financement, calendrier.']},
-    freelance:{who:'Thomas, client potentiel',goal:'vendre ta mission et ton tarif',tips:['Parle du résultat pour le client, pas seulement de ta technique.','Annonce ton tarif avec calme, sans te justifier.','Propose une prochaine étape concrète à la fin.']}
+    salarie:{who:'Claire',role:'DRH d\'une PME',goal:'convaincre sur ton expérience et ta posture',tips:['Réponds avec la méthode STAR : situation, tâche, action, résultat.','Donne un chiffre ou un exemple concret à chaque fois.','Reste positif(ve), même sur une question piège.']},
+    demandeur:{who:'Marc',role:'recruteur terrain',goal:'présenter ta période de recherche avec assurance',tips:['Présente ta recherche comme un projet, pas comme un vide.','Montre ce que tu as appris ou fait pendant cette période.','Termine chaque réponse sur ta motivation pour le poste.']},
+    reconversion:{who:'Sophie',role:'conseillère bilan',goal:'défendre ton projet de reconversion',tips:['Explique ton « pourquoi » en une phrase claire.','Relie tes compétences d\'avant à ton nouveau métier.','Montre que ton projet est préparé : formation, financement, calendrier.']},
+    freelance:{who:'Thomas',role:'client potentiel',goal:'vendre ta mission et ton tarif',tips:['Parle du résultat pour le client, pas seulement de ta technique.','Annonce ton tarif avec calme, sans te justifier.','Propose une prochaine étape concrète à la fin.']}
   };
+  function tipsList(a){ return '<ul>'+a.map(function(x,i){ return '<li><i>'+(i+1)+'</i><span>'+esc(x)+'</span></li>'; }).join('')+'</ul>'; }
   function brief(kind,profil,orig){
     var k=KEY[profil]; if(!k) return orig(profil);
-    var pre=kind==='qcm'?'nq-':'ns-';
+    var pre=kind==='qcm'?'nq-':'ns-', t=TH.quiz;
     var feed=document.getElementById(pre+k+'-feed'), ch=document.getElementById(pre+k+'-choices');
     if(!feed||!ch) return orig(profil);
     feed.innerHTML=''; ch.innerHTML='';
     var host=el('div','evx-brief'); feed.appendChild(host);
     var sim=SIM[profil]||SIM.salarie, steps;
     if(kind==='qcm') steps=[
-      { msg:'Avant de commencer, je te présente ton défi 🎯' },
-      { slide:{ g:'quiz', ic:'quiz', n:'QCM · '+LBL[profil], t:'Teste tes connaissances', lead:'Des questions tirées au hasard sur tes droits et ta préparation. Une seule bonne réponse, et l\'explication juste après.', pts:['25 questions, un nouveau tirage à chaque session','Correction et explication immédiates','Un bilan personnalisé à la fin'], chips:['Droits','Préparation','Feedback'] } },
-      { msg:'Mes 3 conseils : <b>lis chaque proposition jusqu\'au bout</b>, méfie-toi des chiffres proches (jours ouvrables ou calendaires), et si tu hésites, <b>élimine d\'abord les réponses trop absolues</b>.' },
-      { msg:'Prêt(e) ? Quand tu veux 👇' }
+      { make:function(){ return cover(t,{ name:'QCM · '+LBL[profil], handle:t.h+' · qcm', ic:'quiz', bio:'Des questions tirées au hasard sur tes droits et ta préparation. Une seule bonne réponse, et l\'explication juste après.', stats:[['25','questions'],['Direct','correction'],['Bilan','EVA']] }); }, feed:false, wait:2000 },
+      { msg:'Avant de commencer, je te présente ton défi.' },
+      { make:function(){ return post(t,{ ttl:'Mes 3 conseils', meta:'Avant de répondre', media:false, txt:tipsList(['Lis chaque proposition jusqu\'au bout.','Méfie-toi des chiffres proches : jours ouvrables ou calendaires.','Si tu hésites, élimine d\'abord les réponses trop absolues.']) }); } },
+      { msg:'Prêt(e) ? Quand tu veux.' }
     ]; else steps=[
-      { msg:'Avant l\'entretien, je te briefe 🎬' },
-      { slide:{ g:'quiz', ic:'target', n:'Mise en situation · '+LBL[profil], t:'Face à '+esc(sim.who.split(',')[0]), lead:'Une simulation réaliste : réponds comme si tu y étais vraiment.', pts:['<b>Ton interlocuteur :</b> '+esc(sim.who),'<b>Ton objectif :</b> '+esc(sim.goal),'<b>À la fin :</b> ton bilan et tes axes de progrès'], chips:['Entretien','Posture','Réalisme'] } },
-      { msg:'Mes 3 conseils : 1) '+esc(sim.tips[0])+' 2) '+esc(sim.tips[1])+' 3) '+esc(sim.tips[2]) },
-      { msg:'Respire, on y va quand tu es prêt(e) 👇' }
+      { make:function(){ return cover(t,{ name:'Face à '+esc(sim.who), handle:t.h+' · simulation', ic:'target', bio:'Une simulation réaliste d\'entretien : réponds comme si tu y étais vraiment.', stats:[[esc(sim.who),esc(sim.role)],['Réaliste','dialogue'],['Bilan','EVA']] }); }, feed:false, wait:2000 },
+      { msg:'Avant l\'entretien, je te briefe.' },
+      { make:function(){ return post(t,{ ttl:'Ton brief', meta:'Mise en situation · '+LBL[profil], media:false, txt:'<ul><li><i>'+S(IC.user,'currentColor',2.2)+'</i><span><b>Ton interlocuteur :</b> '+esc(sim.who)+', '+esc(sim.role)+'</span></li><li><i>'+S(IC.flag,'currentColor',2.2)+'</i><span><b>Ton objectif :</b> '+esc(sim.goal)+'</span></li><li><i>'+S(IC.star,'currentColor',2.2)+'</i><span><b>À la fin :</b> ton bilan et tes axes de progrès</span></li></ul>' }); } },
+      { make:function(){ return post(t,{ ttl:'Mes 3 conseils', meta:'Pour réussir', media:false, txt:tipsList(sim.tips) }); } },
+      { msg:'Respire, on y va quand tu es prêt(e).' }
     ];
-    var slot=mount({ host:host, id:'brief', key:kind+'-'+profil, bar:false, follow:true, steps:steps, done:function(){
+    mount({ host:host, id:'brief', key:kind+'-'+profil, bar:false, steps:steps, done:function(){
       if(ch.querySelector('.evx-go')) return;
-      ch.innerHTML='';
-      var b=el('button','evx-go',kind==='qcm'?'Commencer le QCM →':'Entrer dans la simulation →'); b.type='button';
+      var b=el('button','evx-go',kind==='qcm'?'Commencer le QCM':'Entrer dans la simulation'); b.type='button';
       b.onclick=function(){ ch.innerHTML=''; orig(profil); feed.insertBefore(host,feed.firstChild); };
       ch.appendChild(b);
     }});
-    return slot;
   }
   function bilan(res){
-    if(!res || res.querySelector('.evx-bilan') || !res.querySelector('.nova-result-score')) return;
-    var t=(res.querySelector('.nova-result-score').textContent||'').replace(/\s/g,''), m=t.match(/(\d+)\/(\d+)/);
-    var pct=m ? Math.round(+m[1]/Math.max(1,+m[2])*100) : 50;
+    if(!res || res.querySelector('.evx-bilan-wrap') || !res.querySelector('.nova-result-score')) return;
+    var m=(res.querySelector('.nova-result-score').textContent||'').replace(/\s/g,'').match(/(\d+)\/(\d+)/);
+    var pct=m ? Math.round(+m[1]/Math.max(1,+m[2])*100) : 50, t=TH.quiz;
     var sim=/mise-situation/.test((res.closest('.nova-screen')||{}).id||'');
     var good = pct>=80 ? 'Tu maîtrises le sujet : tes réponses sont précises et sûres.' : pct>=60 ? 'Tu as de bonnes bases : l\'essentiel est acquis.' : pct>=40 ? 'Tu progresses : plusieurs réflexes sont déjà là.' : 'Tu as osé te tester, et c\'est le premier pas.';
-    var work = pct>=80 ? 'Affine les détails qui font la différence : délais, montants, formulations.' : pct>=60 ? 'Revois les points où tu as hésité : ce sont eux qui piègent le plus.' : 'Reprends les fondamentaux, un thème à la fois, avec les articles Droits & aides.';
+    var work = pct>=80 ? 'Affine les détails qui font la différence : délais, montants, formulations.' : pct>=60 ? 'Revois les points où tu as hésité : ce sont eux qui piègent le plus.' : 'Reprends les fondamentaux, un thème à la fois, avec Droits & aides.';
     var next = pct>=80 ? (sim ? 'Passe au QCM pour verrouiller tes connaissances.' : 'Passe à une mise en situation face à un recruteur.') : 'Refais une session dans 2 ou 3 jours : les questions changent à chaque fois.';
     var box=el('div','evx-bilan-wrap');
-    box.appendChild(msgRow('Voici mon bilan '+(pct>=60?'🎉':'💪')+' Prends 30 secondes pour le lire, c\'est là que tu progresses le plus.')[0]);
-    box.appendChild(actions('Le bilan d\'EVA · '+pct+' %',[{i:'✅',t:'<b>Ce qui est bien :</b> '+good},{i:'🎯',t:'<b>À travailler :</b> '+work},{i:'🚀',t:'<b>Prochaine étape :</b> '+next}],
-      [{ l:'Lire les articles Droits', fn:function(){ go('eva-droits'); } },{ l:'Retour aux quiz', pri:true, fn:function(){ go('eva-entretien'); } }],'evx-bilan'));
+    box.appendChild(msgRow('Voici mon bilan. Prends 30 secondes pour le lire : c\'est là que tu progresses le plus.')[0]);
+    box.appendChild(post(t,{ ttl:'Le bilan d\'EVA · '+pct+' %', meta:sim?'Mise en situation':'QCM', media:false,
+      txt:'<ul><li><i>'+S(IC.check,'currentColor',2.6)+'</i><span><b>Ce qui est bien :</b> '+good+'</span></li><li><i>'+S(IC.target,'currentColor',2.2)+'</i><span><b>À travailler :</b> '+work+'</span></li><li><i>'+S(IC.up,'currentColor',2.2)+'</i><span><b>Prochaine étape :</b> '+next+'</span></li></ul>',
+      actions:[{l:'Droits & aides',fn:function(){ go('eva-droits'); }},{l:'Retour aux quiz',pri:true,fn:function(){ go('eva-entretien'); }}] }));
     res.insertBefore(box,res.firstChild);
   }
-
-  /* ───────── MOTIVATION & ÉQUILIBRE : même hero en tête ───────── */
+  // MOTIVATION & ÉQUILIBRE
   function ebHero(){
     var b=document.getElementById('eb-body'); if(!b || !b.firstElementChild) return;
-    if(b.firstElementChild.classList && b.firstElementChild.classList.contains('evx-ebh')) return;
+    if(b.firstElementChild.classList.contains('evx-ebh')) return;
     var old=b.querySelector('.evx-ebh'); if(old) old.remove();
-    var h=el('div','evx-ebh');
-    h.appendChild(slide({ g:'motiv', ic:'motiv', n:'Motivation & Équilibre', t:'Un moment rien que pour toi', lead:'Un petit rituel pour faire le point, avec bienveillance et sans jugement.', pts:['Des questions guidées selon ton profil et ton moment','15 ou 25 questions, à ton rythme','Un bilan personnalisé et des pistes concrètes'], chips:['Confiance','Stress','Organisation'] }));
+    var h=el('div','evx-ebh'); h.appendChild(cover(TH.motiv,{ name:'Motivation & Équilibre', bio:'Un petit rituel pour faire le point, avec bienveillance et sans jugement. Des questions guidées selon ton profil et ton moment de la journée.', stats:[['15 ou 25','questions'],['5 min','environ'],['100 %','bienveillant']] }));
     b.insertBefore(h,b.firstChild);
   }
-
-  /* ───────── SUIVI DE MA MOTIVATION : EVA présente chaque onglet ───────── */
-  function jnl(i){
-    if(!i) return;
-    var b=document.getElementById('jnl-body'); if(!b) return;
-    var host=el('div'); b.insertBefore(host,b.firstChild);
-    mount({ host:host, id:'jnl'+i, key:'jnl'+i, bar:false, steps: i===1 ? [
-      { msg:'Voici <b>ta semaine</b> 📈 Ton évolution jour après jour et le radar de ton équilibre. Regarde surtout ton pilier le plus bas : c\'est là qu\'une petite action change tout.' }
-    ] : [
-      { msg:'Ici, <b>je te parle</b> 💜 Mon analyse de tes derniers bilans, et mes conseils pour les prochains jours.' }
-    ]});
+  // SUIVI DE MA MOTIVATION
+  function jload(){ try{ return JSON.parse(localStorage.getItem('jnl_v2')||'{}')||{}; }catch(e){ return {}; } }
+  function tracker(){
+    var sc=document.getElementById('s-eva-tracker'); if(!sc) return; var t=TH.suivi;
+    var tabs=q('.jnl-tabs',sc), body=document.getElementById('jnl-body'); if(!tabs||!body) return;
+    var scroll=q('.evx-scroll',sc);
+    if(!scroll){ scroll=el('div','evx-scroll'); sc.insertBefore(scroll,tabs); }
+    var jw=q('.evx-jnl',sc); if(!jw){ jw=el('div','evx-jnl'); jw.appendChild(tabs); jw.appendChild(body); }
+    sc.classList.add('evx-page');
+    var d=jload(), n=(d.entries||[]).length, last=n ? d.entries[n-1].avg : '—';
+    var tabsInfo=[[IC.pen,'Bilan du jour','Deux minutes pour noter tes 4 piliers : énergie, finances, mental et confiance.'],[IC.suivi,'Mon suivi','Ta courbe par semaine, par mois et par année, et la moyenne de chaque pilier.'],[IC.chat,'EVA parle','Mon analyse de tes bilans et mes conseils, dès ta 2e évaluation.']];
+    var steps=[
+      { make:function(){ return cover(t,{ name:'Suivi de ma motivation', bio:'Note ton état, visualise ton évolution et reçois mes conseils, jour après jour.', stats:[[d.streak||0,'jours de suite'],[n,'bilans'],[last,'dernier score']] }); }, feed:false, wait:2000 },
+      { msg:'Bienvenue dans ton <b>Suivi de ma motivation</b>. Deux minutes par jour suffisent pour voir ton chemin parcouru.' },
+      { msg:'Ton journal a 3 espaces. Je te les présente.' }
+    ];
+    tabsInfo.forEach(function(x,i){ steps.push({ make:function(){ return post(t,{ ico:S(x[0],t.c1,2), big:S(x[0]), ttl:x[1], meta:'Espace '+(i+1)+'/3', tag:'Suivi', txt:x[2], actions:[{l:'Ouvrir',pri:true,fn:function(){ var sl=q('.evx[data-slot="trk"]',sc); if(jw.parentNode && jw.parentNode.classList.contains('evx-park') && sl && sl._static) sl._static(); jnlTab(i); setTimeout(function(){ scrollToEl(jw); },120); }}] }); } }); });
+    steps.push({ msg:'C\'est parti : ton journal est juste ici.' });
+    steps.push({ node:jw });
+    mount({ host:scroll, id:'trk', key:'trk', label:'Suivi de ma motivation', bar:true, steps:steps });
   }
-
-  /* ───────── À PROPOS D'EVA ───────── */
+  var PIL=[['energie','Énergie','#f59e0b'],['argent','Finances','#10b981'],['mental','Mental','#8b5cf6'],['amour','Confiance','#f43f5e']];
+  function pd(s){ var a=String(s||'').split('-'); return new Date(+a[0],(+a[1]||1)-1,+a[2]||1); }
+  function r1(x){ return Math.round(x*10)/10; }
+  var PERIOD='week';
+  function series(entries,per){
+    var now=new Date(); now.setHours(0,0,0,0); var pts=[];
+    if(per==='year'){
+      for(var m=11;m>=0;m--){ var dt=new Date(now.getFullYear(),now.getMonth()-m,1);
+        var es=entries.filter(function(e){ var x=pd(e.date); return x.getFullYear()===dt.getFullYear() && x.getMonth()===dt.getMonth(); });
+        pts.push({ l:['janv.','févr.','mars','avr.','mai','juin','juil.','août','sept.','oct.','nov.','déc.'][dt.getMonth()], v:es.length?r1(es.reduce(function(a,e){return a+e.avg;},0)/es.length):null, n:es.length }); }
+    } else {
+      var days=per==='month'?30:7;
+      for(var i=days-1;i>=0;i--){ var dd=new Date(now); dd.setDate(now.getDate()-i);
+        var e=entries.filter(function(x){ return +pd(x.date)===+dd; })[0];
+        pts.push({ l:per==='week'?['dim.','lun.','mar.','mer.','jeu.','ven.','sam.'][dd.getDay()]:(dd.getDate()+'/'+(dd.getMonth()+1)), v:e?e.avg:null, n:e?1:0 }); }
+    }
+    return pts;
+  }
+  function inPeriod(entries,per){ var now=new Date(); now.setHours(0,0,0,0); var from=new Date(now);
+    if(per==='week') from.setDate(now.getDate()-6); else if(per==='month') from.setDate(now.getDate()-29); else from=new Date(now.getFullYear(),now.getMonth()-11,1);
+    return entries.filter(function(e){ return pd(e.date)>=from; }); }
+  function chart(pts){
+    var W=window.innerWidth<900?340:600,H=window.innerWidth<900?170:190,L=24,R=10,T=14,B=26, n=pts.length, x=function(i){ return L+(n<2?0:(W-L-R)*i/(n-1)); }, y=function(v){ return T+(H-T-B)*(1-v/10); };
+    var g=''; [0,5,10].forEach(function(v){ g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(v)+'" y2="'+y(v)+'" stroke="#eef2f7" stroke-width="1"/><text x="'+(L-8)+'" y="'+(y(v)+3.5)+'" text-anchor="end" font-size="10" fill="#94a3b8">'+v+'</text>'; });
+    var step=Math.max(1,Math.ceil(n/7)), lab=''; pts.forEach(function(p,i){ if(i%step===0 || i===n-1) lab+='<text x="'+x(i)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10" fill="#94a3b8">'+p.l+'</text>'; });
+    var segs=[], cur=[]; pts.forEach(function(p,i){ if(p.v==null){ if(cur.length) segs.push(cur); cur=[]; } else cur.push([x(i),y(p.v)]); }); if(cur.length) segs.push(cur);
+    var line='', area=''; segs.forEach(function(s){ var d=s.map(function(p,i){ return (i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1); }).join(' '); line+='<path d="'+d+'" fill="none" stroke="#6d28d9" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>'; if(s.length>1) area+='<path d="'+d+' L'+s[s.length-1][0].toFixed(1)+' '+y(0)+' L'+s[0][0].toFixed(1)+' '+y(0)+' Z" fill="url(#trkg)"/>'; });
+    var dots=''; pts.forEach(function(p,i){ if(p.v==null) return; dots+='<g class="pt" data-t="'+p.l+' : '+p.v+'/10'+(p.n>1?' · '+p.n+' bilans':'')+'" data-x="'+x(i)+'" data-y="'+y(p.v)+'"><circle cx="'+x(i)+'" cy="'+y(p.v)+'" r="12" fill="transparent"/><circle class="v" cx="'+x(i)+'" cy="'+y(p.v)+'" r="4.5" fill="#6d28d9" stroke="#fff" stroke-width="2"/></g>'; });
+    return '<svg class="trk-ch" data-w="'+W+'" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Évolution de ta moyenne"><defs><linearGradient id="trkg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8b5cf6" stop-opacity=".22"/><stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/></linearGradient></defs>'+g+area+line+dots+lab+'</svg>';
+  }
+  function trackCard(){
+    var d=jload(), entries=(d.entries||[]).slice().sort(function(a,b){ return pd(a.date)-pd(b.date); });
+    var c=el('div','trk'); c.style.position='relative';
+    function draw(){
+      var es=inPeriod(entries,PERIOD), avg=es.length?r1(es.reduce(function(a,e){return a+e.avg;},0)/es.length):'—';
+      var lbl={week:'cette semaine',month:'ce mois-ci',year:'cette année'}[PERIOD];
+      var h='<div class="trk-hd"><h4>Mon suivi</h4><div class="trk-seg">'+[['week','Semaine'],['month','Mois'],['year','Année']].map(function(p){ return '<button type="button" data-p="'+p[0]+'" class="'+(PERIOD===p[0]?'on':'')+'">'+p[1]+'</button>'; }).join('')+'</div></div>';
+      if(!entries.length){ h+='<div class="trk-empty">Fais ton premier bilan du jour : ta courbe apparaîtra ici, par semaine, par mois et par année.</div>'; c.innerHTML=h; return; }
+      h+='<div class="trk-kpi"><b>'+avg+'</b><span>moyenne '+lbl+' · '+es.length+' bilan'+(es.length>1?'s':'')+'</span></div>'+chart(series(entries,PERIOD));
+      h+='<div class="trk-pl">'+PIL.map(function(p){ var v=es.length?r1(es.reduce(function(a,e){ return a+((e.scores&&e.scores[p[0]])||5); },0)/es.length):0; return '<div><span>'+p[1]+'</span><i><b style="width:'+(v*10)+'%;background:'+p[2]+'"></b></i><em>'+(es.length?v:'—')+'</em></div>'; }).join('')+'</div>';
+      h+='<div class="trk-tip"></div>';
+      c.innerHTML=h;
+    }
+    c.addEventListener('click',function(e){ var b=e.target.closest('.trk-seg button'); if(b){ PERIOD=b.getAttribute('data-p'); draw(); } });
+    c.addEventListener('mouseover',function(e){ var g=e.target.closest && e.target.closest('.pt'), tip=q('.trk-tip',c), sv=q('svg.trk-ch',c); if(!tip||!sv) return; if(!g){ tip.style.opacity=0; return; }
+      var r=sv.getBoundingClientRect(), cr=c.getBoundingClientRect(), k=r.width/(+sv.getAttribute('data-w')||600); tip.textContent=g.getAttribute('data-t'); tip.style.left=(r.left-cr.left+(+g.getAttribute('data-x'))*k)+'px'; tip.style.top=(r.top-cr.top+(+g.getAttribute('data-y'))*k)+'px'; tip.style.opacity=1; });
+    c.addEventListener('mouseleave',function(){ var tip=q('.trk-tip',c); if(tip) tip.style.opacity=0; });
+    draw(); return c;
+  }
+  var ADV={ energie:'couche-toi 30 minutes plus tôt ce soir et fais une vraie pause sans écran à midi.', argent:'liste tes 3 dépenses fixes et vérifie tes droits (ARE, CAF, aides) dans Droits & aides.', mental:'écris 3 choses faites aujourd\'hui, même petites : ça remet les choses en perspective.', amour:'relis une réussite passée et entraîne-toi avec une mise en situation EVA.' };
+  function adviceCard(){
+    var d=jload(), es=(d.entries||[]).slice().sort(function(a,b){ return pd(a.date)-pd(b.date); }), t=TH.suivi;
+    if(es.length<2){
+      var c=post(t,{ ttl:'Les conseils d\'EVA', meta:'Disponibles dès ta 2e évaluation', media:false, like:false,
+        txt:'Encore <b>'+(2-es.length)+' évaluation'+(2-es.length>1?'s':'')+'</b> et je te donne mes premiers conseils personnalisés.<div class="tadv-dots"><span class="'+(es.length>=1?'on':'')+'"></span><span></span></div>',
+        actions:[{l:'Faire mon bilan',pri:true,fn:function(){ jnlTab(0); }}] });
+      c.classList.add('tadv'); return c;
+    }
+    var a=es[es.length-2], b=es[es.length-1], dv=r1(b.avg-a.avg);
+    var dl=PIL.map(function(p){ return { p:p, v:((b.scores||{})[p[0]]||5)-((a.scores||{})[p[0]]||5), now:(b.scores||{})[p[0]]||5 }; });
+    var best=dl.slice().sort(function(x,y){ return y.v-x.v; })[0], low=dl.slice().sort(function(x,y){ return x.now-y.now; })[0];
+    var tr=dv>0.2?[IC.up,'En hausse de '+dv+' point'+(dv>=2?'s':'')+' depuis ta dernière évaluation. Continue comme ça.']:dv<-0.2?[IC.down,'En baisse de '+Math.abs(dv)+' point'+(Math.abs(dv)>=2?'s':'')+'. Rien de grave : on regarde ensemble ce qui coince.']:[IC.flat,'Stable depuis ta dernière évaluation. La régularité, c\'est déjà une force.'];
+    var c2=post(t,{ ttl:'Les conseils d\'EVA', meta:'Basés sur tes 2 dernières évaluations', media:false,
+      txt:'<ul><li><i>'+S(tr[0],'currentColor',2.2)+'</i><span><b>Tendance :</b> '+tr[1]+'</span></li>'
+        +(best.v>0?'<li><i>'+S(IC.star,'currentColor',2.2)+'</i><span><b>Ta plus belle progression :</b> '+best.p[1]+' (+'+best.v+'). Note ce qui a aidé.</span></li>':'')
+        +'<li><i>'+S(IC.bulb,'currentColor',2.2)+'</i><span><b>À soigner : '+low.p[1]+' ('+low.now+'/10).</b> Mon conseil : '+ADV[low.p[0]]+'</span></li></ul>',
+      actions:[{l:'M\'entraîner',fn:function(){ go('eva-entretien'); }},{l:'Faire mon bilan',pri:true,fn:function(){ jnlTab(0); }}] });
+    c2.classList.add('tadv'); return c2;
+  }
+  function jnl(i){
+    var b=document.getElementById('jnl-body'); if(!b) return;
+    if(i===1){
+      var hist=q('.jnl-hist',b), bars=hist && q('.jnl-chart-card',hist); if(bars) bars.classList.add('evx-hid2');
+      var top=el('div'); top.appendChild(trackCard()); top.appendChild(wrapFeed(adviceCard())); b.insertBefore(top,b.firstChild);
+    } else if(i===2){ b.insertBefore(wrapFeed(adviceCard()),b.firstChild); }
+    b.querySelectorAll('.jnl-chart-title,.jnl-radar-title,.jnl-stat-lbl,.jnl-analyse-title').forEach(function(n){ n.childNodes.forEach(function(x){ if(x.nodeType===3) x.nodeValue=x.nodeValue.replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu,'').replace(/^\s+/,''); }); });
+    if(i){ var host=el('div'); b.insertBefore(host,b.firstChild);
+      mount({ host:host, id:'jnl'+i, key:'jnl'+i, bar:false, steps:[{ msg: i===1 ? 'Voici <b>ton suivi</b> : choisis la semaine, le mois ou l\'année. Regarde surtout ton pilier le plus bas : c\'est là qu\'une petite action change tout.' : 'Ici, <b>je te parle</b> : mon analyse de tes bilans, et mes conseils pour les prochains jours.' }] }); }
+  }
+  // À PROPOS D'EVA
   function identity(){
-    var sc=document.getElementById('s-eva-identity'); if(!sc) return;
+    var sc=document.getElementById('s-eva-identity'); if(!sc) return; var t=TH.eva;
     var host=q('.evad-scroll',sc), body=q('.eva-id-body',sc); if(!host||!body) return;
     hide([q('.eva-id-hero',sc)]); sc.classList.add('evx-page');
     mount({ host:host, id:'id', key:'identity', label:'À propos d\'EVA', bar:true, steps:[
-      { msg:'Enchantée 👋 Moi, c\'est <b>EVA</b>, ton assistante RH et droit du travail. Mon rôle : t\'aider à <b>comprendre</b>, <b>anticiper</b> et <b>agir</b>.' },
-      { slide:{ g:'eva', ic:'eva', n:'EVA · by CareerPulse', t:'L\'intelligence au service de tes droits professionnels', lead:'Je ne remplace pas un avocat : je te donne les clés pour décider en connaissance de cause.', pts:['Des réponses fondées sur les sources officielles','4 profils couverts : salarié, freelance, reconversion, étudiant','Disponible 24h/24, à ton rythme et sans jugement'], chips:['Légifrance','service-public.fr','URSSAF','France Travail'] } },
-      { msg:'Voici qui je suis, en chiffres et en principes 👇' },
+      { make:function(){ return cover(t,{ name:'EVA', handle:'@eva · by CareerPulse', bio:'L\'intelligence au service de tes droits professionnels. Je t\'aide à comprendre, anticiper et agir.', stats:[['29','articles'],['4','profils'],['2026','à jour']] }); }, feed:false, wait:2000 },
+      { msg:'Enchantée. Moi, c\'est <b>EVA</b>, ton assistante RH et droit du travail. Je ne remplace pas un avocat : je te donne les clés pour décider en connaissance de cause.' },
+      { make:function(){ return post(t,{ ttl:'Mes 3 engagements', meta:'Ce qui me guide', media:false, txt:tipsList(['Des réponses fondées sur les sources officielles.','Des explications simples, adaptées à ton profil.','Disponible 24h/24, à ton rythme et sans jugement.']) }); } },
+      { msg:'Voici qui je suis, en chiffres et en principes.' },
       { node:body }
     ]});
   }
 
-  /* ───────── Branchements ───────── */
+  /* ═════ Branchements ═════ */
+  function wrap(name,after){ var f=window[name]; if(typeof f!=='function' || f._evx) return; var g=function(){ var r=f.apply(this,arguments), a=arguments; try{ after.apply(null,a); }catch(e){} return r; }; g._evx=true; window[name]=g; }
   function active(){ var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); return a?a.id.replace('s-',''):''; }
   var last='';
-  function check(){
-    var id=active();
-    if(id!==last){ last=id; if(id==='eva-identity') identity(); }
-    ebHero();
-    document.querySelectorAll('.nova-result').forEach(bilan);
+  function enter(id){
+    if(id==='eva-droits') droitsHub(); else if(id==='eva-workspace'){ if(window.EWS===0 || !window.EWS) wsHub(); } else if(id==='eva-entretien') quizHub();
+    else if(id==='eva-tracker') tracker(); else if(id==='eva-identity') identity();
   }
+  function check(){ var id=active(); if(id!==last){ last=id; try{ enter(id); }catch(e){} } ebHero(); document.querySelectorAll('.nova-result').forEach(bilan); }
   function init(){
+    titles();
+    // Préparation immédiate des pages (pas d'apparition de l'ancien contenu)
+    ['s-eva-droits','s-eva-entretien'].forEach(function(id){ var s=document.getElementById(id); if(s) s.classList.add('evx-page'); });
+    hide([q('#s-eva-droits .ei-hero'), q('#s-eva-droits .ei-body'), q('#ew-p0 .ew-hero'), q('#ew-p0 .ew-sec-lbl'), q('#ew-p0 .ew-ptiles'), q('#s-eva-identity .eva-id-hero')]);
     wrap('evadShowList',function(){ setTimeout(droitsList,0); });
     wrap('evadShowArticle',function(id){ setTimeout(function(){ droitsArticle(id); },60); });
-    wrap('ewGo',function(n){ ws(+n); });
-    if(typeof window.ewShowPortfolioInline==='function'){ window.ewShowPortfolioInline=pfShow; }
+    wrap('ewGo',function(n){ n=+n; if(n===0) wsHub(); else ws(n); });
+    if(typeof window.ewShowPortfolioInline==='function') window.ewShowPortfolioInline=pfShow;
     ['nqStart','nsStart'].forEach(function(n){
       var f=window[n]; if(typeof f!=='function'||f._evx) return;
       var kind=n==='nqStart'?'qcm':'sim', lastT={};
@@ -27194,7 +27311,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     });
     var jt=window.jnlTab; if(typeof jt==='function' && !jt._evx){ window.jnlTab=function(i){ var r=jt.apply(this,arguments); try{ jnl(+i); }catch(e){} return r; }; window.jnlTab._evx=true; }
     check();
-    try{ new MutationObserver(function(){ clearTimeout(window._evx2T); window._evx2T=setTimeout(check,40); }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']}); }catch(e){}
+    try{ new MutationObserver(function(){ clearTimeout(window._evx3T); window._evx3T=setTimeout(check,40); }).observe(document.body,{subtree:true,childList:true,attributes:true,attributeFilter:['class']}); }catch(e){}
   }
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(init,0); });
 })();
