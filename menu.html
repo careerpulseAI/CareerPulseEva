@@ -1338,17 +1338,18 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
 <script>
   const firebaseConfig = {
-    apiKey: "AIzaSyB1vYhKK_tiCH0nYQO4IiyrYfBzmJ0PM7Q",
-    authDomain: "careerpulseproeva.firebaseapp.com",
-    projectId: "careerpulseproeva",
-    storageBucket: "careerpulseproeva.firebasestorage.app",
-    messagingSenderId: "735449151841",
-    appId: "1:735449151841:web:8ffc5cc9d26491e1af6d20",
-    measurementId: "G-DN2GGGCKEL"
+    apiKey: "AIzaSyAObLN7mMZ4PHiwOEkVZ301a1GR3ZpJuW4",
+    authDomain: "careerpulseeva.firebaseapp.com",
+    projectId: "careerpulseeva",
+    storageBucket: "careerpulseeva.firebasestorage.app",
+    messagingSenderId: "692255216052",
+    appId: "1:692255216052:web:3810690c41e9c1810862e1"
   };
 
   firebase.initializeApp(firebaseConfig);
   var fbAuth = firebase.auth();
+  // Sécurité : la connexion dure tant que le site est ouvert (même en arrière-plan) et se ferme quand on quitte vraiment le site
+  try{ fbAuth.setPersistence(firebase.auth.Auth.Persistence.SESSION); }catch(e){}
   window.fbDb = firebase.firestore();
   window.fbStorage = firebase.storage();
   var fbGoogleProvider = new firebase.auth.GoogleAuthProvider();
@@ -1613,6 +1614,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
 
    <div id="cp-membre-logged-out">
+    <div style="display:flex;gap:10px;align-items:flex-start;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:12px;padding:10px 12px;margin-bottom:14px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z" fill="rgba(5,150,105,.1)"/><path d="m9 12 2 2 4-4"/></svg><div style="font-size:.64rem;color:#065f46;line-height:1.5;"><b>🔒 Pour ta sécurité et celle de ton compte</b>, tu seras déconnecté(e) automatiquement en quittant le site.</div></div>
     <div style="display:flex;gap:6px;margin-bottom:16px;background:#f1f5f9;border-radius:30px;padding:4px;">
      <button id="cp-tab-login" onclick="cpAuthTab('login')" style="flex:1;background:#059669;border:none;border-radius:26px;padding:9px;font-size:.66rem;font-weight:700;color:#fff;font-family:inherit;cursor:pointer;box-shadow:0 2px 6px rgba(5,150,105,.35);transition:all .15s;">Se connecter</button>
      <button id="cp-tab-signup" onclick="cpAuthTab('signup')" style="flex:1;background:transparent;border:none;border-radius:26px;padding:9px;font-size:.66rem;font-weight:700;color:#64748b;font-family:inherit;cursor:pointer;transition:all .15s;">Créer un compte</button>
@@ -1620,7 +1622,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
     <div id="cp-auth-login">
      <label style="font-size:.62rem;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Email</label>
-     <input id="cp-login-email" type="email" placeholder="ton@email.com" style="width:100%;border:1.5px solid #bbf7d0;border-radius:9px;padding:10px 12px;font-size:.78rem;font-family:inherit;background:#f0fdf4;outline:none;margin-bottom:10px;box-sizing:border-box;">
+     <div style="position:relative;margin-bottom:6px;"><input id="cp-login-email" type="email" placeholder="ton@email.com" style="width:100%;border:1.5px solid #bbf7d0;border-radius:9px;padding:10px 46px 10px 12px;font-size:.78rem;font-family:inherit;background:#f0fdf4;outline:none;box-sizing:border-box;"><button type="button" class="cp-copy-id" onclick="cpCopyId('cp-login-email',this)" aria-label="Copier mon identifiant" title="Copier mon identifiant" style="position:absolute !important;top:50% !important;right:6px !important;left:auto !important;bottom:auto !important;transform:translateY(-50%) !important;margin:0 !important;width:34px;height:34px;border-radius:9px;background:rgba(5,150,105,.1);border:none;cursor:pointer;color:#059669;display:flex;align-items:center;justify-content:center;padding:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg></button></div><div style="display:flex;gap:6px;align-items:flex-start;font-size:.6rem;color:#64748b;line-height:1.45;margin-bottom:10px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg><span>Copie ton identifiant et garde-le dans un endroit sûr.</span></div>
      <label style="font-size:.62rem;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Mot de passe</label>
      <div style="position:relative;display:flex;align-items:center;margin-bottom:10px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:9px;overflow:hidden;">
       <input id="cp-login-pass" type="password" placeholder="••••••••" style="flex:1;border:none;padding:10px 8px 10px 12px;font-size:.78rem;font-family:inherit;background:transparent;outline:none;box-sizing:border-box;min-width:0;">
@@ -1639,7 +1641,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
      <label style="font-size:.62rem;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Prénom / Surnom</label>
      <input id="cp-signup-name" type="text" placeholder="Ex : Sophie" style="width:100%;border:1.5px solid #bbf7d0;border-radius:9px;padding:10px 12px;font-size:.78rem;font-family:inherit;background:#f0fdf4;outline:none;margin-bottom:10px;box-sizing:border-box;">
      <label style="font-size:.62rem;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Email</label>
-     <input id="cp-signup-email" type="email" placeholder="ton@email.com" style="width:100%;border:1.5px solid #bbf7d0;border-radius:9px;padding:10px 12px;font-size:.78rem;font-family:inherit;background:#f0fdf4;outline:none;margin-bottom:10px;box-sizing:border-box;">
+     <div style="position:relative;margin-bottom:6px;"><input id="cp-signup-email" type="email" placeholder="ton@email.com" style="width:100%;border:1.5px solid #bbf7d0;border-radius:9px;padding:10px 46px 10px 12px;font-size:.78rem;font-family:inherit;background:#f0fdf4;outline:none;box-sizing:border-box;"><button type="button" class="cp-copy-id" onclick="cpCopyId('cp-signup-email',this)" aria-label="Copier mon identifiant" title="Copier mon identifiant" style="position:absolute !important;top:50% !important;right:6px !important;left:auto !important;bottom:auto !important;transform:translateY(-50%) !important;margin:0 !important;width:34px;height:34px;border-radius:9px;background:rgba(5,150,105,.1);border:none;cursor:pointer;color:#059669;display:flex;align-items:center;justify-content:center;padding:0;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M5 15H4.5A1.5 1.5 0 0 1 3 13.5v-9A1.5 1.5 0 0 1 4.5 3h9A1.5 1.5 0 0 1 15 4.5V5"/></svg></button></div><div style="display:flex;gap:6px;align-items:flex-start;font-size:.6rem;color:#64748b;line-height:1.45;margin-bottom:10px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg><span>Copie ton identifiant et garde-le dans un endroit sûr.</span></div>
      <label style="font-size:.62rem;font-weight:700;color:#475569;display:block;margin-bottom:6px;">Mot de passe <span style="color:#94a3b8;font-weight:400;">(6 car. min.)</span></label>
      <div style="position:relative;display:flex;align-items:center;margin-bottom:10px;background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:9px;overflow:hidden;">
       <input id="cp-signup-pass" type="password" placeholder="••••••••" style="flex:1;border:none;padding:10px 8px 10px 12px;font-size:.78rem;font-family:inherit;background:transparent;outline:none;box-sizing:border-box;min-width:0;">
@@ -9357,6 +9359,13 @@ function cpSendAvis(){
 }
 
 // ── Bascule entre Se connecter / Créer un compte ──
+function cpCopyId(id, btn){
+  var v=((document.getElementById(id)||{}).value||'').trim();
+  if(!v){ ecShowToast('Saisis d\'abord ton e-mail, puis copie-le'); return; }
+  function ok(){ ecShowToast('Identifiant copié ✓ Garde-le dans un endroit sûr'); if(btn){ var h=btn.innerHTML; btn.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>'; setTimeout(function(){ btn.innerHTML=h; },1600); } }
+  function old(){ var t=document.createElement('textarea'); t.value=v; t.style.cssText='position:fixed;opacity:0'; document.body.appendChild(t); t.select(); try{ document.execCommand('copy'); ok(); }catch(e){ ecShowToast('Copie impossible : sélectionne ton e-mail à la main'); } t.remove(); }
+  try{ if(navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(v).then(ok,old); else old(); }catch(e){ old(); }
+}
 function cpAuthTab(which){
   var loginTab=document.getElementById('cp-tab-login');
   var signupTab=document.getElementById('cp-tab-signup');
@@ -12375,7 +12384,7 @@ go=function(page){
       var _p0=document.getElementById('grid-panel'); if(_p0) _p0.style.transform='translateX(calc(100% + 24px))';
       window.addEventListener('message',function(e){
         if(e.data==='cp-menu-open') panelOpen();
-        else if(e.data && e.data.cpMenuOpen){ panelOpen(); var k=e.data.cpMenuOpen; setTimeout(function(){ if(typeof cpMenuShow==='function') cpMenuShow(k); },30); }
+        else if(e.data && e.data.cpMenuOpen){ panelOpen(); var k=e.data.cpMenuOpen, su=(k==='signup'); if(su) k='membre'; setTimeout(function(){ if(typeof cpMenuShow==='function') cpMenuShow(k); if(su && typeof cpAuthTab==='function') cpAuthTab('signup'); },30); }
       });
       window.addEventListener('load',function(){ window.parent.postMessage('cp-menu-ready','*'); });
     } else {
