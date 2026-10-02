@@ -25939,17 +25939,11 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   function track(){
     var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active');
     if(a && a.id!=='s-eva') prev=a.id.replace('s-','');
-    // pile des pages EVA visitées (pour le retour mobile, sans jamais quitter EVA)
-    var id=a ? a.id.replace('s-','') : ''; if(id && id!==hist[hist.length-1]){ hist.push(id); if(hist.length>30) hist.shift(); }
   }
-  var hist=[];
-  window.cpEvaBack=function(){
-    hist.pop(); var to=hist.pop(); while(to==='eva-taches') to=hist.pop();
-    go(to||'eva');
-  };
   try{ new MutationObserver(function(){ clearTimeout(window._evPrT); window._evPrT=setTimeout(track,30); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){}
   document.addEventListener('click',function(e){
-    var b=e.target.closest && e.target.closest(window.innerWidth<900 ? '#eva-fs-back,#eva-tl-close' : '#eva-fs-back');
+    var mob=window.innerWidth<900;
+    var b=e.target.closest && e.target.closest(mob ? '#eva-fs-back,#eva-tl-close' : '#eva-fs-back');
     if(!b) return;
     var fs=document.getElementById('eva-fullscreen');
     if(!fs || !fs.classList.contains('chat-mode')) return;
@@ -25957,7 +25951,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var bub=document.getElementById('pf-eva-bubble-root'); if(bub) bub.remove();
     var ov=document.getElementById('ec-pf-overlay'); if(ov) ov.remove();
     fs.classList.remove('chat-mode');
-    go(prev||'eva');
+    go(mob ? 'eva' : (prev||'eva'));
   },true);
 })();
 </script>
@@ -28158,7 +28152,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 ═══════════════════════════════════════════════════════════════ -->
 <div class="evad-screen screen" id="s-eva-taches">
   <div class="evad-hd">
-    <button class="evad-hd-back" onclick="if(window.innerWidth<900 && window.cpEvaBack) cpEvaBack(); else history.back();" aria-label="Retour"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="evad-hd-back" onclick="if(window.innerWidth<900) go('eva'); else history.back();" aria-label="Retour"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="evad-hd-title">Tâches</div>
   </div>
   <div class="evad-scroll"><div id="tk-page"><div id="tk-root"></div></div></div>
