@@ -1,5 +1,5 @@
 # CareerPulseEva
-EVA, un coach IA pour préparer les entretiens, comprendre les droits, contrats et démarches professionnelles, avec des informations issues de sources officielles comme France Travail, Service-Public.fr, le Code du travail et l’URSSAF.
+EVA, un coach pour le secteur professionnel afin de préparer les entretiens, comprendre les droits, contrats et démarches professionnelles, avec des informations issues de sources officielles comme France Travail, Service-Public.fr, le Code du travail et l’URSSAF.
 Des liens vers les meilleures plateformes professionnelles pour créer un CV, rechercher un emploi et développer son profil.
 Un espace membre pour centraliser et classer ses documents professionnels et entrepreneuriaux.
 Un Quiz Pro de 15 ou 25 questions pour tester et renforcer ses connaissances professionnelles.
