@@ -1408,6 +1408,35 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     }
   });
 
+  /* ═══ Inscription / connexion ═══
+     - le menu est une page posée par-dessus le site : après chaque action on recharge TOUTE la page
+     - on attend que l'e-mail de confirmation soit bien parti avant de recharger
+     - membre = e-mail confirmé (Google : déjà confirmé) */
+  fbAuth.languageCode = 'fr';
+  function cpActionSettings(){ try{ if(/^https?:$/.test(location.protocol)) return { url: location.origin + '/index.html' }; }catch(e){} return null; }
+  window.cpReloadAll = function(){ try{ if(window.top && window.top !== window){ window.top.location.reload(); return; } }catch(e){} location.reload(); };
+  window.cpIsMember = function(u){ u = u || window._fbUser || fbAuth.currentUser; return !!(u && u.emailVerified); };
+  window.cpSendVerify = function(){
+    var u = fbAuth.currentUser; if(!u) return Promise.reject(new Error('no-user'));
+    var s = cpActionSettings();
+    return (s ? u.sendEmailVerification(s) : u.sendEmailVerification()).catch(function(e){ if(s) return u.sendEmailVerification(); throw e; });
+  };
+  window.cpResendVerify = function(){
+    cpSendVerify().then(function(){ ecShowToast('📩 E-mail renvoyé — regarde aussi dans tes spams ou ta corbeille.'); })
+      .catch(function(e){ ecShowToast(e && e.code === 'auth/too-many-requests' ? 'Patiente quelques minutes avant de renvoyer un e-mail.' : 'Envoi impossible pour le moment, réessaie plus tard.'); });
+  };
+  window.cpCheckVerified = function(silent){
+    var u = fbAuth.currentUser; if(!u) return Promise.resolve(false);
+    return u.reload().then(function(){
+      var cu = fbAuth.currentUser;
+      if(cu && cu.emailVerified){
+        return cu.getIdToken(true).then(function(){ try{ sessionStorage.setItem('cp_verified_now','1'); sessionStorage.removeItem('cp_verify_pending'); }catch(e){} cpReloadAll(); return true; });
+      }
+      if(!silent) ecShowToast('E-mail pas encore confirmé : clique sur le lien reçu (pense aux spams).');
+      return false;
+    }).catch(function(){ return false; });
+  };
+
   window.togglePwd = function(inputId, btnId) {
     var inp = document.getElementById(inputId);
     var btn = document.getElementById(btnId);
@@ -1423,21 +1452,24 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     var pass = (document.getElementById('cp-signup-pass')?.value || '').trim();
     if (!name || !email || !pass) { ecShowToast('Remplis tous les champs'); return; }
     if (pass.length < 6) { ecShowToast('Mot de passe : 6 caractères minimum'); return; }
+    ecShowToast('Création de ton compte…');
     fbAuth.createUserWithEmailAndPassword(email, pass)
       .then(function(cred) {
-        return cred.user.updateProfile({ displayName: name }).then(function() {
-          window._fbUser = fbAuth.currentUser;
-          cred.user.sendEmailVerification().catch(function(e){ console.warn('Email de vérification non envoyé :', e); });
-          // Nouveau compte : on repart sur une base saine, sans résidu d'une session précédente sur cet appareil.
-          cpClearLocalUserData();
-          location.reload();
-        });
+        return cred.user.updateProfile({ displayName: name })
+          .then(function(){ return cpSendVerify().catch(function(e){ console.warn('E-mail de confirmation non envoyé :', e); }); })
+          .then(function(){
+            cpClearLocalUserData();
+            try{ sessionStorage.setItem('cp_verify_pending','1'); }catch(e){}
+            cpReloadAll();
+          });
       })
       .catch(function(e) {
         var msgs = {
-          'auth/email-already-in-use': 'Cet email est déjà utilisé',
-          'auth/invalid-email': 'Email invalide',
-          'auth/weak-password': 'Mot de passe trop faible'
+          'auth/email-already-in-use': 'Cet e-mail a déjà un compte : connecte-toi',
+          'auth/invalid-email': 'E-mail invalide',
+          'auth/weak-password': 'Mot de passe trop faible',
+          'auth/operation-not-allowed': 'Inscription par e-mail désactivée dans Firebase',
+          'auth/network-request-failed': 'Pas de connexion internet'
         };
         ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
       });
@@ -1446,18 +1478,21 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   window.fbLogin = function() {
     var email = (document.getElementById('cp-login-email')?.value || '').trim();
     var pass = (document.getElementById('cp-login-pass')?.value || '').trim();
-    if (!email || !pass) { ecShowToast('Renseigne ton email et ton mot de passe'); return; }
+    if (!email || !pass) { ecShowToast('Renseigne ton e-mail et ton mot de passe'); return; }
     fbAuth.signInWithEmailAndPassword(email, pass)
-      .then(function() {
+      .then(function(cred) {
         cpClearLocalUserData();
-        location.reload();
+        try{ if(!cred.user.emailVerified) sessionStorage.setItem('cp_verify_pending','1'); }catch(e){}
+        cpReloadAll();
       })
       .catch(function(e) {
         var msgs = {
-          'auth/user-not-found': 'Aucun compte avec cet email',
+          'auth/user-not-found': 'Aucun compte avec cet e-mail',
           'auth/wrong-password': 'Mot de passe incorrect',
-          'auth/invalid-credential': 'Email ou mot de passe incorrect',
-          'auth/invalid-email': 'Email invalide'
+          'auth/invalid-credential': 'E-mail ou mot de passe incorrect',
+          'auth/invalid-email': 'E-mail invalide',
+          'auth/too-many-requests': 'Trop d\'essais : patiente quelques minutes ou utilise « Mot de passe oublié »',
+          'auth/network-request-failed': 'Pas de connexion internet'
         };
         ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
       });
@@ -1465,26 +1500,31 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
   window.fbForgotPassword = function() {
     var email = (document.getElementById('cp-login-email')?.value || '').trim();
-    if (!email) { ecShowToast('Renseigne ton email ci-dessus, puis clique sur "Mot de passe oublié"'); return; }
-    fbAuth.sendPasswordResetEmail(email)
-      .then(function() { ecShowToast('📩 Email de réinitialisation envoyé — vérifie ta boîte (et tes spams).'); })
+    if (!email) { ecShowToast('Écris ton e-mail ci-dessus, puis clique sur « Mot de passe oublié ? »'); var f=document.getElementById('cp-login-email'); if(f) f.focus(); return; }
+    var s = cpActionSettings();
+    (s ? fbAuth.sendPasswordResetEmail(email, s) : fbAuth.sendPasswordResetEmail(email))
+      .catch(function(e){ if(s && e && e.code !== 'auth/invalid-email') return fbAuth.sendPasswordResetEmail(email); throw e; })
+      .then(function() { ecShowToast('📩 Si un compte existe avec cet e-mail, tu vas recevoir un lien pour choisir un nouveau mot de passe (pense aux spams).'); })
       .catch(function(e) {
-        var msgs = {
-          'auth/user-not-found': 'Aucun compte avec cet email',
-          'auth/invalid-email': 'Email invalide'
-        };
+        var msgs = { 'auth/invalid-email': 'E-mail invalide', 'auth/too-many-requests': 'Trop de demandes : réessaie dans quelques minutes', 'auth/network-request-failed': 'Pas de connexion internet' };
         ecShowToast(msgs[e.code] || 'Erreur : ' + e.message);
       });
+  };
+  window.fbForgotEmail = function() {
+    var b = document.getElementById('cp-forgot-email-box');
+    if (b) { b.style.display = b.style.display === 'none' ? 'block' : 'none'; return; }
+    ecShowToast('Ton identifiant est l\'e-mail utilisé à l\'inscription : cherche « CareerPulse » dans tes boîtes mail.');
   };
 
   window.fbLoginGoogle = function() {
     fbAuth.signInWithPopup(fbGoogleProvider)
       .then(function() {
         cpClearLocalUserData();
-        location.reload();
+        cpReloadAll();
       })
       .catch(function(e) {
-        if (e.code !== 'auth/popup-closed-by-user') {
+        if (e.code === 'auth/unauthorized-domain') { ecShowToast('Connexion Google : ce site doit être ajouté dans Firebase (domaines autorisés).'); return; }
+        if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
           ecShowToast('Erreur Google : ' + e.message);
         }
       });
@@ -1492,8 +1532,14 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
   window.fbLogout = function() {
     cpClearLocalUserData();
-    fbAuth.signOut().then(function() { location.reload(); }).catch(function() { location.reload(); });
+    try{ sessionStorage.removeItem('cp_verify_pending'); }catch(e){}
+    fbAuth.signOut().then(cpReloadAll).catch(cpReloadAll);
   };
+
+  // Retour sur le site après avoir cliqué sur le lien de confirmation : on vérifie tout seul
+  function cpAutoCheck(){ if(window.top !== window) return; var u = fbAuth.currentUser; if(u && !u.emailVerified && document.visibilityState === 'visible') cpCheckVerified(true); }
+  document.addEventListener('visibilitychange', cpAutoCheck);
+  window.addEventListener('focus', cpAutoCheck);
 
   console.log('✅ Firebase Auth compat prêt');
 </script>
@@ -10042,24 +10088,37 @@ function cpMemberSignup(){ fbSignup && fbSignup(); }
 function cpMemberLogout(){ fbLogout && fbLogout(); }
 function cpApplyMemberState(){
   var user = window._fbUser || null;
-  var name = user ? (user.displayName || user.email.split('@')[0]) : null;
+  var ok = !!(user && user.emailVerified);   // membre = e-mail confirmé
+  var name = user ? (user.displayName || (user.email||'').split('@')[0]) : null;
   var loggedOut=document.getElementById('cp-membre-logged-out');
   var loggedIn=document.getElementById('cp-membre-logged-in');
+  var pending=document.getElementById('cp-membre-pending');
+  var okBox=document.getElementById('cp-membre-ok');
   var sub=document.getElementById('cp-menu-membre-sub');
   var tnavName=document.getElementById('cp-tnav-membername');
   var docsName=document.getElementById('ew-docs-username');
-  if(name){
+  var nd=document.getElementById('cp-membre-name-display');
+  var BADGE='<span class="cp-cpbadge" style="display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:3px 8px 3px 4px;border-radius:99px;background:linear-gradient(135deg,#1e40af,#059669);color:#fff;font:800 .56rem/1 -apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif;letter-spacing:.02em;vertical-align:middle;white-space:nowrap;box-shadow:0 4px 10px -5px rgba(5,150,105,.9);">'
+    +'<svg viewBox="0 0 32 32" width="13" height="13" fill="none"><circle cx="16" cy="16" r="15" fill="rgba(255,255,255,.18)"/><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CareerPulse</span>';
+  function esc(t){ return String(t||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  if(user){
     if(loggedOut) loggedOut.style.display='none';
     if(loggedIn) loggedIn.style.display='block';
-    var nd=document.getElementById('cp-membre-name-display'); if(nd) nd.textContent=name;
-    if(sub) sub.textContent=name;
-    if(tnavName) tnavName.textContent=name;
-    if(docsName) docsName.textContent=name;
+    if(pending) pending.style.display = ok ? 'none' : 'block';
+    if(okBox) okBox.style.display = ok ? 'block' : 'none';
   } else {
     if(loggedOut) loggedOut.style.display='block';
     if(loggedIn) loggedIn.style.display='none';
-    if(sub) sub.textContent='Se connecter';
-    if(tnavName) tnavName.textContent='Invité';
+  }
+  if(ok){
+    if(nd) nd.innerHTML=esc(name)+BADGE;
+    if(sub) sub.textContent=name;
+    if(tnavName) tnavName.innerHTML=esc(name)+BADGE;
+    if(docsName) docsName.innerHTML=esc(name)+BADGE;
+  } else {
+    if(nd) nd.textContent=name||'';
+    if(sub) sub.textContent = user ? 'E-mail à confirmer' : 'Se connecter';
+    if(tnavName) tnavName.textContent = user ? 'Invité · à confirmer' : 'Invité';
     if(docsName) docsName.textContent='Invité';
   }
 }
@@ -28575,6 +28634,9 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   #cp-gift .cpg-card, #cp-gift .cpg-open{ opacity:1; transform:none; } #cp-gift .cpg-closed{ opacity:0; }
 }
 @media (max-width:420px){ #cp-gift .cpg-ttl{ font-size:1.08rem; } #cp-gift .cpg-card{ padding:18px 16px 14px; } }
+#cp-gift .cpg-mail{ width:76px; height:76px; margin:0 auto 4px; border-radius:22px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#eff6ff,#ecfdf5); box-shadow:inset 0 0 0 1px #dbeafe,0 12px 26px -14px rgba(37,99,235,.7); }
+#cp-gift .cpg-mail svg{ width:52px; height:52px; }
+#cp-gift.cpg-verify .cpg-card{ max-width:380px; }
 @media (max-height:700px){ #cp-gift .cpg-scene{ width:220px; } }
 </style>
 <script>
@@ -28589,12 +28651,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   window.cpMemberBadge=function(light){ return '<span class="cp-mbadge'+(light?' lt':'')+'">'+I.crown+'Réservé aux membres</span>'; };
 
   var LABEL={ 'profil':'Mon espace', 'eva-taches':'Tâches', 'eva-tracker':'Suivi de ma motivation', 'portfolio':'Portfolio' };
-  function state(){ // true = membre, false = visiteur, null = vérification en cours
-    try{ if(window._fbUser || (window.fbAuth && fbAuth.currentUser)) return true; }catch(e){}
+  function curUser(){ try{ return window._fbUser || (window.fbAuth && fbAuth.currentUser) || null; }catch(e){ return null; } }
+  function state(){ // true = membre (e-mail confirmé), 'pending' = compte créé mais e-mail à confirmer, false = visiteur, null = vérification en cours
+    var u=curUser(); if(u) return u.emailVerified ? true : 'pending';
     if(typeof firebase==='undefined' || !window.fbAuth) return false;
     return window._cpAuthInitialized ? false : null;
   }
-  function whenKnown(cb){ var t0=Date.now(); (function w(){ var s=state(); if(s!==null || Date.now()-t0>2500) return cb(!!s); setTimeout(w,120); })(); }
+  function whenKnown(cb){ var t0=Date.now(); (function w(){ var s=state(); if(s!==null || Date.now()-t0>2500) return cb(s||false); setTimeout(w,120); })(); }
 
   function close(){ var g=document.getElementById('cp-gift'); if(!g) return; g.classList.add('out'); setTimeout(function(){ if(g.parentNode) g.remove(); },240); document.removeEventListener('keydown',esc); }
   function esc(e){ if(e.key==='Escape') close(); }
@@ -28618,8 +28681,30 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     document.addEventListener('keydown',esc);
   };
 
+  var MAIL='<svg viewBox="0 0 64 64" fill="none"><rect x="8" y="14" width="48" height="36" rx="7" fill="#fff" stroke="#2563eb" stroke-width="3"/><path d="m11 18 21 16 21-16" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle cx="50" cy="16" r="9" fill="#059669"/><path d="m46 16 3 3 5-6" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  window.cpVerifyOpen=function(key){
+    var old=document.getElementById('cp-gift'); if(old) old.remove();
+    var u=curUser(), em=u&&u.email ? String(u.email).replace(/[&<>"]/g,'') : 'ton adresse';
+    var g=document.createElement('div'); g.id='cp-gift'; g.className='cpg-verify'; g.setAttribute('role','dialog'); g.setAttribute('aria-modal','true');
+    g.innerHTML='<div class="cpg-bg"></div><div class="cpg-stage">'
+      +'<div class="cpg-card" style="opacity:1;animation:cpgCard .5s cubic-bezier(.2,1.2,.3,1) both">'
+      +'<div class="cpg-mail">'+MAIL+'</div>'
+      +'<div class="cpg-ttl">Vérifie tes e-mails</div>'
+      +'<p class="cpg-txt">📩 Une demande de confirmation t\'a été envoyée à <b>'+em+'</b>.<br>Si tu ne la vois pas, regarde dans tes <b>spams</b> ou ta <b>corbeille</b>.'+(key&&LABEL[key]?'<br><br>Une fois ton e-mail confirmé, <b>'+LABEL[key]+'</b> sera débloqué.':'')+'</p>'
+      +'<div class="cpg-btns"><button type="button" class="cpg-yes" data-a="chk">'+I.userplus+'J\'ai confirmé mon e-mail</button><button type="button" class="cpg-no" data-a="re">'+I.clock+'Renvoyer l\'e-mail</button><button type="button" class="cpg-no" data-a="no" style="border:none;background:none;padding:8px">Plus tard</button></div></div></div>';
+    document.body.appendChild(g);
+    g.addEventListener('click',function(e){
+      var b=e.target.closest('[data-a]'), a=b&&b.getAttribute('data-a');
+      if(a==='chk'){ if(window.cpCheckVerified) cpCheckVerified(false); }
+      else if(a==='re'){ if(window.cpResendVerify) cpResendVerify(); }
+      else if(a==='no' || e.target.classList.contains('cpg-bg')) close();
+    });
+    document.addEventListener('keydown',esc);
+  };
+
   /* Accès protégé : on laisse passer les membres, on invite les visiteurs */
-  function guard(key, run){ var s=state(); if(s===true) return run(); if(s===false){ cpGiftOpen(key); return; } whenKnown(function(m){ if(m) run(); else cpGiftOpen(key); }); }
+  function deny(key,s){ if(s==='pending') cpVerifyOpen(key); else cpGiftOpen(key); }
+  function guard(key, run){ var s=state(); if(s===true) return run(); if(s!==null){ deny(key,s); return; } whenKnown(function(m){ if(m===true) run(); else deny(key,m); }); }
   window.cpMemberGuard=guard;
   var SCREENS={ 'profil':1, 'eva-taches':1, 'eva-tracker':1 };
   function install(){
@@ -28639,9 +28724,13 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   /* Arrivée directe sur une page réservée (lien ou adresse) */
   window.addEventListener('load',function(){
     whenKnown(function(m){
-      if(m) return;
+      var ss={}; try{ ss=window.sessionStorage||{}; }catch(e){}
+      try{ if(ss.getItem && ss.getItem('cp_verified_now')){ ss.removeItem('cp_verified_now'); var u=curUser(); if(window.ecShowToast) ecShowToast('✅ E-mail confirmé : bienvenue '+((u&&u.displayName)||'')+', tu es membre CareerPulse !'); } }catch(e){}
+      if(m===true) return;
       var a=document.querySelector('.screen.active'); var id=a ? a.id.replace('s-','') : '';
-      if(SCREENS[id]){ var home=document.getElementById('s-eva') ? 'eva' : 'home'; var g=window.go; if(g) g(home); cpGiftOpen(id); }
+      if(SCREENS[id]){ var home=document.getElementById('s-eva') ? 'eva' : 'home'; var g=window.go; if(g) g(home); deny(id,m); return; }
+      // juste après l'inscription : on rappelle de confirmer l'e-mail
+      try{ if(m==='pending' && ss.getItem && ss.getItem('cp_verify_pending')){ ss.removeItem('cp_verify_pending'); cpVerifyOpen(); } }catch(e){}
     });
   });
 })();
