@@ -1395,15 +1395,16 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     // on vide le cache local ET on recharge la page : sinon les variables JS déjà en mémoire
     // (profil, portfolio…) garderaient les données de l'ancien compte malgré le localStorage vidé.
     if(_cpAuthInitialized && newUid !== _cpLastUid){
+      if(window.cpIsBusy && cpIsBusy()){ _cpLastUid = newUid; return; } // inscription / connexion en cours : on laisse finir (profil, e-mail) avant de recharger
       cpClearLocalUserData();
-      location.reload();
+      (window.cpReloadAll || function(){ location.reload(); })();
       return;
     }
     _cpLastUid = newUid;
     _cpAuthInitialized = true;
     if(typeof cpApplyMemberState === 'function') cpApplyMemberState();
     // Charger le profil depuis Firestore si connecté
-    if(user && typeof loadFicheProFromFirestore === 'function'){
+    if(user && user.emailVerified && typeof loadFicheProFromFirestore === 'function'){
       setTimeout(loadFicheProFromFirestore, 500);
     }
   });
@@ -1413,6 +1414,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
      - on attend que l'e-mail de confirmation soit bien parti avant de recharger
      - membre = e-mail confirmé (Google : déjà confirmé) */
   fbAuth.languageCode = 'fr';
+  // « action en cours » partagé entre le menu et la page (même onglet) : évite un rechargement au mauvais moment
+  try{ sessionStorage.removeItem('cp_auth_busy'); }catch(e){}
+  window.cpBusy = function(on){ try{ if(on) sessionStorage.setItem('cp_auth_busy', String(Date.now())); else sessionStorage.removeItem('cp_auth_busy'); }catch(e){} };
+  window.cpIsBusy = function(){ try{ var t = +sessionStorage.getItem('cp_auth_busy'); return !!t && Date.now() - t < 20000; }catch(e){ return false; } };
   function cpActionSettings(){ try{ if(/^https?:$/.test(location.protocol)) return { url: location.origin + '/index.html' }; }catch(e){} return null; }
   window.cpReloadAll = function(){ try{ if(window.top && window.top !== window){ window.top.location.reload(); return; } }catch(e){} location.reload(); };
   window.cpIsMember = function(u){ u = u || window._fbUser || fbAuth.currentUser; return !!(u && u.emailVerified); };
@@ -1423,7 +1428,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   };
   window.cpResendVerify = function(){
     cpSendVerify().then(function(){ ecShowToast('📩 E-mail renvoyé — regarde aussi dans tes spams ou ta corbeille.'); })
-      .catch(function(e){ ecShowToast(e && e.code === 'auth/too-many-requests' ? 'Patiente quelques minutes avant de renvoyer un e-mail.' : 'Envoi impossible pour le moment, réessaie plus tard.'); });
+      .catch(function(e){
+        var c = (e && e.code) || '';
+        if (c === 'auth/too-many-requests') ecShowToast('Trop d\'envois d\'affilée : patiente quelques minutes avant de renvoyer un e-mail.');
+        else if (c === 'auth/user-not-found' || c === 'auth/user-token-expired' || c === 'auth/invalid-user-token') { ecShowToast('Ce compte n\'existe plus : reconnecte-toi ou crée un nouveau compte.'); fbAuth.signOut().then(cpReloadAll); }
+        else ecShowToast('Envoi impossible (' + (c || (e && e.message) || 'erreur') + ')');
+      });
   };
   window.cpCheckVerified = function(silent){
     var u = fbAuth.currentUser; if(!u) return Promise.resolve(false);
@@ -1453,10 +1463,12 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     if (!name || !email || !pass) { ecShowToast('Remplis tous les champs'); return; }
     if (pass.length < 6) { ecShowToast('Mot de passe : 6 caractères minimum'); return; }
     ecShowToast('Création de ton compte…');
+    cpBusy(true);
+    try{ sessionStorage.setItem('cp_signup_name', name); }catch(e){}
     fbAuth.createUserWithEmailAndPassword(email, pass)
       .then(function(cred) {
         return cred.user.updateProfile({ displayName: name })
-          .then(function(){ return cpSendVerify().catch(function(e){ console.warn('E-mail de confirmation non envoyé :', e); }); })
+          .then(function(){ return cpSendVerify().catch(function(e){ console.warn('E-mail de confirmation non envoyé :', e); try{ sessionStorage.setItem('cp_verify_err', (e && (e.code || e.message)) || 'inconnue'); }catch(x){} }); })
           .then(function(){
             cpClearLocalUserData();
             try{ sessionStorage.setItem('cp_verify_pending','1'); }catch(e){}
@@ -1464,6 +1476,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
           });
       })
       .catch(function(e) {
+        cpBusy(false);
         var msgs = {
           'auth/email-already-in-use': 'Cet e-mail a déjà un compte : connecte-toi',
           'auth/invalid-email': 'E-mail invalide',
@@ -1479,6 +1492,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     var email = (document.getElementById('cp-login-email')?.value || '').trim();
     var pass = (document.getElementById('cp-login-pass')?.value || '').trim();
     if (!email || !pass) { ecShowToast('Renseigne ton e-mail et ton mot de passe'); return; }
+    cpBusy(true);
     fbAuth.signInWithEmailAndPassword(email, pass)
       .then(function(cred) {
         cpClearLocalUserData();
@@ -1486,6 +1500,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
         cpReloadAll();
       })
       .catch(function(e) {
+        cpBusy(false);
         var msgs = {
           'auth/user-not-found': 'Aucun compte avec cet e-mail',
           'auth/wrong-password': 'Mot de passe incorrect',
@@ -1517,12 +1532,14 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   };
 
   window.fbLoginGoogle = function() {
+    cpBusy(true);
     fbAuth.signInWithPopup(fbGoogleProvider)
       .then(function() {
         cpClearLocalUserData();
         cpReloadAll();
       })
       .catch(function(e) {
+        cpBusy(false);
         if (e.code === 'auth/unauthorized-domain') { ecShowToast('Connexion Google : ce site doit être ajouté dans Firebase (domaines autorisés).'); return; }
         if (e.code !== 'auth/popup-closed-by-user' && e.code !== 'auth/cancelled-popup-request') {
           ecShowToast('Erreur Google : ' + e.message);
@@ -1531,10 +1548,23 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   };
 
   window.fbLogout = function() {
+    cpBusy(true);
     cpClearLocalUserData();
     try{ sessionStorage.removeItem('cp_verify_pending'); }catch(e){}
     fbAuth.signOut().then(cpReloadAll).catch(cpReloadAll);
   };
+
+  if (window.top === window) fbAuth.onAuthStateChanged(function(u){
+    if (!u || window._cpBootChecked) return; window._cpBootChecked = true;
+    u.reload().then(function(){
+      var nm = null; try{ nm = sessionStorage.getItem('cp_signup_name'); }catch(e){}
+      if (nm && !u.displayName) return u.updateProfile({ displayName: nm }).then(function(){ try{ sessionStorage.removeItem('cp_signup_name'); }catch(e){} if (typeof cpApplyMemberState === 'function') cpApplyMemberState(); });
+      try{ sessionStorage.removeItem('cp_signup_name'); }catch(e){}
+    }).catch(function(e){
+      var c = (e && e.code) || '';
+      if (c === 'auth/user-not-found' || c === 'auth/user-disabled' || c === 'auth/user-token-expired' || c === 'auth/invalid-user-token') { cpClearLocalUserData(); fbAuth.signOut().then(function(){ location.reload(); }); }
+    });
+  });
 
   // Retour sur le site après avoir cliqué sur le lien de confirmation : on vérifie tout seul
   function cpAutoCheck(){ if(window.top !== window) return; var u = fbAuth.currentUser; if(u && !u.emailVerified && document.visibilityState === 'visible') cpCheckVerified(true); }
@@ -28657,7 +28687,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     if(typeof firebase==='undefined' || !window.fbAuth) return false;
     return window._cpAuthInitialized ? false : null;
   }
-  function whenKnown(cb){ var t0=Date.now(); (function w(){ var s=state(); if(s!==null || Date.now()-t0>2500) return cb(s||false); setTimeout(w,120); })(); }
+  function whenKnown(cb){ var t0=Date.now(); (function w(){ var s=state(); if(s!==null || Date.now()-t0>10000) return cb(s||false); setTimeout(w,120); })(); }
 
   function close(){ var g=document.getElementById('cp-gift'); if(!g) return; g.classList.add('out'); setTimeout(function(){ if(g.parentNode) g.remove(); },240); document.removeEventListener('keydown',esc); }
   function esc(e){ if(e.key==='Escape') close(); }
@@ -28730,7 +28760,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       var a=document.querySelector('.screen.active'); var id=a ? a.id.replace('s-','') : '';
       if(SCREENS[id]){ var home=document.getElementById('s-eva') ? 'eva' : 'home'; var g=window.go; if(g) g(home); deny(id,m); return; }
       // juste après l'inscription : on rappelle de confirmer l'e-mail
-      try{ if(m==='pending' && ss.getItem && ss.getItem('cp_verify_pending')){ ss.removeItem('cp_verify_pending'); cpVerifyOpen(); } }catch(e){}
+      try{ if(m==='pending' && ss.getItem && ss.getItem('cp_verify_pending')){ ss.removeItem('cp_verify_pending'); cpVerifyOpen(); var er=ss.getItem('cp_verify_err'); if(er){ ss.removeItem('cp_verify_err'); setTimeout(function(){ if(window.ecShowToast) ecShowToast('L\'e-mail n\'a pas pu partir ('+er+') : clique sur « Renvoyer l\'e-mail ».'); },600); } } }catch(e){}
     });
   });
 })();
