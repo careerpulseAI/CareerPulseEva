@@ -28804,7 +28804,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     root.innerHTML='<div class="ofs" style="max-width:560px;margin:0 auto"><div class="of-card" style="padding:22px">'
       +'<div class="ofs-hd"><span class="ofs-av">'+S(I.school)+'</span><div><b>'+esc(o.nom||'Votre organisme')+'</b><span>Espace centre de formation</span></div></div>'
       +'<p class="of-muted" style="margin:14px 0 16px;line-height:1.55">EVA accompagne les candidats. Votre espace centre de formation se trouve désormais dans l\'Espace pros de CareerPulse : candidats visibles, recherche, propositions et fiche organisme.</p>'
-      +'<a class="of-btn pri" href="pro.html#centre" style="text-decoration:none;width:100%">Ouvrir mon espace centre</a></div></div>';
+      +'<a class="of-btn pri" href="index.html#pro-centre" style="text-decoration:none;width:100%">Ouvrir mon espace centre</a></div></div>';
   }
   function renderOrg(){
     var o=ST.org||{};
@@ -29170,7 +29170,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   var PART='eva';
   var QUIZ=['s-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-qcm-entretien', 's-qcm-entretien-result', 's-qcm-strategie', 's-qcm-strategie-result', 's-qcm-leadership', 's-qcm-leadership-result', 's-qcm-stress', 's-qcm-stress-result', 's-qcm-digital', 's-qcm-digital-result', 's-qcm-orientation', 's-qcm-orientation-result', 's-qcm-are', 's-qcm-are-result', 's-qcm-demandeur-entretien', 's-qcm-demandeur-entretien-result', 's-qcm-cpf', 's-qcm-cpf-result', 's-qcm-reconversion', 's-qcm-reconversion-result', 's-qcm-freelance-statut', 's-qcm-freelance-statut-result', 's-qcm-freelance-missions', 's-qcm-freelance-missions-result', 's-qcm-etudiant-alternance', 's-qcm-etudiant-alternance-result', 's-qcm-etudiant-emploi', 's-qcm-etudiant-emploi-result', 's-qcm-poste-droits', 's-qcm-poste-droits-result', 's-qcm-poste-integration', 's-qcm-poste-integration-result', 's-vision-quiz'];
   var MON=['s-profil','s-vision-profil'];
-  var VITRINE=['s-home', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
+  var VITRINE=['s-home', 's-pro', 's-pro-centre', 's-pro-employeur', 's-quiz-hub', 's-quiz-admin', 's-quiz-admin-result', 's-quiz-rh', 's-quiz-rh-result', 's-quiz-rupture', 's-quiz-rupture-result', 's-profil', 's-cvlettre', 's-emploi', 's-mentions-legales', 's-confidentialite', 's-profil-public', 's-cgu', 's-vision-emploi', 's-vision-cv', 's-vision-profil', 's-vision-quiz'];
   var EMBED=(PART==='menu' && window.self!==window.top);
   function fileOf(id){ var k='s-'+id; if(QUIZ.indexOf(k)>-1||MON.indexOf(k)>-1) return 'index.html'; return VITRINE.indexOf(k)>-1 ? 'index.html' : 'eva.html'; }
   // Adresse propre (sans #) pour la page d'accueil de chaque fichier : ouverture instantanée (pré-chargée)
