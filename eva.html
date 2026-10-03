@@ -11685,6 +11685,16 @@ go=function(page){
 </div>
 
 <!-- ════════ PAGE LISTE A-Z (commune, contenu dynamique) ════════ -->
+
+<style id="evst-css">
+#evad-subtabs{ padding:10px 14px 4px; background:#fff; }
+.evst{ position:relative; display:flex; gap:4px; padding:4px; border-radius:14px; background:#f1f5f9; border:1px solid #e2e8f0; }
+.evst-b{ flex:1; min-width:0; display:flex; align-items:center; justify-content:center; gap:6px; border:none; background:none; padding:10px 8px; border-radius:11px; font:800 .78rem/1.1 -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif; color:#475569; cursor:pointer; transition:background .25s, color .25s, box-shadow .25s; white-space:nowrap; }
+.evst-b i{ font-style:normal; font-size:.64rem; min-width:20px; height:18px; padding:0 6px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; background:#e2e8f0; color:#334155; }
+.evst-b.on{ color:#fff; background:linear-gradient(135deg,var(--evst-a),var(--evst-b)); box-shadow:0 8px 18px -10px var(--evst-b), inset 0 1px 0 rgba(255,255,255,.25); }
+.evst-b.on i{ background:rgba(255,255,255,.22); color:#fff; }
+@media (max-width:420px){ .evst-b{ font-size:.7rem; gap:4px; padding:10px 4px; } .evst-b i{ min-width:18px; padding:0 4px; font-size:.6rem; } }
+</style>
 <div class="evad-screen" id="s-eva-droits-list">
   <div class="evad-hd">
     <button class="evad-hd-back" onclick="go('eva-droits')"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
@@ -11795,10 +11805,11 @@ var EVAD_ARTICLES = {
       id:'are', ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 6v6l4 2"/></svg>', title:'ARE — Allocation de Retour à l\'Emploi',
       sub:'Conditions · Calcul · Durée · Démarches',
       content: function(){return `
-        <div class="art-lead">L'ARE est versée par France Travail aux salariés involontairement privés d'emploi. En 2026, plus de <strong>2,9 millions de personnes</strong> en bénéficient. Comprendre son calcul évite des erreurs qui coûtent des centaines d'euros.</div>
+        <div class="art-lead">L'ARE est versée par France Travail aux salariés involontairement privés d'emploi. Les règles ont changé en 2025 et 2026 : comprendre son calcul évite des erreurs qui coûtent des centaines d'euros.</div>
         <div class="art-h2">📌 Conditions d'éligibilité</div>
         <div class="art-table-wrap"><table class="art-table"><thead><tr><th>Condition</th><th>Exigence 2026</th></tr></thead><tbody>
-          <tr><td>Durée travaillée</td><td><strong>130 jours ou 910 heures</strong> sur les 24 derniers mois</td></tr>
+          <tr><td>Durée travaillée</td><td><strong>130 jours ou 910 heures</strong> sur les 24 derniers mois (36 mois à partir de 55 ans)</td></tr>
+          <tr><td>Première ouverture de droits</td><td><strong>108 jours ou 758 heures</strong> suffisent depuis le 1er avril 2026 si vous n'avez jamais été indemnisé(e) au cours des 20 dernières années</td></tr>
           <tr><td>Âge</td><td>Moins de 65 ans</td></tr>
           <tr><td>Inscription France Travail</td><td>Dans les <strong>12 mois</strong> suivant la rupture</td></tr>
           <tr><td>Résidence</td><td>France métropolitaine ou DOM-TOM</td></tr>
@@ -11807,19 +11818,21 @@ var EVAD_ARTICLES = {
         <div class="art-h2">💶 Calcul du montant 2026</div>
         <div class="art-p">Le montant journalier = <strong>partie fixe + partie variable</strong>. Le résultat retenu est toujours le plus favorable entre la somme (fixe + variable) et 57 % du SJR.</div>
         <div class="art-table-wrap"><table class="art-table"><thead><tr><th>Élément</th><th>Valeur 2026</th></tr></thead><tbody>
-          <tr><td>Partie fixe</td><td><strong>13,11 €/jour</strong></td></tr>
+          <tr><td>Partie fixe</td><td><strong>13,18 €/jour</strong></td></tr>
           <tr><td>Partie variable</td><td><strong>40,4 %</strong> du SJR</td></tr>
-          <tr><td>Minimum garanti</td><td><strong>31,59 €/jour</strong></td></tr>
+          <tr><td>Minimum garanti</td><td><strong>32,13 €/jour</strong></td></tr>
           <tr><td>Maximum</td><td><strong>75 %</strong> du SJR brut</td></tr>
-          <tr><td>Durée max (−50 ans)</td><td><strong>24 mois</strong></td></tr>
-          <tr><td>Durée max (+50 ans)</td><td><strong>36 mois</strong></td></tr>
+          <tr><td>Durée max (moins de 55 ans)</td><td><strong>18 mois</strong></td></tr>
+          <tr><td>Durée max (55-56 ans)</td><td><strong>22,5 mois</strong></td></tr>
+          <tr><td>Durée max (57 ans et +)</td><td><strong>27 mois</strong></td></tr>
+          <tr><td>Après une rupture conventionnelle (depuis le 1er sept. 2026)</td><td><strong>15 mois</strong> avant 55 ans, <strong>20,5 mois</strong> ensuite</td></tr>
         </tbody></table></div>
-        <div class="art-hl art-hl-blue"><div class="art-hl-h">🧮 Exemple concret</div><div class="art-hl-p">Salaire 2 500 €/mois → SJR = (2 500 × 12) ÷ 365 = <strong>82,19 €</strong><br>ARE = 13,11 + (40,4% × 82,19) = <strong>46,31 €/jour</strong> ≈ <strong>1 390 €/mois</strong></div></div>
+        <div class="art-hl art-hl-blue"><div class="art-hl-h">🧮 Exemple concret</div><div class="art-hl-p">Salaire 2 500 €/mois → SJR = (2 500 × 12) ÷ 365 = <strong>82,19 €</strong><br>ARE = 13,18 + (40,4% × 82,19) = <strong>46,38 €/jour</strong> ≈ <strong>1 391 €/mois</strong> (mois de 30 jours)</div></div>
         <div class="art-h2">📋 Démarches pas à pas</div>
         <ul class="art-steps">
           <li class="art-step"><div class="art-step-n">1</div><div><div class="art-step-t">S'inscrire sur France Travail</div><div class="art-step-d">Sur francetravail.fr ou en agence — <strong>dans les 12 mois</strong> suivant la rupture.</div></div></li>
           <li class="art-step"><div class="art-step-n">2</div><div><div class="art-step-t">Renseigner son dossier</div><div class="art-step-d">Contrat, bulletins de salaire, motif de rupture. France Travail calcule votre SJR.</div></div></li>
-          <li class="art-step"><div class="art-step-n">3</div><div><div class="art-step-t">Attendre le délai de carence</div><div class="art-step-d"><strong>7 jours minimum</strong> + différé selon indemnités perçues (max 75 jours).</div></div></li>
+          <li class="art-step"><div class="art-step-n">3</div><div><div class="art-step-t">Attendre le délai de carence</div><div class="art-step-d"><strong>7 jours</strong> + différés selon les congés payés et les indemnités perçues (différé spécifique : 150 jours maximum, 75 en licenciement économique).</div></div></li>
           <li class="art-step"><div class="art-step-n">4</div><div><div class="art-step-t">Actualiser chaque mois</div><div class="art-step-d">Avant le <strong>15 du mois</strong> sur francetravail.fr. Tout revenu doit être déclaré.</div></div></li>
           <li class="art-step"><div class="art-step-n">5</div><div><div class="art-step-t">Recevoir le virement</div><div class="art-step-d">Entre le <strong>25 et le 28</strong> du mois.</div></div></li>
         </ul>
@@ -12604,6 +12617,182 @@ var EVAD_ARTICLES = {
   ]
 };
 
+/* ═══ Encyclopédie EVA : générateur d'articles + onglets Salarié / Demandeur d'emploi ═══ */
+function evadSP(q){ return 'https://www.service-public.gouv.fr/particuliers/recherche?keyword='+encodeURIComponent(q); }
+function evadMk(o){
+  return { id:o.id, aud:o.aud, ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+o.ico+'</svg>',
+    title:o.title, sub:o.sub,
+    content:function(){
+      var h='<div class="art-lead">'+o.lead+'</div>';
+      (o.sec||[]).forEach(function(s){
+        if(s.h) h+='<div class="art-h2">'+s.h+'</div>';
+        if(s.p) h+='<div class="art-p">'+s.p+'</div>';
+        if(s.t) h+='<div class="art-table-wrap"><table class="art-table"><thead><tr><th>'+s.t[0][0]+'</th><th>'+s.t[0][1]+'</th></tr></thead><tbody>'+s.t.slice(1).map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('')+'</tbody></table></div>';
+        if(s.steps) h+='<ul class="art-steps">'+s.steps.map(function(x,i){ return '<li class="art-step"><div class="art-step-n">'+(i+1)+'</div><div><div class="art-step-t">'+x[0]+'</div><div class="art-step-d">'+x[1]+'</div></div></li>'; }).join('')+'</ul>';
+        if(s.hl) h+='<div class="art-hl art-hl-'+(s.hl[2]||'blue')+'"><div class="art-hl-h">'+s.hl[0]+'</div><div class="art-hl-p">'+s.hl[1]+'</div></div>';
+      });
+      if(o.eva) h+='<div class="art-eva"><div class="art-eva-av">EVA</div><div><div class="art-eva-label">💡 Le conseil d\'Eva</div><div class="art-eva-text">'+o.eva+'</div></div></div>';
+      h+='<div class="art-sources"><div class="art-src-label">📚 Sources officielles</div>'+(o.src||[]).map(function(x){
+        var url=x[1].indexOf('http')===0?x[1]:evadSP(x[1]); var dom=url.replace(/^https?:\/\/(www\.)?/,'').split('/')[0];
+        return '<div class="art-src-row" onclick="window.open(\''+url+'\',\'_blank\')"><div class="art-src-ico">'+(x[2]||'🏛️')+'</div><div class="art-src-info"><div class="art-src-name">'+x[0]+'</div><div class="art-src-url">'+dom+'</div></div></div>';
+      }).join('')+'</div>';
+      return h;
+    } };
+}
+/* Onglets du profil « Salarié & Demandeur d'emploi » */
+var _evadSubTab='sal';
+var EVAD_TABS={ salarie:[['sal','💼 Salarié'],['dem','🔎 Demandeur d\'emploi']] };
+function evadCurArticles(){
+  var all=EVAD_ARTICLES[_evadCurrentProfile]||[], T=EVAD_TABS[_evadCurrentProfile];
+  if(!T) return all;
+  return all.filter(function(a){ return !a.aud || a.aud==='both' || a.aud===_evadSubTab; });
+}
+function evadDrawTabs(){
+  var wrap=document.getElementById('evad-subtabs'), T=EVAD_TABS[_evadCurrentProfile];
+  var sw=document.querySelector('#s-eva-droits-list .az-search-wrap'); if(!sw) return;
+  if(!wrap){ wrap=document.createElement('div'); wrap.id='evad-subtabs'; }
+  if(wrap.nextSibling!==sw) sw.parentNode.insertBefore(wrap,sw);
+  if(!T){ wrap.style.display='none'; wrap.innerHTML=''; return; }
+  var p=EVAD_PROFILES[_evadCurrentProfile]||{}, all=EVAD_ARTICLES[_evadCurrentProfile]||[];
+  wrap.style.display='';
+  wrap.innerHTML='<div class="evst">'+T.map(function(t){
+    var n=all.filter(function(a){ return !a.aud || a.aud==='both' || a.aud===t[0]; }).length;
+    return '<button type="button" class="evst-b'+(t[0]===_evadSubTab?' on':'')+'" data-k="'+t[0]+'">'+t[1]+' <i>'+n+'</i></button>';
+  }).join('')+'</div>';
+  wrap.querySelector('.evst').style.setProperty('--evst-a',p.accentDark||'#1e3a5f'); wrap.querySelector('.evst').style.setProperty('--evst-b',p.accentMid||'#1e40af');
+  wrap.querySelectorAll('.evst-b').forEach(function(b){ b.onclick=function(){ _evadSubTab=b.getAttribute('data-k'); _evadActiveAlpha='ALL'; evadRefreshList(true); }; });
+}
+function evadRefreshList(fromTab){
+  var arts=evadCurArticles();
+  evadDrawTabs();
+  var c=document.getElementById('evad-list-count'); if(c) c.textContent=arts.length+' thèmes classés A → Z';
+  evadBuildAlphaBar(arts); evadRenderList(arts);
+  if(fromTab){ var w=document.getElementById('evad-subtabs'); if(w) try{ var sp=w.parentNode; while(sp && sp!==document.body){ var o=getComputedStyle(sp).overflowY; if(o==='auto'||o==='scroll') break; sp=sp.parentNode; }
+    if(sp && sp!==document.body){ var d=w.getBoundingClientRect().top-sp.getBoundingClientRect().top-96; sp.scrollBy({ top:d, behavior:'smooth' }); } }catch(e){} }
+}
+
+/* ── Profil Salarié & Demandeur d'emploi : nouveaux articles (onglet Demandeur d'emploi + communs) ── */
+(function(){
+var I={ doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+  euro:'<path d="M18 7a7 7 0 1 0 0 10"/><path d="M4 10h9M4 14h9"/>', clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>',
+  trend:'<path d="M3 7l6 6 4-4 8 8"/><path d="M21 11v6h-6"/>', door:'<path d="M14 3h5v18h-5"/><path d="M10 17l5-5-5-5M15 12H3"/>',
+  heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/><path d="M9 11h6M12 8v6"/>',
+  shield:'<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>', scale:'<path d="M12 3v18M5 7h14M7 7l-3 7h6zM17 7l-3 7h6z"/>',
+  hands:'<path d="M12 21s-8-5-8-11a4 4 0 0 1 8 0 4 4 0 0 1 8 0c0 6-8 11-8 11z"/>', car:'<path d="M5 17h14M6 17l1-6h10l1 6"/><circle cx="8" cy="17" r="2"/><circle cx="16" cy="17" r="2"/>',
+  child:'<circle cx="12" cy="6" r="3"/><path d="M8 21v-6l-2-3h12l-2 3v6"/>', book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/>',
+  access:'<circle cx="12" cy="4" r="2"/><path d="M12 7v6l4 5M12 13l-4 5M7 10h10"/>', life:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m5.6 5.6 3.6 3.6M14.8 14.8l3.6 3.6M18.4 5.6l-3.6 3.6M9.2 14.8l-3.6 3.6"/>'
+};
+var M=evadMk, A=[
+M({ id:'plein-emploi', aud:'dem', ico:I.doc, title:'Loi plein emploi — Inscription et obligations', sub:'Inscription · Contrat d\'engagement · Activités · Sanctions',
+  lead:'Depuis le <strong>1er janvier 2025</strong>, la loi pour le plein emploi a changé l\'accompagnement des demandeurs d\'emploi. Mieux vaut connaître vos engagements… et vos droits.',
+  sec:[{h:'👥 Qui est inscrit à France Travail ?',p:'En plus des demandeurs d\'emploi qui s\'inscrivent eux-mêmes, sont désormais <strong>inscrits automatiquement</strong> : les allocataires du RSA, les jeunes suivis par une mission locale et les personnes accompagnées par Cap emploi.'},
+    {h:'📝 Le contrat d\'engagement',p:'Avec votre conseiller, vous signez un <strong>contrat d\'engagement</strong> qui fixe votre plan d\'action : objectifs, démarches, formations. Pour les allocataires du RSA, il prévoit en principe <strong>15 heures d\'activités par semaine</strong> (ateliers, immersions, formation…), adaptables selon votre situation.'},
+    {h:'⚠️ Les sanctions',hl:['La « suspension-remobilisation »','En cas de manquement, votre allocation peut être <strong>suspendue</strong> plutôt que supprimée. Si vous reprenez vos démarches, les sommes peuvent être <strong>reversées</strong>. Répondez toujours aux convocations et gardez une trace de vos démarches.','amber']}],
+  eva:'Le contrat d\'engagement se <strong>négocie</strong> : si une contrainte (garde d\'enfant, santé, transport) vous empêche de tenir un engagement, signalez-la à votre conseiller avant qu\'elle ne devienne un manquement.',
+  src:[['Service-Public — Loi plein emploi','loi pour le plein emploi','🇫🇷'],['France Travail','https://www.francetravail.fr','🏛️']] }),
+M({ id:'droits-rechargeables', aud:'dem', ico:I.refresh, title:'Droits rechargeables — Prolonger son chômage', sub:'Principe · Conditions · Rechargement',
+  lead:'Chaque période travaillée pendant votre indemnisation peut vous apporter de <strong>nouveaux droits</strong>. C\'est le principe des droits rechargeables.',
+  sec:[{h:'🔁 Comment ça marche',p:'Quand vous retravaillez tout en étant indemnisé(e), les jours non indemnisés sont <strong>reportés</strong> : votre fin de droits recule d\'autant.'},
+    {h:'📌 Le rechargement',t:[['Condition','Règle'],['Quand ?','À l\'épuisement de vos droits'],['Durée travaillée','Au moins <strong>130 jours ou 910 heures</strong> (environ 6 mois)'],['Démarche','France Travail examine vos droits automatiquement à la fin de l\'indemnisation']]}],
+  eva:'Accepter des missions courtes pendant le chômage n\'est jamais du temps perdu : vous gagnez un revenu <strong>et</strong> vous allongez votre filet de sécurité.',
+  src:[['Service-Public — Droits rechargeables','droits rechargeables assurance chomage','🇫🇷'],['Unédic','https://www.unedic.org','📊']] }),
+M({ id:'cumul-are', aud:'dem', ico:I.euro, title:'Cumul ARE et salaire — Reprendre un emploi', sub:'Calcul · Plafond · Déclaration',
+  lead:'Reprendre un travail ne fait pas perdre toute son allocation : l\'ARE peut se <strong>cumuler</strong> avec un salaire, sous conditions.',
+  sec:[{h:'🧮 Le calcul',p:'France Travail retire de votre allocation mensuelle <strong>70 % du salaire brut</strong> de votre nouvelle activité. Le total (salaire + allocation) ne peut pas dépasser votre ancien salaire de référence.'},
+    {h:'',hl:['🧮 Exemple','ARE mensuelle de 1 200 € et reprise à 800 € brut : 1 200 − (70 % × 800) = <strong>640 € d\'allocation</strong> + 800 € de salaire.','blue']},
+    {h:'📋 Les bons réflexes',steps:[['Déclarer chaque mois','Indiquez heures et salaire lors de l\'actualisation, même si la paie n\'est pas encore versée.'],['Envoyer les bulletins','Transmettez vos bulletins de salaire dans votre espace France Travail.'],['Suivre ses droits','Les jours non versés sont reportés : votre fin de droits recule.']]}],
+  eva:'Une activité réduite n\'est pas un piège : elle vous fait gagner plus <strong>et</strong> prolonge vos droits.',
+  src:[['Service-Public — Cumul allocation et salaire','cumul allocation chomage salaire','🇫🇷']] }),
+M({ id:'degressivite', aud:'dem', ico:I.trend, title:'Dégressivité de l\'ARE — Qui est concerné ?', sub:'Seuil · 7e mois · Exceptions',
+  lead:'Pour les plus hautes allocations, l\'ARE peut <strong>baisser de 30 %</strong> à partir du 7e mois. Mais beaucoup de demandeurs ne sont pas concernés.',
+  sec:[{h:'📌 Les règles 2026',t:[['Élément','Règle'],['Âge','Moins de <strong>55 ans</strong> à la fin du contrat'],['Seuil','Allocation journalière supérieure à <strong>92,57 €</strong>'],['Baisse','Jusqu\'à <strong>30 %</strong>, sans descendre sous le seuil'],['Début','À partir du <strong>7e mois</strong> d\'indemnisation']]},
+    {h:'✅ Pas de dégressivité si…',p:'Vous aviez <strong>55 ans ou plus</strong> à la fin de votre contrat, ou votre allocation est sous le seuil. Une formation suivie pendant le chômage peut aussi reporter la baisse.'}],
+  eva:'Vérifiez votre allocation journalière sur votre notification de droits : si elle est sous le seuil, la dégressivité ne vous concerne <strong>pas du tout</strong>.',
+  src:[['Unédic — Règles d\'indemnisation','https://www.unedic.org','📊'],['Service-Public — Dégressivité','degressivite allocation chomage','🇫🇷']] }),
+M({ id:'carence-differe', aud:'dem', ico:I.clock, title:'Délai de carence et différés — Quand arrive le 1er paiement ?', sub:'7 jours · Congés payés · Indemnités',
+  lead:'Votre premier versement n\'arrive pas le lendemain de la fin du contrat. Trois délais peuvent s\'additionner.',
+  sec:[{h:'⏱️ Les trois délais',t:[['Délai','Ce qu\'il faut savoir'],['Délai d\'attente','<strong>7 jours</strong> dans tous les cas'],['Différé congés payés','Calculé à partir de l\'indemnité de congés payés reçue'],['Différé spécifique','Lié aux indemnités de rupture supérieures au minimum légal, <strong>150 jours maximum</strong> (75 en licenciement économique)']]},
+    {h:'',hl:['💡 Bon à savoir','Les indemnités <strong>légales</strong> de licenciement ou de rupture conventionnelle ne créent pas de différé spécifique : seule la part qui dépasse le minimum légal compte.','blue']}],
+  eva:'Inscrivez-vous <strong>dès le lendemain</strong> de la fin du contrat : les délais courent pendant ce temps-là, autant ne pas en ajouter.',
+  src:[['Service-Public — Délai d\'attente et différé','delai attente differe indemnisation chomage','🇫🇷']] }),
+M({ id:'demission-legitime', aud:'dem', ico:I.door, title:'Démission légitime — Toucher le chômage après une démission', sub:'Cas reconnus · Réexamen à 121 jours',
+  lead:'Une démission ne prive pas toujours du chômage. Certaines démissions sont dites <strong>légitimes</strong> et ouvrent droit à l\'ARE.',
+  sec:[{h:'✅ Exemples de cas reconnus',p:'Suivre son conjoint qui change de lieu de travail, salaires non payés (avec une décision du juge), violences conjugales obligeant à déménager, démission peu après une embauche qui suivait un licenciement, ou projet de reconversion validé (démission-reconversion).'},
+    {h:'🔄 Pas dans ces cas ? Le réexamen',p:'Après <strong>121 jours</strong> de chômage, vous pouvez demander un réexamen de votre situation, en montrant vos démarches de recherche d\'emploi. Une instance paritaire peut alors vous accorder l\'ARE.'}],
+  eva:'Avant de démissionner, <strong>vérifiez votre cas précis</strong> auprès de France Travail : une démission non légitime, c\'est au minimum 4 mois sans allocation.',
+  src:[['Service-Public — Démission et chômage','demission legitime chomage','🇫🇷']] }),
+M({ id:'maladie-chomage', aud:'dem', ico:I.heart, title:'Arrêt maladie pendant le chômage', sub:'Indemnités · Déclaration · Droits reportés',
+  lead:'Tomber malade pendant le chômage ne fait pas perdre ses droits : l\'ARE est <strong>suspendue</strong>, et l\'Assurance maladie prend le relais.',
+  sec:[{h:'📋 Ce qui se passe',steps:[['Envoyer l\'arrêt','Transmettez l\'arrêt de travail à votre CPAM dans les délais habituels.'],['Le déclarer','Signalez l\'arrêt à France Travail lors de votre actualisation.'],['Indemnités journalières','La CPAM peut vous verser des indemnités, calculées à partir de vos anciens salaires.'],['Droits reportés','Les jours d\'arrêt ne sont pas décomptés de vos droits ARE : ils reprennent après.']]}],
+  eva:'Ne cumulez jamais ARE et indemnités journalières sur la même période : tout trop-perçu vous serait réclamé.',
+  src:[['Ameli — Arrêt de travail','https://www.ameli.fr','🏥'],['Service-Public — Maladie et chômage','arret maladie chomage','🇫🇷']] }),
+M({ id:'retraite-chomage', aud:'dem', ico:I.clock, title:'Retraite et chômage — Vos trimestres comptent', sub:'Trimestres · Points complémentaires',
+  lead:'Les périodes de chômage <strong>comptent pour la retraite</strong>. Beaucoup l\'ignorent, et c\'est une bonne nouvelle.',
+  sec:[{h:'📊 Ce qui est validé',t:[['Période','Effet sur la retraite'],['Chômage indemnisé','<strong>1 trimestre par tranche de 50 jours</strong> indemnisés (4 maximum par an)'],['Chômage non indemnisé','Validation limitée dans le temps'],['Retraite complémentaire','Des <strong>points Agirc-Arrco</strong> sont attribués pendant l\'indemnisation']]}],
+  eva:'Vérifiez votre relevé de carrière sur <strong>info-retraite.fr</strong> : une période de chômage oubliée se corrige, mais plus vite elle est repérée, mieux c\'est.',
+  src:[['Info-retraite — Relevé de carrière','https://www.info-retraite.fr','👵'],['Service-Public — Chômage et retraite','chomage retraite trimestres','🇫🇷']] }),
+M({ id:'mediateur-ft', aud:'dem', ico:I.scale, title:'Médiateur de France Travail — Contester sans procès', sub:'Réclamation · Médiation · Gratuit',
+  lead:'Un désaccord avec France Travail (radiation, trop-perçu, refus d\'aide) ? Avant le tribunal, il existe un recours <strong>gratuit</strong> : le médiateur.',
+  sec:[{h:'📋 Les étapes',steps:[['Réclamation','Écrivez d\'abord à votre agence ou à votre conseiller, en gardant une copie.'],['Médiateur régional','Sans réponse satisfaisante, saisissez le médiateur de votre région, par écrit, avec les pièces.'],['Recommandation','Le médiateur examine votre dossier et peut recommander une solution à France Travail.']]},
+    {h:'',hl:['💡 À savoir','La médiation est gratuite et ne vous empêche pas d\'engager ensuite un autre recours si besoin.','blue']}],
+  eva:'Joignez toujours vos preuves (courriers, captures d\'actualisation, attestations) : un dossier clair se règle beaucoup plus vite.',
+  src:[['France Travail — Le médiateur','https://www.francetravail.fr','🏛️']] }),
+M({ id:'ass', aud:'dem', ico:I.life, title:'ASS — Allocation de solidarité spécifique', sub:'Fin de droits · Conditions · Avenir',
+  lead:'Quand vos droits au chômage sont épuisés, l\'<strong>ASS</strong> peut prendre le relais, sous conditions de ressources et d\'activité passée.',
+  sec:[{h:'📌 Conditions principales',t:[['Condition','Exigence'],['Situation','Avoir épuisé ses droits à l\'ARE'],['Activité passée','<strong>5 ans</strong> d\'activité salariée dans les 10 ans avant la fin du contrat'],['Ressources','Sous un plafond, seul(e) ou en couple'],['Recherche d\'emploi','Être inscrit(e) et en recherche active']]},
+    {h:'🧭 Son avenir',hl:['À vérifier','La suppression de l\'ASS a été annoncée en 2024, avec une bascule vers le RSA. Vérifiez sa situation actuelle sur Service-Public avant toute décision.','amber']}],
+  eva:'L\'ASS permet aussi de <strong>valider des trimestres de retraite</strong>, ce que le RSA ne fait pas. Un argument à garder en tête.',
+  src:[['Service-Public — ASS','allocation de solidarite specifique','🇫🇷']] }),
+M({ id:'aides-mobilite', aud:'dem', ico:I.car, title:'Aides à la mobilité de France Travail', sub:'Transport · Repas · Hébergement',
+  lead:'France Travail peut rembourser vos frais de <strong>transport, repas et hébergement</strong> pour un entretien, un concours, une formation ou une reprise d\'emploi. Pourtant, moins d\'un tiers des demandeurs éligibles connaissent ces aides.',
+  sec:[{h:'✅ Pour quoi ?',p:'Un entretien d\'embauche, un concours public, une prestation ou une formation validée, ou la reprise d\'un emploi (CDI, CDD ou intérim d\'une certaine durée).'},
+    {h:'📍 Conditions habituelles',p:'Le lieu doit être éloigné de chez vous (en général <strong>plus de 60 km aller-retour ou 2 h de trajet</strong>), et l\'aide dépend de vos ressources. Un plafond annuel s\'applique.'},
+    {h:'📋 Démarche',steps:[['Demander à temps','Faites la demande dans votre espace France Travail, idéalement avant le déplacement.'],['Garder les justificatifs','Billets, tickets, factures d\'hôtel : tout se justifie.']]}],
+  eva:'Un entretien loin de chez vous ? Demandez l\'aide <strong>avant</strong> de renoncer : c\'est exactement pour ça qu\'elle existe.',
+  src:[['France Travail — Aides à la mobilité','https://www.francetravail.fr','🏛️'],['Service-Public — Aide à la mobilité','aide mobilite demandeur emploi','🇫🇷']] }),
+M({ id:'agepi', aud:'dem', ico:I.child, title:'AGEPI — Aide à la garde d\'enfants', sub:'Parents isolés · Reprise d\'emploi · Formation',
+  lead:'Parent isolé et de retour à l\'emploi ou en formation ? L\'<strong>AGEPI</strong> aide à payer la garde de vos jeunes enfants. Elle reste très peu demandée.',
+  sec:[{h:'📌 Conditions principales',t:[['Condition','Exigence'],['Situation familiale','Élever seul(e) au moins un enfant de <strong>moins de 10 ans</strong>'],['Projet','Reprise d\'emploi ou entrée en formation'],['Ressources','Sous conditions, selon votre situation']]},
+    {h:'📋 Démarche',p:'La demande se fait auprès de France Travail, dans un délai court après la reprise d\'emploi ou le début de la formation. Le montant dépend du nombre d\'enfants et de votre temps de travail.'}],
+  eva:'Faites la demande <strong>dès la signature</strong> du contrat : un retard peut vous faire perdre l\'aide.',
+  src:[['France Travail — AGEPI','https://www.francetravail.fr','🏛️'],['Service-Public — AGEPI','agepi garde enfant parent isole','🇫🇷']] }),
+M({ id:'permis-ft', aud:'dem', ico:I.car, title:'Aide au permis de conduire de France Travail', sub:'Conditions · Projet · Démarche',
+  lead:'Le permis vous manque pour décrocher un emploi ? France Travail peut <strong>financer une partie</strong> de votre permis B.',
+  sec:[{h:'📌 Conditions habituelles',p:'Être inscrit(e) comme demandeur d\'emploi depuis un certain temps, avoir un projet professionnel qui <strong>nécessite le permis</strong>, et des ressources limitées. L\'aide est plafonnée et versée à l\'auto-école.'},
+    {h:'📋 Démarche',steps:[['En parler','Expliquez à votre conseiller pourquoi le permis est nécessaire à votre projet.'],['Devis','Fournissez un devis d\'une auto-école.'],['Décision','France Travail étudie votre dossier et vous répond.']]}],
+  eva:'Votre argument clé : montrez des <strong>offres d\'emploi précises</strong> qui exigent le permis. C\'est ce qui convainc.',
+  src:[['France Travail — Aide au permis','https://www.francetravail.fr','🏛️']] }),
+M({ id:'are-formation', aud:'dem', ico:I.book, title:'Se former pendant le chômage — ARE et rémunération', sub:'AREF · Rémunération de formation',
+  lead:'Suivre une formation pendant le chômage, c\'est possible <strong>sans perdre ses revenus</strong>, à condition que la formation soit validée.',
+  sec:[{h:'💶 Vos revenus pendant la formation',t:[['Situation','Ce que vous percevez'],['Indemnisé(e) par l\'ARE','Votre allocation continue (AREF) si la formation est validée'],['Non indemnisé(e)','Une <strong>rémunération de formation</strong> peut être versée sous conditions'],['Frais','Transport ou hébergement parfois pris en charge']]},
+    {h:'',hl:['⚠️ Condition clé','La formation doit être <strong>validée par votre conseiller</strong> et inscrite dans votre projet, avant son démarrage.','amber']}],
+  eva:'Faites valider la formation <strong>avant</strong> de vous inscrire : c\'est ce qui garantit le maintien de vos revenus.',
+  src:[['France Travail — Se former','https://www.francetravail.fr','🏛️'],['Service-Public — Formation et chômage','formation demandeur emploi remuneration','🇫🇷']] }),
+M({ id:'prime-activite', aud:'both', ico:I.euro, title:'Prime d\'activité — Le complément de revenus', sub:'Conditions · Simulation · Déclaration',
+  lead:'Vous travaillez avec de petits revenus ? La <strong>prime d\'activité</strong> complète votre salaire chaque mois. Beaucoup de personnes y ont droit sans le savoir.',
+  sec:[{h:'👥 Qui peut en bénéficier ?',p:'Les personnes de <strong>18 ans ou plus</strong> qui travaillent (salariés, indépendants, et sous conditions les étudiants et apprentis), avec des revenus modestes. Le montant dépend de vos revenus et de votre foyer.'},
+    {h:'📋 Démarche',steps:[['Simuler','Faites la simulation sur caf.fr (ou msa.fr) : 5 minutes suffisent.'],['Demander','Faites la demande en ligne si la simulation est positive.'],['Déclarer','Déclarez vos revenus <strong>tous les 3 mois</strong> pour continuer à la percevoir.']]}],
+  eva:'Refaites la simulation à <strong>chaque changement</strong> (nouveau contrat, temps partiel, naissance) : le droit peut s\'ouvrir du jour au lendemain.',
+  src:[['CAF — Prime d\'activité','https://www.caf.fr','🏠'],['Service-Public — Prime d\'activité','prime d activite','🇫🇷']] }),
+M({ id:'rqth', aud:'both', ico:I.access, title:'RQTH — Reconnaissance de travailleur handicapé', sub:'MDPH · Aides Agefiph · Droits',
+  lead:'La <strong>RQTH</strong> ouvre des droits concrets au travail. Elle concerne bien plus de monde qu\'on ne le croit : maladies chroniques, troubles invisibles, séquelles d\'accident…',
+  sec:[{h:'✅ Ce qu\'elle apporte',t:[['Avantage','Détail'],['Accompagnement','Cap emploi, en plus de France Travail'],['Aides financières','Aides de l\'<strong>Agefiph</strong> (aménagement de poste, formation, mobilité)'],['Emploi','Les entreprises de 20 salariés et plus doivent employer des travailleurs handicapés'],['Licenciement','Préavis doublé, dans la limite de 3 mois']]},
+    {h:'📋 Démarche',p:'La demande se fait auprès de la <strong>MDPH</strong> de votre département, avec un certificat médical. La reconnaissance est accordée pour une durée limitée ou sans limite selon les cas.'}],
+  eva:'La RQTH est <strong>confidentielle</strong> : vous n\'êtes jamais obligé(e) d\'en parler à votre employeur. Vous choisissez quand et si vous l\'utilisez.',
+  src:[['Agefiph','https://www.agefiph.fr','♿'],['Service-Public — RQTH','reconnaissance qualite travailleur handicape','🇫🇷']] }),
+M({ id:'csp', aud:'both', ico:I.shield, title:'CSP — Contrat de sécurisation professionnelle', sub:'Licenciement économique · Allocation · Accompagnement',
+  lead:'En cas de licenciement économique, votre employeur doit vous proposer le <strong>CSP</strong>. Bien choisi, il est souvent plus avantageux que le chômage classique.',
+  sec:[{h:'📌 L\'essentiel',t:[['Élément','Règle'],['Qui ?','Licenciement économique dans une entreprise de moins de 1 000 salariés (ou en redressement ou liquidation)'],['Délai de réflexion','<strong>21 jours</strong> pour accepter ou refuser'],['Allocation','<strong>75 % du salaire de référence</strong> pendant 12 mois, si vous avez au moins 1 an d\'ancienneté'],['Accompagnement','Suivi renforcé par un conseiller dédié et formations']]},
+    {h:'',hl:['⚠️ À savoir','Si vous acceptez le CSP, votre contrat est rompu d\'un commun accord, et une partie du préavis est versée à France Travail.','amber']}],
+  eva:'Comparez avant de signer : <strong>CSP</strong> ou ARE classique. Avec au moins un an d\'ancienneté, l\'allocation du CSP est généralement plus élevée la première année.',
+  src:[['Service-Public — CSP','contrat de securisation professionnelle','🇫🇷'],['Unédic','https://www.unedic.org','📊']] })
+];
+A.forEach(function(a){ EVAD_ARTICLES.salarie.push(a); });
+var AUD={ are:'dem', conges:'sal', licenciement:'both', mutuelle:'both', rupture:'both', salaire:'sal', solde:'sal', teletravail:'sal' };
+EVAD_ARTICLES.salarie.forEach(function(a){ if(!a.aud && AUD[a.id]) a.aud=AUD[a.id]; });
+})();
+
 // ══ Fonctions de navigation ══
 
 function evadShowList(profile) {
@@ -12621,16 +12810,12 @@ function evadShowList(profile) {
   document.getElementById('evad-list-tag').style.color = p.tagColor;
   document.getElementById('evad-list-h').textContent = p.title.replace(/^[^\s]+\s/,'');
   document.getElementById('evad-list-p').textContent = p.desc;
-  document.getElementById('evad-list-count').textContent = articles.length + ' thèmes classés A → Z';
-
-  // Réinitialiser filtre alpha
+  // Réinitialiser filtre alpha + onglet (Salarié par défaut)
   _evadActiveAlpha = 'ALL';
+  if(EVAD_TABS[profile] && EVAD_TABS[profile].map(function(t){ return t[0]; }).indexOf(_evadSubTab)<0) _evadSubTab=EVAD_TABS[profile][0][0];
 
-  // Construire pastilles A-Z colorées
-  evadBuildAlphaBar(articles);
-
-  // Rendu liste A-Z
-  evadRenderList(articles);
+  // Onglets + pastilles A-Z + liste
+  evadRefreshList();
 
   // Naviguer
   var screens = document.querySelectorAll('.evad-screen, .screen');
@@ -12696,7 +12881,7 @@ function evadBuildAlphaBar(articles) {
 
 function evadAlphaFilter(letter) {
   _evadActiveAlpha = letter;
-  var articles = EVAD_ARTICLES[_evadCurrentProfile];
+  var articles = evadCurArticles();
   evadBuildAlphaBar(articles);
   evadRenderList(articles);
 }
@@ -27482,6 +27667,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     var srch=q('.az-search-wrap',sc), pack=srch && srch._pack;
     if(!pack){ pack=el('div','evx-pack'); if(srch){ pack.appendChild(srch); srch._pack=pack; } }
     if(body.parentNode!==pack) pack.appendChild(body);
+    var stb=document.getElementById('evad-subtabs'); if(stb && srch && srch.parentNode===pack) pack.insertBefore(stb,srch);
     mount({ host:host, id:'dlist', key:'dlist-'+title, label:'Droits · Encyclopédie', bar:true, steps:[
       { make:function(){ return cover(t,{ name:esc(h), handle:t.h+' · encyclopédie', bio:esc(p), stats:[[n||'A → Z','thèmes'],['2-4 min','par lecture'],['2026','à jour']] }); }, feed:false, wait:2000 },
       { think:'EVA classe tes thèmes de A à Z…' },
