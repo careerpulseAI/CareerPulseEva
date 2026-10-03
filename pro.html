@@ -122,6 +122,12 @@ button{ font-family:inherit; }
   .psteps{ grid-template-columns:1fr; }
   .plink .t{ display:none; }
   .plink{ padding:8px 10px; }
+  /* Mobile : retour au site en bouton vert premium */
+  .plink[href="index.html"]{ width:40px; height:40px; padding:0; justify-content:center; border:none; border-radius:50%; color:#fff;
+    background:radial-gradient(80% 80% at 30% 20%,rgba(255,255,255,.28),rgba(255,255,255,0) 60%),linear-gradient(145deg,#059669,#047857 55%,#065f46);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 8px 18px -8px rgba(4,120,87,.8); }
+  .plink[href="index.html"]:hover, .plink[href="index.html"]:active{ color:#fff; transform:scale(.95); }
+  .plink[href="index.html"] svg{ width:19px; height:19px; stroke-width:2.6; }
 }
 @media (prefers-reduced-motion:reduce){ *{ animation:none !important; transition:none !important; } }
 </style>
