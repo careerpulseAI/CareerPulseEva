@@ -28,6 +28,11 @@
 ::view-transition-image-pair(root){ isolation: auto; }
 ::view-transition-group(cp-tnav){ animation-duration: 0s; }
 @keyframes cpVtOut{ to{ opacity:0; } }
+/* Retour à l'accueil EVA (mobile) : l'ancienne page reste visible, l'accueil glisse par-dessus */
+html.cp-vt-back::view-transition-old(root){ animation: none; }
+html.cp-vt-back::view-transition-new(root){ animation: cpVtBack .3s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes cpVtBack{ from{ opacity:0; transform: translateX(-22px); } }
+@media (max-width: 899px){ html.cp-eva-on #tnav{ visibility: hidden !important; } }
 @keyframes cpVtIn{ from{ opacity:0; transform: translateY(8px); } }
 @media (prefers-reduced-motion: reduce){
   ::view-transition-old(root), ::view-transition-new(root){ animation: none; }
@@ -7028,7 +7033,10 @@ function go(id){
   var sc=document.getElementById('s-'+id);
   if(sc){
     var isEvaPage=sc.classList.contains('evad-screen')||sc.classList.contains('nova-screen')||sc.classList.contains('eva-subpage')||sc.id==='s-eva';
-    if(isEvaPage){
+    if(isEvaPage && id==='eva' && window.innerWidth<900){
+      /* Retour à l'accueil EVA (mobile) : pas de fondu depuis 0, sinon la page CareerPulse transparaît */
+      sc.style.transition='none'; sc.style.opacity='1'; sc.classList.add('active');
+    } else if(isEvaPage){
       sc.style.opacity='0';
       sc.style.transition='opacity .35s ease';
       sc.classList.add('active');
@@ -7039,6 +7047,9 @@ function go(id){
       requestAnimationFrame(function(){requestAnimationFrame(function(){sc.classList.add('page-visible');});});
     }
   }
+  // Mobile : la barre CareerPulse (#tnav, forcée visible en CSS) est masquée sur toutes les pages EVA,
+  // sinon elle transparaît pendant les transitions de retour
+  try{ document.documentElement.classList.toggle('cp-eva-on', !!(sc && (sc.classList.contains('evad-screen')||sc.classList.contains('nova-screen')||sc.classList.contains('eva-subpage')||sc.id==='s-eva'))); }catch(e){}
   scrollTo(0,0);
   // Cacher tnav/bnav quand Eva est actif (plein écran) ou sous-pages Eva
   var tnav=document.getElementById('tnav');
@@ -22558,7 +22569,7 @@ function ewShowResult(result,docLabel){
 </div>
 <div class="evad-screen screen" id="s-eva-identity">
   <div class="evad-hd">
-    <button class="evad-hd-back" onclick="history.back()"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <button class="evad-hd-back" onclick="go('eva')"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
     <div class="evad-hd-title">À propos d'Eva</div>
     <div class="evad-hd-eva" onclick="go('eva-identity')">
       <div class="evad-hd-eva-logo">
@@ -28927,6 +28938,8 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
   window.cpOfRender=render;
 })();
+(function(){ function sync(){ var a=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active'); document.documentElement.classList.toggle('cp-eva-on', !!a); }
+  if(document.readyState!=='loading') setTimeout(sync,0); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(sync,0); }); window.addEventListener('load',sync); })();
 </script>
 <!-- ═══════════════════════════════════════════════════════════════
      EVA · TÂCHES (menu EVA + carte du Portfolio)
@@ -29179,6 +29192,19 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var user=Date.now()-_lastUserAct<3000;
     if(EMBED){ if(user && window.cpMenuLeave) window.cpMenuLeave(id); return; }
     if(document.getElementById('s-'+id)){
+      // Retour à l'accueil EVA (mobile) : l'accueil glisse par-dessus la page quittée
+      if(PART==='eva' && id==='eva' && window.innerWidth<900 && document.startViewTransition && !REDUCE){
+        var cur=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,.screen.active');
+        if(cur && cur.id!=='s-eva'){
+          var bargs=arguments, root=document.documentElement;
+          root.classList.add('cp-vt-back');
+          try{
+            var vt=document.startViewTransition(function(){ _go.apply(window,bargs); });
+            vt.finished.finally(function(){ root.classList.remove('cp-vt-back'); });
+            return;
+          }catch(e){ root.classList.remove('cp-vt-back'); }
+        }
+      }
       // Transition douce entre deux pages du même fichier (vitrine / quiz)
       if(user && (PART==='index'||PART==='quiz'||PART==='monespace') && document.startViewTransition && !REDUCE){
         var args=arguments;
