@@ -6,6 +6,7 @@
 <title>CareerPulse Pro — Espace centres de formation et employeurs</title>
 <meta name="description" content="L'espace des professionnels de CareerPulse : centres de formation et employeurs rencontrent des candidats qui ont choisi d'être visibles.">
 <!-- Retour vers CareerPulse : accueil pré-chargé (session déjà prête) + fondu comme le reste du site -->
+<script>try{ if(sessionStorage.getItem('cp_member_hint')==='1') document.documentElement.classList.add('p-member'); }catch(e){}</script>
 <script type="speculationrules">
 {"prerender":[{"source":"list","urls":["index.html"],"eagerness":"eager"}]}
 </script>
@@ -14,6 +15,8 @@
 ::view-transition-old(root){ animation: pVtOut .18s ease-out both; }
 ::view-transition-new(root){ animation: pVtIn .28s cubic-bezier(.2,.8,.2,1) .06s both; }
 @keyframes pVtOut{ to{ opacity:0; } }
+#plogout{ display:none; }
+html.p-member #plogout{ display:inline-flex; }
 @keyframes pVtIn{ from{ opacity:0; transform:translateY(8px); } }
 @media (prefers-reduced-motion: reduce){ ::view-transition-old(root), ::view-transition-new(root){ animation:none; } }
 </style>
@@ -398,7 +401,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     <span class="plogo-pro">Pro</span>
   </a>
   <div class="pnav-r">
-    <button class="plink" id="plogout" type="button" style="display:none" onclick="proLogout()">
+    <button class="plink" id="plogout" type="button" onclick="proLogout()">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg><span class="t">Se déconnecter</span>
     </button>
     <a class="plink" href="index.html">
@@ -1402,7 +1405,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   fbAuth.onAuthStateChanged(function(u){
     authReady=true; window._fbUser=u||null; window._cpAuthInitialized=true;
     try{ sessionStorage.setItem('cp_member_hint', (u && u.emailVerified) ? '1' : '0'); }catch(e){}
-    $('plogout').style.display = u ? '' : 'none';
+    document.documentElement.classList.toggle('p-member', !!u);
     if(current==='centre') renderCentre();
   });
 
