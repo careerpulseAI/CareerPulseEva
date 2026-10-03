@@ -14474,10 +14474,13 @@ go=function(page){
     if(pressed) return;
     cur=target();
     var mf=document.getElementById('cp-menu-frame'); var menuOpen=mf&&mf.style.display==='block';
-    if(!cur || menuOpen){ box.classList.remove('on'); return; }
-    box.classList.add('on');
+    if(!cur || menuOpen){ if(box.classList.contains('on')) box.classList.remove('on'); return; }
+    if(!box.classList.contains('on')) box.classList.add('on');
     var top=cur.scrollTop, max=cur.scrollHeight-cur.clientHeight;
-    up.disabled = top<4; down.disabled = top>max-4;
+    /* on ne touche aux attributs que s'ils changent (sinon l'observateur relance refresh en boucle) */
+    var u=top<4, d=top>max-4;
+    if(up.disabled!==u) up.disabled=u;
+    if(down.disabled!==d) down.disabled=d;
   }
   function move(dy,smooth){
     var opt={top:dy,behavior:smooth?'smooth':'instant'};
@@ -16487,8 +16490,12 @@ window.cpEvx = window.cpEvx || {
 
   /* Suivi de l'écran actif : classe cp-in-pro, adresse (#pro…) et rendu de l'espace centre */
   var last=null;
+  var synced=false;
   function sync(){
     var a=active();
+    /* n'agit que si l'écran change : sinon les classes des flèches (modifiées en continu) relançaient tout en boucle */
+    if(synced && a===last) return;
+    synced=true;
     document.documentElement.classList.toggle('cp-in-pro', !!a);
     document.documentElement.classList.toggle('cp-pro-sub', a==='s-pro-centre' || a==='s-pro-employeur');
     if(a){ setHash(a.replace('s-','')); }
