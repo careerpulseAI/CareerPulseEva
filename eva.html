@@ -28288,7 +28288,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     if(!u && window.fbAuth && !window._cpAuthInitialized && ofTries++<25){ setTimeout(render,300); return; }
     ofTries=0;
     if(!u || !u.emailVerified){ renderGuest(u?'pending':'guest'); return; }
-    loadRole().then(function(r){ if(r==='org') renderOrg(); else renderCand(); });
+    loadRole().then(function(r){ if(r==='org') renderOrgMoved(); else renderCand(); });
   }
   function present(mode){
     var E=X(), t=T();
@@ -28787,6 +28787,14 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     projet:[d.metier,d.objectif,d.precise,(d.secteurs||[]).join(' '),(d.types||[]).join(' ')].filter(Boolean).join(' '), statut:STAT_MAP[d.situation]||'',
     dispo:(d.dispo==='Immédiatement'||d.dispo==='Dans le mois')?'immediate':d.dispo==='Dans 1 à 3 mois'?'1-3':'plus' }; }
   function loadCands(){ return db().collection('candidats_of').where('visible','==',true).limit(300).get().then(function(q){ ST.cands=q.docs.map(function(d){ return adapt(d.data()); }); }); }
+  /* Les organismes ont leur propre espace : pro.html (Espace pros) */
+  function renderOrgMoved(){
+    var o=ST.org||{};
+    root.innerHTML='<div class="ofs" style="max-width:560px;margin:0 auto"><div class="of-card" style="padding:22px">'
+      +'<div class="ofs-hd"><span class="ofs-av">'+S(I.school)+'</span><div><b>'+esc(o.nom||'Votre organisme')+'</b><span>Espace centre de formation</span></div></div>'
+      +'<p class="of-muted" style="margin:14px 0 16px;line-height:1.55">EVA accompagne les candidats. Votre espace centre de formation se trouve désormais dans l\'Espace pros de CareerPulse : candidats visibles, recherche, propositions et fiche organisme.</p>'
+      +'<a class="of-btn pri" href="pro.html#centre" style="text-decoration:none;width:100%">Ouvrir mon espace centre</a></div></div>';
+  }
   function renderOrg(){
     var o=ST.org||{};
     if(!(o.verifie && o.proActif)){
