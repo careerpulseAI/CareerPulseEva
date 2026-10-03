@@ -28185,6 +28185,40 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   .ofpp-id{ padding:0 14px; } .ofpp-ch{ padding:12px 14px 0; } .ofpp-eva{ margin:14px 14px 0; } .ofpp-ft{ padding:12px 14px; }
   .ofpp-id h4{ font-size:1.08rem; }
 }
+
+/* ── EVA Formation : thèmes + réponses en tiroirs ── */
+.ofq-intro{ padding:12px 12px 4px; }
+.ofq-tabs{ display:flex; gap:6px; padding:8px 12px 10px; overflow-x:auto; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.ofq-tabs::-webkit-scrollbar{ display:none; }
+.ofq-tab{ position:static !important; flex:0 0 auto; display:inline-flex; align-items:center; gap:6px; border:1px solid #f1e3c4; background:#fff; color:#78350f; border-radius:999px; padding:8px 13px; font:700 .74rem/1 inherit; cursor:pointer; white-space:nowrap; transition:background .15s, color .15s, border-color .15s; }
+.ofq-tab i{ font-style:normal; font-size:.64rem; font-weight:800; min-width:18px; height:18px; padding:0 5px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; background:#fef3c7; color:#92400e; }
+.ofq-tab:hover{ border-color:#f59e0b; }
+.ofq-tab.on{ background:linear-gradient(135deg,#b45309,#f59e0b); color:#fff; border-color:transparent; box-shadow:0 6px 16px -8px rgba(180,83,9,.7); }
+.ofq-tab.on i{ background:rgba(255,255,255,.25); color:#fff; }
+.ofq-list{ padding:0 12px 4px; display:flex; flex-direction:column; gap:7px; animation:ofwIn .3s both; }
+.ofq-it{ border:1px solid #f1e8d6; border-radius:14px; background:#fff; overflow:hidden; transition:border-color .2s, box-shadow .2s; }
+.ofq-it.on{ border-color:#fcd34d; box-shadow:0 8px 22px -16px rgba(180,83,9,.55); }
+.ofq-q{ position:static !important; width:100%; display:flex; align-items:center; justify-content:space-between; gap:10px; background:none; border:none; padding:12px 14px; text-align:left; font:700 .8rem/1.35 inherit; color:#0f172a; cursor:pointer; }
+.ofq-q svg{ width:16px; height:16px; flex-shrink:0; stroke:#b45309; fill:none; stroke-width:2.4; transition:transform .25s; }
+.ofq-it.on .ofq-q svg{ transform:rotate(180deg); }
+.ofq-a{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s ease; }
+.ofq-it.on .ofq-a{ grid-template-rows:1fr; }
+.ofq-in{ overflow:hidden; }
+.ofq-in .ofw-eva{ padding:0 12px 12px; }
+.ofq-in .ofw-b{ font-size:.8rem; line-height:1.55; }
+/* ── « Autre » : conseil d'EVA animé + case libre ── */
+.ofa-wrap{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }
+.ofa{ position:relative; overflow:hidden; display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:16px; background:linear-gradient(135deg,#fffbeb,#fff7e6); border:1px solid #fde68a; animation:ofaIn .45s cubic-bezier(.2,1.3,.4,1) both; }
+.ofa::after{ content:""; position:absolute; top:0; bottom:0; left:0; width:40%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent); transform:translateX(-140%); animation:ofaSweep 1.1s .35s ease-out both; pointer-events:none; }
+.ofa-ico{ flex-shrink:0; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1rem; background:#fff; box-shadow:0 0 0 0 rgba(245,158,11,.5); animation:ofaBulb .7s .15s cubic-bezier(.2,1.5,.4,1) both, ofaGlow 1.6s .8s ease-out 2; }
+.ofa-tx b{ display:block; font-size:.72rem; font-weight:800; color:#92400e; margin-bottom:2px; }
+.ofa-tx p{ margin:0; font-size:.78rem; line-height:1.55; color:#422006; }
+.ofa-inp{ min-height:0 !important; resize:none; }
+@keyframes ofaIn{ from{ opacity:0; transform:translateY(8px) scale(.97); } }
+@keyframes ofaSweep{ to{ transform:translateX(320%); } }
+@keyframes ofaBulb{ 0%{ transform:scale(.4) rotate(-18deg); opacity:0; } 60%{ transform:scale(1.18) rotate(8deg); opacity:1; } 100%{ transform:none; } }
+@keyframes ofaGlow{ 0%{ box-shadow:0 0 0 0 rgba(245,158,11,.5); } 100%{ box-shadow:0 0 0 10px rgba(245,158,11,0); } }
+@media (prefers-reduced-motion: reduce){ .ofa, .ofa::after, .ofa-ico, .ofq-list{ animation:none !important; } .ofq-a, .ofq-q svg{ transition:none; } }
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -28408,6 +28442,25 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     {s:8,k:'consent',t:'consent'},
     {s:9,k:'recap',t:'recap'}
   ];
+  /* « Autre » : case libre + conseil d'EVA (pédagogue, sans friction) */
+  var AUTRE={
+    situation:['Décris ta situation en quelques mots simples, comme tu la présenterais à un conseiller : par exemple « en congé parental », « en service civique » ou « bénévole ». Pas besoin de détails personnels.','Ex : en congé parental'],
+    statut:['Indique simplement le nom de ton contrat ou de ton statut : par exemple « apprentissage », « portage salarial » ou « intermittent ». Cette réponse reste <b>privée</b>.','Ex : portage salarial'],
+    diplome:['Écris l\'intitulé de ton diplôme ou de son équivalent : diplôme obtenu à l\'étranger (précise le pays), titre professionnel, certification… L\'intitulé suffit, pas besoin de l\'établissement.','Ex : Licence obtenue au Maroc'],
+    objectif:['Résume ton objectif en une phrase courte qui commence par un verbe : par exemple « reprendre mes études » ou « valider mon expérience ». L\'organisme comprend tout de suite ce que tu cherches.','Ex : reprendre mes études'],
+    secteurs:['Nomme ton secteur comme il apparaîtrait sur une offre d\'emploi : par exemple « agriculture », « sport » ou « audiovisuel ». Un ou deux mots suffisent.','Ex : agriculture'],
+    contraintes:['Décris ta contrainte de façon générale, sans détail médical ni familial : par exemple « horaires décalés », « pas de permis » ou « disponible uniquement le week-end ».','Ex : pas de permis']
+  };
+  function isAutre(x){ return /^Autre(\s*:|$)/.test(String(x||'')); }
+  function autreTxt(x){ return String(x||'').replace(/^Autre\s*:?\s*/,''); }
+  function autreBox(q,val){
+    var a=AUTRE[q.k]||['Précise ta réponse en quelques mots simples : c\'est exactement ce que l\'organisme lira.','Précise ici'];
+    var p=el('div','ofa-wrap','<div class="ofa"><span class="ofa-ico">💡</span><div class="ofa-tx"><b>Le conseil d\'EVA</b><p>'+a[0]+'</p></div></div>');
+    var f=el('input','ofw-inp ofa-inp'); f.placeholder=a[1]; f.maxLength=80; f.value=val||'';
+    p.appendChild(f); p.inp=f;
+    setTimeout(function(){ try{ f.focus({preventScroll:true}); }catch(e){} scrollIn(p); },380);
+    return p;
+  }
   function ok(i,a){ var q=Q[i]; return q && (!q.if || q.if(a)); }
   function firstOfStep(s){ for(var i=0;i<Q.length;i++) if(Q[i].s===s) return i; return 0; }
   var W=null; // état du formulaire : { A, hist, i, edit, box }
@@ -28507,13 +28560,30 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   function widget(q){
     var box=inp(); box.innerHTML=''; var v=W.A[q.k];
     if(q.t==='one'){
-      var w=el('div','ofw-chips'); q.o.forEach(function(o){ var c=btn(esc(o),v===o?'on':''); c.onclick=function(){ answer(q,o); }; w.appendChild(c); }); box.appendChild(w);
+      var w=el('div','ofw-chips'), ap=null;
+      function openAutre(c){
+        w.querySelectorAll('.ofw-btn').forEach(function(x){ x.classList.remove('on'); }); c.classList.add('on');
+        if(ap) return; ap=autreBox(q,isAutre(v)?autreTxt(v):''); box.insertBefore(ap,w.nextSibling);
+        var row=el('div','ofw-row'), g=btn('Valider','pri'); row.appendChild(g); ap.appendChild(row);
+        ap.inp.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); g.click(); } });
+        g.onclick=function(){ var t=clean(ap.inp.value); if(t.length<2){ errMsg(ap,'Écris quelques mots pour préciser « Autre » : c\'est ce que l\'organisme lira.'); return; } answer(q,'Autre : '+t); };
+      }
+      q.o.forEach(function(o){ var on=(o==='Autre')?isAutre(v):v===o; var c=btn(esc(o),on?'on':''); c.onclick=function(){ if(o==='Autre') openAutre(c); else answer(q,o); }; w.appendChild(c); }); box.appendChild(w);
     } else if(q.t==='multi'){
-      var sel=Array.isArray(v)?v.slice():[], w2=el('div','ofw-chips multi'), go=btn('Valider','pri');
+      var prevAutre='', sel=(Array.isArray(v)?v:[]).map(function(x){ if(isAutre(x)){ prevAutre=autreTxt(x); return 'Autre'; } return x; }), w2=el('div','ofw-chips multi'), go=btn('Valider','pri'), ap2=null;
       function upd(){ go.textContent=sel.length?'Valider ('+sel.length+')':'Valider'; }
-      q.o.forEach(function(o){ var c=btn(esc(o),has(sel,o)?'on':''); c.onclick=function(){ var k=sel.indexOf(o); if(k>-1) sel.splice(k,1); else sel.push(o); c.classList.toggle('on'); upd(); }; w2.appendChild(c); });
-      box.appendChild(w2); var row=el('div','ofw-row'); row.appendChild(go); box.appendChild(row); upd();
-      go.onclick=function(){ if(q.req && !sel.length){ errMsg(box,'Ce champ est nécessaire pour continuer.'); return; } answer(q,sel); };
+      function syncAutre(){
+        if(has(sel,'Autre') && !ap2){ ap2=autreBox(q,prevAutre); box.insertBefore(ap2,w2.nextSibling); }
+        else if(!has(sel,'Autre') && ap2){ prevAutre=ap2.inp.value; ap2.remove(); ap2=null; }
+      }
+      q.o.forEach(function(o){ var c=btn(esc(o),has(sel,o)?'on':''); c.onclick=function(){ var k=sel.indexOf(o); if(k>-1) sel.splice(k,1); else sel.push(o); c.classList.toggle('on'); upd(); if(o==='Autre') syncAutre(); }; w2.appendChild(c); });
+      box.appendChild(w2); var row=el('div','ofw-row'); row.appendChild(go); box.appendChild(row); upd(); syncAutre();
+      go.onclick=function(){
+        if(q.req && !sel.length){ errMsg(box,'Ce champ est nécessaire pour continuer.'); return; }
+        var out=sel.slice();
+        if(ap2){ var t=clean(ap2.inp.value); if(t.length<2){ errMsg(ap2,'Écris quelques mots pour préciser « Autre » : c\'est ce que l\'organisme lira.'); return; } out[out.indexOf('Autre')]='Autre : '+t; }
+        answer(q,out);
+      };
     } else if(q.t==='text' || q.t==='ville' || q.t==='date'){
       var f=el(q.long?'textarea':'input','ofw-inp'); if(q.t==='date'){ f.type='date'; f.min=new Date().toISOString().slice(0,10); } else { f.placeholder=q.ph||''; f.maxLength=q.long?300:80; }
       var pv=v!=null?v:(q.pre?q.pre():''); if(q.t==='ville') pv=W.A.ville||''; if(pv) f.value=pv;
@@ -28725,46 +28795,100 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     }
   }
 
-  /* ═════ EVA FORMATION : questions rapides (réponses de l'IA du site, encadrées) ═════ */
-  var FAQ=[
-    ['Qui peut voir mon profil ?','Seuls les organismes de formation vérifiés par CareerPulse, et seulement si tu as activé ta visibilité. Ils voient ton projet, jamais ton nom, ton e-mail ou ton téléphone.'],
-    ['Mon e-mail est-il donné aux organismes ?','Jamais. Ni ton e-mail, ni ton téléphone. Si une formation t\'intéresse, je t\'affiche les coordonnées de l\'organisme, et c\'est toi qui décides de lui écrire.'],
-    ['Comment fonctionne une proposition ?','Un organisme vérifié repère ton projet et te présente une formation. Je te la présente ici, clairement. Tu réponds en un clic : Intéressé(e), Pas intéressé(e), Plus tard ou Signaler.'],
-    ['Que se passe-t-il si je suis intéressé(e) ?','Je t\'affiche les coordonnées de l\'organisme : e-mail, téléphone, site. Tu le contactes si tu veux, quand tu veux. La suite se passe entre vous, en dehors de CareerPulse.'],
-    ['Je peux refuser une proposition ?','Bien sûr, sans te justifier. L\'organisme voit seulement « Pas intéressé(e) ». Aucune pression.'],
-    ['Comment cacher mon profil ?','Dans ta carte « Mon profil formation », désactive « Visible par les organismes ». C\'est immédiat, et tes réponses restent enregistrées pour plus tard.'],
-    ['Comment fonctionne le CPF ?','Le CPF permet de financer certaines formations éligibles, selon tes droits. Les règles se vérifient sur le site officiel Mon Compte Formation. Je ne te demanderai jamais ton mot de passe.'],
-    ['Mon CPF paie toute ma formation ?','Pas forcément : cela dépend de l\'éligibilité de la formation et de tes droits. Depuis le 1er avril 2026, une participation obligatoire de 150 € s\'applique dans la plupart des cas. Vérifie sur Mon Compte Formation.'],
-    ['Je suis demandeur d\'emploi','Plusieurs pistes peuvent exister selon ta situation, notamment le CPF et certaines aides de France Travail. L\'AIF peut compléter ou financer certaines formations, sous conditions. Parles-en à ton conseiller France Travail.'],
-    ['C\'est quoi l\'AIF ?','L\'Aide individuelle à la formation est une aide de France Travail pour les demandeurs d\'emploi, sous conditions : la formation doit être cohérente avec ton projet, quand les autres financements ne suffisent pas.'],
-    ['C\'est quoi le CPF de transition ?','Le projet de transition professionnelle permet, sous conditions, à un salarié de s\'absenter pour suivre une formation certifiante afin de changer de métier, tout en étant rémunéré.'],
-    ['EVA peut garantir mon financement ?','Non, et je préfère être honnête : je t\'aide à comprendre les pistes possibles, mais seul le financeur décide d\'accepter ta demande.'],
-    ['Je ne sais pas quelle formation choisir','Commence par ton objectif : le métier visé, les compétences à acquérir, la durée et la modalité. C\'est exactement ce que ton profil t\'aide à clarifier, étape par étape.'],
-    ['Une proposition me paraît suspecte','Ne partage aucune information sensible, ni identifiant, ni paiement. Clique sur « Signaler » sous la proposition : CareerPulse examine chaque signalement.'],
-    ['Je veux supprimer mon profil','En bas de ta carte « Mon profil formation », clique sur « Supprimer mon profil formation ». Ta fiche disparaît aussitôt de l\'espace des organismes.']
+  /* ═════ EVA FORMATION : questions par thèmes, réponses en tiroirs (réponses de l'IA du site, encadrées) ═════ */
+  var FAQ_T=[
+    ['profil','Mon profil & ma visibilité',[
+      ['Qui peut voir mon profil ?','Seuls les organismes de formation vérifiés par CareerPulse, et seulement si tu as activé ta visibilité. Ils voient ton projet, jamais ton nom, ton e-mail ou ton téléphone.'],
+      ['Que voient exactement les organismes ?','Ton projet, la formation que tu recherches, tes disponibilités, tes préférences et ton parcours (âge, situation, diplôme). Tes pistes de financement et ton prénom n\'apparaissent que si tu l\'as accepté.'],
+      ['Mon nom de famille est-il visible ?','Non, jamais. Ton nom reste privé. Les organismes voient au mieux ton prénom, et seulement si tu as activé « Afficher mon prénom ».'],
+      ['Mon prénom est-il affiché ?','Seulement si tu l\'as accepté. Sinon, les organismes voient un identifiant anonyme. Tu peux changer ce choix à tout moment dans ta carte « Mon profil formation ».'],
+      ['Comment cacher mon profil ?','Dans ta carte « Mon profil formation », désactive « Visible par les organismes ». C\'est immédiat, et tes réponses restent enregistrées pour plus tard.'],
+      ['Je peux modifier mon profil ?','Oui, quand tu veux : « Modifier mon profil » pour changer une étape, ou « Refaire le formulaire avec EVA » pour tout reprendre avec tes réponses déjà présélectionnées.'],
+      ['Ma situation a changé, je fais quoi ?','Mets simplement ton profil à jour avec « Modifier mon profil ». Les organismes verront ton projet actuel, ce qui t\'évite des propositions qui ne te correspondent plus.'],
+      ['Pourquoi répondre à toutes les questions ?','Plus ton profil est précis, plus les propositions te correspondent. Les questions facultatives peuvent être passées, mais chaque réponse aide l\'organisme à savoir si sa formation est faite pour toi.'],
+      ['Si j\'arrête le formulaire en cours ?','Pas de panique : je garde tes réponses pendant ta visite, et on reprend là où tu t\'étais arrêté(e).'],
+      ['À quoi sert « Le mot d\'EVA » ?','C\'est un court résumé de ton projet que je rédige à partir de tes réponses, pour que l\'organisme comprenne en quelques secondes ce que tu cherches.'],
+      ['Je veux supprimer mon profil','En bas de ta carte « Mon profil formation », clique sur « Supprimer mon profil formation ». Ta fiche disparaît aussitôt de l\'espace des organismes.']
+    ]],
+    ['props','Les propositions',[
+      ['Comment fonctionne une proposition ?','Un organisme vérifié repère ton projet et te présente une formation. Je te la présente ici, clairement. Tu réponds en un clic : Intéressé(e), Pas intéressé(e), Plus tard ou Signaler.'],
+      ['Que se passe-t-il si je suis intéressé(e) ?','Je t\'affiche les coordonnées de l\'organisme : e-mail, téléphone, site. Tu le contactes si tu veux, quand tu veux. La suite se passe entre vous, en dehors de CareerPulse.'],
+      ['Je peux refuser une proposition ?','Bien sûr, sans te justifier. L\'organisme voit seulement « Pas intéressé(e) ». Aucune pression.'],
+      ['« Plus tard », ça veut dire quoi ?','Que tu mets la proposition de côté pour y réfléchir. Elle reste dans ton espace, et tu pourras y répondre plus tard.'],
+      ['Combien de propositions vais-je recevoir ?','Ça dépend des organismes présents et de ton projet : je ne peux pas te promettre un nombre. Le réseau d\'organismes vérifiés se construit progressivement.'],
+      ['Je ne reçois aucune proposition','C\'est normal au début : le réseau d\'organismes grandit petit à petit. Vérifie que « Visible » et « Recevoir des propositions » sont activés, et que ton projet est bien précis.'],
+      ['Comment arrêter de recevoir des propositions ?','Désactive « Recevoir des propositions » dans ta carte « Mon profil formation ». Tu peux le réactiver quand tu veux.'],
+      ['La mise en relation est-elle payante ?','Non, elle est gratuite pour toi. La formation elle-même peut avoir un coût : c\'est là que les pistes de financement entrent en jeu.']
+    ]],
+    ['secu','Contact & sécurité',[
+      ['Mon e-mail est-il donné aux organismes ?','Jamais. Ni ton e-mail, ni ton téléphone. Si une formation t\'intéresse, je t\'affiche les coordonnées de l\'organisme, et c\'est toi qui décides de lui écrire.'],
+      ['Pourquoi c\'est moi qui contacte l\'organisme ?','Pour que tu gardes la main, et parce que le démarchage lié au CPF est interdit en France. Ici, aucun organisme ne peut t\'appeler sans que tu l\'aies choisi.'],
+      ['On m\'appelle pour mon CPF sans que j\'aie rien demandé','Méfie-toi : le démarchage lié au CPF est interdit. Ne donne aucune information, raccroche, et ne valide jamais une inscription sous la pression.'],
+      ['On me demande mes identifiants CPF','Ne les donne jamais, à personne : ni ton mot de passe, ni un code reçu par SMS. Aucun organisme sérieux n\'en a besoin, et je ne te les demanderai jamais.'],
+      ['Comment reconnaître une arnaque à la formation ?','Les signaux d\'alerte : appel ou SMS non sollicité, pression pour s\'inscrire vite, cadeau promis, demande d\'identifiants. Dans le doute, ne fais rien et vérifie sur les sites officiels.'],
+      ['Comment savoir si un organisme est sérieux ?','Sur CareerPulse, chaque organisme est vérifié (SIRET, déclaration d\'activité). Pour une formation financée par des fonds publics, vérifie aussi qu\'il est certifié Qualiopi.'],
+      ['Une proposition me paraît suspecte','Ne partage aucune information sensible, ni identifiant, ni paiement. Clique sur « Signaler » sous la proposition : CareerPulse examine chaque signalement.']
+    ]],
+    ['fin','Financer ma formation',[
+      ['Comment fonctionne le CPF ?','Le CPF permet de financer certaines formations éligibles, selon tes droits. Les règles se vérifient sur le site officiel Mon Compte Formation. Je ne te demanderai jamais ton mot de passe.'],
+      ['Mon CPF paie toute ma formation ?','Pas forcément : cela dépend de l\'éligibilité de la formation et de tes droits. Depuis le 1er avril 2026, une participation obligatoire de 150 € s\'applique dans la plupart des cas. Vérifie sur Mon Compte Formation.'],
+      ['Comment connaître mon solde CPF ?','Connecte-toi toi-même sur le site ou l\'application officielle Mon Compte Formation. Ton solde y est affiché. Ne passe jamais par un lien reçu par SMS ou e-mail.'],
+      ['Ma formation n\'est pas éligible au CPF','D\'autres pistes peuvent exister selon ta situation : ton employeur, ton OPCO, France Travail, ta Région ou un autofinancement. Demande à l\'organisme quelles options il connaît.'],
+      ['Je suis demandeur d\'emploi','Plusieurs pistes peuvent exister selon ta situation, notamment le CPF et certaines aides de France Travail. L\'AIF peut compléter ou financer certaines formations, sous conditions. Parles-en à ton conseiller France Travail.'],
+      ['C\'est quoi l\'AIF ?','L\'Aide individuelle à la formation est une aide de France Travail pour les demandeurs d\'emploi, sous conditions : la formation doit être cohérente avec ton projet, quand les autres financements ne suffisent pas.'],
+      ['Je suis salarié(e), quelles pistes ?','Ton CPF, le plan de développement des compétences de ton entreprise (demande à ton employeur ou à ton service RH) et, pour changer de métier, le projet de transition professionnelle.'],
+      ['C\'est quoi le CPF de transition ?','Le projet de transition professionnelle permet, sous conditions, à un salarié de s\'absenter pour suivre une formation certifiante afin de changer de métier, tout en étant rémunéré.'],
+      ['Je suis indépendant(e) ou freelance','Tu peux mobiliser ton CPF, et aussi le fonds d\'assurance formation (FAF) lié à ton activité : tu y cotises via tes charges. Renseigne-toi auprès du FAF de ta profession.'],
+      ['C\'est quoi un OPCO ?','Un opérateur de compétences : il aide les entreprises de son secteur à financer la formation de leurs salariés, notamment l\'alternance. C\'est en général ton employeur qui fait la démarche.'],
+      ['La Région peut-elle financer ma formation ?','Oui, certaines Régions financent des formations, surtout pour les demandeurs d\'emploi et les métiers qui recrutent. Les dispositifs changent selon la Région : renseigne-toi auprès de France Travail ou du site de ta Région.'],
+      ['Je peux cumuler plusieurs financements ?','Souvent oui : par exemple, ton CPF peut être complété par ton employeur, France Travail ou une autre aide. Chaque financeur garde ses propres règles.'],
+      ['EVA peut garantir mon financement ?','Non, et je préfère être honnête : je t\'aide à comprendre les pistes possibles, mais seul le financeur décide d\'accepter ta demande.']
+    ]],
+    ['choix','Choisir ma formation',[
+      ['Je ne sais pas quelle formation choisir','Commence par ton objectif : le métier visé, les compétences à acquérir, la durée et la modalité. C\'est exactement ce que ton profil t\'aide à clarifier, étape par étape.'],
+      ['Certifiante, diplôme, titre pro : quelle différence ?','Un diplôme est délivré par l\'État ou un établissement d\'enseignement, un titre professionnel par le ministère du Travail, et une certification atteste une compétence précise. Tous peuvent être reconnus par l\'État s\'ils sont enregistrés officiellement.'],
+      ['C\'est quoi le RNCP ?','Le Répertoire national des certifications professionnelles recense les diplômes, titres et certifications reconnus par l\'État. Une formation qui y mène est souvent plus facile à faire financer.'],
+      ['C\'est quoi la VAE ?','La validation des acquis de l\'expérience permet d\'obtenir tout ou partie d\'un diplôme grâce à ton expérience, professionnelle ou bénévole, sans refaire toute une formation.'],
+      ['C\'est quoi un bilan de compétences ?','Un accompagnement pour faire le point sur tes compétences, tes envies et ton projet. Il peut t\'aider à choisir une direction avant de te lancer dans une formation.'],
+      ['L\'alternance, c\'est pour moi ?','L\'alternance mêle cours et travail en entreprise, avec un salaire. Elle convient bien si tu veux apprendre un métier en pratiquant : il faut trouver une entreprise qui t\'accueille.'],
+      ['Présentiel, distance ou hybride ?','Le présentiel aide à rester motivé(e) et à échanger, la distance offre de la souplesse, l\'hybride combine les deux. Choisis selon ton emploi du temps et ta façon d\'apprendre.'],
+      ['Quelles questions poser à un organisme ?','Demande quel diplôme ou certification tu obtiens, le rythme, le coût total, les financements possibles, le taux de réussite et l\'accompagnement proposé. Un organisme sérieux répond clairement.']
+    ]]
   ];
+  var FAQ=[]; FAQ_T.forEach(function(t){ t[2].forEach(function(q){ FAQ.push(q); }); });
   function faqRef(t){ for(var i=0;i<FAQ.length;i++) if(FAQ[i][0]===t) return FAQ[i][1]; return ''; }
   function faqNode(){
-    var n=el('div','ofq','<div class="ofq-hd"><span class="ofw-av">'+X().S(X().IC.eva)+'</span><div><b>EVA Formation</b><span>Je t\'aide à comprendre la mise en relation et les financements de formation.</span></div></div><div class="ofq-log"></div><div class="ofq-ch"></div><p class="ofq-ft">Je ne remplace pas France Travail, ton employeur, ton OPCO ou un organisme de formation : pour une décision de financement, vérifie toujours les conditions officielles.</p>');
-    var lg=n.querySelector('.ofq-log'), ch=n.querySelector('.ofq-ch'), busy=false, asked=[];
-    function chips(list,more){
-      ch.innerHTML=''; list.forEach(function(t){ var b=el('button','ofw-btn',esc(t)); b.type='button'; b.onclick=function(){ ask(t); }; ch.appendChild(b); });
-      if(more){ var m=el('button','ofw-btn ghost','Autres sujets'); m.type='button'; m.onclick=function(){ chips(FAQ.map(function(x){ return x[0]; }).filter(function(t){ return asked.indexOf(t)<0; }),false); }; ch.appendChild(m); }
+    var n=el('div','ofq','<div class="ofq-hd"><span class="ofw-av">'+X().S(X().IC.eva)+'</span><div><b>EVA Formation</b><span>Je t\'aide à comprendre la mise en relation et les financements de formation.</span></div></div>'
+      +'<div class="ofq-intro"></div><div class="ofq-tabs" role="tablist"></div><div class="ofq-list"></div>'
+      +'<p class="ofq-ft">Je ne remplace pas France Travail, ton employeur, ton OPCO ou un organisme de formation : pour une décision de financement, vérifie toujours les conditions officielles.</p>');
+    var tabs=n.querySelector('.ofq-tabs'), list=n.querySelector('.ofq-list'), cache={}, cur=null;
+    n.querySelector('.ofq-intro').innerHTML='<div class="ofw-eva"><span class="ofw-av">'+X().S(X().IC.eva)+'</span><div class="ofw-b">👋 Salut ! Je suis <b>EVA</b>. Choisis un thème, puis ouvre la question qui t\'intéresse : je te réponds juste en dessous.</div></div>';
+    function type(b,html){
+      var parts=md(html).split(/(<[^>]+>|\s+)/).filter(function(x){ return x!==''; }), i=0, out='';
+      (function tick(){ if(!b.isConnected) return; if(i>=parts.length){ b.innerHTML=out; return; } var p=parts[i++]; out+=p; b.innerHTML=out+'<span class="evh-caret"></span>'; setTimeout(tick,/^</.test(p)||/^\s+$/.test(p)?0:16+Math.random()*12); })();
     }
-    function evaB(html){ var r=el('div','ofw-eva','<span class="ofw-av">'+X().S(X().IC.eva)+'</span><div class="ofw-b">'+html+'</div>'); lg.appendChild(r); return r; }
-    function ask(t){
-      if(busy) return; busy=true; asked.push(t); ch.innerHTML='';
-      lg.appendChild(el('div','ofw-me','<div class="ofw-b">'+esc(t)+'</div>'));
-      var r=evaB('<span class="evh-typing"><span></span><span></span><span></span></span>'), b=r.querySelector('.ofw-b'); scrollFaq(r);
-      aiAnswer(t).then(function(res){
-        var parts=md(res.reply).split(/(<[^>]+>|\s+)/).filter(function(x){ return x!==''; }), i=0, out='';
-        (function tick(){ if(i>=parts.length){ b.innerHTML=out; busy=false; var nx=(res.next||[]).filter(function(x){ return asked.indexOf(x)<0; }); if(nx.length<3) FAQ.forEach(function(x){ if(nx.length<3 && asked.indexOf(x[0])<0 && nx.indexOf(x[0])<0) nx.push(x[0]); }); chips(nx.slice(0,3),true); scrollFaq(ch); return; }
-          var p=parts[i++]; out+=p; b.innerHTML=out+'<span class="evh-caret"></span>'; setTimeout(tick,/^</.test(p)||/^\s+$/.test(p)?0:20+Math.random()*14); })();
+    function openItem(it,q){
+      var was=it.classList.contains('on');
+      list.querySelectorAll('.ofq-it.on').forEach(function(x){ x.classList.remove('on'); x.querySelector('.ofq-q').setAttribute('aria-expanded','false'); });
+      if(was) return;
+      it.classList.add('on'); it.querySelector('.ofq-q').setAttribute('aria-expanded','true');
+      var b=it.querySelector('.ofq-a .ofw-b');
+      if(cache[q]){ b.innerHTML=md(cache[q]); return; }
+      if(b.getAttribute('data-load')) return;
+      b.setAttribute('data-load','1'); b.innerHTML='<span class="evh-typing"><span></span><span></span><span></span></span>';
+      aiAnswer(q).then(function(res){ cache[q]=res.reply; b.removeAttribute('data-load'); type(b,res.reply); });
+    }
+    function showTheme(k){
+      cur=k; tabs.querySelectorAll('button').forEach(function(x){ var on=x.getAttribute('data-k')===k; x.classList.toggle('on',on); x.setAttribute('aria-selected',on?'true':'false'); });
+      var t=FAQ_T.filter(function(x){ return x[0]===k; })[0]; list.innerHTML='';
+      t[2].forEach(function(q){
+        var it=el('div','ofq-it','<button type="button" class="ofq-q" aria-expanded="false"><span>'+esc(q[0])+'</span>'+S('<path d="m6 9 6 6 6-6"/>')+'</button><div class="ofq-a"><div class="ofq-in"><div class="ofw-eva"><span class="ofw-av">'+X().S(X().IC.eva)+'</span><div class="ofw-b"></div></div></div></div>');
+        it.querySelector('.ofq-q').onclick=function(){ openItem(it,q[0]); };
+        list.appendChild(it);
       });
     }
-    function scrollFaq(x){ try{ var s=x; while(s && s!==document.body){ var o=getComputedStyle(s).overflowY; if(o==='auto'||o==='scroll') break; s=s.parentElement; } if(!s||s===document.body) return; var r=x.getBoundingClientRect(), sr=s.getBoundingClientRect(); if(r.bottom>sr.bottom-12) s.scrollBy({ top:r.bottom-sr.bottom+40, behavior:'smooth' }); }catch(e){} }
-    evaB('👋 Salut ! Je suis <b>EVA</b>. Je t\'explique ta visibilité, les propositions que tu reçois et les grandes pistes de financement. Choisis un sujet :');
-    chips(FAQ.slice(0,5).map(function(x){ return x[0]; }),true);
+    FAQ_T.forEach(function(t){ var b=el('button','ofq-tab',esc(t[1])+' <i>'+t[2].length+'</i>'); b.type='button'; b.setAttribute('role','tab'); b.setAttribute('data-k',t[0]); b.onclick=function(){ if(cur!==t[0]) showTheme(t[0]); }; tabs.appendChild(b); });
+    showTheme(FAQ_T[0][0]);
     return n;
   }
   function aiAnswer(topic){
