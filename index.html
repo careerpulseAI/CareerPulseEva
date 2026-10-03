@@ -15155,5 +15155,37 @@ go=function(page){
   html body #s-home #cp-home-pros > div:first-child svg{ width:15px; height:15px; }
 }
 </style>
+
+<!-- ══ Ordinateur : l'accueil tient sur un seul écran, heros juste un peu plus grands que les cartes ══ -->
+<style id="cp-home-onescreen-desktop">
+@media (min-width: 900px){
+  html body #s-home{ padding-top:14px !important; padding-bottom:8px !important; }
+  html body #s-home .cp-duo{ gap:14px; margin:0 0 12px; }
+  html body #s-home .cp-hero{ min-height:0; padding:18px 22px 16px; border-radius:22px; }
+  html body #s-home .cp-hero-ring{ right:-60px; top:-60px; width:190px; height:190px; }
+  html body #s-home .cp-hero-ico{ width:42px; height:42px; border-radius:13px; }
+  html body #s-home .cp-hero-ico svg{ width:21px; height:21px; }
+  html body #s-home .cp-hero-t{ margin-top:10px; font-size:2rem; }
+  html body #s-home .cp-hero-s{ margin-top:4px; font-size:.84rem; }
+  html body #s-home .cp-hero-cta{ padding-top:10px; font-size:.78rem; }
+  html body #s-home .cp-hero-cta i{ width:30px; height:30px; }
+  html body #s-home .cp-hero-cta i svg{ width:13px; height:13px; }
+  html body #s-home .cta-grid{ gap:12px !important; padding:0 0 10px !important; }
+  html body #s-home .cta-card{ min-height:0 !important; }
+  html body #s-home .cta-ico-wrap{ padding:8px 0 4px !important; }
+  html body #s-home .cta-ico{ width:44px !important; height:44px !important; border-radius:13px !important; }
+  html body #s-home .cta-ico svg{ width:22px !important; height:22px !important; }
+  html body #s-home .cta-body{ padding-bottom:22px !important; }
+  html body #s-home .cta-title{ font-size:.92rem !important; line-height:1.15 !important; }
+  html body #s-home .cta-sub{ font-size:.68rem !important; line-height:1.3 !important; }
+  html body #s-home .cta-arrow{ transform:scale(.85); transform-origin:bottom right; }
+  html body #s-home .cp-hero{ min-height:186px; }
+  html body #s-home #cp-home-pros{ padding:8px 12px !important; margin:0 0 6px !important; }
+  html body #s-home #cp-home-pros > div:first-child{ width:30px !important; height:30px !important; border-radius:9px !important; }
+  html body #s-home #cp-home-pros > div:first-child svg{ width:15px; height:15px; }
+  html body #s-home #cp-home-pros br{ display:none; }
+  html body #s-home #cp-home-pros a + br + a, html body #s-home #cp-home-pros a ~ a{ margin-left:14px; }
+}
+</style>
 </body>
 </html>
