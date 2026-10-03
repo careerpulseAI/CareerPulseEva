@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse Pro — Espace centres de formation et employeurs</title>
 <meta name="description" content="L'espace des professionnels de CareerPulse : centres de formation et employeurs rencontrent des candidats qui ont choisi d'être visibles.">
+<!-- Retour vers CareerPulse : accueil pré-chargé (session déjà prête) + fondu comme le reste du site -->
+<script type="speculationrules">
+{"prerender":[{"source":"list","urls":["index.html"],"eagerness":"eager"}]}
+</script>
+<style>
+@view-transition { navigation: auto; }
+::view-transition-old(root){ animation: pVtOut .18s ease-out both; }
+::view-transition-new(root){ animation: pVtIn .28s cubic-bezier(.2,.8,.2,1) .06s both; }
+@keyframes pVtOut{ to{ opacity:0; } }
+@keyframes pVtIn{ from{ opacity:0; transform:translateY(8px); } }
+@media (prefers-reduced-motion: reduce){ ::view-transition-old(root), ::view-transition-new(root){ animation:none; } }
+</style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
@@ -1389,6 +1401,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   var authReady=false;
   fbAuth.onAuthStateChanged(function(u){
     authReady=true; window._fbUser=u||null; window._cpAuthInitialized=true;
+    try{ sessionStorage.setItem('cp_member_hint', (u && u.emailVerified) ? '1' : '0'); }catch(e){}
     $('plogout').style.display = u ? '' : 'none';
     if(current==='centre') renderCentre();
   });
