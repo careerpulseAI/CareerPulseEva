@@ -1732,7 +1732,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    </div>
 
    <div id="cp-membre-logged-in" style="display:none;">
-    <div style="font-size:.8rem;font-weight:800;color:#0f172a;margin-bottom:6px;">Bonjour <span id="cp-membre-name-display"></span> 👋</div>
+    <div style="font-size:.8rem;font-weight:800;color:#0f172a;margin-bottom:6px;">Bonjour 👋 <span id="cp-membre-name-display"></span></div>
     <div id="cp-membre-pending" style="display:none;background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px;margin-bottom:12px;">
      <div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="rgba(37,99,235,.08)"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></svg><div style="font-size:.66rem;color:#1e3a8a;line-height:1.5;"><b>Confirme ton e-mail pour devenir membre.</b><br>Une demande de confirmation t'a été envoyée. Si tu ne la vois pas, regarde dans tes spams ou ta corbeille.</div></div>
      <button onclick="cpCheckVerified()" style="width:100%;background:linear-gradient(135deg,#1e3a5f,#059669);border:none;border-radius:9px;padding:10px;font-size:.72rem;font-weight:700;color:#fff;font-family:inherit;cursor:pointer;margin-bottom:6px;">J'ai confirmé mon e-mail</button>
@@ -9467,10 +9467,37 @@ function cpAuthTab(which){
 function cpMemberLogin(){ fbLogin && fbLogin(); }
 function cpMemberSignup(){ fbSignup && fbSignup(); }
 function cpMemberLogout(){ fbLogout && fbLogout(); }
+function cpAccountCss(){
+  if(document.getElementById('cp-acct-css')) return;
+  var st=document.createElement('style'); st.id='cp-acct-css';
+  st.textContent=''
+   +'.cp-acct{display:inline-flex;flex-direction:column;align-items:flex-end;gap:3px;line-height:1;max-width:46vw;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Arial,sans-serif;}'
+   +'.cp-acct-n{font-size:.8rem;font-weight:800;color:#0f172a;letter-spacing:-.01em;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}'
+   +'.cp-acct-b{display:inline-flex;align-items:center;gap:4px;padding:3px 8px 3px 3px;border-radius:99px;font-size:.54rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#fff;white-space:nowrap;'
+   +'background:linear-gradient(135deg,#1e40af,#2563eb 45%,#059669);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 1px rgba(255,255,255,.6),0 6px 14px -6px rgba(30,64,175,.7);position:relative;overflow:hidden;}'
+   +'.cp-acct-b::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);animation:cpAcctShine 3.6s 1s ease-in-out infinite;}'
+   +'.cp-acct-b.eva{background:linear-gradient(135deg,#1e3a8a,#2563eb 50%,#7c3aed);}'
+   +'.cp-acct-b svg{width:14px;height:14px;flex-shrink:0;}'
+   +'.cp-acct.inl{flex-direction:row;align-items:center;gap:7px;max-width:none;vertical-align:middle;}'
+   +'@keyframes cpAcctShine{0%,60%{left:-60%;}100%{left:130%;}}'
+   +'@media (prefers-reduced-motion:reduce){.cp-acct-b::after{display:none;}}';
+  document.head.appendChild(st);
+}
+function cpSeal(){ return '<svg viewBox="0 0 24 24"><path fill="#fff" d="M12 1.5l2.3 1.7 2.8-.3 1.1 2.6 2.6 1.1-.3 2.8 1.7 2.3-1.7 2.3.3 2.8-2.6 1.1-1.1 2.6-2.8-.3L12 22.5l-2.3-1.7-2.8.3-1.1-2.6-2.6-1.1.3-2.8L1.5 12l1.7-2.3-.3-2.8 2.6-1.1 1.1-2.6 2.8.3z"/><path d="m8 12.2 2.6 2.6L16.2 9" fill="none" stroke="#2563eb" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'; }
+function cpAccountName(){ var u=window._fbUser; return u ? (u.displayName || (u.email||'').split('@')[0]) : ''; }
+function cpAccountHtml(kind, inline){
+  var esc=function(t){ return String(t||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  return '<span class="cp-acct'+(inline?' inl':'')+'"><span class="cp-acct-n">'+esc(cpAccountName())+'</span><span class="cp-acct-b'+(kind==='eva'?' eva':'')+'">'+cpSeal()+(kind==='eva'?'Membre EVA':'CareerPulse')+'</span></span>';
+}
+// Pastille « nom + badge » (membres confirmés uniquement) — utilisée dans l'en-tête du menu EVA mobile
+window.cpAccountChip=function(kind){
+  var u=window._fbUser; if(!(u && u.emailVerified)) return null;
+  cpAccountCss(); var w=document.createElement('span'); w.innerHTML=cpAccountHtml(kind); return w.firstChild;
+};
 function cpApplyMemberState(){
   var user = window._fbUser || null;
   var ok = !!(user && user.emailVerified);   // membre = e-mail confirmé
-  var name = user ? (user.displayName || (user.email||'').split('@')[0]) : null;
+  var name = user ? cpAccountName() : null;
   var loggedOut=document.getElementById('cp-membre-logged-out');
   var loggedIn=document.getElementById('cp-membre-logged-in');
   var pending=document.getElementById('cp-membre-pending');
@@ -9479,9 +9506,6 @@ function cpApplyMemberState(){
   var tnavName=document.getElementById('cp-tnav-membername');
   var docsName=document.getElementById('ew-docs-username');
   var nd=document.getElementById('cp-membre-name-display');
-  var BADGE='<span class="cp-cpbadge" style="display:inline-flex;align-items:center;gap:4px;margin-left:6px;padding:3px 8px 3px 4px;border-radius:99px;background:linear-gradient(135deg,#1e40af,#059669);color:#fff;font:800 .56rem/1 -apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif;letter-spacing:.02em;vertical-align:middle;white-space:nowrap;box-shadow:0 4px 10px -5px rgba(5,150,105,.9);">'
-    +'<svg viewBox="0 0 32 32" width="13" height="13" fill="none"><circle cx="16" cy="16" r="15" fill="rgba(255,255,255,.18)"/><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>CareerPulse</span>';
-  function esc(t){ return String(t||'').replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   if(user){
     if(loggedOut) loggedOut.style.display='none';
     if(loggedIn) loggedIn.style.display='block';
@@ -9492,10 +9516,11 @@ function cpApplyMemberState(){
     if(loggedIn) loggedIn.style.display='none';
   }
   if(ok){
-    if(nd) nd.innerHTML=esc(name)+BADGE;
+    cpAccountCss();
+    if(nd) nd.innerHTML=cpAccountHtml('cp', true);
     if(sub) sub.textContent=name;
-    if(tnavName) tnavName.innerHTML=esc(name)+BADGE;
-    if(docsName) docsName.innerHTML=esc(name)+BADGE;
+    if(tnavName) tnavName.innerHTML=cpAccountHtml('cp');
+    if(docsName) docsName.innerHTML=cpAccountHtml('eva', true);
   } else {
     if(nd) nd.textContent=name||'';
     if(sub) sub.textContent = user ? 'E-mail à confirmer' : 'Se connecter';
