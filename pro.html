@@ -470,6 +470,21 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   </section>
 
 </main>
+
+<!-- Ordinateur : flèches vertes pour faire défiler la page -->
+<style>
+.pscroll{ display:none; }
+@media (min-width: 900px){
+  .pscroll{ position:fixed; right:22px; top:50%; transform:translateY(-50%); z-index:60; display:flex; flex-direction:column; gap:10px; }
+  .pscroll button{ width:44px; height:44px; border-radius:50%; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center; background:linear-gradient(145deg,#059669,#047857); box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 20px -8px rgba(4,120,87,.7); transition:transform .15s, background .15s; }
+  .pscroll button:hover{ transform:scale(1.07); background:linear-gradient(145deg,#047857,#065f46); }
+  .pscroll svg{ width:20px; height:20px; fill:none; stroke:#fff; stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round; }
+}
+</style>
+<div class="pscroll" aria-label="Défiler la page">
+  <button type="button" aria-label="Monter" onclick="window.scrollBy({top:-window.innerHeight*.8,behavior:'smooth'})"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></button>
+  <button type="button" aria-label="Descendre" onclick="window.scrollBy({top:window.innerHeight*.8,behavior:'smooth'})"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+</div>
 <div id="ptoast" role="status" aria-live="polite"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
