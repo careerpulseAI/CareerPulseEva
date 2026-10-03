@@ -11687,13 +11687,31 @@ go=function(page){
 <!-- ════════ PAGE LISTE A-Z (commune, contenu dynamique) ════════ -->
 
 <style id="evst-css">
-#evad-subtabs{ padding:10px 14px 4px; background:#fff; }
-.evst{ position:relative; display:flex; gap:4px; padding:4px; border-radius:14px; background:#f1f5f9; border:1px solid #e2e8f0; }
-.evst-b{ flex:1; min-width:0; display:flex; align-items:center; justify-content:center; gap:6px; border:none; background:none; padding:10px 8px; border-radius:11px; font:800 .78rem/1.1 -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif; color:#475569; cursor:pointer; transition:background .25s, color .25s, box-shadow .25s; white-space:nowrap; }
-.evst-b i{ font-style:normal; font-size:.64rem; min-width:20px; height:18px; padding:0 6px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; background:#e2e8f0; color:#334155; }
-.evst-b.on{ color:#fff; background:linear-gradient(135deg,var(--evst-a),var(--evst-b)); box-shadow:0 8px 18px -10px var(--evst-b), inset 0 1px 0 rgba(255,255,255,.25); }
-.evst-b.on i{ background:rgba(255,255,255,.22); color:#fff; }
-@media (max-width:420px){ .evst-b{ font-size:.7rem; gap:4px; padding:10px 4px; } .evst-b i{ min-width:18px; padding:0 4px; font-size:.6rem; } }
+#evad-subtabs{ padding:12px 14px 6px; background:#fff; }
+.evst{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.evst-b{ position:relative; overflow:hidden; isolation:isolate; display:flex; flex-direction:column; align-items:flex-start; text-align:left; gap:2px; min-width:0; padding:13px 13px 12px; border-radius:18px; cursor:pointer; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif;
+  border:1px solid #dbe3ef; background:linear-gradient(180deg,#fff,#f6f8fc); color:#1e293b; box-shadow:0 8px 20px -16px rgba(15,23,42,.45); transition:transform .18s, box-shadow .25s, border-color .25s; -webkit-tap-highlight-color:transparent; }
+.evst-b:active{ transform:scale(.97); }
+.evst-ring{ position:absolute; z-index:-1; right:-34px; top:-34px; width:96px; height:96px; border-radius:50%; border:1px solid rgba(30,64,175,.12); }
+.evst-ico{ width:36px; height:36px; border-radius:12px; display:flex; align-items:center; justify-content:center; margin-bottom:7px; background:#eef2ff; color:#1e40af; border:1px solid #dbe4ff; }
+.evst-dem .evst-ico{ background:#ecfdf5; color:#047857; border-color:#c7f0dd; }
+.evst-ico svg{ width:19px; height:19px; }
+.evst-t{ font-size:.9rem; font-weight:900; letter-spacing:-.01em; line-height:1.15; }
+.evst-s{ font-size:.66rem; font-weight:600; color:#64748b; line-height:1.3; }
+.evst-n{ margin-top:auto; position:relative; top:8px; margin-bottom:8px; font-size:.64rem; font-weight:800; padding:4px 9px; border-radius:999px; background:#eef2ff; color:#1e40af; }
+.evst-dem .evst-n{ background:#ecfdf5; color:#047857; }
+.evst-b.on{ border-color:transparent; color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 14px 28px -14px var(--g); }
+.evst-sal.on{ --g:rgba(30,64,175,.75); background:radial-gradient(120% 80% at 100% 0%,rgba(147,197,253,.35),transparent 60%),linear-gradient(150deg,#1e40af,#1e3a5f 75%); }
+.evst-dem.on{ --g:rgba(4,120,87,.75); background:radial-gradient(120% 80% at 100% 0%,rgba(110,231,183,.35),transparent 60%),linear-gradient(150deg,#047857,#064e3b 75%); }
+.evst-b.on .evst-ring{ border-color:rgba(255,255,255,.2); }
+.evst-b.on .evst-ico{ background:rgba(255,255,255,.16); border-color:rgba(255,255,255,.3); color:#fff; }
+.evst-b.on .evst-s{ color:rgba(255,255,255,.82); }
+.evst-b.on .evst-n{ background:rgba(255,255,255,.18); color:#fff; }
+.evst-b.on::before{ content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit; background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 45%); }
+.evst-b.on::after{ content:""; position:absolute; top:-20%; bottom:-20%; left:0; width:45%; z-index:-1; background:linear-gradient(100deg,transparent,rgba(255,255,255,.3),transparent); transform:translateX(-160%) skewX(-12deg); animation:evstSheen 5.5s .6s ease-in-out infinite; }
+@keyframes evstSheen{ 0%{ transform:translateX(-160%) skewX(-12deg); } 24%,100%{ transform:translateX(330%) skewX(-12deg); } }
+@media (min-width:900px){ .evst-b{ padding:16px 18px 14px; } .evst-t{ font-size:1rem; } .evst-s{ font-size:.72rem; } }
+@media (prefers-reduced-motion: reduce){ .evst-b.on::after{ animation:none; display:none; } }
 </style>
 <div class="evad-screen" id="s-eva-droits-list">
   <div class="evad-hd">
@@ -12641,7 +12659,9 @@ function evadMk(o){
 }
 /* Onglets du profil « Salarié & Demandeur d'emploi » */
 var _evadSubTab='sal';
-var EVAD_TABS={ salarie:[['sal','💼 Salarié'],['dem','🔎 Demandeur d\'emploi']] };
+var EVAD_TABS={ salarie:[
+  ['sal','Salarié','Contrat, paie, congés, santé','<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/><path d="M3 13h18"/>'],
+  ['dem','Demandeur d\'emploi','Chômage, aides, recherche','<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/><path d="M11 8v6M8 11h6"/>'] ] };
 function evadCurArticles(){
   var all=EVAD_ARTICLES[_evadCurrentProfile]||[], T=EVAD_TABS[_evadCurrentProfile];
   if(!T) return all;
@@ -12657,7 +12677,9 @@ function evadDrawTabs(){
   wrap.style.display='';
   wrap.innerHTML='<div class="evst">'+T.map(function(t){
     var n=all.filter(function(a){ return !a.aud || a.aud==='both' || a.aud===t[0]; }).length;
-    return '<button type="button" class="evst-b'+(t[0]===_evadSubTab?' on':'')+'" data-k="'+t[0]+'">'+t[1]+' <i>'+n+'</i></button>';
+    return '<button type="button" class="evst-b evst-'+t[0]+(t[0]===_evadSubTab?' on':'')+'" data-k="'+t[0]+'"><span class="evst-ring"></span>'
+      +'<span class="evst-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+t[3]+'</svg></span>'
+      +'<span class="evst-t">'+t[1]+'</span><span class="evst-s">'+t[2]+'</span><span class="evst-n">'+n+' articles</span></button>';
   }).join('')+'</div>';
   wrap.querySelector('.evst').style.setProperty('--evst-a',p.accentDark||'#1e3a5f'); wrap.querySelector('.evst').style.setProperty('--evst-b',p.accentMid||'#1e40af');
   wrap.querySelectorAll('.evst-b').forEach(function(b){ b.onclick=function(){ _evadSubTab=b.getAttribute('data-k'); _evadActiveAlpha='ALL'; evadRefreshList(true); }; });
@@ -12791,6 +12813,243 @@ M({ id:'csp', aud:'both', ico:I.shield, title:'CSP — Contrat de sécurisation 
 A.forEach(function(a){ EVAD_ARTICLES.salarie.push(a); });
 var AUD={ are:'dem', conges:'sal', licenciement:'both', mutuelle:'both', rupture:'both', salaire:'sal', solde:'sal', teletravail:'sal' };
 EVAD_ARTICLES.salarie.forEach(function(a){ if(!a.aud && AUD[a.id]) a.aud=AUD[a.id]; });
+})();
+
+/* ── Onglet Salarié : 36 nouveaux articles ── */
+(function(){
+var I={ doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+ hand:'<path d="M8 13V5a2 2 0 0 1 4 0v6M12 11V4a2 2 0 0 1 4 0v7M16 11V6a2 2 0 0 1 4 0v8a7 7 0 0 1-7 7h-1a7 7 0 0 1-6-3.5L4 14a2 2 0 0 1 3.4-2L8 13"/>',
+ half:'<circle cx="12" cy="12" r="9"/><path d="M12 3v18"/>', lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+ pin:'<path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>', euro:'<path d="M18 7a7 7 0 1 0 0 10"/><path d="M4 10h9M4 14h9"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', piggy:'<path d="M19 10c1 0 2 1 2 2v2h-2l-1 3h-3v-2H9v2H6l-1-3a6 6 0 0 1 5-9h3a6 6 0 0 1 6 5z"/><circle cx="15" cy="10" r=".8"/>',
+ gift:'<rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8v13M3 12h18M12 8S10 3 7.5 4.5 9 8 12 8zM12 8s2-5 4.5-3.5S15 8 12 8z"/>',
+ fork:'<path d="M7 3v8a2 2 0 0 0 4 0V3M9 11v10M17 3c-2 2-2 6 0 8v10"/>', receipt:'<path d="M5 3h14v18l-3-2-2 2-2-2-2 2-2-2-3 2z"/><path d="M9 8h6M9 12h6"/>',
+ bike:'<circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17l4-8h5l3 8M10 9l-1-3H7"/>', coffee:'<path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17M8 3v3M12 3v3"/>',
+ cal:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>', moon:'<path d="M21 13A9 9 0 1 1 11 3a7 7 0 0 0 10 10z"/>',
+ heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>', baby:'<circle cx="12" cy="8" r="4"/><path d="M6 21a6 6 0 0 1 12 0"/><path d="M10 8h.01M14 8h.01"/>',
+ hands:'<path d="M12 21s-8-5-8-11a4 4 0 0 1 8 0 4 4 0 0 1 8 0c0 6-8 11-8 11z"/>', share:'<circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="m8.6 10.5 6.8-3.5M8.6 13.5l6.8 3.5"/>',
+ bank:'<path d="M3 10 12 4l9 6M5 10v8M19 10v8M9 10v8M15 10v8M3 20h18"/>', plug:'<path d="M9 2v6M15 2v6M7 8h10v4a5 5 0 0 1-10 0zM12 17v5"/>',
+ med:'<rect x="3" y="6" width="18" height="14" rx="2"/><path d="M9 6V4h6v2M12 10v6M9 13h6"/>', warn:'<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
+ steth:'<path d="M6 3v6a4 4 0 0 0 8 0V3M10 13v2a5 5 0 0 0 10 0v-1"/><circle cx="20" cy="12" r="2"/>', team:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.4 3.4-5.5 6.5-5.5s5.7 2.1 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M21.5 20c-.5-2.6-2-4.5-4.2-5.2"/>',
+ gavel:'<path d="m14 13-7 7-3-3 7-7M13 4l7 7M10 7l7 7M16 2l6 6"/>', mega:'<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 9a3 3 0 0 1 0 6M19 6a7 7 0 0 1 0 12"/>',
+ eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', door:'<path d="M14 3h5v18h-5"/><path d="M10 17l5-5-5-5M15 12H3"/>',
+ senior:'<circle cx="12" cy="5" r="2.5"/><path d="M12 8v6l-3 7M12 14l3 7M8 11h8M17 11v10"/>'
+};
+var M=evadMk, SP=function(t,q){ return ['Service-Public — '+t,q,'🇫🇷']; }, CT=['Code du travail numérique','https://code.travail.gouv.fr','⚖️'];
+var A=[
+/* ── Contrat ── */
+M({ id:'periode-essai', aud:'sal', ico:I.hand, title:'Période d\'essai — Durées et rupture', sub:'Durées · Renouvellement · Délai de prévenance',
+ lead:'La période d\'essai permet à chacun de tester la relation de travail. Elle est <strong>encadrée</strong> : durée maximale, renouvellement et délai de prévenance.',
+ sec:[{h:'⏱️ Durées maximales en CDI',t:[['Catégorie','Durée (renouvellement compris)'],['Ouvriers, employés','2 mois (4 mois)'],['Agents de maîtrise, techniciens','3 mois (6 mois)'],['Cadres','4 mois (8 mois)']]},
+  {h:'',hl:['⚠️ Le renouvellement','Il n\'est possible qu\'une fois, s\'il est prévu par un accord de branche <strong>et</strong> par votre contrat, et avec votre <strong>accord écrit</strong>.','amber']},
+  {h:'📣 Délai de prévenance de l\'employeur',t:[['Temps de présence','Délai'],['Moins de 8 jours','24 heures'],['8 jours à 1 mois','48 heures'],['Après 1 mois','2 semaines'],['Après 3 mois','1 mois']]}],
+ eva:'Un renouvellement ne se présume jamais : <strong>refusez de signer</strong> si vous n\'êtes pas d\'accord, l\'employeur ne peut pas l\'imposer.',
+ src:[SP('Période d\'essai','periode d essai salarie'),CT] }),
+M({ id:'promesse-embauche', aud:'sal', ico:I.doc, title:'Promesse d\'embauche — Ce qui vous engage', sub:'Offre · Promesse unilatérale · Rétractation',
+ lead:'Un e-mail « on vous embauche » peut déjà valoir contrat. Tout dépend de ce qu\'il contient.',
+ sec:[{h:'📌 Deux situations différentes',t:[['Document','Effet'],['Offre de contrat','Précise le poste, la rémunération et la date. L\'employeur peut la retirer tant que vous ne l\'avez pas reçue ou avant la fin du délai qu\'il a fixé.'],['Promesse unilatérale','Vous offre le choix d\'accepter. Si l\'employeur se rétracte pendant votre délai de réponse, le contrat est <strong>quand même formé</strong>.']]},
+  {h:'',hl:['💡 En cas de rétractation abusive','Vous pouvez demander des dommages et intérêts devant le conseil de prud\'hommes.','blue']}],
+ eva:'Ne démissionnez <strong>jamais</strong> de votre poste actuel avant d\'avoir une promesse ou un contrat écrit, daté et précis.',
+ src:[SP('Promesse d\'embauche','promesse d embauche'),CT] }),
+M({ id:'temps-partiel', aud:'sal', ico:I.half, title:'Temps partiel — Vos droits', sub:'Durée minimale · Heures complémentaires · Priorité',
+ lead:'Travailler à temps partiel ne fait pas de vous un salarié « à part » : vous avez les <strong>mêmes droits</strong>, au prorata, et des garanties en plus.',
+ sec:[{h:'📌 Les règles clés',t:[['Point','Règle'],['Durée minimale','<strong>24 h par semaine</strong>, sauf dérogation (à votre demande ou accord de branche)'],['Heures complémentaires','Majorées d\'au moins <strong>10 %</strong>, puis 25 % au-delà du dixième de la durée prévue'],['Limite','Au maximum un tiers de la durée prévue au contrat'],['Répartition','Le contrat précise vos horaires et les conditions de modification']]},
+  {h:'⭐ Priorité',p:'Vous êtes <strong>prioritaire</strong> pour obtenir un emploi à temps plein dans l\'entreprise s\'il correspond à votre catégorie.'}],
+ eva:'Notez vos heures réelles chaque semaine : si vous dépassez régulièrement votre durée, vous pouvez demander la <strong>révision de votre contrat</strong>.',
+ src:[SP('Temps partiel','temps partiel salarie'),CT] }),
+M({ id:'non-concurrence', aud:'sal', ico:I.lock, title:'Clause de non-concurrence — Est-elle valable ?', sub:'Conditions · Contrepartie · Renonciation',
+ lead:'Votre contrat vous interdit de travailler pour un concurrent après votre départ ? Cette clause n\'est valable que si elle respecte <strong>4 conditions</strong>.',
+ sec:[{h:'✅ Les 4 conditions cumulatives',steps:[['Utile à l\'entreprise','Elle protège un intérêt légitime de l\'employeur.'],['Limitée dans le temps','Une durée précise.'],['Limitée dans l\'espace','Une zone géographique définie.'],['Payée','Une <strong>contrepartie financière</strong> obligatoire versée après le départ.']]},
+  {h:'',hl:['💡 Sans contrepartie ?','La clause est nulle : vous pouvez travailler librement et, si vous l\'avez respectée, demander une indemnisation.','blue']}],
+ eva:'Au moment du départ, vérifiez si l\'employeur <strong>renonce</strong> à la clause dans les délais prévus : sinon, la contrepartie vous est due.',
+ src:[SP('Clause de non-concurrence','clause de non concurrence'),CT] }),
+M({ id:'clause-mobilite', aud:'sal', ico:I.pin, title:'Clause de mobilité — Peut-on vous muter ?', sub:'Zone · Délai · Refus',
+ lead:'Une clause de mobilité permet à l\'employeur de changer votre lieu de travail. Mais elle a des <strong>limites</strong>.',
+ sec:[{h:'📌 Pour être valable',p:'Elle doit définir une <strong>zone géographique précise</strong>, être appliquée de bonne foi, avec un <strong>délai de prévenance raisonnable</strong>, et sans atteinte disproportionnée à votre vie personnelle et familiale.'},
+  {h:'⚖️ Et si vous refusez ?',p:'Si la clause est valable et appliquée correctement, le refus peut être une faute. Si elle est floue ou abusive, votre refus est légitime.'}],
+ eva:'Avant de refuser, faites lire votre clause : une zone comme « toute la France » sans précision est souvent <strong>contestable</strong>.',
+ src:[SP('Clause de mobilité','clause de mobilite'),CT] }),
+/* ── Paie ── */
+M({ id:'bulletin-paie', aud:'sal', ico:I.receipt, title:'Bulletin de paie — Le lire sans se tromper', sub:'Mentions · Brut / net · Conservation',
+ lead:'Votre bulletin de paie est la preuve de vos droits : salaire, heures, congés, cotisations. Savoir le lire évite bien des erreurs.',
+ sec:[{h:'🔍 À vérifier chaque mois',steps:[['Les heures','Heures normales, supplémentaires et leurs majorations.'],['Le net à payer','Ce qui arrive sur votre compte.'],['Le net imposable','Le montant pris en compte pour l\'impôt.'],['Les congés','Jours acquis et pris.']]},
+  {h:'📦 Conservation',hl:['Gardez-les longtemps','Conservez vos bulletins <strong>jusqu\'à la liquidation de votre retraite</strong> : ils prouvent vos périodes travaillées. Le format électronique est possible, sauf si vous vous y opposez.','blue']}],
+ eva:'Une erreur de salaire se réclame : la prescription est de <strong>3 ans</strong>. Plus vous agissez tôt, plus c\'est simple.',
+ src:[SP('Bulletin de paie','bulletin de paie'),CT] }),
+M({ id:'heures-sup', aud:'sal', ico:I.clock, title:'Heures supplémentaires — Majorations et impôt', sub:'Taux · Contingent · Défiscalisation',
+ lead:'Au-delà de 35 heures par semaine, chaque heure en plus est une heure supplémentaire : elle doit être <strong>majorée</strong>.',
+ sec:[{h:'💶 Les majorations (à défaut d\'accord)',t:[['Heures','Majoration'],['De la 36e à la 43e','<strong>+25 %</strong>'],['À partir de la 44e','<strong>+50 %</strong>'],['Par accord collectif','Au moins <strong>+10 %</strong>']]},
+  {h:'🎁 Bon à savoir',p:'Les heures supplémentaires sont exonérées d\'impôt sur le revenu dans une limite annuelle, et bénéficient d\'une réduction de cotisations salariales.'}],
+ eva:'Gardez un relevé personnel de vos horaires (agenda, e-mails) : en cas de litige, il compte comme <strong>élément de preuve</strong>.',
+ src:[SP('Heures supplémentaires','heures supplementaires'),CT] }),
+M({ id:'epargne-salariale', aud:'sal', ico:I.piggy, title:'Épargne salariale — Intéressement, participation, PEE', sub:'Dispositifs · Blocage · Déblocage anticipé',
+ lead:'Beaucoup de salariés ont de l\'argent qui dort sur un plan d\'épargne d\'entreprise… sans le savoir.',
+ sec:[{h:'📌 Les dispositifs',t:[['Dispositif','Principe'],['Participation','Obligatoire dans les entreprises de 50 salariés et plus'],['Intéressement','Facultatif, lié aux résultats ou aux performances'],['PEE','Plan d\'épargne, souvent abondé par l\'employeur'],['PER collectif','Épargne pour la retraite']]},
+  {h:'🔓 Déblocage anticipé',p:'Les sommes sont en général bloquées 5 ans, mais peuvent être débloquées avant dans certains cas : mariage ou PACS, naissance du 3e enfant, achat de la résidence principale, fin du contrat de travail…'}],
+ eva:'Quand vous quittez une entreprise, <strong>demandez le relevé</strong> de votre épargne salariale : elle vous appartient, même après votre départ.',
+ src:[SP('Épargne salariale','epargne salariale'),['Épargne salariale','https://www.service-public.gouv.fr','🏛️']] }),
+M({ id:'ppv', aud:'sal', ico:I.gift, title:'Prime de partage de la valeur — Comment ça marche', sub:'Principe · Exonérations · Versement',
+ lead:'La <strong>prime de partage de la valeur</strong> (ex-« prime Macron ») est une prime facultative que l\'employeur peut verser, avec des avantages fiscaux et sociaux.',
+ sec:[{h:'📌 L\'essentiel',p:'Elle est décidée par l\'employeur (décision unilatérale ou accord). Son montant peut varier selon des critères objectifs (salaire, ancienneté, temps de travail). Les exonérations dépendent de votre salaire et de la taille de l\'entreprise.'},
+  {h:'',hl:['À vérifier','Les plafonds et les conditions d\'exonération évoluent : vérifiez les règles en vigueur sur Service-Public ou l\'URSSAF.','amber']}],
+ eva:'Une prime de partage de la valeur peut aussi être <strong>placée sur un plan d\'épargne</strong> salariale, avec un régime fiscal parfois plus favorable.',
+ src:[SP('Prime de partage de la valeur','prime de partage de la valeur'),['URSSAF','https://www.urssaf.fr','🏛️']] }),
+M({ id:'titres-restaurant', aud:'sal', ico:I.fork, title:'Titres-restaurant — Vos droits', sub:'Financement · Utilisation · Validité',
+ lead:'Les titres-restaurant ne sont pas obligatoires, mais s\'ils existent dans votre entreprise, des <strong>règles précises</strong> s\'appliquent.',
+ sec:[{h:'📌 Les règles',t:[['Point','Règle'],['Financement','L\'employeur paie entre <strong>50 et 60 %</strong> de la valeur'],['Attribution','Un titre par repas compris dans votre horaire de travail'],['Égalité','Les télétravailleurs y ont droit dans les mêmes conditions'],['Validité','Jusqu\'à la fin de l\'année civile, échangeables ensuite pendant une courte période']]}],
+ eva:'Vous télétravaillez ? Si vos collègues sur site reçoivent des titres-restaurant, <strong>vous y avez droit aussi</strong>.',
+ src:[SP('Titres-restaurant','titre restaurant salarie'),CT] }),
+M({ id:'frais-pro', aud:'sal', ico:I.receipt, title:'Frais professionnels — Ce que l\'employeur doit rembourser', sub:'Remboursement · Télétravail · Impôts',
+ lead:'Les frais que vous engagez <strong>pour votre travail</strong> (déplacements, repas en mission, matériel) doivent en principe être pris en charge par l\'employeur.',
+ sec:[{h:'📌 Ce qu\'il faut savoir',steps:[['Justifier','Gardez tous les justificatifs (billets, notes, factures).'],['Demander','Suivez la procédure de note de frais de l\'entreprise.'],['Télétravail','Une allocation peut être versée si un accord ou une charte la prévoit.']]},
+  {h:'🧾 Côté impôts',p:'Vous pouvez choisir la déduction forfaitaire de 10 % ou les <strong>frais réels</strong>, si vos frais non remboursés sont plus élevés.'}],
+ eva:'Ne payez pas de votre poche du matériel imposé par l\'employeur sans <strong>accord écrit de remboursement</strong>.',
+ src:[SP('Frais professionnels','frais professionnels salarie'),['Impots.gouv','https://www.impots.gouv.fr','🧾']] }),
+M({ id:'transport', aud:'sal', ico:I.bike, title:'Transport domicile-travail — Prise en charge et forfait mobilités', sub:'Abonnement · Vélo · Covoiturage',
+ lead:'Votre employeur doit prendre en charge une partie de vos trajets. Et il existe un forfait <strong>souvent oublié</strong> pour le vélo et le covoiturage.',
+ sec:[{h:'📌 Les aides',t:[['Aide','Règle'],['Abonnement transports publics','<strong>50 %</strong> pris en charge, <strong>obligatoire</strong>'],['Forfait mobilités durables','Facultatif : vélo, trottinette, covoiturage, autopartage'],['Prime de transport','Facultative, notamment pour les frais de carburant']]}],
+ eva:'Vous venez à vélo ou en covoiturage ? Demandez si l\'entreprise a mis en place le <strong>forfait mobilités durables</strong> : beaucoup l\'ignorent.',
+ src:[SP('Frais de transport','prise en charge frais transport salarie'),CT] }),
+/* ── Temps et congés ── */
+M({ id:'pauses-repos', aud:'sal', ico:I.coffee, title:'Pauses et temps de repos — Les minimums légaux', sub:'Pause · Repos quotidien · Durées maximales',
+ lead:'La loi fixe des <strong>minimums de repos</strong> qui protègent votre santé. Votre employeur doit les respecter.',
+ sec:[{h:'📌 Les règles',t:[['Règle','Minimum / maximum'],['Pause','<strong>20 minutes</strong> dès 6 h de travail'],['Repos quotidien','<strong>11 heures</strong> consécutives'],['Repos hebdomadaire','<strong>35 heures</strong> consécutives (24 h + 11 h)'],['Durée maximale','10 h par jour, 48 h par semaine']]}],
+ eva:'Si on vous rappelle régulièrement le soir et que vous reprenez tôt le matin, votre <strong>repos de 11 heures</strong> n\'est peut-être pas respecté.',
+ src:[SP('Temps de pause','temps de pause salarie'),CT] }),
+M({ id:'feries-dimanche', aud:'sal', ico:I.cal, title:'Jours fériés et travail le dimanche', sub:'1er mai · Majorations · Repos dominical',
+ lead:'Sur les 11 jours fériés, un seul est obligatoirement chômé et payé : le <strong>1er mai</strong>. Pour le reste, tout dépend de votre convention collective.',
+ sec:[{h:'📌 Jours fériés',p:'Le 1er mai travaillé est payé <strong>double</strong>. Pour les autres jours fériés, c\'est la convention collective ou l\'usage qui décide.'},
+  {h:'📌 Le dimanche',p:'Le repos hebdomadaire est donné en principe le dimanche. Des dérogations existent (commerces, zones touristiques, services continus), avec souvent des <strong>contreparties</strong> prévues par accord.'}],
+ eva:'Cherchez votre convention collective sur le Code du travail numérique : c\'est elle qui fixe vos <strong>majorations réelles</strong>.',
+ src:[SP('Jours fériés','jours feries salarie'),CT] }),
+M({ id:'travail-nuit', aud:'sal', ico:I.moon, title:'Travail de nuit — Protections et contreparties', sub:'Définition · Repos · Suivi médical',
+ lead:'Le travail de nuit use la santé : la loi impose des <strong>contreparties</strong> et un suivi renforcé.',
+ sec:[{h:'📌 Qui est travailleur de nuit ?',p:'Le travail de nuit couvre en principe la période de <strong>21 h à 6 h</strong>. Vous êtes travailleur de nuit si vous y travaillez régulièrement un certain nombre d\'heures (au moins 3 heures, deux fois par semaine, par exemple).'},
+  {h:'✅ Vos droits',t:[['Droit','Détail'],['Contrepartie','Repos compensateur obligatoire, et souvent une majoration de salaire'],['Santé','Suivi médical individuel adapté'],['Retour en journée','Priorité pour un poste de jour, notamment pour raisons familiales']]}],
+ eva:'Enceinte et travailleuse de nuit ? Vous pouvez demander à être <strong>affectée à un poste de jour</strong> pendant la grossesse.',
+ src:[SP('Travail de nuit','travail de nuit salarie'),CT] }),
+M({ id:'conges-familiaux', aud:'sal', ico:I.heart, title:'Congés pour événements familiaux', sub:'Mariage · Naissance · Décès · Handicap',
+ lead:'Mariage, naissance, décès : la loi vous accorde des jours de congé <strong>payés</strong>, en plus de vos congés annuels.',
+ sec:[{h:'📅 Durées minimales légales',t:[['Événement','Jours'],['Votre mariage ou PACS','4 jours'],['Naissance ou adoption','3 jours'],['Mariage d\'un enfant','1 jour'],['Décès du conjoint, d\'un parent, frère ou sœur','3 jours'],['Décès d\'un enfant','5 jours (7 jours ouvrés s\'il avait moins de 25 ans), plus un congé de deuil'],['Annonce du handicap ou d\'une maladie grave d\'un enfant','5 jours']]}],
+ eva:'Votre convention collective peut prévoir <strong>plus de jours</strong> : vérifiez-la avant de poser votre demande.',
+ src:[SP('Congés pour événements familiaux','conges evenements familiaux'),CT] }),
+M({ id:'maternite-paternite', aud:'sal', ico:I.baby, title:'Congé maternité et congé paternité', sub:'Durées · Indemnités · Protection',
+ lead:'L\'arrivée d\'un enfant ouvre des congés <strong>indemnisés</strong> et une protection contre le licenciement.',
+ sec:[{h:'📅 Durées (1er ou 2e enfant)',t:[['Congé','Durée'],['Maternité','<strong>16 semaines</strong> (6 avant, 10 après la naissance)'],['Paternité et accueil de l\'enfant','<strong>25 jours</strong> (32 pour des naissances multiples), dont 4 obligatoires après le congé de naissance'],['Congé de naissance','3 jours payés par l\'employeur']]},
+  {h:'',hl:['À vérifier','Une réforme des congés de naissance est en discussion : vérifiez les règles en vigueur avant de poser vos dates.','amber']}],
+ eva:'Prévenez votre employeur du congé paternité <strong>au moins 1 mois à l\'avance</strong> pour la partie non obligatoire.',
+ src:[SP('Congé maternité','conge maternite salariee'),SP('Congé paternité','conge paternite'),['Ameli','https://www.ameli.fr','🏥']] }),
+M({ id:'conge-parental', aud:'sal', ico:I.baby, title:'Congé parental d\'éducation', sub:'Conditions · Durée · PreParE',
+ lead:'Le congé parental permet d\'arrêter ou de réduire son activité pour élever son enfant, avec un <strong>retour garanti</strong> dans l\'entreprise.',
+ sec:[{h:'📌 Les règles',t:[['Point','Règle'],['Ancienneté','Au moins <strong>1 an</strong> dans l\'entreprise'],['Forme','Arrêt total ou temps partiel'],['Durée','Jusqu\'aux <strong>3 ans</strong> de l\'enfant en principe'],['Retour','Votre poste ou un poste similaire, avec une rémunération au moins équivalente']]},
+  {h:'💶 Et l\'argent ?',p:'L\'employeur ne vous paie pas, mais la CAF peut verser la <strong>PreParE</strong> (prestation partagée d\'éducation de l\'enfant), sous conditions.'}],
+ eva:'Faites la simulation PreParE sur caf.fr <strong>avant</strong> de choisir entre arrêt total et temps partiel.',
+ src:[SP('Congé parental d\'éducation','conge parental education'),['CAF','https://www.caf.fr','🏠']] }),
+M({ id:'presence-parentale', aud:'sal', ico:I.heart, title:'Congé de présence parentale — Enfant gravement malade', sub:'Conditions · Durée · AJPP',
+ lead:'Votre enfant est gravement malade, handicapé ou accidenté ? Ce congé vous permet d\'être à ses côtés, avec une <strong>allocation</strong> de la CAF.',
+ sec:[{h:'📌 Les règles',t:[['Point','Règle'],['Durée','Jusqu\'à <strong>310 jours ouvrés</strong> sur une période de 3 ans'],['Souplesse','Pris en continu, à temps partiel ou par jours'],['Indemnisation','AJPP versée par la CAF, par jour d\'absence'],['Contrat','Suspendu, avec retour garanti']]}],
+ eva:'Un certificat médical précisant la nécessité d\'une présence soutenue suffit pour lancer la demande. N\'attendez pas pour <strong>demander l\'AJPP</strong>.',
+ src:[SP('Congé de présence parentale','conge de presence parentale'),['CAF','https://www.caf.fr','🏠']] }),
+M({ id:'proche-aidant', aud:'sal', ico:I.hands, title:'Congé de proche aidant — Aider un proche sans perdre son emploi', sub:'Conditions · Durée · AJPA',
+ lead:'Vous aidez un proche âgé, malade ou handicapé ? Le <strong>congé de proche aidant</strong> existe, et il peut être indemnisé.',
+ sec:[{h:'📌 Les règles',t:[['Point','Règle'],['Pour qui ?','Un proche (famille, conjoint, personne avec qui vous avez des liens étroits) en perte d\'autonomie ou handicapé'],['Durée','Jusqu\'à <strong>3 mois</strong>, renouvelable, dans la limite d\'<strong>1 an</strong> sur toute la carrière'],['Formes','Temps plein, temps partiel ou fractionné'],['Indemnisation','AJPA, versée par la CAF ou la MSA']]}],
+ eva:'Ce congé ne peut pas vous être refusé si vous remplissez les conditions. Prévenez simplement votre employeur dans les délais.',
+ src:[SP('Congé de proche aidant','conge proche aidant'),['CAF','https://www.caf.fr','🏠']] }),
+M({ id:'solidarite-familiale', aud:'sal', ico:I.hands, title:'Congé de solidarité familiale — Accompagner un proche en fin de vie', sub:'Conditions · Durée · Allocation',
+ lead:'Pour accompagner un proche en fin de vie, ce congé vous permet de vous absenter, avec une <strong>allocation journalière</strong>.',
+ sec:[{h:'📌 Les règles',t:[['Point','Règle'],['Pour qui ?','Un proche souffrant d\'une maladie grave mettant sa vie en jeu, ou en phase avancée'],['Durée','<strong>3 mois</strong>, renouvelable une fois'],['Formes','Continu, temps partiel ou fractionné'],['Indemnisation','Allocation journalière versée par l\'Assurance maladie']]}],
+ eva:'Ce congé est un droit : l\'employeur <strong>ne peut pas le refuser</strong>. Un certificat médical suffit.',
+ src:[SP('Congé de solidarité familiale','conge de solidarite familiale'),['Ameli','https://www.ameli.fr','🏥']] }),
+M({ id:'don-jours', aud:'sal', ico:I.share, title:'Don de jours de repos — Aider un collègue', sub:'Principe · Bénéficiaires · Anonymat',
+ lead:'Vous pouvez <strong>donner des jours de repos</strong> à un collègue qui en a besoin. Un geste de solidarité méconnu.',
+ sec:[{h:'📌 Comment ça marche',p:'Avec l\'accord de l\'employeur, un salarié peut renoncer anonymement à des jours de repos (RTT, une partie des congés) au profit d\'un collègue parent d\'un enfant gravement malade, proche aidant, ou qui a perdu un enfant.'},
+  {h:'✅ Pour le bénéficiaire',p:'Les jours reçus sont <strong>payés</strong> normalement et comptent comme du temps de travail.'}],
+ eva:'Vous traversez une épreuve ? Parlez-en aux RH ou au CSE : un appel au don peut être organisé <strong>sans révéler votre situation</strong>.',
+ src:[SP('Don de jours de repos','don de jours de repos'),CT] }),
+M({ id:'cet', aud:'sal', ico:I.bank, title:'Compte épargne-temps (CET) — Épargner ses congés', sub:'Alimentation · Utilisation · Départ',
+ lead:'Le CET permet de <strong>mettre de côté</strong> des jours de congés ou des primes, pour les utiliser plus tard.',
+ sec:[{h:'📌 L\'essentiel',t:[['Point','Règle'],['Mise en place','Par accord collectif : il n\'existe pas partout'],['Alimentation','Jours de congé au-delà de 24 jours ouvrables, RTT, primes selon l\'accord'],['Utilisation','Congé rémunéré, passage à temps partiel, complément de salaire ou épargne retraite selon l\'accord'],['Au départ','Les droits sont payés ou transférés selon les règles prévues']]}],
+ eva:'Avant un projet long (congé sabbatique, création d\'entreprise), un CET bien rempli peut <strong>financer plusieurs semaines</strong> d\'absence.',
+ src:[SP('Compte épargne-temps','compte epargne temps'),CT] }),
+M({ id:'deconnexion', aud:'sal', ico:I.plug, title:'Droit à la déconnexion', sub:'Principe · Charte · Que faire',
+ lead:'Ne pas répondre aux mails le soir, c\'est un <strong>droit</strong>. Il est inscrit dans le Code du travail.',
+ sec:[{h:'📌 Ce que dit la loi',p:'Les entreprises d\'au moins 50 salariés doivent négocier les modalités du droit à la déconnexion. À défaut d\'accord, l\'employeur établit une <strong>charte</strong>.'},
+  {h:'🛡️ Que faire si on vous sollicite sans cesse ?',steps:[['Garder des traces','Notez les heures des sollicitations hors horaires.'],['En parler','Au manager, aux RH ou au CSE.'],['Alerter','Si votre santé est touchée, consultez le médecin du travail.']]}],
+ eva:'Le droit à la déconnexion protège aussi votre <strong>temps de repos de 11 heures</strong> : les deux vont ensemble.',
+ src:[SP('Droit à la déconnexion','droit a la deconnexion'),CT] }),
+/* ── Santé ── */
+M({ id:'arret-maladie', aud:'sal', ico:I.med, title:'Arrêt maladie — Indemnités et obligations', sub:'48 h · Carence · Complément employeur',
+ lead:'Un arrêt maladie ouvre droit à des <strong>indemnités journalières</strong> de la Sécurité sociale, parfois complétées par l\'employeur.',
+ sec:[{h:'📋 Les étapes',steps:[['Envoyer l\'arrêt','Sous <strong>48 heures</strong> à la CPAM (volets 1 et 2) et à l\'employeur (volet 3).'],['Délai de carence','En général <strong>3 jours</strong> non indemnisés par la Sécurité sociale.'],['Indemnités','Versées par la CPAM, calculées sur vos salaires.'],['Complément employeur','Après 1 an d\'ancienneté, l\'employeur complète sous conditions, souvent plus selon la convention collective.']]},
+  {h:'',hl:['⚠️ Les heures de sortie','Respectez les heures de présence indiquées sur l\'arrêt : un contrôle peut avoir lieu.','amber']}],
+ eva:'Votre convention collective prévoit peut-être un <strong>maintien de salaire</strong> plus généreux : vérifiez-la.',
+ src:[['Ameli — Arrêt maladie','https://www.ameli.fr','🏥'],SP('Arrêt maladie','arret maladie salarie')] }),
+M({ id:'accident-travail', aud:'sal', ico:I.warn, title:'Accident du travail et maladie professionnelle', sub:'Déclaration · Indemnités · Protection',
+ lead:'Un accident au travail ou sur le trajet ouvre des droits <strong>plus protecteurs</strong> qu\'un arrêt maladie classique.',
+ sec:[{h:'📋 Les délais',steps:[['Prévenir l\'employeur','Dans les <strong>24 heures</strong>.'],['Déclaration','L\'employeur déclare l\'accident à la CPAM sous 48 heures.'],['Feuille d\'accident','Remise par l\'employeur : soins pris en charge sans avance de frais.']]},
+  {h:'✅ Vos avantages',t:[['Avantage','Détail'],['Pas de carence','Indemnisé dès le lendemain de l\'accident'],['Indemnités','Plus élevées qu\'en maladie ordinaire'],['Protection','Licenciement très encadré pendant l\'arrêt']]}],
+ eva:'L\'employeur refuse de déclarer ? Vous pouvez déclarer <strong>vous-même</strong> l\'accident à la CPAM, dans un délai de 2 ans.',
+ src:[['Ameli — Accident du travail','https://www.ameli.fr','🏥'],SP('Accident du travail','accident du travail')] }),
+M({ id:'medecine-travail', aud:'sal', ico:I.steth, title:'Médecine du travail — Visites et rôle', sub:'Embauche · Reprise · Pré-reprise',
+ lead:'Le médecin du travail est là pour <strong>protéger votre santé</strong>, pas pour contrôler vos arrêts. Ses visites sont un droit.',
+ sec:[{h:'📅 Les visites',t:[['Visite','Quand ?'],['Information et prévention','Dans les 3 mois suivant l\'embauche'],['Visite périodique','Au moins tous les 5 ans (plus souvent si poste à risque)'],['Reprise','Après un congé maternité, un arrêt pour maladie professionnelle, un accident du travail d\'au moins 30 jours ou une maladie d\'au moins 60 jours'],['Pré-reprise','Pendant un arrêt long, pour préparer le retour']]}],
+ eva:'Vous pouvez demander une visite <strong>à tout moment</strong>, sans passer par votre manager. C\'est confidentiel.',
+ src:[SP('Visite médicale','visite medicale travail'),CT] }),
+M({ id:'inaptitude', aud:'sal', ico:I.steth, title:'Inaptitude — Reclassement ou licenciement', sub:'Constat · Reclassement · Indemnités',
+ lead:'Quand votre état de santé ne permet plus d\'occuper votre poste, seul le <strong>médecin du travail</strong> peut déclarer l\'inaptitude.',
+ sec:[{h:'📋 La procédure',steps:[['Constat','Le médecin du travail déclare l\'inaptitude après échange avec vous et l\'employeur.'],['Reclassement','L\'employeur doit chercher un poste adapté, sauf dispense écrite du médecin.'],['Délai d\'1 mois','Sans reclassement ni licenciement dans le mois, l\'employeur doit <strong>reprendre le paiement du salaire</strong>.']]},
+  {h:'',hl:['💡 Origine professionnelle','Si l\'inaptitude vient d\'un accident du travail ou d\'une maladie professionnelle, l\'indemnité de licenciement est <strong>doublée</strong>.','blue']}],
+ eva:'Avant la visite, préparez la liste des tâches que vous pouvez encore faire : elle aide le médecin à proposer un <strong>aménagement</strong> plutôt qu\'une inaptitude.',
+ src:[SP('Inaptitude','inaptitude medicale salarie'),CT] }),
+M({ id:'tpt', aud:'sal', ico:I.half, title:'Temps partiel thérapeutique — Reprendre en douceur', sub:'Principe · Indemnités · Démarches',
+ lead:'Après une maladie, vous pouvez reprendre <strong>à temps partiel</strong> tout en touchant une partie de vos indemnités journalières.',
+ sec:[{h:'📋 Les étapes',steps:[['Prescription','Votre médecin prescrit une reprise à temps partiel thérapeutique.'],['Accord','L\'employeur doit donner son accord ; le médecin du travail peut être consulté.'],['Revenus','Salaire pour les heures travaillées + une partie des indemnités journalières de la CPAM.']]}],
+ eva:'Le temps partiel thérapeutique est souvent <strong>méconnu des employeurs</strong> : venez avec la prescription et proposez un planning précis.',
+ src:[['Ameli — Temps partiel thérapeutique','https://www.ameli.fr','🏥'],SP('Temps partiel thérapeutique','temps partiel therapeutique')] }),
+M({ id:'droit-retrait', aud:'sal', ico:I.warn, title:'Droit de retrait — Danger grave et imminent', sub:'Conditions · Procédure · Protection',
+ lead:'Face à un <strong>danger grave et imminent</strong> pour votre vie ou votre santé, vous pouvez cesser le travail sans être sanctionné(e).',
+ sec:[{h:'📋 Comment l\'exercer',steps:[['Alerter','Prévenez immédiatement votre employeur (par écrit si possible).'],['Se retirer','Quittez la situation dangereuse, sans créer de nouveau danger pour les autres.'],['Reprendre','Quand le danger est écarté.']]},
+  {h:'🛡️ Protection',p:'Si vous aviez un <strong>motif raisonnable</strong> de penser qu\'il y avait danger, aucune sanction ni retenue de salaire n\'est possible.'}],
+ eva:'Le CSE peut aussi déclencher une <strong>alerte</strong> : prévenez un représentant du personnel en même temps.',
+ src:[SP('Droit de retrait','droit de retrait salarie'),CT] }),
+/* ── Collectif ── */
+M({ id:'cse', aud:'sal', ico:I.team, title:'CSE — Vos représentants du personnel', sub:'Rôle · Seuils · Comment les saisir',
+ lead:'Le <strong>comité social et économique</strong> représente les salariés. C\'est un allié précieux, souvent sous-utilisé.',
+ sec:[{h:'📌 L\'essentiel',t:[['Point','Règle'],['Obligation','Dès <strong>11 salariés</strong>'],['Missions','Porter les réclamations, veiller à la santé, sécurité et conditions de travail'],['À partir de 50 salariés','Consultation sur la marche de l\'entreprise et activités sociales et culturelles'],['Contact','Les élus sont joignables : leurs noms sont affichés']]}],
+ eva:'Un problème de planning, de sécurité ou de harcèlement ? Un élu du CSE peut vous <strong>accompagner</strong> et intervenir auprès de la direction.',
+ src:[SP('CSE','comite social et economique'),CT] }),
+M({ id:'sanction', aud:'sal', ico:I.gavel, title:'Sanction disciplinaire — Procédure et contestation', sub:'Entretien · Délais · Recours',
+ lead:'Avertissement, mise à pied, mutation : une sanction doit suivre une <strong>procédure précise</strong>, sinon elle est contestable.',
+ sec:[{h:'📋 Les règles',t:[['Règle','Délai'],['Engager la procédure','Dans les <strong>2 mois</strong> après la connaissance des faits'],['Entretien préalable','Obligatoire, sauf pour un simple avertissement'],['Notification','Entre 2 jours ouvrables et 1 mois après l\'entretien'],['Assistance','Vous pouvez venir accompagné(e) à l\'entretien']]},
+  {h:'⚖️ Contester',p:'Répondez par écrit pour donner votre version, puis saisissez le conseil de prud\'hommes si la sanction est injustifiée ou disproportionnée.'}],
+ eva:'Ne signez jamais « lu et approuvé » une sanction avec laquelle vous n\'êtes pas d\'accord : écrivez plutôt « <strong>reçu le</strong> » avec la date.',
+ src:[SP('Sanction disciplinaire','sanction disciplinaire salarie'),CT] }),
+M({ id:'lanceur-alerte', aud:'sal', ico:I.mega, title:'Lanceur d\'alerte — Signaler et être protégé', sub:'Signalement · Canaux · Protection',
+ lead:'Vous avez connaissance d\'une fraude, d\'un danger ou d\'une violation de la loi ? Le statut de <strong>lanceur d\'alerte</strong> vous protège.',
+ sec:[{h:'📋 Les canaux',steps:[['En interne','Via la procédure de signalement de l\'entreprise.'],['En externe','Directement auprès d\'une autorité compétente ou du Défenseur des droits.'],['Public','En dernier recours, ou en cas de danger imminent.']]},
+  {h:'🛡️ Protection',p:'Aucune sanction, licenciement ou mesure de représailles ne peut viser un lanceur d\'alerte de bonne foi. Les personnes qui l\'aident sont aussi protégées.'}],
+ eva:'Rassemblez des preuves <strong>sans enfreindre la loi</strong>, et contactez le Défenseur des droits pour être orienté(e).',
+ src:[['Défenseur des droits','https://www.defenseurdesdroits.fr','⚖️'],SP('Lanceur d\'alerte','lanceur d alerte')] }),
+M({ id:'vie-privee', aud:'sal', ico:I.eye, title:'Vie privée et données personnelles au travail', sub:'Surveillance · RGPD · Droit d\'accès',
+ lead:'Caméras, géolocalisation, logiciels : votre employeur peut contrôler l\'activité, mais <strong>pas n\'importe comment</strong>.',
+ sec:[{h:'📌 Les règles',t:[['Règle','Ce que ça veut dire'],['Information','Tout dispositif de contrôle doit vous être annoncé avant'],['Proportionnalité','Le contrôle doit être justifié et limité'],['Vos données','Droit d\'accès, de rectification et d\'opposition (RGPD)'],['Recours','CNIL en cas de manquement']]}],
+ eva:'Vous pouvez demander à votre employeur la <strong>copie des données</strong> qu\'il détient sur vous : il doit répondre en principe sous un mois.',
+ src:[['CNIL — Travail et données','https://www.cnil.fr','🔐'],CT] }),
+/* ── Départ ── */
+M({ id:'abandon-poste', aud:'sal', ico:I.door, title:'Abandon de poste — La présomption de démission', sub:'Mise en demeure · Délai · Chômage',
+ lead:'Depuis 2023, un abandon de poste peut être considéré comme une <strong>démission</strong>… et faire perdre le droit au chômage.',
+ sec:[{h:'📋 La procédure',steps:[['Mise en demeure','L\'employeur vous demande de justifier votre absence et de reprendre le travail.'],['Délai','Au moins <strong>15 jours</strong> pour répondre ou revenir.'],['Présomption','Sans retour ni motif légitime, vous êtes présumé(e) démissionnaire.']]},
+  {h:'',hl:['⚠️ Conséquence','Comme pour une démission classique, vous n\'avez en principe <strong>pas droit à l\'ARE</strong>.','amber']},
+  {h:'✅ Motifs légitimes',p:'Raisons médicales, droit de retrait, droit de grève, refus d\'une modification du contrat… Répondez en justifiant votre motif par écrit.'}],
+ eva:'Plutôt que l\'abandon de poste, parlez d\'une <strong>rupture conventionnelle</strong> : elle préserve votre droit au chômage.',
+ src:[SP('Abandon de poste','abandon de poste presomption de demission'),CT] }),
+M({ id:'cumul-retraite', aud:'sal', ico:I.senior, title:'Cumul emploi-retraite — Travailler en étant retraité', sub:'Cumul intégral · Nouveaux droits · Démarches',
+ lead:'Retraité(e), vous pouvez reprendre une activité. Et depuis 2024, ce travail peut vous ouvrir de <strong>nouveaux droits</strong> à retraite.',
+ sec:[{h:'📌 Les deux cas',t:[['Cas','Règle'],['Cumul intégral','Si toutes vos retraites sont liquidées et à taux plein : pas de limite de revenus'],['Cumul plafonné','Sinon : revenus limités, au-delà la pension est réduite'],['Nouveaux droits','En cumul intégral, l\'activité peut ouvrir une seconde pension, sous conditions']]}],
+ eva:'Avant de reprendre, faites le point sur <strong>info-retraite.fr</strong> : selon votre situation, le gain de la seconde pension peut être intéressant.',
+ src:[['Info-retraite','https://www.info-retraite.fr','👵'],SP('Cumul emploi-retraite','cumul emploi retraite')] })
+];
+A.forEach(function(a){ EVAD_ARTICLES.salarie.push(a); });
 })();
 
 // ══ Fonctions de navigation ══
