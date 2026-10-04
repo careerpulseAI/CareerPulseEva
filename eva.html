@@ -11686,6 +11686,71 @@ go=function(page){
 
 <!-- ════════ PAGE LISTE A-Z (commune, contenu dynamique) ════════ -->
 
+
+<style id="evx-premium-css">
+/* ═══ Hauts de page premium : banderole sur toutes les pages du menu EVA ═══ */
+[data-evt]{ --tdk:color-mix(in srgb, var(--t1) 70%, #020617); }
+html body [data-evt] .evad-hd, html body [data-evt] .eva-sub-header, html body [data-evt] .ew-hdr, html body [data-evt] .eb-hdr, html body [data-evt] .jnl-hdr, html body [data-evt] .nova-hd{
+  position:relative !important; overflow:hidden !important; isolation:isolate; border-bottom:none !important;
+  background:radial-gradient(120% 160% at 100% 0%, rgba(255,255,255,.20), rgba(255,255,255,0) 55%), linear-gradient(120deg, var(--tdk) 0%, var(--t1) 55%, var(--t2) 130%) !important;
+  box-shadow:0 14px 30px -20px var(--t1), inset 0 -1px 0 rgba(255,255,255,.12) !important; }
+html body [data-evt] .evad-hd::before, html body [data-evt] .eva-sub-header::before, html body [data-evt] .ew-hdr::before, html body [data-evt] .eb-hdr::before, html body [data-evt] .jnl-hdr::before, html body [data-evt] .nova-hd::before{
+  content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:35%; pointer-events:none;
+  background:linear-gradient(100deg, transparent, rgba(255,255,255,.18), transparent); transform:translateX(-160%) skewX(-14deg); animation:evbSheen 7s 1.2s ease-in-out infinite; }
+@keyframes evbSheen{ 0%{ transform:translateX(-160%) skewX(-14deg); } 22%,100%{ transform:translateX(420%) skewX(-14deg); } }
+html body [data-evt] .evad-hd::after, html body [data-evt] .eva-sub-header::after, html body [data-evt] .ew-hdr::after, html body [data-evt] .eb-hdr::after, html body [data-evt] .jnl-hdr::after, html body [data-evt] .nova-hd::after{
+  height:1px !important; background:linear-gradient(90deg, rgba(255,255,255,0), rgba(253,230,138,.75), rgba(255,255,255,0)) !important; }
+html body [data-evt] .evad-hd-title, html body [data-evt] .eva-sub-title, html body [data-evt] .ew-hdr-ttl, html body [data-evt] .eb-hdr-title, html body [data-evt] .jnl-hdr-title, html body [data-evt] .nova-hd-name{ color:#fff !important; text-shadow:0 1px 12px rgba(2,6,23,.25); }
+html body [data-evt] [data-eb]::before{ background:rgba(255,255,255,.14) !important; border-color:rgba(255,255,255,.28) !important; color:#fff !important; }
+html body [data-evt] .ev-sub, html body [data-evt] .eb-hdr-sub, html body [data-evt] .jnl-hdr-sub, html body [data-evt] .nova-hd-sub, html body [data-evt] .evad-hd .ev-sub{ color:rgba(255,255,255,.82) !important; }
+html body [data-evt] .evad-hd-back, html body [data-evt] .eva-sub-back, html body [data-evt] .ew-hdr-back, html body [data-evt] .eb-hdr-back, html body [data-evt] .jnl-hdr-back, html body [data-evt] .nova-hd-back{
+  background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.26) !important; box-shadow:none !important; }
+html body [data-evt] .evad-hd-back svg, html body [data-evt] .evad-hd-back svg *, html body [data-evt] .eva-sub-back svg, html body [data-evt] .eva-sub-back svg *, html body [data-evt] .ew-hdr-back svg, html body [data-evt] .ew-hdr-back svg *, html body [data-evt] .eb-hdr-back svg, html body [data-evt] .eb-hdr-back svg *, html body [data-evt] .jnl-hdr-back svg, html body [data-evt] .jnl-hdr-back svg *, html body [data-evt] .nova-hd-back svg, html body [data-evt] .nova-hd-back svg *{ stroke:#fff !important; color:#fff !important; }
+html body [data-evt] .evt-ico{ background:rgba(255,255,255,.16) !important; border:1px solid rgba(255,255,255,.3); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 10px 22px -12px rgba(2,6,23,.6) !important; }
+html body [data-evt] .evad-hd-eva, html body [data-evt] .eb-hdr-badge, html body [data-evt] .nova-hd-badge{ background:rgba(255,255,255,.14) !important; border-color:rgba(255,255,255,.28) !important; color:#fff !important; }
+html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
+@media (prefers-reduced-motion: reduce){ html body [data-evt] .evad-hd::before, html body [data-evt] .eva-sub-header::before, html body [data-evt] .ew-hdr::before, html body [data-evt] .eb-hdr::before, html body [data-evt] .jnl-hdr::before, html body [data-evt] .nova-hd::before{ animation:none; display:none; } }
+
+/* ═══ Barre de progression de lecture (articles) ═══ */
+.evr{ position:absolute; right:14px; top:50%; transform:translateY(-50%); z-index:2; display:flex; align-items:center; gap:7px; padding:6px 10px 6px 7px; border-radius:999px;
+  background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); color:#fff; font:800 .7rem/1 -apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+.evr svg{ width:22px; height:22px; transform:rotate(-90deg); }
+.evr circle{ fill:none; stroke-width:3.2; }
+.evr .bg{ stroke:rgba(255,255,255,.25); } .evr .fg{ stroke:#fde68a; stroke-linecap:round; transition:stroke-dashoffset .2s; }
+.evr-line{ position:absolute; left:0; bottom:0; height:3px; z-index:2; width:0; background:linear-gradient(90deg,#fde68a,#fff); box-shadow:0 0 10px rgba(253,230,138,.8); transition:width .15s; }
+#s-eva-droits-article .evad-hd{ padding-right:96px !important; }
+@media (max-width:420px){ .evr{ right:10px; padding:5px 8px 5px 6px; font-size:.64rem; } .evr svg{ width:19px; height:19px; } #s-eva-droits-article .evad-hd{ padding-right:84px !important; } }
+
+/* ═══ Article refondu : éléments du modèle ═══ */
+.art-ref{ margin:6px 0 14px; padding:9px 12px; border-radius:12px; background:#f8fafc; border:1px dashed #cbd5e1; font-size:.76rem; font-weight:600; color:#334155; }
+.art-list{ margin:6px 0 14px; padding:0; list-style:none; display:flex; flex-direction:column; gap:7px; }
+.art-list li{ position:relative; padding:10px 12px 10px 34px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.84rem; line-height:1.55; color:#1e293b; }
+.art-list li::before{ content:""; position:absolute; left:12px; top:15px; width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,#1d4ed8,#60a5fa); box-shadow:0 0 0 3px #dbeafe; }
+.art-src-date{ color:#047857; font-weight:800; }
+
+/* ═══ Checklist de fin d'article : mini hero en surbrillance ═══ */
+.evck{ position:relative; overflow:hidden; margin:22px 0 10px !important; padding:16px 16px 14px !important; border-radius:22px !important; border:1px solid transparent !important;
+  background:linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,#1d4ed8,#60a5fa 45%,#fde68a) border-box !important;
+  box-shadow:0 22px 44px -26px rgba(29,78,216,.6), 0 0 0 6px rgba(219,234,254,.55) !important; }
+.evck::before{ content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(90% 60% at 100% 0%, rgba(96,165,250,.14), transparent 60%); }
+.evck-hd{ position:relative; display:flex; gap:12px; align-items:center; margin-bottom:12px; }
+.evck-ico{ flex-shrink:0; width:42px; height:42px; border-radius:14px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e3a8a,#1d4ed8 55%,#60a5fa); box-shadow:0 10px 22px -10px rgba(29,78,216,.8); }
+.evck-ico svg{ width:21px; height:21px; }
+.evck-k{ font-size:.62rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#1d4ed8; }
+.evck-t{ font-size:.98rem; font-weight:900; color:#0f172a; line-height:1.25; margin-top:2px; }
+.evck-pg{ position:relative; display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.evck-bar{ flex:1; height:9px; border-radius:99px; background:#e0e7ff; overflow:hidden; }
+.evck-fill{ display:block; height:100%; width:0; border-radius:99px; background:linear-gradient(90deg,#1d4ed8,#60a5fa,#fde68a); box-shadow:0 0 12px rgba(96,165,250,.6); transition:width .45s cubic-bezier(.2,.9,.3,1.05); }
+.evck-n{ font-size:.72rem; font-weight:900; color:#1e3a8a; white-space:nowrap; }
+.evck.done{ background:linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,#047857,#10b981,#fde68a) border-box !important; box-shadow:0 22px 44px -26px rgba(4,120,87,.6), 0 0 0 6px rgba(209,250,229,.6) !important; }
+.evck.done .evck-fill{ background:linear-gradient(90deg,#047857,#10b981,#6ee7b7); }
+.evck-body{ position:relative; }
+.evck-res{ position:relative; margin-top:8px; font-size:.78rem; font-weight:700; color:#1e3a8a; min-height:0; }
+.evck-res:empty{ display:none; }
+.evck-tip{ position:relative; display:flex; gap:9px; align-items:flex-start; margin-top:12px; padding:11px 12px; border-radius:14px; background:linear-gradient(135deg,#fffbeb,#fff7e6); border:1px solid #fde68a; }
+.evck-tip span{ font-size:1rem; line-height:1.3; }
+.evck-tip p{ margin:0; font-size:.76rem; line-height:1.55; color:#422006; }
+</style>
 <style id="evst-css">
 #evad-subtabs{ padding:12px 14px 6px; background:#fff; }
 .evst{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
@@ -12693,6 +12758,39 @@ function evadRefreshList(fromTab){
     if(sp && sp!==document.body){ var d=w.getBoundingClientRect().top-sp.getBoundingClientRect().top-96; sp.scrollBy({ top:d, behavior:'smooth' }); } }catch(e){} }
 }
 
+
+
+var _EV_ENG={}, _EV_QZ={};
+/* ═══ Refonte Droits & aides : modèle d'article officiel ═══
+   Intro → Le droit en bref → Qui ? → Quoi ? → Quand ? → Comment faire → Pourquoi c'est important
+   → Conseil d'Eva → Sources officielles datées → (checklist en fin d'article, mini hero) */
+function evadMk3(o){
+  _EV_ENG[o.id]={ checklist:o.check?{title:o.check[0],items:o.check[1]}:undefined, estimator:o.est, related:o.rel };
+  if(o.quiz) _EV_QZ[o.id]=o.quiz.map(function(x){ return { q:x[0], r:x[1] }; });
+  return { id:o.id, aud:o.aud, v3:true, title:o.title, sub:o.sub,
+    ico:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+o.ico+'</svg>',
+    content:function(){
+      var h='<div class="art-lead">'+o.intro+'</div>';
+      var H=function(t){ h+='<div class="art-h2">'+t+'</div>'; };
+      var P=function(t){ h+='<div class="art-p">'+t+'</div>'; };
+      var T=function(t){ h+='<div class="art-table-wrap"><table class="art-table"><thead><tr><th>'+t[0][0]+'</th><th>'+t[0][1]+'</th></tr></thead><tbody>'+t.slice(1).map(function(r){ return '<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>'; }).join('')+'</tbody></table></div>'; };
+      if(o.loi){ H('⚖️ Le droit en bref'); P(o.loi[0]); if(o.loi[1]) h+='<div class="art-ref">📜 '+o.loi[1]+'</div>'; }
+      if(o.qui){ H('👥 Qui est concerné ?'); if(typeof o.qui==='string') P(o.qui); else h+='<ul class="art-list">'+o.qui.map(function(x){ return '<li>'+x+'</li>'; }).join('')+'</ul>'; }
+      if(o.quoi){ H('📌 Quoi : ce que ça vous apporte'); if(o.quoi.p) P(o.quoi.p); if(o.quoi.t) T(o.quoi.t); if(o.quoi.ex) h+='<div class="art-hl art-hl-blue"><div class="art-hl-h">🧮 Exemple</div><div class="art-hl-p">'+o.quoi.ex+'</div></div>'; }
+      if(o.quand){ H('Quand : les délais'); if(o.quand.p) P(o.quand.p); if(o.quand.t) T(o.quand.t); }
+      if(o.comment){ H('✅ Comment faire'); h+='<ul class="art-steps">'+o.comment.map(function(x,i){ return '<li class="art-step"><div class="art-step-n">'+(i+1)+'</div><div><div class="art-step-t">'+x[0]+'</div><div class="art-step-d">'+x[1]+'</div></div></li>'; }).join('')+'</ul>'; }
+      if(o.pourquoi) h+='<div class="art-hl art-hl-amber"><div class="art-hl-h">⚠️ Pourquoi c\'est important</div><div class="art-hl-p">'+o.pourquoi+'</div></div>';
+      if(o.eva) h+='<div class="art-eva"><div class="art-eva-av">EVA</div><div><div class="art-eva-label">💡 Le conseil d\'Eva</div><div class="art-eva-text">'+o.eva+'</div></div></div>';
+      h+='<div class="art-sources"><div class="art-src-label">📚 Sources officielles</div>'+(o.src||[]).map(function(x){
+        var dom=x[1].replace(/^https?:\/\/(www\.)?/,'').split('/')[0];
+        return '<div class="art-src-row" onclick="window.open(\''+x[1]+'\',\'_blank\')"><div class="art-src-ico">'+(x[3]||'🇫🇷')+'</div><div class="art-src-info"><div class="art-src-name">'+x[0]+'</div><div class="art-src-url">'+dom+(x[2]?' · <b class="art-src-date">'+x[2]+'</b>':'')+'</div></div></div>';
+      }).join('')+'</div>';
+      return h;
+    } };
+}
+/* Remplace (ou ajoute) un article dans un profil, en gardant sa place */
+function evadPut(profile,art){ var L=EVAD_ARTICLES[profile], i=L.findIndex(function(a){ return a.id===art.id; }); if(i>-1) L[i]=art; else L.push(art); }
+
 /* ── Profil Salarié & Demandeur d'emploi : nouveaux articles (onglet Demandeur d'emploi + communs) ── */
 (function(){
 var I={ doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
@@ -13052,6 +13150,98 @@ M({ id:'cumul-retraite', aud:'sal', ico:I.senior, title:'Cumul emploi-retraite �
 A.forEach(function(a){ EVAD_ARTICLES.salarie.push(a); });
 })();
 
+/* ── Refonte · Demandeur d'emploi · Lot 1 (source : Service-Public F38881, vérifié le 23 juillet 2026) ── */
+(function(){
+var F='https://www.service-public.gouv.fr/particuliers/vosdroits/F38881', FD='Vérifié le 23 juillet 2026';
+var A18888='https://www.service-public.gouv.fr/particuliers/actualites/A18888';
+var LEG='https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006178163';
+function sjrOf(m){ return m*12/365; }
+function areOf(sjr){ var d=Math.max(13.18+0.404*sjr, 0.57*sjr); return Math.min(d, 0.70*sjr); }
+var arts=[
+evadMk3({ id:'are', aud:'dem', ico:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', title:'ARE — Allocation de Retour à l\'Emploi', sub:'Conditions · Montant · Durée · Démarches',
+ intro:'L\'<strong>allocation d\'aide au retour à l\'emploi (ARE)</strong> est le revenu de remplacement versé par France Travail aux personnes <strong>involontairement privées d\'emploi</strong>. Ses règles dépendent de votre âge et de la date de fin de votre contrat : voici celles qui s\'appliquent aux contrats terminés depuis le 1er avril 2025.',
+ loi:['L\'assurance chômage garantit un revenu de remplacement aux salariés qui perdent leur emploi sans l\'avoir voulu. Les règles de calcul sont fixées par la convention d\'assurance chômage du 15 novembre 2024.','Code du travail, articles L5421-1 à L5421-4'],
+ qui:['Vous êtes <strong>involontairement privé(e) d\'emploi</strong> : licenciement, rupture conventionnelle, fin de CDD non renouvelé ou démission considérée comme légitime.','Vous avez travaillé au moins <strong>6 mois (130 jours ou 910 heures)</strong> dans les 24 derniers mois, ou dans les 36 derniers mois si vous avez 55 ans ou plus.','<strong>Nouveau depuis le 1er avril 2026</strong> : si vous n\'avez jamais été indemnisé(e), ou pas depuis plus de 20 ans, <strong>5 mois (108 jours ou 758 heures)</strong> suffisent.','Vous êtes physiquement apte à travailler, vous résidez en France de manière stable et vous êtes inscrit(e) à France Travail.'],
+ quoi:{ t:[['Élément','Règle'],['Montant brut par jour','<strong>13,18 €</strong> + <strong>40,4 %</strong> de votre salaire journalier de référence (SJR)'],['Encadrement','Entre <strong>57 %</strong> et <strong>70 %</strong> du SJR'],['Minimum','<strong>32,13 €</strong> net par jour'],['Versement','Sur la base de <strong>30 jours</strong> par mois, quel que soit le mois'],['Durée maximale (moins de 55 ans)','<strong>548 jours</strong>'],['Durée maximale (55 ou 56 ans)','<strong>685 jours</strong>'],['Durée maximale (57 ans et plus)','<strong>822 jours</strong>']],
+   ex:'Salaire de 2 500 € brut par mois : SJR ≈ 82 €. ARE ≈ 13,18 + (40,4 % × 82) ≈ <strong>46 € brut par jour</strong>, soit environ <strong>1 390 € brut</strong> pour un mois de 30 jours.' },
+ quand:{ t:[['Étape','Délai'],['Inscription à France Travail','Dans les <strong>12 mois</strong> qui suivent la fin du contrat'],['Délai d\'attente','<strong>7 jours</strong>, plus d\'éventuels différés (congés payés, indemnités supra-légales)'],['Paiement','Chaque mois, après votre actualisation (par exemple début novembre pour octobre)']] },
+ comment:[['S\'inscrire à France Travail','Faites votre inscription en ligne dès la fin de votre contrat : c\'est elle qui déclenche l\'étude de vos droits.'],['Transmettre l\'attestation employeur','Votre employeur la remet à la fin du contrat ; vérifiez qu\'elle apparaît bien dans votre espace personnel.'],['S\'actualiser chaque mois','Déclarez chaque mois votre situation : reprise d\'activité, formation, maladie… Le paiement en dépend.'],['Faire des démarches de recherche','Vous devez accomplir des actes positifs et répétés pour retrouver un emploi ou créer une entreprise.']],
+ pourquoi:'Passé le délai de <strong>12 mois</strong> après la fin du contrat, vos droits peuvent être perdus. Les allocations ne sont versées que sur un compte bancaire en France ou dans la zone SEPA, et une <strong>déclaration inexacte</strong> met fin au versement.',
+ eva:'Inscrivez-vous <strong>dès le lendemain</strong> de la fin de votre contrat : les délais d\'attente courent pendant ce temps-là. Et utilisez le simulateur officiel de France Travail pour vérifier votre montant.',
+ src:[['Service-Public — ARE après le 1er avril 2025',F,FD],['Service-Public — Conditions assouplies pour les primo-entrants',A18888,'Publié le 23 avril 2026'],['Légifrance — Code du travail, art. L5421-1 à L5421-4',LEG,'','⚖️']],
+ check:['Vos démarches pour toucher l\'ARE',['Je me suis inscrit(e) à France Travail dans les 12 mois après la fin du contrat','Mon attestation employeur apparaît dans mon espace personnel','J\'ai vérifié ma durée de travail (6 mois, ou 5 mois si je suis primo-entrant)','J\'ai renseigné un compte bancaire en France ou dans la zone SEPA','Je m\'actualise chaque mois et je déclare toute reprise d\'activité']],
+ est:{ title:'Eva estime votre ARE', subtitle:'Estimation brute — Service-Public, règles 2026', fields:[{id:'salaire',label:'Salaire brut mensuel',min:1200,max:6000,step:100,unit:'€',default:2500}],
+   calc:function(v){ var s=sjrOf(v[0]), d=Math.max(areOf(s),32.13); return { val:Math.round(d*30)+'€<span>/mois brut</span>', detail:'SJR estimé : '+Math.round(s)+' €/j · ARE : '+d.toFixed(2).replace('.',',')+' €/j' }; } },
+ rel:['carence-differe','cumul-are','droits-rechargeables'],
+ quiz:[['Combien de temps faut-il avoir travaillé pour avoir droit à l\'ARE ?','En règle générale, <strong>6 mois</strong> (130 jours ou 910 heures) sur les 24 derniers mois, ou 36 mois à partir de 55 ans. Depuis le 1er avril 2026, les primo-entrants peuvent être indemnisés avec <strong>5 mois</strong>.'],['Une démission ouvre-t-elle droit à l\'ARE ?','En principe non, car il faut être involontairement privé d\'emploi. Mais une <strong>démission considérée comme légitime</strong> (par exemple pour suivre son conjoint) ouvre droit à l\'ARE.'],['Comment est calculé le montant de l\'ARE ?','Une partie fixe de <strong>13,18 €</strong> plus <strong>40,4 %</strong> du salaire journalier de référence, dans la limite de 57 % à 70 % de ce salaire, avec un minimum de 32,13 € net par jour.'],['Quelle est la durée maximale d\'indemnisation avant 55 ans ?','<strong>548 jours</strong> pour un contrat terminé depuis le 1er avril 2025, la durée ayant été réduite de 25 % en raison de la situation du marché du travail.'],['Dans quel délai faut-il s\'inscrire à France Travail ?','Dans les <strong>12 mois</strong> qui suivent la fin du contrat de travail, ce délai pouvant être prolongé dans certaines situations comme un congé maladie.']] }),
+
+evadMk3({ id:'droits-rechargeables', aud:'dem', ico:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/>', title:'Droits rechargeables — Prolonger son chômage', sub:'Reprise des droits · Rechargement · Droit d\'option',
+ intro:'Retravailler pendant votre indemnisation ne vous fait <strong>rien perdre</strong> : vos droits restants sont conservés et de nouveaux droits peuvent s\'ajouter. C\'est le principe des <strong>droits rechargeables</strong>.',
+ loi:['Quand vous reprenez un emploi sans avoir épuisé vos droits puis le perdez, vous reprenez vos droits initiaux jusqu\'à leur épuisement. Les périodes travaillées permettent ensuite d\'ouvrir de nouveaux droits.','Code du travail, article L5422-2-1 (droits rechargeables)'],
+ qui:['Vous avez repris une activité professionnelle <strong>alors que vos droits n\'étaient pas épuisés</strong>.','Pour de nouveaux droits : vous avez travaillé <strong>6 mois</strong> (130 jours ou 910 heures) dans les 24 derniers mois, ou 36 mois à partir de 55 ans (5 mois pour les primo-entrants).','Exception : pas de droits rechargeables pour un contrat d\'apprentissage déjà indemnisé par France Travail.'],
+ quoi:{ t:[['Mécanisme','Ce que ça vous apporte'],['Reprise des droits','Vos droits initiaux reprennent jusqu\'à leur épuisement'],['Rechargement','De nouveaux droits, avec une nouvelle durée d\'indemnisation'],['Droit d\'option','Choisir tout de suite l\'allocation issue de votre dernier emploi, sans attendre la fin des anciens droits']] },
+ quand:{ t:[['Démarche','Délai'],['Exercer le droit d\'option','<strong>21 jours</strong> de réflexion pour informer France Travail par écrit'],['Effet du choix','À partir du jour de votre demande, et le choix est <strong>définitif</strong>']] },
+ comment:[['Déclarer chaque reprise d\'activité','Lors de votre actualisation mensuelle, indiquez tous vos contrats.'],['Garder vos bulletins de salaire','Ils prouvent vos heures et vos jours travaillés pour le rechargement.'],['Vérifier le droit d\'option','Il faut des allocations non versées, au moins 6 mois travaillés depuis l\'ouverture des droits, et une allocation journalière de 20 € ou moins, ou une hausse d\'au moins 30 %.'],['Répondre par écrit dans les 21 jours','Si France Travail vous propose l\'option, faites votre choix par écrit dans le délai.']],
+ pourquoi:'Le droit d\'option est <strong>irréversible</strong> : une fois choisi, vous ne pourrez plus revenir en arrière. Comparez bien le montant et la durée des deux droits avant de répondre.',
+ eva:'Accepter des missions pendant le chômage n\'est jamais du temps perdu : vous gagnez un salaire <strong>et</strong> vous construisez vos prochains droits.',
+ src:[['Service-Public — ARE après le 1er avril 2025 (rechargement)',F,FD],['Légifrance — Code du travail, art. L5422-1 à L5422-2-2','https://www.legifrance.gouv.fr/codes/section_lc/LEGITEXT000006072050/LEGISCTA000006195891/','','⚖️']],
+ check:['Vos démarches pour recharger vos droits',['Je déclare chaque reprise d\'activité lors de mon actualisation','Je conserve tous mes bulletins de salaire','J\'ai compté mes jours ou heures travaillés depuis l\'ouverture de mes droits','J\'ai vérifié si je remplis les 3 conditions du droit d\'option','Si on me propose l\'option, je réponds par écrit dans les 21 jours']],
+ rel:['are','cumul-are','carence-differe'],
+ quiz:[['Que se passe-t-il si je perds un emploi repris pendant mon chômage ?','Vous reprenez vos <strong>droits initiaux</strong> jusqu\'à leur épuisement, à condition de ne pas les avoir épuisés avant la reprise.'],['Combien faut-il travailler pour obtenir de nouveaux droits ?','<strong>6 mois</strong> (130 jours ou 910 heures) dans les 24 derniers mois, ou 36 mois à partir de 55 ans ; 5 mois pour les primo-entrants.'],['Qu\'est-ce que le droit d\'option ?','La possibilité de choisir l\'allocation issue de votre <strong>dernière période d\'activité</strong> sans attendre l\'épuisement de vos anciens droits.'],['De combien de temps dispose-t-on pour exercer le droit d\'option ?','De <strong>21 jours</strong> de réflexion pour informer France Travail par écrit. Le choix est ensuite définitif.'],['Un apprenti indemnisé peut-il recharger ses droits ?','Non : les droits rechargeables ne s\'appliquent pas si vous avez été en contrat d\'apprentissage et indemnisé par France Travail pour ce contrat.']] }),
+
+evadMk3({ id:'cumul-are', aud:'dem', ico:'<path d="M18 7a7 7 0 1 0 0 10"/><path d="M4 10h9M4 14h9"/>', title:'Cumul ARE et salaire — Reprendre un emploi', sub:'Calcul · Plafond · Activité non salariée',
+ intro:'Reprendre un travail ne fait pas perdre toute son allocation : tant que vous restez à la recherche d\'un emploi, l\'ARE peut se <strong>cumuler</strong> avec votre nouveau salaire.',
+ loi:['Si vous exercez une activité tout en déclarant être toujours à la recherche d\'un emploi, l\'ARE vous est versée partiellement, selon un calcul fixé par la réglementation d\'assurance chômage.','Code du travail, articles L5425-1 à L5425-2'],
+ qui:['Vous percevez l\'ARE et vous reprenez une activité <strong>salariée</strong> ou <strong>non salariée</strong> (micro-entreprise par exemple).','Vous déclarez rester à la recherche d\'un emploi.','Si vous perdez un emploi mais en gardez un autre, l\'ARE calculée sur l\'emploi perdu se cumule <strong>intégralement</strong> avec l\'emploi conservé.'],
+ quoi:{ t:[['Situation','Calcul des jours indemnisés dans le mois'],['Activité salariée','(ARE mensuelle − <strong>70 %</strong> du nouveau salaire) ÷ ARE journalière'],['Activité non salariée','(ARE mensuelle − <strong>60 %</strong> des rémunérations déclarées) ÷ ARE journalière'],['Plafond','ARE versée + revenus ≤ votre salaire journalier de référence'],['Non salarié : limite','Complément plafonné à <strong>60 %</strong> du reliquat de droits, les 40 % restants pouvant être repris ensuite']],
+   ex:'ARE de 40 € par jour (1 200 € par mois) et reprise à 800 € brut : (1 200 − 560) ÷ 40 = <strong>16 jours indemnisés</strong>, soit 640 € d\'ARE en plus du salaire.' },
+ quand:{ p:'Chaque mois, lors de votre <strong>actualisation</strong>. Si vous n\'avez pas encore votre justificatif de revenus, France Travail verse une avance provisoire puis régularise le mois suivant.' },
+ comment:[['Déclarer la reprise','Indiquez votre activité et vos revenus lors de l\'actualisation mensuelle.'],['Envoyer les justificatifs','Transmettez vos bulletins de salaire (ou vos revenus non salariés) dans votre espace personnel.'],['Contrôler le calcul','Vérifiez le nombre de jours indemnisés sur votre avis de paiement.'],['Suivre la fin de vos droits','Les jours non indemnisés reculent d\'autant la fin de votre indemnisation.']],
+ pourquoi:'Les jours non payés ne sont <strong>pas perdus</strong> : ils repoussent la fin de vos droits. Ne pas déclarer une reprise d\'activité, en revanche, entraîne un trop-perçu à rembourser.',
+ eva:'Une activité réduite vous fait gagner plus <strong>et</strong> prolonge vos droits. Déclarez-la toujours, même pour quelques heures.',
+ src:[['Service-Public — Cumul ARE et revenus d\'activité',F,FD],['Légifrance — Code du travail, art. L5425-1 à L5425-2','https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006189832','','⚖️']],
+ check:['Vos démarches pour cumuler ARE et salaire',['J\'ai déclaré ma reprise d\'activité lors de mon actualisation','J\'ai transmis mon bulletin de salaire ou mes revenus','J\'ai vérifié le nombre de jours indemnisés sur mon avis de paiement','Je sais que les jours non payés reculent la fin de mes droits','Je déclare chaque mois, même une activité de quelques heures']],
+ est:{ title:'Eva calcule votre cumul', subtitle:'Activité salariée — formule Service-Public', fields:[{id:'aj',label:'ARE journalière',min:20,max:120,step:1,unit:'€',default:40},{id:'sal',label:'Nouveau salaire brut mensuel',min:100,max:3000,step:50,unit:'€',default:800}],
+   calc:function(v){ var m=v[0]*30, j=Math.max(0,Math.min(30,Math.round((m-0.7*v[1])/v[0]))); return { val:j*v[0]+'€<span> d\'ARE</span>', detail:j+' jours indemnisés · total avec salaire : '+(j*v[0]+v[1])+' € brut' }; } },
+ rel:['are','droits-rechargeables','prime-activite'],
+ quiz:[['Peut-on toucher l\'ARE en retravaillant ?','Oui, si vous déclarez rester à la recherche d\'un emploi : l\'ARE est alors versée <strong>partiellement</strong>.'],['Quel pourcentage du nouveau salaire est déduit de l\'ARE ?','<strong>70 %</strong> du salaire de la nouvelle activité salariée, pour calculer le nombre de jours indemnisés.'],['Et pour une activité non salariée ?','C\'est <strong>60 %</strong> des rémunérations déclarées qui est pris en compte.'],['Que deviennent les jours non indemnisés ?','Ils <strong>reculent d\'autant</strong> la fin de votre indemnisation : vos droits sont prolongés.'],['Le cumul est-il plafonné ?','Oui : l\'ARE versée plus vos revenus ne peuvent pas dépasser votre <strong>salaire journalier de référence</strong>.']] }),
+
+evadMk3({ id:'degressivite', aud:'dem', ico:'<path d="M3 7l6 6 4-4 8 8"/><path d="M21 11v6h-6"/>', title:'Dégressivité de l\'ARE — Qui est concerné ?', sub:'Seuil · 7e mois · Plancher',
+ intro:'Pour les anciens hauts salaires, l\'ARE peut <strong>baisser de 30 %</strong> à partir du 7e mois. La grande majorité des demandeurs d\'emploi n\'est pas concernée.',
+ loi:['La réglementation d\'assurance chômage prévoit une réduction de l\'allocation pour les personnes dont le salaire antérieur était élevé, avec un montant plancher garanti.','Convention d\'assurance chômage du 15 novembre 2024 et textes associés'],
+ qui:['Les allocataires de <strong>moins de 55 ans</strong>.','Dont le salaire antérieur journalier brut moyen dépasse <strong>159,68 €</strong>, soit environ <strong>4 857,81 € brut par mois</strong>.'],
+ quoi:{ t:[['Élément','Règle'],['Baisse','<strong>30 %</strong> de l\'allocation journalière'],['Début','À partir du <strong>7e mois</strong> de versement'],['Plancher','L\'allocation ne peut pas descendre sous <strong>92,57 € brut par jour</strong> (environ 2 777 € pour 30 jours)']] },
+ quand:{ p:'La baisse s\'applique à partir du <strong>7e mois</strong> de versement de l\'allocation, pas du 7e mois de chômage.' },
+ comment:[['Lire sa notification de droits','Elle indique votre salaire de référence et votre allocation journalière.'],['Comparer au seuil','Si votre ancien salaire était sous 4 857,81 € brut par mois, vous n\'êtes pas concerné(e).'],['Anticiper le 7e mois','Si vous êtes concerné(e), prévoyez votre budget avec le montant réduit.'],['Parler formation à votre conseiller','Une formation peut faire évoluer votre indemnisation : posez la question avant de vous engager.']],
+ pourquoi:'Beaucoup de demandeurs d\'emploi s\'inquiètent à tort de la dégressivité. Seuls les anciens salaires élevés de moins de 55 ans sont concernés, et un <strong>plancher</strong> protège l\'allocation.',
+ eva:'Vérifiez votre salaire de référence sur votre notification : si vous êtes sous le seuil, la dégressivité <strong>ne vous concerne pas du tout</strong>.',
+ src:[['Service-Public — ARE après le 1er avril 2025 (dégressivité)',F,FD],['Unédic — Réglementation d\'assurance chômage','https://www.unedic.org','','📊']],
+ check:['Vérifier si la dégressivité vous concerne',['J\'ai retrouvé ma notification de droits France Travail','J\'ai comparé mon ancien salaire au seuil de 4 857,81 € brut par mois','J\'ai noté mon âge à la fin du contrat (moins de 55 ans ?)','J\'ai calculé mon allocation après le 7e mois si je suis concerné(e)','J\'en ai parlé à mon conseiller si j\'envisage une formation']],
+ est:{ title:'Eva vérifie la dégressivité', subtitle:'Estimation brute — seuils Service-Public 2026', fields:[{id:'sal',label:'Ancien salaire brut mensuel',min:2000,max:12000,step:100,unit:'€',default:5500}],
+   calc:function(v){ var s=sjrOf(v[0]), d=areOf(s); if(s<=159.68) return { val:'Non concerné', detail:'Salaire journalier ≈ '+Math.round(s)+' € : sous le seuil de 159,68 €' }; var a=Math.max(d*0.7,92.57); return { val:Math.round(a*30)+'€<span>/mois dès le 7e mois</span>', detail:'Avant : ≈ '+Math.round(d*30)+' € · baisse de 30 % avec plancher de 92,57 €/j' }; } },
+ rel:['are','carence-differe','cumul-are'],
+ quiz:[['Qui est concerné par la dégressivité ?','Les allocataires de <strong>moins de 55 ans</strong> dont le salaire antérieur journalier brut moyen dépassait 159,68 €.'],['De combien l\'allocation baisse-t-elle ?','De <strong>30 %</strong>.'],['À partir de quand ?','À partir du <strong>7e mois</strong> de versement de l\'allocation.'],['Existe-t-il un minimum après la baisse ?','Oui : l\'allocation ne peut pas descendre sous <strong>92,57 € brut par jour</strong>.'],['Un salarié qui gagnait 3 000 € brut par mois est-il concerné ?','Non : son salaire est sous le seuil d\'environ <strong>4 857,81 € brut par mois</strong>.']] }),
+
+evadMk3({ id:'carence-differe', aud:'dem', ico:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', title:'Délai d\'attente et différés — Quand arrive le 1er paiement ?', sub:'7 jours · Congés payés · Indemnités supra-légales',
+ intro:'Votre indemnisation ne commence pas le lendemain de la fin du contrat. <strong>Trois délais</strong> peuvent s\'appliquer, selon les sommes que vous avez reçues.',
+ loi:['La réglementation d\'assurance chômage prévoit un délai d\'attente et des différés d\'indemnisation, qui courent à partir du lendemain de la fin du contrat de travail.','Convention d\'assurance chômage du 15 novembre 2024'],
+ qui:'Tous les demandeurs d\'emploi indemnisés par l\'ARE. Les différés ne s\'appliquent que si vous avez reçu une indemnité de congés payés ou des indemnités de rupture <strong>supérieures au minimum légal</strong>.',
+ quoi:{ t:[['Délai','Calcul'],['Délai d\'attente','<strong>7 jours</strong>, sauf s\'il a déjà été appliqué dans les 12 mois précédents'],['Différé congés payés','Indemnité compensatrice de congés payés ÷ salaire journalier de référence (arrondi au supérieur)'],['Différé spécifique','Indemnités supra-légales ÷ <strong>109,6</strong> (arrondi au supérieur)'],['Plafond du différé spécifique','<strong>150 jours</strong>, ou <strong>75 jours</strong> en cas de licenciement économique']],
+   ex:'Indemnité supra-légale de 10 000 € : 10 000 ÷ 109,6 = 91 jours. Avec les 7 jours d\'attente, l\'indemnisation commence après environ <strong>100 jours</strong>.' },
+ quand:{ p:'Les délais courent à partir du <strong>lendemain de la fin du contrat</strong>. Le délai d\'attente débute à la fin des différés.' },
+ comment:[['Rassembler vos documents de fin de contrat','Solde de tout compte, attestation employeur, montant des indemnités.'],['Repérer la part supra-légale','Seule la part qui dépasse l\'indemnité légale crée un différé spécifique.'],['Calculer vos jours de différé','Utilisez les formules ci-dessus ou le simulateur France Travail.'],['Prévoir votre budget','Organisez vos finances jusqu\'au premier paiement.']],
+ pourquoi:'Une <strong>indemnité négociée élevée</strong> retarde votre premier versement d\'ARE. Mieux vaut le savoir avant de signer une rupture conventionnelle, pour prévoir votre budget.',
+ eva:'Les indemnités <strong>légales</strong> de licenciement ou de rupture conventionnelle ne créent pas de différé spécifique : seule la part au-dessus du minimum légal compte.',
+ src:[['Service-Public — ARE après le 1er avril 2025 (délais et différés)',F,FD],['Unédic — Réglementation d\'assurance chômage','https://www.unedic.org','','📊']],
+ check:['Préparer l\'arrivée de votre premier paiement',['J\'ai mon solde de tout compte et mon attestation employeur','J\'ai repéré le montant de mon indemnité de congés payés','J\'ai identifié la part de mes indemnités au-dessus du minimum légal','J\'ai estimé mon nombre de jours de différé','J\'ai prévu mon budget jusqu\'au premier versement']],
+ est:{ title:'Eva calcule votre différé', subtitle:'Formules Service-Public — estimation', fields:[{id:'cp',label:'Indemnité de congés payés',min:0,max:6000,step:100,unit:'€',default:1000},{id:'sup',label:'Indemnités supra-légales',min:0,max:30000,step:500,unit:'€',default:5000},{id:'sjr',label:'Salaire journalier de référence',min:30,max:300,step:1,unit:'€',default:80}],
+   calc:function(v){ var cp=Math.ceil(v[0]/v[2]), sp=Math.min(Math.ceil(v[1]/109.6),150), t=cp+sp+7; return { val:t+'<span> jours</span>', detail:'Congés payés : '+cp+' j · spécifique : '+sp+' j · attente : 7 j' }; } },
+ rel:['are','rupture','solde'],
+ quiz:[['Combien dure le délai d\'attente ?','<strong>7 jours</strong>, sauf s\'il a déjà été appliqué dans les 12 mois précédents.'],['Comment est calculé le différé congés payés ?','En divisant l\'indemnité compensatrice de congés payés par le <strong>salaire journalier de référence</strong>.'],['Quelles sommes créent un différé spécifique ?','Les indemnités de rupture <strong>supérieures au minimum légal</strong> (part conventionnelle ou supra-légale, clause de non-concurrence…).'],['Quel est le plafond du différé spécifique ?','<strong>150 jours</strong>, ou 75 jours en cas de licenciement économique.'],['Par quel nombre divise-t-on les indemnités supra-légales ?','Par <strong>109,6</strong>, en arrondissant au nombre entier supérieur.']] })
+];
+arts.forEach(function(a){ evadPut('salarie',a); });
+})();
+
 // ══ Fonctions de navigation ══
 
 function evadShowList(profile) {
@@ -13214,6 +13404,7 @@ function evadShowArticle(id) {
       <div class="art-quiz-title">5 questions sur ce sujet — les réponses sont générées par EVA</div>
       <div id="art-quiz-block"><div class="art-quiz-loading"><span></span><span></span><span></span> Chargement des questions…</div></div>
     </div>
+    ` + evadChecklistHero(art.id) + `
     <div class="art-eva-footer">
       <div class="art-eva-footer-top">
         <div class="art-eva-footer-logo">
@@ -14586,8 +14777,8 @@ function evadBuildEngagement(artId) {
   if(!d) return '';
   var html = '';
 
-  // — Checklist éligibilité —
-  if(d.checklist) {
+  // — Checklist : affichée en fin d'article (mini hero, voir evadChecklistHero) —
+  if(false && d.checklist) {
     var items = d.checklist.items.map(function(it,i){
       return '<div class="art-checklist-item" onclick="evadCheckItem(this,\''+artId+'\')">'+
         '<div class="art-checklist-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'+
@@ -14693,12 +14884,36 @@ function evadBuildEngagement(artId) {
   return html;
 }
 
+
+/* Checklist de fin d'article : mini hero en surbrillance + progression + conseil Portfolio */
+function evadChecklistHero(artId){
+  var d=(typeof EVAD_ENGAGE!=='undefined')?EVAD_ENGAGE[artId]:null; if(!d||!d.checklist) return '';
+  var items=d.checklist.items.map(function(it){
+    return '<div class="art-checklist-item" onclick="evadCheckItem(this,\''+artId+'\')"><div class="art-checklist-box"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div class="art-checklist-label">'+it+'</div></div>';
+  }).join('');
+  return '<div class="art-checklist evck" id="cl-'+artId+'">'
+    +'<div class="evck-hd"><span class="evck-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span>'
+    +'<div><div class="evck-k">Mes démarches · avec EVA</div><div class="evck-t">'+d.checklist.title+'</div></div></div>'
+    +'<div class="evck-pg"><div class="evck-bar"><i class="evck-fill"></i></div><b class="evck-n">0/'+d.checklist.items.length+' · 0 %</b></div>'
+    +'<div class="evck-body">'+items+'</div>'
+    +'<div class="art-checklist-result evck-res" id="cl-res-'+artId+'"></div>'
+    +'<div class="evck-tip"><span>💡</span><p><b>Le conseil d\'EVA</b> : avec autant d\'articles, notez ces démarches dans votre <b>Portfolio</b>, rubrique <b>Tâches à réaliser</b>, pour vous organiser. C\'est un conseil, rien n\'est obligatoire.</p></div>'
+    +'</div>';
+}
 function evadCheckItem(el, artId) {
   var box = el.querySelector('.art-checklist-box');
   box.classList.toggle('checked');
   var cl = document.getElementById('cl-'+artId);
   var total = cl.querySelectorAll('.art-checklist-item').length;
   var checked = cl.querySelectorAll('.art-checklist-box.checked').length;
+  if(cl.classList.contains('evck')){
+    var pc=Math.round(checked/total*100), f=cl.querySelector('.evck-fill'), n=cl.querySelector('.evck-n');
+    if(f) f.style.width=pc+'%'; if(n) n.textContent=checked+'/'+total+' · '+pc+' %';
+    cl.classList.toggle('done', checked===total);
+    var r=document.getElementById('cl-res-'+artId);
+    if(r) r.innerHTML = checked===total ? '🎉 Toutes vos démarches sont cochées. Bravo, vous êtes à jour !' : (checked ? 'Encore '+(total-checked)+' démarche'+(total-checked>1?'s':'')+' à faire, à votre rythme.' : '');
+    return;
+  }
   var res = document.getElementById('cl-res-'+artId);
   if(checked === total) {
     res.className = 'art-checklist-result eligible';
@@ -27947,14 +28162,12 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     now.appendChild(wrapFeed(post(t,{ ttl:'Ce que tu peux faire maintenant', meta:'Le plan d\'action d\'EVA', media:false, like:true,
       txt:'<ul><li><i>1</i><span><b>Vérifie ta situation</b> avec l\'estimateur ci-dessus.</span></li><li><i>2</i><span><b>Valide tes connaissances</b> avec le quiz de 5 questions juste en dessous.</span></li><li><i>3</i><span><b>Passe à l\'action</b> : prépare tes documents et entraîne-toi face à un recruteur.</span></li></ul>',
       actions:[{l:'Mes conseils',fn:function(){ go('eva-workspace'); }},{l:'M\'entraîner',pri:true,fn:function(){ go('eva-entretien'); }}] })));
-    var qz=q('.art-quiz-wrap',body); if(qz) body.insertBefore(now,qz); else body.appendChild(now);
+    /* Bloc « Ce que tu peux faire maintenant » retiré : la checklist personnalisée de fin d'article prend le relais */
     var chips=sub.split('·').map(function(x){return x.trim();}).filter(Boolean);
     mount({ host:host, before:hd, id:'dart', key:'dart-'+id, label:'Droits · Article', bar:true, steps:[
       { make:function(){ return cover(t,{ name:esc(title), handle:t.h+' · article', ic:'book', bio:esc(chips.join(' · ')), stats:[['5','questions quiz'],['Sources','officielles'],['2026','à jour']] }); }, feed:false, wait:1900 },
       { msg:'On regarde ensemble <b>'+esc(title)+'</b> 👌 Je te donne l\'essentiel… puis ce que tu peux faire concrètement.' },
       { think:'EVA lit l\'article pour toi…' },
-      first ? { msg:'<b>L\'essentiel :</b> '+esc(first) } : { msg:'Lis à ton rythme, je reste avec toi.' },
-      { msg:'L\'article complet est juste en dessous 👇 avec l\'estimateur et le quiz. Prends ton temps.' },
       { node:body }
     ]});
   }
@@ -30236,5 +30449,37 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 </script>
 
 <div id="cp-end" hidden></div>
+<script>
+/* Données des articles refondus : checklist, estimateur, articles liés et quiz dédiés */
+(function(){ try{ Object.keys(_EV_ENG).forEach(function(k){ EVAD_ENGAGE[k]=_EV_ENG[k]; }); Object.keys(_EV_QZ).forEach(function(k){ QUIZ_BANK[k]=_EV_QZ[k]; }); }catch(e){} })();
+</script>
+<script>
+/* Barre de progression de lecture premium (% lu) sur les articles Droits & aides */
+(function(){
+  function hd(){ return document.querySelector('#s-eva-droits-article .evad-hd'); }
+  function ensure(){
+    var h=hd(); if(!h) return null;
+    var p=h.querySelector('.evr');
+    if(!p){ p=document.createElement('div'); p.className='evr'; p.setAttribute('aria-live','polite');
+      p.innerHTML='<svg viewBox="0 0 24 24"><circle class="bg" cx="12" cy="12" r="9"/><circle class="fg" cx="12" cy="12" r="9" stroke-dasharray="56.55" stroke-dashoffset="56.55"/></svg><span class="evr-t">0 % lu</span>';
+      h.appendChild(p); var l=document.createElement('i'); l.className='evr-line'; h.appendChild(l); }
+    return p;
+  }
+  function upd(){
+    var sc=document.getElementById('evad-art-scroll'), p=ensure(); if(!sc||!p) return;
+    var max=sc.scrollHeight-sc.clientHeight, pc=max>0?Math.min(100,Math.max(0,Math.round(sc.scrollTop/max*100))):0;
+    p.querySelector('.evr-t').textContent=pc+' % lu';
+    p.querySelector('.fg').setAttribute('stroke-dashoffset',(56.55*(1-pc/100)).toFixed(2));
+    var l=hd().querySelector('.evr-line'); if(l) l.style.width=pc+'%';
+  }
+  function init(){
+    var sc=document.getElementById('evad-art-scroll'); if(!sc) return;
+    sc.addEventListener('scroll',function(){ if(!sc._evrT){ sc._evrT=requestAnimationFrame(function(){ sc._evrT=0; upd(); }); } },{ passive:true });
+    var _s=window.evadShowArticle; if(typeof _s==='function'){ window.evadShowArticle=evadShowArticle=function(){ var r=_s.apply(this,arguments); setTimeout(upd,60); setTimeout(upd,900); return r; }; }
+    upd();
+  }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
 </body>
 </html>
