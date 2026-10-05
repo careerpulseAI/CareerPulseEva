@@ -16481,7 +16481,8 @@ window.cpEvx = window.cpEvx || {
       rendering=false;
       if(!d.exists){ setBody(notOrgHtml(u)); $('pn-other').onclick=function(){ setHash('pro-centre'); if(window.fbLogout) fbLogout(); }; return; }
       $('centre-body').innerHTML='';
-      if(typeof window.cpProRenderOrg==='function') window.cpProRenderOrg();
+      if(typeof window.cpCatRender==='function') window.cpCatRender(d.data());
+      else if(typeof window.cpProRenderOrg==='function') window.cpProRenderOrg();
     }).catch(function(e){
       rendering=false;
       setBody('<div class="pcard"><div class="pinfo"><span>Accès à la base impossible ('+esc((e&&e.code)||'erreur')+'). Rechargez la page.</span></div></div>');
@@ -16512,5 +16513,220 @@ window.cpEvx = window.cpEvx || {
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
+<!-- ═══════════════════════════════════════════════════════════════
+     ESPACE CENTRE DE FORMATION — modèle « catalogue »
+     Le centre publie ses formations ; ce sont les candidats qui le contactent (aucun démarchage).
+═══════════════════════════════════════════════════════════════ -->
+<style id="ofc-css">
+.ofc{ --g:#047857; --g2:#065f46; --g3:#10b981; --ink:#0f172a; --ink2:#334155; --mute:#64748b; --line:#e5e7eb; font-family:'DM Sans',system-ui,sans-serif; color:var(--ink); display:flex; flex-direction:column; gap:14px; }
+.ofc *{ box-sizing:border-box; }
+/* Hero brillant : moitié EVA (verre, reflet, dégradé), moitié CareerPulse (vert, Cormorant) */
+.ofc-hero{ position:relative; overflow:hidden; isolation:isolate; border-radius:24px; padding:24px 22px 20px; color:#fff;
+  background:radial-gradient(120% 140% at 100% 0%,rgba(110,231,183,.30),transparent 55%),linear-gradient(130deg,#062e22 0%,#047857 52%,#1e3a8a 120%);
+  box-shadow:0 22px 44px -24px rgba(4,120,87,.85), inset 0 1px 0 rgba(255,255,255,.22); }
+.ofc-hero::before{ content:""; position:absolute; z-index:-1; right:-70px; top:-80px; width:240px; height:240px; border-radius:50%; border:1px solid rgba(255,255,255,.18); }
+.ofc-hero::after{ content:""; position:absolute; z-index:-1; top:-30%; bottom:-30%; left:0; width:38%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); transform:translateX(-160%) skewX(-12deg); animation:ofcSheen 6.5s 1s ease-in-out infinite; }
+@keyframes ofcSheen{ 0%{ transform:translateX(-160%) skewX(-12deg); } 22%,100%{ transform:translateX(360%) skewX(-12deg); } }
+.ofc-k{ display:inline-flex; align-items:center; gap:7px; padding:5px 11px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.ofc-k i{ width:7px; height:7px; border-radius:50%; background:#6ee7b7; box-shadow:0 0 0 4px rgba(110,231,183,.25); }
+.ofc-hero h2{ font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(1.7rem,4.6vw,2.4rem); line-height:1.05; margin:12px 0 8px; }
+.ofc-hero p{ margin:0; font-size:.88rem; line-height:1.6; color:rgba(255,255,255,.9); max-width:60ch; }
+.ofc-steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-top:16px; }
+.ofc-step{ position:relative; padding:11px 11px 10px; border-radius:16px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.24); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); }
+.ofc-step b{ display:flex; align-items:center; gap:7px; font-size:.78rem; font-weight:800; }
+.ofc-step b em{ font-style:normal; width:22px; height:22px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center; background:#fff; color:var(--g2); font-size:.7rem; }
+.ofc-step span{ display:block; margin-top:5px; font-size:.7rem; line-height:1.45; color:rgba(255,255,255,.86); }
+.ofc-law{ display:flex; gap:9px; align-items:flex-start; margin-top:14px; padding:10px 12px; border-radius:14px; background:rgba(2,6,23,.22); font-size:.74rem; line-height:1.5; color:rgba(255,255,255,.92); }
+.ofc-law svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; }
+@media (max-width:720px){ .ofc-steps{ grid-template-columns:1fr 1fr; } }
+/* Onglets */
+.ofc-tabs{ display:flex; gap:4px; padding:5px; border-radius:16px; background:#f1f5f4; border:1px solid #dfe7e4; overflow-x:auto; scrollbar-width:none; }
+.ofc-tabs::-webkit-scrollbar{ display:none; }
+.ofc-tabs button{ flex:1 0 auto; display:inline-flex; align-items:center; justify-content:center; gap:6px; border:none; background:none; padding:10px 12px; border-radius:12px; font:800 .78rem/1 'DM Sans',sans-serif; color:#475569; cursor:pointer; white-space:nowrap; }
+.ofc-tabs button i{ font-style:normal; min-width:18px; height:18px; padding:0 5px; border-radius:9px; display:inline-flex; align-items:center; justify-content:center; font-size:.62rem; background:#e2e8f0; color:#334155; }
+.ofc-tabs button.on{ color:#fff; background:linear-gradient(135deg,#065f46,#047857 55%,#10b981); box-shadow:0 8px 18px -10px rgba(4,120,87,.8), inset 0 1px 0 rgba(255,255,255,.25); }
+.ofc-tabs button.on i{ background:rgba(255,255,255,.22); color:#fff; }
+/* Cartes */
+.ofc-card{ background:#fff; border:1px solid var(--line); border-radius:20px; padding:18px; box-shadow:0 14px 30px -26px rgba(15,23,42,.5); }
+.ofc-card h3{ margin:0 0 4px; font-size:1rem; font-weight:900; letter-spacing:-.01em; }
+.ofc-card > p{ margin:0 0 12px; font-size:.82rem; line-height:1.55; color:var(--ink2); }
+.ofc-empty{ text-align:center; padding:22px 10px; color:var(--mute); font-size:.84rem; line-height:1.55; }
+.ofc-empty svg{ width:30px; height:30px; display:block; margin:0 auto 8px; color:var(--g3); }
+.ofc-f{ display:grid; grid-template-columns:1fr 1fr; gap:10px 12px; }
+.ofc-f .full{ grid-column:1/-1; }
+.ofc-f label{ display:flex; flex-direction:column; gap:5px; font-size:.74rem; font-weight:800; color:var(--ink2); }
+.ofc-f label small{ font-weight:600; color:var(--mute); }
+.ofc-f input,.ofc-f select,.ofc-f textarea{ font:500 .88rem/1.35 'DM Sans',sans-serif; padding:11px 12px; border:1px solid #d1d5db; border-radius:12px; background:#fff; color:var(--ink); width:100%; }
+.ofc-f textarea{ min-height:96px; resize:vertical; }
+.ofc-f input:focus,.ofc-f select:focus,.ofc-f textarea:focus{ outline:none; border-color:var(--g3); box-shadow:0 0 0 3px rgba(16,185,129,.15); }
+.ofc-chk{ display:flex; flex-wrap:wrap; gap:6px; }
+.ofc-chk label{ flex-direction:row; align-items:center; gap:6px; padding:7px 11px; border:1px solid #d1d5db; border-radius:999px; font-size:.74rem; font-weight:700; cursor:pointer; }
+.ofc .ofc-chk input{ -webkit-appearance:checkbox !important; appearance:auto !important; width:15px !important; height:15px !important; min-height:0 !important; margin:0 !important; padding:0 !important; border:none !important; box-shadow:none !important; accent-color:#047857; flex-shrink:0; }
+.ofc-chk label:has(input:checked){ border-color:#10b981; background:#ecfdf5; color:#065f46; }
+.ofc .ofc-engage input{ -webkit-appearance:checkbox !important; appearance:auto !important; width:16px !important; height:16px !important; min-height:0 !important; padding:0 !important; }
+.ofc-engage{ display:flex; gap:9px; align-items:flex-start; padding:11px 12px; border-radius:14px; background:#ecfdf5; border:1px solid #a7f3d0; font-size:.76rem; line-height:1.5; color:#065f46; font-weight:600; }
+.ofc-engage input{ margin-top:3px; accent-color:#047857; flex-shrink:0; }
+.ofc-btns{ display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.ofc-btn{ display:inline-flex; align-items:center; justify-content:center; gap:7px; padding:11px 16px; border-radius:12px; border:1px solid #d1d5db; background:#fff; color:var(--ink); font:800 .82rem/1 'DM Sans',sans-serif; cursor:pointer; }
+.ofc-btn.pri{ border:none; color:#fff; background:linear-gradient(135deg,#065f46,#047857 55%,#10b981); box-shadow:0 10px 22px -12px rgba(4,120,87,.85), inset 0 1px 0 rgba(255,255,255,.25); }
+.ofc-btn.dan{ color:#b91c1c; border-color:#fecaca; }
+.ofc-btn[disabled]{ opacity:.6; cursor:wait; }
+.ofc-item{ display:flex; gap:12px; align-items:flex-start; padding:14px; border-radius:16px; border:1px solid var(--line); background:linear-gradient(180deg,#fff,#f8faf9); }
+.ofc-item + .ofc-item{ margin-top:10px; }
+.ofc-item-ico{ flex-shrink:0; width:42px; height:42px; border-radius:13px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#065f46,#10b981); }
+.ofc-item-ico svg{ width:20px; height:20px; }
+.ofc-item-b{ flex:1; min-width:0; }
+.ofc-item-t{ font-size:.92rem; font-weight:900; }
+.ofc-item-s{ font-size:.74rem; color:var(--mute); margin-top:3px; line-height:1.45; }
+.ofc-tag{ display:inline-flex; align-items:center; gap:4px; font-size:.64rem; font-weight:800; padding:3px 9px; border-radius:999px; margin-top:7px; }
+.ofc-tag.pub{ background:#d1fae5; color:#065f46; } .ofc-tag.draft{ background:#f1f5f9; color:#475569; }
+.ofc-item .ofc-btns{ margin-top:10px; }
+.ofc-item .ofc-btn{ padding:8px 12px; font-size:.74rem; }
+.ofc-wait{ display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:.8rem; line-height:1.5; }
+@media (max-width:720px){ .ofc-f{ grid-template-columns:1fr; } .ofc-hero{ padding:20px 16px 16px; } }
+@media (prefers-reduced-motion: reduce){ .ofc-hero::after{ animation:none; display:none; } }
+</style>
+<script>
+(function(){
+  var ST={ tab:'form', org:null, list:[], edit:null };
+  function $(id){ return document.getElementById(id); }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function toast(m){ if(window.ecShowToast) ecShowToast(m); }
+  function db(){ return window.fbDb; }
+  function me(){ var A=window.fbAuth||(typeof fbAuth!=='undefined'?fbAuth:null); return A&&A.currentUser; }
+  function S(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  var I={ book:'<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/>', inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13L22 12v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/>',
+    chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>', school:'<path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>', lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>', plus:'<path d="M12 5v14M5 12h14"/>', check:'<path d="m5 12 5 5L20 7"/>' };
+  var STATUTS=['Salarié(e)','Demandeur(se) d\'emploi','Étudiant(e) / alternant(e)','Indépendant(e) / freelance','En reconversion'];
+  var FIN=['CPF','France Travail','OPCO / employeur','Région','Transitions Pro','Autofinancement'];
+  var MOD=['Présentiel','À distance','Hybride'];
+
+  function hero(o){
+    return '<div class="ofc-hero"><span class="ofc-k"><i></i>Espace centre de formation</span>'
+      +'<h2>'+esc(o.nom||'Votre organisme')+', vos formations rencontrent les bons candidats.</h2>'
+      +'<p>Publiez vos formations : EVA les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui viennent vers vous.</p>'
+      +'<div class="ofc-steps">'
+      +'<div class="ofc-step"><b><em>1</em>Publiez</b><span>Vos fiches formation, vérifiées et complètes.</span></div>'
+      +'<div class="ofc-step"><b><em>2</em>EVA recommande</b><span>Aux membres dont le profil correspond.</span></div>'
+      +'<div class="ofc-step"><b><em>3</em>Le candidat écrit</b><span>Il vous contacte s\'il est intéressé.</span></div>'
+      +'<div class="ofc-step"><b><em>4</em>Vous échangez</b><span>Dans une messagerie protégée.</span></div></div>'
+      +'<div class="ofc-law">'+S(I.lock)+'<span>Vous ne contactez jamais un candidat le premier : c\'est lui qui vient vers vous. Ce fonctionnement respecte l\'interdiction du démarchage des titulaires du CPF (art. L6323-8-1 du Code du travail).</span></div></div>';
+  }
+  function tabs(){
+    var T=[['form','Mes formations',I.book,ST.list.length],['dem','Demandes reçues',I.inbox,0],['stat','Statistiques',I.chart,0],['org','Mon organisme',I.school,0]];
+    return '<div class="ofc-tabs" role="tablist">'+T.map(function(t){ return '<button type="button" data-tab="'+t[0]+'" class="'+(ST.tab===t[0]?'on':'')+'">'+S(t[2]).replace('<svg','<svg width="15" height="15"')+t[1]+(t[3]?'<i>'+t[3]+'</i>':'')+'</button>'; }).join('')+'</div>';
+  }
+  function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
+  function checks(name){ return [].slice.call(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(x){ return x.value; }); }
+  function chk(name,opts,sel){ sel=sel||[]; return '<div class="ofc-chk">'+opts.map(function(o){ return '<label><input type="checkbox" name="'+name+'" value="'+esc(o)+'"'+(sel.indexOf(o)>-1?' checked':'')+'>'+esc(o)+'</label>'; }).join('')+'</div>'; }
+
+  function formHtml(f){
+    f=f||{};
+    return '<div class="ofc-card" id="ofc-editor"><h3>'+(f.id?'Modifier la formation':'Publier une formation')+'</h3><p>Les candidats voient cette fiche dans leurs recommandations. Plus elle est précise, plus le pourcentage de correspondance est fiable.</p>'
+      +'<div class="ofc-f">'
+      +'<label class="full">Intitulé de la formation *<input id="ofc-titre" maxlength="120" value="'+esc(f.titre)+'" placeholder="Ex : Titre professionnel Développeur web et web mobile"></label>'
+      +'<label>Certification<select id="ofc-certT">'+['RNCP','Répertoire spécifique (RS)','Non certifiante'].map(function(o){ return '<option'+(f.certType===o?' selected':'')+'>'+o+'</option>'; }).join('')+'</select></label>'
+      +'<label>Code de la certification <small>(ex : RNCP37674)</small><input id="ofc-certC" maxlength="20" value="'+esc(f.certCode)+'"></label>'
+      +'<label>Organisme certifié Qualiopi<select id="ofc-qual"><option value="oui"'+(f.qualiopi!==false?' selected':'')+'>Oui</option><option value="non"'+(f.qualiopi===false?' selected':'')+'>Non</option></select></label>'
+      +'<label>Modalité *<select id="ofc-mod">'+MOD.map(function(o){ return '<option'+(f.modalite===o?' selected':'')+'>'+o+'</option>'; }).join('')+'</select></label>'
+      +'<label>Établissement (lieu de formation)<input id="ofc-etab" maxlength="120" value="'+esc(f.etablissement)+'" placeholder="Ex : Campus Caen Centre"></label>'
+      +'<label>Ville *<input id="ofc-ville" maxlength="60" value="'+esc(f.ville)+'" placeholder="Ex : Caen"></label>'
+      +'<label class="full">Adresse<input id="ofc-adr" maxlength="160" value="'+esc(f.adresse)+'" placeholder="Numéro, rue, code postal"></label>'
+      +'<label>Durée<input id="ofc-duree" maxlength="60" value="'+esc(f.duree)+'" placeholder="Ex : 9 mois, 700 heures"></label>'
+      +'<label>Prochaines dates<input id="ofc-dates" maxlength="80" value="'+esc(f.dates)+'" placeholder="Ex : janvier et septembre 2027"></label>'
+      +'<label>Niveau de sortie<input id="ofc-niv" maxlength="60" value="'+esc(f.niveau)+'" placeholder="Ex : niveau 5 (Bac+2)"></label>'
+      +'<label>Prix TTC<input id="ofc-prix" maxlength="40" value="'+esc(f.prix)+'" placeholder="Ex : 6 900 €"></label>'
+      +'<label class="full">Public visé'+chk('ofc-pub',STATUTS,f.publics)+'</label>'
+      +'<label class="full">Financements possibles'+chk('ofc-fin',FIN,f.financements)+'</label>'
+      +'<label class="full">Domaine et mots-clés<input id="ofc-dom" maxlength="160" value="'+esc(f.domaine)+'" placeholder="Ex : développement web, informatique, numérique"></label>'
+      +'<label class="full">Programme<textarea id="ofc-prog" maxlength="3000" placeholder="Objectifs, modules, débouchés…">'+esc(f.programme)+'</textarea></label>'
+      +'<label class="full">Lien vers le programme détaillé<input id="ofc-lien" maxlength="200" value="'+esc(f.lien)+'" placeholder="https://"></label>'
+      +'<label class="full ofc-engage"><input type="checkbox" id="ofc-eng"'+(f.id?' checked':'')+'><span>Je certifie que ces informations sont exactes et que cette fiche ne contient <b>aucune promotion, cadeau ou rétribution</b> liée à l\'inscription (art. L6323-8-1 du Code du travail).</span></label>'
+      +'</div><div class="ofc-btns"><button type="button" class="ofc-btn pri" data-a="save" data-pub="1">'+S(I.check).replace('<svg','<svg width="16" height="16"')+'Publier</button>'
+      +'<button type="button" class="ofc-btn" data-a="save" data-pub="0">Enregistrer en brouillon</button>'
+      +(f.id?'<button type="button" class="ofc-btn" data-a="cancel">Annuler</button>':'')+'</div></div>';
+  }
+  function listHtml(){
+    if(!ST.list.length) return '<div class="ofc-card"><div class="ofc-empty">'+S(I.book)+'Vous n\'avez pas encore publié de formation.<br>Votre première fiche apparaîtra ici.</div></div>';
+    return '<div class="ofc-card"><h3>Vos formations</h3><p>'+ST.list.filter(function(f){ return f.statut==='publiee'; }).length+' publiée(s) · visibles par les membres à qui elles correspondent.</p>'
+      +ST.list.map(function(f){
+        var pub=f.statut==='publiee';
+        return '<div class="ofc-item"><span class="ofc-item-ico">'+S(I.book)+'</span><div class="ofc-item-b"><div class="ofc-item-t">'+esc(f.titre)+'</div>'
+          +'<div class="ofc-item-s">'+esc([f.ville,f.modalite,f.duree,f.certCode].filter(Boolean).join(' · '))+'</div>'
+          +'<span class="ofc-tag '+(pub?'pub':'draft')+'">'+(pub?'● Publiée':'Brouillon')+'</span>'
+          +'<div class="ofc-btns"><button type="button" class="ofc-btn" data-a="edit" data-id="'+f.id+'">Modifier</button>'
+          +'<button type="button" class="ofc-btn" data-a="toggle" data-id="'+f.id+'">'+(pub?'Dépublier':'Publier')+'</button>'
+          +'<button type="button" class="ofc-btn dan" data-a="del" data-id="'+f.id+'">Supprimer</button></div></div></div>';
+      }).join('')+'</div>';
+  }
+  function tabHtml(){
+    var o=ST.org||{};
+    if(ST.tab==='form') return formHtml(ST.edit)+listHtml();
+    if(ST.tab==='dem') return '<div class="ofc-card"><h3>Demandes reçues</h3><div class="ofc-empty">'+S(I.inbox)+'Quand un candidat sera intéressé par l\'une de vos formations, sa demande et votre conversation apparaîtront ici.<br>C\'est toujours le candidat qui écrit le premier message.</div></div>';
+    if(ST.tab==='stat') return '<div class="ofc-card"><h3>Statistiques</h3><p>Vous verrez ici, pour chaque formation publiée, le nombre de profils de membres qui y correspondent et les critères qui ressortent le plus. Ces chiffres sont toujours anonymes et ne s\'affichent qu\'à partir de 5 profils.</p><div class="ofc-empty">'+S(I.chart)+'Les statistiques s\'activent dès votre première formation publiée.</div></div>';
+    return '<div class="ofc-card"><h3>Mon organisme</h3><p>Ces coordonnées sont partagées avec un candidat <b>uniquement</b> dans une conversation qu\'il a lui-même ouverte.</p>'
+      +'<div class="ofc-f"><label>Nom de l\'organisme *<input id="ofc-onom" value="'+esc(o.nom)+'"></label><label>Ville<input id="ofc-oville" value="'+esc(o.ville)+'"></label>'
+      +'<label>E-mail de contact *<input id="ofc-omail" type="email" value="'+esc(o.email)+'"></label><label>Téléphone<input id="ofc-otel" value="'+esc(o.tel)+'"></label>'
+      +'<label class="full">Site internet<input id="ofc-osite" value="'+esc(o.site)+'" placeholder="https://"></label>'
+      +(o.siret?'<label>SIRET<input value="'+esc(o.siret)+'" disabled></label>':'')+(o.nda?'<label>Déclaration d\'activité<input value="'+esc(o.nda)+'" disabled></label>':'')
+      +'</div><div class="ofc-btns"><button type="button" class="ofc-btn pri" data-a="saveorg">Enregistrer</button></div></div>';
+  }
+  function draw(){
+    var root=$('of-root'); if(!root) return;
+    var o=ST.org||{};
+    if(!(o.verifie && o.proActif)){
+      root.innerHTML='<div class="ofc">'+hero(o)+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET, déclaration d\'activité, Qualiopi). Dès sa validation, vous pourrez publier vos formations.</span></div></div></div>';
+      return;
+    }
+    root.innerHTML='<div class="ofc">'+hero(o)+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
+    root.onclick=onClick;
+  }
+  function load(){
+    var u=me(); if(!u||!db()) return Promise.resolve();
+    return db().collection('formations').where('orgUid','==',u.uid).get().then(function(q){
+      ST.list=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')); });
+    }).catch(function(e){ console.warn('formations',e); ST.list=[]; });
+  }
+  function collect(){
+    return { titre:val('ofc-titre'), certType:val('ofc-certT'), certCode:val('ofc-certC').toUpperCase(), qualiopi:val('ofc-qual')!=='non', modalite:val('ofc-mod'),
+      etablissement:val('ofc-etab'), ville:val('ofc-ville'), adresse:val('ofc-adr'), duree:val('ofc-duree'), dates:val('ofc-dates'), niveau:val('ofc-niv'), prix:val('ofc-prix'),
+      publics:checks('ofc-pub'), financements:checks('ofc-fin'), domaine:val('ofc-dom'), programme:val('ofc-prog'), lien:val('ofc-lien') };
+  }
+  function onClick(e){
+    var tb=e.target.closest('[data-tab]'); if(tb){ ST.tab=tb.getAttribute('data-tab'); draw(); return; }
+    var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a'), u=me(); if(!u) return;
+    if(a==='save'){
+      var f=collect(), pub=b.getAttribute('data-pub')==='1';
+      if(!f.titre||!f.ville){ toast('Indiquez au moins l\'intitulé et la ville'); return; }
+      if(f.lien && !/^https:\/\//i.test(f.lien)){ toast('Le lien du programme doit commencer par https://'); return; }
+      if(pub && !$('ofc-eng').checked){ toast('Cochez l\'engagement de conformité pour publier'); return; }
+      var o=ST.org||{}, now=new Date().toISOString();
+      Object.assign(f,{ orgUid:u.uid, orgNom:o.nom||'', orgVille:o.ville||'', statut:pub?'publiee':'brouillon', engagement:pub?now:(ST.edit&&ST.edit.engagement)||'', updatedAt:now });
+      b.disabled=true;
+      var ref=ST.edit&&ST.edit.id ? db().collection('formations').doc(ST.edit.id) : db().collection('formations').doc();
+      if(!(ST.edit&&ST.edit.id)) f.createdAt=now;
+      ref.set(f,{merge:true}).then(function(){ toast(pub?'Formation publiée':'Brouillon enregistré'); ST.edit=null; return load(); }).then(draw)
+        .catch(function(x){ b.disabled=false; toast('Enregistrement impossible ('+((x&&x.code)||'erreur')+')'); });
+    } else if(a==='cancel'){ ST.edit=null; draw(); }
+    else if(a==='edit'){ ST.edit=ST.list.filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]||null; draw(); var ed=$('ofc-editor'); if(ed) ed.scrollIntoView({ behavior:'smooth', block:'start' }); }
+    else if(a==='toggle'){
+      var f2=ST.list.filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]; if(!f2) return;
+      if(f2.statut!=='publiee' && !f2.engagement){ ST.edit=f2; draw(); toast('Ouvrez la fiche et cochez l\'engagement pour publier'); return; }
+      db().collection('formations').doc(f2.id).set({ statut:f2.statut==='publiee'?'brouillon':'publiee', updatedAt:new Date().toISOString() },{merge:true}).then(load).then(draw).catch(function(){ toast('Action impossible pour le moment'); });
+    } else if(a==='del'){
+      if(!confirm('Supprimer définitivement cette formation ?')) return;
+      db().collection('formations').doc(b.getAttribute('data-id')).delete().then(function(){ toast('Formation supprimée'); return load(); }).then(draw).catch(function(){ toast('Suppression impossible pour le moment'); });
+    } else if(a==='saveorg'){
+      var o2={ nom:val('ofc-onom'), ville:val('ofc-oville'), email:val('ofc-omail'), tel:val('ofc-otel'), site:val('ofc-osite') };
+      if(!o2.nom || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(o2.email)){ toast('Indiquez le nom de l\'organisme et un e-mail de contact valide'); return; }
+      b.disabled=true;
+      db().collection('organismes').doc(u.uid).set(o2,{merge:true}).then(function(){ Object.assign(ST.org,o2); toast('Coordonnées enregistrées'); b.disabled=false; }).catch(function(){ b.disabled=false; toast('Enregistrement impossible pour le moment'); });
+    }
+  }
+  /* Point d'entrée appelé par l'Espace pros quand le compte est un organisme */
+  window.cpCatRender=function(org){ ST.org=org||{}; ST.tab=ST.tab||'form'; var r=$('of-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>'; load().then(draw); };
+})();
+</script>
+
 </body>
 </html>
