@@ -2392,7 +2392,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 }
 /* Dans l'Espace pros : ni nom du membre ni bandeau invité */
 html.cp-in-pro #cp-tnav-membername, html.cp-in-pro #cp-guest-notice{ display:none !important; }
-@media (min-width: 900px){ html.cp-pro-sub #cp-scroll-arrows{ display:none !important; } }
+@media (min-width: 900px){ html.cp-pro-sub:not(.cp-pro-long) #cp-scroll-arrows{ display:none !important; } }
 </style>
 <style id="of-css">
 [data-evt="of"]{ --t1:#047857; --t2:#10b981; --ts:#ecfdf5; --tb:#a7f3d0; }
@@ -2644,8 +2644,8 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 
     <div class="phero">
       <div class="phero-k"><i></i>Espace professionnels</div>
-      <h1>Rencontrez des candidats qui ont choisi d'être vus.</h1>
-      <p>Centres de formation et employeurs vérifiés accèdent à des profils anonymisés. Le candidat garde la main : c'est lui qui décide de vous écrire.</p>
+      <h1>Les bons candidats viennent à vous.</h1>
+      <p>Centres de formation vérifiés : publiez vos formations, EVA les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui prennent contact, jamais l'inverse.</p>
     </div>
 
     <div class="pchoices">
@@ -2655,11 +2655,11 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
           <span class="ptag ok">Ouvert en test</span>
         </div>
         <h2>Je suis un centre de formation</h2>
-        <p>Présentez vos formations aux candidats dont le projet correspond.</p>
+        <p>Publiez vos formations et recevez les demandes des candidats intéressés.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Profils anonymisés, filtrés par projet, ville et statut</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Une proposition de formation en quelques clics</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Suivi des réponses : intéressé, plus tard, pas intéressé</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Fiches formation vérifiées : certification, Qualiopi, financements</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Recommandées par EVA aux profils qui correspondent</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Demandes et échanges dans une messagerie protégée</li>
         </ul>
         <span class="pchoice-go">Accéder à l'espace centre</span>
       </button>
@@ -2684,12 +2684,12 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       <h3>Comment ça fonctionne</h3>
       <div class="psteps">
         <div class="pstep"><b>Votre compte est vérifié</b><p>SIRET et, pour les centres, numéro de déclaration d'activité. Chaque compte est validé par l'équipe CareerPulse.</p></div>
-        <div class="pstep"><b>Vous voyez les profils visibles</b><p>Seuls les candidats qui l'ont accepté apparaissent, sous forme anonymisée : projet, ville, disponibilité.</p></div>
-        <div class="pstep"><b>Le candidat vous écrit</b><p>Vous lui présentez une proposition. S'il est intéressé, il reçoit vos coordonnées et vous contacte lui-même.</p></div>
+        <div class="pstep"><b>Vous publiez vos formations</b><p>Des fiches complètes : certification, programme, dates, prix et financements possibles.</p></div>
+        <div class="pstep"><b>Le candidat vous écrit</b><p>EVA recommande votre formation aux membres dont le profil correspond. S'il est intéressé, c'est lui qui vous contacte.</p></div>
       </div>
       <div class="prule">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <span>Les coordonnées des candidats ne vous sont jamais transmises. Ce fonctionnement respecte l'interdiction du démarchage lié au CPF.</span>
+        <span>Vous ne contactez jamais un candidat le premier : c'est lui qui vient vers vous. Ce fonctionnement respecte l'interdiction du démarchage lié au CPF (art. L6323-8-1 du Code du travail).</span>
       </div>
     </div>
 
@@ -16405,7 +16405,10 @@ window.cpEvx = window.cpEvx || {
   function active(){ for(var i=0;i<PRO.length;i++){ var e=$(PRO[i]); if(e && e.classList.contains('active')) return PRO[i]; } return null; }
   function setHash(h){ try{ history.replaceState(null,'', h ? '#'+h : location.pathname+location.search); }catch(e){} }
 
-  function setBody(html){ $('centre-body').innerHTML=html; $('of-root').innerHTML=''; }
+  /* Pages longues de l'espace centre (inscription, demande, espace complet) : flèches bleues sur ordinateur */
+  function setLong(on){ document.documentElement.classList.toggle('cp-pro-long',!!on); }
+  window.cpProSetLong=setLong;
+  function setBody(html){ $('centre-body').innerHTML=html; $('of-root').innerHTML=''; setLong(html.indexOf('ps-nom')>-1); }
   var SCHOOL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/><path d="M22 10v6"/></svg>';
   function loginHtml(){
     return '<div class="pcard">'
@@ -16566,6 +16569,7 @@ window.cpEvx = window.cpEvx || {
     synced=true;
     document.documentElement.classList.toggle('cp-in-pro', !!a);
     document.documentElement.classList.toggle('cp-pro-sub', a==='s-pro-centre' || a==='s-pro-employeur');
+    if(a!=='s-pro-centre') document.documentElement.classList.remove('cp-pro-long');
     if(a){ setHash(a.replace('s-','')); }
     else if(last){ if(/^#pro/.test(location.hash)) setHash(''); }
     if(a==='s-pro-centre' && last!=='s-pro-centre') renderCentre();
@@ -16585,6 +16589,9 @@ window.cpEvx = window.cpEvx || {
      Le centre publie ses formations ; ce sont les candidats qui le contactent (aucun démarchage).
 ═══════════════════════════════════════════════════════════════ -->
 <style id="ofc-css">
+/* Case d'engagement du formulaire centre : toujours visible */
+.cpro #ps-eng{ -webkit-appearance:checkbox !important; appearance:auto !important; display:inline-block !important; opacity:1 !important; position:static !important; width:18px !important; height:18px !important; min-width:18px !important; min-height:0 !important; margin:3px 0 0 !important; padding:0 !important; border:none !important; box-shadow:none !important; accent-color:#047857; visibility:visible !important; }
+
 .ofc{ --g:#047857; --g2:#065f46; --g3:#10b981; --ink:#0f172a; --ink2:#334155; --mute:#64748b; --line:#e5e7eb; font-family:'DM Sans',system-ui,sans-serif; color:var(--ink); display:flex; flex-direction:column; gap:14px; }
 .ofc *{ box-sizing:border-box; }
 /* Hero brillant : moitié EVA (verre, reflet, dégradé), moitié CareerPulse (vert, Cormorant) */
@@ -16791,7 +16798,7 @@ window.cpEvx = window.cpEvx || {
     }
   }
   /* Point d'entrée appelé par l'Espace pros quand le compte est un organisme */
-  window.cpCatRender=function(org){ ST.org=org||{}; ST.tab=ST.tab||'form'; var r=$('of-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>'; load().then(draw); };
+  window.cpCatRender=function(org){ if(window.cpProSetLong) cpProSetLong(true); ST.org=org||{}; ST.tab=ST.tab||'form'; var r=$('of-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>'; load().then(draw); };
 })();
 </script>
 
