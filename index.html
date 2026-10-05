@@ -16612,7 +16612,14 @@ window.cpEvx = window.cpEvx || {
 .ofc-step span{ display:block; margin-top:5px; font-size:.7rem; line-height:1.45; color:rgba(255,255,255,.86); }
 .ofc-law{ display:flex; gap:9px; align-items:flex-start; margin-top:14px; padding:10px 12px; border-radius:14px; background:rgba(2,6,23,.22); font-size:.74rem; line-height:1.5; color:rgba(255,255,255,.92); }
 .ofc-law svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; }
-@media (max-width:720px){ .ofc-steps{ grid-template-columns:1fr 1fr; } }
+@media (max-width:720px){
+  /* Mobile : 4 cartes identiques (même taille, même structure) */
+  .ofc-steps{ grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:10px; }
+  .ofc-step{ display:flex; flex-direction:column; align-items:flex-start; padding:13px 12px 12px; min-height:0; }
+  .ofc-step b{ flex-direction:column; align-items:flex-start; gap:8px; font-size:.86rem; line-height:1.2; }
+  .ofc-step b em{ width:26px; height:26px; font-size:.76rem; }
+  .ofc-step span{ margin-top:6px; font-size:.74rem; line-height:1.45; }
+}
 /* Onglets */
 .ofc-tabs{ display:flex; gap:4px; padding:5px; border-radius:16px; background:#f1f5f4; border:1px solid #dfe7e4; overflow-x:auto; scrollbar-width:none; }
 .ofc-tabs::-webkit-scrollbar{ display:none; }
@@ -16677,7 +16684,7 @@ window.cpEvx = window.cpEvx || {
 
   function hero(o){
     return '<div class="ofc-hero"><span class="ofc-k"><i></i>Espace centre de formation</span>'
-      +'<h2>'+esc(o.nom||'Votre organisme')+', vos formations rencontrent les bons candidats.</h2>'
+      +'<h2>Vos formations rencontrent les bons candidats.</h2>'
       +'<p>Publiez vos formations : EVA les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui viennent vers vous.</p>'
       +'<div class="ofc-steps">'
       +'<div class="ofc-step"><b><em>1</em>Publiez</b><span>Vos fiches formation, vérifiées et complètes.</span></div>'
