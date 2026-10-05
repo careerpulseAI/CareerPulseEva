@@ -16417,8 +16417,71 @@ window.cpEvx = window.cpEvx || {
       +'<div style="text-align:center;margin-top:12px"><button class="plinkbtn" type="button" id="pl-forgot">Mot de passe oublié ?</button></div>'
       +'<div class="psep">ou</div>'
       +'<button class="pbtn sec" id="pl-google" type="button"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 0 1 0-4.3V7.1H2.1a11 11 0 0 0 0 9.9z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.2-3.2A11 11 0 0 0 2.1 7.1l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>Continuer avec Google</button>'
-      +'<div class="pnote">Pas encore de compte organisme ? Les comptes sont ouverts sur demande pendant la phase de test. '
-      +'<a class="plinkbtn" href="mailto:'+CONTACT+'?subject='+encodeURIComponent('Demande d\'accès — espace centre de formation')+'&body='+encodeURIComponent('Bonjour,\n\nNous souhaitons ouvrir un compte centre de formation sur CareerPulse.\n\nNom de l\'organisme :\nSIRET :\nNuméro de déclaration d\'activité :\nVille :\nPersonne à contacter :\n')+'">Demander un accès</a></div></div>';
+      +'<div class="pnote">Pas encore de compte centre ? <button class="plinkbtn" type="button" id="pl-signup">Créer mon compte centre</button></div></div>';
+  }
+  /* ── Inscription d'un centre : compte créé, puis vérification par CareerPulse ── */
+  function siretOk(v){ v=String(v).replace(/\s/g,''); if(!/^\d{14}$/.test(v)) return false; var t=0; for(var i=0;i<14;i++){ var n=+v[i]; if(i%2===0){ n*=2; if(n>9) n-=9; } t+=n; } return t%10===0 || /^356000000/.test(v); }
+  function ndaOk(v){ return /^\d{11}$/.test(String(v).replace(/\s/g,'')); }
+  function orgFields(email){
+    return '<div class="pf"><label for="ps-nom">Nom de l\'organisme *</label><input id="ps-nom" maxlength="120" autocomplete="organization"></div>'
+      +'<div class="pf"><label for="ps-siret">SIRET * <small style="font-weight:600;color:#64748b">(14 chiffres)</small></label><input id="ps-siret" inputmode="numeric" maxlength="17" placeholder="123 456 789 00012"></div>'
+      +'<div class="pf"><label for="ps-nda">Numéro de déclaration d\'activité * <small style="font-weight:600;color:#64748b">(11 chiffres)</small></label><input id="ps-nda" inputmode="numeric" maxlength="14"></div>'
+      +'<div class="pf"><label for="ps-qual">Certification Qualiopi</label><select id="ps-qual" style="font:500 .95rem/1.2 inherit;padding:13px 14px;border:1px solid #d1d5db;border-radius:12px;background:#fff"><option value="oui">Oui, nous sommes certifiés</option><option value="en_cours">En cours de certification</option><option value="non">Non</option></select></div>'
+      +'<div class="pf"><label for="ps-ville">Ville *</label><input id="ps-ville" maxlength="60" autocomplete="address-level2"></div>'
+      +'<div class="pf"><label for="ps-tel">Téléphone</label><input id="ps-tel" type="tel" maxlength="20" autocomplete="tel"></div>';
+  }
+  function readOrg(){
+    var g=function(id){ var e=$(id); return e?String(e.value||'').trim():''; };
+    return { nom:g('ps-nom'), siret:g('ps-siret').replace(/\s/g,''), nda:g('ps-nda').replace(/\s/g,''), qualiopi:g('ps-qual'), ville:g('ps-ville'), tel:g('ps-tel') };
+  }
+  function checkOrg(o,er){
+    if(!o.nom||!o.ville){ er.textContent='Indiquez le nom de l\'organisme et la ville.'; return false; }
+    if(!siretOk(o.siret)){ er.textContent='Le SIRET doit contenir 14 chiffres valides.'; return false; }
+    if(!ndaOk(o.nda)){ er.textContent='Le numéro de déclaration d\'activité doit contenir 11 chiffres.'; return false; }
+    return true;
+  }
+  var ENG='<label style="display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.78rem;line-height:1.5;color:#334155;font-weight:600"><input type="checkbox" id="ps-eng" style="margin-top:3px;accent-color:#047857;width:16px;height:16px;flex-shrink:0">Je certifie l\'exactitude de ces informations et je m\'engage à ne jamais démarcher les candidats : ce sont eux qui prennent contact (art. L6323-8-1 du Code du travail).</label>';
+  function signupHtml(){
+    return '<div class="pcard"><div class="pcard-hd"><span class="pchoice-ico">'+SCHOOL+'</span><div><h2>Créer mon compte centre</h2><span>Votre compte est vérifié par CareerPulse avant activation</span></div></div>'
+      +orgFields()
+      +'<div class="pf"><label for="ps-email">E-mail de connexion *</label><input id="ps-email" type="email" autocomplete="email" inputmode="email"></div>'
+      +'<div class="pf"><label for="ps-pass">Mot de passe * <small style="font-weight:600;color:#64748b">(8 caractères minimum)</small></label><input id="ps-pass" type="password" autocomplete="new-password"></div>'
+      +ENG+'<div class="perr" id="ps-err"></div>'
+      +'<button class="pbtn pri" id="ps-go" type="button">Créer mon compte centre</button>'
+      +'<div style="text-align:center;margin-top:12px"><button class="plinkbtn" type="button" id="ps-back">J\'ai déjà un compte : me connecter</button></div></div>';
+  }
+  function bindSignup(){
+    var A=auth(), er=$('ps-err'), go_=$('ps-go');
+    $('ps-back').onclick=function(){ setBody(loginHtml()); bindLogin(); };
+    go_.onclick=function(){
+      er.textContent='';
+      var o=readOrg(), em=String($('ps-email').value||'').trim(), pw=$('ps-pass').value||'';
+      if(!checkOrg(o,er)) return;
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ er.textContent='Indiquez une adresse e-mail valide.'; return; }
+      if(pw.length<8){ er.textContent='Le mot de passe doit contenir au moins 8 caractères.'; return; }
+      if(!$('ps-eng').checked){ er.textContent='Cochez l\'engagement pour créer votre compte.'; return; }
+      go_.disabled=true; go_.textContent='Création du compte…';
+      if(window.cpBusy) cpBusy(true); setHash('pro-centre');
+      A.createUserWithEmailAndPassword(em,pw).then(function(cred){
+        var u=cred.user, now=new Date().toISOString();
+        o.email=em; o.statutDemande='en_attente'; o.demandeAt=now; o.engagement=now;
+        return window.fbDb.collection('organismes').doc(u.uid).set(o).then(function(){
+          return u.sendEmailVerification({ url: location.origin + location.pathname + '#pro-centre' }).catch(function(){});
+        });
+      }).then(function(){
+        if(window.cpBusy) cpBusy(false);
+        toast('Compte créé : confirmez votre e-mail');
+        rendering=false; renderCentre();
+      }).catch(function(e){
+        if(window.cpBusy) cpBusy(false);
+        go_.disabled=false; go_.textContent='Créer mon compte centre';
+        var c=(e&&e.code)||'';
+        er.textContent = c==='auth/email-already-in-use' ? 'Un compte existe déjà avec cet e-mail : connectez-vous, puis complétez votre demande.'
+          : c==='auth/weak-password' ? 'Mot de passe trop faible : 8 caractères minimum.'
+          : c==='permission-denied' ? 'Enregistrement refusé : les règles Firestore doivent être mises à jour.'
+          : authErr(e)||'La création du compte a échoué. Réessayez.';
+      });
+    };
   }
   function authErr(e){
     var c=(e&&e.code)||'';
@@ -16440,6 +16503,7 @@ window.cpEvx = window.cpEvx || {
     }
     go_.onclick=doLogin;
     pw.addEventListener('keydown',function(e){ if(e.key==='Enter') doLogin(); });
+    var su=$('pl-signup'); if(su) su.onclick=function(){ setBody(signupHtml()); bindSignup(); };
     $('pl-google').onclick=function(){ er.textContent=''; setHash('pro-centre'); A.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){ er.textContent=authErr(e); }); };
     $('pl-forgot').onclick=function(){
       var v=em.value.trim();
@@ -16455,11 +16519,10 @@ window.cpEvx = window.cpEvx || {
       +'<button class="pbtn sec" type="button" id="pv-send">Renvoyer le lien</button></div>';
   }
   function notOrgHtml(u){
-    var body='Bonjour,\n\nJe souhaite que mon compte soit enregistré comme centre de formation.\n\nE-mail du compte : '+(u.email||'')+'\nIdentifiant : '+u.uid+'\n\nNom de l\'organisme :\nSIRET :\nNuméro de déclaration d\'activité :\nVille :\n';
-    return '<div class="pcard"><div class="pcard-hd"><span class="pchoice-ico">'+SCHOOL+'</span><div><h2>Compte non enregistré</h2></div></div>'
-      +'<div class="pinfo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Ce compte n\'est pas encore enregistré comme centre de formation.</span></div>'
-      +'<p>Envoyez-nous votre demande : votre identifiant est déjà inclus dans le message. Nous vérifions votre SIRET et votre déclaration d\'activité, puis nous activons votre espace.</p>'
-      +'<a class="pbtn pri" href="mailto:'+CONTACT+'?subject='+encodeURIComponent('Activation espace centre de formation')+'&body='+encodeURIComponent(body)+'">Demander l\'activation</a>'
+    return '<div class="pcard"><div class="pcard-hd"><span class="pchoice-ico">'+SCHOOL+'</span><div><h2>Compléter ma demande</h2><span>Ce compte n\'est pas encore un compte centre</span></div></div>'
+      +'<p>Renseignez votre organisme : CareerPulse vérifie votre SIRET, votre déclaration d\'activité et votre certification, puis active votre espace.</p>'
+      +orgFields()+ENG+'<div class="perr" id="ps-err"></div>'
+      +'<button class="pbtn pri" type="button" id="pn-send">Envoyer ma demande</button>'
       +'<button class="pbtn sec" type="button" id="pn-other">Utiliser un autre compte</button></div>';
   }
   var rendering=false;
@@ -16479,7 +16542,11 @@ window.cpEvx = window.cpEvx || {
     setBody('<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>');
     window.fbDb.collection('organismes').doc(u.uid).get().then(function(d){
       rendering=false;
-      if(!d.exists){ setBody(notOrgHtml(u)); $('pn-other').onclick=function(){ setHash('pro-centre'); if(window.fbLogout) fbLogout(); }; return; }
+      if(!d.exists){ setBody(notOrgHtml(u)); $('pn-other').onclick=function(){ setHash('pro-centre'); if(window.fbLogout) fbLogout(); };
+        $('pn-send').onclick=function(){ var er=$('ps-err'), b=this; er.textContent=''; var o=readOrg(); if(!checkOrg(o,er)) return; if(!$('ps-eng').checked){ er.textContent='Cochez l\'engagement pour envoyer votre demande.'; return; }
+          var now=new Date().toISOString(); o.email=u.email||''; o.statutDemande='en_attente'; o.demandeAt=now; o.engagement=now; b.disabled=true;
+          window.fbDb.collection('organismes').doc(u.uid).set(o).then(function(){ toast('Demande envoyée'); renderCentre(); }).catch(function(e){ b.disabled=false; er.textContent=(e&&e.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Envoi impossible pour le moment. Réessayez.'; }); };
+        return; }
       $('centre-body').innerHTML='';
       if(typeof window.cpCatRender==='function') window.cpCatRender(d.data());
       else if(typeof window.cpProRenderOrg==='function') window.cpProRenderOrg();
