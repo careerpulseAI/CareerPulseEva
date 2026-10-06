@@ -16787,6 +16787,73 @@ html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
 @keyframes ofcTabSheen{ 0%{ transform:translateX(-170%) skewX(-12deg); } 25%,100%{ transform:translateX(360%) skewX(-12deg); } }
 @media (prefers-reduced-motion: reduce){ .ofc-tabs button::after{ animation:none; display:none; } }
 @media (prefers-reduced-motion: reduce){ .ofc-hero::after{ animation:none; display:none; } }
+
+/* ═══ Espace centre fermé (compte pro) ═══ */
+html.cp-org-lock .cp-lock-hide, html.cp-org-lock #s-pro-centre .ptop, html.cp-org-lock [data-cp-back]{ display:none !important; }
+.ofc-lockbar{ display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:18px; background:linear-gradient(135deg,#0b1f3a,#123b5e 55%,#065f46); color:#fff; box-shadow:0 16px 32px -22px rgba(2,6,23,.8); }
+.ofc-lockbar-ic{ width:38px; height:38px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); }
+.ofc-lockbar-ic svg{ width:18px; height:18px; }
+.ofc-lockbar > div{ flex:1; min-width:0; } .ofc-lockbar b{ display:block; font-size:.86rem; } .ofc-lockbar span{ display:block; font-size:.7rem; line-height:1.45; opacity:.85; margin-top:2px; }
+.ofc-btn.out{ flex-shrink:0; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12); color:#fff; }
+@media (max-width:720px){ .ofc-lockbar{ flex-wrap:wrap; } .ofc-lockbar .ofc-btn.out{ width:100%; justify-content:center; } }
+
+/* ═══ Formulaire : cartes « hero » bleu-vert ═══ */
+.ofc-cat{ background:linear-gradient(180deg,#f3f7fb,#f2f8f5) !important; border:none !important; box-shadow:none !important; }
+.ofc-cat-hd{ position:relative; overflow:hidden; isolation:isolate; margin:0; padding:22px 20px 20px; color:#fff; border-radius:22px; background:radial-gradient(120% 140% at 100% 0%,rgba(110,231,183,.30),transparent 55%),linear-gradient(130deg,#0b2a52 0%,#1e40af 45%,#047857 110%) !important; box-shadow:0 20px 40px -26px rgba(30,64,175,.8); border:none !important; }
+.ofc-cat-hd::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcSheen 7s 1s ease-in-out infinite; }
+.ofc-cat-hd .ofc-k{ background:rgba(255,255,255,.14) !important; border-color:rgba(255,255,255,.3) !important; color:#fff !important; }
+.ofc-cat-hd p{ color:rgba(255,255,255,.88) !important; }
+.ofc-cat .ofc-sec{ margin:14px 0 0; padding:0 !important; border:1px solid #e3eaf2 !important; border-radius:22px; overflow:hidden; background:#fff; box-shadow:0 18px 36px -30px rgba(15,23,42,.45); }
+.ofc-cat .ofc-sec-hd{ margin:0; padding:14px 16px; color:#fff; background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.25),transparent 55%),linear-gradient(120deg,#123b6e,#1e40af 45%,#047857 120%); }
+.ofc-cat .ofc-sec-hd b{ color:#fff; font-size:.96rem; } .ofc-cat .ofc-sec-hd div span{ color:rgba(255,255,255,.82) !important; }
+.ofc-cat .ofc-sec-hd .ofc-sec-n{ background:#fff !important; color:#1e40af !important; box-shadow:0 8px 16px -10px rgba(2,6,23,.6); }
+.ofc-cat .ofc-sec .ofc-f{ padding:16px; }
+.ofc-cat .ofc-engage{ margin:14px 0 0 !important; }
+.ofc-cat .ofc-err{ margin:12px 0 0 !important; }
+.ofc-cat .ofc-cta{ padding:16px 0 4px !important; }
+.ofc-btn{ gap:8px; transition:transform .15s, box-shadow .25s; }
+.ofc-btn:active{ transform:scale(.97); }
+.ofc-btn.pri{ background:linear-gradient(135deg,#1e40af,#047857 70%,#10b981) !important; box-shadow:0 12px 24px -14px rgba(30,64,175,.85), inset 0 1px 0 rgba(255,255,255,.25) !important; }
+.ofc-btn.ghost{ border-color:#bfdbfe !important; background:linear-gradient(180deg,#fff,#eff6ff) !important; color:#1e3a8a !important; }
+.ofc-btn svg{ flex-shrink:0; }
+@media (max-width:720px){
+  .ofc-cat{ padding:0 !important; }
+  .ofc-cat .ofc-cta{ display:grid !important; grid-template-columns:1fr; gap:8px; }
+  .ofc-cat .ofc-cta .ofc-btn{ width:100%; justify-content:center; padding:13px 16px; }
+  .ofc-item{ flex-direction:column; }
+  .ofc-item .ofc-btns{ display:grid; grid-template-columns:1fr 1fr; gap:8px; width:100%; }
+  .ofc-item .ofc-btn{ justify-content:center; }
+}
+
+/* ═══ Aperçu et messagerie : pleine page sur ordinateur ═══ */
+@media (min-width:900px){
+  .ofcm-sheet.ofcm-full, .ofcm-sheet:has(.ofcm-pro){ align-items:stretch; padding:0; }
+  .ofcm-full .ofcm-box, .ofcm-box.ofcm-pro{ max-width:none; width:100vw; height:100vh; border-radius:0; }
+  .ofcm-full .ofp-scroll{ padding:28px 20px 40px; }
+  .ofcm-full .ofp-scroll > .cpfp{ max-width:900px; margin:0 auto; }
+}
+.ofcm-full .ofcm-hd, .ofcm-pro .ofcm-hd{ padding:16px 20px; background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.28),transparent 55%),linear-gradient(120deg,#0b2a52,#1e40af 45%,#047857 120%); }
+.ofp-box{ background:linear-gradient(180deg,#eef3f9,#eef6f2) !important; }
+
+/* ═══ Messagerie haut de gamme (centre) ═══ */
+.ofcm-main{ flex:1; min-height:0; display:flex; }
+.ofcm-chat{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.ofcm-aside{ display:none; }
+.ofcm-pro .ofcm-list{ background:radial-gradient(circle at 1px 1px,rgba(30,64,175,.07) 1px,transparent 0) 0 0/22px 22px, radial-gradient(60% 50% at 0% 0%,rgba(16,185,129,.10),transparent 70%), radial-gradient(60% 50% at 100% 100%,rgba(59,130,246,.10),transparent 70%), linear-gradient(180deg,#f7fafd,#f2f7f5); padding:18px; gap:10px; }
+.ofcm-day{ align-self:center; font-size:.66rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#64748b; padding:6px 12px; border-radius:999px; background:rgba(255,255,255,.75); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border:1px solid rgba(226,232,240,.9); }
+.ofcm-pro .ofcm-m{ padding:10px 14px; border-radius:20px; font-size:.88rem; box-shadow:0 8px 20px -16px rgba(15,23,42,.5); }
+.ofcm-pro .ofcm-m.me{ background:linear-gradient(135deg,#1e40af,#047857); border-bottom-right-radius:6px; }
+.ofcm-pro .ofcm-m.them{ background:rgba(255,255,255,.92); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); border:1px solid rgba(226,232,240,.95); border-bottom-left-radius:6px; }
+.ofcm-pro .ofcm-ft{ padding:12px 16px 16px; background:rgba(255,255,255,.85); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid #e3eaf2; }
+.ofcm-pro .ofcm-in{ border-radius:18px; border-color:#dbe4ef; background:#f8fafc; }
+.ofcm-pro .ofcm-send{ background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 10px 20px -12px rgba(30,64,175,.8); }
+@media (min-width:900px){
+  .ofcm-pro .ofcm-aside{ display:block; width:340px; flex-shrink:0; overflow-y:auto; padding:18px; background:linear-gradient(180deg,#fff,#f6f9fc); border-right:1px solid #e3eaf2; }
+  .ofcm-pro .ofcm-aside .ofcm-card + .ofcm-card{ margin-top:12px; }
+  .ofcm-pro .ofcm-mobinfo{ display:none; }
+  .ofcm-pro .ofcm-list{ padding:24px 8%; }
+  .ofcm-pro .ofcm-m{ max-width:70%; }
+}
 </style>
 <script>
 /* ═══ Page de présentation d'une formation — même rendu côté centre (aperçu) et côté membre ═══ */
@@ -16845,8 +16912,13 @@ window.cpFormPage=function(f,o){
   var FIN=['CPF','France Travail','OPCO / employeur','Région','Transitions Pro','Autofinancement'];
   var MOD=['Présentiel','À distance','Hybride'];
 
+  var IX={ out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>', eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+    pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>', pause:'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>', play:'<path d="M7 4v16l13-8z"/>',
+    trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>', save:'<path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/>', x:'<path d="M18 6 6 18M6 6l12 12"/>', up:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5M12 3v12"/>' };
+  function ic(k){ return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+IX[k]+'</svg>'; }
+  function lockBar(){ return '<div class="ofc-lockbar"><span class="ofc-lockbar-ic">'+S(I.lock)+'</span><div><b>Votre espace centre</b><span>Pour quitter votre espace, déconnectez-vous. Si vous fermez la page sans vous déconnecter, votre session se déconnecte automatiquement.</span></div><button type="button" class="ofc-btn out" data-a="logout">'+ic('out')+'Se déconnecter</button></div>'; }
   function hero(o){
-    return '<div class="ofc-hero"><span class="ofc-k"><i></i>Espace centre de formation</span>'
+    return lockBar()+'<div class="ofc-hero"><span class="ofc-k"><i></i>Espace centre de formation</span>'
       +'<h2>Vos formations rencontrent les bons candidats.</h2>'
       +'<p>Publiez vos formations : EVA les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui viennent vers vous.</p>'
       +'<div class="ofc-steps">'
@@ -16878,7 +16950,7 @@ window.cpFormPage=function(f,o){
 
   var NIVEAUX=['Niveau 2 — savoirs de base','Niveau 3 — CAP, BEP','Niveau 4 — Bac, Bac pro, BP','Niveau 5 — Bac+2 (BTS, DEUST…)','Niveau 6 — Bac+3/4 (Licence, BUT…)','Niveau 7 — Bac+5 (Master, titre d\'ingénieur…)','Niveau 8 — Doctorat','Certification sans niveau (CQP, habilitation…)'];
   function fmtDate(iso){ try{ return new Date(iso+'T12:00:00').toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return iso; } }
-  function sec(n,t,s,body){ return '<div class="ofc-sec"><div class="ofc-sec-hd"><span class="ofc-sec-n">'+n+'</span><div><b>'+t+'</b>'+(s?'<span>'+s+'</span>':'')+'</div></div><div class="ofc-f">'+body+'</div></section>'; }
+  function sec(n,t,s,body){ return '<div class="ofc-sec"><div class="ofc-sec-hd"><span class="ofc-sec-n">'+n+'</span><div><b>'+t+'</b>'+(s?'<span>'+s+'</span>':'')+'</div></div><div class="ofc-f">'+body+'</div></div>'; }
   function opt(list,v){ return list.map(function(o){ return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>'; }).join(''); }
   function formHtml(f){
     f=f||{}; var o=ST.org||{}; ST.logo=(f.orgLogo!==undefined?f.orgLogo:o.logo)||''; ST.theme=f.theme||ST.theme||'emeraude';
@@ -16909,15 +16981,15 @@ window.cpFormPage=function(f,o){
          '<label class="full">Programme<textarea id="ofc-prog" maxlength="3000" placeholder="Objectif : …&#10;Bases du web : HTML, CSS…&#10;Débouchés : …">'+esc(f.programme)+'</textarea></label>'
         +'<label class="full">Lien vers le programme officiel <small>(page ou PDF sur votre site)</small><input id="ofc-lien" maxlength="200" value="'+esc(f.lien)+'" placeholder="https://"></label>')
       +sec(7,'Identité visuelle','Votre page, à vos couleurs',
-         '<div class="full ofc-logo"><span class="ofc-logo-pv" id="ofc-logo-pv">'+(ST.logo?'<img src="'+esc(ST.logo)+'" alt="">':'Logo')+'</span><div><b>Logo du centre</b><span>PNG ou JPG, réduit automatiquement.</span><div class="ofc-btns" style="margin-top:8px"><label class="ofc-btn">Choisir un logo<input type="file" id="ofc-logo" accept="image/png,image/jpeg,image/webp" hidden></label>'+(ST.logo?'<button type="button" class="ofc-btn" data-a="nologo">Retirer</button>':'')+'</div></div></div>'
+         '<div class="full ofc-logo"><span class="ofc-logo-pv" id="ofc-logo-pv">'+(ST.logo?'<img src="'+esc(ST.logo)+'" alt="">':'Logo')+'</span><div><b>Logo du centre</b><span>PNG ou JPG, réduit automatiquement.</span><div class="ofc-btns" style="margin-top:8px"><label class="ofc-btn">'+ic('up')+'Choisir un logo<input type="file" id="ofc-logo" accept="image/png,image/jpeg,image/webp" hidden></label>'+(ST.logo?'<button type="button" class="ofc-btn" data-a="nologo">'+ic('trash')+'Retirer</button>':'')+'</div></div></div>'
         +'<div class="full"><span class="ofc-lbl">Couleur de votre page</span><div class="ofc-sws">'+sw+'</div></div>'
         +'<label class="full">Site internet du centre<input id="ofc-site" maxlength="200" value="'+esc(f.orgSite!==undefined?f.orgSite:(o.site||''))+'" placeholder="https://www.votrecentre.fr"></label>')
       +'<label class="ofc-engage"><input type="checkbox" id="ofc-eng"'+(f.id?' checked':'')+'><span>Je certifie que ces informations sont exactes et que cette fiche ne contient <b>aucune promotion, cadeau ou rétribution</b> liée à l\'inscription (art. L6323-8-1 du Code du travail).</span></label>'
       +'<div id="ofc-err" class="ofc-err" role="alert" style="display:none"></div>'
-      +'<div class="ofc-btns ofc-cta"><button type="button" class="ofc-btn ghost" data-a="preview">'+S('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>').replace('<svg','<svg width="16" height="16"')+'Aperçu candidat</button>'
+      +'<div class="ofc-btns ofc-cta"><button type="button" class="ofc-btn ghost" data-a="preview">'+ic('eye')+'Aperçu candidat</button>'
       +'<button type="button" class="ofc-btn pri" data-a="save" data-pub="1">'+S(I.check).replace('<svg','<svg width="16" height="16"')+'Publier</button>'
-      +'<button type="button" class="ofc-btn" data-a="save" data-pub="0">Enregistrer en brouillon</button>'
-      +(f.id?'<button type="button" class="ofc-btn" data-a="cancel">Annuler</button>':'')+'</div></div>';
+      +'<button type="button" class="ofc-btn" data-a="save" data-pub="0">'+ic('save')+'Enregistrer en brouillon</button>'
+      +(f.id?'<button type="button" class="ofc-btn" data-a="cancel">'+ic('x')+'Annuler</button>':'')+'</div></div>';
   }
   /* Logo : redimensionné dans le navigateur (160 px) puis enregistré dans la fiche — aucun stockage payant */
   function readLogo(file){
@@ -16933,7 +17005,7 @@ window.cpFormPage=function(f,o){
   function previewSheet(f){
     var o=ST.org||{}; f=Object.assign({ orgNom:o.nom||'' },f);
     var sh=document.createElement('div'); sh.className='ofcm-sheet';
-    sh.innerHTML='<div class="ofcm-box ofp-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>Aperçu candidat</b><span>Voici votre page, telle que les membres la voient</span></div></div><div class="ofp-scroll">'+cpFormPage(f,{ actions:'<div class="ofp-demo"><span>Je suis intéressé(e)</span><span>Enregistrer</span></div>' })+'</div></div>';
+    sh.className='ofcm-sheet ofcm-full'; sh.innerHTML='<div class="ofcm-box ofp-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>Aperçu candidat</b><span>Voici votre page, telle que les membres la voient</span></div></div><div class="ofp-scroll">'+cpFormPage(f,{ actions:'<div class="ofp-demo"><span>Je suis intéressé(e)</span><span>Enregistrer</span></div>' })+'</div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var close=function(){ sh.remove(); document.documentElement.classList.remove('ofcm-lock'); };
     sh.querySelector('.ofcm-x').onclick=close; sh.addEventListener('click',function(e){ if(e.target===sh) close(); });
@@ -16947,9 +17019,9 @@ window.cpFormPage=function(f,o){
         return '<div class="ofc-item"><span class="ofc-item-ico">'+S(I.book)+'</span><div class="ofc-item-b"><div class="ofc-item-t">'+esc(f.titre)+'</div>'
           +'<div class="ofc-item-s">'+esc([f.ville,f.modalite,f.duree,f.certCode].filter(Boolean).join(' · '))+'</div>'
           +'<span class="ofc-tag '+(pub?'pub':'draft')+'">'+(pub?'● Publiée':'Brouillon')+'</span>'
-          +'<div class="ofc-btns"><button type="button" class="ofc-btn pri" data-a="view" data-id="'+f.id+'">Voir ma page</button><button type="button" class="ofc-btn" data-a="edit" data-id="'+f.id+'">Modifier</button>'
-          +'<button type="button" class="ofc-btn" data-a="toggle" data-id="'+f.id+'">'+(pub?'Dépublier':'Publier')+'</button>'
-          +'<button type="button" class="ofc-btn dan" data-a="del" data-id="'+f.id+'">Supprimer</button></div></div></div>';
+          +'<div class="ofc-btns"><button type="button" class="ofc-btn pri" data-a="view" data-id="'+f.id+'">'+ic('eye')+'Voir ma page</button><button type="button" class="ofc-btn" data-a="edit" data-id="'+f.id+'">'+ic('pen')+'Modifier</button>'
+          +'<button type="button" class="ofc-btn" data-a="toggle" data-id="'+f.id+'">'+ic(pub?'pause':'play')+(pub?'Dépublier':'Publier')+'</button>'
+          +'<button type="button" class="ofc-btn dan" data-a="del" data-id="'+f.id+'">'+ic('trash')+'Supprimer</button></div></div></div>';
       }).join('')+'</div>';
   }
   function tabHtml(){
@@ -16975,7 +17047,7 @@ window.cpFormPage=function(f,o){
     var o=ST.org||{};
     if(!(o.verifie && o.proActif)){
       root.innerHTML='<div class="ofc">'+hero(o)+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET, déclaration d\'activité, Qualiopi). Dès sa validation, vous pourrez publier vos formations.</span></div></div></div>';
-      return;
+      root.onclick=onClick; return;
     }
     root.innerHTML='<div class="ofc">'+hero(o)+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
@@ -17005,6 +17077,7 @@ window.cpFormPage=function(f,o){
       theme:ST.theme||'emeraude', orgLogo:ST.logo||'', orgSite:val('ofc-site') };
   }
   function onClick(e){
+    var lo=e.target.closest('[data-a="logout"]'); if(lo){ if(window.cpOrgUnlock) cpOrgUnlock(); try{ history.replaceState(null,'','#pro-centre'); }catch(x){} if(window.fbLogout) fbLogout(); else if(window.fbAuth) fbAuth.signOut().then(function(){ location.reload(); }); return; }
     var th=e.target.closest('[data-theme]'); if(th){ ST.theme=th.getAttribute('data-theme'); document.querySelectorAll('.ofc-sw').forEach(function(x){ x.classList.toggle('on',x===th); }); return; }
     var pv=e.target.closest('[data-a="preview"]'); if(pv){ previewSheet(collect()); return; }
     var nl=e.target.closest('[data-a="nologo"]'); if(nl){ ST.logo=''; $('ofc-logo-pv').innerHTML='Logo'; nl.remove(); return; }
@@ -17051,7 +17124,8 @@ window.cpFormPage=function(f,o){
     var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv();
     var sh=document.createElement('div'); sh.className='ofcm-sheet';
     sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b class="ofcm-who"></b><span>'+esc(c.formationTitre||'')+'</span></div><em>🔒 Protégé</em></div>'
-      +'<div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div>';
+      +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div></div></div>';
+    sh.querySelector('.ofcm-box').classList.add('ofcm-pro');
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var list=sh.querySelector('.ofcm-list'), ref=db().collection('conversations').doc(c.id);
     function info(x){
@@ -17065,7 +17139,8 @@ window.cpFormPage=function(f,o){
     }
     function render(x){
       sh.querySelector('.ofcm-who').textContent=x.candLabel||'Candidat';
-      list.innerHTML=info(x)+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
+      sh.querySelector('.ofcm-aside').innerHTML=info(x);
+      list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · le candidat a écrit en premier</div>'+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
         +(x.statut!=='ouverte'?'<div class="ofcm-note">Le candidat a clôturé cette conversation.</div>':'');
       list.scrollTop=list.scrollHeight;
       sh.querySelector('.ofcm-ft').style.display=x.statut==='ouverte'?'':'none';
@@ -17085,7 +17160,33 @@ window.cpFormPage=function(f,o){
     };
   }
   /* Point d'entrée appelé par l'Espace pros quand le compte est un organisme */
-  window.cpCatRender=function(org){ if(window.cpProSetLong) cpProSetLong(true); ST.org=org||{}; ST.tab=ST.tab||'form'; var r=$('of-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>'; load().then(draw); };
+  window.cpCatRender=function(org){ if(window.cpOrgLock){ var u0=me(); cpOrgLock(u0&&u0.uid); } if(window.cpProSetLong) cpProSetLong(true); ST.org=org||{}; ST.tab=ST.tab||'form'; var r=$('of-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>'; load().then(draw); };
+})();
+</script>
+
+<script>
+/* ═══ Compte centre : espace fermé. On n'en sort qu'en se déconnectant. ═══ */
+(function(){
+  var KEY='cp_org_lock';
+  function on(){ try{ return !!sessionStorage.getItem(KEY); }catch(e){ return false; } }
+  function msg(){ var t='Pour quitter votre espace centre, déconnectez-vous.'; if(window.ecShowToast) ecShowToast(t); else alert(t); }
+  function apply(){
+    if(!on()) return; var h=document.documentElement; h.classList.add('cp-org-lock');
+    var n=document.getElementById('cp-tnav-pros'), bar=n&&n.parentNode&&n.parentNode.parentNode;
+    if(bar && !bar._cpLock){ bar._cpLock=1; bar.querySelectorAll('a,button').forEach(function(b){ b.classList.add('cp-lock-hide'); }); }
+    if(location.hash!=='#pro-centre'){ try{ history.replaceState(null,'','#pro-centre'); }catch(e){ location.hash='pro-centre'; } if(window.go) setTimeout(function(){ _go('pro-centre'); },0); }
+  }
+  window.cpOrgLock=function(uid){ try{ sessionStorage.setItem(KEY,uid||'1'); }catch(e){} apply(); };
+  window.cpOrgUnlock=function(){ try{ sessionStorage.removeItem(KEY); }catch(e){} document.documentElement.classList.remove('cp-org-lock'); };
+  var _go=window.go;
+  window.go=go=function(id){ if(on() && id!=='pro-centre'){ msg(); return; } return _go.apply(this,arguments); };
+  document.addEventListener('click',function(e){
+    if(!on()) return; var a=e.target.closest('a[href]'); if(!a) return;
+    var href=a.getAttribute('href')||''; if(href==='#pro-centre' || a.target==='_blank' || /^mailto:|^tel:/.test(href)) return;
+    if(a.closest('.cpfp')) return; e.preventDefault(); e.stopPropagation(); msg();
+  },true);
+  window.addEventListener('hashchange',function(){ if(on() && location.hash!=='#pro-centre'){ msg(); history.replaceState(null,'','#pro-centre'); _go('pro-centre'); } });
+  if(document.readyState!=='loading') apply(); else document.addEventListener('DOMContentLoaded',apply);
 })();
 </script>
 
