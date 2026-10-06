@@ -29693,6 +29693,43 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 /* Hero de couverture « Contacter des formations… » : titre sur sa ligne, badges dessous (mobile et ordinateur) */
 .pfs-nm:has(.pfs-nmt){ flex-wrap:wrap; row-gap:10px; margin-bottom:8px; }
 .pfs-nm .pfs-nmt{ flex:1 1 100%; font-size:clamp(1.25rem,5vw,1.55rem); line-height:1.18; letter-spacing:-.02em; }
+.cpsa{ display:none; }
+@media (min-width:900px){
+  .cpsa{ position:absolute; right:18px; top:50%; transform:translateY(-50%); z-index:5; display:flex; flex-direction:column; gap:8px; }
+  .cpsa button{ width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.6); cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 10px 22px -12px rgba(30,64,175,.8); transition:opacity .2s, transform .15s; }
+  .cpsa button:hover{ transform:scale(1.06); } .cpsa button:disabled{ opacity:.35; cursor:default; transform:none; }
+  .cpsa svg{ width:18px; height:18px; }
+}
+/* ── Tiroirs haut de gamme ── */
+.ofdw{ margin-bottom:12px; border-radius:20px; background:#fff; border:1px solid #f1e3c4; box-shadow:0 16px 32px -26px rgba(180,83,9,.55); overflow:hidden; }
+.ofdw > summary{ list-style:none; display:flex; align-items:center; gap:12px; padding:13px 14px; cursor:pointer; background:radial-gradient(120% 140% at 100% 0%,rgba(253,230,138,.45),transparent 55%),linear-gradient(135deg,#fffaf0,#fff); -webkit-tap-highlight-color:transparent; }
+.ofdw > summary::-webkit-details-marker{ display:none; }
+.ofdw-ic{ width:40px; height:40px; flex-shrink:0; border-radius:13px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#92400e,#d97706 60%,#f59e0b); box-shadow:0 10px 20px -12px rgba(180,83,9,.8), inset 0 1px 0 rgba(255,255,255,.3); }
+.ofdw-ic svg{ width:19px; height:19px; display:block; stroke:currentColor; fill:none; }
+.ofdw-t{ flex:1; min-width:0; } .ofdw-t b{ display:block; font-size:.92rem; font-weight:900; color:#0f172a; } .ofdw-t span{ display:block; font-size:.7rem; color:#78350f; opacity:.8; margin-top:2px; }
+.ofdw-b{ font-style:normal; min-width:22px; height:22px; padding:0 7px; border-radius:11px; display:inline-flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:900; color:#fff; background:#dc2626; }
+.ofdw-ch{ width:32px; height:32px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#fff7e6; border:1px solid #f6e3bd; color:#b45309; transition:transform .3s; }
+.ofdw-ch svg{ width:16px; height:16px; }
+.ofdw[open] .ofdw-ch{ transform:rotate(180deg); }
+.ofdw-in{ padding:4px 12px 12px; }
+.ofdw .ofd{ margin:0; padding:0; background:none; border:none; }
+/* ancien conteneur « Mes demandes » : rendu dans le tiroir */
+.ofdw-in > .ofd-it:first-child{ margin-top:6px; }
+/* ── Bouton « Retour à ton profil » ── */
+.ofx-back{ justify-content:flex-start !important; gap:12px !important; padding:10px 12px !important; border-radius:18px !important; background:linear-gradient(135deg,#fffaf0,#fff) !important; }
+.ofx-back > span:nth-child(2){ flex:1; text-align:left; font-size:.9rem; }
+.ofx-back-ic, .ofx-back-av{ width:38px; height:38px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; }
+.ofx-back-ic{ color:#fff; background:linear-gradient(135deg,#92400e,#f59e0b); box-shadow:0 10px 20px -12px rgba(180,83,9,.8); }
+.ofx-back-av{ background:#fff7e6; border:1px solid #f6e3bd; color:#b45309; }
+.ofx-back svg{ width:18px !important; height:18px !important; }
+/* ── Pleine page : présentation de formation et messagerie (membre) ── */
+.ofx-sheet, .ofm-sheet{ align-items:stretch !important; padding:0 !important; }
+.ofx-box, .ofm-box{ max-width:none !important; width:100vw !important; height:100vh !important; height:100dvh !important; border-radius:0 !important; position:relative; }
+@media (min-width:900px){
+  .ofx-scroll{ padding:28px 20px 40px !important; } .ofx-scroll > .cpfp{ max-width:900px; margin:0 auto; }
+  .ofm-list{ padding:24px 10% !important; } .ofm-m{ max-width:66% !important; }
+  .ofm-ft, .ofm-tools{ padding-left:10% !important; padding-right:10% !important; }
+}
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -29898,7 +29935,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
       +chips(['Match expliqué','Centres vérifiés','Personne ne t\'appelle'])));
     p2.appendChild(inbox);
     var fq=el('div','oft-faq'); fq.appendChild(faqNode()); p2.appendChild(fq);
-    var bk=el('button','ofx-back'); bk.type='button'; bk.innerHTML=S('<path d="M15 18l-6-6 6-6"/>')+'Retour à la page précédente'; bk.onclick=function(){ go('eva'); }; p2.appendChild(bk);
+    var bk=el('button','ofx-back'); bk.type='button'; bk.innerHTML='<span class="ofx-back-ic">'+S('<path d="M15 18l-6-6 6-6"/>')+'</span><span>Retour à ton profil</span><span class="ofx-back-av">'+S(I.school)+'</span>'; bk.onclick=function(){ show('1'); try{ n.scrollIntoView({ behavior:'smooth', block:'start' }); }catch(e){} }; p2.appendChild(bk);
     var bar=n.querySelector('.oft-bar'), ink=n.querySelector('.oft-ink');
     function show(k){
       n.querySelectorAll('.oft-tab').forEach(function(b){ var on=b.getAttribute('data-t')===k; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false'); if(on){ ink.style.width=b.offsetWidth+'px'; ink.style.transform='translateX('+b.offsetLeft+'px)'; } });
@@ -30423,6 +30460,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     }
     draw(c);
     MSG.unsub=ref.onSnapshot(function(d){ if(d.exists) draw(d.data()); },function(){});
+    cpSheetArrows(list,sh.querySelector('.ofm-box'));
     sh.querySelector('.ofm-x').onclick=closeThread;
     sh.addEventListener('click',function(e){ if(e.target===sh) closeThread(); });
     sh.querySelector('.ofm-send').onclick=function(){
@@ -30441,11 +30479,18 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     };
   }
   function closeThread(){ if(MSG.unsub){ MSG.unsub(); MSG.unsub=null; } var s=document.querySelector('.ofm-sheet'); if(s) s.remove(); document.documentElement.classList.remove('ofm-lock'); MSG.open=null; loadConvs().then(function(){ recoBadge(); var b=document.querySelector('.ofi'); if(b && RECO.forms) drawReco(b); }); }
+  /* Tiroir haut de gamme (ouvert par défaut, l'état est mémorisé pendant la visite) */
+  var DRW={};
+  function drawerOpen(k,ico,t,sub,badge,closed){
+    var open = (k in DRW) ? DRW[k] : !closed;
+    return '<details class="ofdw" data-dw="'+k+'"'+(open?' open':'')+'><summary><span class="ofdw-ic">'+ico+'</span><span class="ofdw-t"><b>'+t+'</b><span>'+sub+'</span></span>'+(badge?'<em class="ofdw-b">'+badge+'</em>':'')+'<span class="ofdw-ch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary><div class="ofdw-in">';
+  }
   function demandesHtml(){
     var L=Object.keys(MSG.convs).map(function(k){ return MSG.convs[k]; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
     if(!L.length) return '';
-    return '<div class="ofd"><div class="ofd-hd">'+S(I.inbox)+'<b>Mes demandes</b></div>'+L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
-      return '<button type="button" class="ofd-it" data-conv="'+esc(c.formationId)+'"><span class="ofd-dot'+(c.unreadCand?' on':'')+'"></span><span class="ofd-t"><b>'+esc(c.formationTitre)+'</b><span>'+esc(c.orgNom)+' · '+(c.statut!=='ouverte'?'Clôturée':c.lastFrom==='org'?'Le centre t\'a répondu':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,80))+'</i></span>'+S('<path d="m9 18 6-6-6-6"/>')+'</button>'; }).join('')+'</div>';
+    var un=L.filter(function(c){ return c.unreadCand; }).length;
+    return drawerOpen('dem',S(I.inbox),'Mes demandes',L.length+' conversation'+(L.length>1?'s':'')+(un?' · '+un+' nouveau'+(un>1?'x':'')+' message'+(un>1?'s':''):''),un)+L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
+      return '<button type="button" class="ofd-it" data-conv="'+esc(c.formationId)+'"><span class="ofd-dot'+(c.unreadCand?' on':'')+'"></span><span class="ofd-t"><b>'+esc(c.formationTitre)+'</b><span>'+esc(c.orgNom)+' · '+(c.statut!=='ouverte'?'Clôturée':c.lastFrom==='org'?'Le centre t\'a répondu':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,80))+'</i></span>'+S('<path d="m9 18 6-6-6-6"/>')+'</button>'; }).join('')+'</div></details>';
   }
   /* Présentation complète d'une formation (même page que l'aperçu du centre) */
   function closePage(){ var s=document.querySelector('.ofx-sheet'); if(s) s.remove(); if(!document.querySelector('.ofm-sheet')) document.documentElement.classList.remove('ofm-lock'); }
@@ -30463,6 +30508,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     document.body.appendChild(sh); document.documentElement.classList.add('ofm-lock');
     if(RECO.st.seen.indexOf(fid)<0){ RECO.st.seen.push(fid); saveReco(); setTimeout(recoBadge,300); }
     sh.querySelector('.ofm-x').onclick=closePage;
+    cpSheetArrows(sh.querySelector('.ofx-scroll'),sh.querySelector('.ofx-box'));
     sh.addEventListener('click',function(e){
       if(e.target===sh){ closePage(); return; }
       var b=e.target.closest('[data-x],[data-a]'); if(!b) return; var a=b.getAttribute('data-x')||b.getAttribute('data-a'), u=user();
@@ -30483,14 +30529,15 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     else if(!on) h+='<div class="ofr-tip">'+S(I.eye)+'<span>Active <b>« Me recommander des formations »</b> dans ton profil : je te montrerai d\'abord celles qui te correspondent le mieux.</span></div>';
     h+=demandesHtml();
     var top=L.filter(function(x){ return x.m.pct>=40; }), rest=L.filter(function(x){ return x.m.pct<40; });
-    if(top.length) h+='<div class="ofr-sec">Recommandées pour toi</div>'+top.map(recoCard).join('');
-    if(rest.length) h+='<div class="ofr-sec lo">'+(top.length?'Autres formations publiées':'Formations publiées')+'<span>Elles correspondent moins à ton profil, mais tu peux les consulter.</span></div>'+rest.map(recoCard).join('');
+    if(top.length) h+=drawerOpen('reco','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/></svg>','Recommandées pour toi',top.length+' formation'+(top.length>1?'s':'')+' qui te correspond'+(top.length>1?'ent':''),0)+top.map(recoCard).join('')+'</div></details>';
+    if(rest.length) h+=drawerOpen('rest',S(I.school),top.length?'Autres formations publiées':'Formations publiées','Elles correspondent moins à ton profil, mais tu peux les consulter',0,true)+rest.map(recoCard).join('')+'</div></details>';
     if(!L.length) h+='<div class="ofp-empty">'+S(I.school)+'<b>Tes formations arrivent ici.</b><span>Les centres de formation vérifiés rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'une de leurs formations correspond à ton profil, elle apparaît ici et une notification t\'attend dans ton espace. Ton profil est prêt : tu n\'as rien d\'autre à faire.</span></div>'
       +'<div class="ofr-cat"><b>En attendant, explore les catalogues officiels</b><span>Avec tes critères'+(PROF&&PROF.metier?' (métier : '+esc(PROF.metier)+(PROF.ville?', '+esc(PROF.ville):'')+')':'')+' :</span>'
       +'<a href="https://www.moncompteformation.gouv.fr" target="_blank" rel="noopener noreferrer">Mon Compte Formation ↗</a>'
       +'<a href="https://www.onisep.fr" target="_blank" rel="noopener noreferrer">Onisep, les formations ↗</a></div>';
     var old=(ST.props||[]); if(old.length) h+='<div class="ofr-old"><b>Anciennes propositions</b></div>'+old.map(propCard).join('');
     box.innerHTML=h;
+    box.addEventListener('toggle',function(e){ var d=e.target; if(d && d.getAttribute && d.getAttribute('data-dw')) DRW[d.getAttribute('data-dw')]=d.open; },true);
     box.onclick=function(e){
       var cv=e.target.closest('[data-conv]'); if(cv){ openThread(cv.getAttribute('data-conv')); return; }
       var crd=e.target.closest('.ofr'); if(crd && !e.target.closest('[data-a]')){ openPage(crd.getAttribute('data-f')); return; }
@@ -31404,7 +31451,7 @@ window.cpFormPage=function(f,o){
   var logo=f.orgLogo?'<img src="'+E(f.orgLogo)+'" alt="Logo '+E(f.orgNom)+'">':E(ini);
   var chips=[f.certCode?(f.certType==='Répertoire spécifique (RS)'?'RS ':'')+f.certCode:(f.certType&&f.certType!=='Non certifiante'?f.certType:''), f.modalite, f.duree, f.niveau].filter(Boolean).map(function(c){ return '<span>'+E(c)+'</span>'; }).join('');
   if(f.qualiopi!==false) chips='<span class="q">✓ Qualiopi</span>'+chips;
-  var fact=function(l,v){ return '<div class="cpfp-fact"><span>'+l+'</span><b>'+E(v||'À préciser')+'</b></div>'; };
+  var fact=function(l,v){ return '<div class="cpfp-fact"><span>'+l+'</span><b>'+E(v||o.empty||'À préciser')+'</b></div>'; };
   /* Programme : « Libellé : texte » → paragraphe, autres lignes → liste */
   var prog='', list=[];
   String(f.programme||'').split(/\r?\n/).map(function(l){ return l.trim(); }).filter(Boolean).forEach(function(l){
@@ -31432,6 +31479,18 @@ window.cpFormPage=function(f,o){
     +'<div class="cpfp-slot">'+(o.actions||'')+'</div>'
     +'<div class="cpfp-note">Le financement dépend de la situation de chacun : rien n\'est garanti tant que le financeur n\'a pas validé. Aucun démarchage : c\'est toujours le candidat qui prend contact.</div>'
     +'</div></div>';
+};
+
+/* Flèches de défilement (ordinateur) pour les pages en plein écran qui défilent */
+window.cpSheetArrows=function(sc,host){
+  if(!sc||!host||host.querySelector('.cpsa')) return;
+  var w=document.createElement('div'); w.className='cpsa';
+  w.innerHTML='<button type="button" data-d="-1" aria-label="Monter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button><button type="button" data-d="1" aria-label="Descendre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>';
+  host.appendChild(w);
+  w.onclick=function(e){ var b=e.target.closest('[data-d]'); if(b) sc.scrollBy({ top:(+b.getAttribute('data-d'))*sc.clientHeight*.8, behavior:'smooth' }); };
+  function upd(){ var can=sc.scrollHeight-sc.clientHeight>40; w.style.display=can?'':'none'; w.children[0].disabled=sc.scrollTop<10; w.children[1].disabled=sc.scrollTop>sc.scrollHeight-sc.clientHeight-10; }
+  sc.addEventListener('scroll',upd,{ passive:true }); setTimeout(upd,60); setTimeout(upd,600);
+  try{ new ResizeObserver(upd).observe(sc); }catch(e){}
 };
 </script>
 </body>
