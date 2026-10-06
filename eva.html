@@ -29626,6 +29626,9 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 .ofm-tools{ display:flex; gap:8px; padding:0 12px 12px; background:#fff; flex-wrap:wrap; }
 .ofm-tools button{ border:1px solid #f1e3c4; background:#fffbeb; color:#92400e; border-radius:999px; padding:7px 12px; font:800 .7rem/1 inherit; cursor:pointer; }
 @keyframes ofmIn{ from{ opacity:0; } }
+
+.ofr-sec{ margin:4px 2px 9px; font-size:.82rem; font-weight:900; color:#78350f; }
+.ofr-sec.lo{ margin-top:18px; color:#475569; } .ofr-sec span{ display:block; font-size:.7rem; font-weight:600; color:#64748b; margin-top:2px; }
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -30272,10 +30275,9 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     var A=PROF||{}, on=!!(CONS&&CONS.visible);
     return (RECO.forms||[]).filter(function(f){ return RECO.st.hidden.indexOf(f.id)<0; })
       .map(function(f){ return { f:f, m:matchOf(f,A) }; })
-      .filter(function(x){ return !on || x.m.pct>=40; })
       .sort(function(a,b){ return b.m.pct-a.m.pct; });
   }
-  function newCount(){ if(!RECO.forms||!RECO.st||!(CONS&&CONS.visible)) return 0; return recoList().filter(function(x){ return RECO.st.seen.indexOf(x.f.id)<0; }).length; }
+  function newCount(){ if(!RECO.forms||!RECO.st||!(CONS&&CONS.visible)) return 0; return recoList().filter(function(x){ return x.m.pct>=40 && RECO.st.seen.indexOf(x.f.id)<0; }).length; }
   function recoBadge(){
     var n=newCount()+unreadConvs();
     document.querySelectorAll('.oft-tab[data-t="2"]').forEach(function(t){ var e=t.querySelector('em'); if(!e){ e=document.createElement('em'); t.appendChild(e); } e.textContent=n; e.style.display=n?'':'none'; });
@@ -30393,8 +30395,10 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     if(!PROF) h+='<div class="ofr-tip">'+S(I.school)+'<span>Complète ton <b>profil formation</b> dans le premier onglet : je pourrai calculer ton pourcentage de correspondance.</span></div>';
     else if(!on) h+='<div class="ofr-tip">'+S(I.eye)+'<span>Active <b>« Me recommander des formations »</b> dans ton profil : je te montrerai d\'abord celles qui te correspondent le mieux.</span></div>';
     h+=demandesHtml();
-    if(L.length) h+=L.map(recoCard).join('');
-    else h+='<div class="ofp-empty">'+S(I.school)+'<b>Tes formations arrivent ici.</b><span>Les centres de formation vérifiés rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'une de leurs formations correspond à ton profil, elle apparaît ici et une notification t\'attend dans ton espace. Ton profil est prêt : tu n\'as rien d\'autre à faire.</span></div>'
+    var top=L.filter(function(x){ return x.m.pct>=40; }), rest=L.filter(function(x){ return x.m.pct<40; });
+    if(top.length) h+='<div class="ofr-sec">Recommandées pour toi</div>'+top.map(recoCard).join('');
+    if(rest.length) h+='<div class="ofr-sec lo">'+(top.length?'Autres formations publiées':'Formations publiées')+'<span>Elles correspondent moins à ton profil, mais tu peux les consulter.</span></div>'+rest.map(recoCard).join('');
+    if(!L.length) h+='<div class="ofp-empty">'+S(I.school)+'<b>Tes formations arrivent ici.</b><span>Les centres de formation vérifiés rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'une de leurs formations correspond à ton profil, elle apparaît ici et une notification t\'attend dans ton espace. Ton profil est prêt : tu n\'as rien d\'autre à faire.</span></div>'
       +'<div class="ofr-cat"><b>En attendant, explore les catalogues officiels</b><span>Avec tes critères'+(PROF&&PROF.metier?' (métier : '+esc(PROF.metier)+(PROF.ville?', '+esc(PROF.ville):'')+')':'')+' :</span>'
       +'<a href="https://www.moncompteformation.gouv.fr" target="_blank" rel="noopener noreferrer">Mon Compte Formation ↗</a>'
       +'<a href="https://www.onisep.fr" target="_blank" rel="noopener noreferrer">Onisep, les formations ↗</a></div>';
