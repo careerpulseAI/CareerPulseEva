@@ -16523,10 +16523,11 @@ window.cpEvx = window.cpEvx || {
   }
   function notOrgHtml(u){
     return '<div class="pcard"><div class="pcard-hd"><span class="pchoice-ico">'+SCHOOL+'</span><div><h2>Compléter ma demande</h2><span>Ce compte n\'est pas encore un compte centre</span></div></div>'
-      +'<p>Renseignez votre organisme : CareerPulse vérifie votre SIRET, votre déclaration d\'activité et votre certification, puis active votre espace.</p>'
+      +'<div class="pinfo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span>Vous êtes connecté avec un compte qui n\'est pas un compte centre (par exemple votre compte membre). Si vous avez déjà un compte centre, cliquez sur <b>« J\'ai déjà un compte centre »</b> en bas de page.</span></div>'
+      +'<p>Sinon, renseignez votre organisme : CareerPulse vérifie votre SIRET, votre déclaration d\'activité et votre certification, puis active votre espace.</p>'
       +orgFields()+ENG+'<div class="perr" id="ps-err"></div>'
       +'<button class="pbtn pri" type="button" id="pn-send">Envoyer ma demande</button>'
-      +'<button class="pbtn sec" type="button" id="pn-other">Utiliser un autre compte</button></div>';
+      +'<button class="pbtn sec" type="button" id="pn-other">J\'ai déjà un compte centre</button></div>';
   }
   var rendering=false;
   function renderCentre(){
@@ -16543,7 +16544,11 @@ window.cpEvx = window.cpEvx || {
     }
     rendering=true;
     setBody('<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>');
-    window.fbDb.collection('organismes').doc(u.uid).get().then(function(d){
+    var getOrg=function(){ return window.fbDb.collection('organismes').doc(u.uid).get(); };
+    getOrg().catch(function(){ return u.getIdToken(true).then(getOrg); }).then(function(d){
+      if(d.exists) return d;
+      return u.getIdToken(true).then(getOrg).catch(function(){ return d; });
+    }).then(function(d){
       rendering=false;
       if(!d.exists){ setBody(notOrgHtml(u)); $('pn-other').onclick=function(){ setHash('pro-centre'); if(window.fbLogout) fbLogout(); };
         $('pn-send').onclick=function(){ var er=$('ps-err'), b=this; er.textContent=''; var o=readOrg(); if(!checkOrg(o,er)) return; if(!$('ps-eng').checked){ er.textContent='Cochez l\'engagement pour envoyer votre demande.'; return; }
