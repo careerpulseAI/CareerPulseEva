@@ -16867,6 +16867,70 @@ html.cp-org-lock .cp-lock-hide, html.cp-org-lock #s-pro-centre .ptop, html.cp-or
 .ofcm-box, .ofcm-chat, .ofp-box{ position:relative; }
 
 .ofc-logo .ofc-logo-pv{ display:flex !important; align-items:center !important; justify-content:center !important; text-align:center; font-size:.74rem !important; font-weight:700; color:#94a3b8 !important; line-height:1; margin:0 !important; }
+/* ═══ EVA Pro ═══ */
+.evp-cta{ position:relative; overflow:hidden; isolation:isolate; width:100%; display:flex; align-items:center; gap:14px; text-align:left; padding:16px; border-radius:22px; border:none; cursor:pointer; color:#fff; font-family:'DM Sans',sans-serif;
+  background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.32),transparent 55%),linear-gradient(130deg,#0b2a52,#1e40af 50%,#047857 120%); box-shadow:0 20px 40px -26px rgba(30,64,175,.85), inset 0 1px 0 rgba(255,255,255,.2); }
+.evp-cta::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcSheen 7s 1.4s ease-in-out 1 both; }
+.evp-cta-ic{ width:48px; height:48px; flex-shrink:0; border-radius:16px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); }
+.evp-cta-ic svg{ width:24px; height:24px; }
+.evp-cta-t{ flex:1; min-width:0; } .evp-cta-t b{ display:block; font-size:.96rem; } .evp-cta-t span{ display:block; font-size:.74rem; opacity:.86; margin-top:3px; line-height:1.45; }
+.evp-cta-go{ display:flex; align-items:center; gap:6px; flex-shrink:0; padding:9px 12px 9px 14px; border-radius:999px; background:#fff; color:#1e40af; font-weight:900; font-size:.78rem; }
+.evp-cta-go svg{ width:15px; height:15px; }
+@media (max-width:720px){ .evp-cta{ flex-wrap:wrap; } .evp-cta-go{ width:100%; justify-content:center; } }
+.evp-sheet{ position:fixed; inset:0; z-index:9100; background:rgba(15,23,42,.45); display:flex; animation:ofmIn .25s ease both; }
+@keyframes ofmIn{ from{ opacity:0; } }
+.evp-box{ position:relative; width:100vw; height:100vh; height:100dvh; display:flex; flex-direction:column; overflow:hidden; font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif; color:#0f172a;
+  background:radial-gradient(circle at 1px 1px,rgba(30,64,175,.06) 1px,transparent 0) 0 0/22px 22px, radial-gradient(60% 45% at 0% 0%,rgba(16,185,129,.12),transparent 70%), radial-gradient(60% 45% at 100% 100%,rgba(59,130,246,.12),transparent 70%), linear-gradient(180deg,#f6f9fd,#f1f7f4); }
+.evp-hd{ display:flex; align-items:center; gap:12px; padding:14px 18px; color:#fff; background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.28),transparent 55%),linear-gradient(120deg,#0b2a52,#1e40af 45%,#047857 120%); box-shadow:0 10px 30px -20px rgba(2,6,23,.8); }
+.evp-x{ width:38px; height:38px; flex-shrink:0; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.14); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.evp-x svg{ width:18px; height:18px; }
+.evp-logo{ position:relative; width:42px; height:42px; flex-shrink:0; border-radius:14px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#fff,#dbeafe); color:#1e40af; box-shadow:0 10px 20px -12px rgba(2,6,23,.7); }
+.evp-logo svg{ width:22px; height:22px; } .evp-logo i{ position:absolute; right:-3px; bottom:-3px; width:12px; height:12px; border-radius:50%; background:#22c55e; border:2px solid #fff; }
+.evp-ht{ flex:1; min-width:0; } .evp-ht b{ display:block; font-size:1.02rem; } .evp-ht span{ display:block; font-size:.74rem; opacity:.88; }
+.evp-on{ display:flex; align-items:center; gap:6px; font-style:normal; font-size:.68rem; font-weight:800; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); }
+.evp-on i{ width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 0 3px rgba(74,222,128,.25); }
+.evp-scroll{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.evp-wrap{ max-width:1120px; margin:0 auto; padding:16px 14px 28px; }
+.evp-hero{ position:relative; padding:18px; border-radius:22px; background:rgba(255,255,255,.88); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(226,232,240,.95); box-shadow:0 18px 40px -30px rgba(15,23,42,.5); }
+.evp-hero-k{ display:inline-flex; font-size:.68rem; font-weight:800; padding:5px 10px; border-radius:999px; background:#eff6ff; color:#1e40af; border:1px solid #dbeafe; }
+.evp-hero h3{ margin:10px 0 6px; font-family:'Cormorant Garamond',Georgia,serif; font-size:1.7rem; font-weight:600; line-height:1.1; }
+.evp-hero p{ margin:0; font-size:.86rem; line-height:1.6; color:#334155; }
+.evp-search{ display:flex; align-items:center; gap:10px; margin-top:14px; padding:0 14px; border-radius:16px; background:#f8fafc; border:1px solid #dbe4ef; }
+.evp-search svg{ width:18px; height:18px; color:#64748b; flex-shrink:0; }
+.evp-search input{ flex:1; min-width:0; border:none !important; background:none !important; box-shadow:none !important; padding:13px 0 !important; font:500 .88rem 'DM Sans',sans-serif; outline:none; }
+.evp-grid{ display:grid; grid-template-columns:1fr; gap:14px; margin-top:14px; }
+.evp-nav{ display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px; }
+.evp-nav::-webkit-scrollbar{ display:none; }
+.evp-tab{ flex:0 0 auto; display:flex; align-items:center; gap:8px; padding:10px 12px; border-radius:16px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; font:800 .8rem 'DM Sans',sans-serif; color:#0f172a; white-space:nowrap; box-shadow:0 8px 18px -16px rgba(15,23,42,.5); }
+.evp-te{ font-size:1.05rem; } .evp-tab em{ font-style:normal; min-width:22px; height:20px; padding:0 6px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; font-size:.66rem; background:#eff6ff; color:#1e40af; }
+.evp-tab.on{ color:#fff; border-color:transparent; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 12px 24px -14px rgba(30,64,175,.85); }
+.evp-tab.on em{ background:rgba(255,255,255,.22); color:#fff; }
+.evp-list{ display:flex; flex-direction:column; gap:10px; }
+.evp-q{ border-radius:18px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 10px 24px -22px rgba(15,23,42,.6); overflow:hidden; transition:box-shadow .25s, border-color .25s; }
+.evp-q.open{ border-color:#bfdbfe; box-shadow:0 18px 34px -24px rgba(30,64,175,.55); }
+.evp-qb{ width:100%; display:flex; align-items:center; gap:12px; text-align:left; padding:14px; border:none; background:none; cursor:pointer; font:800 .9rem/1.35 'DM Sans',sans-serif; color:#0f172a; }
+.evp-qe{ width:34px; height:34px; flex-shrink:0; border-radius:11px; display:flex; align-items:center; justify-content:center; background:#f1f5f9; font-size:1rem; }
+.evp-qt{ flex:1; min-width:0; }
+.evp-ch{ width:30px; height:30px; flex-shrink:0; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#f8fafc; border:1px solid #e2e8f0; color:#1e40af; transition:transform .3s; }
+.evp-ch svg{ width:15px; height:15px; } .evp-q.open .evp-ch{ transform:rotate(180deg); background:#eff6ff; }
+.evp-a{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease; } .evp-q.open .evp-a{ grid-template-rows:1fr; }
+.evp-ai{ overflow:hidden; display:flex; gap:10px; padding:0 14px; } .evp-q.open .evp-ai{ padding:0 14px 14px; }
+.evp-av{ width:32px; height:32px; flex-shrink:0; border-radius:11px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); }
+.evp-av svg{ width:17px; height:17px; }
+.evp-bub{ flex:1; padding:11px 13px; border-radius:4px 16px 16px 16px; background:linear-gradient(180deg,#f8fbff,#f2f8f5); border:1px solid #e2eaf3; font-size:.86rem; line-height:1.62; color:#1e293b; }
+.evp-bub b{ color:#1e3a8a; }
+.evp-dots{ display:inline-flex; gap:4px; } .evp-dots i{ width:7px; height:7px; border-radius:50%; background:#94a3b8; animation:evpDot 1s infinite; } .evp-dots i:nth-child(2){ animation-delay:.15s; } .evp-dots i:nth-child(3){ animation-delay:.3s; }
+@keyframes evpDot{ 0%,80%,100%{ opacity:.3; transform:translateY(0); } 40%{ opacity:1; transform:translateY(-3px); } }
+.evp-empty{ padding:18px; border-radius:18px; background:#fff; border:1px dashed #cbd5e1; font-size:.84rem; color:#475569; text-align:center; }
+.evp-foot{ margin-top:18px; text-align:center; font-size:.8rem; color:#475569; }
+@media (min-width:900px){
+  .evp-wrap{ padding:26px 80px 40px 28px; }
+  .evp-hero{ padding:24px 26px; } .evp-hero h3{ font-size:2.1rem; }
+  .evp-grid{ grid-template-columns:290px 1fr; align-items:start; }
+  .evp-nav{ flex-direction:column; overflow:visible; position:sticky; top:12px; }
+  .evp-tab{ width:100%; padding:13px 14px; } .evp-tt{ flex:1; text-align:left; }
+}
+@media (prefers-reduced-motion: reduce){ .evp-cta::after{ display:none; } }
 </style>
 <script>
 /* ═══ Page de présentation d'une formation — même rendu côté centre (aperçu) et côté membre ═══ */
@@ -16921,6 +16985,115 @@ window.cpSheetArrows=function(sc,host){
   sc.addEventListener('scroll',upd,{ passive:true }); setTimeout(upd,60); setTimeout(upd,600);
   try{ new ResizeObserver(upd).observe(sc); }catch(e){}
 };
+</script>
+<script>
+/* ═══ EVA Pro : l'assistante des centres de formation (questions en tiroirs, réponses vérifiées) ═══ */
+(function(){
+  var MAIL='careerpulse-pro@outlook.com';
+  var T=[
+   ['use','🧭','Utiliser CareerPulse',[
+    ['Comment publier une formation ?','Ouvrez l\'onglet <b>Mes formations</b>, remplissez la fiche (l\'intitulé et la ville sont obligatoires), cochez l\'engagement de conformité puis cliquez sur <b>Publier</b>. Votre formation est aussitôt proposée aux membres dont le profil correspond. 🚀'],
+    ['Puis-je préparer une fiche sans la publier ?','Oui : cliquez sur <b>Enregistrer en brouillon</b>. Un brouillon n\'est visible par aucun membre. Vous le publiez quand vous êtes prêt.'],
+    ['Comment modifier une formation publiée ?','Dans la liste de vos formations, cliquez sur <b>Modifier</b>, faites vos changements puis <b>Publier</b>. La page vue par les membres est mise à jour immédiatement.'],
+    ['Dépublier ou supprimer, quelle différence ?','<b>Dépublier</b> masque la formation aux membres sans rien effacer : vous pouvez la republier en un clic. <b>Supprimer</b> efface définitivement la fiche. Les conversations déjà ouvertes avec des candidats restent accessibles.'],
+    ['Comment est calculé le pourcentage de correspondance ?','EVA compare votre fiche au profil du membre sur plusieurs critères : <b>lieu</b>, <b>modalité</b>, <b>public visé</b>, <b>financements</b> et <b>métier ou mots-clés</b>. Le membre voit chaque critère avec ✓ ou ✗ : le pourcentage est toujours expliqué.'],
+    ['Comment améliorer ma correspondance avec les profils ?','Remplissez tout : public visé, financements réellement possibles, ville, modalité, et des <b>mots-clés précis</b> (le métier visé, les outils enseignés). Plus la fiche est complète, plus elle atteint les bons profils. 🎯'],
+    ['Comment voir ma page comme un candidat ?','Cliquez sur <b>Aperçu candidat</b> dans le formulaire, ou sur <b>Voir ma page</b> dans la liste de vos formations. 👀'],
+    ['Comment ajouter mon logo et mes couleurs ?','Dans la section <b>Identité visuelle</b> du formulaire : choisissez votre logo (il est réduit automatiquement) et l\'une des 7 couleurs de page. Ajoutez aussi le lien de votre site : il apparaît sur votre page.'],
+    ['Combien de formations puis-je publier ?','Aucune limite n\'est fixée aujourd\'hui : publiez une fiche par formation, pour que chacune soit recommandée aux bons profils.']
+   ]],
+   ['law','⚖️','Règles et démarchage CPF',[
+    ['Pourquoi ne puis-je pas contacter les candidats ?','Parce que la loi interdit le démarchage des titulaires du CPF. Sur CareerPulse, c\'est donc <b>toujours le candidat qui écrit en premier</b>. Vous publiez, il vous contacte s\'il est intéressé. ✅'],
+    ['Que dit précisément la loi ?','L\'<b>article L6323-8-1 du Code du travail</b> interdit toute prospection commerciale des titulaires du CPF visant à collecter leurs données ou à leur faire conclure une formation éligible au CPF, que ce soit par téléphone, SMS, e-mail ou réseaux sociaux.'],
+    ['Quelles sont les sanctions ?','Le non-respect de cette interdiction est puni d\'une amende administrative pouvant atteindre <b>75 000 €</b> pour une personne physique et <b>375 000 €</b> pour une personne morale.'],
+    ['Ai-je le droit de faire de la publicité ?','Oui : la publicité de vos formations reste autorisée. Votre fiche sur CareerPulse en est une. Ce qui est interdit, c\'est le contact direct et non sollicité d\'un titulaire du CPF.'],
+    ['Puis-je proposer une promotion ou un cadeau ?','Non. La loi interdit aussi d\'offrir des avantages ou cadeaux liés à l\'inscription à une formation financée par le CPF. C\'est l\'engagement que vous cochez avant de publier. 🚫🎁'],
+    ['Que puis-je faire des coordonnées d\'un candidat ?','Uniquement répondre à <b>sa</b> demande. Pas de relance commerciale ultérieure, pas d\'ajout à une liste de diffusion, pas de transmission à un tiers : ces données restent soumises au RGPD.'],
+    ['Pourquoi mon compte doit-il être vérifié ?','Pour garantir aux candidats qu\'ils échangent avec de vrais organismes : CareerPulse contrôle votre SIRET, votre déclaration d\'activité et votre certification Qualiopi avant d\'activer votre espace. 🛡️'],
+    ['Que se passe-t-il si un candidat me signale ?','CareerPulse examine chaque signalement. En cas de manquement aux règles (démarchage, informations trompeuses), l\'accès à l\'espace peut être suspendu.']
+   ]],
+   ['cert','🎓','Certifications et qualité',[
+    ['RNCP ou Répertoire spécifique, quelle différence ?','Le <b>RNCP</b> recense les certifications professionnelles qui attestent d\'un métier, classées par niveau. Le <b>Répertoire spécifique (RS)</b> recense des certifications de compétences complémentaires (habilitations, compétences transversales), sans niveau.'],
+    ['Où trouver le code de ma certification ?','Sur la fiche de votre certification publiée par <b>France Compétences</b> : le code a la forme RNCP12345 ou RS1234. Recopiez-le tel quel dans votre fiche.'],
+    ['Puis-je publier une formation non certifiante ?','Oui, choisissez « Non certifiante ». Sachez qu\'en règle générale, seules les formations certifiantes (RNCP, RS) et quelques actions spécifiques sont éligibles au CPF : ne cochez alors que les financements réellement possibles.'],
+    ['Qualiopi, c\'est quoi exactement ?','C\'est la certification qualité des organismes de formation. Elle est obligatoire pour bénéficier de fonds publics ou mutualisés : CPF, OPCO, France Travail, Régions…'],
+    ['Je ne suis pas certifié Qualiopi, puis-je publier ?','Oui, indiquez « Non ». Vos formations restent visibles, mais les financements publics et mutualisés ne seront en principe pas accessibles à vos stagiaires.'],
+    ['À quoi correspondent les niveaux 2 à 8 ?','C\'est le cadre national des certifications : niveau 3 = CAP, 4 = Bac, 5 = Bac+2, 6 = Bac+3 ou 4, 7 = Bac+5, 8 = doctorat. Le niveau 2 correspond aux savoirs de base.'],
+    ['Le badge Qualiopi s\'affiche-t-il sur ma page ?','Oui, si vous indiquez être certifié. Cette information doit être exacte : elle fait partie de ce que CareerPulse vérifie.'],
+    ['Comment indiquer le niveau de sortie ?','Dans la section Certification et qualité, choisissez le niveau dans la liste. Si aucun ne convient, choisissez <b>Autre</b> et précisez-le.']
+   ]],
+   ['fin','💶','Financements',[
+    ['Comment fonctionne le CPF pour un candidat ?','Le titulaire mobilise ses droits sur <b>Mon Compte Formation</b> pour une formation éligible. De votre côté, l\'offre doit être référencée sur EDOF, la plateforme des organismes de la Caisse des Dépôts.'],
+    ['Le candidat doit-il payer quelque chose avec le CPF ?','Une participation forfaitaire est en principe demandée au titulaire, sauf exceptions (notamment les demandeurs d\'emploi ou en cas d\'abondement de l\'employeur). Vérifiez le montant en vigueur sur les sites officiels.'],
+    ['Qu\'est-ce qu\'un OPCO ?','Un opérateur de compétences : il finance la formation des <b>salariés</b> pour les entreprises de sa branche (plan de développement des compétences, alternance…).'],
+    ['Comment France Travail peut-il financer ?','Pour les demandeurs d\'emploi, sous conditions : par exemple l\'aide individuelle à la formation (AIF), ou des dispositifs liés à un recrutement comme la POEI. La demande passe par le conseiller du candidat.'],
+    ['Et la Région ?','Les Régions financent des programmes de formation, surtout pour les demandeurs d\'emploi. Les dispositifs varient d\'une région à l\'autre.'],
+    ['Qu\'est-ce que Transitions Pro ?','C\'est l\'organisme qui finance le <b>projet de transition professionnelle</b> : un salarié se forme à un nouveau métier, avec maintien de sa rémunération sous conditions.'],
+    ['Dois-je garantir un financement au candidat ?','Non, jamais. Le financement dépend de la situation de chacun et de la décision du financeur. Votre page le rappelle d\'ailleurs au candidat.'],
+    ['Quels financements cocher sur ma fiche ?','Uniquement ceux que votre formation peut <b>réellement</b> mobiliser. Une case cochée à tort crée de fausses attentes et fausse le pourcentage de correspondance.']
+   ]],
+   ['msg','💬','Demandes et messagerie',[
+    ['Comment suis-je prévenu d\'une demande ?','Dans l\'onglet <b>Demandes reçues</b> : un compteur et un point rouge signalent les nouveaux messages. 🔔'],
+    ['Puis-je écrire en premier à un candidat ?','Non. Une conversation s\'ouvre toujours à l\'initiative du candidat : c\'est la règle de CareerPulse et une exigence légale.'],
+    ['Que vois-je du candidat ?','Son projet de formation s\'il a choisi de le partager, et les coordonnées qu\'il a décidé de vous transmettre (prénom, e-mail, téléphone). Rien d\'autre.'],
+    ['Dans quel délai répondre ?','Nous vous conseillons de répondre <b>sous 48 heures ouvrées</b> : un candidat qui reçoit une réponse rapide reste engagé. ⏱️'],
+    ['Comment rédiger une bonne réponse ?','Personnalisez votre message, répondez précisément à ses questions (dates, reste à charge, modalités d\'inscription), et restez sans pression : c\'est lui qui décide. ✍️'],
+    ['Puis-je envoyer un document ?','Pour l\'instant, la messagerie accepte le texte. Partagez le lien vers votre programme officiel ou votre site.'],
+    ['Y a-t-il une limite de messages ?','Oui, 60 messages par conversation. Si le candidat a partagé ses coordonnées, vous pourrez poursuivre par e-mail ou téléphone.'],
+    ['Que signifie « conversation clôturée » ?','Le candidat a mis fin à l\'échange : plus personne ne peut écrire. Respectez sa décision, sans le relancer par un autre moyen.'],
+    ['Combien de temps les conversations sont-elles conservées ?','Elles sont prévues pour être supprimées 6 mois après le dernier message, pour protéger les données des candidats.']
+   ]],
+   ['acc','🔐','Compte et abonnement',[
+    ['Comment mon compte est-il vérifié ?','L\'équipe CareerPulse contrôle votre SIRET, votre déclaration d\'activité et votre certification Qualiopi, puis active votre espace. Vous voyez « en cours de vérification » tant que ce n\'est pas fait.'],
+    ['Combien coûte l\'espace centre ?','L\'abonnement Pro est de <b>15 € par mois</b>. Pendant la phase de test, l\'accès est ouvert sur demande ; le paiement en ligne sera proposé ensuite.'],
+    ['Comment quitter mon espace ?','Cliquez sur <b>Se déconnecter</b>, en haut de votre espace. Si vous fermez la page sans vous déconnecter, votre session se déconnecte automatiquement.'],
+    ['Comment modifier mes coordonnées ?','Dans l\'onglet <b>Mon organisme</b>. Elles ne sont partagées avec un candidat que dans une conversation qu\'il a lui-même ouverte.'],
+    ['Que fait CareerPulse de mes données ?','Les informations de votre organisme servent à la vérification de votre compte et à votre page de formation. CareerPulse ne transmet jamais les données des candidats à des tiers.'],
+    ['Comment supprimer mon compte ?','Écrivez à <b>'+MAIL+'</b> depuis l\'adresse de votre compte : nous traitons votre demande.'],
+    ['Comment contacter CareerPulse ?','Par e-mail à <b>'+MAIL+'</b>. Pensez à indiquer le nom de votre organisme. 📩']
+   ]]
+  ];
+  var tab='use', q='';
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function plain(h){ return h.replace(/<[^>]+>/g,'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+  var CH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  var SP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9.4l-4.2 1.8L12 16l-1.8-4.8L6 9.4l4.2-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>';
+  function list(){
+    var n=plain(q), out=[];
+    T.forEach(function(t){ t[3].forEach(function(x,i){ if(n ? (plain(x[0]+' '+x[1]).indexOf(n)>-1) : t[0]===tab) out.push([t,x,i]); }); });
+    if(!out.length) return '<div class="evp-empty">🔎 Aucune question ne correspond. Essayez un autre mot, ou écrivez-nous à <b>'+MAIL+'</b>.</div>';
+    return out.map(function(r){ return '<div class="evp-q"><button type="button" class="evp-qb"><span class="evp-qe">'+r[0][1]+'</span><span class="evp-qt">'+esc(r[1][0])+'</span><span class="evp-ch">'+CH+'</span></button><div class="evp-a"><div class="evp-ai"><span class="evp-av">'+SP+'</span><div class="evp-bub" data-a="'+encodeURIComponent(r[1][1])+'"></div></div></div></div>'; }).join('');
+  }
+  function nav(){ return T.map(function(t){ return '<button type="button" class="evp-tab'+(t[0]===tab&&!q?' on':'')+'" data-t="'+t[0]+'"><span class="evp-te">'+t[1]+'</span><span class="evp-tt">'+t[2]+'</span><em>'+t[3].length+'</em></button>'; }).join(''); }
+  function open(){
+    if(document.querySelector('.evp-sheet')) return;
+    var total=T.reduce(function(a,t){ return a+t[3].length; },0);
+    var sh=document.createElement('div'); sh.className='evp-sheet';
+    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo">'+SP+'<i></i></span><div class="evp-ht"><b>EVA Pro</b><span>L\'assistante des centres de formation ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
+      +'<div class="evp-scroll"><div class="evp-wrap">'
+      +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total+' réponses vérifiées</div><h3>Bonjour 👋 Je suis EVA Pro.</h3><p>Je réponds à vos questions sur CareerPulse, les règles du démarchage CPF, les certifications, les financements et la messagerie. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
+      +'<label class="evp-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Rechercher une question… (ex : Qualiopi, OPCO, délai)"></label></div>'
+      +'<div class="evp-grid"><nav class="evp-nav">'+nav()+'</nav><div class="evp-list">'+list()+'</div></div>'
+      +'<div class="evp-foot">📩 Une autre question ? Écrivez à <b>'+MAIL+'</b></div>'
+      +'</div></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var L=sh.querySelector('.evp-list'), N=sh.querySelector('.evp-nav'), sc=sh.querySelector('.evp-scroll');
+    function close(){ sh.remove(); if(!document.querySelector('.ofcm-sheet')) document.documentElement.classList.remove('ofcm-lock'); }
+    sh.querySelector('.evp-x').onclick=close;
+    sh.querySelector('.evp-search input').oninput=function(e){ q=e.target.value.trim(); N.innerHTML=nav(); L.innerHTML=list(); };
+    N.onclick=function(e){ var b=e.target.closest('[data-t]'); if(!b) return; tab=b.getAttribute('data-t'); q=''; sh.querySelector('.evp-search input').value=''; N.innerHTML=nav(); L.innerHTML=list(); var on=N.querySelector('.on'); if(on && window.innerWidth<900){ N.scrollTo({ left:on.offsetLeft-12, behavior:'smooth' }); } };
+    L.onclick=function(e){
+      var b=e.target.closest('.evp-qb'); if(!b) return; var it=b.parentNode, was=it.classList.contains('open');
+      L.querySelectorAll('.evp-q.open').forEach(function(x){ x.classList.remove('open'); });
+      if(was) return; it.classList.add('open');
+      var bub=it.querySelector('.evp-bub');
+      if(!bub.getAttribute('data-done')){ bub.innerHTML='<span class="evp-dots"><i></i><i></i><i></i></span>'; setTimeout(function(){ bub.innerHTML=decodeURIComponent(bub.getAttribute('data-a')); bub.setAttribute('data-done','1'); },650); }
+    };
+    if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.evp-box'));
+  }
+  window.cpEvaPro=open;
+  window.cpEvaProCard=function(){ return '<button type="button" class="evp-cta" data-a="evapro"><span class="evp-cta-ic">'+SP+'</span><span class="evp-cta-t"><b>Une question ? EVA Pro vous répond 💬</b><span>Démarchage CPF, certifications, financements, messagerie : '+T.reduce(function(a,t){ return a+t[3].length; },0)+' réponses vérifiées.</span></span><span class="evp-cta-go">Ouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>'; };
+})();
 </script>
 <script>
 (function(){
@@ -17072,10 +17245,10 @@ window.cpSheetArrows=function(sc,host){
     var root=$('of-root'); if(!root) return;
     var o=ST.org||{};
     if(!(o.verifie && o.proActif)){
-      root.innerHTML='<div class="ofc">'+hero(o)+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET, déclaration d\'activité, Qualiopi). Dès sa validation, vous pourrez publier vos formations.</span></div></div></div>';
+      root.innerHTML='<div class="ofc">'+hero(o)+(window.cpEvaProCard?cpEvaProCard():'')+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET, déclaration d\'activité, Qualiopi). Dès sa validation, vous pourrez publier vos formations.</span></div></div></div>';
       root.onclick=onClick; return;
     }
-    root.innerHTML='<div class="ofc">'+hero(o)+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
+    root.innerHTML='<div class="ofc">'+hero(o)+(window.cpEvaProCard?cpEvaProCard():'')+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
     root.onchange=function(e){
       if(e.target.id==='ofc-logo'){ readLogo(e.target.files[0]).then(function(d){ ST.logo=d; $('ofc-logo-pv').innerHTML='<img src="'+d+'" alt="">'; }).catch(function(){ formErr('Ce fichier n\'est pas une image valide (PNG, JPG ou WebP).'); }); }
@@ -17103,6 +17276,7 @@ window.cpSheetArrows=function(sc,host){
       theme:ST.theme||'emeraude', orgLogo:ST.logo||'', orgSite:val('ofc-site') };
   }
   function onClick(e){
+    var ep=e.target.closest('[data-a="evapro"]'); if(ep){ if(window.cpEvaPro) cpEvaPro(); return; }
     var lo=e.target.closest('[data-a="logout"]'); if(lo){ if(window.cpOrgUnlock) cpOrgUnlock(); try{ history.replaceState(null,'','#pro-centre'); }catch(x){} if(window.fbLogout) fbLogout(); else if(window.fbAuth) fbAuth.signOut().then(function(){ location.reload(); }); return; }
     var th=e.target.closest('[data-theme]'); if(th){ ST.theme=th.getAttribute('data-theme'); document.querySelectorAll('.ofc-sw').forEach(function(x){ x.classList.toggle('on',x===th); }); return; }
     var pv=e.target.closest('[data-a="preview"]'); if(pv){ previewSheet(collect()); return; }
