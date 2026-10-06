@@ -29559,6 +29559,33 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 @keyframes ofpStripes{ to{ background-position:32px 0; } }
 @keyframes ofpShine{ 0%{ transform:translateX(-150%); } 45%,100%{ transform:translateX(320%); } }
 @media (prefers-reduced-motion: reduce){ .ofw .ofw-pg .ofw-bar i, .ofw .ofw-pg .ofw-bar i::before, .ofw .ofw-pg .ofw-bar i::after, .ofw-pg-n.bump{ animation:none !important; transition:none !important; } }
+
+/* ── Formations recommandées (modèle catalogue) ── */
+.ofr{ position:relative; background:#fff; border:1px solid #f1e3c4; border-radius:18px; padding:14px; box-shadow:0 12px 26px -22px rgba(180,83,9,.6); }
+.ofr + .ofr{ margin-top:10px; }
+.ofr-hd{ display:flex; gap:12px; align-items:center; }
+.ofr-pct{ flex-shrink:0; width:58px; height:58px; border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.3); }
+.ofr-pct b{ font-size:1.05rem; font-weight:900; line-height:1; } .ofr-pct span{ font-size:.56rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; opacity:.9; margin-top:2px; }
+.ofr-pct.hi{ background:linear-gradient(135deg,#047857,#10b981); } .ofr-pct.mid{ background:linear-gradient(135deg,#b45309,#f59e0b); } .ofr-pct.lo{ background:linear-gradient(135deg,#64748b,#94a3b8); }
+.ofr-t{ min-width:0; } .ofr-t b{ display:block; font-size:.92rem; font-weight:900; color:#0f172a; line-height:1.3; } .ofr-t span{ display:block; font-size:.72rem; color:#64748b; margin-top:3px; }
+.ofr-new,.ofr-sv{ display:inline-block; font-style:normal; font-size:.6rem; font-weight:800; padding:3px 8px; border-radius:999px; margin:6px 6px 0 0; }
+.ofr-new{ background:#dc2626; color:#fff; } .ofr-sv{ background:#fef3c7; color:#92400e; }
+.ofr-crit{ display:flex; flex-wrap:wrap; gap:6px; margin-top:11px; }
+.ofr-crit span{ font-size:.66rem; font-weight:800; padding:4px 9px; border-radius:999px; }
+.ofr-crit .ok{ background:#d1fae5; color:#065f46; } .ofr-crit .ko{ background:#f1f5f9; color:#64748b; }
+.ofr-more{ display:flex; align-items:center; gap:5px; margin-top:10px; border:none; background:none; padding:0; font:800 .74rem/1 inherit; color:#b45309; cursor:pointer; }
+.ofr-more svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2.6; transition:transform .25s; }
+.ofr.open .ofr-more svg{ transform:rotate(180deg); }
+.ofr-det{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .3s ease; } .ofr.open .ofr-det{ grid-template-rows:1fr; }
+.ofr-in{ overflow:hidden; } .ofr.open .ofr-in{ padding-top:10px; }
+.ofr-link{ display:inline-block; margin:8px 0; font-size:.78rem; font-weight:800; color:#047857; }
+.ofr-done{ display:flex; gap:8px; align-items:flex-start; margin-top:10px; padding:10px 12px; border-radius:12px; background:#ecfdf5; border:1px solid #a7f3d0; font-size:.76rem; line-height:1.5; color:#065f46; font-weight:600; }
+.ofr-done svg{ width:16px; height:16px; flex-shrink:0; margin-top:2px; stroke:currentColor; fill:none; stroke-width:2.6; }
+.ofr-tip{ display:flex; gap:9px; align-items:flex-start; margin-bottom:10px; padding:11px 13px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; font-size:.78rem; line-height:1.5; color:#78350f; }
+.ofr-tip svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; stroke:#b45309; fill:none; stroke-width:2; }
+.ofr-cat{ display:flex; flex-direction:column; gap:7px; margin-top:10px; padding:13px 14px; border-radius:16px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.78rem; color:#334155; }
+.ofr-cat b{ color:#0f172a; font-size:.84rem; } .ofr-cat a{ font-weight:800; color:#047857; text-decoration:none; }
+.ofr-old{ margin:16px 0 8px; font-size:.8rem; color:#64748b; }
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -29747,7 +29774,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var n=el('div','oft');
     n.innerHTML='<div class="oft-bar" role="tablist">'
       +'<button type="button" class="oft-tab" role="tab" data-t="1">'+S(I.school)+'<span>Mon profil formation</span></button>'
-      +'<button type="button" class="oft-tab" role="tab" data-t="2">'+S(I.inbox)+'<span>Propositions & questions</span>'+(pending?'<em>'+pending+'</em>':'')+'</button>'
+      +'<button type="button" class="oft-tab" role="tab" data-t="2">'+S(I.inbox)+'<span>Formations pour toi & questions</span><em style="display:none"></em></button>'
       +'<i class="oft-ink"></i></div>'
       +'<div class="oft-pan" data-p="1"></div><div class="oft-pan" data-p="2"></div>';
     var p1=n.querySelector('[data-p="1"]'), p2=n.querySelector('[data-p="2"]');
@@ -29759,9 +29786,9 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       +chips(['100 % gratuit','Coordonnées jamais transmises','Zéro démarchage','C\'est toi qui décides'])));
     p1.appendChild(zone);
     p2.appendChild(el('div','oft-pitch',
-      '<div class="oft-pk"><span class="oft-spark">💌</span>Les formations viennent à toi</div>'
-      +'<p>Ici, je te présente les <b>propositions</b> des organismes vérifiés : tu réponds en un clic, sans pression. Et si tu te poses une question sur la mise en relation ou le financement, la réponse est juste en dessous.</p>'
-      +chips(['Réponse en un clic','Organismes vérifiés','Tu gardes la main'])));
+      '<div class="oft-pk"><span class="oft-spark">💌</span>Les formations faites pour toi</div>'
+      +'<p>Je te montre les <b>formations des centres vérifiés</b> qui correspondent à ton profil, avec un pourcentage de correspondance expliqué. Si l\'une t\'intéresse, c\'est <b>toi</b> qui contactes le centre. Et tes questions sur la formation ou le financement ont leur réponse juste en dessous.</p>'
+      +chips(['Match expliqué','Centres vérifiés','Personne ne t\'appelle'])));
     p2.appendChild(inbox);
     var fq=el('div','oft-faq'); fq.appendChild(faqNode()); p2.appendChild(fq);
     var bar=n.querySelector('.oft-bar'), ink=n.querySelector('.oft-ink');
@@ -29769,9 +29796,9 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       n.querySelectorAll('.oft-tab').forEach(function(b){ var on=b.getAttribute('data-t')===k; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false'); if(on){ ink.style.width=b.offsetWidth+'px'; ink.style.transform='translateX('+b.offsetLeft+'px)'; } });
       [p1,p2].forEach(function(p){ var on=p.getAttribute('data-p')===k; p.classList.toggle('on',on); });
     }
-    n.querySelectorAll('.oft-tab').forEach(function(b){ b.onclick=function(){ show(b.getAttribute('data-t')); }; });
+    n.querySelectorAll('.oft-tab').forEach(function(b){ b.onclick=function(){ var k=b.getAttribute('data-t'); show(k); if(k==='2') markSeen(); }; });
     n.addEventListener('of-tab',function(e){ show(e.detail); try{ n.scrollIntoView({ behavior:'smooth', block:'start' }); }catch(_){} });
-    var first=(PROF && pending)?'2':'1';
+    var first='1'; loadReco().then(recoBadge);
     show(first); requestAnimationFrame(function(){ show(first); });
     window.addEventListener('resize',function(){ var on=n.querySelector('.oft-tab.on'); if(on) show(on.getAttribute('data-t')); });
     return n;
@@ -30003,21 +30030,18 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   }
   /* Étape 8 : deux accords séparés, décochés par défaut */
   function consentAsk(){ return 'Je te propose <b>deux choix séparés</b>. Rien n\'est coché d\'avance, et tu pourras changer d\'avis à tout moment.'; }
-  var TXT_VIS='Je souhaite être visible auprès des organismes de formation présents sur CareerPulse afin de recevoir des propositions correspondant à mon projet.';
+  var TXT_VIS='J\'accepte qu\'EVA utilise mon profil pour me recommander des formations de centres vérifiés présents sur CareerPulse, et pour établir des statistiques anonymes.';
   var TXT_PROP='J\'accepte de recevoir des propositions de formation personnalisées de la part d\'organismes présents sur CareerPulse.';
   var TXT_PRE='J\'accepte que mon prénom soit affiché aux organismes (sinon, seul un identifiant anonyme apparaît).';
   function consentWidget(q){
     var box=inp(), c=W.A.consent||{};
     box.innerHTML=visAd({})+'<label class="ofw-ck"><input type="checkbox" data-c="visible"'+(c.visible?' checked':'')+'><span>'+TXT_VIS+'</span></label>'
-      +'<div class="ofw-conf"><b>Ta confidentialité reste prioritaire.</b> Les organismes peuvent consulter certaines informations de ton profil pour savoir si leur formation correspond à ton projet. <b>Ton e-mail et ton téléphone ne leur sont jamais communiqués</b> : si une proposition t\'intéresse, c\'est toi qui les contactes.</div>'
-      +'<label class="ofw-ck"><input type="checkbox" data-c="propositions"'+(c.propositions?' checked':'')+'><span>'+TXT_PROP+'</span></label>'
-      +'<label class="ofw-ck lt"><input type="checkbox" data-c="prenom"'+(c.prenom?' checked':'')+'><span>'+TXT_PRE+'</span></label>';
+      +'<div class="ofw-conf"><b>Ta confidentialité reste prioritaire.</b> Les centres ne voient <b>jamais</b> ton profil ni tes coordonnées. Si une formation t\'intéresse, c\'est toi qui contactes le centre, et tu choisis ce que tu partages.</div>';
     var row=el('div','ofw-row'), g=btn('Enregistrer mes préférences','pri'); row.appendChild(g); box.appendChild(row);
     g.onclick=function(){
       var v={}; box.querySelectorAll('[data-c]').forEach(function(x){ v[x.getAttribute('data-c')]=x.checked; });
-      if(v.propositions && !v.visible){ errMsg(box,'Pour recevoir des propositions, ton profil doit être visible : coche aussi la première case.'); return; }
       W.A.consent=v; W.A.consentAt=nowIso(); me(answerLabel(q,v)); box.innerHTML='';
-      var r= v.visible ? 'C\'est noté ✅ Ton profil sera <b>visible</b>'+(v.propositions?' et tu pourras recevoir des propositions.':', sans propositions pour l\'instant.') : 'Pas de souci 😊 Ton profil reste <b>privé</b>. Tu pourras le rendre visible quand tu veux.';
+      var r= v.visible ? 'C\'est noté ✅ Je te recommanderai les <b>formations qui te correspondent</b>.' : 'Pas de souci 😊 Ton profil reste <b>privé</b>. Tu pourras activer les recommandations quand tu veux.';
       typeIn(r,function(){ next(); });
     };
     scrollIn(box);
@@ -30119,13 +30143,10 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   /* Publicité « visibilité » au-dessus des vraies cases qui rendent visible */
   function visAd(c){
     c=c||{};
-    var k= c.visible ? (c.propositions ? 'all' : 'prop') : 'off';
-    var T={
-      off:['📣','Les formateurs ne te voient pas encore','Active « Visible » : ton profil apparaît chez les organismes de formation vérifiés, et ce sont eux qui peuvent venir te présenter leurs formations. Ton nom et tes coordonnées restent privés, et tu coupes tout en un clic quand tu veux.','Active ta visibilité juste en dessous'],
-      prop:['💌','Plus qu\'une case !','Ton profil est visible. Active « Recevoir des propositions » pour que les organismes puissent te présenter leurs formations, directement ici.','Active les propositions juste en dessous'],
-      all:['✨','Ton profil est en vitrine','Les organismes de formation vérifiés peuvent te découvrir et te présenter leurs formations. Garde ton profil à jour pour qu\'il te ressemble.','']
-    }[k];
-    return '<div class="ofad'+(k==='all'?' ok':'')+'"><div class="ofad-in"><span class="ofad-ico">'+T[0]+'</span><div><b>'+T[1]+'</b><p>'+T[2]+'</p></div></div>'
+    var on=!!c.visible;
+    var T= on ? ['✨','Tes recommandations sont actives','Je te montre les formations des centres vérifiés qui correspondent à ton profil, avec ton pourcentage de correspondance. Personne ne te contacte : c\'est toi qui choisis qui tu contactes.','']
+      : ['📣','Active tes recommandations','Je te trouve les formations qui te correspondent parmi celles des centres vérifiés, avec un pourcentage de correspondance expliqué. Ton nom et tes coordonnées restent privés, et tu coupes tout en un clic.','Active-les juste en dessous'];
+    return '<div class="ofad'+(on?' ok':'')+'"><div class="ofad-in"><span class="ofad-ico">'+T[0]+'</span><div><b>'+T[1]+'</b><p>'+T[2]+'</p></div></div>'
       +(T[3]?'<div class="ofad-cta">'+T[3]+'<i>'+S('<path d="m6 9 6 6 6-6"/>')+'</i></div>':'')+'</div>';
   }
   /* Page « Mon profil formation » : la présentation + les réglages (modifier, refaire, supprimer, visibilité) */
@@ -30134,9 +30155,9 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var wrap=el('div','ofs-wrap');
     wrap.innerHTML=meterHtml(A,true)+presPage(publicDoc(A,u.uid,c),{ badge:'<span class="'+(c.visible?'on':'')+'">'+(c.visible?'● Visible par les organismes':'Profil privé')+'</span>' })
       +'<div class="ofs">'
-      +'<div class="ofs-t">'+S(I.eye)+'<span>'+(c.visible?'C\'est exactement la page que voient les organismes de formation vérifiés.':'Ta page est prête. Active « Visible » pour la montrer aux organismes vérifiés.')+'</span></div>'
+      +'<div class="ofs-t">'+S(I.eye)+'<span>'+(c.visible?'Ce que le centre recevra si tu le contactes : tu choisiras toi-même ce que tu partages.':'Ton profil est prêt. Active « Me recommander des formations » pour que je te montre celles qui te correspondent.')+'</span></div>'
       +visAd(c)
-      +sw('visible','Visible par les organismes de formation',c.visible)+sw('propositions','Recevoir des propositions',c.propositions)+sw('prenom','Afficher mon prénom',c.prenom)
+      +sw('visible','Me recommander des formations',c.visible)
       +'<div class="ofw-row wrap"><button type="button" class="ofw-btn pri" data-a="edit">'+S('<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/>')+'Modifier mon profil</button><button type="button" class="ofw-btn" data-a="redo">'+S('<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>')+'Refaire le formulaire avec EVA</button></div>'
       +'<button type="button" class="ofw-skip" data-a="del">Supprimer mon profil formation</button></div>'
       +(function(){ var n=(ST.props||[]).filter(function(p){ return p.statut==='envoyee'; }).length;
@@ -30173,7 +30194,95 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   function sw(k,t,on){ return '<label class="ofs-sw"><span>'+t+'</span><input type="checkbox" data-sw="'+k+'"'+(on?' checked':'')+'><i></i></label>'; }
 
   /* ═════ PROPOSITIONS : présentées par EVA, réponse en un clic ═════ */
-  function drawInbox(box){
+  /* ═════ MODÈLE CATALOGUE : formations recommandées au membre (le candidat contacte, jamais l'inverse) ═════ */
+  var RECO={ forms:null, st:null, loading:null };
+  function nrm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim(); }
+  var STOPW={ pour:1, dans:1, avec:1, plus:1, mois:1, formation:1, metier:1, autre:1, une:1, des:1, les:1, aux:1 };
+  function toks(t){ return nrm(t).split(' ').filter(function(w){ return w.length>=4 && !STOPW[w]; }); }
+  var PUB_MAP={ 'Salarié(e)':'Salarié(e)', 'Demandeur(se) d\'emploi':'Demandeur(se) d\'emploi', 'Étudiant(e)':'Étudiant(e) / alternant(e)', 'Alternant(e)':'Étudiant(e) / alternant(e)', 'Indépendant(e) / freelance':'Indépendant(e) / freelance', 'Entrepreneur(e)':'Indépendant(e) / freelance', 'En reconversion':'En reconversion' };
+  var FIN_MAP={ 'CPF':'CPF', 'France Travail':'France Travail', 'Employeur':'OPCO / employeur', 'OPCO':'OPCO / employeur', 'Projet de transition professionnelle':'Transitions Pro', 'Région':'Région', 'Autofinancement':'Autofinancement' };
+  /* % de correspondance expliqué : chaque critère est affiché ✓ ou ✗ */
+  function matchOf(f,A){
+    A=A||{}; var crit=[];
+    var dist=f.modalite==='À distance';
+    var lieu = dist || A.zone==='Toute la France' || A.zone==='100 % à distance' && dist || (A.ville && nrm(A.ville)===nrm(f.ville)) || (Array.isArray(A.mobilite) && A.mobilite.indexOf('Nationale')>-1);
+    crit.push(['Lieu'+(f.ville?' : '+f.ville:''), !!lieu]);
+    if(A.modalite){ var mm={ 'En présentiel':'Présentiel', 'À distance':'À distance', 'En hybride':'Hybride' }[A.modalite]; crit.push(['Modalité : '+(f.modalite||'—'), A.modalite==='Peu importe' || mm===f.modalite]); }
+    var pub=PUB_MAP[A.situation]; if(pub && Array.isArray(f.publics) && f.publics.length) crit.push(['Public : '+pub, f.publics.indexOf(pub)>-1]);
+    var fins=(Array.isArray(A.fin)?A.fin:[]).map(function(x){ return FIN_MAP[x]; }).filter(Boolean);
+    if(fins.length && Array.isArray(f.financements) && f.financements.length) crit.push(['Financement', fins.some(function(x){ return f.financements.indexOf(x)>-1; })]);
+    var mine=toks([A.metier,A.precise,(Array.isArray(A.secteurs)?A.secteurs.join(' '):''),(Array.isArray(A.competences)?A.competences.join(' '):A.competences)].join(' '));
+    if(mine.length){ var ft=toks([f.titre,f.domaine,f.programme].join(' ')); crit.push(['Projet / métier', mine.some(function(w){ var r=w.slice(0,5); return ft.some(function(x){ return x.slice(0,5)===r; }); })]); }
+    var ok=crit.filter(function(c){ return c[1]; }).length;
+    return { pct: crit.length ? Math.round(ok/crit.length*100) : 0, crit:crit };
+  }
+  function recoRef(){ var u=user(); return u&&db() ? db().collection('users').doc(u.uid).collection('of').doc('reco') : null; }
+  function loadReco(force){
+    if(RECO.loading && !force) return RECO.loading;
+    var r=recoRef(); if(!r){ RECO.forms=[]; RECO.st={}; return Promise.resolve(); }
+    RECO.loading=Promise.all([
+      db().collection('formations').where('statut','==','publiee').get().then(function(q){ RECO.forms=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }); }).catch(function(){ RECO.forms=[]; }),
+      r.get().then(function(d){ RECO.st=d.exists?d.data():{}; }).catch(function(){ RECO.st={}; })
+    ]).then(function(){ RECO.st.saved=RECO.st.saved||[]; RECO.st.hidden=RECO.st.hidden||[]; RECO.st.seen=RECO.st.seen||[]; RECO.st.interest=RECO.st.interest||{}; recoBadge(); });
+    return RECO.loading;
+  }
+  function saveReco(){ var r=recoRef(); if(r) r.set(RECO.st,{merge:true}).catch(function(){}); }
+  function recoList(){
+    var A=PROF||{}, on=!!(CONS&&CONS.visible);
+    return (RECO.forms||[]).filter(function(f){ return RECO.st.hidden.indexOf(f.id)<0; })
+      .map(function(f){ return { f:f, m:matchOf(f,A) }; })
+      .filter(function(x){ return !on || x.m.pct>=40; })
+      .sort(function(a,b){ return b.m.pct-a.m.pct; });
+  }
+  function newCount(){ if(!RECO.forms||!RECO.st||!(CONS&&CONS.visible)) return 0; return recoList().filter(function(x){ return RECO.st.seen.indexOf(x.f.id)<0; }).length; }
+  function recoBadge(){
+    var n=newCount();
+    document.querySelectorAll('.oft-tab[data-t="2"]').forEach(function(t){ var e=t.querySelector('em'); if(!e){ e=document.createElement('em'); t.appendChild(e); } e.textContent=n; e.style.display=n?'':'none'; });
+    document.querySelectorAll('#eva-side [data-go="eva-of"]').forEach(function(b){ var x=b.querySelector('.of-badge'); if(!x){ x=el('span','of-badge'); b.appendChild(x); } x.textContent=n; x.style.display=n?'':'none'; });
+  }
+  function markSeen(){ if(!RECO.forms||!(CONS&&CONS.visible)) return; var ch=false; recoList().forEach(function(x){ if(RECO.st.seen.indexOf(x.f.id)<0){ RECO.st.seen.push(x.f.id); ch=true; } }); if(ch){ saveReco(); } setTimeout(recoBadge,600); }
+  function pctClass(p){ return p>=75?'hi':p>=50?'mid':'lo'; }
+  function recoCard(x){
+    var f=x.f, m=x.m, saved=RECO.st.saved.indexOf(f.id)>-1, inter=!!RECO.st.interest[f.id], neu=RECO.st.seen.indexOf(f.id)<0;
+    var g=function(l,v){ return v?'<div><span>'+l+'</span><b>'+esc(v)+'</b></div>':''; };
+    return '<div class="ofr" data-f="'+esc(f.id)+'"><div class="ofr-hd"><div class="ofr-pct '+pctClass(m.pct)+'"><b>'+m.pct+'%</b><span>match</span></div>'
+      +'<div class="ofr-t"><b>'+esc(f.titre)+'</b><span>'+esc([f.orgNom,f.ville,f.modalite].filter(Boolean).join(' · '))+'</span>'+(neu?'<em class="ofr-new">Nouveau</em>':'')+(saved?'<em class="ofr-sv">Enregistrée</em>':'')+'</div></div>'
+      +'<div class="ofr-crit">'+m.crit.map(function(c){ return '<span class="'+(c[1]?'ok':'ko')+'">'+(c[1]?'✓':'✗')+' '+esc(c[0])+'</span>'; }).join('')+'</div>'
+      +'<button type="button" class="ofr-more" data-a="toggle">Voir la fiche complète'+S('<path d="m6 9 6 6 6-6"/>')+'</button>'
+      +'<div class="ofr-det"><div class="ofr-in">'
+      +'<div class="ofp-g">'+g('Organisme',f.orgNom)+g('Certification',[f.certType,f.certCode].filter(Boolean).join(' · '))+g('Qualiopi',f.qualiopi===false?'Non':'Oui')+g('Modalité',f.modalite)+g('Durée',f.duree)+g('Dates',f.dates)+g('Niveau de sortie',f.niveau)+g('Prix TTC',f.prix)+g('Lieu',[f.etablissement,f.adresse,f.ville].filter(Boolean).join(', '))+g('Financements possibles',(f.financements||[]).join(', '))+'</div>'
+      +(f.programme?'<div class="ofp-txt">'+esc(f.programme)+'</div>':'')
+      +(f.lien?'<a class="ofr-link" href="'+esc(f.lien)+'" target="_blank" rel="noopener noreferrer">Voir le programme détaillé ↗</a>':'')
+      +'<div class="ofp-note">Le financement dépend de ta situation : vérifie toujours les conditions officielles. Rien n\'est garanti tant que le financeur n\'a pas validé.</div>'
+      +(inter?'<div class="ofr-done">'+S(I.check)+'<span>Ta demande est enregistrée. Dès l\'ouverture de la messagerie protégée, tu pourras écrire au centre : c\'est toujours toi qui envoies le premier message.</span></div>'
+        :'<div class="ofw-row wrap"><button type="button" class="ofw-btn pri" data-a="int">'+S(I.check)+'Je suis intéressé(e)</button><button type="button" class="ofw-btn" data-a="save">'+(saved?'Retirer des enregistrées':'Enregistrer')+'</button><button type="button" class="ofw-btn" data-a="hide">Pas pour moi</button><button type="button" class="ofw-skip" data-a="sig">Signaler</button></div>')
+      +'</div></div></div>';
+  }
+  function drawReco(box){
+    if(!RECO.forms){ box.innerHTML='<div class="ofp-empty"><span class="evh-typing"><span></span><span></span><span></span></span></div>'; loadReco().then(function(){ drawReco(box); }); return; }
+    var on=!!(CONS&&CONS.visible), L=recoList(), h='';
+    if(!PROF) h+='<div class="ofr-tip">'+S(I.school)+'<span>Complète ton <b>profil formation</b> dans le premier onglet : je pourrai calculer ton pourcentage de correspondance.</span></div>';
+    else if(!on) h+='<div class="ofr-tip">'+S(I.eye)+'<span>Active <b>« Me recommander des formations »</b> dans ton profil : je te montrerai d\'abord celles qui te correspondent le mieux.</span></div>';
+    if(L.length) h+=L.map(recoCard).join('');
+    else h+='<div class="ofp-empty">'+S(I.school)+'<b>Tes formations arrivent ici.</b><span>Les centres de formation vérifiés rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'une de leurs formations correspond à ton profil, elle apparaît ici et une notification t\'attend dans ton espace. Ton profil est prêt : tu n\'as rien d\'autre à faire.</span></div>'
+      +'<div class="ofr-cat"><b>En attendant, explore les catalogues officiels</b><span>Avec tes critères'+(PROF&&PROF.metier?' (métier : '+esc(PROF.metier)+(PROF.ville?', '+esc(PROF.ville):'')+')':'')+' :</span>'
+      +'<a href="https://www.moncompteformation.gouv.fr" target="_blank" rel="noopener noreferrer">Mon Compte Formation ↗</a>'
+      +'<a href="https://www.onisep.fr" target="_blank" rel="noopener noreferrer">Onisep, les formations ↗</a></div>';
+    var old=(ST.props||[]); if(old.length) h+='<div class="ofr-old"><b>Anciennes propositions</b></div>'+old.map(propCard).join('');
+    box.innerHTML=h;
+    box.onclick=function(e){
+      var b=e.target.closest('[data-a]'); if(!b) return;
+      var card=b.closest('.ofr'); if(!card){ inboxClick(e,box); return; }
+      var id=card.getAttribute('data-f'), a=b.getAttribute('data-a'), u=user();
+      if(a==='toggle'){ card.classList.toggle('open'); return; }
+      if(a==='int'){ RECO.st.interest[id]=new Date().toISOString(); saveReco(); toast('Demande enregistrée'); drawReco(box); var c2=box.querySelector('.ofr[data-f="'+id+'"]'); if(c2) c2.classList.add('open'); return; }
+      if(a==='save'){ var k=RECO.st.saved.indexOf(id); if(k>-1) RECO.st.saved.splice(k,1); else RECO.st.saved.push(id); saveReco(); toast(k>-1?'Retirée de tes formations enregistrées':'Formation enregistrée'); drawReco(box); return; }
+      if(a==='hide'){ RECO.st.hidden.push(id); saveReco(); toast('C\'est noté, je ne te la montre plus'); drawReco(box); recoBadge(); return; }
+      if(a==='sig'){ if(!u||!db()) return; db().collection('reports').add({ reporterUid:u.uid, type:'formation', formationId:id, createdAt:new Date().toISOString() }).then(function(){ toast('Merci, CareerPulse va examiner cette formation'); }).catch(function(){ toast('Signalement impossible pour le moment'); }); }
+    };
+  }
+  function drawInbox(box){ drawReco(box); }
+  function drawInboxOld(box){
     var list=ST.props||[];
     if(!list.length){ box.innerHTML='<div class="ofp-empty">'+S(I.inbox)+'<b>Aucune proposition pour le moment.</b><span>'+(CONS&&CONS.propositions?'Dès qu\'un organisme vérifié te présente une formation, je te la montre ici.':'Active « Recevoir des propositions » dans ton profil pour que les organismes puissent te présenter leurs formations.')+'</span></div>'; return; }
     box.innerHTML=list.map(propCard).join('');
