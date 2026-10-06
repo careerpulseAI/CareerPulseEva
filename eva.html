@@ -26970,7 +26970,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       else if(b.getAttribute('data-cp')){ if(('CSSViewTransitionRule' in window)){ location.href='index.html'; } else { document.documentElement.classList.add('cp-leaving'); setTimeout(function(){ location.href='index.html'; },170); } }
     });
   }
-  var SUB={ 'eva-droits':'Comprendre ses droits pour mieux avancer.', 'eva-workspace':'Des conseils concrets, adaptés à ta situation.', 'eva-entretien':'Prépare tes entretiens avec des mises en situation réalistes.', 'eva-tracker':'Suis ton énergie et tes progrès, jour après jour.', 'eva-identity':'Qui est EVA et comment elle t\'accompagne.', 'eva-of':'EVA développe son réseau : à moyen terme, des organismes de formation pourront te présenter leurs formations.', 'eva-taches':'Organise ton travail, une tâche après l\'autre.' };
+  var SUB={ 'eva-droits':'Comprendre ses droits pour mieux avancer.', 'eva-workspace':'Des conseils concrets, adaptés à ta situation.', 'eva-entretien':'Prépare tes entretiens avec des mises en situation réalistes.', 'eva-tracker':'Suis ton énergie et tes progrès, jour après jour.', 'eva-identity':'Qui est EVA et comment elle t\'accompagne.', 'eva-of':'Des formations de centres vérifiés, recommandées selon ton profil. C\'est toi qui choisis qui tu contactes.', 'eva-taches':'Organise ton travail, une tâche après l\'autre.' };
   function decorate(){
     Object.keys(SUB).forEach(function(id){
       var sc=document.getElementById('s-'+id); if(!sc) return;
@@ -29586,6 +29586,46 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 .ofr-cat{ display:flex; flex-direction:column; gap:7px; margin-top:10px; padding:13px 14px; border-radius:16px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.78rem; color:#334155; }
 .ofr-cat b{ color:#0f172a; font-size:.84rem; } .ofr-cat a{ font-weight:800; color:#047857; text-decoration:none; }
 .ofr-old{ margin:16px 0 8px; font-size:.8rem; color:#64748b; }
+
+/* ── Messagerie protégée (membre) ── */
+.ofc-comp{ margin-top:10px; display:flex; flex-direction:column; gap:9px; }
+.ofc-txt{ min-height:110px !important; }
+.ofc-share{ display:flex; flex-direction:column; gap:6px; padding:11px 12px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; font-size:.78rem; color:#422006; }
+.ofc-share b{ font-size:.76rem; color:#92400e; }
+.ofc-share label{ display:flex; gap:8px; align-items:flex-start; cursor:pointer; }
+.ofc-share input[type=checkbox]{ -webkit-appearance:checkbox !important; appearance:auto !important; width:16px !important; height:16px !important; min-height:0 !important; margin:2px 0 0 !important; padding:0 !important; flex-shrink:0; accent-color:#b45309; }
+.ofc-legal{ margin:0; font-size:.68rem; color:#64748b; line-height:1.5; }
+.ofd{ margin-bottom:12px; padding:12px; border-radius:18px; background:linear-gradient(135deg,#fff7e6,#fffbeb); border:1px solid #f6e3bd; }
+.ofd-hd{ display:flex; align-items:center; gap:7px; margin-bottom:8px; font-size:.84rem; color:#78350f; }
+.ofd-hd svg{ width:17px; height:17px; stroke:#b45309; fill:none; stroke-width:2; }
+.ofd-it{ width:100%; display:flex; align-items:center; gap:10px; text-align:left; border:1px solid #f1e3c4; background:#fff; border-radius:14px; padding:11px 12px; cursor:pointer; font-family:inherit; }
+.ofd-it + .ofd-it{ margin-top:7px; }
+.ofd-it > svg{ width:16px; height:16px; flex-shrink:0; stroke:#b45309; fill:none; stroke-width:2.4; }
+.ofd-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; background:#e2e8f0; } .ofd-dot.on{ background:#dc2626; box-shadow:0 0 0 4px rgba(220,38,38,.15); }
+.ofd-t{ flex:1; min-width:0; } .ofd-t b{ display:block; font-size:.82rem; color:#0f172a; } .ofd-t span{ display:block; font-size:.68rem; color:#64748b; margin-top:2px; }
+.ofd-t i{ display:block; font-style:normal; font-size:.72rem; color:#334155; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
+.ofm-sheet{ position:fixed; inset:0; z-index:9000; background:rgba(15,23,42,.45); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:ofmIn .25s ease both; }
+.ofm-box{ width:100%; max-width:640px; height:min(92vh,760px); background:#fff; border-radius:22px 22px 0 0; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 -20px 50px -20px rgba(15,23,42,.5); font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif; }
+@media (min-width:900px){ .ofm-sheet{ align-items:center; } .ofm-box{ border-radius:22px; height:min(86vh,760px); } }
+.ofm-hd{ display:flex; align-items:center; gap:10px; padding:14px 14px 12px; color:#fff; background:linear-gradient(125deg,#78350f,#b45309 50%,#f59e0b); }
+.ofm-hd > div{ flex:1; min-width:0; } .ofm-hd b{ display:block; font-size:.92rem; } .ofm-hd span{ display:block; font-size:.72rem; opacity:.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ofm-hd em{ font-style:normal; font-size:.64rem; font-weight:800; padding:4px 9px; border-radius:999px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); white-space:nowrap; }
+.ofm-x{ width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.16); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+.ofm-x svg{ width:18px; height:18px; stroke:#fff; fill:none; stroke-width:2.6; }
+.ofm-list{ flex:1; overflow-y:auto; padding:14px; background:#faf7f2; display:flex; flex-direction:column; gap:8px; }
+.ofm-note{ align-self:center; text-align:center; max-width:90%; font-size:.7rem; color:#64748b; background:#fff; border:1px solid #f1e3c4; border-radius:12px; padding:7px 10px; line-height:1.45; }
+.ofm-m{ max-width:82%; padding:9px 12px; border-radius:16px; font-size:.84rem; line-height:1.5; }
+.ofm-m p{ margin:0; white-space:pre-wrap; word-break:break-word; } .ofm-m span{ display:block; margin-top:4px; font-size:.62rem; opacity:.75; }
+.ofm-m.me{ align-self:flex-end; background:linear-gradient(135deg,#b45309,#f59e0b); color:#fff; border-bottom-right-radius:5px; }
+.ofm-m.them{ align-self:flex-start; background:#fff; border:1px solid #f1e3c4; color:#0f172a; border-bottom-left-radius:5px; }
+.ofm-ft{ display:flex; gap:8px; padding:10px 12px; border-top:1px solid #f1e3c4; background:#fff; }
+.ofm-in{ flex:1; min-height:44px; max-height:120px; resize:none; font:500 .88rem/1.4 inherit; padding:11px 12px; border:1px solid #e2d6bd; border-radius:14px; }
+.ofm-send{ width:46px; height:46px; flex-shrink:0; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#b45309,#f59e0b); box-shadow:0 8px 18px -10px rgba(180,83,9,.8); }
+.ofm-send svg{ width:20px; height:20px; stroke:#fff; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+.ofm-tools{ display:flex; gap:8px; padding:0 12px 12px; background:#fff; flex-wrap:wrap; }
+.ofm-tools button{ border:1px solid #f1e3c4; background:#fffbeb; color:#92400e; border-radius:999px; padding:7px 12px; font:800 .7rem/1 inherit; cursor:pointer; }
+@keyframes ofmIn{ from{ opacity:0; } }
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -29705,19 +29745,19 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   function present(mode){
     var E=X(), t=T();
     return [
-      { make:function(){ return E.cover(t,{ member:true, name:'Mise en relation avec des organismes de formation', bio:'EVA développe son réseau : à moyen terme, des organismes de formation pourront te présenter leurs formations.', stats:[['100 %','gratuit'],['0','coordonnée transmise'],['Toi','qui décides']] }); }, feed:false, wait:2000 },
+      { make:function(){ return E.cover(t,{ member:true, name:'Mise en relation avec des organismes de formation', bio:'Des formations de centres vérifiés, recommandées selon ton profil. C\'est toi qui choisis qui tu contactes.', stats:[['100 %','gratuit'],['0','coordonnée transmise'],['Toi','qui décides']] }); }, feed:false, wait:2000 },
       { think:'EVA prépare ton espace formation…' },
       { msg: mode==='member'
         ? 'Ravie de te voir'+(firstName()?', <b>'+esc(firstName())+'</b>':'')+' 😊 Ici, on prépare ensemble ton <b>projet de formation</b>… pour que les bons organismes puissent venir te le présenter.'
-        : 'Bienvenue 👋 Ici, ce n\'est pas toi qui cours après les formations : <b>tu poses ton projet une fois</b>, et des organismes de formation pourront venir te présenter les leurs.' },
+        : 'Bienvenue 👋 Ici, <b>tu poses ton projet une fois</b>, et je te montre les formations des centres vérifiés qui te correspondent. Si l\'une t\'intéresse, c\'est toi qui contactes le centre.' },
       { make:function(){ return E.post(t,{ ico:S(I.school,t.c1), ttl:'Comment ça marche ?', meta:'En 4 étapes, sans surprise', media:false,
         txt:'<ul><li><i>1</i><span><b>Tu crées ton profil avec moi</b> : ton projet, la formation que tu cherches, tes disponibilités.</span></li>'
-          +'<li><i>2</i><span><b>Tu choisis, séparément</b> : être visible, et recevoir des propositions. Rien n\'est coché d\'avance.</span></li>'
-          +'<li><i>3</i><span><b>Des organismes vérifiés te présentent une formation.</b> Je te la présente clairement, et tu réponds en un clic.</span></li>'
-          +'<li><i>4</i><span><b>Elle t\'intéresse ?</b> Je te donne les coordonnées de l\'organisme : c\'est toi qui décides de lui écrire. <b>Tes coordonnées ne sont jamais transmises.</b></span></li></ul>' }); } },
+          +'<li><i>2</i><span><b>Tu choisis</b> d\'activer ou non les recommandations. Rien n\'est coché d\'avance.</span></li>'
+          +'<li><i>3</i><span><b>Je te montre les formations qui te correspondent</b>, avec un pourcentage de correspondance expliqué.</span></li>'
+          +'<li><i>4</i><span><b>Elle t\'intéresse ?</b> Tu écris au centre dans une messagerie protégée, et tu choisis ce que tu partages. <b>Personne ne te contacte sans ton accord.</b></span></li></ul>' }); } },
       E.mob({ think:['Je vérifie que tout reste confidentiel…','Je prépare ton parcours…'] }),
       { make:function(){ return E.post(t,{ ico:S(I.lock,t.c1), ttl:'Bon à savoir', meta:'EVA joue cartes sur table', media:false, like:false,
-        txt:'EVA ouvre progressivement son réseau aux organismes de formation, et <b>chacun est vérifié</b> (SIRET, déclaration d\'activité) avant de pouvoir te présenter une formation. Je ne te demanderai <b>jamais</b> tes identifiants Mon Compte Formation ou France Travail. Et je ne promets ni financement, ni admission : je t\'aide à y voir clair.' }); } }
+        txt:'EVA ouvre progressivement son réseau aux organismes de formation, et <b>chacun est vérifié</b> (SIRET, déclaration d\'activité) avant de pouvoir publier une formation. Je ne te demanderai <b>jamais</b> tes identifiants Mon Compte Formation ou France Travail. Et je ne promets ni financement, ni admission : je t\'aide à y voir clair.' }); } }
     ];
   }
   function mountOf(key,steps){ root.innerHTML=''; X().mount({ host:root, id:'of', key:key, label:'Mise en relation · formation', bar:true, steps:steps }); }
@@ -29745,7 +29785,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       PROF=r[0].exists ? (r[0].data().answers||null) : null;
       CONS=r[1].exists ? r[1].data() : { visible:false, propositions:false, prenom:false };
       var steps=present('member'), zone=el('div','ofz'), inbox=el('div','ofi');
-      steps.push({ msg: PROF ? 'Ton profil est prêt ✅ Retrouve-le dans l\'onglet <b>Mon profil formation</b>, et tes propositions dans l\'onglet d\'à côté 👇' : 'Tout se passe en <b>deux onglets</b> : ton profil d\'abord, puis tes propositions et mes réponses à tes questions 👇' });
+      steps.push({ msg: PROF ? 'Ton profil est prêt ✅ Retrouve-le dans l\'onglet <b>Mon profil formation</b>, et les formations faites pour toi dans l\'onglet d\'à côté 👇' : 'Tout se passe en <b>deux onglets</b> : ton profil d\'abord, puis les formations faites pour toi et mes réponses à tes questions 👇' });
       steps.push({ node:ofTabs(zone,inbox) });
       drawZone(zone); drawInbox(inbox);
       mountOf('of-member',steps);
@@ -29759,12 +29799,12 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var hi=p?'<b>'+esc(p)+'</b>, ':'';
     var by={
       'Demandeur(se) d\'emploi':'tu poses ton projet une fois, et ce sont les organismes qui viennent vers toi. Du temps gagné pour ta recherche, sans un seul appel non sollicité.',
-      'Salarié(e)':'tu avances sur ta formation sans empiéter sur ton travail : les propositions arrivent ici, et tu réponds quand tu veux.',
+      'Salarié(e)':'tu avances sur ta formation sans empiéter sur ton travail : les formations qui te correspondent arrivent ici, et tu contactes le centre quand tu veux.',
       'Étudiant(e)':'compare des formations qui collent vraiment à ton projet, sans être harcelé(e) d\'appels.',
       'Alternant(e)':'compare des formations qui collent vraiment à ton projet, sans être harcelé(e) d\'appels.',
-      'Indépendant(e) / freelance':'décris ton besoin une fois : les organismes qui peuvent t\'aider à développer ton activité viennent te présenter leurs formations.',
-      'Entrepreneur(e)':'décris ton besoin une fois : les organismes qui peuvent t\'aider à développer ton activité viennent te présenter leurs formations.',
-      'En reconversion':'ta reconversion mérite la bonne formation. Présente ton projet une fois, et compare les propositions sereinement.'
+      'Indépendant(e) / freelance':'décris ton besoin une fois : je te montre les formations qui peuvent t\'aider à développer ton activité.',
+      'Entrepreneur(e)':'décris ton besoin une fois : je te montre les formations qui peuvent t\'aider à développer ton activité.',
+      'En reconversion':'ta reconversion mérite la bonne formation. Présente ton projet une fois, et compare les formations sereinement.'
     };
     var txt=by[sit] || 'quel que soit ton profil (salarié(e), en recherche, étudiant(e), indépendant(e)…), un seul profil suffit pour que les bonnes formations viennent à toi.';
     return hi ? hi+txt : txt.charAt(0).toUpperCase()+txt.slice(1);
@@ -29782,7 +29822,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     p1.appendChild(el('div','oft-pitch',
       '<div class="oft-pk"><span class="oft-spark">✨</span>'+(PROF?'Ton profil travaille pour toi':'Ton projet de formation, en 5 minutes')+'</div>'
       +'<p>'+pitchFor()+'</p>'
-      +(PROF?'<p class="oft-sub">Garde-le à jour : un profil précis, ce sont des propositions qui te ressemblent.</p>':'<p class="oft-sub">9 petites étapes, une question à la fois. Je t\'explique tout au fur et à mesure, et tu peux revenir en arrière quand tu veux.</p>')
+      +(PROF?'<p class="oft-sub">Garde-le à jour : un profil précis, ce sont des recommandations qui te ressemblent.</p>':'<p class="oft-sub">9 petites étapes, une question à la fois. Je t\'explique tout au fur et à mesure, et tu peux revenir en arrière quand tu veux.</p>')
       +chips(['100 % gratuit','Coordonnées jamais transmises','Zéro démarchage','C\'est toi qui décides'])));
     p1.appendChild(zone);
     p2.appendChild(el('div','oft-pitch',
@@ -29808,19 +29848,19 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   var STEPS=['Mon identité','Ma situation','Mon projet','La formation','Mon financement','Mes disponibilités','Mes préférences','Visibilité','Récapitulatif'];
   var SECT=['Numérique / informatique','Commerce','Marketing / communication','Administration','Finance / comptabilité','BTP','Industrie','Transport / logistique','Santé','Social','Hôtellerie / restauration','Sécurité','Immobilier','Création / design','Entrepreneuriat','Autre'];
   var Q=[
-    {s:1,say:'On commence par toi, tout simplement. À chaque question, je te dis ce qui est <b>visible</b> par les organismes… et ce qui reste <b>privé</b>. 🔒'},
-    {s:1,k:'prenom',t:'text',req:1,ask:'Quel est ton <b>prénom</b> ? Tu choisiras plus tard s\'il est affiché.',ph:'Ex : Jean',pre:firstName},
-    {s:1,k:'nom',t:'text',req:1,ask:'Et ton <b>nom</b> ? Il reste <b>privé</b> : aucun organisme ne le voit.',ph:'Ex : Dupont'},
+    {s:1,say:'On commence par toi, tout simplement. Rassure-toi : <b>les centres ne voient jamais ton profil</b>. Il sert à te recommander les bonnes formations, et c\'est toi qui choisis ce que tu partages si tu contactes un centre. 🔒'},
+    {s:1,k:'prenom',t:'text',req:1,ask:'Quel est ton <b>prénom</b> ?',ph:'Ex : Jean',pre:firstName},
+    {s:1,k:'nom',t:'text',req:1,ask:'Et ton <b>nom</b> ? Il reste <b>privé</b>.',ph:'Ex : Dupont'},
     {s:1,k:'age',t:'one',req:1,ask:'Ta <b>tranche d\'âge</b> ?',o:['Moins de 18 ans','18-24 ans','25-34 ans','35-44 ans','45-54 ans','55 ans et +']},
     {s:1,k:'ville',t:'ville',req:1,ask:'Dans quelle <b>ville</b> habites-tu ? Je retrouve ton département toute seule.',ph:'Ex : Caen'},
     {s:1,k:'dep',t:'text',req:1,ask:'Je n\'ai pas trouvé ta ville 🤔 Quel est ton <b>département</b> ?',ph:'Ex : 14 – Calvados',if:function(a){ return !a.depAuto; }},
     {s:1,k:'mobilite',t:'multi',req:1,ask:'Jusqu\'où es-tu prêt(e) à aller pour te former ? Plusieurs choix possibles.',o:['Locale','Départementale','Régionale','Nationale','À distance']},
-    {s:2,say:'Parfait 👌 Parlons de ta <b>situation</b> : ça aide les organismes à savoir si leur formation est faite pour toi.'},
+    {s:2,say:'Parfait 👌 Parlons de ta <b>situation</b> : ça m\'aide à te recommander des formations faites pour toi.'},
     {s:2,k:'situation',t:'one',req:1,ask:'Quelle est ta <b>situation actuelle</b> ?',o:['Salarié(e)','Demandeur(se) d\'emploi','Étudiant(e)','Alternant(e)','Indépendant(e) / freelance','Entrepreneur(e)','En reconversion','Autre']},
     {s:2,k:'statut',t:'one',ask:'Ton <b>statut</b>, plus précisément ? Il reste <b>privé</b>.',o:['CDI','CDD','Intérim','Fonction publique','Micro-entrepreneur','Sans activité','Étudiant','Autre']},
     {s:2,k:'diplome',t:'one',req:1,ask:'Ton <b>niveau de diplôme</b> ?',o:['Aucun diplôme','CAP / BEP','Bac','Bac+1','Bac+2','Bac+3','Bac+4','Bac+5','Doctorat','Autre']},
     {s:2,k:'envies',t:'multi',ask:'Qu\'est-ce qui te motive en ce moment ? Plusieurs choix possibles.',o:['Trouver un emploi','Changer de métier','Monter en compétences','Créer mon entreprise','Développer mon activité','Obtenir une certification']},
-    {s:3,say:'On arrive au cœur de ton profil : <b>ton projet</b>. C\'est ce que les organismes regardent en premier, alors prenons le temps. 🎯'},
+    {s:3,say:'On arrive au cœur de ton profil : <b>ton projet</b>. C\'est ce qui compte le plus pour te trouver la bonne formation, alors prenons le temps. 🎯'},
     {s:3,k:'objectif',t:'one',req:1,ask:'Ton <b>objectif principal</b> ?',o:['Trouver un emploi','Me reconvertir','Obtenir une certification','Monter en compétences','Changer de secteur','Créer mon entreprise','Développer mon activité','Trouver une alternance','Préparer un concours','Autre']},
     {s:3,k:'metier',t:'text',req:1,vague:1,ask:'Quel <b>métier</b> vises-tu ?',ph:'Ex : Développeur web',sug:['Développeur web','Assistant administratif','Commercial','Comptable','Électricien','Community manager']},
     {s:3,k:'secteurs',t:'multi',req:1,ask:'Dans quel(s) <b>secteur(s)</b> ?',o:SECT},
@@ -29839,7 +29879,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     {s:5,k:'ft',t:'one',req:1,ask:'Es-tu inscrit(e) à <b>France Travail</b> ?',o:['Je suis inscrit(e)','Je ne suis pas inscrit(e)','Je ne sais pas','Je préfère ne pas répondre']},
     {s:5,k:'aideFin',t:'one',req:1,ask:'Veux-tu être <b>accompagné(e)</b> pour trouver ton financement ?',o:['Oui','Non']},
     {s:5,k:'budget',t:'one',req:1,ask:'Quel <b>budget personnel</b> pourrais-tu envisager ?',o:['0 €','Moins de 500 €','500 – 1 000 €','1 000 – 3 000 €','Plus de 3 000 €','Je ne sais pas']},
-    {s:5,k:'finVis',t:'one',req:1,ask:'Veux-tu que les organismes voient <b>tes pistes de financement et ton budget</b> ?',o:['Oui, ça les aide','Non, je les garde privés']},
+    {s:5,k:'finVis',if:function(){ return false; },t:'one',req:1,ask:'Veux-tu que les organismes voient <b>tes pistes de financement et ton budget</b> ?',o:['Oui, ça les aide','Non, je les garde privés']},
     {s:6,say:'On a fait le plus gros 💪 Parlons de ton <b>emploi du temps</b>.'},
     {s:6,k:'dispo',t:'one',req:1,ask:'Quand pourrais-tu <b>commencer</b> ?',o:['Immédiatement','Dans le mois','Dans 1 à 3 mois','Dans 3 à 6 mois','Plus tard']},
     {s:6,k:'debut',t:'date',ask:'Tu as une <b>date de début</b> précise en tête ?'},
@@ -29929,7 +29969,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   }
   function say(html,cb){ inp().innerHTML=''; typeIn(html,cb); }
   function answerLabel(q,v){
-    if(q.t==='consent'){ v=v||{}; return 'Visible : <b>'+(v.visible?'oui':'non')+'</b> · Propositions : <b>'+(v.propositions?'oui':'non')+'</b> · Prénom affiché : <b>'+(v.prenom?'oui':'non')+'</b>'; }
+    if(q.t==='consent'){ v=v||{}; return 'Recommandations de formations : <b>'+(v.visible?'oui':'non')+'</b>'; }
     if(q.t==='ville') return esc(W.A.ville||'')+(W.A.dep?' <span class="ofw-sub">· '+esc(W.A.dep)+'</span>':'');
     if(q.t==='date' && v){ var p=String(v).split('-'); return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:esc(v); }
     if(v==null || v==='' || (Array.isArray(v)&&!v.length)) return '<i>Passé</i>';
@@ -30090,12 +30130,12 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       +'<div class="ofpp-ft">'+S(I.lock)+'<span>Coordonnées protégées par EVA : le nom, l\'e-mail et le téléphone ne sont jamais communiqués aux organismes.</span></div>'
       +'</article>';
   }
-  function previewHtml(A,uid,c){ return presPage(publicDoc(A,uid,c),{ badge:'<span>Aperçu · ce que voient les organismes</span>' }); }
+  function previewHtml(A,uid,c){ return presPage(publicDoc(A,uid,c),{ badge:'<span>Aperçu · ce que le centre recevra si tu le contactes</span>' }); }
   function recap(){
     var u=user(), A=W.A, c=A.consent||{};
     var card=el('div','ofw-rc');
     card.innerHTML=meterHtml(A,false)+previewHtml(A,u.uid,c)
-      +'<div class="ofw-rc-st">'+(c.visible?'<span class="on">'+S(I.eye)+'Visible par les organismes</span>':'<span>'+S(I.lock)+'Profil privé</span>')+(c.propositions?'<span class="on">'+S(I.inbox)+'Propositions acceptées</span>':'')+'</div>'
+      +'<div class="ofw-rc-st">'+(c.visible?'<span class="on">'+S(I.eye)+'Recommandations actives</span>':'<span>'+S(I.lock)+'Recommandations désactivées</span>')+'</div>'
       +'<div class="ofw-rc-ed"><span>Modifier une étape :</span>'+STEPS.slice(0,8).map(function(s,i){ return '<button type="button" data-s="'+(i+1)+'">'+(i+1)+'. '+s+'</button>'; }).join('')+'</div>';
     log().appendChild(card); scrollIn(card);
     card.onclick=function(e){ var b=e.target.closest('[data-s]'); if(!b) return; var s=+b.getAttribute('data-s'); W.edit=s; W.i=firstOfStep(s); while(Q[W.i].say) W.i++; W.hist=histBefore(W.i); saveDraft(); rebuild(); askCur(); };
@@ -30117,7 +30157,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       PROF=A; CONS={ visible:!!c.visible, propositions:!!c.propositions, prenom:!!c.prenom };
       var zone=W.box.parentNode; W.box=null;
       zone.innerHTML=''; statusCard(zone,true);
-      toast(c.visible?'✅ Profil enregistré : il est visible par les organismes de formation':'✅ Profil enregistré : il reste privé');
+      toast(c.visible?'✅ Profil enregistré : je te recommande les formations qui te correspondent':'✅ Profil enregistré : il reste privé');
     });
   }
   /* Taux de complétion du profil : questions remplies / questions qui s'appliquent */
@@ -30153,7 +30193,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   function statusCard(zone,fresh){
     var u=user(), A=PROF||{}, c=CONS||{};
     var wrap=el('div','ofs-wrap');
-    wrap.innerHTML=meterHtml(A,true)+presPage(publicDoc(A,u.uid,c),{ badge:'<span class="'+(c.visible?'on':'')+'">'+(c.visible?'● Visible par les organismes':'Profil privé')+'</span>' })
+    wrap.innerHTML=meterHtml(A,true)+presPage(publicDoc(A,u.uid,c),{ badge:'<span class="'+(c.visible?'on':'')+'">'+(c.visible?'● Recommandations actives':'Recommandations désactivées')+'</span>' })
       +'<div class="ofs">'
       +'<div class="ofs-t">'+S(I.eye)+'<span>'+(c.visible?'Ce que le centre recevra si tu le contactes : tu choisiras toi-même ce que tu partages.':'Ton profil est prêt. Active « Me recommander des formations » pour que je te montre celles qui te correspondent.')+'</span></div>'
       +visAd(c)
@@ -30174,7 +30214,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       var txt={ visible:TXT_VIS, propositions:TXT_PROP, prenom:TXT_PRE }[k];
       Promise.all([ db().collection('users').doc(u.uid).collection('of').doc('consents').set({ visible:!!nc.visible, propositions:!!nc.propositions, prenom:!!nc.prenom, updatedAt:nowIso() }), logConsent(u.uid,k,on,txt), syncPublic(u.uid,PROF,nc) ])
         .then(function(){ CONS=nc; statusCard(zone);
-          toast(k==='visible' ? (on?'Ton profil est visible par les organismes de formation.':'Ton profil n\'est plus visible par les organismes. Tes préférences restent enregistrées dans ton compte.') : k==='propositions' ? (on?'Tu peux recevoir des propositions de formation.':'Tu ne reçois plus de nouvelles propositions.') : (on?'Ton prénom est affiché aux organismes.':'Seul ton identifiant anonyme est affiché.')); })
+          toast(k==='visible' ? (on?'Recommandations activées : je te montre les formations qui te correspondent.':'Recommandations désactivées. Tes réponses restent enregistrées dans ton compte.') : k==='propositions' ? (on?'Tu peux recevoir des propositions de formation.':'Tu ne reçois plus de nouvelles propositions.') : (on?'Ton prénom est affiché aux organismes.':'Seul ton identifiant anonyme est affiché.')); })
         .catch(function(){ e.target.checked=!on; toast('Tes informations n\'ont pas pu être enregistrées. Réessaie dans quelques instants.'); });
     };
     card.onclick=function(e){
@@ -30222,7 +30262,8 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var r=recoRef(); if(!r){ RECO.forms=[]; RECO.st={}; return Promise.resolve(); }
     RECO.loading=Promise.all([
       db().collection('formations').where('statut','==','publiee').get().then(function(q){ RECO.forms=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }); }).catch(function(){ RECO.forms=[]; }),
-      r.get().then(function(d){ RECO.st=d.exists?d.data():{}; }).catch(function(){ RECO.st={}; })
+      r.get().then(function(d){ RECO.st=d.exists?d.data():{}; }).catch(function(){ RECO.st={}; }),
+      loadConvs()
     ]).then(function(){ RECO.st.saved=RECO.st.saved||[]; RECO.st.hidden=RECO.st.hidden||[]; RECO.st.seen=RECO.st.seen||[]; RECO.st.interest=RECO.st.interest||{}; recoBadge(); });
     return RECO.loading;
   }
@@ -30236,7 +30277,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   }
   function newCount(){ if(!RECO.forms||!RECO.st||!(CONS&&CONS.visible)) return 0; return recoList().filter(function(x){ return RECO.st.seen.indexOf(x.f.id)<0; }).length; }
   function recoBadge(){
-    var n=newCount();
+    var n=newCount()+unreadConvs();
     document.querySelectorAll('.oft-tab[data-t="2"]').forEach(function(t){ var e=t.querySelector('em'); if(!e){ e=document.createElement('em'); t.appendChild(e); } e.textContent=n; e.style.display=n?'':'none'; });
     document.querySelectorAll('#eva-side [data-go="eva-of"]').forEach(function(b){ var x=b.querySelector('.of-badge'); if(!x){ x=el('span','of-badge'); b.appendChild(x); } x.textContent=n; x.style.display=n?'':'none'; });
   }
@@ -30254,15 +30295,104 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       +(f.programme?'<div class="ofp-txt">'+esc(f.programme)+'</div>':'')
       +(f.lien?'<a class="ofr-link" href="'+esc(f.lien)+'" target="_blank" rel="noopener noreferrer">Voir le programme détaillé ↗</a>':'')
       +'<div class="ofp-note">Le financement dépend de ta situation : vérifie toujours les conditions officielles. Rien n\'est garanti tant que le financeur n\'a pas validé.</div>'
-      +(inter?'<div class="ofr-done">'+S(I.check)+'<span>Ta demande est enregistrée. Dès l\'ouverture de la messagerie protégée, tu pourras écrire au centre : c\'est toujours toi qui envoies le premier message.</span></div>'
-        :'<div class="ofw-row wrap"><button type="button" class="ofw-btn pri" data-a="int">'+S(I.check)+'Je suis intéressé(e)</button><button type="button" class="ofw-btn" data-a="save">'+(saved?'Retirer des enregistrées':'Enregistrer')+'</button><button type="button" class="ofw-btn" data-a="hide">Pas pour moi</button><button type="button" class="ofw-skip" data-a="sig">Signaler</button></div>')
+      +(MSG.convs[f.id]?'<div class="ofw-row wrap"><button type="button" class="ofw-btn pri" data-a="conv">'+S(I.inbox)+'Ouvrir la conversation'+(MSG.convs[f.id].unreadCand?' · nouveau message':'')+'</button></div>'
+        :'<div class="ofc-zone"></div><div class="ofw-row wrap ofc-acts"><button type="button" class="ofw-btn pri" data-a="int">'+S(I.check)+'Je suis intéressé(e)</button><button type="button" class="ofw-btn" data-a="save">'+(saved?'Retirer des enregistrées':'Enregistrer')+'</button><button type="button" class="ofw-btn" data-a="hide">Pas pour moi</button><button type="button" class="ofw-skip" data-a="sig">Signaler</button></div>')
       +'</div></div></div>';
+  }
+  /* ═════ MESSAGERIE PROTÉGÉE (côté membre) : le membre écrit toujours le premier ═════ */
+  var MSG={ convs:{}, unsub:null, open:null };
+  function convId(fid){ var u=user(); return u.uid+'_'+fid; }
+  function loadConvs(){
+    var u=user(); if(!u||!db()) return Promise.resolve();
+    return db().collection('conversations').where('candUid','==',u.uid).get().then(function(q){
+      MSG.convs={}; q.docs.forEach(function(d){ var x=d.data(); x.id=d.id; MSG.convs[x.formationId]=x; });
+    }).catch(function(){ MSG.convs={}; });
+  }
+  function unreadConvs(){ return Object.keys(MSG.convs).filter(function(k){ return MSG.convs[k].unreadCand; }).length; }
+  function fmtAt(iso){ try{ var d=new Date(iso); return d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' })+' · '+d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
+  function profilSnap(){
+    var u=user(), p=publicDoc(PROF||{},u.uid,{});
+    ['uid','visible','propositions','prenom','fin','budget','updatedAt'].forEach(function(k){ delete p[k]; });
+    p.motEva=evaWord(p).replace(/<[^>]+>/g,'');
+    return p;
+  }
+  function composerHtml(f){
+    var u=user(), pn=(PROF&&PROF.prenom)||'', em=(u&&u.email)||'';
+    var sug='Bonjour, votre formation « '+(f.titre||'')+' » m\'intéresse. Pourriez-vous m\'indiquer les prochaines dates, le reste à charge éventuel et les modalités d\'inscription ? Merci.';
+    return '<div class="ofc-comp"><div class="ofw-eva"><span class="ofw-av">'+X().S(X().IC.eva)+'</span><div class="ofw-b">Écris au centre en quelques lignes. Je t\'ai préparé un message, modifie-le librement. <b>Tu choisis ce que tu partages.</b></div></div>'
+      +'<textarea class="ofw-inp ofc-txt" maxlength="1500">'+esc(sug)+'</textarea>'
+      +'<div class="ofc-share"><b>Ce que tu partages avec le centre</b>'
+      +'<label><input type="checkbox" data-sh="profil" checked><span>Mon projet de formation (sans nom ni coordonnées)</span></label>'
+      +(pn?'<label><input type="checkbox" data-sh="prenom"><span>Mon prénom : '+esc(pn)+'</span></label>':'')
+      +(em?'<label><input type="checkbox" data-sh="email"><span>Mon e-mail : '+esc(em)+'</span></label>':'')
+      +'<label><input type="checkbox" data-sh="tel"><span>Mon téléphone</span></label><input class="ofw-inp ofc-tel" type="tel" maxlength="20" placeholder="Ton numéro, si tu veux le partager" style="display:none;min-height:0">'
+      +'</div><div class="ofw-row wrap"><button type="button" class="ofw-btn pri" data-a="send1">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'Envoyer au centre</button><button type="button" class="ofw-btn" data-a="cancel1">Annuler</button></div>'
+      +'<p class="ofc-legal">Le centre ne peut pas te contacter en dehors de cette conversation. Tes informations CPF ne sont jamais transmises.</p></div>';
+  }
+  function sendFirst(card,f){
+    var u=user(), t=String(card.querySelector('.ofc-txt').value||'').trim(); if(t.length<5){ toast('Écris quelques mots au centre'); return; }
+    var sh={}; card.querySelectorAll('[data-sh]').forEach(function(c){ sh[c.getAttribute('data-sh')]=c.checked; });
+    var shared={}; if(sh.prenom) shared.prenom=(PROF&&PROF.prenom)||''; if(sh.email) shared.email=u.email||''; if(sh.tel){ var tv=String(card.querySelector('.ofc-tel').value||'').trim(); if(tv) shared.tel=tv; }
+    var now=new Date().toISOString(), exp=new Date(Date.now()+180*864e5);
+    var d={ candUid:u.uid, orgUid:f.orgUid, formationId:f.id, formationTitre:f.titre||'', orgNom:f.orgNom||'', candLabel:shared.prenom||refOf(u.uid),
+      profil: sh.profil ? profilSnap() : null, shared:shared, statut:'ouverte', messages:[{ from:'cand', text:t, at:now }],
+      createdAt:now, updatedAt:now, lastAt:now, lastFrom:'cand', unreadOrg:true, unreadCand:false };
+    try{ d.expireAt=firebase.firestore.Timestamp.fromDate(exp); }catch(e){}
+    var b=card.querySelector('[data-a="send1"]'); b.disabled=true;
+    db().collection('conversations').doc(convId(f.id)).set(d).then(function(){
+      MSG.convs[f.id]=Object.assign({ id:convId(f.id) },d); RECO.st.interest[f.id]=now; saveReco(); toast('Message envoyé au centre'); openThread(f.id);
+      var box=card.closest('.ofi'); if(box) drawReco(box);
+    }).catch(function(e){ b.disabled=false; toast((e&&e.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+  }
+  /* Fenêtre de conversation (temps réel tant qu'elle est ouverte) */
+  function openThread(fid){
+    var c=MSG.convs[fid]; if(!c) return; closeThread();
+    var sh=el('div','ofm-sheet'); sh.innerHTML='<div class="ofm-box"><div class="ofm-hd"><button type="button" class="ofm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>'+esc(c.orgNom||'Centre de formation')+'</b><span>'+esc(c.formationTitre||'')+'</span></div><em>🔒 Protégé</em></div>'
+      +'<div class="ofm-list"></div><div class="ofm-ft"><textarea class="ofm-in" maxlength="1500" placeholder="Écris ton message…"></textarea><button type="button" class="ofm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div>'
+      +'<div class="ofm-tools"><button type="button" data-t="share">Partager mes coordonnées</button><button type="button" data-t="close">Clôturer la conversation</button></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofm-lock'); MSG.open=fid;
+    var list=sh.querySelector('.ofm-list'), ref=db().collection('conversations').doc(c.id);
+    function draw(x){
+      MSG.convs[fid]=Object.assign({ id:c.id },x);
+      list.innerHTML='<div class="ofm-note">Conversation protégée : le centre ne voit que ce que tu as choisi de partager.'+(x.shared&&Object.keys(x.shared).length?' Partagé : '+esc(Object.keys(x.shared).map(function(k){ return {prenom:'prénom',email:'e-mail',tel:'téléphone'}[k]; }).join(', '))+'.':'')+'</div>'
+        +(x.messages||[]).map(function(m){ return '<div class="ofm-m '+(m.from==='cand'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='cand'?'Toi':esc(x.orgNom||'Centre'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
+        +(x.statut!=='ouverte'?'<div class="ofm-note">Cette conversation est clôturée.</div>':'');
+      list.scrollTop=list.scrollHeight;
+      sh.querySelector('.ofm-ft').style.display=x.statut==='ouverte'?'':'none';
+      if(x.unreadCand) ref.update({ unreadCand:false }).catch(function(){});
+    }
+    draw(c);
+    MSG.unsub=ref.onSnapshot(function(d){ if(d.exists) draw(d.data()); },function(){});
+    sh.querySelector('.ofm-x').onclick=closeThread;
+    sh.addEventListener('click',function(e){ if(e.target===sh) closeThread(); });
+    sh.querySelector('.ofm-send').onclick=function(){
+      var ta=sh.querySelector('.ofm-in'), t=String(ta.value||'').trim(); if(!t) return;
+      var x=MSG.convs[fid]; if((x.messages||[]).length>=60){ toast('Conversation complète : continuez par e-mail si vous avez partagé vos coordonnées'); return; }
+      var now=new Date().toISOString(), upd={ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:now }), updatedAt:now, lastAt:now, lastFrom:'cand', unreadOrg:true };
+      try{ upd.expireAt=firebase.firestore.Timestamp.fromDate(new Date(Date.now()+180*864e5)); }catch(e){}
+      ta.value=''; ref.update(upd).catch(function(){ ta.value=t; toast('Envoi impossible pour le moment'); });
+    };
+    sh.querySelector('.ofm-tools').onclick=function(e){
+      var b=e.target.closest('[data-t]'); if(!b) return; var x=MSG.convs[fid];
+      if(b.getAttribute('data-t')==='close'){ if(!confirm('Clôturer cette conversation ? Ni toi ni le centre ne pourrez plus écrire.')) return; ref.update({ statut:'close', updatedAt:new Date().toISOString() }).catch(function(){}); return; }
+      var u=user(), pn=(PROF&&PROF.prenom)||'', tel=prompt('Ton numéro de téléphone (laisse vide pour ne partager que ton e-mail) :','')||'';
+      var s2=Object.assign({},x.shared||{}); if(pn) s2.prenom=pn; if(u.email) s2.email=u.email; if(tel.trim()) s2.tel=tel.trim();
+      ref.update({ shared:s2, updatedAt:new Date().toISOString() }).then(function(){ toast('Coordonnées partagées avec le centre'); }).catch(function(){ toast('Partage impossible pour le moment'); });
+    };
+  }
+  function closeThread(){ if(MSG.unsub){ MSG.unsub(); MSG.unsub=null; } var s=document.querySelector('.ofm-sheet'); if(s) s.remove(); document.documentElement.classList.remove('ofm-lock'); MSG.open=null; loadConvs().then(function(){ recoBadge(); var b=document.querySelector('.ofi'); if(b && RECO.forms) drawReco(b); }); }
+  function demandesHtml(){
+    var L=Object.keys(MSG.convs).map(function(k){ return MSG.convs[k]; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+    if(!L.length) return '';
+    return '<div class="ofd"><div class="ofd-hd">'+S(I.inbox)+'<b>Mes demandes</b></div>'+L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
+      return '<button type="button" class="ofd-it" data-conv="'+esc(c.formationId)+'"><span class="ofd-dot'+(c.unreadCand?' on':'')+'"></span><span class="ofd-t"><b>'+esc(c.formationTitre)+'</b><span>'+esc(c.orgNom)+' · '+(c.statut!=='ouverte'?'Clôturée':c.lastFrom==='org'?'Le centre t\'a répondu':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,80))+'</i></span>'+S('<path d="m9 18 6-6-6-6"/>')+'</button>'; }).join('')+'</div>';
   }
   function drawReco(box){
     if(!RECO.forms){ box.innerHTML='<div class="ofp-empty"><span class="evh-typing"><span></span><span></span><span></span></span></div>'; loadReco().then(function(){ drawReco(box); }); return; }
     var on=!!(CONS&&CONS.visible), L=recoList(), h='';
     if(!PROF) h+='<div class="ofr-tip">'+S(I.school)+'<span>Complète ton <b>profil formation</b> dans le premier onglet : je pourrai calculer ton pourcentage de correspondance.</span></div>';
     else if(!on) h+='<div class="ofr-tip">'+S(I.eye)+'<span>Active <b>« Me recommander des formations »</b> dans ton profil : je te montrerai d\'abord celles qui te correspondent le mieux.</span></div>';
+    h+=demandesHtml();
     if(L.length) h+=L.map(recoCard).join('');
     else h+='<div class="ofp-empty">'+S(I.school)+'<b>Tes formations arrivent ici.</b><span>Les centres de formation vérifiés rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'une de leurs formations correspond à ton profil, elle apparaît ici et une notification t\'attend dans ton espace. Ton profil est prêt : tu n\'as rien d\'autre à faire.</span></div>'
       +'<div class="ofr-cat"><b>En attendant, explore les catalogues officiels</b><span>Avec tes critères'+(PROF&&PROF.metier?' (métier : '+esc(PROF.metier)+(PROF.ville?', '+esc(PROF.ville):'')+')':'')+' :</span>'
@@ -30271,11 +30401,16 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var old=(ST.props||[]); if(old.length) h+='<div class="ofr-old"><b>Anciennes propositions</b></div>'+old.map(propCard).join('');
     box.innerHTML=h;
     box.onclick=function(e){
+      var cv=e.target.closest('[data-conv]'); if(cv){ openThread(cv.getAttribute('data-conv')); return; }
       var b=e.target.closest('[data-a]'); if(!b) return;
       var card=b.closest('.ofr'); if(!card){ inboxClick(e,box); return; }
       var id=card.getAttribute('data-f'), a=b.getAttribute('data-a'), u=user();
       if(a==='toggle'){ card.classList.toggle('open'); return; }
-      if(a==='int'){ RECO.st.interest[id]=new Date().toISOString(); saveReco(); toast('Demande enregistrée'); drawReco(box); var c2=box.querySelector('.ofr[data-f="'+id+'"]'); if(c2) c2.classList.add('open'); return; }
+      if(a==='int'){ var f=(RECO.forms||[]).filter(function(x){ return x.id===id; })[0]; if(!f) return; card.querySelector('.ofc-zone').innerHTML=composerHtml(f); card.querySelector('.ofc-acts').style.display='none';
+        var tc=card.querySelector('[data-sh="tel"]'); if(tc) tc.onchange=function(){ card.querySelector('.ofc-tel').style.display=tc.checked?'':'none'; }; return; }
+      if(a==='send1'){ var f1=(RECO.forms||[]).filter(function(x){ return x.id===id; })[0]; if(f1) sendFirst(card,f1); return; }
+      if(a==='cancel1'){ card.querySelector('.ofc-zone').innerHTML=''; card.querySelector('.ofc-acts').style.display=''; return; }
+      if(a==='conv'){ openThread(id); return; }
       if(a==='save'){ var k=RECO.st.saved.indexOf(id); if(k>-1) RECO.st.saved.splice(k,1); else RECO.st.saved.push(id); saveReco(); toast(k>-1?'Retirée de tes formations enregistrées':'Formation enregistrée'); drawReco(box); return; }
       if(a==='hide'){ RECO.st.hidden.push(id); saveReco(); toast('C\'est noté, je ne te la montre plus'); drawReco(box); recoBadge(); return; }
       if(a==='sig'){ if(!u||!db()) return; db().collection('reports').add({ reporterUid:u.uid, type:'formation', formationId:id, createdAt:new Date().toISOString() }).then(function(){ toast('Merci, CareerPulse va examiner cette formation'); }).catch(function(){ toast('Signalement impossible pour le moment'); }); }
@@ -30335,27 +30470,27 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 
   /* ═════ EVA FORMATION : questions par thèmes, réponses en tiroirs (réponses de l'IA du site, encadrées) ═════ */
   var FAQ_T=[
-    ['profil','Mon profil & ma visibilité',[
-      ['Qui peut voir mon profil ?','Seuls les organismes de formation vérifiés par CareerPulse, et seulement si tu as activé ta visibilité. Ils voient ton projet, jamais ton nom, ton e-mail ou ton téléphone.'],
-      ['Que voient exactement les organismes ?','Ton projet, la formation que tu recherches, tes disponibilités, tes préférences et ton parcours (âge, situation, diplôme). Tes pistes de financement et ton prénom n\'apparaissent que si tu l\'as accepté.'],
-      ['Mon nom de famille est-il visible ?','Non, jamais. Ton nom reste privé. Les organismes voient au mieux ton prénom, et seulement si tu as activé « Afficher mon prénom ».'],
-      ['Mon prénom est-il affiché ?','Seulement si tu l\'as accepté. Sinon, les organismes voient un identifiant anonyme. Tu peux changer ce choix à tout moment dans ta carte « Mon profil formation ».'],
-      ['Comment cacher mon profil ?','Dans ta carte « Mon profil formation », désactive « Visible par les organismes ». C\'est immédiat, et tes réponses restent enregistrées pour plus tard.'],
+    ['profil','Mon profil & mes recommandations',[
+      ['Qui peut voir mon profil ?','Personne d\'autre que toi. Les centres de formation ne voient jamais ton profil : il me sert uniquement à te recommander les formations qui te correspondent.'],
+      ['Que reçoit un centre si je le contacte ?','Seulement ce que tu choisis de partager quand tu lui écris : ton message, et si tu le veux ton prénom, ton e-mail ou ton téléphone. Tu vois l\'aperçu exact dans « Ce que le centre recevra si tu le contactes ».'],
+      ['Mon nom de famille est-il visible ?','Non, jamais. Ton nom reste privé. Même quand tu écris à un centre, c\'est toi qui choisis de donner ou non ton prénom et tes coordonnées.'],
+      ['Mes infos CPF sont-elles transmises ?','Non. Tes pistes de financement et ton budget servent uniquement à mes conseils et au calcul du match. Ils ne sont jamais transmis aux centres.'],
+      ['Comment couper les recommandations ?','Dans ta carte « Mon profil formation », désactive « Me recommander des formations ». C\'est immédiat, et tes réponses restent enregistrées pour plus tard.'],
       ['Je peux modifier mon profil ?','Oui, quand tu veux : « Modifier mon profil » pour changer une étape, ou « Refaire le formulaire avec EVA » pour tout reprendre avec tes réponses déjà présélectionnées.'],
-      ['Ma situation a changé, je fais quoi ?','Mets simplement ton profil à jour avec « Modifier mon profil ». Les organismes verront ton projet actuel, ce qui t\'évite des propositions qui ne te correspondent plus.'],
-      ['Pourquoi répondre à toutes les questions ?','Plus ton profil est précis, plus les propositions te correspondent. Les questions facultatives peuvent être passées, mais chaque réponse aide l\'organisme à savoir si sa formation est faite pour toi.'],
+      ['Ma situation a changé, je fais quoi ?','Mets simplement ton profil à jour avec « Modifier mon profil ». Je recalculerai tes correspondances, pour te montrer des formations qui collent à ton projet actuel.'],
+      ['Pourquoi répondre à toutes les questions ?','Plus ton profil est précis, plus ton pourcentage de correspondance est fiable. Les questions facultatives peuvent être passées, mais chaque réponse m\'aide à te trouver la bonne formation.'],
       ['Si j\'arrête le formulaire en cours ?','Pas de panique : je garde tes réponses pendant ta visite, et on reprend là où tu t\'étais arrêté(e).'],
-      ['À quoi sert « Le mot d\'EVA » ?','C\'est un court résumé de ton projet que je rédige à partir de tes réponses, pour que l\'organisme comprenne en quelques secondes ce que tu cherches.'],
-      ['Je veux supprimer mon profil','En bas de ta carte « Mon profil formation », clique sur « Supprimer mon profil formation ». Ta fiche disparaît aussitôt de l\'espace des organismes.']
+      ['À quoi sert « Le mot d\'EVA » ?','C\'est un court résumé de ton projet que je rédige à partir de tes réponses. Il t\'aide à présenter ton projet clairement quand tu écris à un centre.'],
+      ['Je veux supprimer mon profil','En bas de ta carte « Mon profil formation », clique sur « Supprimer mon profil formation ». Tes réponses sont effacées et je ne te recommande plus de formations.']
     ]],
-    ['props','Les propositions',[
-      ['Comment fonctionne une proposition ?','Un organisme vérifié repère ton projet et te présente une formation. Je te la présente ici, clairement. Tu réponds en un clic : Intéressé(e), Pas intéressé(e), Plus tard ou Signaler.'],
-      ['Que se passe-t-il si je suis intéressé(e) ?','Je t\'affiche les coordonnées de l\'organisme : e-mail, téléphone, site. Tu le contactes si tu veux, quand tu veux. La suite se passe entre vous, en dehors de CareerPulse.'],
-      ['Je peux refuser une proposition ?','Bien sûr, sans te justifier. L\'organisme voit seulement « Pas intéressé(e) ». Aucune pression.'],
-      ['« Plus tard », ça veut dire quoi ?','Que tu mets la proposition de côté pour y réfléchir. Elle reste dans ton espace, et tu pourras y répondre plus tard.'],
-      ['Combien de propositions vais-je recevoir ?','Ça dépend des organismes présents et de ton projet : je ne peux pas te promettre un nombre. Le réseau d\'organismes vérifiés se construit progressivement.'],
-      ['Je ne reçois aucune proposition','C\'est normal au début : le réseau d\'organismes grandit petit à petit. Vérifie que « Visible » et « Recevoir des propositions » sont activés, et que ton projet est bien précis.'],
-      ['Comment arrêter de recevoir des propositions ?','Désactive « Recevoir des propositions » dans ta carte « Mon profil formation ». Tu peux le réactiver quand tu veux.'],
+    ['props','Les formations pour toi',[
+      ['Comment sont choisies les formations ?','Je compare chaque formation publiée par un centre vérifié avec ton profil : lieu, modalité, public visé, financement et métier. Tu vois le pourcentage de correspondance et le détail critère par critère.'],
+      ['Que veut dire le pourcentage ?','C\'est la part de tes critères que la formation respecte. Chaque critère est affiché avec ✓ ou ✗, pour que tu comprennes d\'un coup d\'œil ce qui colle et ce qui ne colle pas.'],
+      ['Que se passe-t-il si je clique « Je suis intéressé(e) » ?','Tu écris au centre dans une messagerie protégée. C\'est toi qui envoies le premier message, et tu choisis ce que tu partages. Le centre peut ensuite te répondre dans cette conversation.'],
+      ['Un centre peut-il me contacter le premier ?','Non, jamais. C\'est un principe de CareerPulse et une obligation légale : le démarchage lié au CPF est interdit. Ici, seul toi peux ouvrir une conversation.'],
+      ['« Pas pour moi », ça fait quoi ?','La formation disparaît de tes recommandations. Le centre n\'en sait rien : aucune information ne lui est envoyée.'],
+      ['Combien de formations vais-je voir ?','Ça dépend des centres inscrits et de ton projet : je ne peux pas te promettre un nombre. Les centres vérifiés rejoignent CareerPulse au fil de leur inscription.'],
+      ['Je ne vois aucune formation','Vérifie que « Me recommander des formations » est activé et que ton profil est complet. Si rien ne correspond encore, une notification t\'attendra dans ton espace dès qu\'une formation te correspond.'],
       ['La mise en relation est-elle payante ?','Non, elle est gratuite pour toi. La formation elle-même peut avoir un coût : c\'est là que les pistes de financement entrent en jeu.']
     ]],
     ['secu','Contact & sécurité',[
@@ -30365,7 +30500,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       ['On me demande mes identifiants CPF','Ne les donne jamais, à personne : ni ton mot de passe, ni un code reçu par SMS. Aucun organisme sérieux n\'en a besoin, et je ne te les demanderai jamais.'],
       ['Comment reconnaître une arnaque à la formation ?','Les signaux d\'alerte : appel ou SMS non sollicité, pression pour s\'inscrire vite, cadeau promis, demande d\'identifiants. Dans le doute, ne fais rien et vérifie sur les sites officiels.'],
       ['Comment savoir si un organisme est sérieux ?','Sur CareerPulse, chaque organisme est vérifié (SIRET, déclaration d\'activité). Pour une formation financée par des fonds publics, vérifie aussi qu\'il est certifié Qualiopi.'],
-      ['Une proposition me paraît suspecte','Ne partage aucune information sensible, ni identifiant, ni paiement. Clique sur « Signaler » sous la proposition : CareerPulse examine chaque signalement.']
+      ['Une formation me paraît suspecte','Ne partage aucune information sensible, ni identifiant, ni paiement. Clique sur « Signaler » dans la fiche de la formation : CareerPulse examine chaque signalement.']
     ]],
     ['fin','Financer ma formation',[
       ['Comment fonctionne le CPF ?','Le CPF permet de financer certaines formations éligibles, selon tes droits. Les règles se vérifient sur le site officiel Mon Compte Formation. Je ne te demanderai jamais ton mot de passe.'],
@@ -30432,7 +30567,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
   function aiAnswer(topic){
     var ref=faqRef(topic), A=PROF||{}, list=FAQ.map(function(x){ return x[0]; });
     var sys='Tu es EVA Formation, l\'assistante de CareerPulse pour la mise en relation entre les membres et des organismes de formation. Tu tutoies. Ton : chaleureux, humain, rassurant, précis, jamais infantilisant. Efficace : pas de blabla, 2 à 4 phrases, 70 mots maximum.\n'
-      +'FONCTIONNEMENT RÉEL (ne jamais le contredire) : le membre crée son profil avec EVA ; il choisit séparément d\'être visible et de recevoir des propositions ; seuls des organismes vérifiés voient son projet, jamais son nom, son e-mail ni son téléphone ; quand une proposition l\'intéresse, EVA lui affiche les coordonnées de l\'organisme et c\'est le membre qui décide de le contacter ; la suite se passe en dehors de CareerPulse.\n'
+      +'FONCTIONNEMENT RÉEL (ne jamais le contredire) : le membre crée son profil avec EVA ; les centres de formation ne voient JAMAIS son profil ; les centres vérifiés publient des fiches formation ; EVA recommande au membre les formations qui lui correspondent avec un pourcentage de correspondance expliqué ; si une formation l\'intéresse, c\'est le membre qui écrit le premier au centre dans une messagerie protégée de CareerPulse et il choisit ce qu\'il partage ; un centre ne peut jamais contacter un membre le premier (interdiction du démarchage CPF) ; les infos CPF du membre ne sont jamais transmises.\n'
       +'INTERDITS : garantir un financement, une admission ou un emploi ; inventer un organisme, une certification, une règle ou un chiffre ; demander un mot de passe ou des identifiants (Mon Compte Formation, France Travail) ; prétendre contacter quelqu\'un ou avoir vérifié un dossier. Pour les financements, renvoie vers les sites officiels.\n'
       +'RÉPONSE DE RÉFÉRENCE (respecte-la sur le fond, reformule-la avec ta personnalité) : '+ref+'\n'
       +(A.situation||A.metier?'Profil du membre : '+[A.situation,A.objectif,A.metier].filter(Boolean).join(', ')+'.\n':'')
@@ -30586,7 +30721,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     var u=user(); if(!u || !db()) return;
     db().collection('propositions').where('candUid','==',u.uid).where('statut','==','envoyee').get().then(function(q){
       ST.props=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }); badge();
-      if(q.size && !sessionStorage.getItem('of-notified')){ sessionStorage.setItem('of-notified','1'); toast('Nouvelle proposition de formation : ouvre « Organismes de formation »'); }
+      if(q.size && !sessionStorage.getItem('of-notified')){ sessionStorage.setItem('of-notified','1'); toast('Nouvelle réponse à tes demandes : ouvre « Organismes de formation »'); }
     }).catch(function(){});
   }
   /* Branchement : rendu à l'ouverture de la page */
