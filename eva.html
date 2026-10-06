@@ -29163,7 +29163,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
 <div class="evad-screen screen" id="s-eva-of">
   <div class="evad-hd">
     <button class="evad-hd-back" onclick="go('eva')" aria-label="Retour"><svg width="18" height="18" viewBox="0 0 24 24" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-    <div class="evad-hd-title">Mise en relation avec des organismes de formation</div>
+    <div class="evad-hd-title">Contacter des formations compatibles à ton profil créé par EVA</div>
   </div>
   <div class="evad-scroll"><div id="of-root"></div></div>
 </div>
@@ -29745,7 +29745,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
   function present(mode){
     var E=X(), t=T();
     return [
-      { make:function(){ return E.cover(t,{ member:true, name:'Mise en relation avec des organismes de formation', bio:'Des formations de centres vérifiés, recommandées selon ton profil. C\'est toi qui choisis qui tu contactes.', stats:[['100 %','gratuit'],['0','coordonnée transmise'],['Toi','qui décides']] }); }, feed:false, wait:2000 },
+      { make:function(){ return E.cover(t,{ member:true, name:'Contacter des formations compatibles à ton profil créé par EVA', bio:'Des formations de centres vérifiés, recommandées selon ton profil. C\'est toi qui choisis qui tu contactes.', stats:[['100 %','gratuit'],['0','coordonnée transmise'],['Toi','qui décides']] }); }, feed:false, wait:2000 },
       { think:'EVA prépare ton espace formation…' },
       { msg: mode==='member'
         ? 'Ravie de te voir'+(firstName()?', <b>'+esc(firstName())+'</b>':'')+' 😊 Ici, on prépare ensemble ton <b>projet de formation</b>… pour que les bons organismes puissent venir te le présenter.'
