@@ -1910,7 +1910,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cp-hero.eva{ --cp-glow:rgba(4,120,87,.75); background:radial-gradient(120% 70% at 100% 0%,rgba(52,211,153,.35),transparent 60%),linear-gradient(155deg,#065f46 0%,#0f3d2e 70%,#0b2e23 100%); }
 .cp-hero.pro{ --cp-glow:rgba(30,58,138,.7); background:radial-gradient(120% 70% at 100% 0%,rgba(96,165,250,.32),transparent 60%),linear-gradient(155deg,#1e3a8a 0%,#172554 70%,#0f1b3d 100%); }
 .cp-hero::before{ content:""; position:absolute; inset:0; z-index:-1; background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 42%); border-radius:inherit; }
-.cp-hero::after{ content:""; position:absolute; top:-20%; bottom:-20%; left:0; width:45%; z-index:-1; background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent); transform:translateX(-160%) skewX(-12deg); animation:cpSheen 6s 1s ease-in-out infinite; }
+.cp-hero::after{ content:""; position:absolute; top:-20%; bottom:-20%; left:0; width:45%; z-index:-1; background:linear-gradient(100deg,transparent,rgba(255,255,255,.28),transparent); transform:translateX(-160%) skewX(-12deg); animation:cpSheen 6s 1s ease-in-out 1 both; }
 .cp-hero.pro::after{ animation-delay:1.35s; }
 @keyframes cpSheen{ 0%{ transform:translateX(-160%) skewX(-12deg); } 22%,100%{ transform:translateX(330%) skewX(-12deg); } }
 .cp-hero-ring{ position:absolute; z-index:-1; right:-46px; top:-46px; width:130px; height:130px; border-radius:50%; border:1px solid rgba(255,255,255,.16); }
@@ -10560,7 +10560,7 @@ function cpAccountCss(){
    +'.cp-acct-n{font-size:.8rem;font-weight:800;color:#0f172a;letter-spacing:-.01em;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}'
    +'.cp-acct-b{display:inline-flex;align-items:center;gap:4px;padding:3px 8px 3px 3px;border-radius:99px;font-size:.54rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#fff;white-space:nowrap;'
    +'background:linear-gradient(135deg,#1e40af,#2563eb 45%,#059669);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 1px rgba(255,255,255,.6),0 6px 14px -6px rgba(30,64,175,.7);position:relative;overflow:hidden;}'
-   +'.cp-acct-b::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);animation:cpAcctShine 3.6s 1s ease-in-out infinite;}'
+   +'.cp-acct-b::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);animation:cpAcctShine 3.6s 1s ease-in-out 1 both;}'
    +'.cp-acct-b.eva{background:linear-gradient(135deg,#1e3a8a,#2563eb 50%,#7c3aed);}'
    +'.cp-acct-b svg{width:14px;height:14px;flex-shrink:0;}'
    +'.cp-acct.inl{flex-direction:row;align-items:center;gap:7px;max-width:none;vertical-align:middle;}'
@@ -16599,7 +16599,7 @@ window.cpEvx = window.cpEvx || {
 .cpfp-hero{ position:relative; overflow:hidden; isolation:isolate; padding:22px 20px 20px; color:#fff;
   background:radial-gradient(120% 140% at 100% 0%,rgba(255,255,255,.22),transparent 55%),linear-gradient(135deg,var(--a) 0%,var(--b) 120%); }
 .cpfp-hero::before{ content:""; position:absolute; z-index:-1; right:-60px; top:-70px; width:230px; height:230px; border-radius:50%; border:1px solid rgba(255,255,255,.22); box-shadow:0 0 0 26px rgba(255,255,255,.05); }
-.cpfp-hero::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpfpSheen 7s 1s ease-in-out infinite; }
+.cpfp-hero::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpfpSheen 7s 1s ease-in-out 1 both; }
 @keyframes cpfpSheen{ 0%{ transform:translateX(-170%) skewX(-12deg); } 22%,100%{ transform:translateX(380%) skewX(-12deg); } }
 .cpfp-org{ display:flex; align-items:center; gap:12px; }
 .cpfp-logo{ flex-shrink:0; width:58px; height:58px; border-radius:16px; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 12px 26px -14px rgba(2,6,23,.6); color:var(--a); font-weight:900; font-size:1.2rem; }
@@ -16705,7 +16705,7 @@ html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
   background:radial-gradient(120% 140% at 100% 0%,rgba(110,231,183,.30),transparent 55%),linear-gradient(130deg,#062e22 0%,#047857 52%,#1e3a8a 120%);
   box-shadow:0 22px 44px -24px rgba(4,120,87,.85), inset 0 1px 0 rgba(255,255,255,.22); }
 .ofc-hero::before{ content:""; position:absolute; z-index:-1; right:-70px; top:-80px; width:240px; height:240px; border-radius:50%; border:1px solid rgba(255,255,255,.18); }
-.ofc-hero::after{ content:""; position:absolute; z-index:-1; top:-30%; bottom:-30%; left:0; width:38%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); transform:translateX(-160%) skewX(-12deg); animation:ofcSheen 6.5s 1s ease-in-out infinite; }
+.ofc-hero::after{ content:""; position:absolute; z-index:-1; top:-30%; bottom:-30%; left:0; width:38%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); transform:translateX(-160%) skewX(-12deg); animation:ofcSheen 6.5s 1s ease-in-out 1 both; }
 @keyframes ofcSheen{ 0%{ transform:translateX(-160%) skewX(-12deg); } 22%,100%{ transform:translateX(360%) skewX(-12deg); } }
 .ofc-k{ display:inline-flex; align-items:center; gap:7px; padding:5px 11px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); font-size:.68rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
 .ofc-k i{ width:7px; height:7px; border-radius:50%; background:#6ee7b7; box-shadow:0 0 0 4px rgba(110,231,183,.25); }
@@ -16780,7 +16780,7 @@ html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
   .ofc-tabs button i{ position:absolute; top:12px; right:12px; }
   .ofc-tabs button.on{ color:#fff; border-color:transparent; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.32),transparent 60%),linear-gradient(150deg,#065f46,#047857 55%,#0f3d2e); box-shadow:0 14px 28px -14px rgba(4,120,87,.8), inset 0 1px 0 rgba(255,255,255,.22); }
   .ofc-tabs button.on svg{ background:rgba(255,255,255,.16); color:#fff; }
-  .ofc-tabs button::after{ content:""; position:absolute; z-index:-1; top:-30%; bottom:-30%; left:0; width:45%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcTabSheen 6s ease-in-out infinite; }
+  .ofc-tabs button::after{ content:""; position:absolute; z-index:-1; top:-30%; bottom:-30%; left:0; width:45%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcTabSheen 6s ease-in-out 1 both; }
   .ofc-tabs button.on::after{ background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent); }
   .ofc-tabs button:nth-child(2)::after{ animation-delay:.6s; } .ofc-tabs button:nth-child(3)::after{ animation-delay:1.2s; } .ofc-tabs button:nth-child(4)::after{ animation-delay:1.8s; }
 }
@@ -16800,7 +16800,7 @@ html.cp-org-lock .cp-lock-hide, html.cp-org-lock #s-pro-centre .ptop, html.cp-or
 /* ═══ Formulaire : cartes « hero » bleu-vert ═══ */
 .ofc-cat{ background:linear-gradient(180deg,#f3f7fb,#f2f8f5) !important; border:none !important; box-shadow:none !important; }
 .ofc-cat-hd{ position:relative; overflow:hidden; isolation:isolate; margin:0; padding:22px 20px 20px; color:#fff; border-radius:22px; background:radial-gradient(120% 140% at 100% 0%,rgba(110,231,183,.30),transparent 55%),linear-gradient(130deg,#0b2a52 0%,#1e40af 45%,#047857 110%) !important; box-shadow:0 20px 40px -26px rgba(30,64,175,.8); border:none !important; }
-.ofc-cat-hd::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcSheen 7s 1s ease-in-out infinite; }
+.ofc-cat-hd::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcSheen 7s 1s ease-in-out 1 both; }
 .ofc-cat-hd .ofc-k{ background:rgba(255,255,255,.14) !important; border-color:rgba(255,255,255,.3) !important; color:#fff !important; }
 .ofc-cat-hd p{ color:rgba(255,255,255,.88) !important; }
 .ofc-cat .ofc-sec{ margin:14px 0 0; padding:0 !important; border:1px solid #e3eaf2 !important; border-radius:22px; overflow:hidden; background:#fff; box-shadow:0 18px 36px -30px rgba(15,23,42,.45); }
@@ -16865,6 +16865,8 @@ html.cp-org-lock .cp-lock-hide, html.cp-org-lock #s-pro-centre .ptop, html.cp-or
 .ofc-lockbar-ic{ display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; }
 .ofc-lockbar-ic svg{ display:block !important; width:18px !important; height:18px !important; margin:0 !important; position:static !important; }
 .ofcm-box, .ofcm-chat, .ofp-box{ position:relative; }
+
+.ofc-logo .ofc-logo-pv{ display:flex !important; align-items:center !important; justify-content:center !important; text-align:center; font-size:.74rem !important; font-weight:700; color:#94a3b8 !important; line-height:1; margin:0 !important; }
 </style>
 <script>
 /* ═══ Page de présentation d'une formation — même rendu côté centre (aperçu) et côté membre ═══ */
@@ -17028,7 +17030,7 @@ window.cpSheetArrows=function(sc,host){
   function previewSheet(f){
     var o=ST.org||{}; f=Object.assign({ orgNom:o.nom||'' },f);
     var sh=document.createElement('div'); sh.className='ofcm-sheet';
-    sh.className='ofcm-sheet ofcm-full'; sh.innerHTML='<div class="ofcm-box ofp-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>Aperçu candidat</b><span>Voici votre page, telle que les membres la voient</span></div></div><div class="ofp-scroll">'+cpFormPage(f,{ empty:'Vos informations', actions:'<div class="ofp-demo"><span>Je suis intéressé(e)</span><span>Enregistrer</span></div>' })+'</div></div>';
+    sh.className='ofcm-sheet ofcm-full'; sh.innerHTML='<div class="ofcm-box ofp-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>Aperçu candidat</b><span>Voici votre page, telle que les membres la voient</span></div></div><div class="ofp-scroll">'+cpFormPage(f,{ empty:'Vos informations' })+'</div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var close=function(){ sh.remove(); document.documentElement.classList.remove('ofcm-lock'); };
     sh.querySelector('.ofcm-x').onclick=close; sh.addEventListener('click',function(e){ if(e.target===sh) close(); });
