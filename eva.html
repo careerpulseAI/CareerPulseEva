@@ -29167,6 +29167,50 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
   </div>
   <div class="evad-scroll"><div id="of-root"></div></div>
 </div>
+<style id="cpfp-css">
+/* ═══ Page de présentation d'une formation (identique côté centre et côté membre) ═══ */
+.cpfp{ --a:#065f46; --b:#10b981; --c:#ecfdf5; font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Inter,Arial,sans-serif; color:#0f172a; background:#fff; border-radius:24px; overflow:hidden; border:1px solid #e7ece9; box-shadow:0 26px 60px -38px rgba(15,23,42,.55); }
+.cpfp *{ box-sizing:border-box; }
+.cpfp-hero{ position:relative; overflow:hidden; isolation:isolate; padding:22px 20px 20px; color:#fff;
+  background:radial-gradient(120% 140% at 100% 0%,rgba(255,255,255,.22),transparent 55%),linear-gradient(135deg,var(--a) 0%,var(--b) 120%); }
+.cpfp-hero::before{ content:""; position:absolute; z-index:-1; right:-60px; top:-70px; width:230px; height:230px; border-radius:50%; border:1px solid rgba(255,255,255,.22); box-shadow:0 0 0 26px rgba(255,255,255,.05); }
+.cpfp-hero::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpfpSheen 7s 1s ease-in-out infinite; }
+@keyframes cpfpSheen{ 0%{ transform:translateX(-170%) skewX(-12deg); } 22%,100%{ transform:translateX(380%) skewX(-12deg); } }
+.cpfp-org{ display:flex; align-items:center; gap:12px; }
+.cpfp-logo{ flex-shrink:0; width:58px; height:58px; border-radius:16px; background:#fff; display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 12px 26px -14px rgba(2,6,23,.6); color:var(--a); font-weight:900; font-size:1.2rem; }
+.cpfp-logo img{ width:100%; height:100%; object-fit:contain; padding:6px; }
+.cpfp-orgn{ min-width:0; } .cpfp-orgn b{ display:block; font-size:.86rem; } .cpfp-orgn span{ display:flex; align-items:center; gap:5px; font-size:.7rem; opacity:.9; margin-top:2px; }
+.cpfp-orgn svg{ width:13px; height:13px; }
+.cpfp-t{ font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(1.7rem,5vw,2.3rem); line-height:1.05; margin:16px 0 12px; letter-spacing:-.01em; }
+.cpfp-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.cpfp-chips span{ font-size:.68rem; font-weight:800; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); }
+.cpfp-chips span.q{ background:#fff; color:var(--a); border-color:#fff; }
+.cpfp-body{ padding:18px 18px 20px; display:flex; flex-direction:column; gap:16px; }
+.cpfp-facts{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.cpfp-fact{ padding:11px 11px 10px; border-radius:16px; background:var(--c); border:1px solid rgba(0,0,0,.04); }
+.cpfp-fact span{ display:block; font-size:.6rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--a); opacity:.85; }
+.cpfp-fact b{ display:block; margin-top:4px; font-size:.86rem; line-height:1.3; }
+@media (max-width:640px){ .cpfp-facts{ grid-template-columns:1fr 1fr; } }
+.cpfp-sec h4{ display:flex; align-items:center; gap:8px; margin:0 0 8px; font-size:.78rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; color:var(--a); }
+.cpfp-sec h4::after{ content:""; flex:1; height:1px; background:linear-gradient(90deg,var(--b),transparent); opacity:.4; }
+.cpfp-prog p{ margin:0 0 8px; font-size:.86rem; line-height:1.6; color:#1e293b; } .cpfp-prog p b{ color:var(--a); }
+.cpfp-prog ul{ margin:0 0 8px; padding:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+.cpfp-prog li{ position:relative; padding:9px 11px 9px 30px; border-radius:12px; background:#f8faf9; border:1px solid #edf1ef; font-size:.84rem; line-height:1.5; }
+.cpfp-prog li::before{ content:""; position:absolute; left:12px; top:15px; width:8px; height:8px; border-radius:50%; background:var(--b); box-shadow:0 0 0 3px var(--c); }
+.cpfp-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+.cpfp-tags span{ font-size:.74rem; font-weight:700; padding:6px 11px; border-radius:999px; background:var(--c); color:var(--a); }
+.cpfp-place{ font-size:.84rem; line-height:1.55; color:#1e293b; }
+.cpfp-links{ display:flex; flex-direction:column; gap:8px; }
+.cpfp-link{ display:flex; align-items:center; gap:10px; padding:12px 14px; border-radius:14px; text-decoration:none; color:#0f172a; background:#fff; border:1px solid #e7ece9; font-size:.84rem; font-weight:800; }
+.cpfp-link i{ font-style:normal; margin-left:auto; color:var(--a); }
+.cpfp-link small{ display:block; font-weight:600; font-size:.7rem; color:#64748b; }
+.cpfp-link .ic{ width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center; background:var(--c); color:var(--a); flex-shrink:0; }
+.cpfp-link .ic svg{ width:17px; height:17px; }
+.cpfp-note{ font-size:.7rem; line-height:1.5; color:#64748b; padding:10px 12px; border-radius:12px; background:#f8fafc; }
+.cpfp-slot:empty{ display:none; }
+@media (prefers-reduced-motion: reduce){ .cpfp-hero::after{ animation:none; display:none; } }
+
+</style>
 <style id="of-css">
 [data-evt="of"]{ --t1:#b45309; --t2:#f59e0b; --ts:#fffbeb; --tb:#fde68a; }
 #s-eva-of{ background: radial-gradient(60% 50% at 100% 0%, rgba(245,158,11,.10) 0%, rgba(245,158,11,0) 70%), #f7f9fd !important; }
@@ -29629,6 +29673,22 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 
 .ofr-sec{ margin:4px 2px 9px; font-size:.82rem; font-weight:900; color:#78350f; }
 .ofr-sec.lo{ margin-top:18px; color:#475569; } .ofr-sec span{ display:block; font-size:.7rem; font-weight:600; color:#64748b; margin-top:2px; }
+/* ── Présentation de formation (pleine page) ── */
+.ofr{ cursor:pointer; border-left:4px solid var(--ta,#b45309); }
+.ofr:hover{ box-shadow:0 18px 34px -24px rgba(15,23,42,.45); }
+.ofr-logo{ width:46px; height:46px; flex-shrink:0; border-radius:13px; background:#fff; border:1px solid #eef0f2; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+.ofr-logo img{ width:100%; height:100%; object-fit:contain; padding:4px; }
+.ofr-more{ color:var(--ta,#b45309) !important; }
+.ofx-sheet{ position:fixed; inset:0; z-index:8900; background:rgba(15,23,42,.45); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; animation:ofmIn .25s ease both; }
+.ofx-box{ width:100%; max-width:760px; height:min(94vh,860px); background:#f5f2ec; border-radius:22px 22px 0 0; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 -20px 50px -20px rgba(15,23,42,.5); }
+@media (min-width:900px){ .ofx-sheet{ align-items:center; } .ofx-box{ border-radius:22px; height:min(90vh,860px); } }
+.ofx-scroll{ flex:1; overflow-y:auto; padding:14px; }
+.ofx-match{ display:flex; gap:12px; align-items:center; padding:12px; border-radius:16px; background:#fffbeb; border:1px solid #fde68a; }
+.ofx-match > div:last-child b{ display:block; font-size:.82rem; color:#78350f; }
+.ofx-match .ofr-crit{ margin-top:7px; }
+.ofx-acts{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.ofx-back{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin:16px 0 4px; padding:13px 16px; border-radius:16px; border:1px solid #f1e3c4; background:linear-gradient(180deg,#fff,#fffbeb); color:#92400e; font:800 .86rem/1 inherit; cursor:pointer; box-shadow:0 10px 22px -18px rgba(180,83,9,.6); }
+.ofx-back svg{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2.6; }
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -29834,6 +29894,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
       +chips(['Match expliqué','Centres vérifiés','Personne ne t\'appelle'])));
     p2.appendChild(inbox);
     var fq=el('div','oft-faq'); fq.appendChild(faqNode()); p2.appendChild(fq);
+    var bk=el('button','ofx-back'); bk.type='button'; bk.innerHTML=S('<path d="M15 18l-6-6 6-6"/>')+'Retour à la page précédente'; bk.onclick=function(){ go('eva'); }; p2.appendChild(bk);
     var bar=n.querySelector('.oft-bar'), ink=n.querySelector('.oft-ink');
     function show(k){
       n.querySelectorAll('.oft-tab').forEach(function(b){ var on=b.getAttribute('data-t')===k; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false'); if(on){ ink.style.width=b.offsetWidth+'px'; ink.style.transform='translateX('+b.offsetLeft+'px)'; } });
@@ -30288,18 +30349,12 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
   function recoCard(x){
     var f=x.f, m=x.m, saved=RECO.st.saved.indexOf(f.id)>-1, inter=!!RECO.st.interest[f.id], neu=RECO.st.seen.indexOf(f.id)<0;
     var g=function(l,v){ return v?'<div><span>'+l+'</span><b>'+esc(v)+'</b></div>':''; };
-    return '<div class="ofr" data-f="'+esc(f.id)+'"><div class="ofr-hd"><div class="ofr-pct '+pctClass(m.pct)+'"><b>'+m.pct+'%</b><span>match</span></div>'
+    var th=(window.CPFP_THEMES&&CPFP_THEMES[f.theme])||['#b45309','#f59e0b'];
+    return '<div class="ofr" data-f="'+esc(f.id)+'" style="--ta:'+th[0]+';--tb:'+th[1]+'"><div class="ofr-hd">'+(f.orgLogo?'<span class="ofr-logo"><img src="'+esc(f.orgLogo)+'" alt=""></span>':'')+'<div class="ofr-pct '+pctClass(m.pct)+'"><b>'+m.pct+'%</b><span>match</span></div>'
       +'<div class="ofr-t"><b>'+esc(f.titre)+'</b><span>'+esc([f.orgNom,f.ville,f.modalite].filter(Boolean).join(' · '))+'</span>'+(neu?'<em class="ofr-new">Nouveau</em>':'')+(saved?'<em class="ofr-sv">Enregistrée</em>':'')+'</div></div>'
       +'<div class="ofr-crit">'+m.crit.map(function(c){ return '<span class="'+(c[1]?'ok':'ko')+'">'+(c[1]?'✓':'✗')+' '+esc(c[0])+'</span>'; }).join('')+'</div>'
-      +'<button type="button" class="ofr-more" data-a="toggle">Voir la fiche complète'+S('<path d="m6 9 6 6 6-6"/>')+'</button>'
-      +'<div class="ofr-det"><div class="ofr-in">'
-      +'<div class="ofp-g">'+g('Organisme',f.orgNom)+g('Certification',[f.certType,f.certCode].filter(Boolean).join(' · '))+g('Qualiopi',f.qualiopi===false?'Non':'Oui')+g('Modalité',f.modalite)+g('Durée',f.duree)+g('Dates',f.dates)+g('Niveau de sortie',f.niveau)+g('Prix TTC',f.prix)+g('Lieu',[f.etablissement,f.adresse,f.ville].filter(Boolean).join(', '))+g('Financements possibles',(f.financements||[]).join(', '))+'</div>'
-      +(f.programme?'<div class="ofp-txt">'+esc(f.programme)+'</div>':'')
-      +(f.lien?'<a class="ofr-link" href="'+esc(f.lien)+'" target="_blank" rel="noopener noreferrer">Voir le programme détaillé ↗</a>':'')
-      +'<div class="ofp-note">Le financement dépend de ta situation : vérifie toujours les conditions officielles. Rien n\'est garanti tant que le financeur n\'a pas validé.</div>'
-      +(MSG.convs[f.id]?'<div class="ofw-row wrap"><button type="button" class="ofw-btn pri" data-a="conv">'+S(I.inbox)+'Ouvrir la conversation'+(MSG.convs[f.id].unreadCand?' · nouveau message':'')+'</button></div>'
-        :'<div class="ofc-zone"></div><div class="ofw-row wrap ofc-acts"><button type="button" class="ofw-btn pri" data-a="int">'+S(I.check)+'Je suis intéressé(e)</button><button type="button" class="ofw-btn" data-a="save">'+(saved?'Retirer des enregistrées':'Enregistrer')+'</button><button type="button" class="ofw-btn" data-a="hide">Pas pour moi</button><button type="button" class="ofw-skip" data-a="sig">Signaler</button></div>')
-      +'</div></div></div>';
+      +'<button type="button" class="ofr-more" data-a="page">Voir la présentation de la formation'+S('<path d="m9 18 6-6-6-6"/>')+'</button>'
+      +'</div>';
   }
   /* ═════ MESSAGERIE PROTÉGÉE (côté membre) : le membre écrit toujours le premier ═════ */
   var MSG={ convs:{}, unsub:null, open:null };
@@ -30342,8 +30397,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     try{ d.expireAt=firebase.firestore.Timestamp.fromDate(exp); }catch(e){}
     var b=card.querySelector('[data-a="send1"]'); b.disabled=true;
     db().collection('conversations').doc(convId(f.id)).set(d).then(function(){
-      MSG.convs[f.id]=Object.assign({ id:convId(f.id) },d); RECO.st.interest[f.id]=now; saveReco(); toast('Message envoyé au centre'); openThread(f.id);
-      var box=card.closest('.ofi'); if(box) drawReco(box);
+      MSG.convs[f.id]=Object.assign({ id:convId(f.id) },d); RECO.st.interest[f.id]=now; saveReco(); toast('Message envoyé au centre'); closePage(); openThread(f.id); refreshList();
     }).catch(function(e){ b.disabled=false; toast((e&&e.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
   }
   /* Fenêtre de conversation (temps réel tant qu'elle est ouverte) */
@@ -30389,6 +30443,35 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     return '<div class="ofd"><div class="ofd-hd">'+S(I.inbox)+'<b>Mes demandes</b></div>'+L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
       return '<button type="button" class="ofd-it" data-conv="'+esc(c.formationId)+'"><span class="ofd-dot'+(c.unreadCand?' on':'')+'"></span><span class="ofd-t"><b>'+esc(c.formationTitre)+'</b><span>'+esc(c.orgNom)+' · '+(c.statut!=='ouverte'?'Clôturée':c.lastFrom==='org'?'Le centre t\'a répondu':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,80))+'</i></span>'+S('<path d="m9 18 6-6-6-6"/>')+'</button>'; }).join('')+'</div>';
   }
+  /* Présentation complète d'une formation (même page que l'aperçu du centre) */
+  function closePage(){ var s=document.querySelector('.ofx-sheet'); if(s) s.remove(); if(!document.querySelector('.ofm-sheet')) document.documentElement.classList.remove('ofm-lock'); }
+  function pageActions(f){
+    var saved=RECO.st.saved.indexOf(f.id)>-1;
+    if(MSG.convs[f.id]) return '<div class="ofx-acts"><button type="button" class="ofw-btn pri" data-x="conv">'+S(I.inbox)+'Ouvrir la conversation'+(MSG.convs[f.id].unreadCand?' · nouveau message':'')+'</button></div>';
+    return '<div class="ofc-zone"></div><div class="ofx-acts ofc-acts"><button type="button" class="ofw-btn pri" data-x="int">'+S(I.check)+'Je suis intéressé(e)</button><button type="button" class="ofw-btn" data-x="save">'+(saved?'Retirer des enregistrées':'Enregistrer')+'</button><button type="button" class="ofw-btn" data-x="hide">Pas pour moi</button><button type="button" class="ofw-skip" data-x="sig">Signaler</button></div>';
+  }
+  function openPage(fid){
+    var f=(RECO.forms||[]).filter(function(x){ return x.id===fid; })[0]; if(!f) return; closePage();
+    var m=matchOf(f,PROF||{});
+    var top='<div class="ofx-match"><div class="ofr-pct '+pctClass(m.pct)+'"><b>'+m.pct+'%</b><span>match</span></div><div><b>Ta correspondance avec cette formation</b><div class="ofr-crit">'+m.crit.map(function(c){ return '<span class="'+(c[1]?'ok':'ko')+'">'+(c[1]?'✓':'✗')+' '+esc(c[0])+'</span>'; }).join('')+'</div></div></div>';
+    var sh=el('div','ofx-sheet');
+    sh.innerHTML='<div class="ofx-box"><div class="ofm-hd"><button type="button" class="ofm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>'+esc(f.titre||'Formation')+'</b><span>'+esc(f.orgNom||'')+'</span></div><em>Centre vérifié</em></div><div class="ofx-scroll">'+cpFormPage(f,{ top:top, actions:pageActions(f) })+'</div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofm-lock');
+    if(RECO.st.seen.indexOf(fid)<0){ RECO.st.seen.push(fid); saveReco(); setTimeout(recoBadge,300); }
+    sh.querySelector('.ofm-x').onclick=closePage;
+    sh.addEventListener('click',function(e){
+      if(e.target===sh){ closePage(); return; }
+      var b=e.target.closest('[data-x],[data-a]'); if(!b) return; var a=b.getAttribute('data-x')||b.getAttribute('data-a'), u=user();
+      if(a==='conv'){ closePage(); openThread(fid); return; }
+      if(a==='int'){ sh.querySelector('.ofc-zone').innerHTML=composerHtml(f); sh.querySelector('.ofc-acts').style.display='none'; var tc=sh.querySelector('[data-sh="tel"]'); if(tc) tc.onchange=function(){ sh.querySelector('.ofc-tel').style.display=tc.checked?'':'none'; }; sh.querySelector('.ofc-zone').scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+      if(a==='send1'){ sendFirst(sh,f); return; }
+      if(a==='cancel1'){ sh.querySelector('.ofc-zone').innerHTML=''; sh.querySelector('.ofc-acts').style.display=''; return; }
+      if(a==='save'){ var k=RECO.st.saved.indexOf(fid); if(k>-1) RECO.st.saved.splice(k,1); else RECO.st.saved.push(fid); saveReco(); toast(k>-1?'Retirée de tes formations enregistrées':'Formation enregistrée'); b.textContent=k>-1?'Enregistrer':'Retirer des enregistrées'; refreshList(); return; }
+      if(a==='hide'){ RECO.st.hidden.push(fid); saveReco(); toast('C\'est noté, je ne te la montre plus'); closePage(); refreshList(); return; }
+      if(a==='sig'){ if(!u||!db()) return; db().collection('reports').add({ reporterUid:u.uid, type:'formation', formationId:fid, createdAt:new Date().toISOString() }).then(function(){ toast('Merci, CareerPulse va examiner cette formation'); }).catch(function(){ toast('Signalement impossible pour le moment'); }); }
+    });
+  }
+  function refreshList(){ var b=document.querySelector('.ofi'); if(b && RECO.forms) drawReco(b); recoBadge(); }
   function drawReco(box){
     if(!RECO.forms){ box.innerHTML='<div class="ofp-empty"><span class="evh-typing"><span></span><span></span><span></span></span></div>'; loadReco().then(function(){ drawReco(box); }); return; }
     var on=!!(CONS&&CONS.visible), L=recoList(), h='';
@@ -30406,10 +30489,11 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     box.innerHTML=h;
     box.onclick=function(e){
       var cv=e.target.closest('[data-conv]'); if(cv){ openThread(cv.getAttribute('data-conv')); return; }
+      var crd=e.target.closest('.ofr'); if(crd && !e.target.closest('[data-a]')){ openPage(crd.getAttribute('data-f')); return; }
       var b=e.target.closest('[data-a]'); if(!b) return;
       var card=b.closest('.ofr'); if(!card){ inboxClick(e,box); return; }
       var id=card.getAttribute('data-f'), a=b.getAttribute('data-a'), u=user();
-      if(a==='toggle'){ card.classList.toggle('open'); return; }
+      if(a==='page'){ openPage(id); return; }
       if(a==='int'){ var f=(RECO.forms||[]).filter(function(x){ return x.id===id; })[0]; if(!f) return; card.querySelector('.ofc-zone').innerHTML=composerHtml(f); card.querySelector('.ofc-acts').style.display='none';
         var tc=card.querySelector('[data-sh="tel"]'); if(tc) tc.onchange=function(){ card.querySelector('.ofc-tel').style.display=tc.checked?'':'none'; }; return; }
       if(a==='send1'){ var f1=(RECO.forms||[]).filter(function(x){ return x.id===id; })[0]; if(f1) sendFirst(card,f1); return; }
@@ -31303,6 +31387,48 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
   }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
 })();
+</script>
+<script>
+/* ═══ Page de présentation d'une formation — même rendu côté centre (aperçu) et côté membre ═══ */
+window.CPFP_THEMES={ emeraude:['#065f46','#10b981','#ecfdf5','Émeraude'], saphir:['#1e3a8a','#3b82f6','#eff6ff','Saphir'], ambre:['#92400e','#f59e0b','#fffbeb','Ambre'], rubis:['#9f1239','#f43f5e','#fff1f2','Rubis'], violet:['#5b21b6','#a78bfa','#f5f3ff','Améthyste'], turquoise:['#115e59','#2dd4bf','#f0fdfa','Turquoise'], ardoise:['#0f172a','#64748b','#f1f5f9','Ardoise'] };
+window.cpFormPage=function(f,o){
+  f=f||{}; o=o||{};
+  var E=function(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); };
+  var T=CPFP_THEMES[f.theme]||CPFP_THEMES.emeraude;
+  var I=function(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; };
+  var ini=String(f.orgNom||'?').trim().split(/\s+/).slice(0,2).map(function(w){ return w[0]||''; }).join('').toUpperCase();
+  var logo=f.orgLogo?'<img src="'+E(f.orgLogo)+'" alt="Logo '+E(f.orgNom)+'">':E(ini);
+  var chips=[f.certCode?(f.certType==='Répertoire spécifique (RS)'?'RS ':'')+f.certCode:(f.certType&&f.certType!=='Non certifiante'?f.certType:''), f.modalite, f.duree, f.niveau].filter(Boolean).map(function(c){ return '<span>'+E(c)+'</span>'; }).join('');
+  if(f.qualiopi!==false) chips='<span class="q">✓ Qualiopi</span>'+chips;
+  var fact=function(l,v){ return '<div class="cpfp-fact"><span>'+l+'</span><b>'+E(v||'À préciser')+'</b></div>'; };
+  /* Programme : « Libellé : texte » → paragraphe, autres lignes → liste */
+  var prog='', list=[];
+  String(f.programme||'').split(/\r?\n/).map(function(l){ return l.trim(); }).filter(Boolean).forEach(function(l){
+    var m=l.match(/^([^:]{2,28})\s*:\s*(.*)$/);
+    var head=m && /^(objectifs?|modules?|programme|d[ée]roulement|d[ée]bouch[ée]s|pr[ée]requis|public|m[ée]thodes?|[ée]valuation|certification|dur[ée]e|rythme|accessibilit[ée])$/i.test(m[1].trim());
+    if(head){ if(list.length){ prog+='<ul>'+list.join('')+'</ul>'; list=[]; } prog+='<p><b>'+E(m[1])+'</b>'+(m[2]?' : '+E(m[2]):'')+'</p>'; }
+    else if(m) list.push('<li><b>'+E(m[1].replace(/^[-•*\d.)\s]+/,''))+'</b> : '+E(m[2])+'</li>');
+    else list.push('<li>'+E(l.replace(/^[-•*\d.)\s]+/,''))+'</li>');
+  });
+  if(list.length) prog+='<ul>'+list.join('')+'</ul>';
+  var tags=function(a){ return (a||[]).map(function(x){ return '<span>'+E(String(x).replace(/^Autre\s*:\s*/,''))+'</span>'; }).join(''); };
+  var link=function(href,ic,t,s){ href=/^https?:\/\//i.test(href)?href:'https://'+href; return '<a class="cpfp-link" href="'+E(href)+'" target="_blank" rel="noopener noreferrer"><span class="ic">'+I(ic)+'</span><span>'+t+'<small>'+s+'</small></span><i>↗</i></a>'; };
+  var links=(f.lien?link(f.lien,'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>','Programme officiel détaillé','Document ou page officielle de la formation'):'')
+    +(f.orgSite?link(f.orgSite,'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>','Visiter le site du centre','N\'hésitez pas à visiter leur site'):'');
+  return '<div class="cpfp" style="--a:'+T[0]+';--b:'+T[1]+';--c:'+T[2]+'">'
+    +'<div class="cpfp-hero"><div class="cpfp-org"><span class="cpfp-logo">'+logo+'</span><span class="cpfp-orgn"><b>'+E(f.orgNom||'Centre de formation')+'</b><span>'+I('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'Centre vérifié par CareerPulse</span></span></div>'
+    +'<h3 class="cpfp-t">'+E(f.titre||'Intitulé de la formation')+'</h3><div class="cpfp-chips">'+chips+'</div></div>'
+    +'<div class="cpfp-body"><div class="cpfp-slot">'+(o.top||'')+'</div>'
+    +'<div class="cpfp-facts">'+fact('Prochaine rentrée',f.dates)+fact('Durée',f.duree)+fact('Lieu',f.ville)+fact('Prix TTC',f.prix)+'</div>'
+    +(prog?'<div class="cpfp-sec"><h4>Le programme</h4><div class="cpfp-prog">'+prog+'</div></div>':'')
+    +((f.publics||[]).length?'<div class="cpfp-sec"><h4>Pour qui</h4><div class="cpfp-tags">'+tags(f.publics)+'</div></div>':'')
+    +((f.financements||[]).length?'<div class="cpfp-sec"><h4>Financements possibles</h4><div class="cpfp-tags">'+tags(f.financements)+'</div></div>':'')
+    +((f.etablissement||f.adresse)?'<div class="cpfp-sec"><h4>Où se déroule la formation</h4><div class="cpfp-place">'+E([f.etablissement,f.adresse,f.ville].filter(Boolean).join(', '))+'</div></div>':'')
+    +(links?'<div class="cpfp-sec"><h4>Pour aller plus loin</h4><div class="cpfp-links">'+links+'</div></div>':'')
+    +'<div class="cpfp-slot">'+(o.actions||'')+'</div>'
+    +'<div class="cpfp-note">Le financement dépend de la situation de chacun : rien n\'est garanti tant que le financeur n\'a pas validé. Aucun démarchage : c\'est toujours le candidat qui prend contact.</div>'
+    +'</div></div>';
+};
 </script>
 </body>
 </html>
