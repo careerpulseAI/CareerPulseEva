@@ -16594,6 +16594,9 @@ window.cpEvx = window.cpEvx || {
      Le centre publie ses formations ; ce sont les candidats qui le contactent (aucun démarchage).
 ═══════════════════════════════════════════════════════════════ -->
 <style id="ofc-css">
+.ofc-err{ margin-top:12px; padding:11px 13px; border-radius:12px; background:#fef2f2; border:1px solid #fecaca; color:#b91c1c; font-size:.8rem; font-weight:700; line-height:1.5; }
+.ofc-ok{ margin-bottom:12px; padding:11px 13px; border-radius:12px; background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; font-size:.8rem; font-weight:700; line-height:1.5; }
+
 /* ── Messagerie protégée (centre) ── */
 .ofc-conv{ width:100%; display:flex; align-items:center; gap:10px; text-align:left; border:1px solid #dfe7e4; background:linear-gradient(180deg,#fff,#f8faf9); border-radius:14px; padding:12px; cursor:pointer; font-family:'DM Sans',sans-serif; color:#0f172a; }
 .ofc-conv + .ofc-conv{ margin-top:8px; }
@@ -16748,6 +16751,7 @@ html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
     return '<div class="ofc-tabs" role="tablist">'+T.map(function(t){ return '<button type="button" data-tab="'+t[0]+'" class="'+(ST.tab===t[0]?'on':'')+'">'+S(t[2]).replace('<svg','<svg width="15" height="15"')+t[1]+(t[3]?'<i>'+t[3]+'</i>':'')+'</button>'; }).join('')+'</div>';
   }
   function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
+  function formErr(m){ var e=$('ofc-err'); if(!e) return; e.textContent=m; e.style.display=m?'':'none'; if(m) e.scrollIntoView({ behavior:'smooth', block:'center' }); }
   function checks(name){
     return [].slice.call(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(x){
       if(x.value!=='Autre') return x.value; var t=val(name+'-autre'); return t ? 'Autre : '+t : 'Autre';
@@ -16784,13 +16788,14 @@ html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
       +'<label class="full">Programme<textarea id="ofc-prog" maxlength="3000" placeholder="Objectifs, modules, débouchés…">'+esc(f.programme)+'</textarea></label>'
       +'<label class="full">Lien vers le programme détaillé<input id="ofc-lien" maxlength="200" value="'+esc(f.lien)+'" placeholder="https://"></label>'
       +'<label class="full ofc-engage"><input type="checkbox" id="ofc-eng"'+(f.id?' checked':'')+'><span>Je certifie que ces informations sont exactes et que cette fiche ne contient <b>aucune promotion, cadeau ou rétribution</b> liée à l\'inscription (art. L6323-8-1 du Code du travail).</span></label>'
-      +'</div><div class="ofc-btns"><button type="button" class="ofc-btn pri" data-a="save" data-pub="1">'+S(I.check).replace('<svg','<svg width="16" height="16"')+'Publier</button>'
+      +'</div><div id="ofc-err" class="ofc-err" role="alert" style="display:none"></div><div class="ofc-btns"><button type="button" class="ofc-btn pri" data-a="save" data-pub="1">'+S(I.check).replace('<svg','<svg width="16" height="16"')+'Publier</button>'
       +'<button type="button" class="ofc-btn" data-a="save" data-pub="0">Enregistrer en brouillon</button>'
       +(f.id?'<button type="button" class="ofc-btn" data-a="cancel">Annuler</button>':'')+'</div></div>';
   }
   function listHtml(){
-    if(!ST.list.length) return '<div class="ofc-card"><div class="ofc-empty">'+S(I.book)+'Vous n\'avez pas encore publié de formation.<br>Votre première fiche apparaîtra ici.</div></div>';
-    return '<div class="ofc-card"><h3>Vos formations</h3><p>'+ST.list.filter(function(f){ return f.statut==='publiee'; }).length+' publiée(s) · visibles par les membres à qui elles correspondent.</p>'
+    if(!ST.list.length) return '<div class="ofc-card" id="ofc-listcard"><div class="ofc-empty">'+S(I.book)+'Vous n\'avez pas encore publié de formation.<br>Votre première fiche apparaîtra ici.</div></div>';
+    var fl=ST.flash?'<div class="ofc-ok">'+esc(ST.flash)+'</div>':''; ST.flash='';
+    return '<div class="ofc-card" id="ofc-listcard">'+fl+'<h3>Vos formations</h3><p>'+ST.list.filter(function(f){ return f.statut==='publiee'; }).length+' publiée(s) · visibles par les membres à qui elles correspondent.</p>'
       +ST.list.map(function(f){
         var pub=f.statut==='publiee';
         return '<div class="ofc-item"><span class="ofc-item-ico">'+S(I.book)+'</span><div class="ofc-item-b"><div class="ofc-item-t">'+esc(f.titre)+'</div>'
@@ -16854,16 +16859,17 @@ html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
     var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a'), u=me(); if(!u) return;
     if(a==='save'){
       var f=collect(), pub=b.getAttribute('data-pub')==='1';
-      if(!f.titre||!f.ville){ toast('Indiquez au moins l\'intitulé et la ville'); return; }
-      if(f.lien && !/^https:\/\//i.test(f.lien)){ toast('Le lien du programme doit commencer par https://'); return; }
-      if(pub && !$('ofc-eng').checked){ toast('Cochez l\'engagement de conformité pour publier'); return; }
+      formErr('');
+      if(!f.titre||!f.ville){ formErr('Indiquez au moins l\'intitulé de la formation et la ville.'); return; }
+      if(f.lien){ f.lien=f.lien.replace(/\s+/g,''); if(!/^https?:\/\//i.test(f.lien)) f.lien='https://'+f.lien; if(!/^https?:\/\/[^\s.]+\.[^\s]{2,}/i.test(f.lien)){ formErr('Le lien du programme ne semble pas valide (exemple : https://www.moncentre.fr/formation).'); return; } }
+      if(pub && !$('ofc-eng').checked){ formErr('Cochez l\'engagement de conformité pour publier.'); return; }
       var o=ST.org||{}, now=new Date().toISOString();
       Object.assign(f,{ orgUid:u.uid, orgNom:o.nom||'', orgVille:o.ville||'', statut:pub?'publiee':'brouillon', engagement:pub?now:(ST.edit&&ST.edit.engagement)||'', updatedAt:now });
       b.disabled=true;
       var ref=ST.edit&&ST.edit.id ? db().collection('formations').doc(ST.edit.id) : db().collection('formations').doc();
       if(!(ST.edit&&ST.edit.id)) f.createdAt=now;
-      ref.set(f,{merge:true}).then(function(){ toast(pub?'Formation publiée':'Brouillon enregistré'); ST.edit=null; return load(); }).then(draw)
-        .catch(function(x){ b.disabled=false; toast('Enregistrement impossible ('+((x&&x.code)||'erreur')+')'); });
+      ref.set(f,{merge:true}).then(function(){ toast(pub?'Formation publiée':'Brouillon enregistré'); ST.edit=null; ST.flash=pub?'✅ Formation publiée : elle est maintenant recommandée aux membres dont le profil correspond.':'Brouillon enregistré : il n\'est pas visible par les membres tant qu\'il n\'est pas publié.'; return load(); }).then(function(){ draw(); var l=$('ofc-listcard'); if(l) l.scrollIntoView({ behavior:'smooth', block:'start' }); })
+        .catch(function(x){ b.disabled=false; var c=(x&&x.code)||'erreur'; formErr(c==='permission-denied'?'Enregistrement refusé : votre compte n\'est pas encore validé, ou les règles Firestore ne sont pas à jour.':'Enregistrement impossible ('+c+'). Vérifiez votre connexion et réessayez.'); });
     } else if(a==='cancel'){ ST.edit=null; draw(); }
     else if(a==='edit'){ ST.edit=ST.list.filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]||null; draw(); var ed=$('ofc-editor'); if(ed) ed.scrollIntoView({ behavior:'smooth', block:'start' }); }
     else if(a==='toggle'){
