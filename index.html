@@ -16854,6 +16854,17 @@ html.cp-org-lock .cp-lock-hide, html.cp-org-lock #s-pro-centre .ptop, html.cp-or
   .ofcm-pro .ofcm-list{ padding:24px 8%; }
   .ofcm-pro .ofcm-m{ max-width:70%; }
 }
+.cpsa{ display:none; }
+@media (min-width:900px){
+  .cpsa{ position:absolute; right:18px; top:50%; transform:translateY(-50%); z-index:5; display:flex; flex-direction:column; gap:8px; }
+  .cpsa button{ width:40px; height:40px; border-radius:50%; border:1px solid rgba(255,255,255,.6); cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 10px 22px -12px rgba(30,64,175,.8); transition:opacity .2s, transform .15s; }
+  .cpsa button:hover{ transform:scale(1.06); } .cpsa button:disabled{ opacity:.35; cursor:default; transform:none; }
+  .cpsa svg{ width:18px; height:18px; }
+}
+
+.ofc-lockbar-ic{ display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; }
+.ofc-lockbar-ic svg{ display:block !important; width:18px !important; height:18px !important; margin:0 !important; position:static !important; }
+.ofcm-box, .ofcm-chat, .ofp-box{ position:relative; }
 </style>
 <script>
 /* ═══ Page de présentation d'une formation — même rendu côté centre (aperçu) et côté membre ═══ */
@@ -16867,7 +16878,7 @@ window.cpFormPage=function(f,o){
   var logo=f.orgLogo?'<img src="'+E(f.orgLogo)+'" alt="Logo '+E(f.orgNom)+'">':E(ini);
   var chips=[f.certCode?(f.certType==='Répertoire spécifique (RS)'?'RS ':'')+f.certCode:(f.certType&&f.certType!=='Non certifiante'?f.certType:''), f.modalite, f.duree, f.niveau].filter(Boolean).map(function(c){ return '<span>'+E(c)+'</span>'; }).join('');
   if(f.qualiopi!==false) chips='<span class="q">✓ Qualiopi</span>'+chips;
-  var fact=function(l,v){ return '<div class="cpfp-fact"><span>'+l+'</span><b>'+E(v||'À préciser')+'</b></div>'; };
+  var fact=function(l,v){ return '<div class="cpfp-fact"><span>'+l+'</span><b>'+E(v||o.empty||'À préciser')+'</b></div>'; };
   /* Programme : « Libellé : texte » → paragraphe, autres lignes → liste */
   var prog='', list=[];
   String(f.programme||'').split(/\r?\n/).map(function(l){ return l.trim(); }).filter(Boolean).forEach(function(l){
@@ -16895,6 +16906,18 @@ window.cpFormPage=function(f,o){
     +'<div class="cpfp-slot">'+(o.actions||'')+'</div>'
     +'<div class="cpfp-note">Le financement dépend de la situation de chacun : rien n\'est garanti tant que le financeur n\'a pas validé. Aucun démarchage : c\'est toujours le candidat qui prend contact.</div>'
     +'</div></div>';
+};
+
+/* Flèches de défilement (ordinateur) pour les pages en plein écran qui défilent */
+window.cpSheetArrows=function(sc,host){
+  if(!sc||!host||host.querySelector('.cpsa')) return;
+  var w=document.createElement('div'); w.className='cpsa';
+  w.innerHTML='<button type="button" data-d="-1" aria-label="Monter"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg></button><button type="button" data-d="1" aria-label="Descendre"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>';
+  host.appendChild(w);
+  w.onclick=function(e){ var b=e.target.closest('[data-d]'); if(b) sc.scrollBy({ top:(+b.getAttribute('data-d'))*sc.clientHeight*.8, behavior:'smooth' }); };
+  function upd(){ var can=sc.scrollHeight-sc.clientHeight>40; w.style.display=can?'':'none'; w.children[0].disabled=sc.scrollTop<10; w.children[1].disabled=sc.scrollTop>sc.scrollHeight-sc.clientHeight-10; }
+  sc.addEventListener('scroll',upd,{ passive:true }); setTimeout(upd,60); setTimeout(upd,600);
+  try{ new ResizeObserver(upd).observe(sc); }catch(e){}
 };
 </script>
 <script>
@@ -17005,10 +17028,11 @@ window.cpFormPage=function(f,o){
   function previewSheet(f){
     var o=ST.org||{}; f=Object.assign({ orgNom:o.nom||'' },f);
     var sh=document.createElement('div'); sh.className='ofcm-sheet';
-    sh.className='ofcm-sheet ofcm-full'; sh.innerHTML='<div class="ofcm-box ofp-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>Aperçu candidat</b><span>Voici votre page, telle que les membres la voient</span></div></div><div class="ofp-scroll">'+cpFormPage(f,{ actions:'<div class="ofp-demo"><span>Je suis intéressé(e)</span><span>Enregistrer</span></div>' })+'</div></div>';
+    sh.className='ofcm-sheet ofcm-full'; sh.innerHTML='<div class="ofcm-box ofp-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b>Aperçu candidat</b><span>Voici votre page, telle que les membres la voient</span></div></div><div class="ofp-scroll">'+cpFormPage(f,{ empty:'Vos informations', actions:'<div class="ofp-demo"><span>Je suis intéressé(e)</span><span>Enregistrer</span></div>' })+'</div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var close=function(){ sh.remove(); document.documentElement.classList.remove('ofcm-lock'); };
     sh.querySelector('.ofcm-x').onclick=close; sh.addEventListener('click',function(e){ if(e.target===sh) close(); });
+    cpSheetArrows(sh.querySelector('.ofp-scroll'),sh.querySelector('.ofcm-box'));
   }
   function listHtml(){
     if(!ST.list.length) return '<div class="ofc-card" id="ofc-listcard"><div class="ofc-empty">'+S(I.book)+'Vous n\'avez pas encore publié de formation.<br>Votre première fiche apparaîtra ici.</div></div>';
@@ -17149,6 +17173,7 @@ window.cpFormPage=function(f,o){
     }
     render(c);
     UNSUB=ref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
+    cpSheetArrows(list,sh.querySelector('.ofcm-chat'));
     sh.querySelector('.ofcm-x').onclick=closeConv;
     sh.addEventListener('click',function(e){ if(e.target===sh) closeConv(); });
     sh.querySelector('.ofcm-send').onclick=function(){
