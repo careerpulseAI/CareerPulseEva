@@ -16665,6 +16665,21 @@ window.cpEvx = window.cpEvx || {
 .ofc-item .ofc-btn{ padding:8px 12px; font-size:.74rem; }
 .ofc-wait{ display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:.8rem; line-height:1.5; }
 @media (max-width:720px){ .ofc-f{ grid-template-columns:1fr; } .ofc-hero{ padding:20px 16px 16px; } }
+/* Mobile : les 4 onglets deviennent 4 mini heroes en surbrillance (grille 2 × 2) */
+@media (max-width:720px){
+  .ofc-tabs{ display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:10px; padding:0; background:none; border:none; overflow:visible; }
+  .ofc-tabs button{ position:relative; overflow:hidden; isolation:isolate; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:8px; padding:14px 13px 13px; border-radius:18px; white-space:normal; text-align:left; font-size:.84rem; line-height:1.2;
+    background:linear-gradient(180deg,#fff,#f4f8f6); border:1px solid #dfe7e4; color:#0f172a; box-shadow:0 10px 22px -18px rgba(15,23,42,.45); }
+  .ofc-tabs button svg{ width:38px !important; height:38px !important; padding:9px !important; box-sizing:border-box !important; border-radius:12px; background:#ecfdf5; color:#047857; flex-shrink:0; }
+  .ofc-tabs button i{ position:absolute; top:12px; right:12px; }
+  .ofc-tabs button.on{ color:#fff; border-color:transparent; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.32),transparent 60%),linear-gradient(150deg,#065f46,#047857 55%,#0f3d2e); box-shadow:0 14px 28px -14px rgba(4,120,87,.8), inset 0 1px 0 rgba(255,255,255,.22); }
+  .ofc-tabs button.on svg{ background:rgba(255,255,255,.16); color:#fff; }
+  .ofc-tabs button::after{ content:""; position:absolute; z-index:-1; top:-30%; bottom:-30%; left:0; width:45%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent); transform:translateX(-170%) skewX(-12deg); animation:ofcTabSheen 6s ease-in-out infinite; }
+  .ofc-tabs button.on::after{ background:linear-gradient(100deg,transparent,rgba(255,255,255,.25),transparent); }
+  .ofc-tabs button:nth-child(2)::after{ animation-delay:.6s; } .ofc-tabs button:nth-child(3)::after{ animation-delay:1.2s; } .ofc-tabs button:nth-child(4)::after{ animation-delay:1.8s; }
+}
+@keyframes ofcTabSheen{ 0%{ transform:translateX(-170%) skewX(-12deg); } 25%,100%{ transform:translateX(360%) skewX(-12deg); } }
+@media (prefers-reduced-motion: reduce){ .ofc-tabs button::after{ animation:none; display:none; } }
 @media (prefers-reduced-motion: reduce){ .ofc-hero::after{ animation:none; display:none; } }
 </style>
 <script>
@@ -16698,8 +16713,19 @@ window.cpEvx = window.cpEvx || {
     return '<div class="ofc-tabs" role="tablist">'+T.map(function(t){ return '<button type="button" data-tab="'+t[0]+'" class="'+(ST.tab===t[0]?'on':'')+'">'+S(t[2]).replace('<svg','<svg width="15" height="15"')+t[1]+(t[3]?'<i>'+t[3]+'</i>':'')+'</button>'; }).join('')+'</div>';
   }
   function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
-  function checks(name){ return [].slice.call(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(x){ return x.value; }); }
-  function chk(name,opts,sel){ sel=sel||[]; return '<div class="ofc-chk">'+opts.map(function(o){ return '<label><input type="checkbox" name="'+name+'" value="'+esc(o)+'"'+(sel.indexOf(o)>-1?' checked':'')+'>'+esc(o)+'</label>'; }).join('')+'</div>'; }
+  function checks(name){
+    return [].slice.call(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(x){
+      if(x.value!=='Autre') return x.value; var t=val(name+'-autre'); return t ? 'Autre : '+t : 'Autre';
+    });
+  }
+  function chk(name,opts,sel,autrePh){
+    sel=sel||[]; var autre=''; sel.forEach(function(x){ if(/^Autre\s*:/.test(x)) autre=x.replace(/^Autre\s*:\s*/,''); });
+    var h='<div class="ofc-chk">'+opts.map(function(o){ return '<label><input type="checkbox" name="'+name+'" value="'+esc(o)+'"'+(sel.indexOf(o)>-1?' checked':'')+'>'+esc(o)+'</label>'; }).join('');
+    if(autrePh) h+='<label><input type="checkbox" name="'+name+'" value="Autre" data-autre="'+name+'"'+(autre?' checked':'')+'>Autre</label>';
+    h+='</div>';
+    if(autrePh) h+='<input class="ofc-autre" id="'+name+'-autre" maxlength="80" placeholder="'+esc(autrePh)+'" value="'+esc(autre)+'" style="margin-top:8px;'+(autre?'':'display:none')+'">';
+    return h;
+  }
 
   function formHtml(f){
     f=f||{};
@@ -16717,8 +16743,8 @@ window.cpEvx = window.cpEvx || {
       +'<label>Prochaines dates<input id="ofc-dates" maxlength="80" value="'+esc(f.dates)+'" placeholder="Ex : janvier et septembre 2027"></label>'
       +'<label>Niveau de sortie<input id="ofc-niv" maxlength="60" value="'+esc(f.niveau)+'" placeholder="Ex : niveau 5 (Bac+2)"></label>'
       +'<label>Prix TTC<input id="ofc-prix" maxlength="40" value="'+esc(f.prix)+'" placeholder="Ex : 6 900 €"></label>'
-      +'<label class="full">Public visé'+chk('ofc-pub',STATUTS,f.publics)+'</label>'
-      +'<label class="full">Financements possibles'+chk('ofc-fin',FIN,f.financements)+'</label>'
+      +'<label class="full">Public visé'+chk('ofc-pub',STATUTS,f.publics,'Précisez le public : ex. personnes en situation de handicap, seniors, intermittents…')+'</label>'
+      +'<label class="full">Financements possibles'+chk('ofc-fin',FIN,f.financements,'Précisez le financement : ex. Agefiph, fonds d\'assurance formation (FAF)…')+'</label>'
       +'<label class="full">Domaine et mots-clés<input id="ofc-dom" maxlength="160" value="'+esc(f.domaine)+'" placeholder="Ex : développement web, informatique, numérique"></label>'
       +'<label class="full">Programme<textarea id="ofc-prog" maxlength="3000" placeholder="Objectifs, modules, débouchés…">'+esc(f.programme)+'</textarea></label>'
       +'<label class="full">Lien vers le programme détaillé<input id="ofc-lien" maxlength="200" value="'+esc(f.lien)+'" placeholder="https://"></label>'
@@ -16774,6 +16800,7 @@ window.cpEvx = window.cpEvx || {
       publics:checks('ofc-pub'), financements:checks('ofc-fin'), domaine:val('ofc-dom'), programme:val('ofc-prog'), lien:val('ofc-lien') };
   }
   function onClick(e){
+    var au=e.target.closest('input[data-autre]'); if(au){ var f0=$(au.getAttribute('data-autre')+'-autre'); if(f0){ f0.style.display=au.checked?'':'none'; if(au.checked) f0.focus(); } return; }
     var tb=e.target.closest('[data-tab]'); if(tb){ ST.tab=tb.getAttribute('data-tab'); draw(); return; }
     var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a'), u=me(); if(!u) return;
     if(a==='save'){
