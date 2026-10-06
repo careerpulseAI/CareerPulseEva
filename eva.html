@@ -29689,6 +29689,10 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 .ofx-acts{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
 .ofx-back{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; margin:16px 0 4px; padding:13px 16px; border-radius:16px; border:1px solid #f1e3c4; background:linear-gradient(180deg,#fff,#fffbeb); color:#92400e; font:800 .86rem/1 inherit; cursor:pointer; box-shadow:0 10px 22px -18px rgba(180,83,9,.6); }
 .ofx-back svg{ width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:2.6; }
+
+/* Hero de couverture « Contacter des formations… » : titre sur sa ligne, badges dessous (mobile et ordinateur) */
+.pfs-nm:has(.pfs-nmt){ flex-wrap:wrap; row-gap:10px; margin-bottom:8px; }
+.pfs-nm .pfs-nmt{ flex:1 1 100%; font-size:clamp(1.25rem,5vw,1.55rem); line-height:1.18; letter-spacing:-.02em; }
 </style>
 <script>
 /* ═══ Organismes de formation : données (Firestore, base interne) + interfaces candidat / organisme ═══ */
@@ -29808,7 +29812,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
   function present(mode){
     var E=X(), t=T();
     return [
-      { make:function(){ return E.cover(t,{ member:true, name:'Contacter des formations compatibles à ton profil créé par EVA', bio:'Des formations de centres vérifiés, recommandées selon ton profil. C\'est toi qui choisis qui tu contactes.', stats:[['100 %','gratuit'],['0','coordonnée transmise'],['Toi','qui décides']] }); }, feed:false, wait:2000 },
+      { make:function(){ return E.cover(t,{ member:true, name:'<span class="pfs-nmt">Contacter des formations compatibles à ton profil créé par EVA</span>', bio:'Des formations de centres vérifiés, recommandées selon ton profil. C\'est toi qui choisis qui tu contactes.', stats:[['100 %','gratuit'],['0','coordonnée transmise'],['Toi','qui décides']] }); }, feed:false, wait:2000 },
       { think:'EVA prépare ton espace formation…' },
       { msg: mode==='member'
         ? 'Ravie de te voir'+(firstName()?', <b>'+esc(firstName())+'</b>':'')+' 😊 Ici, on prépare ensemble ton <b>projet de formation</b>… pour que les bons organismes puissent venir te le présenter.'
