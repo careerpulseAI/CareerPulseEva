@@ -16589,6 +16589,36 @@ window.cpEvx = window.cpEvx || {
      Le centre publie ses formations ; ce sont les candidats qui le contactent (aucun démarchage).
 ═══════════════════════════════════════════════════════════════ -->
 <style id="ofc-css">
+/* ── Messagerie protégée (centre) ── */
+.ofc-conv{ width:100%; display:flex; align-items:center; gap:10px; text-align:left; border:1px solid #dfe7e4; background:linear-gradient(180deg,#fff,#f8faf9); border-radius:14px; padding:12px; cursor:pointer; font-family:'DM Sans',sans-serif; color:#0f172a; }
+.ofc-conv + .ofc-conv{ margin-top:8px; }
+.ofc-conv > svg{ flex-shrink:0; color:#047857; }
+.ofc-dot{ width:9px; height:9px; border-radius:50%; flex-shrink:0; background:#e2e8f0; } .ofc-dot.on{ background:#dc2626; box-shadow:0 0 0 4px rgba(220,38,38,.15); }
+.ofc-conv-t{ flex:1; min-width:0; } .ofc-conv-t b{ display:block; font-size:.84rem; } .ofc-conv-t span{ display:block; font-size:.7rem; color:#64748b; margin-top:2px; }
+.ofc-conv-t i{ display:block; font-style:normal; font-size:.74rem; color:#334155; margin-top:4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+html.ofcm-lock, html.ofcm-lock body{ overflow:hidden !important; }
+.ofcm-sheet{ position:fixed; inset:0; z-index:9000; background:rgba(15,23,42,.45); backdrop-filter:blur(3px); -webkit-backdrop-filter:blur(3px); display:flex; align-items:flex-end; justify-content:center; }
+.ofcm-box{ width:100%; max-width:680px; height:min(92vh,780px); background:#fff; border-radius:22px 22px 0 0; display:flex; flex-direction:column; overflow:hidden; font-family:'DM Sans',sans-serif; box-shadow:0 -20px 50px -20px rgba(15,23,42,.5); }
+@media (min-width:900px){ .ofcm-sheet{ align-items:center; } .ofcm-box{ border-radius:22px; height:min(86vh,780px); } }
+.ofcm-hd{ display:flex; align-items:center; gap:10px; padding:14px; color:#fff; background:linear-gradient(130deg,#062e22,#047857 55%,#1e3a8a 130%); }
+.ofcm-hd > div{ flex:1; min-width:0; } .ofcm-hd b{ display:block; font-size:.94rem; } .ofcm-hd span{ display:block; font-size:.72rem; opacity:.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ofcm-hd em{ font-style:normal; font-size:.64rem; font-weight:800; padding:4px 9px; border-radius:999px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); }
+.ofcm-x{ width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.14); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+.ofcm-x svg{ width:18px; height:18px; }
+.ofcm-list{ flex:1; overflow-y:auto; padding:14px; background:#f4f8f6; display:flex; flex-direction:column; gap:8px; }
+.ofcm-card{ background:#fff; border:1px solid #dfe7e4; border-radius:14px; padding:11px 12px; font-size:.76rem; color:#334155; line-height:1.5; }
+.ofcm-card b{ display:block; font-size:.78rem; color:#065f46; margin-bottom:6px; } .ofcm-card p{ margin:6px 0 0; } .ofcm-card i{ font-style:normal; font-weight:700; color:#0f172a; }
+.ofcm-g{ display:grid; grid-template-columns:1fr 1fr; gap:6px 10px; } .ofcm-g span{ display:block; font-size:.62rem; text-transform:uppercase; letter-spacing:.06em; color:#94a3b8; font-weight:800; }
+.ofcm-note{ align-self:center; font-size:.72rem; color:#64748b; background:#fff; border:1px solid #dfe7e4; border-radius:12px; padding:7px 10px; }
+.ofcm-m{ max-width:82%; padding:9px 12px; border-radius:16px; font-size:.84rem; line-height:1.5; }
+.ofcm-m p{ margin:0; white-space:pre-wrap; word-break:break-word; } .ofcm-m span{ display:block; margin-top:4px; font-size:.62rem; opacity:.75; }
+.ofcm-m.me{ align-self:flex-end; color:#fff; background:linear-gradient(135deg,#065f46,#10b981); border-bottom-right-radius:5px; }
+.ofcm-m.them{ align-self:flex-start; background:#fff; border:1px solid #dfe7e4; border-bottom-left-radius:5px; }
+.ofcm-ft{ display:flex; gap:8px; padding:10px 12px 14px; border-top:1px solid #dfe7e4; background:#fff; }
+.ofcm-in{ flex:1; min-height:46px; max-height:120px; resize:none; font:500 .88rem/1.4 'DM Sans',sans-serif; padding:11px 12px; border:1px solid #d1d5db; border-radius:14px; }
+.ofcm-send{ width:46px; height:46px; border:none; border-radius:50%; flex-shrink:0; cursor:pointer; color:#fff; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#065f46,#10b981); }
+.ofcm-send svg{ width:20px; height:20px; }
+
 /* Case d'engagement du formulaire centre : toujours visible */
 .cpro #ps-eng{ -webkit-appearance:checkbox !important; appearance:auto !important; display:inline-block !important; opacity:1 !important; position:static !important; width:18px !important; height:18px !important; min-width:18px !important; min-height:0 !important; margin:3px 0 0 !important; padding:0 !important; border:none !important; box-shadow:none !important; accent-color:#047857; visibility:visible !important; }
 
@@ -16709,7 +16739,7 @@ window.cpEvx = window.cpEvx || {
       +'<div class="ofc-law">'+S(I.lock)+'<span>Vous ne contactez jamais un candidat le premier : c\'est lui qui vient vers vous. Ce fonctionnement respecte l\'interdiction du démarchage des titulaires du CPF (art. L6323-8-1 du Code du travail).</span></div></div>';
   }
   function tabs(){
-    var T=[['form','Mes formations',I.book,ST.list.length],['dem','Demandes reçues',I.inbox,0],['stat','Statistiques',I.chart,0],['org','Mon organisme',I.school,0]];
+    var T=[['form','Mes formations',I.book,ST.list.length],['dem','Demandes reçues',I.inbox,(ST.convs||[]).filter(function(c){ return c.unreadOrg; }).length],['stat','Statistiques',I.chart,0],['org','Mon organisme',I.school,0]];
     return '<div class="ofc-tabs" role="tablist">'+T.map(function(t){ return '<button type="button" data-tab="'+t[0]+'" class="'+(ST.tab===t[0]?'on':'')+'">'+S(t[2]).replace('<svg','<svg width="15" height="15"')+t[1]+(t[3]?'<i>'+t[3]+'</i>':'')+'</button>'; }).join('')+'</div>';
   }
   function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
@@ -16769,7 +16799,13 @@ window.cpEvx = window.cpEvx || {
   function tabHtml(){
     var o=ST.org||{};
     if(ST.tab==='form') return formHtml(ST.edit)+listHtml();
-    if(ST.tab==='dem') return '<div class="ofc-card"><h3>Demandes reçues</h3><div class="ofc-empty">'+S(I.inbox)+'Quand un candidat sera intéressé par l\'une de vos formations, sa demande et votre conversation apparaîtront ici.<br>C\'est toujours le candidat qui écrit le premier message.</div></div>';
+    if(ST.tab==='dem'){
+      var C=ST.convs||[];
+      if(!C.length) return '<div class="ofc-card"><h3>Demandes reçues</h3><div class="ofc-empty">'+S(I.inbox)+'Quand un candidat sera intéressé par l\'une de vos formations, sa demande et votre conversation apparaîtront ici.<br>C\'est toujours le candidat qui écrit le premier message.</div></div>';
+      return '<div class="ofc-card"><h3>Demandes reçues</h3><p>Les candidats qui vous ont écrit. Répondez-leur dans la messagerie protégée.</p>'
+        +C.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
+          return '<button type="button" class="ofc-conv" data-conv="'+esc(c.id)+'"><span class="ofc-dot'+(c.unreadOrg?' on':'')+'"></span><span class="ofc-conv-t"><b>'+esc(c.candLabel||'Candidat')+' · '+esc(c.formationTitre)+'</b><span>'+(c.statut!=='ouverte'?'Clôturée par le candidat':c.lastFrom==='cand'?'Message du candidat':'Vous avez répondu')+'</span><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+S('<path d="m9 18 6-6-6-6"/>').replace('<svg','<svg width="16" height="16"')+'</button>'; }).join('')+'</div>';
+    }
     if(ST.tab==='stat') return '<div class="ofc-card"><h3>Statistiques</h3><p>Vous verrez ici, pour chaque formation publiée, le nombre de profils de membres qui y correspondent et les critères qui ressortent le plus. Ces chiffres sont toujours anonymes et ne s\'affichent qu\'à partir de 5 profils.</p><div class="ofc-empty">'+S(I.chart)+'Les statistiques s\'activent dès votre première formation publiée.</div></div>';
     return '<div class="ofc-card"><h3>Mon organisme</h3><p>Ces coordonnées sont partagées avec un candidat <b>uniquement</b> dans une conversation qu\'il a lui-même ouverte.</p>'
       +'<div class="ofc-f"><label>Nom de l\'organisme *<input id="ofc-onom" value="'+esc(o.nom)+'"></label><label>Ville<input id="ofc-oville" value="'+esc(o.ville)+'"></label>'
@@ -16788,8 +16824,15 @@ window.cpEvx = window.cpEvx || {
     root.innerHTML='<div class="ofc">'+hero(o)+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
   }
+  function loadConvs(){
+    var u=me(); if(!u||!db()) return Promise.resolve();
+    return db().collection('conversations').where('orgUid','==',u.uid).get().then(function(q){
+      ST.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+    }).catch(function(){ ST.convs=[]; });
+  }
   function load(){
     var u=me(); if(!u||!db()) return Promise.resolve();
+    loadConvs().then(function(){ var t=document.querySelector('.ofc-tabs [data-tab="dem"]'); if(t) draw(); });
     return db().collection('formations').where('orgUid','==',u.uid).get().then(function(q){
       ST.list=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.updatedAt||'').localeCompare(String(a.updatedAt||'')); });
     }).catch(function(e){ console.warn('formations',e); ST.list=[]; });
@@ -16800,6 +16843,7 @@ window.cpEvx = window.cpEvx || {
       publics:checks('ofc-pub'), financements:checks('ofc-fin'), domaine:val('ofc-dom'), programme:val('ofc-prog'), lien:val('ofc-lien') };
   }
   function onClick(e){
+    var cv=e.target.closest('[data-conv]'); if(cv){ openConv(cv.getAttribute('data-conv')); return; }
     var au=e.target.closest('input[data-autre]'); if(au){ var f0=$(au.getAttribute('data-autre')+'-autre'); if(f0){ f0.style.display=au.checked?'':'none'; if(au.checked) f0.focus(); } return; }
     var tb=e.target.closest('[data-tab]'); if(tb){ ST.tab=tb.getAttribute('data-tab'); draw(); return; }
     var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a'), u=me(); if(!u) return;
@@ -16830,6 +16874,46 @@ window.cpEvx = window.cpEvx || {
       b.disabled=true;
       db().collection('organismes').doc(u.uid).set(o2,{merge:true}).then(function(){ Object.assign(ST.org,o2); toast('Coordonnées enregistrées'); b.disabled=false; }).catch(function(){ b.disabled=false; toast('Enregistrement impossible pour le moment'); });
     }
+  }
+  function fmtAt(iso){ try{ var d=new Date(iso); return d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' })+' · '+d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
+  var UNSUB=null;
+  function closeConv(){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet'); if(x) x.remove(); document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(draw); }
+  function openConv(id){
+    var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv();
+    var sh=document.createElement('div'); sh.className='ofcm-sheet';
+    sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b class="ofcm-who"></b><span>'+esc(c.formationTitre||'')+'</span></div><em>🔒 Protégé</em></div>'
+      +'<div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var list=sh.querySelector('.ofcm-list'), ref=db().collection('conversations').doc(c.id);
+    function info(x){
+      var p=x.profil, sh2=x.shared||{}, h='';
+      if(p) h+='<div class="ofcm-card"><b>Projet du candidat</b><div class="ofcm-g">'
+        +[['Situation',p.situation],['Métier visé',p.metier],['Objectif',p.objectif],['Ville',p.ville],['Disponibilité',p.dispo],['Modalité souhaitée',p.modalite]].filter(function(r){ return r[1]; }).map(function(r){ return '<div><span>'+r[0]+'</span><i>'+esc(r[1])+'</i></div>'; }).join('')+'</div>'
+        +(p.motEva?'<p>'+esc(p.motEva)+'</p>':'')+'</div>';
+      var k=Object.keys(sh2).filter(function(z){ return sh2[z]; });
+      h+='<div class="ofcm-card"><b>Coordonnées partagées</b>'+(k.length?'<p>'+(sh2.prenom?'Prénom : <i>'+esc(sh2.prenom)+'</i><br>':'')+(sh2.email?'E-mail : <i>'+esc(sh2.email)+'</i><br>':'')+(sh2.tel?'Téléphone : <i>'+esc(sh2.tel)+'</i>':'')+'</p>':'<p>Le candidat n\'a pas partagé ses coordonnées : échangez ici, dans la messagerie protégée.</p>')+'</div>';
+      return h;
+    }
+    function render(x){
+      sh.querySelector('.ofcm-who').textContent=x.candLabel||'Candidat';
+      list.innerHTML=info(x)+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
+        +(x.statut!=='ouverte'?'<div class="ofcm-note">Le candidat a clôturé cette conversation.</div>':'');
+      list.scrollTop=list.scrollHeight;
+      sh.querySelector('.ofcm-ft').style.display=x.statut==='ouverte'?'':'none';
+      if(x.unreadOrg) ref.update({ unreadOrg:false }).catch(function(){});
+      c=Object.assign({ id:c.id },x);
+    }
+    render(c);
+    UNSUB=ref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
+    sh.querySelector('.ofcm-x').onclick=closeConv;
+    sh.addEventListener('click',function(e){ if(e.target===sh) closeConv(); });
+    sh.querySelector('.ofcm-send').onclick=function(){
+      var ta=sh.querySelector('.ofcm-in'), t=String(ta.value||'').trim(); if(!t) return;
+      if((c.messages||[]).length>=60){ toast('Conversation complète'); return; }
+      var now=new Date().toISOString(), upd={ messages:firebase.firestore.FieldValue.arrayUnion({ from:'org', text:t, at:now }), updatedAt:now, lastAt:now, lastFrom:'org', unreadCand:true };
+      try{ upd.expireAt=firebase.firestore.Timestamp.fromDate(new Date(Date.now()+180*864e5)); }catch(e){}
+      ta.value=''; ref.update(upd).catch(function(e){ ta.value=t; toast((e&&e.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+    };
   }
   /* Point d'entrée appelé par l'Espace pros quand le compte est un organisme */
   window.cpCatRender=function(org){ if(window.cpProSetLong) cpProSetLong(true); ST.org=org||{}; ST.tab=ST.tab||'form'; var r=$('of-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>'; load().then(draw); };
