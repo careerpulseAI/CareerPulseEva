@@ -1569,6 +1569,162 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 
   console.log('✅ Firebase Auth compat prêt');
 </script>
+<style id="cps-css">
+/* ═══ CareerPulse Stream (Mon espace) — vert & bleu ═══ */
+#s-profil .cps-hero{ position:relative; overflow:hidden; isolation:isolate; border-radius:24px; padding:20px 18px 18px; margin-bottom:12px; color:#fff;
+  background:radial-gradient(120% 140% at 100% 0%,rgba(110,231,183,.30),transparent 55%),linear-gradient(130deg,#0b2a52 0%,#1e40af 48%,#047857 115%); box-shadow:0 22px 44px -26px rgba(30,64,175,.85); font-family:'DM Sans',sans-serif; }
+#s-profil .cps-hero::before{ content:""; position:absolute; z-index:-1; right:-70px; top:-80px; width:240px; height:240px; border-radius:50%; border:1px solid rgba(255,255,255,.18); box-shadow:0 0 0 26px rgba(255,255,255,.04); }
+#s-profil .cps-hero::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.2),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpsSheen 7s .8s ease-in-out 1 both; }
+@keyframes cpsSheen{ 0%{ transform:translateX(-170%) skewX(-12deg); } 22%,100%{ transform:translateX(380%) skewX(-12deg); } }
+.cps-hero-top{ display:flex; align-items:center; gap:10px; }
+.cps-logo{ width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:1.2rem; background:linear-gradient(135deg,#10b981,#047857); box-shadow:0 8px 18px -8px rgba(16,185,129,.8); }
+.cps-hero-top > div{ flex:1; min-width:0; } .cps-hero-top b{ display:block; font-size:.92rem; } .cps-hero-top span{ display:block; font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; opacity:.7; }
+.cps-live{ display:flex; align-items:center; gap:6px; font-style:normal; font-size:.64rem; font-weight:800; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); white-space:nowrap; }
+.cps-live i{ width:7px; height:7px; border-radius:50%; background:#4ade80; box-shadow:0 0 0 3px rgba(74,222,128,.25); }
+.cps-h{ font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(1.8rem,6vw,2.4rem); line-height:1.05; margin:16px 0 6px; color:#fff; }
+.cps-sub{ margin:0; font-size:.84rem; line-height:1.55; color:rgba(255,255,255,.88); }
+.cps-gauge{ margin-top:14px; padding:11px 12px; border-radius:16px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.22); }
+.cps-gauge-hd{ display:flex; justify-content:space-between; font-size:.74rem; font-weight:700; margin-bottom:7px; } .cps-gauge-hd b{ font-size:.9rem; }
+.cps-bar{ height:9px; border-radius:99px; background:rgba(255,255,255,.2); overflow:hidden; } .cps-bar i{ display:block; height:100%; width:0; border-radius:99px; background:linear-gradient(90deg,#6ee7b7,#fff); transition:width .6s cubic-bezier(.2,.9,.3,1); }
+.cps-bar.sm{ height:8px; background:#e0e7ff; margin:10px 0 8px; } .cps-bar.sm i{ background:linear-gradient(90deg,#1e40af,#10b981); }
+.cps-next{ width:100%; margin-top:12px; display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 14px; border-radius:14px; border:none; cursor:pointer; background:#fff; color:#1e3a8a; font:800 .86rem 'DM Sans',sans-serif; box-shadow:0 12px 24px -16px rgba(2,6,23,.7); }
+.cps-next svg{ width:18px; height:18px; }
+.cps-sec{ display:flex; align-items:center; gap:8px; margin:18px 2px 9px; font-size:.82rem; font-weight:900; letter-spacing:.04em; text-transform:uppercase; color:#0f2a52; font-family:'DM Sans',sans-serif; }
+.cps-sec > span{ font-size:1rem; } .cps-sec em{ font-style:normal; min-width:22px; height:20px; padding:0 7px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; font-size:.68rem; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); }
+.cps-sec::after{ content:""; flex:1; height:1px; background:linear-gradient(90deg,#bfdbfe,transparent); }
+.cps-card{ background:#fff; border:1px solid #e2e8f0; border-radius:20px; padding:14px; margin-bottom:10px; box-shadow:0 16px 32px -28px rgba(15,23,42,.55); font-family:'DM Sans',sans-serif; }
+.cps-card-hd{ display:flex; align-items:center; gap:12px; } .cps-card-hd > div{ flex:1; min-width:0; } .cps-card-hd b{ display:block; font-size:.92rem; color:#0f172a; } .cps-card-hd span{ display:block; font-size:.74rem; color:#64748b; margin-top:2px; line-height:1.45; }
+.cps-ic{ width:40px; height:40px; flex-shrink:0; border-radius:13px; display:flex; align-items:center; justify-content:center; color:#fff; }
+.cps-ic svg{ width:19px; height:19px; } .cps-ic.g{ background:linear-gradient(135deg,#047857,#10b981); } .cps-ic.b{ background:linear-gradient(135deg,#1e3a8a,#3b82f6); }
+.cps-score{ font-style:normal; font-weight:900; font-size:1.05rem; color:#1e40af; }
+.cps-checks{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.cps-checks li{ display:flex; align-items:center; gap:9px; font-size:.8rem; color:#475569; }
+.cps-checks li span{ width:20px; height:20px; flex-shrink:0; border-radius:7px; border:1.5px solid #cbd5e1; display:flex; align-items:center; justify-content:center; font-size:.7rem; font-weight:900; color:#fff; }
+.cps-checks li.ok{ color:#0f172a; font-weight:600; } .cps-checks li.ok span{ border-color:transparent; background:linear-gradient(135deg,#047857,#10b981); }
+.cps-sw{ position:relative; width:50px; height:30px; flex-shrink:0; border-radius:999px; border:none; cursor:pointer; background:#cbd5e1; transition:background .25s; }
+.cps-sw i{ position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(0,0,0,.2); transition:transform .25s; }
+.cps-sw.on{ background:linear-gradient(135deg,#1e40af,#10b981); } .cps-sw.on i{ transform:translateX(20px); }
+.cps-p{ margin:0 0 10px; font-size:.82rem; line-height:1.55; color:#334155; }
+.cps-plats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.cps-plat{ display:flex; align-items:center; gap:10px; padding:11px; border-radius:16px; border:1px solid #e2e8f0; background:linear-gradient(180deg,#fff,#f8fafc); text-decoration:none; color:#0f172a; }
+.cps-plat > svg{ width:15px; height:15px; margin-left:auto; color:#94a3b8; flex-shrink:0; }
+.cps-plat-ic{ width:34px; height:34px; flex-shrink:0; border-radius:11px; display:flex; align-items:center; justify-content:center; font-weight:900; color:#fff; background:var(--c); }
+.cps-plat b{ display:block; font-size:.82rem; } .cps-plat small{ display:block; font-size:.66rem; color:#64748b; }
+@media (max-width:720px){ .cps-plats{ grid-template-columns:1fr; } }
+.cps-alert{ display:flex; gap:9px; align-items:flex-start; margin-bottom:10px; padding:10px 12px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; font-size:.78rem; line-height:1.5; color:#78350f; }
+.cps-alert svg{ width:17px; height:17px; flex-shrink:0; margin-top:1px; color:#b45309; }
+.cps-add{ display:grid; grid-template-columns:1fr 1fr 130px auto; gap:8px; }
+.cps-add input, .cps-add select{ min-width:0; font:500 .84rem 'DM Sans',sans-serif; padding:11px 12px; border:1px solid #dbe4ef; border-radius:12px; background:#f8fafc; }
+@media (max-width:720px){ .cps-add{ grid-template-columns:1fr 1fr; } .cps-add .cps-btn{ grid-column:1/-1; justify-content:center; } }
+.cps-btn{ display:inline-flex; align-items:center; gap:7px; padding:11px 14px; border-radius:12px; border:1px solid #dbe4ef; background:#fff; color:#0f172a; font:800 .8rem 'DM Sans',sans-serif; cursor:pointer; text-decoration:none; }
+.cps-btn svg{ width:16px; height:16px; } .cps-btn.pri{ border:none; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 10px 20px -12px rgba(30,64,175,.8); }
+.cps-list{ display:flex; flex-direction:column; gap:8px; margin-top:12px; }
+.cps-it{ display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:14px; border:1px solid #e2e8f0; background:linear-gradient(180deg,#fff,#f8fafc); }
+.cps-it-t{ flex:1; min-width:0; } .cps-it-t b{ display:block; font-size:.86rem; } .cps-it-t span{ display:block; font-size:.7rem; color:#64748b; margin-top:2px; }
+.cps-rel{ display:inline-block; font-style:normal; font-size:.62rem; font-weight:800; padding:3px 8px; border-radius:999px; background:#fef3c7; color:#92400e; margin-top:5px; }
+.cps-st{ font:800 .72rem 'DM Sans',sans-serif; padding:7px 9px; border-radius:999px; border:1px solid #dbe4ef; background:#eff6ff; color:#1e40af; }
+.cps-st.st-2{ background:#ecfdf5; color:#047857; } .cps-st.st-3{ background:#d1fae5; color:#065f46; } .cps-st.st-4{ background:#f1f5f9; color:#64748b; } .cps-st.st-1{ background:#fffbeb; color:#92400e; }
+.cps-del{ width:34px; height:34px; flex-shrink:0; border-radius:10px; border:1px solid #fecaca; background:#fff; color:#b91c1c; cursor:pointer; display:flex; align-items:center; justify-content:center; } .cps-del svg{ width:15px; height:15px; }
+@media (max-width:520px){ .cps-it{ flex-wrap:wrap; } .cps-it-t{ flex-basis:100%; } }
+.cps-empty{ margin-top:12px; padding:14px; border-radius:14px; border:1px dashed #cbd5e1; text-align:center; font-size:.8rem; color:#64748b; }
+.cps-rec{ display:flex; gap:12px; align-items:flex-start; } .cps-rec p, .cps-msg p{ margin:0; font-size:.82rem; line-height:1.6; color:#334155; }
+.cps-msg .cps-btn{ margin-top:10px; }
+/* accordéons existants habillés en cartes Stream */
+#s-profil .cps-acc{ border-radius:20px !important; border:1px solid #e2e8f0 !important; box-shadow:0 16px 32px -28px rgba(15,23,42,.55) !important; }
+#s-profil .cps-ic svg, #s-profil .cps-next svg{ width:19px !important; height:19px !important; stroke:currentColor !important; fill:none !important; display:block; }
+#s-profil .cps-ic{ color:#fff !important; }
+#s-profil .cps-ic, #s-profil .cps-logo, #s-profil .cps-plat-ic{ display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; }
+#s-profil .cps-ic svg{ margin:0 !important; position:static !important; }
+#s-profil .cps-btn svg, #s-profil .cps-plat > svg, #s-profil .cps-alert svg, #s-profil .cps-del svg{ stroke:currentColor !important; fill:none !important; display:block; }
+#s-profil .cps-logo{ color:#fff !important; font-family:'DM Sans',sans-serif !important; line-height:1 !important; font-size:1.2rem !important; font-weight:900 !important; }
+#s-profil .cps-hero-top b{ font-size:.92rem !important; } #s-profil .cps-hero-top > div > span{ font-size:.62rem !important; }
+/* ── Stream v2 : catégories, fil, formulaire Stream ── */
+#s-profil .cps-si{ width:26px; height:26px; flex-shrink:0; border-radius:9px; display:flex !important; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); }
+#s-profil .cps-si svg{ width:14px !important; height:14px !important; stroke:currentColor !important; fill:none !important; }
+#s-profil .cps-logo svg{ width:22px !important; height:22px !important; stroke:#fff !important; fill:none !important; }
+.cps-tabs{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:2px 0 6px; }
+.cps-tab{ position:relative; overflow:hidden; isolation:isolate; display:flex; flex-direction:column; align-items:flex-start; gap:4px; text-align:left; padding:13px 12px 12px; border-radius:18px; border:1px solid #dbe4ef; background:linear-gradient(180deg,#fff,#f5f8fc); cursor:pointer; font-family:'DM Sans',sans-serif; color:#0f172a; box-shadow:0 12px 24px -20px rgba(15,23,42,.5); transition:transform .15s; }
+.cps-tab:active{ transform:scale(.97); }
+.cps-tab-ic{ width:38px; height:38px; border-radius:12px; display:flex !important; align-items:center; justify-content:center; background:#eff6ff; color:#1e40af; margin-bottom:4px; }
+.cps-tab-ic svg{ width:20px !important; height:20px !important; stroke:currentColor !important; fill:none !important; }
+.cps-tab b{ font-size:.84rem; line-height:1.2; } .cps-tab small{ font-size:.66rem; color:#64748b; line-height:1.3; }
+.cps-tab em{ position:absolute; top:10px; right:10px; font-style:normal; min-width:20px; height:20px; padding:0 6px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:.66rem; font-weight:900; color:#fff; background:#dc2626; }
+.cps-tab.on{ color:#fff; border-color:transparent; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.3),transparent 60%),linear-gradient(150deg,#1e40af,#065f46); box-shadow:0 16px 30px -16px rgba(30,64,175,.8); }
+.cps-tab.on small{ color:rgba(255,255,255,.82); } .cps-tab.on .cps-tab-ic{ background:rgba(255,255,255,.16); color:#fff; }
+.cps-tab::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:45%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpsSheen 6s .4s ease-in-out 1 both; }
+@media (max-width:720px){ .cps-tabs{ grid-template-columns:1fr 1fr; grid-auto-rows:1fr; } }
+.cps-tip{ display:flex; gap:12px; align-items:flex-start; background:linear-gradient(135deg,#fffbeb,#fff) !important; border-color:#fde68a !important; }
+.cps-tip b{ display:block; font-size:.88rem; color:#78350f; } .cps-tip p{ margin:4px 0 0; font-size:.84rem; line-height:1.55; color:#422006; }
+#s-profil .cps-ic.y{ background:linear-gradient(135deg,#b45309,#f59e0b); } #s-profil .cps-ic.w{ background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); }
+.cps-mini{ margin:0; font-size:.76rem; color:#475569; line-height:1.5; }
+.cps-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:10px; }
+.cps-stats div{ padding:12px 10px; border-radius:16px; background:#fff; border:1px solid #e2e8f0; text-align:center; box-shadow:0 12px 24px -22px rgba(15,23,42,.55); }
+.cps-stats b{ display:block; font-size:1.35rem; font-weight:900; background:linear-gradient(135deg,#1e40af,#047857); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.cps-stats span{ display:block; font-size:.64rem; color:#64748b; margin-top:2px; line-height:1.3; }
+.cps-checks li span svg{ width:12px !important; height:12px !important; stroke:#fff !important; }
+.cps-promo{ position:relative; overflow:hidden; isolation:isolate; margin-bottom:10px; padding:16px; border-radius:22px; color:#fff; font-family:'DM Sans',sans-serif; background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.32),transparent 55%),linear-gradient(130deg,#0b2a52,#1e40af 50%,#047857 120%); box-shadow:0 20px 40px -26px rgba(30,64,175,.85); }
+.cps-promo::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:36%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpsSheen 7s 1s ease-in-out 1 both; }
+.cps-promo-in{ display:flex; gap:12px; align-items:flex-start; } .cps-promo b{ display:block; font-size:.96rem; } .cps-promo p{ margin:4px 0 0; font-size:.8rem; line-height:1.55; opacity:.9; }
+.cps-btn.light{ margin-top:12px; width:100%; justify-content:center; border:none; background:#fff; color:#1e3a8a; }
+.cps-inv, .cps-msg{ display:flex; align-items:center; gap:12px; } .cps-inv > div, .cps-msg > div{ flex:1; min-width:0; } .cps-inv b, .cps-msg b{ display:block; font-size:.86rem; } .cps-inv p, .cps-msg p{ margin:3px 0 0; font-size:.76rem; color:#64748b; line-height:1.5; }
+@media (max-width:520px){ .cps-inv, .cps-msg{ flex-wrap:wrap; } .cps-inv .cps-btn, .cps-msg .cps-btn{ width:100%; justify-content:center; } }
+.cps-wizcta{ width:100%; display:flex; align-items:center; gap:12px; text-align:left; margin:6px 0 10px; padding:15px; border-radius:20px; border:none; cursor:pointer; color:#fff; font-family:'DM Sans',sans-serif; background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.3),transparent 55%),linear-gradient(130deg,#1e40af,#047857); box-shadow:0 18px 34px -22px rgba(30,64,175,.85); }
+.cps-wizcta > span:nth-child(2){ flex:1; min-width:0; } .cps-wizcta b{ display:block; font-size:.92rem; } .cps-wizcta small{ display:block; font-size:.74rem; opacity:.88; margin-top:2px; line-height:1.4; }
+.cps-wizcta > svg{ flex-shrink:0; stroke:#fff !important; }
+.cps-search{ display:flex; align-items:center; gap:9px; padding:0 12px; border-radius:14px; background:#f8fafc; border:1px solid #dbe4ef; color:#64748b; }
+.cps-search input{ flex:1; min-width:0; border:none !important; background:none !important; padding:12px 0 !important; font:500 .84rem 'DM Sans',sans-serif; }
+.cps-conv{ width:100%; display:flex; align-items:center; gap:10px; text-align:left; padding:11px 12px; border-radius:14px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; font-family:'DM Sans',sans-serif; margin-bottom:8px; }
+.cps-dot{ width:9px; height:9px; border-radius:50%; background:#e2e8f0; flex-shrink:0; } .cps-dot.on{ background:#dc2626; }
+.cps-conv-t{ flex:1; min-width:0; } .cps-conv-t b{ display:block; font-size:.84rem; } .cps-conv-t i{ display:block; font-style:normal; font-size:.74rem; color:#64748b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+/* ── Formulaire Stream (plein écran) ── */
+.cpw-sheet{ position:fixed; inset:0; z-index:9200; display:flex; background:rgba(15,23,42,.45); animation:cpwIn .25s ease both; }
+@keyframes cpwIn{ from{ opacity:0; } }
+.cpw-box{ position:relative; width:100vw; height:100vh; height:100dvh; display:flex; flex-direction:column; overflow:hidden; font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif; color:#0f172a;
+  background:radial-gradient(circle at 1px 1px,rgba(30,64,175,.06) 1px,transparent 0) 0 0/22px 22px, radial-gradient(60% 45% at 0% 0%,rgba(16,185,129,.12),transparent 70%), radial-gradient(60% 45% at 100% 100%,rgba(59,130,246,.12),transparent 70%), linear-gradient(180deg,#f6f9fd,#f1f7f4); }
+.cpw-hd{ display:flex; align-items:center; gap:12px; padding:14px 18px; color:#fff; background:radial-gradient(120% 160% at 100% 0%,rgba(110,231,183,.28),transparent 55%),linear-gradient(120deg,#0b2a52,#1e40af 45%,#047857 120%); }
+.cpw-x{ width:38px; height:38px; flex-shrink:0; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.14); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.cpw-logo{ width:40px; height:40px; flex-shrink:0; border-radius:13px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#10b981,#047857); box-shadow:0 8px 18px -8px rgba(16,185,129,.8); }
+.cpw-logo.lg{ width:50px; height:50px; border-radius:16px; }
+.cpw-ht{ flex:1; min-width:0; } .cpw-ht b{ display:block; font-size:1rem; } .cpw-ht span{ display:block; font-size:.72rem; opacity:.85; }
+.cpw-step{ font-style:normal; font-size:.72rem; font-weight:900; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); }
+.cpw-pg{ height:4px; background:#dbeafe; } .cpw-pg i{ display:block; height:100%; width:0; background:linear-gradient(90deg,#1e40af,#10b981); transition:width .4s; }
+.cpw-scroll{ flex:1; overflow-y:auto; }
+.cpw-wrap{ max-width:760px; margin:0 auto; padding:18px 16px 30px; }
+.cpw-intro{ display:flex; gap:12px; align-items:center; padding:16px; border-radius:20px; background:rgba(255,255,255,.9); border:1px solid #e2e8f0; box-shadow:0 16px 32px -28px rgba(15,23,42,.5); margin-bottom:14px; }
+.cpw-intro b{ display:block; font-size:.98rem; } .cpw-intro p{ margin:3px 0 0; font-size:.8rem; color:#475569; line-height:1.5; }
+.cpw-log{ display:flex; flex-direction:column; gap:10px; }
+.cpw-row{ display:flex; gap:10px; align-items:flex-start; animation:cpwUp .3s ease both; }
+@keyframes cpwUp{ from{ opacity:0; transform:translateY(8px); } }
+.cpw-av{ width:32px; height:32px; flex-shrink:0; border-radius:11px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); }
+.cpw-b{ max-width:86%; padding:11px 13px; border-radius:4px 16px 16px 16px; background:#fff; border:1px solid #e2e8f0; font-size:.88rem; line-height:1.6; box-shadow:0 10px 24px -22px rgba(15,23,42,.6); }
+.cpw-b small{ display:block; margin-top:6px; font-size:.74rem; color:#64748b; }
+.cpw-me{ align-self:flex-end; max-width:80%; padding:10px 13px; border-radius:16px 16px 4px 16px; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); font-size:.86rem; animation:cpwUp .3s ease both; white-space:pre-wrap; }
+.cpw-dots{ display:inline-flex; gap:4px; } .cpw-dots i{ width:7px; height:7px; border-radius:50%; background:#94a3b8; animation:evpDot 1s infinite; } .cpw-dots i:nth-child(2){ animation-delay:.15s; } .cpw-dots i:nth-child(3){ animation-delay:.3s; }
+@keyframes evpDot{ 0%,80%,100%{ opacity:.3; transform:translateY(0); } 40%{ opacity:1; transform:translateY(-3px); } }
+.cpw-input{ margin-top:14px; display:flex; flex-direction:column; gap:10px; }
+.cpw-field{ width:100%; font:500 .92rem 'DM Sans',sans-serif; padding:13px 14px; border:1.5px solid #dbe4ef; border-radius:14px; background:#fff; outline:none; resize:vertical; }
+.cpw-field:focus{ border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,.15); } .cpw-field.err{ border-color:#dc2626; }
+.cpw-chips{ display:flex; flex-wrap:wrap; gap:8px; } .cpw-chip{ padding:10px 14px; border-radius:999px; border:1px solid #dbe4ef; background:#fff; cursor:pointer; font:700 .84rem 'DM Sans',sans-serif; color:#0f172a; }
+.cpw-chips.sm .cpw-chip{ padding:7px 11px; font-size:.76rem; } .cpw-chip.on, .cpw-chip:hover{ border-color:#1e40af; background:#eff6ff; color:#1e3a8a; }
+.cpw-gen{ display:inline-flex; align-items:center; gap:7px; align-self:flex-start; padding:9px 12px; border-radius:12px; border:1px dashed #93c5fd; background:#eff6ff; color:#1e3a8a; font:800 .78rem 'DM Sans',sans-serif; cursor:pointer; }
+.cpw-acts{ display:flex; gap:8px; justify-content:flex-end; }
+.cpw-btn{ display:inline-flex; align-items:center; gap:7px; padding:12px 18px; border-radius:14px; border:none; cursor:pointer; color:#fff; font:800 .88rem 'DM Sans',sans-serif; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 12px 24px -14px rgba(30,64,175,.85); }
+.cpw-btn.ghost{ background:#fff; color:#334155; border:1px solid #dbe4ef; box-shadow:none; }
+.cpw-backq{ display:inline-flex; align-items:center; gap:6px; align-self:flex-start; border:none; background:none; color:#64748b; font:700 .76rem 'DM Sans',sans-serif; cursor:pointer; padding:4px 0; }
+.cpw-recap{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:6px; }
+.cpw-recap li{ display:flex; flex-direction:column; gap:2px; padding:10px 12px; border-radius:12px; background:#fff; border:1px solid #e2e8f0; }
+.cpw-recap span{ font-size:.7rem; color:#64748b; } .cpw-recap b{ font-size:.84rem; white-space:pre-wrap; }
+.cpw-ft{ display:flex; gap:8px; padding:12px 16px 16px; background:rgba(255,255,255,.88); border-top:1px solid #e2e8f0; }
+.cpw-in{ flex:1; min-height:46px; resize:none; font:500 .88rem 'DM Sans',sans-serif; padding:11px 12px; border:1px solid #dbe4ef; border-radius:16px; }
+.cpw-send{ width:46px; height:46px; flex-shrink:0; border:none; border-radius:50%; color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1e40af,#047857); }
+.cpw-note{ align-self:center; font-size:.7rem; color:#64748b; padding:6px 12px; border-radius:999px; background:#fff; border:1px solid #e2e8f0; }
+.cpw-m{ max-width:78%; padding:10px 13px; border-radius:18px; font-size:.86rem; line-height:1.5; } .cpw-m p{ margin:0; white-space:pre-wrap; }
+.cpw-m.me{ align-self:flex-end; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); border-bottom-right-radius:5px; } .cpw-m.them{ align-self:flex-start; background:#fff; border:1px solid #e2e8f0; border-bottom-left-radius:5px; }
+.cps-thread{ padding:16px; }
+
+@media (prefers-reduced-motion: reduce){ #s-profil .cps-hero::after{ display:none; } }
+</style>
+
 </head>
 <body>
 <!-- Notification "compte requis" pour sauvegarder des infos personnelles — toujours au niveau racine -->
@@ -13880,65 +14036,22 @@ go=function(page){
 <div class="wrap">
 
 
- <!-- Hero Mon espace personnel CareerPulse -->
- <div style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:16px;padding:16px 16px 14px;margin-bottom:14px;position:relative;overflow:hidden">
-  <div style="position:absolute;top:-24px;right:-24px;width:100px;height:100px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none"></div>
-  <div style="position:absolute;bottom:-18px;left:-18px;width:70px;height:70px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none"></div>
-
-  <!-- Logo CareerPulse -->
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:13px;position:relative">
-   <div style="width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(5,150,105,.5);flex-shrink:0">
-    <span style="font-family:'DM Sans',sans-serif;font-size:1.2rem;font-weight:900;color:#fff;line-height:1;letter-spacing:-.03em">C</span>
-   </div>
-   <div>
-    <div style="font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:800;color:#fff;letter-spacing:-.02em">CareerPulse</div>
-    <div style="font-size:.46rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.55)">Ton espace personnel</div>
-   </div>
-  </div>
-
-  <!-- Titre hero -->
-  <div style="font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:#fff;line-height:1.15;margin-bottom:8px;position:relative">
-   Mon espace<br><em style="color:#6ee7b7;font-weight:400">personnel.</em>
-  </div>
-  <div style="font-size:.62rem;color:rgba(255,255,255,.72);line-height:1.6;position:relative;margin-bottom:13px">
-   Crée ton profil professionnel et conserve tes documents importants — lettre de motivation et documents importants. Sauvegarde sécurisée de tes documents.
-  </div>
-
-  <!-- Steps compacts -->
-  <div style="display:flex;align-items:center;position:relative">
-   <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-profil" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    </div>
-    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Profil</span>
-   </div>
-   <div style="flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 7px"></div>
-   <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-cv" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    </div>
-    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Lettre de motivation</span>
-   </div>
-   <div style="flex:1;height:1px;background:rgba(255,255,255,.2);margin:0 7px"></div>
-   <div style="display:flex;align-items:center;gap:5px">
-    <div id="hero-step-visible" style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;transition:all .4s">
-     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-    </div>
-    <span style="font-size:.56rem;font-weight:600;color:rgba(255,255,255,.7)">Documents</span>
-   </div>
-  </div>
-
-  <!-- IDs cachés nécessaires au JS -->
-  <span id="prof-status-lbl" style="display:none">Profil invisible</span>
-  <div id="prof-dot" style="display:none"></div>
-  <span id="prof-score-pct" style="display:none">0</span>
-  <div id="prof-score-bar" style="display:none"></div>
-  <div id="prof-score-badge" style="display:none">Complète ton profil.</div>
+ <!-- ═══ CareerPulse Stream : hero ═══ -->
+ <div class="cps-hero">
+  <div class="cps-hero-top"><span class="cps-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><div><b>CareerPulse Stream</b><span>Ton espace emploi</span></div><em class="cps-live"><i></i>En direct</em></div>
+  <h2 class="cps-h">Bonjour <span id="cps-name"></span></h2>
+  <p class="cps-sub" id="cps-sub">Ton profil, tes candidatures et les recruteurs CareerPulse, au même endroit.</p>
+  <div class="cps-gauge"><div class="cps-gauge-hd"><span>Profil complété</span><b id="cps-pct">0 %</b></div><div class="cps-bar"><i id="cps-bar"></i></div></div>
+  <button type="button" class="cps-next" id="cps-next"><span id="cps-next-t">Complète ton profil pro</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+  <div style="display:none"><div id="hero-step-profil"></div><div id="hero-step-cv"></div><div id="hero-step-visible"></div>
+  <span id="prof-status-lbl">Profil invisible</span><div id="prof-dot"></div><span id="prof-score-pct">0</span><div id="prof-score-bar"></div><div id="prof-score-badge">Complète ton profil.</div></div>
  </div>
-
-
+ <div id="cps-cats"></div>
+ <div class="cps-pane" data-pane="stream"><div id="cps-feed"></div></div>
+ <div class="cps-pane" data-pane="profil"><div id="cps-prof-top"></div>
+ <div class="cps-sec" id="cps-sec-profil"><span class="cps-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Mon profil pro</div>
  <!-- ACCORDÉON 1 : Informations essentielles -->
- <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
+ <div class="cps-acc" style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
  <div onclick="toggleAccordion('acc-info')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
   <div style="display:flex;align-items:center;gap:7px">
    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -14032,8 +14145,9 @@ go=function(page){
  </div>
  </div></div><!-- /acc-info -->
 
+<div class="cps-sec" id="cps-sec-lm"><span class="cps-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="m4 6 8 6 8-6"/></svg></span>Ma lettre de motivation</div>
  <!-- ACCORDÉON 2 : Lettre de motivation -->
- <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
+ <div class="cps-acc" style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
  <div onclick="toggleAccordion('acc-cv')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
   <div style="display:flex;align-items:center;gap:8px">
    <div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 5px rgba(5,150,105,.3)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="2.3"/><path d="M3.5 6.5 12 12.5l8.5-6"/></svg></div>
@@ -14104,8 +14218,9 @@ go=function(page){
  </div>
  </div></div><!-- /acc-cv /accordéon-2 -->
 
+<div class="cps-sec" id="cps-sec-docs"><span class="cps-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>Mes documents</div>
  <!-- ACCORDÉON 3 : Documents -->
- <div style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
+ <div class="cps-acc" style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
  <div onclick="toggleAccordion('acc-docs')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
   <div style="display:flex;align-items:center;gap:7px">
    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
@@ -14124,6 +14239,9 @@ go=function(page){
  </div>
  </div>
  <!-- /acc-docs /accordéon-3 -->
+ </div><!-- /pane profil -->
+ <div class="cps-pane" data-pane="cand"><div id="cps-cand"></div></div>
+ <div class="cps-pane" data-pane="rec"><div id="cps-rec"></div></div>
 
 
  <!-- IDs cachés pour JS toggleFpVis -->
@@ -14148,30 +14266,6 @@ go=function(page){
 
 </div>
 
- <!-- CareerPulse CTA Profil -->
- <div class="wrap" style="padding-top:0;padding-bottom:16px">
- <div onclick="go('vision-profil')" style="background:linear-gradient(135deg,#1e3a5f,#065f46);border-radius:14px;padding:13px 14px;text-align:left;position:relative;overflow:hidden;cursor:pointer" onmouseover="this.style.opacity='.92'" onmouseout="this.style.opacity='1'" ontouchstart="this.style.opacity='.88'" ontouchend="this.style.opacity='1'">
-  <div style="position:absolute;top:-20px;right:-20px;width:90px;height:90px;background:rgba(255,255,255,.05);border-radius:50%;pointer-events:none"></div>
-  <div style="position:absolute;bottom:-14px;left:-14px;width:70px;height:70px;background:rgba(255,255,255,.04);border-radius:50%;pointer-events:none"></div>
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px;position:relative">
-   <div style="width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,#059669,#047857);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(5,150,105,.4)">
-    <span style="font-size:.9rem;font-weight:900;color:#fff;font-family:'DM Sans',sans-serif;line-height:1">C</span>
-   </div>
-   <div style="flex:1">
-    <div style="font-size:.64rem;font-weight:900;color:#fff;letter-spacing:-.01em">CareerPulse</div>
-    <div style="font-size:.46rem;color:rgba(255,255,255,.55);margin-top:1px">Fiche professionnelle · Notre vision</div>
-   </div>
-   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="2" stroke-linecap="round" style="flex-shrink:0"><polyline points="9 18 15 12 9 6"/></svg>
-  </div>
-  <div style="font-size:.6rem;color:rgba(255,255,255,.8);line-height:1.6;position:relative;margin-bottom:9px">
-   L'utilité de <strong style="color:#6ee7b7">créer son profil dans CareerPulse</strong> et de conserver ses documents importants — CV et lettre de motivation — dans son espace personnel.
-  </div>
-  <div style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:8px 12px;font-size:.6rem;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;gap:6px">
-   <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
-   Découvrir mon espace →
-  </div>
- </div>
- </div>
 </div>
 <div class="screen" id="s-vision-profil">
 <div class="wrap" style="padding-top:16px;padding-bottom:24px">
@@ -17390,6 +17484,243 @@ window.cpSheetArrows=function(sc,host){
   if(document.readyState!=='loading') apply(); else document.addEventListener('DOMContentLoaded',apply);
 })();
 </script>
+
+<script>
+/* ═══ CareerPulse Stream (Mon espace) ═══
+   4 catégories : Mon Stream · Profil & documents · Candidatures · Recruteurs & messages
+   + Formulaire Stream (profil pro étape par étape) en plein écran */
+(function(){
+  function $(id){ return document.getElementById(id); }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function user(){ return window._fbUser || (window.fbAuth && fbAuth.currentUser) || null; }
+  function db(){ return window.fbDb; }
+  function say(m){ if(typeof toast==='function') toast(m); }
+  function I(p,w){ return '<svg viewBox="0 0 24 24" width="'+(w||18)+'" height="'+(w||18)+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  var P={ pulse:'<path d="M3 12h4l2-5 4 10 2-5h6"/>', home:'<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>', user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+    brief:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>', chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>',
+    check:'<path d="m5 12 5 5L20 7"/>', eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', bulb:'<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+    target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+    plus:'<path d="M12 5v14M5 12h14"/>', trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>', bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+    ext:'<path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>', send:'<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>', wand:'<path d="m15 4 5 5L9 20H4v-5z"/><path d="M13 6l5 5"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>', back:'<path d="M15 18l-6-6 6-6"/>', chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>', mega:'<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 9a3 3 0 0 1 0 6"/>' };
+  var PLAT=[['Indeed','https://fr.indeed.com','N°1 mondial','#1e40af'],['France Travail','https://www.francetravail.fr','Officiel','#1d4ed8'],['Malt','https://www.malt.fr','Freelance','#be123c']];
+  var STATUTS=['Envoyée','Relancée','Entretien','Acceptée','Refusée'];
+  var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Vérifie ton orthographe à voix haute avant chaque envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne la ville et la mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Un profil complet à 100 % inspire confiance : termine-le avec le formulaire Stream.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
+  var CATS=[['stream','Mon Stream','Conseil, défi, progression',P.home],['profil','Profil & documents','Ton CV CareerPulse',P.user],['cand','Candidatures','Postuler et suivre',P.brief],['rec','Recruteurs & messages','Annuaire et échanges',P.chat]];
+  var S={ cat:'stream', list:[], convs:[] };
+  try{ S.cat=sessionStorage.getItem('cps_cat')||'stream'; }catch(e){}
+
+  /* ── Données du profil existant ── */
+  function pct(){ var e=$('prof-score-pct'); return e?(parseInt(e.textContent,10)||0):0; }
+  function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
+  function visOn(){ return typeof _fpVis!=='undefined' && !!_fpVis; }
+  function lmOk(){ var lo=$('letter-out'); return !!(lo && lo.textContent.trim().length>40) || !!localStorage.getItem('cp_lm_name'); }
+  function docOk(){ var dl=$('docs-list'); return !!(dl && dl.children.length && !/aucun/i.test(dl.textContent)) || !!localStorage.getItem('cp_cv_name'); }
+  function days(iso){ return Math.floor((Date.now()-new Date(iso).getTime())/864e5); }
+  function checks(){ return [['Profil pro complété à 80 % ou plus',pct()>=80],['Lettre de motivation prête',lmOk()],['Au moins un document enregistré',docOk()],['Au moins une candidature suivie',S.list.length>0]]; }
+
+  /* ── Hero ── */
+  function next(){ var p=pct(); return p<80?['Remplir mon profil avec le Stream','wiz']:(!lmOk()?['Préparer ma lettre de motivation','lm']:(!S.list.length?['Suivre ma 1re candidature','cand']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','cand']))); }
+  function drawHero(){
+    var p=pct(), first=val('fp-name').split(/\s+/)[0]||'';
+    if($('cps-pct')) $('cps-pct').textContent=p+' %'; if($('cps-bar')) $('cps-bar').style.width=p+'%';
+    if($('cps-name')) $('cps-name').textContent=first; if($('cps-sub')) $('cps-sub').textContent=val('fp-titre')?val('fp-titre')+' · ton espace emploi CareerPulse':'Ton profil, tes candidatures et les recruteurs CareerPulse, au même endroit.';
+    var n=next(); if($('cps-next-t')) $('cps-next-t').textContent=n[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',n[1]);
+  }
+  /* ── Catégories ── */
+  function drawCats(){
+    var b=$('cps-cats'); if(!b) return;
+    var badge={ cand:S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length, rec:S.convs.filter(function(c){ return c.unreadCand; }).length };
+    b.innerHTML='<div class="cps-tabs">'+CATS.map(function(c){ return '<button type="button" class="cps-tab'+(c[0]===S.cat?' on':'')+'" data-cat="'+c[0]+'"><span class="cps-tab-ic">'+I(c[3],20)+'</span><b>'+c[1]+'</b><small>'+c[2]+'</small>'+(badge[c[0]]?'<em>'+badge[c[0]]+'</em>':'')+'</button>'; }).join('')+'</div>';
+    document.querySelectorAll('#s-profil .cps-pane').forEach(function(p){ p.style.display=p.getAttribute('data-pane')===S.cat?'':'none'; });
+  }
+  /* ── 1. Mon Stream : l'ambiance active (uniquement des données réelles) ── */
+  function drawFeed(){
+    var b=$('cps-feed'); if(!b) return;
+    var ck=checks(), done=ck.filter(function(c){ return c[1]; }).length, sc=Math.round(done/ck.length*100);
+    var d=new Date(), doy=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5), tip=TIPS[doy%TIPS.length];
+    var week=S.list.filter(function(x){ return days(x.date)<7; }).length, goal=3, wp=Math.min(100,Math.round(week/goal*100));
+    var rel=S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length, itw=S.list.filter(function(x){ return x.statut==='Entretien'; }).length;
+    b.innerHTML=
+      '<div class="cps-sec"><span class="cps-si">'+I(P.pulse)+'</span>Ton fil du jour</div>'
+      +'<div class="cps-card cps-tip"><span class="cps-ic y">'+I(P.bulb)+'</span><div><b>Le conseil du jour</b><p>'+esc(tip)+'</p></div></div>'
+      +'<div class="cps-card"><div class="cps-card-hd"><span class="cps-ic g">'+I(P.target)+'</span><div><b>Défi de la semaine</b><span>Postule à '+goal+' offres en 7 jours</span></div><em class="cps-score">'+Math.min(week,goal)+'/'+goal+'</em></div><div class="cps-bar sm"><i style="width:'+wp+'%"></i></div><p class="cps-mini">'+(week>=goal?'Défi relevé, bravo ! Garde ce rythme.':'Encore '+(goal-week)+' candidature'+(goal-week>1?'s':'')+' pour relever le défi. Chaque candidature notée compte.')+'</p></div>'
+      +'<div class="cps-stats"><div><b>'+week+'</b><span>candidatures cette semaine</span></div><div><b>'+rel+'</b><span>relances à faire</span></div><div><b>'+itw+'</b><span>entretiens en cours</span></div></div>'
+      +'<div class="cps-card cps-ready"><div class="cps-card-hd"><span class="cps-ic g">'+I(P.check)+'</span><div><b>Prêt à postuler</b><span>'+done+' / '+ck.length+' étapes</span></div><em class="cps-score">'+sc+'%</em></div><div class="cps-bar sm"><i style="width:'+sc+'%"></i></div><ul class="cps-checks">'+ck.map(function(c){ return '<li class="'+(c[1]?'ok':'')+'"><span>'+(c[1]?I(P.check,12):'')+'</span>'+c[0]+'</li>'; }).join('')+'</ul></div>'
+      +'<div class="cps-sec"><span class="cps-si">'+I(P.mega)+'</span>Fais grandir CareerPulse</div>'
+      +'<div class="cps-promo"><div class="cps-promo-in"><span class="cps-ic w">'+I(P.brief)+'</span><div><b>Tu connais un recruteur ?</b><p>Invite-le à rejoindre CareerPulse : il trouvera des candidats motivés, avec des profils clairs et un pourcentage de correspondance.</p></div></div><button type="button" class="cps-btn light" data-cps="inv-rec">'+I(P.share,16)+'Inviter un recruteur</button></div>'
+      +'<div class="cps-card cps-inv"><span class="cps-ic b">'+I(P.share)+'</span><div><b>Invite un(e) ami(e) en recherche</b><p>CareerPulse Stream, le profil pro et le suivi des candidatures sont gratuits pour les membres.</p></div><button type="button" class="cps-btn" data-cps="inv-ami">Partager</button></div>';
+  }
+  /* ── 2. Profil & documents ── */
+  function drawProfTop(){
+    var b=$('cps-prof-top'); if(!b) return;
+    b.innerHTML='<button type="button" class="cps-wizcta" data-cps="wiz"><span class="cps-ic w">'+I(P.wand,20)+'</span><span><b>Remplir mon profil avec le Stream</b><small>Question par question, en 3 minutes : CareerPulse t\'aide à chaque étape.</small></span>'+I('<path d="m9 18 6-6-6-6"/>',18)+'</button>'
+      +'<div class="cps-card cps-vis"><div class="cps-card-hd"><span class="cps-ic b">'+I(P.eye)+'</span><div><b>Visible par les recruteurs</b><span>'+(visOn()?'Ton profil apparaît dans l\'annuaire des recruteurs CareerPulse : ils peuvent te proposer un échange.':'Ton profil reste privé. Active-le quand il est prêt.')+'</span></div><button type="button" class="cps-sw'+(visOn()?' on':'')+'" data-cps="vis" aria-label="Visible par les recruteurs"><i></i></button></div></div>';
+  }
+  /* ── 3. Candidatures ── */
+  function col(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid).collection('candidatures'):null; }
+  function drawCand(){
+    var b=$('cps-cand'); if(!b) return; var rel=S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length;
+    b.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.send)+'</span>Postuler dès maintenant</div>'
+      +'<div class="cps-card"><p class="cps-p">Postule sur les plateformes de référence, puis note ta candidature juste en dessous : le Stream te rappelle quand relancer.</p><div class="cps-plats">'+PLAT.map(function(p){ return '<a class="cps-plat" href="'+p[1]+'" target="_blank" rel="noopener noreferrer" style="--c:'+p[3]+'"><span class="cps-plat-ic">'+esc(p[0][0])+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span>'+I(P.ext,15)+'</a>'; }).join('')+'</div></div>'
+      +'<div class="cps-sec"><span class="cps-si">'+I(P.chart)+'</span>Mes candidatures'+(S.list.length?' <em>'+S.list.length+'</em>':'')+'</div>'
+      +'<div class="cps-card">'+(rel?'<div class="cps-alert">'+I(P.bell,17)+'<span><b>'+rel+' relance'+(rel>1?'s':'')+' conseillée'+(rel>1?'s':'')+'</b> : sans réponse depuis 7 jours, un court message de relance montre ta motivation.</span></div>':'')
+      +'<div class="cps-add"><input id="cps-co" maxlength="80" placeholder="Entreprise"><input id="cps-po" maxlength="80" placeholder="Poste"><select id="cps-pl"><option>Indeed</option><option>France Travail</option><option>Malt</option><option>Autre</option></select><button type="button" class="cps-btn pri" data-cps="add">'+I(P.plus,16)+'J\'ai postulé</button></div>'
+      +(S.list.length?'<div class="cps-list">'+S.list.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
+        return '<div class="cps-it"><div class="cps-it-t"><b>'+esc(x.poste)+'</b><span>'+esc(x.entreprise)+' · '+esc(x.plateforme)+' · le '+new Date(x.date).toLocaleDateString('fr-FR')+'</span>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+'</div><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cps="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div>'; }).join('')+'</div>'
+        :'<div class="cps-empty">Aucune candidature suivie pour l\'instant. Postule sur une plateforme, puis note-la ici.</div>')+'</div>';
+  }
+  /* ── 4. Recruteurs & messages ── */
+  function drawRec(){
+    var b=$('cps-rec'); if(!b) return;
+    b.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.search)+'</span>Annuaire des recruteurs</div>'
+      +'<div class="cps-card"><label class="cps-search">'+I(P.search,17)+'<input placeholder="Rechercher un recruteur, un secteur, une ville…" disabled></label><div class="cps-empty">Les recruteurs rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'ils seront là, tu pourras les rechercher ici et leur écrire. '+(visOn()?'Ton profil est visible : ils pourront aussi te proposer un échange.':'Rends ton profil visible pour qu\'ils puissent aussi te proposer un échange.')+'</div></div>'
+      +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs'+(S.convs.length?' <em>'+S.convs.length+'</em>':'')+'</div>'
+      +'<div class="cps-card">'+(S.convs.length?S.convs.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-conv="'+c.id+'"><span class="cps-dot'+(c.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(c.empNom||'Recruteur')+(c.poste?' · '+esc(c.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I('<path d="m9 18 6-6-6-6"/>',16)+'</button>'; }).join(''):'<div class="cps-empty">Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée : tu choisis toujours ce que tu partages.</div>')+'</div>'
+      +'<div class="cps-card cps-msg"><span class="cps-ic g">'+I(P.chat)+'</span><div><b>Tes échanges avec les centres de formation</b><p>Ils se trouvent dans EVA, rubrique « Contacter des formations ».</p></div><a class="cps-btn" href="eva.html#eva-of">Ouvrir</a></div>';
+  }
+  function drawAll(){ drawHero(); drawCats(); drawFeed(); drawProfTop(); drawCand(); drawRec(); }
+
+  /* ── Messagerie candidats / recruteurs (même principe que pour les formations) ── */
+  function convCol(){ return db()?db().collection('emploi_conversations'):null; }
+  function loadConvs(){ var u=user(), c=convCol(); if(!u||!c) return Promise.resolve(); return c.where('candUid','==',u.uid).get().then(function(q){ S.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); }); }).catch(function(){ S.convs=[]; }); }
+  var UNSUB=null;
+  function openConv(id){
+    var c=S.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
+    var sh=document.createElement('div'); sh.className='cpw-sheet';
+    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button><span class="cpw-logo">'+I(P.pulse,20)+'</span><div class="cpw-ht"><b>'+esc(c.empNom||'Recruteur')+'</b><span>'+esc(c.poste||'Messagerie protégée')+'</span></div></div><div class="cpw-scroll"><div class="cpw-log cps-thread"></div></div><div class="cpw-ft"><textarea class="cpw-in" maxlength="1500" placeholder="Écris ton message…"></textarea><button type="button" class="cpw-send" aria-label="Envoyer">'+I(P.send,20)+'</button></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var log=sh.querySelector('.cpw-log'), ref=convCol().doc(id);
+    function render(x){ log.innerHTML='<div class="cpw-note">Messagerie protégée : tu choisis ce que tu partages.</div>'+(x.messages||[]).map(function(m){ return '<div class="cpw-m '+(m.from==='cand'?'me':'them')+'"><p>'+esc(m.text)+'</p></div>'; }).join(''); var sc=sh.querySelector('.cpw-scroll'); sc.scrollTop=sc.scrollHeight; if(x.unreadCand) ref.update({ unreadCand:false }).catch(function(){}); sh.querySelector('.cpw-ft').style.display=x.statut==='close'?'none':''; }
+    render(c); UNSUB=ref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
+    function close(){ if(UNSUB){ UNSUB(); UNSUB=null; } sh.remove(); document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(drawAll); }
+    sh.querySelector('.cpw-x').onclick=close;
+    sh.querySelector('.cpw-send').onclick=function(){ var ta=sh.querySelector('.cpw-in'), t=ta.value.trim(); if(!t) return; var now=new Date().toISOString(); ta.value='';
+      ref.update({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:now }), lastAt:now, lastFrom:'cand', unreadEmp:true, updatedAt:now }).catch(function(){ ta.value=t; say('Envoi impossible pour le moment'); }); };
+    if(window.cpSheetArrows) cpSheetArrows(sh.querySelector('.cpw-scroll'),sh.querySelector('.cpw-box'));
+  }
+
+  /* ═══ Formulaire Stream : le profil pro, question par question ═══ */
+  function opts(id){ var e=$(id); return e?[].slice.call(e.options).filter(function(o){ return o.value && !/…$/.test(o.textContent); }).map(function(o){ return o.textContent; }):[]; }
+  var STEPS=[
+    { id:'fp-name', q:'Pour commencer, quels sont ton <b>prénom</b> et ton <b>nom</b> ?', t:'text', ph:'Ex : Sophie Martin', why:'Ton nom n\'est visible des recruteurs que si tu rends ton profil visible.' },
+    { id:'fp-titre', q:'Quel est ton <b>titre professionnel</b>, ou le poste que tu vises ?', t:'text', ph:'Ex : Développeuse web, Assistant RH…', why:'C\'est la première ligne que lit un recruteur : sois précis(e).' },
+    { id:'fp-secteur', q:'Dans quel <b>secteur</b> travailles-tu, ou veux-tu travailler ?', t:'choice' },
+    { id:'fp-ville', q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.', t:'text', ph:'Ex : Caen, Paris, télétravail…', chips:['Télétravail','Toute la France'] },
+    { id:'fp-exp', q:'Combien d\'<b>années d\'expérience</b> as-tu dans ce domaine ?', t:'choice' },
+    { id:'fp-salaire', q:'Quel <b>salaire</b> souhaites-tu ?', t:'text', ph:'Ex : 32 000 €/an', chips:['À discuter'] },
+    { id:'fp-accroche', q:'Dernière étape importante : ton <b>accroche</b>. En 2 ou 3 phrases, qui es-tu et que cherches-tu ?', t:'area', ph:'Qui tu es, ce que tu sais faire, ce que tu cherches…', gen:true },
+    { id:'fp-email-public', q:'Une adresse e-mail de <b>contact</b> pour les recruteurs ? (facultatif)', t:'text', ph:'ton@email.com', skip:true },
+    { id:'fp-tel-public', q:'Et un <b>téléphone</b> ? (facultatif)', t:'text', ph:'06 12 34 56 78', skip:true },
+    { id:'_vis', q:'Ton profil est prêt ! Veux-tu le rendre <b>visible par les recruteurs</b> CareerPulse ?', t:'choice', list:['Oui, rends-le visible','Plus tard'] }
+  ];
+  function genAccroche(A){ var t=A['fp-titre']||'professionnel(le)', s=A['fp-secteur'], e=A['fp-exp'], v=A['fp-ville'];
+    return t+(e?' avec '+e.toLowerCase()+' d\'expérience':'')+(s&&s!=='Autre'?' dans le secteur '+s:'')+'. Rigoureux(se) et motivé(e), je cherche un nouveau poste'+(v?' à '+v:'')+' où mettre mes compétences au service d\'une équipe et continuer à progresser.'; }
+  function wizard(){
+    if(document.querySelector('.cpw-sheet')) return;
+    var A={}, k=0; STEPS.forEach(function(s){ if(s.id[0]!=='_') A[s.id]=val(s.id); });
+    var sh=document.createElement('div'); sh.className='cpw-sheet';
+    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button><span class="cpw-logo">'+I(P.pulse,20)+'</span><div class="cpw-ht"><b>Formulaire Stream</b><span>CareerPulse · ton profil pro</span></div><em class="cpw-step">1/'+STEPS.length+'</em></div>'
+      +'<div class="cpw-pg"><i></i></div><div class="cpw-scroll"><div class="cpw-wrap"><div class="cpw-intro"><span class="cpw-logo lg">'+I(P.pulse,24)+'</span><div><b>Bienvenue dans le Stream CareerPulse</b><p>On construit ton profil pro ensemble, une question à la fois. Tu peux revenir en arrière à tout moment.</p></div></div><div class="cpw-log"></div><div class="cpw-input"></div></div></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var log=sh.querySelector('.cpw-log'), inp=sh.querySelector('.cpw-input'), sc=sh.querySelector('.cpw-scroll');
+    function close(){ sh.remove(); document.documentElement.classList.remove('ofcm-lock'); drawAll(); }
+    sh.querySelector('.cpw-x').onclick=close;
+    function down(){ setTimeout(function(){ sc.scrollTo({ top:sc.scrollHeight, behavior:'smooth' }); },60); }
+    function bot(html,cb){ var m=document.createElement('div'); m.className='cpw-row'; m.innerHTML='<span class="cpw-av">'+I(P.pulse,16)+'</span><div class="cpw-b"><span class="cpw-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ m.querySelector('.cpw-b').innerHTML=html; down(); if(cb) cb(); },500); }
+    function me(t){ var m=document.createElement('div'); m.className='cpw-me'; m.textContent=t; log.appendChild(m); down(); }
+    function prog(){ var p=Math.round(k/STEPS.length*100); sh.querySelector('.cpw-pg i').style.width=p+'%'; sh.querySelector('.cpw-step').textContent=Math.min(k+1,STEPS.length)+'/'+STEPS.length; }
+    function ask(){
+      prog(); inp.innerHTML='';
+      if(k>=STEPS.length){ finish(); return; }
+      var s=STEPS[k];
+      bot(s.q+(s.why?'<small>'+s.why+'</small>':''),function(){
+        var cur=s.id[0]==='_'?'':(A[s.id]||'');
+        var list=s.list||(s.t==='choice'?opts(s.id):null);
+        var h='';
+        if(list) h+='<div class="cpw-chips">'+list.map(function(o){ return '<button type="button" class="cpw-chip'+(o===cur?' on':'')+'" data-v="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
+        else{
+          h+=(s.t==='area'?'<textarea class="cpw-field" rows="4" placeholder="'+esc(s.ph||'')+'">'+esc(cur)+'</textarea>':'<input class="cpw-field" placeholder="'+esc(s.ph||'')+'" value="'+esc(cur)+'">');
+          if(s.chips) h+='<div class="cpw-chips sm">'+s.chips.map(function(o){ return '<button type="button" class="cpw-chip" data-fill="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
+          if(s.gen) h+='<button type="button" class="cpw-gen" data-gen="1">'+I(P.wand,16)+'Proposer une accroche à partir de mes réponses</button>';
+          h+='<div class="cpw-acts">'+(s.skip?'<button type="button" class="cpw-btn ghost" data-skip="1">Passer</button>':'')+'<button type="button" class="cpw-btn" data-ok="1">Valider'+I('<path d="m9 18 6-6-6-6"/>',16)+'</button></div>';
+        }
+        if(k>0) h+='<button type="button" class="cpw-backq" data-prev="1">'+I(P.back,14)+'Question précédente</button>';
+        inp.innerHTML=h; var f=inp.querySelector('.cpw-field'); if(f){ f.focus(); f.onkeydown=function(e){ if(e.key==='Enter' && s.t!=='area'){ e.preventDefault(); inp.querySelector('[data-ok]').click(); } }; } down();
+      });
+    }
+    function answer(v){ var s=STEPS[k]; if(s.id[0]!=='_') A[s.id]=v; else A[s.id]=v; me(v||'(passé)'); k++; ask(); }
+    inp.onclick=function(e){
+      var b=e.target.closest('button'); if(!b) return; var s=STEPS[k];
+      if(b.hasAttribute('data-v')){ answer(b.getAttribute('data-v')); return; }
+      if(b.hasAttribute('data-fill')){ var f=inp.querySelector('.cpw-field'); f.value=b.getAttribute('data-fill'); f.focus(); return; }
+      if(b.hasAttribute('data-gen')){ inp.querySelector('.cpw-field').value=genAccroche(A); return; }
+      if(b.hasAttribute('data-skip')){ answer(''); return; }
+      if(b.hasAttribute('data-prev')){ k=Math.max(0,k-1); bot('D\'accord, on revient à la question précédente.',ask); return; }
+      if(b.hasAttribute('data-ok')){ var v=inp.querySelector('.cpw-field').value.trim(); if(!v && !s.skip){ inp.querySelector('.cpw-field').classList.add('err'); say('Réponds à la question pour continuer'); return; } answer(v); }
+    };
+    function finish(){
+      prog(); var rows=STEPS.filter(function(s){ return s.id[0]!=='_'; }).map(function(s){ return '<li><span>'+s.q.replace(/<[^>]+>/g,'').replace(/\?.*$/,'?')+'</span><b>'+esc(A[s.id]||'—')+'</b></li>'; }).join('');
+      bot('Bravo, ton profil pro est prêt ! Vérifie le récapitulatif, puis enregistre-le.',function(){
+        inp.innerHTML='<ul class="cpw-recap">'+rows+'</ul><div class="cpw-acts"><button type="button" class="cpw-btn ghost" data-redo="1">Recommencer</button><button type="button" class="cpw-btn" data-save="1">'+I(P.check,16)+'Enregistrer mon profil</button></div>';
+        inp.onclick=function(e){ var b=e.target.closest('button'); if(!b) return;
+          if(b.hasAttribute('data-redo')){ k=0; log.innerHTML=''; inp.onclick=null; wizard.restart(); return; }
+          if(b.hasAttribute('data-save')){
+            STEPS.forEach(function(s){ if(s.id[0]==='_') return; var el=$(s.id); if(!el) return;
+              if(el.tagName==='SELECT'){ [].slice.call(el.options).forEach(function(o){ if(o.textContent===A[s.id]) el.value=o.value; }); } else el.value=A[s.id]||''; el.dispatchEvent(new Event('input',{ bubbles:true })); });
+            if(typeof updateFpScore==='function') updateFpScore();
+            if(typeof saveFichePro==='function') saveFichePro();
+            if(/^Oui/.test(A._vis||'') && !visOn() && typeof toggleFpVis==='function') toggleFpVis();
+            say('Profil pro enregistré ✅'); close(); S.cat='profil'; try{ sessionStorage.setItem('cps_cat','profil'); }catch(x){} drawAll();
+          } };
+      });
+    }
+    wizard.restart=function(){ close(); setTimeout(wizard,50); };
+    if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.cpw-box'));
+    ask();
+  }
+  window.cpStreamWizard=wizard;
+
+  /* ── Partage (invitations) ── */
+  function share(rec){
+    var url=location.origin+location.pathname+(rec?'#pro':''), t=rec?'Je te recommande CareerPulse pour trouver des candidats motivés, avec des profils clairs et un pourcentage de correspondance : '+url:'Je te recommande CareerPulse pour ta recherche d\'emploi : profil pro, suivi des candidatures et CareerPulse Stream, gratuit pour les membres : '+url;
+    if(navigator.share){ navigator.share({ title:'CareerPulse', text:t, url:url }).catch(function(){}); return; }
+    try{ navigator.clipboard.writeText(t).then(function(){ say('Message copié : colle-le où tu veux 📋'); }); }catch(e){ prompt('Copie ce message :',t); }
+  }
+
+  /* ── Événements ── */
+  document.addEventListener('click',function(e){
+    var cat=e.target.closest('[data-cat]'); if(cat && cat.closest('#s-profil')){ S.cat=cat.getAttribute('data-cat'); try{ sessionStorage.setItem('cps_cat',S.cat); }catch(x){} drawCats(); var c=$('cps-cats'); if(c) c.scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+    var nx=e.target.closest('#cps-next'); if(nx){ var g=nx.getAttribute('data-go');
+      if(g==='wiz'){ wizard(); return; } if(g==='vis'){ toggleVis(); return; }
+      S.cat= g==='lm'?'profil':'cand'; try{ sessionStorage.setItem('cps_cat',S.cat); }catch(x){} drawCats();
+      if(g==='lm' && typeof toggleAccordion==='function'){ var a=$('acc-cv'); if(a && !a.offsetHeight) toggleAccordion('acc-cv'); var t=$('cps-sec-lm'); if(t) t.scrollIntoView({ behavior:'smooth', block:'start' }); }
+      else { var c2=$('cps-cats'); if(c2) c2.scrollIntoView({ behavior:'smooth', block:'start' }); }
+      return; }
+    var cv=e.target.closest('[data-conv]'); if(cv && cv.closest('#s-profil')){ openConv(cv.getAttribute('data-conv')); return; }
+    var b=e.target.closest('[data-cps]'); if(!b || !b.closest('#s-profil')) return; var a2=b.getAttribute('data-cps');
+    if(a2==='wiz'){ wizard(); return; }
+    if(a2==='vis'){ toggleVis(); return; }
+    if(a2==='inv-rec'){ share(true); return; } if(a2==='inv-ami'){ share(false); return; }
+    if(a2==='add'){ var co=val('cps-co'), po=val('cps-po'), pl=$('cps-pl').value, c3=col();
+      if(!co||!po){ say('Indique l\'entreprise et le poste'); return; } if(!c3){ say('Connecte-toi pour suivre tes candidatures'); return; }
+      var d={ entreprise:co, poste:po, plateforme:pl, statut:'Envoyée', date:new Date().toISOString() }; b.disabled=true;
+      c3.add(d).then(function(r){ d.id=r.id; S.list.unshift(d); say('Candidature ajoutée ✅'); drawAll(); }).catch(function(){ b.disabled=false; say('Enregistrement impossible pour le moment'); }); return; }
+    if(a2==='del'){ if(!confirm('Supprimer cette candidature de ton suivi ?')) return; var id=b.getAttribute('data-id'), c4=col(); if(!c4) return;
+      c4.doc(id).delete().then(function(){ S.list=S.list.filter(function(x){ return x.id!==id; }); drawAll(); }).catch(function(){ say('Suppression impossible pour le moment'); }); }
+  });
+  document.addEventListener('change',function(e){ var s=e.target.closest('#s-profil .cps-st'); if(!s) return; var id=s.getAttribute('data-id'), c=col(); if(!c) return;
+    c.doc(id).set({ statut:s.value, majAt:new Date().toISOString() },{ merge:true }).then(function(){ S.list.forEach(function(x){ if(x.id===id) x.statut=s.value; }); say('Statut mis à jour'); drawAll(); }).catch(function(){ say('Mise à jour impossible pour le moment'); }); });
+  function toggleVis(){ if(typeof toggleFpVis!=='function') return; toggleFpVis(); setTimeout(drawAll,60); }
+  function load(){ var c=col(); return Promise.all([ c?c.get().then(function(q){ S.list=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.date||'').localeCompare(String(a.date||'')); }); }).catch(function(){}):null, loadConvs() ]); }
+  function watch(){ var sp=$('prof-score-pct'); if(sp) new MutationObserver(drawAll).observe(sp,{ childList:true, characterData:true, subtree:true });
+    ['fp-name','fp-titre'].forEach(function(id){ var x=$(id); if(x) x.addEventListener('input',drawHero); });
+    ['letter-out','docs-list'].forEach(function(id){ var x=$(id); if(x) new MutationObserver(function(){ drawFeed(); drawHero(); }).observe(x,{ childList:true, subtree:true, characterData:true }); }); }
+  function start(){ watch(); drawAll(); var go=function(){ load().then(drawAll); }; if(user()) go(); else { var n=0, t=setInterval(function(){ if(user()||++n>40){ clearInterval(t); go(); } },250); } }
+  if(document.readyState!=='loading') start(); else document.addEventListener('DOMContentLoaded',start);
+})();
+</script>
+
 
 </body>
 </html>
