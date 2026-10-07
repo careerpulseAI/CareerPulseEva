@@ -31509,9 +31509,10 @@ window.cpSheetArrows=function(sc,host){
   var m=/^#pf-(dem|etu|rec|frl)-([a-z]+)$/.exec(location.hash||''); if(!m) return;
   var p=m[1], tab=m[2], n=0;
   (function tryOpen(){
-    if(typeof window.go!=='function' || typeof window.ewOpen!=='function' || typeof window.ewOpenPortfolioToTab!=='function' || !document.getElementById('eva-fullscreen')){ if(++n<60) setTimeout(tryOpen,150); return; }
+    if(typeof window.go!=='function' || typeof window.ewOpen!=='function' || typeof window.ewGoDiagnosticChat!=='function' || !document.getElementById('eva-fullscreen')){ if(++n<60) setTimeout(tryOpen,150); return; }
     try{ window.go('eva-workspace'); window.ewOpen(p); }catch(e){}
-    setTimeout(function(){ try{ window.ewOpenPortfolioToTab(tab); }catch(e){} try{ history.replaceState(null,'',location.pathname+'#eva-workspace'); }catch(e){} },350);
+    /* On ouvre le Portfolio complet (agenda, tâches, documents, contacts…) sur le bon profil */
+    setTimeout(function(){ try{ window.ewGoDiagnosticChat(); }catch(e){} try{ history.replaceState(null,'',location.pathname+'#eva'); }catch(e){} },350);
   })();
 })();
 </script>
