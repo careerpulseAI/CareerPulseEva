@@ -17861,7 +17861,7 @@ window.cpSheetArrows=function(sc,host){
     var lk=document.createElement('div'); lk.className='cj-evas';
     lk.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.clip)+'</span>Ranger et améliorer avec EVA</div>'
       +evPf('pf','Ouvrir mon Portfolio','Documents, tâches, agenda, contacts…')
-      +evPf('pf','Faire analyser ma lettre ou mon CV','Dans ton Portfolio, outil « Analyser un document »')+evPf('taches','Mes tâches','Organise ta semaine, tâche par tâche')
+      +evPf('doc','Faire analyser ma lettre ou mon CV','EVA lit ton document comme un recruteur et te donne une note')+evPf('taches','Mes tâches','Organise ta semaine, tâche par tâche')
       ;
     o.body.appendChild(lk);
     if(target==='lm'||target==='docs'){ var acc=target==='lm'?'acc-cv':'acc-docs', a=$(acc); if(a && a.style.display!=='block' && typeof toggleAccordion==='function') toggleAccordion(acc);
