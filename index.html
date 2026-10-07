@@ -1571,6 +1571,137 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 </script>
 <style id="cps-css">
 /* ═══ CareerPulse Stream (Mon espace) — vert & bleu ═══ */
+/* ═══ Stream : Lisa, l'assistante Careerjob + 4 cartes ═══ */
+.cj-av{ flex-shrink:0; width:44px; height:44px; border-radius:50%; overflow:hidden; display:flex !important; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(5,150,105,.35); position:relative; }
+.cj-av img{ width:100%; height:100%; object-fit:cover; display:block; }
+.cj-av.sm{ width:34px; height:34px; box-shadow:0 0 0 2px #fff,0 0 0 3px rgba(5,150,105,.3); }
+.cj-av.lg{ width:58px; height:58px; }
+.cj-av svg{ stroke:#fff !important; width:18px !important; height:18px !important; }
+#s-profil .cj-coach{ display:flex; gap:12px; align-items:flex-start; margin:14px 0; padding:15px; border-radius:22px; background:linear-gradient(135deg,#eff6ff,#ecfdf5); border:1px solid #d6e6f5; }
+.cj-coach-b{ flex:1; min-width:0; }
+.cj-coach-n{ display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin-bottom:4px; } .cj-coach-n b{ font-size:.95rem; color:#0f172a; } .cj-coach-n span{ font-size:.72rem; font-weight:700; color:#047857; }
+.cj-coach p{ margin:4px 0 0; font-size:.86rem; line-height:1.55; color:#1e293b; } .cj-coach p b{ color:#1e3a8a; }
+.cj-btn{ display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:9px 14px; border-radius:999px; border:none; cursor:pointer; font:800 .8rem 'DM Sans',sans-serif; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 10px 20px -12px rgba(30,64,175,.7); }
+.cj-btn svg{ stroke:#fff !important; } .cj-btn.ghost{ background:#fff; color:#1e3a8a; border:1px solid #cbd5e1; box-shadow:none; } .cj-btn.ghost svg{ stroke:#1e3a8a !important; }
+.cj-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; align-items:start; }
+@media (max-width:820px){ .cj-grid{ grid-template-columns:1fr; } }
+.cj-card{ background:#fff; border:1px solid #e2e8f0; border-radius:26px; padding:14px; box-shadow:0 24px 50px -38px rgba(15,23,42,.55); display:flex; flex-direction:column; gap:10px; }
+.cj-card button, .cj-sheet button{ font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; }
+.cj-hd{ display:flex; align-items:center; gap:12px; width:100%; padding:4px; border:none; background:none; cursor:pointer; text-align:left; }
+.cj-hd-t{ flex:1; min-width:0; } .cj-hd-t b{ display:block; font-size:1.12rem; font-weight:800; color:#0f172a; letter-spacing:-.01em; } .cj-hd-t small{ display:block; font-size:.78rem; color:#64748b; margin-top:2px; }
+.cj-go{ width:34px; height:34px; border-radius:50%; background:#f1f5f9; display:flex !important; align-items:center; justify-content:center; color:#0f172a; flex-shrink:0; }
+.cj-ic{ flex-shrink:0; width:52px; height:52px; border-radius:16px; display:flex !important; align-items:center; justify-content:center; color:#fff; }
+.cj-ic.sm{ width:42px; height:42px; border-radius:13px; }
+.cj-ic.b{ background:linear-gradient(135deg,#1e3a8a,#2563eb); } .cj-ic.g{ background:linear-gradient(135deg,#047857,#10b981); } .cj-ic.y{ background:linear-gradient(135deg,#d97706,#f59e0b); }
+.cj-ic svg, .cj-main svg{ stroke:#fff !important; }
+.cj-box{ position:relative; display:flex; align-items:center; flex-wrap:wrap; gap:12px; width:100%; text-align:left; padding:13px; border-radius:18px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; }
+.cj-box-t{ flex:1; min-width:0; } .cj-box-t b{ display:block; font-size:.9rem; color:#0f172a; } .cj-box-t small{ display:block; font-size:.76rem; line-height:1.45; color:#64748b; margin-top:2px; }
+.cj-score{ font-style:normal; font-size:1.3rem; font-weight:900; color:#1e40af; }
+.cj-bar{ display:block; width:100%; height:7px; border-radius:9px; background:#e0e7ff; overflow:hidden; } .cj-bar > i{ display:block; height:100%; border-radius:9px; background:linear-gradient(90deg,#1e40af,#10b981); transition:width .5s; }
+.cj-bar.lg{ height:10px; margin:10px 0 4px; }
+.cj-mini{ display:block; width:100%; font-size:.76rem; color:#64748b; margin:0; }
+.cj-defi.off{ border-style:dashed; border-color:#a7f3d0; background:#f0fdf4; }
+.cj-tip{ background:#fffbeb; border-color:#fde68a; } .cj-tip .cj-box-t small{ color:#78350f; font-size:.8rem; }
+.cj-stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+.cj-stats button{ text-align:left; padding:11px 10px; border-radius:16px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; display:flex; flex-direction:column; gap:2px; }
+.cj-stats span{ width:30px; height:30px; border-radius:10px; background:#eff6ff; color:#1e40af; display:flex !important; align-items:center; justify-content:center; margin-bottom:4px; }
+.cj-stats b{ font-size:1.35rem; font-weight:900; color:#0f172a; line-height:1; } .cj-stats small{ font-size:.7rem; color:#64748b; line-height:1.3; }
+.cj-comp{ background:linear-gradient(135deg,#f0fdf4,#ecfdf5); border-color:#bbf7d0; flex-wrap:nowrap; }
+.cj-ring{ flex-shrink:0; } .cj-ring text{ font:900 15px 'DM Sans',sans-serif; fill:#1e3a8a; }
+.cj-rows{ display:flex; flex-direction:column; border:1px solid #e2e8f0; border-radius:18px; overflow:hidden; }
+.cj-rows button{ display:flex; align-items:center; gap:10px; width:100%; padding:11px 12px; border:none; border-bottom:1px solid #eef2f7; background:#fff; cursor:pointer; text-align:left; color:#0f172a; }
+.cj-rows button:last-child{ border-bottom:none; }
+.cj-rows button > svg{ flex-shrink:0; color:#94a3b8; }
+.cj-ck{ width:22px; height:22px; border-radius:50%; border:2px solid #cbd5e1; display:flex !important; align-items:center; justify-content:center; flex-shrink:0; }
+.cj-ck.on{ border-color:#059669; background:#059669; } .cj-ck svg{ stroke:#fff !important; stroke-width:3; }
+.cj-ri{ color:#1e3a8a; display:flex !important; flex-shrink:0; } .cj-ri.lg{ width:40px; height:40px; border-radius:13px; background:#eff6ff; align-items:center; justify-content:center; }
+.cj-rt{ flex:1; min-width:0; font-size:.84rem; } .cj-rt b{ display:block; font-size:.88rem; } .cj-rt small{ display:block; font-size:.74rem; color:#64748b; margin-top:1px; }
+.cj-rows em{ font-style:normal; font-size:.74rem; font-weight:700; color:#64748b; white-space:nowrap; } .cj-rows em.ok{ color:#047857; }
+.cj-dot{ width:9px; height:9px; border-radius:50%; background:#dc2626; flex-shrink:0; }
+.cj-main{ display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; border:none; border-radius:16px; cursor:pointer; font:800 .92rem 'DM Sans',sans-serif; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 14px 26px -16px rgba(30,64,175,.8); margin-top:2px; }
+.cj-main:disabled{ opacity:.6; }
+.cj-counts{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
+.cj-counts button{ padding:12px 4px; border-radius:16px; border:none; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; }
+.cj-counts b{ font-size:1.5rem; font-weight:900; line-height:1; } .cj-counts small{ font-size:.72rem; font-weight:700; }
+.cj-counts .c0{ background:#eff6ff; color:#1e40af; } .cj-counts .c1{ background:#fff7ed; color:#c2410c; } .cj-counts .c2{ background:#ecfdf5; color:#047857; } .cj-counts .c3{ background:#f5f3ff; color:#6d28d9; }
+.cj-vis{ background:#eff6ff; border-color:#dbeafe; flex-wrap:nowrap; cursor:default; }
+.cj-inv{ display:flex; align-items:center; gap:12px; margin:16px 0 4px; padding:14px; border-radius:20px; background:#fff; border:1px solid #e2e8f0; }
+.cj-inv .cj-btn{ margin:0; }
+@media (max-width:520px){ .cj-inv{ flex-wrap:wrap; } .cj-inv .cj-btn{ width:100%; justify-content:center; } }
+/* Pages plein écran */
+.cj-pg{ padding:16px; max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:12px; font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; color:#0f172a; }
+.cj-sheet .cpw-hd .cj-av{ width:38px; height:38px; }
+.cj-say{ display:flex; gap:10px; align-items:flex-start; } .cj-say > div{ flex:1; padding:11px 14px; border-radius:4px 18px 18px 18px; background:#fff; border:1px solid #e2e8f0; font-size:.86rem; line-height:1.55; box-shadow:0 10px 22px -20px rgba(15,23,42,.6); }
+.cj-tabs{ display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; scrollbar-width:none; } .cj-tabs::-webkit-scrollbar{ display:none; }
+.cj-tabs button{ flex-shrink:0; padding:8px 12px; border-radius:999px; border:1px solid #e2e8f0; background:#fff; font-size:.78rem; font-weight:700; color:#334155; cursor:pointer; }
+.cj-tabs button.on{ background:#1e3a8a; border-color:#1e3a8a; color:#fff; } .cj-tabs em{ font-style:normal; opacity:.7; }
+.cj-list{ display:flex; flex-direction:column; gap:10px; }
+.cj-it{ padding:12px; border-radius:18px; border:1px solid #e2e8f0; background:#fff; }
+.cj-it-hd{ display:flex; gap:11px; align-items:flex-start; }
+.cj-it-t{ flex:1; min-width:0; } .cj-it-t b{ display:block; font-size:.9rem; } .cj-it-t span{ display:block; font-size:.78rem; color:#475569; } .cj-it-t small{ display:flex; align-items:center; gap:4px; font-size:.72rem; color:#64748b; margin-top:3px; flex-wrap:wrap; }
+.cj-it-ft{ display:flex; gap:8px; align-items:center; margin-top:10px; } .cj-it-ft .cps-st{ flex:1; }
+.cj-thumb{ width:52px; height:52px; padding:0; border-radius:12px; overflow:hidden; border:1px solid #e2e8f0; cursor:zoom-in; flex-shrink:0; } .cj-thumb img{ width:100%; height:100%; object-fit:cover; }
+.cj-proof{ width:100%; border-radius:16px; border:1px solid #e2e8f0; }
+.cj-pick{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.cj-pick button{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; text-align:left; padding:14px; border-radius:18px; border:1.5px solid #e2e8f0; background:#fff; cursor:pointer; }
+.cj-pick button.on{ border-color:#1e40af; background:#eff6ff; box-shadow:0 0 0 3px rgba(30,64,175,.12); }
+.cj-pick b{ font-size:.88rem; } .cj-pick small{ font-size:.74rem; color:#64748b; line-height:1.4; }
+@media (max-width:480px){ .cj-pick{ grid-template-columns:1fr; } }
+.cj-form{ display:flex; flex-direction:column; gap:10px; padding:14px; border-radius:20px; background:#fff; border:1px solid #e2e8f0; }
+.cj-form label{ display:flex; flex-direction:column; gap:5px; font-size:.74rem; font-weight:800; color:#334155; letter-spacing:.01em; flex:1; min-width:0; }
+.cj-form input, .cj-form select{ width:100%; box-sizing:border-box; padding:12px; border-radius:12px; border:1.5px solid #dbe4ef; background:#f8fafc; font:500 .9rem 'DM Sans',sans-serif; color:#0f172a; }
+.cj-form input:focus, .cj-form select:focus{ outline:none; border-color:#1e40af; background:#fff; }
+.cj-2{ display:flex; gap:10px; } @media (max-width:420px){ .cj-2{ flex-direction:column; } }
+.cj-drop{ cursor:pointer; border:2px dashed #93c5fd !important; border-radius:16px; background:#eff6ff; padding:16px; align-items:center; text-align:center; }
+.cj-drop span{ display:flex; flex-direction:column; align-items:center; gap:4px; color:#1e3a8a; } .cj-drop small{ font-weight:500; color:#64748b; }
+.cj-drop img{ max-width:100%; max-height:260px; border-radius:12px; }
+.cj-types{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.cj-types button{ display:flex; flex-direction:column; align-items:flex-start; gap:6px; padding:13px; border-radius:18px; border:1.5px solid #e2e8f0; background:#fff; cursor:pointer; text-align:left; }
+.cj-types button.on{ border-color:#059669; background:#ecfdf5; box-shadow:0 0 0 3px rgba(5,150,105,.12); }
+.cj-types b{ font-size:.86rem; } .cj-types small{ font-size:.7rem; color:#64748b; }
+.cj-nbs{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; }
+.cj-nbs button{ width:52px; height:52px; border-radius:16px; border:1.5px solid #e2e8f0; background:#fff; font:900 1.1rem 'DM Sans',sans-serif; color:#0f172a; cursor:pointer; }
+.cj-nbs button.on{ background:linear-gradient(135deg,#1e40af,#059669); border-color:transparent; color:#fff; }
+.cj-own{ display:flex; align-items:center; gap:6px; padding:0 10px; height:52px; border-radius:16px; border:1.5px solid #e2e8f0; font-size:.8rem; font-weight:800; color:#334155; }
+.cj-own.on{ border-color:#1e40af; } .cj-own input{ width:56px; border:none; background:transparent; font:900 1.05rem 'DM Sans',sans-serif; color:#0f172a; outline:none; }
+.cj-now{ padding:15px; border-radius:22px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 20px 40px -32px rgba(15,23,42,.6); }
+.cj-now-hd{ display:flex; align-items:center; gap:12px; } .cj-now-hd > div{ flex:1; } .cj-now-hd b{ display:block; font-size:.98rem; } .cj-now-hd small{ font-size:.76rem; color:#64748b; }
+.cj-pm{ display:flex; align-items:center; justify-content:center; gap:18px; margin:12px 0 4px; }
+.cj-pm button{ width:52px; height:52px; border-radius:50%; border:none; cursor:pointer; font:900 1.5rem 'DM Sans',sans-serif; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); }
+.cj-pm b{ font-size:2rem; font-weight:900; min-width:40px; text-align:center; }
+.cj-acts{ display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:8px; } .cj-acts .cj-btn{ margin-top:0; }
+.cj-year{ padding:14px; border-radius:20px; background:#fff; border:1px solid #e2e8f0; }
+.cj-ys{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:12px; } .cj-ys div{ padding:10px; border-radius:14px; background:#f8fafc; } .cj-ys b{ display:block; font-size:1.25rem; font-weight:900; color:#1e3a8a; } .cj-ys small{ font-size:.7rem; color:#64748b; }
+.cj-bars{ display:flex; align-items:flex-end; gap:6px; height:110px; padding-top:6px; }
+.cj-bars span{ flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px; }
+.cj-bars i{ width:100%; max-width:26px; border-radius:7px 7px 3px 3px; background:#cbd5e1; } .cj-bars i.ok{ background:linear-gradient(180deg,#10b981,#047857); }
+.cj-bars small{ font-size:.6rem; color:#94a3b8; }
+.cj-log .cpw-row .cj-av{ align-self:flex-end; }
+.cj-res{ padding:16px; border-radius:22px; background:#fff; border:1px solid #fde68a; box-shadow:0 20px 40px -30px rgba(15,23,42,.6); } .cj-res.ok{ border-color:#a7f3d0; }
+.cj-res-hd{ display:flex; align-items:center; gap:12px; } .cj-res-hd > div{ flex:1; } .cj-res-hd b{ display:block; font-size:1.05rem; } .cj-res-hd small{ font-size:.76rem; color:#64748b; }
+.cj-res-hd em{ font-style:normal; font-size:1.8rem; font-weight:900; color:#1e3a8a; } .cj-res-hd em small{ font-size:.85rem; color:#64748b; }
+.cj-res-l{ list-style:none; margin:10px 0; padding:0; display:flex; flex-direction:column; gap:6px; } .cj-res-l li{ display:flex; align-items:center; gap:8px; font-size:.84rem; color:#7f1d1d; }
+.cj-res-l li span{ width:20px; height:20px; border-radius:50%; background:#dc2626; display:flex; align-items:center; justify-content:center; } .cj-res-l li.ok{ color:#064e3b; } .cj-res-l li.ok span{ background:#059669; } .cj-res-l svg{ stroke:#fff !important; stroke-width:3; }
+.cj-res-m{ margin:6px 0 10px; font-size:.9rem; line-height:1.55; font-weight:600; color:#1e293b; }
+.cj-res-c{ padding:12px 14px; border-radius:16px; background:#eff6ff; margin-bottom:12px; } .cj-res-c b{ font-size:.8rem; color:#1e3a8a; } .cj-res-c p{ margin:4px 0 0; font-size:.84rem; line-height:1.55; }
+.cps-pc-sec{ margin-top:12px; } .cps-pc-sec > b{ display:block; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:#64748b; margin-bottom:6px; }
+.cps-pc-sec ul{ margin:0; padding-left:18px; font-size:.82rem; line-height:1.6; color:#334155; }
+.cpw-chip.on{ background:#ecfdf5; border-color:#059669; color:#065f46; }
+.cj-sheet .cps-ic, .cj-sheet .cps-si{ display:flex !important; align-items:center !important; justify-content:center !important; padding:0 !important; }
+.cj-sheet .cps-ic{ color:#fff !important; } .cj-sheet .cps-ic svg{ width:19px !important; height:19px !important; stroke:currentColor !important; margin:0 !important; position:static !important; }
+
+.cps-pc{ position:relative; overflow:hidden; background:#fff; border:1px solid #e2e8f0; border-radius:22px; padding:16px; margin:0 0 12px; box-shadow:0 18px 40px -30px rgba(15,23,42,.55); }
+.cps-pc::before{ content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,#1e40af,#047857); }
+.cps-pc-hd{ display:flex; align-items:center; gap:13px; }
+.cps-pc.empty{ display:flex; align-items:center; gap:13px; } .cps-pc.empty b{ display:block; font-size:.92rem; color:#0f172a; } .cps-pc.empty p{ margin:3px 0 0; font-size:.78rem; line-height:1.5; color:#64748b; }
+.cps-pc-av{ position:relative; flex-shrink:0; width:62px; height:62px; border-radius:50%; border:none; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; font:800 1.1rem 'DM Sans',sans-serif; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 0 0 3px #fff,0 0 0 5px rgba(4,120,87,.25); }
+.cps-pc-av img{ width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.cps-pc-av > span{ position:absolute; right:-2px; bottom:-2px; width:22px; height:22px; border-radius:50%; background:#047857; border:2px solid #fff; display:flex; align-items:center; justify-content:center; }
+.cps-pc-av svg{ stroke:#fff !important; }
+.cps-pc-id{ min-width:0; } .cps-pc-id b{ display:block; font-size:1.02rem; color:#0f172a; letter-spacing:-.01em; } .cps-pc-id span{ display:block; margin-top:2px; font-size:.8rem; font-weight:600; color:#1e40af; }
+.cps-pc-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-top:12px; } .cps-pc-chips span{ font-size:.72rem; font-weight:700; color:#065f46; background:#ecfdf5; border:1px solid #d1fae5; border-radius:999px; padding:5px 10px; }
+.cps-pc-acc{ margin:12px 0 0; font-size:.82rem; line-height:1.6; color:#334155; padding:11px 13px; background:#f8fafc; border-radius:14px; border-left:3px solid #047857; }
+.cps-pc-ct{ display:flex; align-items:center; gap:7px; margin-top:10px; font-size:.76rem; color:#64748b; } .cps-pc-ct svg{ flex-shrink:0; }
 #s-profil .cps-hero{ position:relative; overflow:hidden; isolation:isolate; border-radius:24px; padding:20px 18px 18px; margin-bottom:12px; color:#fff;
   background:radial-gradient(120% 140% at 100% 0%,rgba(110,231,183,.30),transparent 55%),linear-gradient(130deg,#0b2a52 0%,#1e40af 48%,#047857 115%); box-shadow:0 22px 44px -26px rgba(30,64,175,.85); font-family:'DM Sans',sans-serif; }
 #s-profil .cps-hero::before{ content:""; position:absolute; z-index:-1; right:-70px; top:-80px; width:240px; height:240px; border-radius:50%; border:1px solid rgba(255,255,255,.18); box-shadow:0 0 0 26px rgba(255,255,255,.04); }
@@ -1642,7 +1773,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 #s-profil .cps-si{ width:26px; height:26px; flex-shrink:0; border-radius:9px; display:flex !important; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#047857); }
 #s-profil .cps-si svg{ width:14px !important; height:14px !important; stroke:currentColor !important; fill:none !important; }
 #s-profil .cps-logo svg{ width:22px !important; height:22px !important; stroke:#fff !important; fill:none !important; }
-.cps-tabs{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:2px 0 6px; }
+.cps-tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:2px 0 6px; }
 .cps-tab{ position:relative; overflow:hidden; isolation:isolate; display:flex; flex-direction:column; align-items:flex-start; gap:4px; text-align:left; padding:13px 12px 12px; border-radius:18px; border:1px solid #dbe4ef; background:linear-gradient(180deg,#fff,#f5f8fc); cursor:pointer; font-family:'DM Sans',sans-serif; color:#0f172a; box-shadow:0 12px 24px -20px rgba(15,23,42,.5); transition:transform .15s; }
 .cps-tab:active{ transform:scale(.97); }
 .cps-tab-ic{ width:38px; height:38px; border-radius:12px; display:flex !important; align-items:center; justify-content:center; background:#eff6ff; color:#1e40af; margin-bottom:4px; }
@@ -1652,7 +1783,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cps-tab.on{ color:#fff; border-color:transparent; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.3),transparent 60%),linear-gradient(150deg,#1e40af,#065f46); box-shadow:0 16px 30px -16px rgba(30,64,175,.8); }
 .cps-tab.on small{ color:rgba(255,255,255,.82); } .cps-tab.on .cps-tab-ic{ background:rgba(255,255,255,.16); color:#fff; }
 .cps-tab::after{ content:""; position:absolute; z-index:-1; top:-40%; bottom:-40%; left:0; width:45%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.4),transparent); transform:translateX(-170%) skewX(-12deg); animation:cpsSheen 6s .4s ease-in-out 1 both; }
-@media (max-width:720px){ .cps-tabs{ grid-template-columns:1fr 1fr; grid-auto-rows:1fr; } }
+@media (max-width:720px){ .cps-tabs{ grid-template-columns:1fr 1fr; grid-auto-rows:auto; } #s-profil .cps-tabs .cps-tab:nth-child(3){ grid-column:1 / -1 !important; flex-direction:row !important; align-items:center !important; gap:10px !important; } #s-profil .cps-tabs .cps-tab:nth-child(3) small{ margin-left:auto; text-align:right; } }
 .cps-tip{ display:flex; gap:12px; align-items:flex-start; background:linear-gradient(135deg,#fffbeb,#fff) !important; border-color:#fde68a !important; }
 .cps-tip b{ display:block; font-size:.88rem; color:#78350f; } .cps-tip p{ margin:4px 0 0; font-size:.84rem; line-height:1.55; color:#422006; }
 #s-profil .cps-ic.y{ background:linear-gradient(135deg,#b45309,#f59e0b); } #s-profil .cps-ic.w{ background:rgba(255,255,255,.16); border:1px solid rgba(255,255,255,.3); }
@@ -14046,12 +14177,11 @@ go=function(page){
   <div style="display:none"><div id="hero-step-profil"></div><div id="hero-step-cv"></div><div id="hero-step-visible"></div>
   <span id="prof-status-lbl">Profil invisible</span><div id="prof-dot"></div><span id="prof-score-pct">0</span><div id="prof-score-bar"></div><div id="prof-score-badge">Complète ton profil.</div></div>
  </div>
- <div id="cps-cats"></div>
- <div class="cps-pane" data-pane="stream"><div id="cps-feed"></div></div>
- <div class="cps-pane" data-pane="profil"><div id="cps-prof-top"></div>
- <div class="cps-sec" id="cps-sec-profil"><span class="cps-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Mon profil pro</div>
- <!-- ACCORDÉON 1 : Informations essentielles -->
- <div class="cps-acc" style="background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
+ <div id="cj-home"></div>
+ <div class="cps-pane" data-pane="profil" style="display:none"><div id="cps-prof-top"></div>
+ <div class="cps-sec" id="cps-sec-profil" style="display:none"><span class="cps-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>Mon profil pro</div>
+ <!-- ACCORDÉON 1 : Informations essentielles (remplacé par le Formulaire Stream, champs conservés) -->
+ <div class="cps-acc" id="cps-acc-info" style="display:none;background:#fff;border:1px solid rgba(5,150,105,.12);border-radius:16px;margin-bottom:10px;box-shadow:0 2px 10px rgba(5,150,105,.06);overflow:hidden">
  <div onclick="toggleAccordion('acc-info')" style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;cursor:pointer;user-select:none" ontouchstart="this.style.background='rgba(5,150,105,.04)'" ontouchend="this.style.background=''">
   <div style="display:flex;align-items:center;gap:7px">
    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -14240,8 +14370,6 @@ go=function(page){
  </div>
  <!-- /acc-docs /accordéon-3 -->
  </div><!-- /pane profil -->
- <div class="cps-pane" data-pane="cand"><div id="cps-cand"></div></div>
- <div class="cps-pane" data-pane="rec"><div id="cps-rec"></div></div>
 
 
  <!-- IDs cachés pour JS toggleFpVis -->
@@ -17487,101 +17615,333 @@ window.cpSheetArrows=function(sc,host){
 
 <script>
 /* ═══ CareerPulse Stream (Mon espace) ═══
-   4 catégories : Mon Stream · Profil & documents · Candidatures · Recruteurs & messages
-   + Formulaire Stream (profil pro étape par étape) en plein écran */
+   Lisa, l'assistante Careerjob de CareerPulse, guide le candidat à travers 4 cartes :
+   Mon Stream (défi de la semaine + bilan) · Profil & documents · Candidatures · Recruteurs & messages
+   Tout est cliquable, chaque carte ouvre sa page en plein écran. */
 (function(){
+  /* Avatar de Lisa, l'assistante Careerjob (image intégrée) */
+  var CJ_IMG='data:image/jpeg;base64,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';
   function $(id){ return document.getElementById(id); }
   function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function user(){ return window._fbUser || (window.fbAuth && fbAuth.currentUser) || null; }
   function db(){ return window.fbDb; }
   function say(m){ if(typeof toast==='function') toast(m); }
   function I(p,w){ return '<svg viewBox="0 0 24 24" width="'+(w||18)+'" height="'+(w||18)+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
-  var P={ pulse:'<path d="M3 12h4l2-5 4 10 2-5h6"/>', home:'<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>', user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  var P={ pulse:'<path d="M3 12h4l2-5 4 10 2-5h6"/>', user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
     brief:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>', chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>',
-    check:'<path d="m5 12 5 5L20 7"/>', eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', bulb:'<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+    check:'<path d="m5 12 5 5L20 7"/>', x:'<path d="M18 6 6 18M6 6l12 12"/>', eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>', bulb:'<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
     target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
     plus:'<path d="M12 5v14M5 12h14"/>', trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>', bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
     ext:'<path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>', send:'<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>', wand:'<path d="m15 4 5 5L9 20H4v-5z"/><path d="M13 6l5 5"/>',
-    search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>', back:'<path d="M15 18l-6-6 6-6"/>', chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>', mega:'<path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 9a3 3 0 0 1 0 6"/>' };
+    search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>', back:'<path d="M15 18l-6-6 6-6"/>', chev:'<path d="m9 18 6-6-6-6"/>', chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>',
+    list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>', id:'<rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2.2"/><path d="M5.5 16c.8-1.6 2-2.4 3.5-2.4s2.7.8 3.5 2.4M14 9h4M14 13h4"/>',
+    doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+    mail:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/>', clip:'<path d="m21 11-8.5 8.5a5 5 0 0 1-7-7L14 4a3.3 3.3 0 0 1 4.7 4.7l-8.5 8.5a1.7 1.7 0 0 1-2.4-2.4L15.5 7"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    cam:'<path d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.5"/>', pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>',
+    cal:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18"/>', trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>' };
   var PLAT=[['Indeed','https://fr.indeed.com','N°1 mondial','#1e40af'],['France Travail','https://www.francetravail.fr','Officiel','#1d4ed8'],['Malt','https://www.malt.fr','Freelance','#be123c']];
   var STATUTS=['Envoyée','Relancée','Entretien','Acceptée','Refusée'];
-  var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Vérifie ton orthographe à voix haute avant chaque envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne la ville et la mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Un profil complet à 100 % inspire confiance : termine-le avec le formulaire Stream.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
-  var CATS=[['stream','Mon Stream','Conseil, défi, progression',P.home],['profil','Profil & documents','Ton CV CareerPulse',P.user],['cand','Candidatures','Postuler et suivre',P.brief],['rec','Recruteurs & messages','Annuaire et échanges',P.chat]];
-  var S={ cat:'stream', list:[], convs:[] };
-  try{ S.cat=sessionStorage.getItem('cps_cat')||'stream'; }catch(e){}
+  var FILTRES={ all:['Postulées',null], cours:['En cours',['Envoyée','Relancée']], itw:['Entretien',['Entretien']], rep:['Réponses',['Acceptée','Refusée']] };
+  var MODES=['Sur une plateforme','Par e-mail','Par courrier','En main propre'];
+  var DEFIS={ cand:['Envoyer des CV','CV envoyés',P.send,1], rel:['Relancer des entreprises','relances faites',P.bell,0], res:['Contacter mon réseau','personnes contactées',P.users,0], prep:['Préparer des entretiens','entretiens préparés',P.star,0] };
+  var NBS=[1,2,3,5,10];
+  var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Relis ta candidature à voix haute avant l\'envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne ta ville et ta mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
+  var PUB=['Un profil complet et visible, c\'est ce que les recruteurs CareerPulse regardent en premier.','Chaque candidature notée ici, c\'est une relance que tu n\'oublieras jamais.','Avec CareerPulse, tu avances chaque semaine avec un objectif clair, et je suis là pour te le faire tenir.','Ton profil CareerPulse est gratuit : complète-le une fois, les recruteurs le retrouvent à tout moment.'];
+  var S={ list:[], convs:[], st:{ exp:'', comp:[], defi:null, hist:[] } };
 
-  /* ── Données du profil existant ── */
-  function pct(){ var e=$('prof-score-pct'); return e?(parseInt(e.textContent,10)||0):0; }
+  /* ── Dates : la semaine commence le lundi ── */
+  function monday(d){ d=new Date(d||Date.now()); d.setHours(0,0,0,0); var w=(d.getDay()+6)%7; d.setDate(d.getDate()-w); return d; }
+  function wk(d){ var m=monday(d); return m.getFullYear()+'-'+('0'+(m.getMonth()+1)).slice(-2)+'-'+('0'+m.getDate()).slice(-2); }
+  function wkDate(id){ var p=String(id).split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+  function wkLabel(id){ return 'semaine du '+wkDate(id).toLocaleDateString('fr-FR',{ day:'numeric', month:'long' }); }
+  function dow(){ return (new Date().getDay()+6)%7; } /* 0 = lundi … 6 = dimanche */
+  function days(iso){ return Math.floor((Date.now()-new Date(iso).getTime())/864e5); }
+
+  /* ── Profil ── */
   function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
+  function selTxt(id){ var e=$(id); if(!e) return ''; var o=e.options&&e.options[e.selectedIndex]; var t=o?o.textContent:e.value; return (e.value && !/…$/.test(t))?t:''; }
   function visOn(){ return typeof _fpVis!=='undefined' && !!_fpVis; }
   function lmOk(){ var lo=$('letter-out'); return !!(lo && lo.textContent.trim().length>40) || !!localStorage.getItem('cp_lm_name'); }
   function docOk(){ var dl=$('docs-list'); return !!(dl && dl.children.length && !/aucun/i.test(dl.textContent)) || !!localStorage.getItem('cp_cv_name'); }
-  function days(iso){ return Math.floor((Date.now()-new Date(iso).getTime())/864e5); }
-  function checks(){ return [['Profil pro complété à 80 % ou plus',pct()>=80],['Lettre de motivation prête',lmOk()],['Au moins un document enregistré',docOk()],['Au moins une candidature suivie',S.list.length>0]]; }
+  function infosOk(){ return ['fp-name','fp-titre','fp-secteur','fp-ville','fp-exp','fp-salaire','fp-accroche'].every(function(i){ return !!val(i); }); }
+  function rows(){ return [
+    ['infos','Informations personnelles',P.id,infosOk(),'Complété','À compléter'],
+    ['exp','Expériences professionnelles',P.brief,!!S.st.exp,'Complété','À compléter'],
+    ['comp','Compétences',P.star,(S.st.comp||[]).length>=3,'Complété','À compléter'],
+    ['lm','Lettre de motivation',P.mail,lmOk(),'Prête','À ajouter'],
+    ['docs','Documents (CV, diplômes…)',P.clip,docOk(),'Enregistrés','À ajouter'] ]; }
+  function profPct(){ var r=rows(); return Math.round(r.filter(function(x){ return x[3]; }).length/r.length*100); }
+  function firstSec(){ var r=rows().filter(function(x){ return !x[3] && /infos|exp|comp/.test(x[0]); })[0]; return r?r[0]:'infos'; }
+
+  /* ── Défi ── */
+  function inWeek(iso,id){ var a=wkDate(id).getTime(), t=new Date(iso).getTime(); return t>=a && t<a+7*864e5; }
+  function done(d){ if(!d) return 0; return d.type==='cand' ? S.list.filter(function(x){ return inWeek(x.date,d.week); }).length : (d.manuel||0); }
+  function dpct(d){ return d&&d.cible?Math.min(100,Math.round(done(d)/d.cible*100)):0; }
+  function curDefi(){ var d=S.st.defi; return d && d.week===wk() ? d : null; }
+  function pendingBilan(){ var d=S.st.defi; return d && d.week!==wk() ? d : null; }
+  function canBilan(d){ return d && (dow()>=4 || done(d)>=d.cible); }
+
+  /* ── Sauvegarde (users/{uid}/stream/etat) ── */
+  function stRef(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid).collection('stream').doc('etat'):null; }
+  function saveSt(){ try{ localStorage.setItem('cj_state',JSON.stringify(S.st)); }catch(e){} var r=stRef(); if(r) return r.set(S.st).catch(function(){ say('Enregistrement impossible pour le moment'); }); return Promise.resolve(); }
+  function col(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid).collection('candidatures'):null; }
+
+  /* ── Lisa ── */
+  function av(sz){ return '<span class="cj-av'+(sz?' '+sz:'')+'">'+(CJ_IMG?'<img src="'+CJ_IMG+'" alt="Lisa">':I(P.pulse,sz==='lg'?24:18))+'</span>'; }
+  function first(){ return val('fp-name').split(/\s+/)[0]||''; }
+  function coach(){
+    var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null;
+    if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
+    else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
+    else { var f=done(d), r=Math.max(0,d.cible-f), lab=DEFIS[d.type][0].toLowerCase();
+      if(f>=d.cible){ m.push('Bravo '+esc(hi)+'ton défi est <b>réussi</b> 🎉 Tu peux faire ton bilan dès maintenant.'); act=['Faire mon bilan','bilan']; }
+      else if(dow()>=4){ m.push(esc(hi)+'la semaine se termine : il te reste <b>'+r+'</b> pour ton défi « '+esc(lab)+' ». Un dernier effort, ou faisons le bilan.'); act=['Faire mon bilan','bilan']; }
+      else if(dow()>=2 && dpct(d)<50){ m.push('On est '+['lundi','mardi','mercredi','jeudi'][dow()]+' et ton défi est à <b>'+dpct(d)+' %</b>. Il te reste '+r+' : on s\'y met aujourd\'hui ?'); act=d.type==='cand'?['Ajouter une candidature','add']:['Voir mon défi','defi']; }
+      else { m.push('Ton défi avance : <b>'+f+' / '+d.cible+'</b>. Continue comme ça, la régularité paie toujours.'); act=d.type==='cand'?['Ajouter une candidature','add']:['Voir mon défi','defi']; } }
+    if(p<100) m.push('Ton profil est à <b>'+p+' %</b>. '+PUB[0]);
+    else if(!visOn()) m.push('Ton profil est complet 👏 Rends-le <b>visible</b> : les recruteurs CareerPulse pourront te trouver et te contacter.');
+    else m.push(PUB[(new Date().getDate())%PUB.length]);
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante Careerjob</span></div>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
+      +(act?'<button type="button" class="cj-btn" data-cj="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+'</div></div>';
+  }
 
   /* ── Hero ── */
-  function next(){ var p=pct(); return p<80?['Remplir mon profil avec le Stream','wiz']:(!lmOk()?['Préparer ma lettre de motivation','lm']:(!S.list.length?['Suivre ma 1re candidature','cand']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','cand']))); }
+  function next(){ var p=profPct(); return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
   function drawHero(){
-    var p=pct(), first=val('fp-name').split(/\s+/)[0]||'';
+    var p=profPct();
     if($('cps-pct')) $('cps-pct').textContent=p+' %'; if($('cps-bar')) $('cps-bar').style.width=p+'%';
-    if($('cps-name')) $('cps-name').textContent=first; if($('cps-sub')) $('cps-sub').textContent=val('fp-titre')?val('fp-titre')+' · ton espace emploi CareerPulse':'Ton profil, tes candidatures et les recruteurs CareerPulse, au même endroit.';
+    if($('cps-name')) $('cps-name').textContent=first(); if($('cps-sub')) $('cps-sub').textContent=val('fp-titre')?val('fp-titre')+' · ton espace emploi CareerPulse':'Ton profil, tes candidatures et les recruteurs CareerPulse, au même endroit.';
     var n=next(); if($('cps-next-t')) $('cps-next-t').textContent=n[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',n[1]);
   }
-  /* ── Catégories ── */
-  function drawCats(){
-    var b=$('cps-cats'); if(!b) return;
-    var badge={ cand:S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length, rec:S.convs.filter(function(c){ return c.unreadCand; }).length };
-    b.innerHTML='<div class="cps-tabs">'+CATS.map(function(c){ return '<button type="button" class="cps-tab'+(c[0]===S.cat?' on':'')+'" data-cat="'+c[0]+'"><span class="cps-tab-ic">'+I(c[3],20)+'</span><b>'+c[1]+'</b><small>'+c[2]+'</small>'+(badge[c[0]]?'<em>'+badge[c[0]]+'</em>':'')+'</button>'; }).join('')+'</div>';
-    document.querySelectorAll('#s-profil .cps-pane').forEach(function(p){ p.style.display=p.getAttribute('data-pane')===S.cat?'':'none'; });
+
+  /* ── Les 4 cartes ── */
+  function head(k,ic,t,sub,c){ return '<button type="button" class="cj-hd" data-cj="'+k+'"><span class="cj-ic '+c+'">'+I(ic,24)+'</span><span class="cj-hd-t"><b>'+t+'</b><small>'+sub+'</small></span><span class="cj-go">'+I(P.chev,18)+'</span></button>'; }
+  function ring(p){ var c=2*Math.PI*26; return '<svg class="cj-ring" viewBox="0 0 64 64" width="72" height="72"><circle cx="32" cy="32" r="26" fill="none" stroke="#e2e8f0" stroke-width="7"/><circle cx="32" cy="32" r="26" fill="none" stroke="url(#cjg)" stroke-width="7" stroke-linecap="round" stroke-dasharray="'+c.toFixed(1)+'" stroke-dashoffset="'+(c*(1-p/100)).toFixed(1)+'" transform="rotate(-90 32 32)"/><defs><linearGradient id="cjg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e40af"/><stop offset="1" stop-color="#059669"/></linearGradient></defs><text x="32" y="37" text-anchor="middle">'+p+'%</text></svg>'; }
+  function cnt(f){ var g=FILTRES[f][1]; return g?S.list.filter(function(x){ return g.indexOf(x.statut)>-1; }).length:S.list.length; }
+  function relN(){ return S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length; }
+  function drawHome(){
+    var b=$('cj-home'); if(!b) return;
+    var d=curDefi(), pb=pendingBilan(), tipI=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5), tip=TIPS[tipI%TIPS.length];
+    var weekN=S.list.filter(function(x){ return inWeek(x.date,wk()); }).length, itw=cnt('itw'), p=profPct();
+    var defi = pb ? '<button type="button" class="cj-box cj-defi" data-cj="bilan"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Bilan à faire</b><small>Ton défi de la '+wkLabel(pb.week)+'</small></span><em class="cj-score">'+done(pb)+'/'+pb.cible+'</em></button>'
+      : d ? '<button type="button" class="cj-box cj-defi" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>'+esc(DEFIS[d.type][0])+' · objectif '+d.cible+'</small></span><em class="cj-score">'+done(d)+'/'+d.cible+'</em><i class="cj-bar"><i style="width:'+dpct(d)+'%"></i></i><span class="cj-mini">'+(done(d)>=d.cible?'Défi relevé, bravo ! Fais ton bilan quand tu veux.':'Encore '+(d.cible-done(d))+' pour relever le défi.')+'</span></button>'
+      : '<button type="button" class="cj-box cj-defi off" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>Choisis ton objectif : de 1 à 10, ou ton propre chiffre</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
+    b.innerHTML=coach()+'<div class="cj-grid">'
+      /* 1. Mon Stream */
+      +'<div class="cj-card">'+head('defi',P.pulse,'Mon Stream','Ton plan d\'action avec Lisa','b')+defi
+      +'<button type="button" class="cj-box cj-tip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
+      +'<div class="cj-stats"><button type="button" data-cj="list" data-f="week"><span>'+I(P.doc,17)+'</span><b>'+weekN+'</b><small>candidatures cette semaine</small></button><button type="button" data-cj="list" data-f="rel"><span>'+I(P.clock,17)+'</span><b>'+relN()+'</b><small>relances à faire</small></button><button type="button" data-cj="list" data-f="itw"><span>'+I(P.users,17)+'</span><b>'+itw+'</b><small>entretiens en cours</small></button></div></div>'
+      /* 2. Profil & documents */
+      +'<div class="cj-card">'+head('prof',P.user,'Profil & documents','Ton profil, vu par les recruteurs','b')
+      +'<button type="button" class="cj-box cj-comp" data-cj="wiz">'+ring(p)+'<span class="cj-box-t"><b>Complétude du profil</b><small>'+(p<100?'Complète les étapes ci-dessous : Lisa te pose les questions.':'Profil complet : il est prêt pour les recruteurs.')+'</small></span></button>'
+      +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+I(P.chev,15)+'</button>'; }).join('')+'</div>'
+      +'<button type="button" class="cj-main" data-cj="wiz">'+I(P.pen,18)+(p<100?'Compléter mon profil':'Modifier mon profil')+'</button></div>'
+      /* 3. Candidatures */
+      +'<div class="cj-card">'+head('list',P.brief,'Candidatures','Postuler et suivre tes candidatures','b')
+      +'<div class="cj-counts">'+['all','cours','itw','rep'].map(function(f,i){ return '<button type="button" class="c'+i+'" data-cj="list" data-f="'+f+'"><b>'+cnt(f)+'</b><small>'+FILTRES[f][0]+'</small></button>'; }).join('')+'</div>'
+      +'<div class="cj-rows big"><button type="button" data-cj="plats"><span class="cj-ri lg">'+I(P.search,20)+'</span><span class="cj-rt"><b>Trouver des offres</b><small>Sur Indeed, France Travail et Malt</small></span>'+I(P.chev,15)+'</button>'
+      +'<button type="button" data-cj="add"><span class="cj-ri lg">'+I(P.plus,20)+'</span><span class="cj-rt"><b>Ajouter une candidature</b><small>Avec une capture d\'écran, ou en remplissant les infos</small></span>'+I(P.chev,15)+'</button>'
+      +'<button type="button" data-cj="list" data-f="all"><span class="cj-ri lg">'+I(P.list,20)+'</span><span class="cj-rt"><b>Suivre mes candidatures</b><small>Statut, relances et preuves d\'envoi</small></span>'+I(P.chev,15)+'</button></div>'
+      +'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button></div>'
+      /* 4. Recruteurs & messages */
+      +'<div class="cj-card">'+head('rec',P.users,'Recruteurs & messages','Échanger avec les recruteurs','g')
+      +'<div class="cj-box cj-vis"><span class="cj-ic b sm">'+I(P.eye,20)+'</span><span class="cj-box-t"><b>'+(visOn()?'Profil visible':'Rends ton profil visible')+'</b><small>'+(visOn()?'Les recruteurs CareerPulse peuvent te trouver et te contacter.':'Active la visibilité pour que les recruteurs puissent te trouver et te contacter.')+'</small></span><button type="button" class="cps-sw'+(visOn()?' on':'')+'" data-cj="vis" aria-label="Visible par les recruteurs"><i></i></button></div>'
+      +'<div class="cj-rows big"><button type="button" data-cj="rec"><span class="cj-ri lg">'+I(P.search,20)+'</span><span class="cj-rt"><b>Annuaire des recruteurs</b><small>Rechercher une entreprise, un secteur, une ville</small></span>'+I(P.chev,15)+'</button>'
+      +'<button type="button" data-cj="rec"><span class="cj-ri lg">'+I(P.chat,20)+'</span><span class="cj-rt"><b>Mes messages</b><small>'+(S.convs.length?S.convs.length+' échange'+(S.convs.length>1?'s':'')+' avec les recruteurs':'Tes échanges avec les recruteurs')+'</small></span>'+(S.convs.some(function(c){ return c.unreadCand; })?'<em class="cj-dot"></em>':'')+I(P.chev,15)+'</button></div>'
+      +'<button type="button" class="cj-main" data-cj="rec">'+I(P.users,18)+'Voir l\'annuaire des recruteurs</button></div>'
+      +'</div>'
+      +'<div class="cj-inv"><span class="cj-ic b sm">'+I(P.share,20)+'</span><span class="cj-box-t"><b>Invite un(e) ami(e) en recherche</b><small>CareerPulse Stream, le profil pro et le suivi des candidatures sont gratuits pour les membres.</small></span><button type="button" class="cj-btn ghost" data-cj="inv-ami">Partager</button></div>';
   }
-  /* ── 1. Mon Stream : l'ambiance active (uniquement des données réelles) ── */
-  function drawFeed(){
-    var b=$('cps-feed'); if(!b) return;
-    var ck=checks(), done=ck.filter(function(c){ return c[1]; }).length, sc=Math.round(done/ck.length*100);
-    var d=new Date(), doy=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5), tip=TIPS[doy%TIPS.length];
-    var week=S.list.filter(function(x){ return days(x.date)<7; }).length, goal=3, wp=Math.min(100,Math.round(week/goal*100));
-    var rel=S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length, itw=S.list.filter(function(x){ return x.statut==='Entretien'; }).length;
-    b.innerHTML=
-      '<div class="cps-sec"><span class="cps-si">'+I(P.pulse)+'</span>Ton fil du jour</div>'
-      +'<div class="cps-card cps-tip"><span class="cps-ic y">'+I(P.bulb)+'</span><div><b>Le conseil du jour</b><p>'+esc(tip)+'</p></div></div>'
-      +'<div class="cps-card"><div class="cps-card-hd"><span class="cps-ic g">'+I(P.target)+'</span><div><b>Défi de la semaine</b><span>Postule à '+goal+' offres en 7 jours</span></div><em class="cps-score">'+Math.min(week,goal)+'/'+goal+'</em></div><div class="cps-bar sm"><i style="width:'+wp+'%"></i></div><p class="cps-mini">'+(week>=goal?'Défi relevé, bravo ! Garde ce rythme.':'Encore '+(goal-week)+' candidature'+(goal-week>1?'s':'')+' pour relever le défi. Chaque candidature notée compte.')+'</p></div>'
-      +'<div class="cps-stats"><div><b>'+week+'</b><span>candidatures cette semaine</span></div><div><b>'+rel+'</b><span>relances à faire</span></div><div><b>'+itw+'</b><span>entretiens en cours</span></div></div>'
-      +'<div class="cps-card cps-ready"><div class="cps-card-hd"><span class="cps-ic g">'+I(P.check)+'</span><div><b>Prêt à postuler</b><span>'+done+' / '+ck.length+' étapes</span></div><em class="cps-score">'+sc+'%</em></div><div class="cps-bar sm"><i style="width:'+sc+'%"></i></div><ul class="cps-checks">'+ck.map(function(c){ return '<li class="'+(c[1]?'ok':'')+'"><span>'+(c[1]?I(P.check,12):'')+'</span>'+c[0]+'</li>'; }).join('')+'</ul></div>'
-      +'<div class="cps-sec"><span class="cps-si">'+I(P.mega)+'</span>Fais grandir CareerPulse</div>'
-      +'<div class="cps-promo"><div class="cps-promo-in"><span class="cps-ic w">'+I(P.brief)+'</span><div><b>Tu connais un recruteur ?</b><p>Invite-le à rejoindre CareerPulse : il trouvera des candidats motivés, avec des profils clairs et un pourcentage de correspondance.</p></div></div><button type="button" class="cps-btn light" data-cps="inv-rec">'+I(P.share,16)+'Inviter un recruteur</button></div>'
-      +'<div class="cps-card cps-inv"><span class="cps-ic b">'+I(P.share)+'</span><div><b>Invite un(e) ami(e) en recherche</b><p>CareerPulse Stream, le profil pro et le suivi des candidatures sont gratuits pour les membres.</p></div><button type="button" class="cps-btn" data-cps="inv-ami">Partager</button></div>';
-  }
-  /* ── 2. Profil & documents ── */
   function drawProfTop(){
     var b=$('cps-prof-top'); if(!b) return;
-    b.innerHTML='<button type="button" class="cps-wizcta" data-cps="wiz"><span class="cps-ic w">'+I(P.wand,20)+'</span><span><b>Remplir mon profil avec le Stream</b><small>Question par question, en 3 minutes : CareerPulse t\'aide à chaque étape.</small></span>'+I('<path d="m9 18 6-6-6-6"/>',18)+'</button>'
-      +'<div class="cps-card cps-vis"><div class="cps-card-hd"><span class="cps-ic b">'+I(P.eye)+'</span><div><b>Visible par les recruteurs</b><span>'+(visOn()?'Ton profil apparaît dans l\'annuaire des recruteurs CareerPulse : ils peuvent te proposer un échange.':'Ton profil reste privé. Active-le quand il est prêt.')+'</span></div><button type="button" class="cps-sw'+(visOn()?' on':'')+'" data-cps="vis" aria-label="Visible par les recruteurs"><i></i></button></div></div>';
+    var nm=val('fp-name'), ti=val('fp-titre'), im=document.querySelector('#fp-avatar-wrap img');
+    var ini=nm.split(/\s+/).slice(0,2).map(function(w){ return w[0]||''; }).join('').toUpperCase();
+    var a='<button type="button" class="cps-pc-av" data-cj="photo" aria-label="Changer ma photo">'+(im?'<img src="'+esc(im.getAttribute('src'))+'" alt="">':(ini?esc(ini):I(P.user,26)))+'<span>'+I(P.plus,12)+'</span></button>';
+    var chips=[selTxt('fp-secteur'), val('fp-ville'), selTxt('fp-exp'), val('fp-salaire')].filter(Boolean).map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('');
+    var comp=(S.st.comp||[]).map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('');
+    var ct=[val('fp-email-public'), val('fp-tel-public')].filter(Boolean).map(esc).join(' · ');
+    var card=(!nm&&!ti)?'<div class="cps-pc empty">'+a+'<div><b>Ton profil pro t\'attend</b><p>Réponds aux questions de Lisa : ton profil se construit tout seul, prêt pour les recruteurs.</p></div></div>'
+      :'<div class="cps-pc"><div class="cps-pc-hd">'+a+'<div class="cps-pc-id"><b>'+esc(nm||'Ton nom')+'</b><span>'+esc(ti||'Titre professionnel à compléter')+'</span></div></div>'
+        +(chips?'<div class="cps-pc-chips">'+chips+'</div>':'')+(val('fp-accroche')?'<p class="cps-pc-acc">'+esc(val('fp-accroche'))+'</p>':'')
+        +(S.st.exp?'<div class="cps-pc-sec"><b>Expériences</b><ul>'+S.st.exp.split(/\n+/).filter(Boolean).map(function(l){ return '<li>'+esc(l)+'</li>'; }).join('')+'</ul></div>':'')
+        +(comp?'<div class="cps-pc-sec"><b>Compétences</b><div class="cps-pc-chips">'+comp+'</div></div>':'')
+        +(ct?'<div class="cps-pc-ct">'+I(P.chat,14)+'<span>'+ct+'</span></div>':'')+'</div>';
+    b.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.user)+'</span>Mon profil pro</div>'+card
+      +'<button type="button" class="cps-wizcta" data-cj="wiz"><span class="cps-ic w">'+I(P.wand,20)+'</span><span><b>'+(nm?'Modifier mon profil avec Lisa':'Remplir mon profil avec Lisa')+'</b><small>Infos perso, expériences, compétences : une question à la fois.</small></span>'+I(P.chev,18)+'</button>'
+      +'<div class="cps-card cps-vis"><div class="cps-card-hd"><span class="cps-ic b">'+I(P.eye)+'</span><div><b>Visible par les recruteurs</b><span>'+(visOn()?'Ton profil apparaît dans l\'annuaire des recruteurs CareerPulse : ils peuvent te proposer un échange.':'Ton profil reste privé. Active-le quand il est prêt.')+'</span></div><button type="button" class="cps-sw'+(visOn()?' on':'')+'" data-cj="vis" aria-label="Visible par les recruteurs"><i></i></button></div></div>';
   }
-  /* ── 3. Candidatures ── */
-  function col(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid).collection('candidatures'):null; }
-  function drawCand(){
-    var b=$('cps-cand'); if(!b) return; var rel=S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length;
-    b.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.send)+'</span>Postuler dès maintenant</div>'
-      +'<div class="cps-card"><p class="cps-p">Postule sur les plateformes de référence, puis note ta candidature juste en dessous : le Stream te rappelle quand relancer.</p><div class="cps-plats">'+PLAT.map(function(p){ return '<a class="cps-plat" href="'+p[1]+'" target="_blank" rel="noopener noreferrer" style="--c:'+p[3]+'"><span class="cps-plat-ic">'+esc(p[0][0])+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span>'+I(P.ext,15)+'</a>'; }).join('')+'</div></div>'
-      +'<div class="cps-sec"><span class="cps-si">'+I(P.chart)+'</span>Mes candidatures'+(S.list.length?' <em>'+S.list.length+'</em>':'')+'</div>'
-      +'<div class="cps-card">'+(rel?'<div class="cps-alert">'+I(P.bell,17)+'<span><b>'+rel+' relance'+(rel>1?'s':'')+' conseillée'+(rel>1?'s':'')+'</b> : sans réponse depuis 7 jours, un court message de relance montre ta motivation.</span></div>':'')
-      +'<div class="cps-add"><input id="cps-co" maxlength="80" placeholder="Entreprise"><input id="cps-po" maxlength="80" placeholder="Poste"><select id="cps-pl"><option>Indeed</option><option>France Travail</option><option>Malt</option><option>Autre</option></select><button type="button" class="cps-btn pri" data-cps="add">'+I(P.plus,16)+'J\'ai postulé</button></div>'
-      +(S.list.length?'<div class="cps-list">'+S.list.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
-        return '<div class="cps-it"><div class="cps-it-t"><b>'+esc(x.poste)+'</b><span>'+esc(x.entreprise)+' · '+esc(x.plateforme)+' · le '+new Date(x.date).toLocaleDateString('fr-FR')+'</span>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+'</div><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cps="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div>'; }).join('')+'</div>'
-        :'<div class="cps-empty">Aucune candidature suivie pour l\'instant. Postule sur une plateforme, puis note-la ici.</div>')+'</div>';
-  }
-  /* ── 4. Recruteurs & messages ── */
-  function drawRec(){
-    var b=$('cps-rec'); if(!b) return;
-    b.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.search)+'</span>Annuaire des recruteurs</div>'
-      +'<div class="cps-card"><label class="cps-search">'+I(P.search,17)+'<input placeholder="Rechercher un recruteur, un secteur, une ville…" disabled></label><div class="cps-empty">Les recruteurs rejoignent CareerPulse au fil de leur inscription sur le site. Dès qu\'ils seront là, tu pourras les rechercher ici et leur écrire. '+(visOn()?'Ton profil est visible : ils pourront aussi te proposer un échange.':'Rends ton profil visible pour qu\'ils puissent aussi te proposer un échange.')+'</div></div>'
-      +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs'+(S.convs.length?' <em>'+S.convs.length+'</em>':'')+'</div>'
-      +'<div class="cps-card">'+(S.convs.length?S.convs.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-conv="'+c.id+'"><span class="cps-dot'+(c.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(c.empNom||'Recruteur')+(c.poste?' · '+esc(c.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I('<path d="m9 18 6-6-6-6"/>',16)+'</button>'; }).join(''):'<div class="cps-empty">Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée : tu choisis toujours ce que tu partages.</div>')+'</div>'
-      +'<div class="cps-card cps-msg"><span class="cps-ic g">'+I(P.chat)+'</span><div><b>Tes échanges avec les centres de formation</b><p>Ils se trouvent dans EVA, rubrique « Contacter des formations ».</p></div><a class="cps-btn" href="eva.html#eva-of">Ouvrir</a></div>';
-  }
-  function drawAll(){ drawHero(); drawCats(); drawFeed(); drawProfTop(); drawCand(); drawRec(); }
+  function drawAll(){ drawHero(); drawHome(); drawProfTop(); }
 
-  /* ── Messagerie candidats / recruteurs (même principe que pour les formations) ── */
+  /* ── Pages en plein écran ── */
+  function sheet(t,sub,html,onClose){
+    var sh=document.createElement('div'); sh.className='cpw-sheet cj-sheet';
+    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Retour">'+I(P.back)+'</button>'+av()+'<div class="cpw-ht"><b>'+t+'</b><span>'+sub+'</span></div></div><div class="cpw-scroll"><div class="cj-pg">'+(html||'')+'</div></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var o={ sh:sh, body:sh.querySelector('.cj-pg'), sc:sh.querySelector('.cpw-scroll') };
+    o.close=function(){ if(onClose) onClose(o); sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); drawAll(); };
+    sh.querySelector('.cpw-x').onclick=o.close;
+    if(window.cpSheetArrows) cpSheetArrows(o.sc,sh.querySelector('.cpw-box'));
+    return o;
+  }
+  function say2(html){ return '<div class="cj-say">'+av('sm')+'<div>'+html+'</div></div>'; }
+
+  /* Profil & documents : on déplace la vraie zone (lettre, documents) dans la page, puis on la remet */
+  function openProf(target){
+    var pane=document.querySelector('#s-profil [data-pane="profil"]'); if(!pane) return;
+    var home=pane.parentNode, mark=document.createComment('cj-prof');
+    home.insertBefore(mark,pane); drawProfTop();
+    var o=sheet('Profil & documents','Ton profil, ta lettre et tes documents','',function(){ pane.style.display='none'; mark.parentNode.insertBefore(pane,mark); mark.remove(); });
+    o.body.appendChild(pane); pane.style.display='block';
+    if(target==='lm'||target==='docs'){ var acc=target==='lm'?'acc-cv':'acc-docs', a=$(acc); if(a && a.style.display!=='block' && typeof toggleAccordion==='function') toggleAccordion(acc);
+      setTimeout(function(){ var t=$(target==='lm'?'cps-sec-lm':'cps-sec-docs'); if(t) t.scrollIntoView({ behavior:'smooth', block:'start' }); },120); }
+  }
+
+  /* Candidatures : liste filtrée */
+  function filtered(f){ if(f==='week') return S.list.filter(function(x){ return inWeek(x.date,wk()); }); if(f==='rel') return S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; });
+    var g=FILTRES[f]&&FILTRES[f][1]; return g?S.list.filter(function(x){ return g.indexOf(x.statut)>-1; }):S.list; }
+  var LISTO=null;
+  function openList(f){
+    var o=LISTO||sheet('Mes candidatures','Statut, relances et preuves d\'envoi','',function(){ LISTO=null; }); LISTO=o; o.f=f||'all';
+    function render(){
+      var L=filtered(o.f), tabs=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses'],['week','Cette semaine'],['rel','À relancer']];
+      var msg={ all:'Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.', cours:'Tes candidatures en attente de réponse. Sans nouvelles après 7 jours, une relance montre ta motivation.', itw:'Tes entretiens : prépare-les avec les quiz d\'EVA, c\'est là que tout se joue.', rep:'Les réponses reçues. Une réponse négative n\'est pas un échec : demande un retour, ça aide pour la suite.', week:'Tes candidatures de cette semaine : elles comptent pour ton défi.', rel:'Ces candidatures attendent depuis 7 jours ou plus : un court message poli suffit pour relancer.' }[o.f];
+      o.body.innerHTML=say2(msg)+'<div class="cj-tabs">'+tabs.map(function(t){ return '<button type="button" class="'+(t[0]===o.f?'on':'')+'" data-cj="lf" data-f="'+t[0]+'">'+t[1]+' <em>'+filtered(t[0]).length+'</em></button>'; }).join('')+'</div>'
+        +'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button>'
+        +(L.length?'<div class="cj-list">'+L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
+          return '<div class="cj-it"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb" data-cj="proof" data-id="'+x.id+'"><img src="'+x.preuve+'" alt="Preuve"></button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
+            +'<div class="cj-it-t"><b>'+esc(x.poste||x.entreprise)+'</b><span>'+esc(x.poste?x.entreprise:'')+(x.plateforme?(x.poste?' · ':'')+esc(x.plateforme):'')+'</span><small>'+I(P.cal,12)+'Le '+new Date(x.date).toLocaleDateString('fr-FR')+(x.mode?' · '+esc(x.mode):'')+(x.adresse?' · '+esc(x.adresse):'')+'</small>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+'</div></div>'
+            +'<div class="cj-it-ft"><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cj="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div></div>'; }).join('')+'</div>'
+          :'<div class="cps-empty">Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : le compteur se met à jour tout seul.</div>');
+    }
+    o.render=render; render();
+  }
+
+  /* Ajouter une candidature : capture d'écran ou saisie */
+  function shrink(file){ return new Promise(function(res,rej){ var r=new FileReader(); r.onload=function(){ var im=new Image(); im.onload=function(){ var m=1000, w=im.width, h=im.height, k=Math.min(1,m/Math.max(w,h)); var c=document.createElement('canvas'); c.width=Math.round(w*k); c.height=Math.round(h*k); c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    var q=.62, u=c.toDataURL('image/jpeg',q); while(u.length>420000 && q>.3){ q-=.1; u=c.toDataURL('image/jpeg',q); } res(u); }; im.onerror=rej; im.src=r.result; }; r.onerror=rej; r.readAsDataURL(file); }); }
+  function openAdd(){
+    var today=new Date().toISOString().slice(0,10), o=sheet('Ajouter une candidature','Lisa l\'ajoute à ton suivi','');
+    o.mode=''; o.img='';
+    function render(){
+      o.body.innerHTML=say2(o.mode?'Parfait. Remplis ce que tu sais, puis valide : ta candidature s\'ajoute à ton compteur et à ton défi.':'Tu as postulé ? Bravo 👏 Comment veux-tu l\'enregistrer ?')
+        +'<div class="cj-pick"><button type="button" class="'+(o.mode==='cap'?'on':'')+'" data-cj="mode" data-m="cap"><span class="cj-ic b sm">'+I(P.cam,20)+'</span><b>J\'ai une capture d\'écran</b><small>La preuve de ta candidature, rangée dans ton dossier</small></button>'
+        +'<button type="button" class="'+(o.mode==='man'?'on':'')+'" data-cj="mode" data-m="man"><span class="cj-ic g sm">'+I(P.pen,20)+'</span><b>Je remplis à la main</b><small>Pas de capture, ou envoi par courrier : nom, adresse, date, envoi</small></button></div>'
+        +(o.mode?'<div class="cj-form">'
+          +(o.mode==='cap'?'<label class="cj-drop">'+(o.img?'<img src="'+o.img+'" alt="Capture">':'<span>'+I(P.cam,26)+'<b>Ajouter la capture d\'écran</b><small>Image JPG ou PNG</small></span>')+'<input type="file" accept="image/*" id="cj-cap" hidden></label>':'')
+          +'<label>Entreprise *<input id="cj-co" maxlength="80" placeholder="Ex : Boulangerie Martin"></label>'
+          +'<label>Poste<input id="cj-po" maxlength="80" placeholder="Ex : Vendeur(se)"></label>'
+          +(o.mode==='man'?'<label>Adresse de l\'entreprise<input id="cj-ad" maxlength="140" placeholder="Ex : 12 rue de la Paix, Caen"></label>':'')
+          +'<div class="cj-2"><label>Date d\'envoi<input type="date" id="cj-da" value="'+today+'"></label><label>Mode d\'envoi<select id="cj-mo">'+MODES.map(function(m){ return '<option>'+m+'</option>'; }).join('')+'</select></label></div>'
+          +'<div class="cj-2"><label>Plateforme ou site<select id="cj-pl"><option>Indeed</option><option>France Travail</option><option>Malt</option><option>Site de l\'entreprise</option><option>Autre</option></select></label><label>État<select id="cj-et">'+STATUTS.map(function(s){ return '<option>'+s+'</option>'; }).join('')+'</select></label></div>'
+          +'<button type="button" class="cj-main" data-cj="save">'+I(P.check,18)+'OK, ajouter à mon suivi</button></div>':'');
+      var f=$('cj-cap'); if(f) f.onchange=function(){ if(!f.files[0]) return; shrink(f.files[0]).then(function(u){ var keep=snap(); o.img=u; render(); fill(keep); }).catch(function(){ say('Image illisible, essaie une autre capture'); }); };
+    }
+    function snap(){ var k={}; ['cj-co','cj-po','cj-ad','cj-da','cj-mo','cj-pl','cj-et'].forEach(function(i){ var e=$(i); if(e) k[i]=e.value; }); return k; }
+    function fill(k){ Object.keys(k).forEach(function(i){ var e=$(i); if(e) e.value=k[i]; }); }
+    o.render=render; o.save=function(btn){
+      var co=val('cj-co'), c3=col(); if(!co){ say('Indique le nom de l\'entreprise'); var e=$('cj-co'); if(e) e.focus(); return; }
+      if(o.mode==='cap' && !o.img){ say('Ajoute ta capture d\'écran, ou choisis « Je remplis à la main »'); return; }
+      if(!c3){ say('Connecte-toi pour suivre tes candidatures'); return; }
+      var dt=val('cj-da'), d={ entreprise:co, poste:val('cj-po'), adresse:val('cj-ad'), mode:val('cj-mo'), plateforme:val('cj-pl'), statut:val('cj-et')||'Envoyée', date:(dt?new Date(dt+'T12:00:00'):new Date()).toISOString(), creeLe:new Date().toISOString() };
+      if(o.img) d.preuve=o.img; btn.disabled=true;
+      c3.add(d).then(function(r){ d.id=r.id; S.list.unshift(d); S.list.sort(function(a,b){ return String(b.date).localeCompare(String(a.date)); });
+        var cd=curDefi(); say('Candidature ajoutée ✅'+(cd&&cd.type==='cand'?' · défi : '+done(cd)+'/'+cd.cible:'')); o.close(); if(LISTO) LISTO.render(); if(DEFO) DEFO.render(); }).catch(function(){ btn.disabled=false; say('Enregistrement impossible pour le moment'); });
+    };
+    ADDO=o; render();
+  }
+  var ADDO=null;
+
+  /* Plateformes */
+  function openPlats(){
+    sheet('Trouver des offres','Les plateformes de référence',say2('Postule sur ces plateformes, puis reviens ajouter ta candidature ici : je te dirai quand relancer. Les offres des recruteurs CareerPulse arriveront ici au fil de leur inscription.')
+      +'<div class="cps-plats">'+PLAT.map(function(p){ return '<a class="cps-plat" href="'+p[1]+'" target="_blank" rel="noopener noreferrer" style="--c:'+p[3]+'"><span class="cps-plat-ic">'+esc(p[0][0])+'</span><span><b>'+esc(p[0])+'</b><small>'+esc(p[2])+'</small></span>'+I(P.ext,15)+'</a>'; }).join('')+'</div>'
+      +'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'J\'ai postulé : ajouter ma candidature</button>');
+  }
+
+  /* Recruteurs & messages */
+  function openRec(){
+    sheet('Recruteurs & messages','Annuaire et messagerie protégée',say2('Les recruteurs rejoignent CareerPulse au fil de leur inscription. '+(visOn()?'Ton profil est <b>visible</b> : ils pourront te trouver et te contacter.':'Rends ton profil <b>visible</b> pour qu\'ils puissent te trouver et te contacter.'))
+      +'<div class="cps-sec"><span class="cps-si">'+I(P.search)+'</span>Annuaire des recruteurs</div>'
+      +'<div class="cps-card"><label class="cps-search">'+I(P.search,17)+'<input placeholder="Rechercher un recruteur, un secteur, une ville…" disabled></label><div class="cps-empty">Dès qu\'ils seront là, tu pourras les rechercher ici, consulter leurs offres et leur écrire.</div></div>'
+      +'<div class="cps-card cps-inv"><span class="cps-ic b">'+I(P.brief)+'</span><div><b>Ton entreprise recrute ?</b><p>Un recruteur ou un manager de ton réseau cherche des profils ? Fais-lui découvrir CareerPulse : c\'est simple et sans engagement.</p></div><button type="button" class="cps-btn" data-cj="inv-rec">Partager</button></div>'
+      +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs'+(S.convs.length?' <em>'+S.convs.length+'</em>':'')+'</div>'
+      +'<div class="cps-card">'+(S.convs.length?S.convs.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-conv="'+c.id+'"><span class="cps-dot'+(c.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(c.empNom||'Recruteur')+(c.poste?' · '+esc(c.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I(P.chev,16)+'</button>'; }).join(''):'<div class="cps-empty">Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée : tu choisis toujours ce que tu partages.</div>')+'</div>'
+      +'<div class="cps-card cps-msg"><span class="cps-ic g">'+I(P.chat)+'</span><div><b>Tes échanges avec les centres de formation</b><p>Ils se trouvent dans EVA, rubrique « Contacter des formations ».</p></div><a class="cps-btn" href="eva.html#eva-of">Ouvrir</a></div>');
+  }
+
+  /* ── Mon Stream : défi de la semaine ── */
+  var DEFO=null;
+  function openDefi(){
+    var o=DEFO||sheet('Mon Stream','Ton défi de la semaine avec Lisa','',function(){ DEFO=null; }); DEFO=o; o.pick=o.pick||{ type:'cand', cible:3 };
+    function hist(){
+      var y=String(new Date().getFullYear()), H=(S.st.hist||[]).filter(function(h){ return String(h.week).slice(0,4)===y; }), ok=H.filter(function(h){ return h.ok; }).length;
+      var moy=H.length?Math.round(H.reduce(function(a,h){ return a+h.pct; },0)/H.length):0, last=(S.st.hist||[]).slice().sort(function(a,b){ return String(a.week).localeCompare(String(b.week)); }).slice(-12);
+      return '<div class="cps-sec"><span class="cps-si">'+I(P.chart)+'</span>Ton année '+y+'</div><div class="cj-year"><div class="cj-ys"><div><b>'+ok+'</b><small>défi'+(ok>1?'s':'')+' réussi'+(ok>1?'s':'')+'</small></div><div><b>'+H.length+'</b><small>semaine'+(H.length>1?'s':'')+' suivie'+(H.length>1?'s':'')+'</small></div><div><b>'+moy+' %</b><small>de réussite moyenne</small></div></div>'
+        +(last.length?'<div class="cj-bars">'+last.map(function(h){ return '<span title="'+esc(wkLabel(h.week))+' : '+h.pct+' %"><i class="'+(h.ok?'ok':'')+'" style="height:'+Math.max(6,h.pct)+'%"></i><small>'+wkDate(h.week).getDate()+'/'+(wkDate(h.week).getMonth()+1)+'</small></span>'; }).join('')+'</div>':'<p class="cj-mini">Ton premier bilan apparaîtra ici. Chaque semaine compte !</p>')+'</div>';
+    }
+    function chooser(){
+      var p=o.pick, custom=NBS.indexOf(p.cible)<0;
+      return '<div class="cps-sec"><span class="cps-si">'+I(P.target)+'</span>1. Choisis ton défi</div><div class="cj-types">'+Object.keys(DEFIS).map(function(k){ return '<button type="button" class="'+(p.type===k?'on':'')+'" data-cj="dt" data-t="'+k+'"><span class="cj-ri lg">'+I(DEFIS[k][2],19)+'</span><b>'+DEFIS[k][0]+'</b>'+(DEFIS[k][3]?'<small>Compté automatiquement</small>':'<small>Tu le notes toi-même</small>')+'</button>'; }).join('')+'</div>'
+        +'<div class="cps-sec"><span class="cps-si">'+I(P.chart)+'</span>2. Ton objectif pour la semaine</div><div class="cj-nbs">'+NBS.map(function(n){ return '<button type="button" class="'+(p.cible===n?'on':'')+'" data-cj="dn" data-n="'+n+'">'+n+'</button>'; }).join('')
+        +'<label class="cj-own'+(custom?' on':'')+'">Autre<input type="number" min="1" max="50" id="cj-own" placeholder="…" value="'+(custom?p.cible:'')+'"></label></div>'
+        +'<button type="button" class="cj-main" data-cj="dgo">'+I(P.check,18)+'Je relève ce défi</button>';
+    }
+    function render(){
+      var d=curDefi(), pb=pendingBilan();
+      if(pb){ o.body.innerHTML=say2('Avant un nouveau défi, faisons le <b>bilan</b> de ta '+wkLabel(pb.week)+'.')+'<button type="button" class="cj-main" data-cj="bilan">'+I(P.trophy,18)+'Faire mon bilan</button>'+hist(); return; }
+      if(!d || o.change){ o.body.innerHTML=say2(o.change?'Pas de souci, on ajuste ton défi. Choisis ce qui te semble <b>réaliste et motivant</b>.':'Chaque semaine, on se fixe <b>un objectif clair</b>. Choisis ton défi et ton chiffre : de 1 à 10, ou ton propre objectif. Je te relance si ça coince 😉')+chooser()+hist(); return; }
+      var f=done(d), pc=dpct(d), r=Math.max(0,d.cible-f), info=DEFIS[d.type];
+      o.body.innerHTML=say2(f>=d.cible?'Défi <b>réussi</b> 🎉 Tu peux faire ton bilan maintenant, ou continuer sur ta lancée.':(dow()>=4?'La semaine se termine : il te reste <b>'+r+'</b>. Tu peux encore y arriver, ou faire ton bilan.':'Il te reste <b>'+r+'</b> pour relever ton défi. '+(d.type==='cand'?'Chaque candidature ajoutée compte automatiquement.':'Note chaque action dès qu\'elle est faite.')))
+        +'<div class="cj-now"><div class="cj-now-hd"><span class="cj-ic g">'+I(info[2],22)+'</span><div><b>'+info[0]+'</b><small>'+wkLabel(d.week)+'</small></div><em class="cj-score">'+f+'/'+d.cible+'</em></div><i class="cj-bar lg"><i style="width:'+pc+'%"></i></i><p class="cj-mini">'+pc+' % de ton objectif · '+f+' '+info[1]+'</p>'
+        +(d.type==='cand'?'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button>':'<div class="cj-pm"><button type="button" data-cj="dm" data-d="-1" aria-label="Retirer">−</button><b>'+f+'</b><button type="button" data-cj="dm" data-d="1" aria-label="Ajouter">+</button></div>')
+        +'<div class="cj-acts">'+(canBilan(d)?'<button type="button" class="cj-btn" data-cj="bilan">'+I(P.trophy,16)+'Faire mon bilan</button>':'<span class="cj-mini">Le bilan s\'ouvre vendredi, ou dès que ton défi est réussi.</span>')+'<button type="button" class="cj-btn ghost" data-cj="dch">Changer de défi</button></div></div>'+hist();
+    }
+    o.render=render; render();
+  }
+
+  /* Bilan de la semaine : Lisa pose ses questions puis donne le barème */
+  function openBilan(){
+    var d=pendingBilan()||curDefi(); if(!d){ openDefi(); return; }
+    if(DEFO){ DEFO.close(); }
+    var o=sheet('Bilan de la semaine','Avec Lisa, ton assistante Careerjob',''), A={ fait:done(d) }, info=DEFIS[d.type];
+    o.body.innerHTML='<div class="cpw-log cj-log"></div><div class="cpw-input cj-in"></div>';
+    var log=o.body.querySelector('.cj-log'), inp=o.body.querySelector('.cj-in');
+    function down(){ setTimeout(function(){ o.sc.scrollTo({ top:o.sc.scrollHeight, behavior:'smooth' }); },60); }
+    function bot(html,cb){ var m=document.createElement('div'); m.className='cpw-row'; m.innerHTML=av('sm')+'<div class="cpw-b"><span class="cpw-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ m.querySelector('.cpw-b').innerHTML=html; down(); if(cb) cb(); },550); }
+    function me(t){ var m=document.createElement('div'); m.className='cpw-me'; m.textContent=t; log.appendChild(m); down(); }
+    function chips(list,cb){ inp.innerHTML='<div class="cpw-chips">'+list.map(function(x,i){ return '<button type="button" class="cpw-chip" data-i="'+i+'">'+esc(x)+'</button>'; }).join('')+'</div>'; down();
+      inp.onclick=function(e){ var b=e.target.closest('[data-i]'); if(!b) return; inp.innerHTML=''; var v=list[+b.getAttribute('data-i')]; me(v); cb(v); }; }
+    var Q=[
+      function(n){ if(d.type==='cand'){ bot('Ton défi de la '+wkLabel(d.week)+' : <b>'+info[0].toLowerCase()+'</b>, objectif <b>'+d.cible+'</b>. D\'après ton suivi, tu en as fait <b>'+A.fait+'</b>. C\'est bien ça ?',function(){ chips(['Oui, c\'est ça','J\'en ai fait plus'],function(v){ if(/plus/.test(v)){ bot('Combien en as-tu fait au total ?',function(){ var L=[]; for(var i=A.fait;i<=Math.max(d.cible+3,A.fait+3);i++) L.push(String(i)); chips(L,function(x){ A.fait=+x; n(); }); }); } else n(); }); }); }
+        else bot('Ton défi de la '+wkLabel(d.week)+' : <b>'+info[0].toLowerCase()+'</b>, objectif <b>'+d.cible+'</b>. Tu en as noté <b>'+A.fait+'</b>. Combien en as-tu fait au total ?',function(){ var L=[]; for(var i=0;i<=Math.max(d.cible+2,A.fait);i++) L.push(String(i)); chips(L,function(x){ A.fait=+x; n(); }); }); },
+      function(n){ bot('As-tu reçu des <b>réponses</b> de recruteurs cette semaine ?',function(){ chips(['Oui, au moins une','Pas encore'],function(v){ A.rep=/^Oui/.test(v); n(); }); }); },
+      function(n){ bot('Comment s\'est passée ta semaine, honnêtement ?',function(){ chips(['Très bien 💪','Correcte 🙂','Difficile 😕'],function(v){ A.hum=v; n(); }); }); },
+      function(n){ bot('Qu\'est-ce qui t\'a le plus <b>freiné</b> ?',function(){ chips(['Le manque de temps','Peu d\'offres adaptées','Le manque de confiance','Rien, tout roule'],function(v){ A.frein=v; n(); }); }); }
+    ];
+    var k=0; function step(){ if(k<Q.length){ Q[k++](step); } else result(); }
+    function result(){
+      var pc=Math.min(100,Math.round(A.fait/d.cible*100)), ok=A.fait>=d.cible, note=Math.round(pc/10*(A.rep?1:.95)*10)/10; note=Math.min(10,Math.round(pc/10+(A.rep&&pc>=50?.5:0)));
+      var mot= ok ? ['Défi réussi : tu prouves que tu sais tenir un objectif. C\'est exactement ce que cherchent les recruteurs.','Bravo ! Une semaine comme ça, c\'est la régularité qui finit par payer.'][d.cible%2]
+        : pc>=50 ? 'Tu n\'es pas loin : '+pc+' %, c\'est une vraie semaine de travail. La prochaine, on y va jusqu\'au bout.'
+        : 'Cette semaine a été plus dure, et c\'est normal. L\'important, c\'est de repartir : on ajuste l\'objectif et on avance.';
+      var cons={ 'Le manque de temps':'Bloque 2 créneaux fixes de 30 minutes dans ta semaine, comme des rendez-vous : c\'est plus efficace qu\'une grosse session.', 'Peu d\'offres adaptées':'Élargis un peu ta recherche : métiers proches, villes voisines, télétravail. Et tente une candidature spontanée par semaine.', 'Le manque de confiance':'Relis ton profil et note 3 réussites concrètes de ton parcours. Tu as plus de valeur que tu ne le penses.', 'Rien, tout roule':'Garde ce rythme et vise un cran plus haut la semaine prochaine : '+Math.min(50,d.cible+1)+' au lieu de '+d.cible+'.' }[A.frein];
+      var sug= ok ? Math.min(50,d.cible+1) : (pc<50 ? Math.max(1,Math.ceil(d.cible/2)) : d.cible);
+      var items=[['Objectif atteint ('+A.fait+'/'+d.cible+')',ok],['Réponses de recruteurs',A.rep],['Moral de la semaine',!/Difficile/.test(A.hum)]];
+      bot('Voici ton bilan 👇',function(){
+        inp.innerHTML='<div class="cj-res'+(ok?' ok':'')+'"><div class="cj-res-hd"><span class="cj-ic '+(ok?'g':'y')+'">'+I(ok?P.trophy:P.target,24)+'</span><div><b>'+(ok?'Défi réussi':'Défi non atteint')+'</b><small>'+wkLabel(d.week)+'</small></div><em>'+note+'<small>/10</small></em></div>'
+          +'<i class="cj-bar lg"><i style="width:'+pc+'%"></i></i><ul class="cj-res-l">'+items.map(function(x){ return '<li class="'+(x[1]?'ok':'')+'"><span>'+I(x[1]?P.check:P.x,12)+'</span>'+x[0]+'</li>'; }).join('')+'</ul>'
+          +'<p class="cj-res-m">'+mot+'</p><div class="cj-res-c"><b>Le conseil de Lisa</b><p>'+cons+'</p></div>'
+          +'<button type="button" class="cj-main" data-cj="bsave">'+I(P.check,18)+'Enregistrer et choisir mon prochain défi</button></div>'; down();
+        inp.onclick=function(e){ var b=e.target.closest('[data-cj="bsave"]'); if(!b) return; b.disabled=true;
+          S.st.hist=(S.st.hist||[]).filter(function(h){ return h.week!==d.week; }).concat([{ week:d.week, type:d.type, cible:d.cible, fait:A.fait, pct:pc, ok:ok, note:note, rep:!!A.rep, humeur:A.hum, frein:A.frein }]).slice(-60);
+          S.st.defi=null; saveSt().then(function(){ say('Bilan enregistré ✅'); o.close(); var nd=openDefi; nd(); if(DEFO){ DEFO.pick={ type:d.type, cible:sug }; DEFO.render(); } }); };
+      });
+    }
+    bot('Bonjour'+(first()?' '+esc(first()):'')+' ! C\'est l\'heure du <b>bilan</b>. Je te pose 4 petites questions, puis je te donne ta note et mes conseils.',step);
+  }
+
+  /* ── Messagerie candidats / recruteurs ── */
   function convCol(){ return db()?db().collection('emploi_conversations'):null; }
   function loadConvs(){ var u=user(), c=convCol(); if(!u||!c) return Promise.resolve(); return c.where('candUid','==',u.uid).get().then(function(q){ S.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); }); }).catch(function(){ S.convs=[]; }); }
   var UNSUB=null;
@@ -17593,132 +17953,159 @@ window.cpSheetArrows=function(sc,host){
     var log=sh.querySelector('.cpw-log'), ref=convCol().doc(id);
     function render(x){ log.innerHTML='<div class="cpw-note">Messagerie protégée : tu choisis ce que tu partages.</div>'+(x.messages||[]).map(function(m){ return '<div class="cpw-m '+(m.from==='cand'?'me':'them')+'"><p>'+esc(m.text)+'</p></div>'; }).join(''); var sc=sh.querySelector('.cpw-scroll'); sc.scrollTop=sc.scrollHeight; if(x.unreadCand) ref.update({ unreadCand:false }).catch(function(){}); sh.querySelector('.cpw-ft').style.display=x.statut==='close'?'none':''; }
     render(c); UNSUB=ref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
-    function close(){ if(UNSUB){ UNSUB(); UNSUB=null; } sh.remove(); document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(drawAll); }
+    function close(){ if(UNSUB){ UNSUB(); UNSUB=null; } sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(drawAll); }
     sh.querySelector('.cpw-x').onclick=close;
     sh.querySelector('.cpw-send').onclick=function(){ var ta=sh.querySelector('.cpw-in'), t=ta.value.trim(); if(!t) return; var now=new Date().toISOString(); ta.value='';
       ref.update({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:now }), lastAt:now, lastFrom:'cand', unreadEmp:true, updatedAt:now }).catch(function(){ ta.value=t; say('Envoi impossible pour le moment'); }); };
     if(window.cpSheetArrows) cpSheetArrows(sh.querySelector('.cpw-scroll'),sh.querySelector('.cpw-box'));
   }
 
-  /* ═══ Formulaire Stream : le profil pro, question par question ═══ */
+  /* ═══ Formulaire Stream : Lisa construit le profil, question par question ═══ */
   function opts(id){ var e=$(id); return e?[].slice.call(e.options).filter(function(o){ return o.value && !/…$/.test(o.textContent); }).map(function(o){ return o.textContent; }):[]; }
   var STEPS=[
-    { id:'fp-name', q:'Pour commencer, quels sont ton <b>prénom</b> et ton <b>nom</b> ?', t:'text', ph:'Ex : Sophie Martin', why:'Ton nom n\'est visible des recruteurs que si tu rends ton profil visible.' },
-    { id:'fp-titre', q:'Quel est ton <b>titre professionnel</b>, ou le poste que tu vises ?', t:'text', ph:'Ex : Développeuse web, Assistant RH…', why:'C\'est la première ligne que lit un recruteur : sois précis(e).' },
-    { id:'fp-secteur', q:'Dans quel <b>secteur</b> travailles-tu, ou veux-tu travailler ?', t:'choice' },
-    { id:'fp-ville', q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.', t:'text', ph:'Ex : Caen, Paris, télétravail…', chips:['Télétravail','Toute la France'] },
-    { id:'fp-exp', q:'Combien d\'<b>années d\'expérience</b> as-tu dans ce domaine ?', t:'choice' },
-    { id:'fp-salaire', q:'Quel <b>salaire</b> souhaites-tu ?', t:'text', ph:'Ex : 32 000 €/an', chips:['À discuter'] },
-    { id:'fp-accroche', q:'Dernière étape importante : ton <b>accroche</b>. En 2 ou 3 phrases, qui es-tu et que cherches-tu ?', t:'area', ph:'Qui tu es, ce que tu sais faire, ce que tu cherches…', gen:true },
-    { id:'fp-email-public', q:'Une adresse e-mail de <b>contact</b> pour les recruteurs ? (facultatif)', t:'text', ph:'ton@email.com', skip:true },
-    { id:'fp-tel-public', q:'Et un <b>téléphone</b> ? (facultatif)', t:'text', ph:'06 12 34 56 78', skip:true },
-    { id:'_vis', q:'Ton profil est prêt ! Veux-tu le rendre <b>visible par les recruteurs</b> CareerPulse ?', t:'choice', list:['Oui, rends-le visible','Plus tard'] }
+    { sec:'infos', id:'fp-name', q:'Pour commencer, quels sont ton <b>prénom</b> et ton <b>nom</b> ?', t:'text', ph:'Ex : Sophie Martin', why:'Ton nom n\'est visible des recruteurs que si tu rends ton profil visible.' },
+    { sec:'infos', id:'fp-titre', q:'Quel est ton <b>titre professionnel</b>, ou le poste que tu vises ?', t:'text', ph:'Ex : Développeuse web, Assistant RH…', why:'C\'est la première ligne que lit un recruteur : sois précis(e).' },
+    { sec:'infos', id:'fp-secteur', q:'Dans quel <b>secteur</b> travailles-tu, ou veux-tu travailler ?', t:'choice' },
+    { sec:'infos', id:'fp-ville', q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.', t:'text', ph:'Ex : Caen, Paris, télétravail…', chips:['Télétravail','Toute la France'] },
+    { sec:'infos', id:'fp-exp', q:'Combien d\'<b>années d\'expérience</b> as-tu dans ce domaine ?', t:'choice' },
+    { sec:'infos', id:'fp-salaire', q:'Quel <b>salaire</b> souhaites-tu ?', t:'text', ph:'Ex : 32 000 €/an', chips:['À discuter'] },
+    { sec:'infos', id:'fp-accroche', q:'Ton <b>accroche</b> : en 2 ou 3 phrases, qui es-tu et que cherches-tu ?', t:'area', ph:'Qui tu es, ce que tu sais faire, ce que tu cherches…', gen:true },
+    { sec:'infos', id:'fp-email-public', q:'Une adresse e-mail de <b>contact</b> pour les recruteurs ? (facultatif)', t:'text', ph:'ton@email.com', skip:true },
+    { sec:'infos', id:'fp-tel-public', q:'Et un <b>téléphone</b> ? (facultatif)', t:'text', ph:'06 12 34 56 78', skip:true },
+    { sec:'exp', id:'_exp', q:'Parlons de tes <b>expériences</b>. Écris-en une par ligne : poste, entreprise, années.', t:'area', ph:'Ex : Vendeuse — Boulangerie Martin — 2022-2024\nStage accueil — Mairie de Caen — 2021', why:'Stages, jobs d\'été, bénévolat : tout compte, surtout si tu débutes.', skip:true },
+    { sec:'comp', id:'_comp', q:'Quelles sont tes <b>compétences</b> principales ? Sépare-les par des virgules (3 au minimum).', t:'text', ph:'Ex : Relation client, Pack Office, Anglais', add:['Travail en équipe','Organisation','Relation client','Pack Office','Anglais','Gestion du temps','Permis B','Autonomie'] },
+    { sec:'vis', id:'_vis', q:'Ton profil est prêt ! Veux-tu le rendre <b>visible par les recruteurs</b> CareerPulse ?', t:'choice', list:['Oui, rends-le visible','Plus tard'] }
   ];
+  var SECN={ infos:'Informations personnelles', exp:'Expériences', comp:'Compétences' };
   function genAccroche(A){ var t=A['fp-titre']||'professionnel(le)', s=A['fp-secteur'], e=A['fp-exp'], v=A['fp-ville'];
     return t+(e?' avec '+e.toLowerCase()+' d\'expérience':'')+(s&&s!=='Autre'?' dans le secteur '+s:'')+'. Rigoureux(se) et motivé(e), je cherche un nouveau poste'+(v?' à '+v:'')+' où mettre mes compétences au service d\'une équipe et continuer à progresser.'; }
-  function wizard(){
-    if(document.querySelector('.cpw-sheet')) return;
-    var A={}, k=0; STEPS.forEach(function(s){ if(s.id[0]!=='_') A[s.id]=val(s.id); });
-    var sh=document.createElement('div'); sh.className='cpw-sheet';
-    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button><span class="cpw-logo">'+I(P.pulse,20)+'</span><div class="cpw-ht"><b>Formulaire Stream</b><span>CareerPulse · ton profil pro</span></div><em class="cpw-step">1/'+STEPS.length+'</em></div>'
-      +'<div class="cpw-pg"><i></i></div><div class="cpw-scroll"><div class="cpw-wrap"><div class="cpw-intro"><span class="cpw-logo lg">'+I(P.pulse,24)+'</span><div><b>Bienvenue dans le Stream CareerPulse</b><p>On construit ton profil pro ensemble, une question à la fois. Tu peux revenir en arrière à tout moment.</p></div></div><div class="cpw-log"></div><div class="cpw-input"></div></div></div></div>';
+  function wizard(only){
+    if(document.querySelector('.cpw-sheet.cj-wiz')) return;
+    var steps=only?STEPS.filter(function(s){ return s.sec===only; }):STEPS.slice();
+    var A={}, k=0; steps.forEach(function(s){ A[s.id]= s.id==='_exp'?S.st.exp : s.id==='_comp'?(S.st.comp||[]).join(', ') : s.id[0]==='_'?'' : (s.t==='choice'?selTxt(s.id):val(s.id)); });
+    var sh=document.createElement('div'); sh.className='cpw-sheet cj-wiz';
+    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button>'+av()+'<div class="cpw-ht"><b>Formulaire Stream</b><span>Lisa · '+(only?SECN[only]:'ton profil pro')+'</span></div><em class="cpw-step">1/'+steps.length+'</em></div>'
+      +'<div class="cpw-pg"><i></i></div><div class="cpw-scroll"><div class="cpw-wrap"><div class="cpw-intro">'+av('lg')+'<div><b>'+(only?SECN[only]:'On construit ton profil ensemble')+'</b><p>'+(only?'Quelques questions et cette partie de ton profil est à jour.':'Je te pose les questions une à une : infos perso, expériences, compétences. Tu peux revenir en arrière à tout moment.')+'</p></div></div><div class="cpw-log"></div><div class="cpw-input"></div></div></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var log=sh.querySelector('.cpw-log'), inp=sh.querySelector('.cpw-input'), sc=sh.querySelector('.cpw-scroll');
-    function close(){ sh.remove(); document.documentElement.classList.remove('ofcm-lock'); drawAll(); }
+    function close(){ sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); drawAll(); }
     sh.querySelector('.cpw-x').onclick=close;
     function down(){ setTimeout(function(){ sc.scrollTo({ top:sc.scrollHeight, behavior:'smooth' }); },60); }
-    function bot(html,cb){ var m=document.createElement('div'); m.className='cpw-row'; m.innerHTML='<span class="cpw-av">'+I(P.pulse,16)+'</span><div class="cpw-b"><span class="cpw-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ m.querySelector('.cpw-b').innerHTML=html; down(); if(cb) cb(); },500); }
+    function bot(html,cb){ var m=document.createElement('div'); m.className='cpw-row'; m.innerHTML=av('sm')+'<div class="cpw-b"><span class="cpw-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ m.querySelector('.cpw-b').innerHTML=html; down(); if(cb) cb(); },500); }
     function me(t){ var m=document.createElement('div'); m.className='cpw-me'; m.textContent=t; log.appendChild(m); down(); }
-    function prog(){ var p=Math.round(k/STEPS.length*100); sh.querySelector('.cpw-pg i').style.width=p+'%'; sh.querySelector('.cpw-step').textContent=Math.min(k+1,STEPS.length)+'/'+STEPS.length; }
+    function prog(){ var p=Math.round(k/steps.length*100); sh.querySelector('.cpw-pg i').style.width=p+'%'; sh.querySelector('.cpw-step').textContent=Math.min(k+1,steps.length)+'/'+steps.length; }
     function ask(){
-      prog(); inp.innerHTML='';
-      if(k>=STEPS.length){ finish(); return; }
-      var s=STEPS[k];
+      prog(); inp.innerHTML=''; inp.onclick=onInp;
+      if(k>=steps.length){ finish(); return; }
+      var s=steps[k];
       bot(s.q+(s.why?'<small>'+s.why+'</small>':''),function(){
-        var cur=s.id[0]==='_'?'':(A[s.id]||'');
-        var list=s.list||(s.t==='choice'?opts(s.id):null);
-        var h='';
+        var cur=A[s.id]||'', list=s.list||(s.t==='choice'?opts(s.id):null), h='';
         if(list) h+='<div class="cpw-chips">'+list.map(function(o){ return '<button type="button" class="cpw-chip'+(o===cur?' on':'')+'" data-v="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
         else{
           h+=(s.t==='area'?'<textarea class="cpw-field" rows="4" placeholder="'+esc(s.ph||'')+'">'+esc(cur)+'</textarea>':'<input class="cpw-field" placeholder="'+esc(s.ph||'')+'" value="'+esc(cur)+'">');
           if(s.chips) h+='<div class="cpw-chips sm">'+s.chips.map(function(o){ return '<button type="button" class="cpw-chip" data-fill="'+esc(o)+'">'+esc(o)+'</button>'; }).join('')+'</div>';
+          if(s.add) h+='<div class="cpw-chips sm">'+s.add.map(function(o){ return '<button type="button" class="cpw-chip" data-add="'+esc(o)+'">+ '+esc(o)+'</button>'; }).join('')+'</div>';
           if(s.gen) h+='<button type="button" class="cpw-gen" data-gen="1">'+I(P.wand,16)+'Proposer une accroche à partir de mes réponses</button>';
-          h+='<div class="cpw-acts">'+(s.skip?'<button type="button" class="cpw-btn ghost" data-skip="1">Passer</button>':'')+'<button type="button" class="cpw-btn" data-ok="1">Valider'+I('<path d="m9 18 6-6-6-6"/>',16)+'</button></div>';
+          h+='<div class="cpw-acts">'+(s.skip?'<button type="button" class="cpw-btn ghost" data-skip="1">Passer</button>':'')+'<button type="button" class="cpw-btn" data-ok="1">Valider'+I(P.chev,16)+'</button></div>';
         }
         if(k>0) h+='<button type="button" class="cpw-backq" data-prev="1">'+I(P.back,14)+'Question précédente</button>';
         inp.innerHTML=h; var f=inp.querySelector('.cpw-field'); if(f){ f.focus(); f.onkeydown=function(e){ if(e.key==='Enter' && s.t!=='area'){ e.preventDefault(); inp.querySelector('[data-ok]').click(); } }; } down();
       });
     }
-    function answer(v){ var s=STEPS[k]; if(s.id[0]!=='_') A[s.id]=v; else A[s.id]=v; me(v||'(passé)'); k++; ask(); }
-    inp.onclick=function(e){
-      var b=e.target.closest('button'); if(!b) return; var s=STEPS[k];
+    function answer(v){ A[steps[k].id]=v; me(v||'(passé)'); k++; ask(); }
+    function onInp(e){
+      var b=e.target.closest('button'); if(!b) return; var s=steps[k]; if(!s) return;
       if(b.hasAttribute('data-v')){ answer(b.getAttribute('data-v')); return; }
       if(b.hasAttribute('data-fill')){ var f=inp.querySelector('.cpw-field'); f.value=b.getAttribute('data-fill'); f.focus(); return; }
+      if(b.hasAttribute('data-add')){ var f2=inp.querySelector('.cpw-field'), cur=f2.value.split(',').map(function(x){ return x.trim(); }).filter(Boolean), a=b.getAttribute('data-add'); if(cur.indexOf(a)<0) cur.push(a); f2.value=cur.join(', '); b.classList.add('on'); return; }
       if(b.hasAttribute('data-gen')){ inp.querySelector('.cpw-field').value=genAccroche(A); return; }
       if(b.hasAttribute('data-skip')){ answer(''); return; }
       if(b.hasAttribute('data-prev')){ k=Math.max(0,k-1); bot('D\'accord, on revient à la question précédente.',ask); return; }
-      if(b.hasAttribute('data-ok')){ var v=inp.querySelector('.cpw-field').value.trim(); if(!v && !s.skip){ inp.querySelector('.cpw-field').classList.add('err'); say('Réponds à la question pour continuer'); return; } answer(v); }
-    };
+      if(b.hasAttribute('data-ok')){ var v=inp.querySelector('.cpw-field').value.trim();
+        if(!v && !s.skip){ inp.querySelector('.cpw-field').classList.add('err'); say('Réponds à la question pour continuer'); return; }
+        if(s.id==='_comp' && v.split(',').filter(function(x){ return x.trim(); }).length<3){ say('Indique au moins 3 compétences'); return; }
+        answer(v); }
+    }
     function finish(){
-      prog(); var rows=STEPS.filter(function(s){ return s.id[0]!=='_'; }).map(function(s){ return '<li><span>'+s.q.replace(/<[^>]+>/g,'').replace(/\?.*$/,'?')+'</span><b>'+esc(A[s.id]||'—')+'</b></li>'; }).join('');
-      bot('Bravo, ton profil pro est prêt ! Vérifie le récapitulatif, puis enregistre-le.',function(){
-        inp.innerHTML='<ul class="cpw-recap">'+rows+'</ul><div class="cpw-acts"><button type="button" class="cpw-btn ghost" data-redo="1">Recommencer</button><button type="button" class="cpw-btn" data-save="1">'+I(P.check,16)+'Enregistrer mon profil</button></div>';
+      prog(); var rs=steps.filter(function(s){ return s.id!=='_vis'; }).map(function(s){ return '<li><span>'+s.q.replace(/<[^>]+>/g,'').replace(/[?.].*$/,'')+'</span><b>'+esc(A[s.id]||'—').replace(/\n/g,'<br>')+'</b></li>'; }).join('');
+      bot((only?'C\'est noté ! ':'Bravo, ton profil est prêt ! ')+'Vérifie le récapitulatif, puis enregistre.',function(){
+        inp.innerHTML='<ul class="cpw-recap">'+rs+'</ul><div class="cpw-acts"><button type="button" class="cpw-btn ghost" data-redo="1">Recommencer</button><button type="button" class="cpw-btn" data-save="1">'+I(P.check,16)+'Enregistrer</button></div>';
         inp.onclick=function(e){ var b=e.target.closest('button'); if(!b) return;
-          if(b.hasAttribute('data-redo')){ k=0; log.innerHTML=''; inp.onclick=null; wizard.restart(); return; }
+          if(b.hasAttribute('data-redo')){ close(); setTimeout(function(){ wizard(only); },50); return; }
           if(b.hasAttribute('data-save')){
-            STEPS.forEach(function(s){ if(s.id[0]==='_') return; var el=$(s.id); if(!el) return;
+            var infos=false;
+            steps.forEach(function(s){ if(s.id[0]==='_') return; infos=true; var el=$(s.id); if(!el) return;
               if(el.tagName==='SELECT'){ [].slice.call(el.options).forEach(function(o){ if(o.textContent===A[s.id]) el.value=o.value; }); } else el.value=A[s.id]||''; el.dispatchEvent(new Event('input',{ bubbles:true })); });
+            if('_exp' in A) S.st.exp=String(A._exp||'').trim();
+            if('_comp' in A) S.st.comp=String(A._comp||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean).slice(0,20);
+            saveSt(); var u=user(); if(u&&db()&&('_exp' in A||'_comp' in A)) db().collection('profils').doc(u.uid).set({ experiences:S.st.exp, competences:S.st.comp, updatedAt:new Date().toISOString() },{ merge:true }).catch(function(){});
             if(typeof updateFpScore==='function') updateFpScore();
-            if(typeof saveFichePro==='function') saveFichePro();
+            if(infos && typeof saveFichePro==='function') saveFichePro();
             if(/^Oui/.test(A._vis||'') && !visOn() && typeof toggleFpVis==='function') toggleFpVis();
-            say('Profil pro enregistré ✅'); close(); S.cat='profil'; try{ sessionStorage.setItem('cps_cat','profil'); }catch(x){} drawAll();
+            say('Profil enregistré ✅'); close();
           } };
       });
     }
-    wizard.restart=function(){ close(); setTimeout(wizard,50); };
     if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.cpw-box'));
     ask();
   }
   window.cpStreamWizard=wizard;
 
-  /* ── Partage (invitations) ── */
+  /* ── Partage ── */
   function share(rec){
-    var url=location.origin+location.pathname+(rec?'#pro':''), t=rec?'Je te recommande CareerPulse pour trouver des candidats motivés, avec des profils clairs et un pourcentage de correspondance : '+url:'Je te recommande CareerPulse pour ta recherche d\'emploi : profil pro, suivi des candidatures et CareerPulse Stream, gratuit pour les membres : '+url;
+    var url=location.origin+location.pathname+(rec?'#pro':''), t=rec?'Je te recommande CareerPulse pour trouver des candidats motivés, avec des profils clairs et un pourcentage de correspondance : '+url:'Je te recommande CareerPulse pour ta recherche d\'emploi : profil pro, suivi des candidatures et une assistante qui t\'aide chaque semaine, gratuit pour les membres : '+url;
     if(navigator.share){ navigator.share({ title:'CareerPulse', text:t, url:url }).catch(function(){}); return; }
     try{ navigator.clipboard.writeText(t).then(function(){ say('Message copié : colle-le où tu veux 📋'); }); }catch(e){ prompt('Copie ce message :',t); }
   }
+  function toggleVis(){ if(typeof toggleFpVis!=='function') return; toggleFpVis(); setTimeout(drawAll,60); }
 
   /* ── Événements ── */
+  function inZone(el){ return el.closest('#s-profil') || el.closest('.cj-sheet'); }
+  function act(a,b){
+    if(a==='defi'){ openDefi(); return; } if(a==='bilan'){ openBilan(); return; } if(a==='add'){ openAdd(); return; } if(a==='plats'){ openPlats(); return; }
+    if(a==='rec'){ openRec(); return; } if(a==='prof'){ openProf(); return; } if(a==='list'){ openList(b.getAttribute('data-f')); return; }
+    if(a==='wiz'){ if(profPct()>=100 || !user()) { wizard(); } else { var f=firstSec(); wizard(f==='infos'&&!val('fp-name')?null:f); } return; }
+    if(a==='sec'){ var s=b.getAttribute('data-s'); if(s==='lm'||s==='docs') openProf(s); else wizard(s); return; }
+    if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
+    if(a==='vis'){ toggleVis(); return; } if(a==='inv-rec'){ share(true); return; } if(a==='inv-ami'){ share(false); return; }
+    if(a==='photo'){ var fi=$('fp-photo'); if(fi){ fi.click(); if(!fi._cps){ fi._cps=1; fi.addEventListener('change',function(){ setTimeout(drawProfTop,400); setTimeout(drawProfTop,1200); }); } } return; }
+    if(a==='lf' && LISTO){ LISTO.f=b.getAttribute('data-f'); LISTO.render(); return; }
+    if(a==='proof'){ var x=S.list.filter(function(y){ return y.id===b.getAttribute('data-id'); })[0]; if(x&&x.preuve) sheet('Preuve de candidature',esc(x.entreprise),'<img class="cj-proof" src="'+x.preuve+'" alt="Capture">'); return; }
+    if(a==='del'){ if(!confirm('Supprimer cette candidature de ton suivi ?')) return; var id=b.getAttribute('data-id'), c4=col(); if(!c4) return;
+      c4.doc(id).delete().then(function(){ S.list=S.list.filter(function(y){ return y.id!==id; }); if(LISTO) LISTO.render(); drawAll(); }).catch(function(){ say('Suppression impossible pour le moment'); }); return; }
+    if(a==='mode' && ADDO){ var keep={}; ['cj-co','cj-po','cj-ad','cj-da','cj-mo','cj-pl','cj-et'].forEach(function(i){ var e=$(i); if(e) keep[i]=e.value; }); ADDO.mode=b.getAttribute('data-m'); ADDO.render(); Object.keys(keep).forEach(function(i){ var e=$(i); if(e) e.value=keep[i]; }); return; }
+    if(a==='save' && ADDO){ ADDO.save(b); return; }
+    if(DEFO){
+      if(a==='dt'){ DEFO.pick.type=b.getAttribute('data-t'); DEFO.render(); return; }
+      if(a==='dn'){ DEFO.pick.cible=+b.getAttribute('data-n'); DEFO.render(); return; }
+      if(a==='dch'){ DEFO.change=true; var cd=curDefi(); if(cd) DEFO.pick={ type:cd.type, cible:cd.cible }; DEFO.render(); return; }
+      if(a==='dgo'){ var own=parseInt(val('cj-own'),10); if(own>0) DEFO.pick.cible=Math.min(50,own); if(!user()){ say('Connecte-toi pour relever un défi'); return; }
+        var old=curDefi(); S.st.defi={ week:wk(), type:DEFO.pick.type, cible:DEFO.pick.cible, manuel:old&&old.type===DEFO.pick.type?(old.manuel||0):0, debut:new Date().toISOString() };
+        DEFO.change=false; saveSt(); say('C\'est parti ! Défi : '+DEFIS[DEFO.pick.type][0].toLowerCase()+' · objectif '+DEFO.pick.cible+' 💪'); DEFO.render(); return; }
+      if(a==='dm'){ var d=curDefi(); if(!d) return; d.manuel=Math.max(0,(d.manuel||0)+(+b.getAttribute('data-d'))); saveSt(); DEFO.render(); if(d.manuel===d.cible) say('Défi réussi 🎉 Tu peux faire ton bilan'); return; }
+    }
+  }
   document.addEventListener('click',function(e){
-    var cat=e.target.closest('[data-cat]'); if(cat && cat.closest('#s-profil')){ S.cat=cat.getAttribute('data-cat'); try{ sessionStorage.setItem('cps_cat',S.cat); }catch(x){} drawCats(); var c=$('cps-cats'); if(c) c.scrollIntoView({ behavior:'smooth', block:'start' }); return; }
-    var nx=e.target.closest('#cps-next'); if(nx){ var g=nx.getAttribute('data-go');
-      if(g==='wiz'){ wizard(); return; } if(g==='vis'){ toggleVis(); return; }
-      S.cat= g==='lm'?'profil':'cand'; try{ sessionStorage.setItem('cps_cat',S.cat); }catch(x){} drawCats();
-      if(g==='lm' && typeof toggleAccordion==='function'){ var a=$('acc-cv'); if(a && !a.offsetHeight) toggleAccordion('acc-cv'); var t=$('cps-sec-lm'); if(t) t.scrollIntoView({ behavior:'smooth', block:'start' }); }
-      else { var c2=$('cps-cats'); if(c2) c2.scrollIntoView({ behavior:'smooth', block:'start' }); }
-      return; }
-    var cv=e.target.closest('[data-conv]'); if(cv && cv.closest('#s-profil')){ openConv(cv.getAttribute('data-conv')); return; }
-    var b=e.target.closest('[data-cps]'); if(!b || !b.closest('#s-profil')) return; var a2=b.getAttribute('data-cps');
-    if(a2==='wiz'){ wizard(); return; }
-    if(a2==='vis'){ toggleVis(); return; }
-    if(a2==='inv-rec'){ share(true); return; } if(a2==='inv-ami'){ share(false); return; }
-    if(a2==='add'){ var co=val('cps-co'), po=val('cps-po'), pl=$('cps-pl').value, c3=col();
-      if(!co||!po){ say('Indique l\'entreprise et le poste'); return; } if(!c3){ say('Connecte-toi pour suivre tes candidatures'); return; }
-      var d={ entreprise:co, poste:po, plateforme:pl, statut:'Envoyée', date:new Date().toISOString() }; b.disabled=true;
-      c3.add(d).then(function(r){ d.id=r.id; S.list.unshift(d); say('Candidature ajoutée ✅'); drawAll(); }).catch(function(){ b.disabled=false; say('Enregistrement impossible pour le moment'); }); return; }
-    if(a2==='del'){ if(!confirm('Supprimer cette candidature de ton suivi ?')) return; var id=b.getAttribute('data-id'), c4=col(); if(!c4) return;
-      c4.doc(id).delete().then(function(){ S.list=S.list.filter(function(x){ return x.id!==id; }); drawAll(); }).catch(function(){ say('Suppression impossible pour le moment'); }); }
+    var nx=e.target.closest('#cps-next'); if(nx){ var g=nx.getAttribute('data-go'); act(g==='wiz'?'wiz':g,nx); return; }
+    var cv=e.target.closest('[data-conv]'); if(cv && inZone(cv)){ openConv(cv.getAttribute('data-conv')); return; }
+    var b=e.target.closest('[data-cj]'); if(!b || !inZone(b)) return; act(b.getAttribute('data-cj'),b);
   });
-  document.addEventListener('change',function(e){ var s=e.target.closest('#s-profil .cps-st'); if(!s) return; var id=s.getAttribute('data-id'), c=col(); if(!c) return;
-    c.doc(id).set({ statut:s.value, majAt:new Date().toISOString() },{ merge:true }).then(function(){ S.list.forEach(function(x){ if(x.id===id) x.statut=s.value; }); say('Statut mis à jour'); drawAll(); }).catch(function(){ say('Mise à jour impossible pour le moment'); }); });
-  function toggleVis(){ if(typeof toggleFpVis!=='function') return; toggleFpVis(); setTimeout(drawAll,60); }
-  function load(){ var c=col(); return Promise.all([ c?c.get().then(function(q){ S.list=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.date||'').localeCompare(String(a.date||'')); }); }).catch(function(){}):null, loadConvs() ]); }
+  document.addEventListener('input',function(e){ if(e.target.id==='cj-own' && DEFO){ var n=parseInt(e.target.value,10); if(n>0){ DEFO.pick.cible=Math.min(50,n); [].forEach.call(document.querySelectorAll('.cj-nbs button'),function(x){ x.classList.remove('on'); }); e.target.parentNode.classList.add('on'); } } });
+  document.addEventListener('change',function(e){ var s=e.target.closest('.cps-st'); if(!s || !inZone(s)) return; var id=s.getAttribute('data-id'), c=col(); if(!c) return;
+    c.doc(id).set({ statut:s.value, majAt:new Date().toISOString() },{ merge:true }).then(function(){ S.list.forEach(function(x){ if(x.id===id) x.statut=s.value; }); say('Statut mis à jour'); if(LISTO) LISTO.render(); drawAll(); }).catch(function(){ say('Mise à jour impossible pour le moment'); }); });
+
+  /* ── Chargement ── */
+  function load(){ var c=col(), r=stRef();
+    return Promise.all([ c?c.get().then(function(q){ S.list=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.date||'').localeCompare(String(a.date||'')); }); }).catch(function(){}):null,
+      r?r.get().then(function(d){ if(d.exists){ var x=d.data(); S.st={ exp:x.exp||'', comp:x.comp||[], defi:x.defi||null, hist:x.hist||[] }; } }).catch(function(){}):null, loadConvs() ]); }
   function watch(){ var sp=$('prof-score-pct'); if(sp) new MutationObserver(drawAll).observe(sp,{ childList:true, characterData:true, subtree:true });
     ['fp-name','fp-titre'].forEach(function(id){ var x=$(id); if(x) x.addEventListener('input',drawHero); });
-    ['letter-out','docs-list'].forEach(function(id){ var x=$(id); if(x) new MutationObserver(function(){ drawFeed(); drawHero(); }).observe(x,{ childList:true, subtree:true, characterData:true }); }); }
-  function start(){ watch(); drawAll(); var go=function(){ load().then(drawAll); }; if(user()) go(); else { var n=0, t=setInterval(function(){ if(user()||++n>40){ clearInterval(t); go(); } },250); } }
+    ['letter-out','docs-list'].forEach(function(id){ var x=$(id); if(x) new MutationObserver(function(){ drawHome(); drawHero(); }).observe(x,{ childList:true, subtree:true, characterData:true }); }); }
+  function start(){ try{ var ls=JSON.parse(localStorage.getItem('cj_state')||'null'); if(ls) S.st={ exp:ls.exp||'', comp:ls.comp||[], defi:ls.defi||null, hist:ls.hist||[] }; }catch(e){}
+    watch(); drawAll(); var go=function(){ load().then(drawAll); }; if(user()) go(); else { var n=0, t=setInterval(function(){ if(user()||++n>40){ clearInterval(t); go(); } },250); } }
   if(document.readyState!=='loading') start(); else document.addEventListener('DOMContentLoaded',start);
 })();
+
 </script>
 
 
