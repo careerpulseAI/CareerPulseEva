@@ -31516,5 +31516,26 @@ window.cpSheetArrows=function(sc,host){
   })();
 })();
 </script>
+<script>
+/* Liens depuis CareerPulse : eva.html#cp-<page>-<profil> ouvre la bonne page d'EVA dans la catégorie du profil */
+(function(){
+  var m=/^#cp-(droits|quiz|itw|pf|taches|moral)-(sal|dem|etu|rec|frl)$/.exec(location.hash||''); if(!m) return;
+  var pg=m[1], p=m[2], n=0;
+  function ready(){ return typeof window.go==='function' && typeof window.evadShowList==='function' && typeof window.ewOpen==='function' && typeof window.ewGoDiagnosticChat==='function' && document.getElementById('eva-fullscreen'); }
+  function taches(prof){ try{ var K='cp_taches_v1', d=JSON.parse(localStorage.getItem(K)||'null')||{}; d.prof=prof; localStorage.setItem(K,JSON.stringify(d)); }catch(e){} window.go('eva-taches'); }
+  function run(){ try{
+    if(pg==='droits'){
+      if(p==='sal'||p==='dem'){ window._evadSubTab=p; window.evadShowList('salarie'); }
+      else window.evadShowList({ etu:'etudiant', rec:'reconversion', frl:'freelance' }[p]);
+    } else if(pg==='quiz'||pg==='itw'){
+      var q={ sal:'salarie', dem:'demandeur', etu:'demandeur', rec:'reconversion', frl:'freelance' }[p];
+      window.go((pg==='quiz'?'mise-situation-':'entretien-')+q);
+    } else if(pg==='taches' || (pg==='pf' && p==='sal')){ taches({ sal:'sal', dem:'dem', etu:'etu', rec:'etu', frl:'frl' }[p]); }
+    else if(pg==='pf'){ window.go('eva-workspace'); window.ewOpen(p); setTimeout(function(){ try{ window.ewGoDiagnosticChat(); }catch(e){} },350); }
+    else if(pg==='moral'){ window.go('eva-bienetre'); }
+  }catch(e){} }
+  (function wait(){ if(!ready()){ if(++n<80) setTimeout(wait,150); return; } setTimeout(run,250); })();
+})();
+</script>
 </body>
 </html>
