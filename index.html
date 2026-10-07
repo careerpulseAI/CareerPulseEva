@@ -1687,6 +1687,25 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cps-pc-sec{ margin-top:12px; } .cps-pc-sec > b{ display:block; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:#64748b; margin-bottom:6px; }
 .cps-pc-sec ul{ margin:0; padding-left:18px; font-size:.82rem; line-height:1.6; color:#334155; }
 .cpw-chip.on{ background:#ecfdf5; border-color:#059669; color:#065f46; }
+.cj-tiles, .cj-mtip{ display:none; }
+@media (max-width:820px){
+  #s-profil .cj-grid{ display:none; }
+  #s-profil .cj-tiles{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  #s-profil .cj-mtip{ display:flex; margin-top:12px; }
+}
+.cj-tile{ position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-height:208px; padding:14px; border-radius:24px; border:1px solid #e2e8f0; background:#fff; text-align:left; cursor:pointer; box-shadow:0 20px 40px -32px rgba(15,23,42,.6); font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; color:#0f172a; }
+.cj-tile::before{ content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,#1e40af,#059669); }
+.cj-tile:active{ transform:scale(.97); }
+.cj-tile .cj-ic{ width:46px; height:46px; border-radius:15px; margin-bottom:6px; }
+.cj-tile > b{ font-size:.95rem; font-weight:800; line-height:1.2; letter-spacing:-.01em; }
+.cj-tile > small{ font-size:.72rem; color:#64748b; line-height:1.35; }
+.cj-tm{ margin-top:auto; padding-top:8px; display:flex; flex-direction:column; }
+.cj-tm strong{ font-size:1.55rem; font-weight:900; color:#1e40af; line-height:1; } .cj-tm em{ font-style:normal; font-size:.7rem; font-weight:700; color:#475569; margin-top:3px; }
+.cj-tile .cj-bar{ margin-top:8px; height:6px; }
+.cj-tdots{ display:flex; gap:4px; margin-top:8px; width:100%; } .cj-tdots i{ flex:1; font-style:normal; text-align:center; font-size:.66rem; font-weight:900; padding:3px 0; border-radius:7px; }
+.cj-tdots .c0{ background:#eff6ff; color:#1e40af; } .cj-tdots .c1{ background:#fff7ed; color:#c2410c; } .cj-tdots .c2{ background:#ecfdf5; color:#047857; } .cj-tdots .c3{ background:#f5f3ff; color:#6d28d9; }
+.cj-tvis{ display:inline-flex; align-items:center; gap:4px; margin-top:8px; padding:4px 8px; border-radius:999px; font-size:.66rem; font-weight:800; color:#64748b; background:#f1f5f9; } .cj-tvis.on{ color:#047857; background:#ecfdf5; }
+.cj-2b{ display:flex; gap:8px; } .cj-2b .cj-main{ flex:1; padding:13px 8px; font-size:.86rem; } .cj-main.alt{ background:#fff; color:#1e3a8a; border:1.5px solid #1e40af; box-shadow:none; } .cj-main.alt svg{ stroke:#1e3a8a !important; }
 .cj-pf{ margin-left:auto; padding:4px 10px; border-radius:999px; border:1px solid #bfdbfe; background:#fff; font:700 .7rem 'DM Sans',sans-serif; color:#1e3a8a; cursor:pointer; }
 .cj-pfs{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
 .cj-pfs button{ padding:10px 14px; border-radius:14px; border:1.5px solid #cbd5e1; background:#fff; font:800 .84rem 'DM Sans',sans-serif; color:#0f172a; cursor:pointer; }
@@ -17759,7 +17778,19 @@ window.cpSheetArrows=function(sc,host){
     var defi = pb ? '<button type="button" class="cj-box cj-defi" data-cj="bilan"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Bilan à faire</b><small>Ton défi de la '+wkLabel(pb.week)+'</small></span><em class="cj-score">'+done(pb)+'/'+pb.cible+'</em></button>'
       : d ? '<button type="button" class="cj-box cj-defi" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>'+esc(DEFIS[d.type][0])+' · objectif '+d.cible+'</small></span><em class="cj-score">'+done(d)+'/'+d.cible+'</em><i class="cj-bar"><i style="width:'+dpct(d)+'%"></i></i><span class="cj-mini">'+(done(d)>=d.cible?'Défi relevé, bravo ! Fais ton bilan quand tu veux.':'Encore '+(d.cible-done(d))+' pour relever le défi.')+'</span></button>'
       : '<button type="button" class="cj-box cj-defi off" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>Choisis ton objectif : de 1 à 10, ou ton propre chiffre</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
-    b.innerHTML=coach()+'<div class="cj-grid">'
+    var conv=S.convs.length, unread=S.convs.some(function(c){ return c.unreadCand; });
+    var tiles='<div class="cj-tiles">'
+      +'<button type="button" class="cj-tile" data-cj="'+(pb?'bilan':'defi')+'"><span class="cj-ic b">'+I(P.pulse,22)+'</span><b>Mon Stream</b><small>'+(pb?'Bilan à faire':d?esc(DEFIS[d.type][0]):'Ton défi de la semaine')+'</small>'
+        +'<span class="cj-tm"><strong>'+(pb?done(pb)+'/'+pb.cible:d?done(d)+'/'+d.cible:'—')+'</strong><em>'+(pb?'semaine passée':d?(done(d)>=d.cible?'défi réussi 🎉':'défi en cours'):'à choisir')+'</em></span><i class="cj-bar"><i style="width:'+(pb?dpct(pb):dpct(d))+'%"></i></i></button>'
+      +'<button type="button" class="cj-tile" data-cj="prof"><span class="cj-ic b">'+I(P.user,22)+'</span><b>Profil & documents</b><small>Ton CV visible pour les recruteurs</small>'
+        +'<span class="cj-tm"><strong>'+p+' %</strong><em>'+(p<100?'profil complété':'profil complet ✓')+'</em></span><i class="cj-bar"><i style="width:'+p+'%"></i></i></button>'
+      +'<button type="button" class="cj-tile" data-cj="list" data-f="all"><span class="cj-ic b">'+I(P.brief,22)+'</span><b>Candidatures</b><small>Postuler et suivre</small>'
+        +'<span class="cj-tm"><strong>'+cnt('all')+'</strong><em>'+(relN()?relN()+' à relancer':cnt('itw')?cnt('itw')+' entretien'+(cnt('itw')>1?'s':''):'postulée'+(cnt('all')>1?'s':''))+'</em></span><span class="cj-tdots">'+['all','cours','itw','rep'].map(function(f,i){ return '<i class="c'+i+'">'+cnt(f)+'</i>'; }).join('')+'</span></button>'
+      +'<button type="button" class="cj-tile" data-cj="rec"><span class="cj-ic g">'+I(P.users,22)+'</span><b>Recruteurs & messages</b><small>Échanger avec les recruteurs</small>'
+        +'<span class="cj-tm"><strong>'+conv+'</strong><em>message'+(conv>1?'s':'')+(unread?' · nouveau':'')+'</em></span><span class="cj-tvis'+(visOn()?' on':'')+'">'+I(P.eye,13)+(visOn()?'Profil visible':'Profil privé')+'</span></button>'
+      +'</div>'
+      +'<button type="button" class="cj-box cj-tip cj-mtip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
+    b.innerHTML=coach()+tiles+'<div class="cj-grid">'
       /* 1. Mon Stream */
       +'<div class="cj-card">'+head('defi',P.pulse,'Mon Stream','Ton plan d\'action avec Lisa','b')+defi
       +'<button type="button" class="cj-box cj-tip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
@@ -17803,7 +17834,11 @@ window.cpSheetArrows=function(sc,host){
       +'<button type="button" class="cps-wizcta" data-cj="wiz"><span class="cps-ic w">'+I(P.wand,20)+'</span><span><b>'+(nm?'Modifier mon profil avec Lisa':'Remplir mon profil avec Lisa')+'</b><small>Infos perso, expériences, compétences : une question à la fois.</small></span>'+I(P.chev,18)+'</button>'
       +'<div class="cps-card cps-vis"><div class="cps-card-hd"><span class="cps-ic b">'+I(P.eye)+'</span><div><b>Visible par les recruteurs</b><span>'+(visOn()?'Ton profil apparaît dans l\'annuaire des recruteurs CareerPulse : ils peuvent te proposer un échange.':'Ton profil reste privé. Active-le quand il est prêt.')+'</span></div><button type="button" class="cps-sw'+(visOn()?' on':'')+'" data-cj="vis" aria-label="Visible par les recruteurs"><i></i></button></div></div>';
   }
-  function drawAll(){ drawHero(); drawHome(); drawProfTop(); }
+  function drawCheck(){ var b=$('cj-pcheck'); if(!b) return; var p=profPct();
+    b.innerHTML=say2(p<100?'Ton profil est à <b>'+p+' %</b>. Touche une étape : je te pose les questions, une à une.':'Ton profil est <b>complet</b> 👏 Pense à le rendre visible pour les recruteurs.')
+      +'<div class="cj-box cj-comp">'+ring(p)+'<span class="cj-box-t"><b>Complétude du profil</b><small>Infos perso, expériences, compétences, lettre et documents.</small></span></div>'
+      +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+I(P.chev,15)+'</button>'; }).join('')+'</div>'; }
+  function drawAll(){ drawHero(); drawHome(); drawProfTop(); drawCheck(); }
 
   /* ── Pages en plein écran ── */
   function sheet(t,sub,html,onClose){
@@ -17821,9 +17856,11 @@ window.cpSheetArrows=function(sc,host){
   /* Profil & documents : on déplace la vraie zone (lettre, documents) dans la page, puis on la remet */
   function openProf(target){
     var pane=document.querySelector('#s-profil [data-pane="profil"]'); if(!pane) return;
+    if(pane.closest('.cj-sheet')){ if(target==='lm'||target==='docs'){ var ac=target==='lm'?'acc-cv':'acc-docs', aa=$(ac); if(aa && aa.style.display!=='block' && typeof toggleAccordion==='function') toggleAccordion(ac); var tt=$(target==='lm'?'cps-sec-lm':'cps-sec-docs'); if(tt) tt.scrollIntoView({ behavior:'smooth', block:'start' }); } return; }
     var home=pane.parentNode, mark=document.createComment('cj-prof');
     home.insertBefore(mark,pane); drawProfTop();
     var o=sheet('Profil & documents','Ton profil, ta lettre et tes documents','',function(){ pane.style.display='none'; mark.parentNode.insertBefore(pane,mark); mark.remove(); });
+    var ck=document.createElement('div'); ck.id='cj-pcheck'; o.body.appendChild(ck); drawCheck();
     o.body.appendChild(pane); pane.style.display='block';
     var lk=document.createElement('div'); lk.className='cj-evas';
     lk.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.clip)+'</span>Ranger et améliorer avec EVA</div>'
@@ -17845,7 +17882,7 @@ window.cpSheetArrows=function(sc,host){
       var L=filtered(o.f), tabs=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses'],['week','Cette semaine'],['rel','À relancer']];
       var msg={ all:'Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.', cours:'Tes candidatures en attente de réponse. Sans nouvelles après 7 jours, une relance montre ta motivation.', itw:'Tes entretiens : prépare-les avec les quiz d\'EVA, c\'est là que tout se joue.', rep:'Les réponses reçues. Une réponse négative n\'est pas un échec : demande un retour, ça aide pour la suite.', week:'Tes candidatures de cette semaine : elles comptent pour ton défi.', rel:'Ces candidatures attendent depuis 7 jours ou plus : un court message poli suffit pour relancer.' }[o.f];
       o.body.innerHTML=say2(msg)+'<div class="cj-tabs">'+tabs.map(function(t){ return '<button type="button" class="'+(t[0]===o.f?'on':'')+'" data-cj="lf" data-f="'+t[0]+'">'+t[1]+' <em>'+filtered(t[0]).length+'</em></button>'; }).join('')+'</div>'
-        +'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button>'
+        +'<div class="cj-2b"><button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
         +(L.length?'<div class="cj-list">'+L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
           return '<div class="cj-it"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb'+(x.preuveType==='pdf'?' pdf':'')+'" data-cj="proof" data-id="'+x.id+'">'+(x.preuveType==='pdf'?I(P.doc,22)+'<small>PDF</small>':'<img src="'+x.preuve+'" alt="Preuve">')+'</button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
             +'<div class="cj-it-t"><b>'+esc(x.poste||x.entreprise)+'</b><span>'+esc(x.poste?x.entreprise:'')+(x.plateforme?(x.poste?' · ':'')+esc(x.plateforme):'')+'</span><small>'+I(P.cal,12)+'Le '+new Date(x.date).toLocaleDateString('fr-FR')+(x.mode?' · '+esc(x.mode):'')+(x.adresse?' · '+esc(x.adresse):'')+'</small>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+(x.lien?'<a class="cj-offer" href="'+esc(x.lien)+'" target="_blank" rel="noopener noreferrer">'+I(P.ext,13)+'Voir l\'offre</a>':'')+'</div></div>'
@@ -17942,7 +17979,11 @@ window.cpSheetArrows=function(sc,host){
         +(d.type==='cand'?'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button>':'<div class="cj-pm"><button type="button" data-cj="dm" data-d="-1" aria-label="Retirer">−</button><b>'+f+'</b><button type="button" data-cj="dm" data-d="1" aria-label="Ajouter">+</button></div>')
         +'<div class="cj-acts">'+(canBilan(d)?'<button type="button" class="cj-btn" data-cj="bilan">'+I(P.trophy,16)+'Faire mon bilan</button>':'<span class="cj-mini">Le bilan s\'ouvre vendredi, ou dès que ton défi est réussi.</span>')+'<button type="button" class="cj-btn ghost" data-cj="dch">Changer de défi</button></div></div>'+evq+hist();
     }
-    o.render=render; render();
+    o.render=function(){ render(); var sy=o.body.querySelector('.cj-say'); if(!sy) return;
+      var tipI=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5), wn=S.list.filter(function(x){ return inWeek(x.date,wk()); }).length;
+      sy.insertAdjacentHTML('afterend','<button type="button" class="cj-box cj-tip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(TIPS[tipI%TIPS.length])+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
+        +'<div class="cj-stats"><button type="button" data-cj="list" data-f="week"><span>'+I(P.doc,17)+'</span><b>'+wn+'</b><small>candidatures cette semaine</small></button><button type="button" data-cj="list" data-f="rel"><span>'+I(P.clock,17)+'</span><b>'+relN()+'</b><small>relances à faire</small></button><button type="button" data-cj="list" data-f="itw"><span>'+I(P.users,17)+'</span><b>'+cnt('itw')+'</b><small>entretiens en cours</small></button></div>'); };
+    o.render();
   }
 
   /* Bilan de la semaine : Lisa pose ses questions puis donne le barème */
