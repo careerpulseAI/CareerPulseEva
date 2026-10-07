@@ -27604,7 +27604,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       msg:'Pour avancer au quotidien, je te donne des <b>conseils adaptés à ta situation</b> et un espace pour tout organiser : ton <b>Portfolio</b>.',
       title:'Conseils pratiques & Portfolio', lead:'Des conseils personnalisés selon ton profil, et tous tes outils de travail réunis au même endroit.',
       pts:['<b>Nouveau : Tâches</b>, tes tâches datées avec statut, commentaires et infos perso, adaptées à ton profil','Agenda de suivi pour tes rendez-vous et échéances','Documents prêts à remplir : CV, lettre de motivation, facture, devis, business plan, compte-rendu…','Contacts, analyse de document et organismes utiles selon ton profil'],
-      chips:['Organisation','Tâches','Documents pro'], cta:'Ouvrir mes conseils', go2:'eva-taches', cta2:'Mes tâches', member:'Portfolio et Tâches réservés aux membres' },
+      chips:['Organisation','Tâches','Documents pro'], cta:'Ouvrir mes conseils', go2:'eva-workspace', cta2:'Mes tâches (Portfolio)', member:'Portfolio et Tâches réservés aux membres' },
     { key:'motiv', step:'Motivation & Équilibre', go:'eva-bienetre', grad:'linear-gradient(145deg,#be185d,#db2777 60%,#f472b6)', ic:'motiv',
       msg:'Une recherche ou un projet, ça demande de l\'énergie. Je t\'accompagne aussi sur ton <b>équilibre</b>, avec bienveillance et sans jugement.',
       title:'Motivation & Équilibre', lead:'Un petit rituel quotidien pour faire le point avant ou après ta journée, et repartir du bon pied.',
@@ -27671,7 +27671,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       var w=el('div'); w.setAttribute('data-k',s.key);
       var t=el('div','evh-trust','<span>Légifrance</span><span>service-public.fr</span><span>France Travail</span><span>URSSAF</span><span>CAF</span>');
       var q=el('div','evh-quick');
-      SLIDES.filter(function(x){return x.go;}).forEach(function(x){ var b=el('button',null,x.step); b.type='button'; b.setAttribute('data-go',x.go); q.appendChild(b); if(x.go2){ var b2=el('button',null,'Tâches'); b2.type='button'; b2.setAttribute('data-go',x.go2); q.appendChild(b2); } });
+      SLIDES.filter(function(x){return x.go;}).forEach(function(x){ var b=el('button',null,x.step); b.type='button'; b.setAttribute('data-go',x.go); q.appendChild(b); if(x.go2){ var b2=el('button',null,'Tâches (Portfolio)'); b2.type='button'; b2.setAttribute('data-go',x.go2); q.appendChild(b2); } });
       w.appendChild(t); w.appendChild(q); return w;
     }
     return null;
@@ -29097,7 +29097,8 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     {k:'sal',ttl:'Salarié',ico:IC.user,txt:'Tes missions, tes réunions et tes objectifs : chaque tâche a sa date, son heure, son statut et tes commentaires.',tip:'Note tes objectifs dès qu\'ils sont fixés : c\'est ta base pour l\'entretien annuel.'},
     {k:'dem',ttl:'Demandeur d\'emploi',ico:IC.target,txt:'Tes candidatures, tes relances et tes rendez-vous France Travail : rien ne passe à la trappe.',tip:'Programme une relance 7 jours après chaque candidature.'},
     {k:'frl',ttl:'Freelance',ico:IC.conseils,txt:'Tes clients, tes devis, tes factures et tes échéances URSSAF, rangés au même endroit.',tip:'Bloque une date chaque mois ou trimestre pour ta déclaration URSSAF.'},
-    {k:'etu',ttl:'Étudiant / Reconversion',ico:IC.school,txt:'Tes cours, tes recherches de stage ou d\'alternance et tes dossiers (CPF, bourse, bilan).',tip:'Découpe chaque gros dossier en petites tâches datées.'}
+    {k:'etu',ttl:'Étudiant',ico:IC.school,txt:'Tes cours, tes recherches de stage ou d\'alternance et tes dossiers (bourse, logement).',tip:'Découpe chaque gros dossier en petites tâches datées.'},
+    {k:'rec',ttl:'Reconversion',ico:IC.conseils,txt:'Ton projet, ton CPF, ton bilan de compétences et tes démarches de formation.',tip:'Fixe une date à chaque étape de ton projet.'}
   ];
   function taches(){
     var sc=document.getElementById('s-eva-taches'); if(!sc) return; var t=TH.taches;
@@ -29111,7 +29112,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
       { make:function(){ return post(t,{ ico:S(IC.tasks,t.c1,2), ttl:'Comment ça marche ?', meta:'En 3 gestes', media:false, txt:'<ul><li><i>1</i><span><b>Ajoute</b> une tâche : titre, date, heure, priorité.</span></li><li><i>2</i><span><b>Suis-la</b> : statut « à faire », « en cours » ou « fait », et des commentaires pour noter l\'avancement.</span></li><li><i>3</i><span><b>Modifie ou supprime</b> quand tu veux. Tes <b>infos perso</b> ont leur propre espace.</span></li></ul>' }); } },
       { msg:'Je t\'adapte des idées de tâches selon ton profil 👇' }
     ];
-    TK_PROF.forEach(function(p,i){ steps.push({ make:function(){ return post(t,{ ico:S(p.ico,t.c1,2), big:S(p.ico), ttl:esc(p.ttl), meta:'Profil '+(i+1)+'/4', tag:'Tâches', txt:esc(p.txt), tip:p.tip, actions:[{l:'Choisir',pri:true,fn:function(){ if(window.cpTkSetProfile) window.cpTkSetProfile(p.k); scrollToEl(page); }}] }); } }); });
+    TK_PROF.forEach(function(p,i){ steps.push({ make:function(){ return post(t,{ ico:S(p.ico,t.c1,2), big:S(p.ico), ttl:esc(p.ttl), meta:'Profil '+(i+1)+'/'+TK_PROF.length, tag:'Tâches', txt:esc(p.txt), tip:p.tip, actions:[{l:'Choisir',pri:true,fn:function(){ if(window.cpTkSetProfile) window.cpTkSetProfile(p.k); scrollToEl(page); }}] }); } }); });
     steps.push(mob({ think:['Je range tes idées de tâches…','Je prépare ta liste…'] }));
     steps.push({ make:function(){ return plus(t,'Tes tâches sont aussi dans ton <b>Portfolio</b> : tu les retrouves à côté de ton agenda, de tes documents et de tes contacts. 📂'); } });
     steps.push({ msg:'C\'est parti : ta liste est juste ici 👇' });
@@ -31656,7 +31657,7 @@ window.cpSheetArrows=function(sc,host){
 <script>
 /* Liens depuis CareerPulse : eva.html#cp-<page>-<profil> ouvre la bonne page d'EVA dans la catégorie du profil */
 (function(){
-  var m=/^#cp-(droits|quiz|itw|pf|taches|moral)-(sal|dem|etu|rec|frl)$/.exec(location.hash||''); if(!m) return;
+  var m=/^#cp-(droits|quiz|itw|pf|taches|doc|moral)-(sal|dem|etu|rec|frl)$/.exec(location.hash||''); if(!m) return;
   var pg=m[1], p=m[2], n=0;
   function ready(){ return typeof window.go==='function' && typeof window.evadShowList==='function' && typeof window.ewOpen==='function' && typeof window.ewGoDiagnosticChat==='function' && document.getElementById('eva-fullscreen'); }
   function taches(prof){ try{ var K='cp_taches_v1', d=JSON.parse(localStorage.getItem(K)||'null')||{}; d.prof=prof; localStorage.setItem(K,JSON.stringify(d)); }catch(e){} window.go('eva-taches'); }
@@ -31666,8 +31667,8 @@ window.cpSheetArrows=function(sc,host){
       else window.evadShowList({ etu:'etudiant', rec:'reconversion', frl:'freelance' }[p]);
     } else if(pg==='quiz'||pg==='itw'){
       var q={ sal:'salarie', dem:'demandeur', etu:'etudiant', rec:'reconversion', frl:'freelance' }[p];
-      window.go((pg==='quiz'?'mise-situation-':'entretien-')+q);
-    } else if(pg==='taches'){ window.go('eva-workspace'); window.ewOpen(p); setTimeout(function(){ try{ window.ewGoDiagnosticChat(); }catch(e){} setTimeout(function(){ try{ window.ewOpenPortfolioToTab('taches'); }catch(e){} },900); },350); }
+      window.go((pg==='quiz'?'entretien-':'mise-situation-')+q);
+    } else if(pg==='taches'||pg==='doc'){ var tb=pg==='doc'?'doc':'taches'; window.go('eva-workspace'); window.ewOpen(p); setTimeout(function(){ try{ window.ewGoDiagnosticChat(); }catch(e){} setTimeout(function(){ try{ window.ewOpenPortfolioToTab(tb); }catch(e){} },900); },350); }
     else if(pg==='pf'){ window.go('eva-workspace'); window.ewOpen(p); setTimeout(function(){ try{ window.ewGoDiagnosticChat(); }catch(e){} },350); }
     else if(pg==='moral'){ window.go('eva-bienetre'); }
   }catch(e){} }
