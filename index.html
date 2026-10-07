@@ -1708,6 +1708,8 @@ button.cj-own{ cursor:pointer; background:#fff; font-family:'DM Sans',sans-serif
 .cj-2b{ display:flex; gap:8px; } .cj-2b .cj-main{ flex:1; padding:13px 8px; font-size:.86rem; } .cj-main.alt{ background:#fff; color:#1e3a8a; border:1.5px solid #1e40af; box-shadow:none; } .cj-main.alt svg{ stroke:#1e3a8a !important; }
 .cj-pf{ margin-left:auto; padding:4px 10px; border-radius:999px; border:1px solid #bfdbfe; background:#fff; font:700 .7rem 'DM Sans',sans-serif; color:#1e3a8a; cursor:pointer; }
 .cj-pfs{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+.cj-pfs.big{ display:grid; grid-template-columns:1fr 1fr; } .cj-pfs.big button{ padding:16px 12px; font-size:.92rem; }
+button.cj-eva{ width:100%; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; } .cj-eva small i{ font-style:normal; font-weight:800; color:#6d28d9; }
 .cj-pfs button{ padding:10px 14px; border-radius:14px; border:1.5px solid #cbd5e1; background:#fff; font:800 .84rem 'DM Sans',sans-serif; color:#0f172a; cursor:pointer; }
 .cj-pfs button:hover{ border-color:#1e40af; } .cj-pfs small{ font-size:.66rem; font-weight:700; color:#b45309; margin-left:4px; }
 .cj-eva{ display:flex; align-items:center; gap:11px; padding:11px 12px; border-radius:16px; background:linear-gradient(135deg,#faf5ff,#eff6ff); border:1px solid #e9d5ff; text-decoration:none; color:#0f172a; }
@@ -17685,16 +17687,23 @@ window.cpSheetArrows=function(sc,host){
   var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Relis ta candidature à voix haute avant l\'envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne ta ville et ta mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
   var PUB=['Un profil complet et visible, c\'est ce que les recruteurs CareerPulse regardent en premier.','Chaque candidature notée ici, c\'est une relance que tu n\'oublieras jamais.','Avec CareerPulse, tu avances chaque semaine avec un objectif clair, et je suis là pour te le faire tenir.','Ton profil CareerPulse est gratuit : complète-le une fois, les recruteurs le retrouvent à tout moment.'];
   var S={ list:[], convs:[], st:{ exp:'', comp:[], defi:null, hist:[], profil:'' } };
-  var PROFS={ dem:'Demandeur d\'emploi', etu:'Étudiant(e)', rec:'En reconversion', frl:'Freelance' };
-  /* Liens vers EVA (eva.html) : le Portfolio s'ouvre sur le bon profil et la bonne rubrique */
-  function pf(tab){ return 'eva.html#pf-'+(S.st.profil||'dem')+'-'+tab; }
-  var EV={ quiz:['eva.html#eva-entretien','Quiz et mises en situation','Entraîne-toi avec EVA avant de postuler'],
-    itw:['eva.html#eva-entretien','Simulation d\'entretien avec EVA','Prépare tes prochains entretiens, à ton rythme'],
-    moral:['eva.html#eva-bienetre','Motivation & Équilibre','EVA t\'aide à reprendre confiance'],
-    droits:['eva.html#eva-droits','Tes droits et aides avec EVA','Chômage, contrat, aides : tout expliqué simplement'] };
-  function evaLink(href,t,sub){ return '<a class="cj-eva" href="'+href+'"><span class="cj-av sm eva"><img src="'+EVA_IMG+'" alt="EVA"></span><span class="cj-box-t"><b>'+t+'</b><small>'+sub+'</small></span><em>EVA</em>'+I(P.chev,15)+'</a>'; }
+  var PROFS={ sal:'Salarié', dem:'Demandeur d\'emploi', etu:'Étudiant(e)', rec:'En reconversion', frl:'Freelance' };
+  /* Liens vers EVA : chaque lien ouvre la bonne page d'EVA dans la catégorie du profil (eva.html#cp-<page>-<profil>) */
+  function evaUrl(pg){ return 'eva.html#cp-'+pg+'-'+(S.st.profil||'dem'); }
+  var EV={ quiz:['quiz','Quiz et mises en situation','Entraîne-toi avec EVA avant de postuler'],
+    itw:['itw','Simulation d\'entretien avec EVA','Prépare tes prochains entretiens, à ton rythme'],
+    moral:['moral','Motivation & Équilibre','EVA t\'aide à reprendre confiance'],
+    droits:['droits','Tes droits et aides avec EVA','Chômage, contrat, aides : tout expliqué simplement'] };
+  function evaLink(pg,t,sub){ var pr=S.st.profil&&PROFS[S.st.profil];
+    return '<button type="button" class="cj-eva" data-cj="eva" data-to="'+pg+'"><span class="cj-av sm eva"><img src="'+EVA_IMG+'" alt="EVA"></span><span class="cj-box-t"><b>'+t+'</b><small>'+sub+(pr?' · <i>'+esc(pr)+'</i>':'')+'</small></span><em>EVA</em>'+I(P.chev,15)+'</button>'; }
   function ev(k){ var e=EV[k]; return evaLink(e[0],e[1],e[2]); }
-  function evPf(tab,t,sub){ return evaLink(pf(tab),t,sub); }
+  function evPf(pg,t,sub){ return evaLink(pg,t,sub); }
+  /* Avant d'ouvrir EVA : Lisa demande le profil s'il n'est pas encore connu */
+  function goEva(pg){
+    if(S.st.profil){ location.href=evaUrl(pg); return; }
+    var o=sheet('Ton profil','Pour t\'ouvrir la bonne page d\'EVA',say2('EVA fonctionne <b>par profil</b> : dis-moi ta situation et je t\'ouvre directement ta catégorie.')
+      +'<div class="cj-pfs big">'+['sal','dem','etu','rec'].map(function(k){ return '<button type="button" data-cj="pfgo" data-p="'+k+'" data-to="'+pg+'">'+PROFS[k]+'</button>'; }).join('')+'</div>');
+    return o; }
 
   /* ── Dates : la semaine commence le lundi ── */
   function monday(d){ d=new Date(d||Date.now()); d.setHours(0,0,0,0); var w=(d.getDay()+6)%7; d.setDate(d.getDate()-w); return d; }
@@ -17740,7 +17749,7 @@ window.cpSheetArrows=function(sc,host){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
     if(!S.st.profil){
       return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Pour bien t\'accompagner, dis-moi ta <b>situation</b> :</p>'
-        +'<div class="cj-pfs">'+['dem','etu','rec','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+(k==='frl'?' <small>bientôt</small>':'')+'</button>'; }).join('')+'</div></div></div>';
+        +'<div class="cj-pfs">'+['sal','dem','etu','rec','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+(k==='frl'?' <small>page bientôt</small>':'')+'</button>'; }).join('')+'</div></div></div>';
     }
     if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
     else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
@@ -17752,8 +17761,8 @@ window.cpSheetArrows=function(sc,host){
     if(p<100) m.push('Ton profil est à <b>'+p+' %</b>. '+PUB[0]);
     else if(!visOn()) m.push('Ton profil est complet 👏 Rends-le <b>visible</b> : les recruteurs CareerPulse pourront te trouver et te contacter.');
     else m.push(PUB[(new Date().getDate())%PUB.length]);
-    if(dow()===0) extra=evaLink(EV.quiz[0],'Lundi : on s\'échauffe avec EVA','Quiz et mises en situation pour bien démarrer ta semaine');
-    else if(dow()===4) extra=evaLink(EV.itw[0],'Vendredi : simulation d\'entretien','Entraîne-toi avec EVA pour tes prochains rendez-vous');
+    if(dow()===0) extra=evaLink('quiz','Lundi : on s\'échauffe avec EVA','Quiz et mises en situation pour bien démarrer ta semaine');
+    else if(dow()===4) extra=evaLink('itw','Vendredi : simulation d\'entretien','Entraîne-toi avec EVA pour tes prochains rendez-vous');
     return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS[S.st.profil])+' · changer</button>':'')+'</div>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
       +(act?'<button type="button" class="cj-btn" data-cj="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+(extra?'<div class="cj-coach-eva">'+extra+'</div>':'')+'</div></div>';
   }
@@ -17851,8 +17860,8 @@ window.cpSheetArrows=function(sc,host){
     o.body.appendChild(pane); pane.style.display='block';
     var lk=document.createElement('div'); lk.className='cj-evas';
     lk.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.clip)+'</span>Ranger et améliorer avec EVA</div>'
-      +evPf('notes','Ouvrir mon Portfolio','Documents, tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))
-      +evPf('doc','Faire analyser ma lettre ou mon CV','Dans ton Portfolio : EVA lit ton document comme un recruteur')
+      +evPf('pf','Ouvrir mon Portfolio','Documents, tâches, agenda, contacts…')
+      +evPf('pf','Faire analyser ma lettre ou mon CV','Dans ton Portfolio, outil « Analyser un document »')+evPf('taches','Mes tâches','Organise ta semaine, tâche par tâche')
       ;
     o.body.appendChild(lk);
     if(target==='lm'||target==='docs'){ var acc=target==='lm'?'acc-cv':'acc-docs', a=$(acc); if(a && a.style.display!=='block' && typeof toggleAccordion==='function') toggleAccordion(acc);
@@ -17875,7 +17884,7 @@ window.cpSheetArrows=function(sc,host){
             +'<div class="cj-it-t"><b>'+esc(x.poste||x.entreprise)+'</b><span>'+esc(x.poste?x.entreprise:'')+(x.plateforme?(x.poste?' · ':'')+esc(x.plateforme):'')+'</span><small>'+I(P.cal,12)+'Le '+new Date(x.date).toLocaleDateString('fr-FR')+(x.mode?' · '+esc(x.mode):'')+(x.adresse?' · '+esc(x.adresse):'')+'</small>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+(x.lien?'<a class="cj-offer" href="'+esc(x.lien)+'" target="_blank" rel="noopener noreferrer">'+I(P.ext,13)+'Voir l\'offre</a>':'')+'</div></div>'
             +'<div class="cj-it-ft"><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cj="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div></div>'; }).join('')+'</div>'
           :'<div class="cps-empty">Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : le compteur se met à jour tout seul.</div>')
-        +'<div class="cj-evas">'+(o.f==='itw'?ev('itw'):'')+evPf('taches','Noter mes relances dans mon Portfolio','Tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))+(o.f!=='itw'?ev('itw'):'')+'</div>';
+        +'<div class="cj-evas">'+(o.f==='itw'?ev('itw'):'')+evPf('taches','Noter mes relances dans mes tâches','Une tâche par relance, avec la date')+(o.f!=='itw'?ev('itw'):'')+'</div>';
     }
     o.render=render; render();
   }
@@ -18143,8 +18152,10 @@ window.cpSheetArrows=function(sc,host){
     if(a==='wiz'){ if(profPct()>=100 || !user()) { wizard(); } else { var f=firstSec(); wizard(f==='infos'&&!val('fp-name')?null:f); } return; }
     if(a==='sec'){ var s=b.getAttribute('data-s'); if(s==='lm'||s==='docs') openProf(s); else wizard(s); return; }
     if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
-    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Ta page Freelance arrive bientôt : en attendant, je t\'accompagne ici 😉'); else say('C\'est noté : '+PROFS[S.st.profil]); drawAll(); return; }
+    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Ta page Freelance arrive bientôt : en attendant, je t\'accompagne ici et EVA t\'ouvre ses pages Freelance 😉'); else say('C\'est noté : '+PROFS[S.st.profil]); drawAll(); return; }
     if(a==='pfch'){ S.st.profil=''; drawAll(); return; }
+    if(a==='eva'){ goEva(b.getAttribute('data-to')); return; }
+    if(a==='pfgo'){ S.st.profil=b.getAttribute('data-p'); saveSt(); location.href=evaUrl(b.getAttribute('data-to')); return; }
     if(a==='paste'){ var li=$('cj-li'); if(!li) return; if(navigator.clipboard && navigator.clipboard.readText){ navigator.clipboard.readText().then(function(t){ li.value=String(t||'').trim(); if(!li.value) li.focus(); }).catch(function(){ li.focus(); say('Appuie longuement dans le champ, puis « Coller »'); }); } else li.focus(); return; }
     if(a==='vis'){ toggleVis(); return; } if(a==='inv-rec'){ share(true); return; } if(a==='inv-ami'){ share(false); return; }
     if(a==='photo'){ var fi=$('fp-photo'); if(fi){ fi.click(); if(!fi._cps){ fi._cps=1; fi.addEventListener('change',function(){ setTimeout(drawProfTop,400); setTimeout(drawProfTop,1200); }); } } return; }
