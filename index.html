@@ -1687,13 +1687,10 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cps-pc-sec{ margin-top:12px; } .cps-pc-sec > b{ display:block; font-size:.74rem; text-transform:uppercase; letter-spacing:.08em; color:#64748b; margin-bottom:6px; }
 .cps-pc-sec ul{ margin:0; padding-left:18px; font-size:.82rem; line-height:1.6; color:#334155; }
 .cpw-chip.on{ background:#ecfdf5; border-color:#059669; color:#065f46; }
-.cj-tiles, .cj-mtip{ display:none; }
-@media (max-width:820px){
-  #s-profil .cj-grid{ display:none; }
-  #s-profil .cj-tiles{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  #s-profil .cj-mtip{ display:flex; margin-top:12px; }
-}
-.cj-tile{ position:relative; overflow:hidden; display:flex; flex-direction:column; align-items:flex-start; gap:4px; min-height:208px; padding:14px; border-radius:24px; border:1px solid #e2e8f0; background:#fff; text-align:left; cursor:pointer; box-shadow:0 20px 40px -32px rgba(15,23,42,.6); font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; color:#0f172a; }
+#s-profil .cj-tiles{ display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:14px; }
+#s-profil .cj-mtip{ display:flex; margin-top:14px; }
+@media (min-width:821px){ #s-profil .cj-tiles{ gap:18px; } #s-profil .cj-tile{ min-height:250px; padding:20px; } #s-profil .cj-tile .cj-ic{ width:56px; height:56px; } #s-profil .cj-tile > b{ font-size:1.15rem; } #s-profil .cj-tile > small{ font-size:.82rem; } #s-profil .cj-tm strong{ font-size:2rem; } }
+.cj-tile{ position:relative; overflow:hidden; display:flex; height:100%; width:100%; flex-direction:column; align-items:flex-start; gap:4px; min-height:208px; padding:14px; border-radius:24px; border:1px solid #e2e8f0; background:#fff; text-align:left; cursor:pointer; box-shadow:0 20px 40px -32px rgba(15,23,42,.6); font-family:'DM Sans',-apple-system,BlinkMacSystemFont,sans-serif; color:#0f172a; }
 .cj-tile::before{ content:""; position:absolute; inset:0 0 auto 0; height:4px; background:linear-gradient(90deg,#1e40af,#059669); }
 .cj-tile:active{ transform:scale(.97); }
 .cj-tile .cj-ic{ width:46px; height:46px; border-radius:15px; margin-bottom:6px; }
@@ -1705,6 +1702,9 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cj-tdots{ display:flex; gap:4px; margin-top:8px; width:100%; } .cj-tdots i{ flex:1; font-style:normal; text-align:center; font-size:.66rem; font-weight:900; padding:3px 0; border-radius:7px; }
 .cj-tdots .c0{ background:#eff6ff; color:#1e40af; } .cj-tdots .c1{ background:#fff7ed; color:#c2410c; } .cj-tdots .c2{ background:#ecfdf5; color:#047857; } .cj-tdots .c3{ background:#f5f3ff; color:#6d28d9; }
 .cj-tvis{ display:inline-flex; align-items:center; gap:4px; margin-top:8px; padding:4px 8px; border-radius:999px; font-size:.66rem; font-weight:800; color:#64748b; background:#f1f5f9; } .cj-tvis.on{ color:#047857; background:#ecfdf5; }
+.cj-write textarea, .cj-write input{ width:100%; box-sizing:border-box; padding:14px; border-radius:14px; border:1.5px solid #dbe4ef; background:#f8fafc; font:500 1rem 'DM Sans',sans-serif; color:#0f172a; resize:vertical; }
+.cj-write textarea:focus, .cj-write input:focus{ outline:none; border-color:#1e40af; background:#fff; } .cj-write .err{ border-color:#dc2626; }
+button.cj-own{ cursor:pointer; background:#fff; font-family:'DM Sans',sans-serif; } button.cj-own b{ font-size:1.05rem; margin-left:4px; } button.cj-own.on{ background:#eff6ff; }
 .cj-2b{ display:flex; gap:8px; } .cj-2b .cj-main{ flex:1; padding:13px 8px; font-size:.86rem; } .cj-main.alt{ background:#fff; color:#1e3a8a; border:1.5px solid #1e40af; box-shadow:none; } .cj-main.alt svg{ stroke:#1e3a8a !important; }
 .cj-pf{ margin-left:auto; padding:4px 10px; border-radius:999px; border:1px solid #bfdbfe; background:#fff; font:700 .7rem 'DM Sans',sans-serif; color:#1e3a8a; cursor:pointer; }
 .cj-pfs{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
@@ -17678,8 +17678,9 @@ window.cpSheetArrows=function(sc,host){
   var PLAT=[['Indeed','https://fr.indeed.com','N°1 mondial','#1e40af'],['France Travail','https://www.francetravail.fr','Officiel','#1d4ed8'],['Malt','https://www.malt.fr','Freelance','#be123c']];
   var STATUTS=['Envoyée','Relancée','Entretien','Acceptée','Refusée'];
   var FILTRES={ all:['Postulées',null], cours:['En cours',['Envoyée','Relancée']], itw:['Entretien',['Entretien']], rep:['Réponses',['Acceptée','Refusée']] };
-  var MODES=['Sur une plateforme','Par e-mail','Par courrier','En main propre'];
-  var DEFIS={ cand:['Envoyer des CV','CV envoyés',P.send,1], rel:['Relancer des entreprises','relances faites',P.bell,0], res:['Contacter mon réseau','personnes contactées',P.users,0], prep:['Préparer des entretiens','entretiens préparés',P.star,0] };
+  var MODES=['Sur une plateforme','Par e-mail','Par courrier','En main propre','Autre'];
+  var DEFIS={ cand:['Envoyer des CV','CV envoyés',P.send,1], rel:['Relancer des entreprises','relances faites',P.bell,0], res:['Contacter mon réseau','personnes contactées',P.users,0], prep:['Préparer des entretiens','entretiens préparés',P.star,0], autre:['Autre défi','actions faites',P.pen,0] };
+  function dlab(d){ return (d&&d.label)||DEFIS[(d&&d.type)||'cand'][0]; }
   var NBS=[1,2,3,5,10];
   var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Relis ta candidature à voix haute avant l\'envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne ta ville et ta mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
   var PUB=['Un profil complet et visible, c\'est ce que les recruteurs CareerPulse regardent en premier.','Chaque candidature notée ici, c\'est une relance que tu n\'oublieras jamais.','Avec CareerPulse, tu avances chaque semaine avec un objectif clair, et je suis là pour te le faire tenir.','Ton profil CareerPulse est gratuit : complète-le une fois, les recruteurs le retrouvent à tout moment.'];
@@ -17743,7 +17744,7 @@ window.cpSheetArrows=function(sc,host){
     }
     if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
     else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
-    else { var f=done(d), r=Math.max(0,d.cible-f), lab=DEFIS[d.type][0].toLowerCase();
+    else { var f=done(d), r=Math.max(0,d.cible-f), lab=dlab(d).toLowerCase();
       if(f>=d.cible){ m.push('Bravo '+esc(hi)+'ton défi est <b>réussi</b> 🎉 Tu peux faire ton bilan dès maintenant.'); act=['Faire mon bilan','bilan']; }
       else if(dow()>=4){ m.push(esc(hi)+'la semaine se termine : il te reste <b>'+r+'</b> pour ton défi « '+esc(lab)+' ». Un dernier effort, ou faisons le bilan.'); act=['Faire mon bilan','bilan']; }
       else if(dow()>=2 && dpct(d)<50){ m.push('On est '+['lundi','mardi','mercredi','jeudi'][dow()]+' et ton défi est à <b>'+dpct(d)+' %</b>. Il te reste '+r+' : on s\'y met aujourd\'hui ?'); act=d.type==='cand'?['Ajouter une candidature','add']:['Voir mon défi','defi']; }
@@ -17776,11 +17777,11 @@ window.cpSheetArrows=function(sc,host){
     var d=curDefi(), pb=pendingBilan(), tipI=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5), tip=TIPS[tipI%TIPS.length];
     var weekN=S.list.filter(function(x){ return inWeek(x.date,wk()); }).length, itw=cnt('itw'), p=profPct();
     var defi = pb ? '<button type="button" class="cj-box cj-defi" data-cj="bilan"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Bilan à faire</b><small>Ton défi de la '+wkLabel(pb.week)+'</small></span><em class="cj-score">'+done(pb)+'/'+pb.cible+'</em></button>'
-      : d ? '<button type="button" class="cj-box cj-defi" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>'+esc(DEFIS[d.type][0])+' · objectif '+d.cible+'</small></span><em class="cj-score">'+done(d)+'/'+d.cible+'</em><i class="cj-bar"><i style="width:'+dpct(d)+'%"></i></i><span class="cj-mini">'+(done(d)>=d.cible?'Défi relevé, bravo ! Fais ton bilan quand tu veux.':'Encore '+(d.cible-done(d))+' pour relever le défi.')+'</span></button>'
+      : d ? '<button type="button" class="cj-box cj-defi" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>'+esc(dlab(d))+' · objectif '+d.cible+'</small></span><em class="cj-score">'+done(d)+'/'+d.cible+'</em><i class="cj-bar"><i style="width:'+dpct(d)+'%"></i></i><span class="cj-mini">'+(done(d)>=d.cible?'Défi relevé, bravo ! Fais ton bilan quand tu veux.':'Encore '+(d.cible-done(d))+' pour relever le défi.')+'</span></button>'
       : '<button type="button" class="cj-box cj-defi off" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>Choisis ton objectif : de 1 à 10, ou ton propre chiffre</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
     var conv=S.convs.length, unread=S.convs.some(function(c){ return c.unreadCand; });
     var tiles='<div class="cj-tiles">'
-      +'<button type="button" class="cj-tile" data-cj="'+(pb?'bilan':'defi')+'"><span class="cj-ic b">'+I(P.pulse,22)+'</span><b>Mon Stream</b><small>'+(pb?'Bilan à faire':d?esc(DEFIS[d.type][0]):'Ton défi de la semaine')+'</small>'
+      +'<button type="button" class="cj-tile" data-cj="'+(pb?'bilan':'defi')+'"><span class="cj-ic b">'+I(P.pulse,22)+'</span><b>Mon Stream</b><small>'+(pb?'Bilan à faire':d?esc(dlab(d)):'Ton défi de la semaine')+'</small>'
         +'<span class="cj-tm"><strong>'+(pb?done(pb)+'/'+pb.cible:d?done(d)+'/'+d.cible:'—')+'</strong><em>'+(pb?'semaine passée':d?(done(d)>=d.cible?'défi réussi 🎉':'défi en cours'):'à choisir')+'</em></span><i class="cj-bar"><i style="width:'+(pb?dpct(pb):dpct(d))+'%"></i></i></button>'
       +'<button type="button" class="cj-tile" data-cj="prof"><span class="cj-ic b">'+I(P.user,22)+'</span><b>Profil & documents</b><small>Ton CV visible pour les recruteurs</small>'
         +'<span class="cj-tm"><strong>'+p+' %</strong><em>'+(p<100?'profil complété':'profil complet ✓')+'</em></span><i class="cj-bar"><i style="width:'+p+'%"></i></i></button>'
@@ -17790,30 +17791,7 @@ window.cpSheetArrows=function(sc,host){
         +'<span class="cj-tm"><strong>'+conv+'</strong><em>message'+(conv>1?'s':'')+(unread?' · nouveau':'')+'</em></span><span class="cj-tvis'+(visOn()?' on':'')+'">'+I(P.eye,13)+(visOn()?'Profil visible':'Profil privé')+'</span></button>'
       +'</div>'
       +'<button type="button" class="cj-box cj-tip cj-mtip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
-    b.innerHTML=coach()+tiles+'<div class="cj-grid">'
-      /* 1. Mon Stream */
-      +'<div class="cj-card">'+head('defi',P.pulse,'Mon Stream','Ton plan d\'action avec Lisa','b')+defi
-      +'<button type="button" class="cj-box cj-tip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
-      +'<div class="cj-stats"><button type="button" data-cj="list" data-f="week"><span>'+I(P.doc,17)+'</span><b>'+weekN+'</b><small>candidatures cette semaine</small></button><button type="button" data-cj="list" data-f="rel"><span>'+I(P.clock,17)+'</span><b>'+relN()+'</b><small>relances à faire</small></button><button type="button" data-cj="list" data-f="itw"><span>'+I(P.users,17)+'</span><b>'+itw+'</b><small>entretiens en cours</small></button></div></div>'
-      /* 2. Profil & documents */
-      +'<div class="cj-card">'+head('prof',P.user,'Profil & documents','Ton profil, vu par les recruteurs','b')
-      +'<button type="button" class="cj-box cj-comp" data-cj="wiz">'+ring(p)+'<span class="cj-box-t"><b>Complétude du profil</b><small>'+(p<100?'Complète les étapes ci-dessous : Lisa te pose les questions.':'Profil complet : il est prêt pour les recruteurs.')+'</small></span></button>'
-      +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+I(P.chev,15)+'</button>'; }).join('')+'</div>'
-      +'<button type="button" class="cj-main" data-cj="wiz">'+I(P.pen,18)+(p<100?'Compléter mon profil':'Modifier mon profil')+'</button></div>'
-      /* 3. Candidatures */
-      +'<div class="cj-card">'+head('list',P.brief,'Candidatures','Postuler et suivre tes candidatures','b')
-      +'<div class="cj-counts">'+['all','cours','itw','rep'].map(function(f,i){ return '<button type="button" class="c'+i+'" data-cj="list" data-f="'+f+'"><b>'+cnt(f)+'</b><small>'+FILTRES[f][0]+'</small></button>'; }).join('')+'</div>'
-      +'<div class="cj-rows big"><button type="button" data-cj="plats"><span class="cj-ri lg">'+I(P.search,20)+'</span><span class="cj-rt"><b>Trouver des offres</b><small>Sur Indeed, France Travail et Malt</small></span>'+I(P.chev,15)+'</button>'
-      +'<button type="button" data-cj="add"><span class="cj-ri lg">'+I(P.plus,20)+'</span><span class="cj-rt"><b>Ajouter une candidature</b><small>Avec une capture d\'écran, ou en remplissant les infos</small></span>'+I(P.chev,15)+'</button>'
-      +'<button type="button" data-cj="list" data-f="all"><span class="cj-ri lg">'+I(P.list,20)+'</span><span class="cj-rt"><b>Suivre mes candidatures</b><small>Statut, relances et preuves d\'envoi</small></span>'+I(P.chev,15)+'</button></div>'
-      +'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button></div>'
-      /* 4. Recruteurs & messages */
-      +'<div class="cj-card">'+head('rec',P.users,'Recruteurs & messages','Échanger avec les recruteurs','g')
-      +'<div class="cj-box cj-vis"><span class="cj-ic b sm">'+I(P.eye,20)+'</span><span class="cj-box-t"><b>'+(visOn()?'Profil visible':'Rends ton profil visible')+'</b><small>'+(visOn()?'Les recruteurs CareerPulse peuvent te trouver et te contacter.':'Active la visibilité pour que les recruteurs puissent te trouver et te contacter.')+'</small></span><button type="button" class="cps-sw'+(visOn()?' on':'')+'" data-cj="vis" aria-label="Visible par les recruteurs"><i></i></button></div>'
-      +'<div class="cj-rows big"><button type="button" data-cj="rec"><span class="cj-ri lg">'+I(P.search,20)+'</span><span class="cj-rt"><b>Annuaire des recruteurs</b><small>Rechercher une entreprise, un secteur, une ville</small></span>'+I(P.chev,15)+'</button>'
-      +'<button type="button" data-cj="rec"><span class="cj-ri lg">'+I(P.chat,20)+'</span><span class="cj-rt"><b>Mes messages</b><small>'+(S.convs.length?S.convs.length+' échange'+(S.convs.length>1?'s':'')+' avec les recruteurs':'Tes échanges avec les recruteurs')+'</small></span>'+(S.convs.some(function(c){ return c.unreadCand; })?'<em class="cj-dot"></em>':'')+I(P.chev,15)+'</button></div>'
-      +'<button type="button" class="cj-main" data-cj="rec">'+I(P.users,18)+'Voir l\'annuaire des recruteurs</button></div>'
-      +'</div>'
+    b.innerHTML=coach()+tiles
       +'<div class="cj-inv"><span class="cj-ic b sm">'+I(P.share,20)+'</span><span class="cj-box-t"><b>Invite un(e) ami(e) en recherche</b><small>CareerPulse Stream, le profil pro et le suivi des candidatures sont gratuits pour les membres.</small></span><button type="button" class="cj-btn ghost" data-cj="inv-ami">Partager</button></div>';
   }
   function drawProfTop(){
@@ -17852,6 +17830,15 @@ window.cpSheetArrows=function(sc,host){
     return o;
   }
   function say2(html){ return '<div class="cj-say">'+av('sm')+'<div>'+html+'</div></div>'; }
+  /* Page « écrire » : ouverte par chaque bouton Autre */
+  function writePage(t,q,o,cb){ o=o||{};
+    var w=sheet(t,'Écris ta réponse, Lisa s\'occupe du reste',say2(q)+'<div class="cj-form cj-write">'+(o.area?'<textarea id="cj-w" rows="5" maxlength="'+(o.max||300)+'" placeholder="'+esc(o.ph||'')+'">'+esc(o.v||'')+'</textarea>':'<input id="cj-w" '+(o.num?'type="number" min="1" max="50" inputmode="numeric"':'maxlength="'+(o.max||80)+'"')+' placeholder="'+esc(o.ph||'')+'" value="'+esc(o.v||'')+'">')
+      +'<button type="button" class="cj-main" id="cj-wok">'+I(P.check,18)+'Valider</button></div>');
+    var f=$('cj-w'); setTimeout(function(){ try{ f.focus(); }catch(e){} },250);
+    function ok(){ var v=String(f.value||'').trim(); if(!v){ f.classList.add('err'); say('Écris ta réponse pour continuer'); return; } if(o.num){ v=parseInt(v,10); if(!(v>0)){ say('Indique un nombre'); return; } v=Math.min(50,v); }
+      w.close(); cb(v); }
+    $('cj-wok').onclick=ok; f.onkeydown=function(e){ if(e.key==='Enter' && !o.area){ e.preventDefault(); ok(); } };
+    return w; }
 
   /* Profil & documents : on déplace la vraie zone (lettre, documents) dans la page, puis on la remet */
   function openProf(target){
@@ -17864,9 +17851,9 @@ window.cpSheetArrows=function(sc,host){
     o.body.appendChild(pane); pane.style.display='block';
     var lk=document.createElement('div'); lk.className='cj-evas';
     lk.innerHTML='<div class="cps-sec"><span class="cps-si">'+I(P.clip)+'</span>Ranger et améliorer avec EVA</div>'
-      +evPf('notes','Classer mes documents dans mon Portfolio','Portfolio '+esc(PROFS[S.st.profil||'dem'])+' · Documents')
-      +evPf('doc','Faire analyser ma lettre ou mon CV','EVA lit ton document comme un recruteur et te donne une note')
-      +evPf('taches','Suivre mes tâches','Portfolio '+esc(PROFS[S.st.profil||'dem'])+' · Suivi des tâches');
+      +evPf('notes','Ouvrir mon Portfolio','Documents, tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))
+      +evPf('doc','Faire analyser ma lettre ou mon CV','Dans ton Portfolio : EVA lit ton document comme un recruteur')
+      ;
     o.body.appendChild(lk);
     if(target==='lm'||target==='docs'){ var acc=target==='lm'?'acc-cv':'acc-docs', a=$(acc); if(a && a.style.display!=='block' && typeof toggleAccordion==='function') toggleAccordion(acc);
       setTimeout(function(){ var t=$(target==='lm'?'cps-sec-lm':'cps-sec-docs'); if(t) t.scrollIntoView({ behavior:'smooth', block:'start' }); },120); }
@@ -17888,7 +17875,7 @@ window.cpSheetArrows=function(sc,host){
             +'<div class="cj-it-t"><b>'+esc(x.poste||x.entreprise)+'</b><span>'+esc(x.poste?x.entreprise:'')+(x.plateforme?(x.poste?' · ':'')+esc(x.plateforme):'')+'</span><small>'+I(P.cal,12)+'Le '+new Date(x.date).toLocaleDateString('fr-FR')+(x.mode?' · '+esc(x.mode):'')+(x.adresse?' · '+esc(x.adresse):'')+'</small>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+(x.lien?'<a class="cj-offer" href="'+esc(x.lien)+'" target="_blank" rel="noopener noreferrer">'+I(P.ext,13)+'Voir l\'offre</a>':'')+'</div></div>'
             +'<div class="cj-it-ft"><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cj="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div></div>'; }).join('')+'</div>'
           :'<div class="cps-empty">Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : le compteur se met à jour tout seul.</div>')
-        +'<div class="cj-evas">'+(o.f==='itw'?ev('itw'):'')+evPf('taches','Noter mes relances dans mon Portfolio','Portfolio '+esc(PROFS[S.st.profil||'dem'])+' · Suivi des tâches')+(o.f!=='itw'?ev('itw'):'')+'</div>';
+        +'<div class="cj-evas">'+(o.f==='itw'?ev('itw'):'')+evPf('taches','Noter mes relances dans mon Portfolio','Tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))+(o.f!=='itw'?ev('itw'):'')+'</div>';
     }
     o.render=render; render();
   }
@@ -17919,6 +17906,8 @@ window.cpSheetArrows=function(sc,host){
     }
     function snap(){ var k={}; ['cj-co','cj-po','cj-li','cj-ad','cj-da','cj-mo','cj-pl','cj-et'].forEach(function(i){ var e=$(i); if(e) k[i]=e.value; }); return k; }
     function fill(k){ Object.keys(k).forEach(function(i){ var e=$(i); if(e) e.value=k[i]; }); }
+    o.body.addEventListener('change',function(e){ var sl=e.target; if(!sl.matches('#cj-pl,#cj-mo') || sl.value!=='Autre') return; var pl=sl.id==='cj-pl';
+      writePage(pl?'Autre plateforme':'Autre mode d\'envoi',pl?'Sur quelle <b>plateforme</b> ou quel <b>site</b> as-tu postulé ?':'Comment as-tu <b>envoyé</b> ta candidature ?',{ ph:pl?'Ex : Welcome to the Jungle, HelloWork…':'Ex : Formulaire du site, LinkedIn…', max:60 },function(v){ var op=document.createElement('option'); op.textContent=v; sl.insertBefore(op,sl.lastElementChild); sl.value=v; }); });
     o.render=render; o.save=function(btn){
       var co=val('cj-co'), c3=col(); if(!co){ say('Indique le nom de l\'entreprise'); var e=$('cj-co'); if(e) e.focus(); return; }
       if(o.mode==='cap' && !o.img){ say('Ajoute ta preuve (capture, photo ou fichier), ou choisis « Je remplis à la main »'); return; }
@@ -17963,9 +17952,9 @@ window.cpSheetArrows=function(sc,host){
     }
     function chooser(){
       var p=o.pick, custom=NBS.indexOf(p.cible)<0;
-      return '<div class="cps-sec"><span class="cps-si">'+I(P.target)+'</span>1. Choisis ton défi</div><div class="cj-types">'+Object.keys(DEFIS).map(function(k){ return '<button type="button" class="'+(p.type===k?'on':'')+'" data-cj="dt" data-t="'+k+'"><span class="cj-ri lg">'+I(DEFIS[k][2],19)+'</span><b>'+DEFIS[k][0]+'</b>'+(DEFIS[k][3]?'<small>Compté automatiquement</small>':'<small>Tu le notes toi-même</small>')+'</button>'; }).join('')+'</div>'
+      return '<div class="cps-sec"><span class="cps-si">'+I(P.target)+'</span>1. Choisis ton défi</div><div class="cj-types">'+Object.keys(DEFIS).map(function(k){ return '<button type="button" class="'+(p.type===k?'on':'')+'" data-cj="dt" data-t="'+k+'"><span class="cj-ri lg">'+I(DEFIS[k][2],19)+'</span><b>'+(k==='autre'&&p.type==='autre'&&p.label?esc(p.label):DEFIS[k][0])+'</b>'+(k==='autre'?'<small>'+(p.type==='autre'&&p.label?'Touche pour modifier':'Tu l\'écris toi-même')+'</small>':DEFIS[k][3]?'<small>Compté automatiquement</small>':'<small>Tu le notes toi-même</small>')+'</button>'; }).join('')+'</div>'
         +'<div class="cps-sec"><span class="cps-si">'+I(P.chart)+'</span>2. Ton objectif pour la semaine</div><div class="cj-nbs">'+NBS.map(function(n){ return '<button type="button" class="'+(p.cible===n?'on':'')+'" data-cj="dn" data-n="'+n+'">'+n+'</button>'; }).join('')
-        +'<label class="cj-own'+(custom?' on':'')+'">Autre<input type="number" min="1" max="50" id="cj-own" placeholder="…" value="'+(custom?p.cible:'')+'"></label></div>'
+        +'<button type="button" class="cj-own'+(custom?' on':'')+'" data-cj="downn">'+(custom?'Autre : <b>'+p.cible+'</b>':'Autre…')+'</button></div>'
         +'<button type="button" class="cj-main" data-cj="dgo">'+I(P.check,18)+'Je relève ce défi</button>';
     }
     function render(){
@@ -17973,7 +17962,7 @@ window.cpSheetArrows=function(sc,host){
       if(pb){ o.body.innerHTML=say2('Avant un nouveau défi, faisons le <b>bilan</b> de ta '+wkLabel(pb.week)+'.')+'<button type="button" class="cj-main" data-cj="bilan">'+I(P.trophy,18)+'Faire mon bilan</button>'+hist(); return; }
       var evq='<div class="cj-evas">'+(dow()>=4?ev('itw'):ev('quiz'))+'</div>';
       if(!d || o.change){ o.body.innerHTML=say2(o.change?'Pas de souci, on ajuste ton défi. Choisis ce qui te semble <b>réaliste et motivant</b>.':'Chaque semaine, on se fixe <b>un objectif clair</b>. Choisis ton défi et ton chiffre : de 1 à 10, ou ton propre objectif. Je te relance si ça coince 😉')+chooser()+evq+hist(); return; }
-      var f=done(d), pc=dpct(d), r=Math.max(0,d.cible-f), info=DEFIS[d.type];
+      var f=done(d), pc=dpct(d), r=Math.max(0,d.cible-f), info=DEFIS[d.type].slice(); info[0]=dlab(d);
       o.body.innerHTML=say2(f>=d.cible?'Défi <b>réussi</b> 🎉 Tu peux faire ton bilan maintenant, ou continuer sur ta lancée.':(dow()>=4?'La semaine se termine : il te reste <b>'+r+'</b>. Tu peux encore y arriver, ou faire ton bilan.':'Il te reste <b>'+r+'</b> pour relever ton défi. '+(d.type==='cand'?'Chaque candidature ajoutée compte automatiquement.':'Note chaque action dès qu\'elle est faite.')))
         +'<div class="cj-now"><div class="cj-now-hd"><span class="cj-ic g">'+I(info[2],22)+'</span><div><b>'+info[0]+'</b><small>'+wkLabel(d.week)+'</small></div><em class="cj-score">'+f+'/'+d.cible+'</em></div><i class="cj-bar lg"><i style="width:'+pc+'%"></i></i><p class="cj-mini">'+pc+' % de ton objectif · '+f+' '+info[1]+'</p>'
         +(d.type==='cand'?'<button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter une candidature</button>':'<div class="cj-pm"><button type="button" data-cj="dm" data-d="-1" aria-label="Retirer">−</button><b>'+f+'</b><button type="button" data-cj="dm" data-d="1" aria-label="Ajouter">+</button></div>')
@@ -17990,20 +17979,20 @@ window.cpSheetArrows=function(sc,host){
   function openBilan(){
     var d=pendingBilan()||curDefi(); if(!d){ openDefi(); return; }
     if(DEFO){ DEFO.close(); }
-    var o=sheet('Bilan de la semaine','Avec Lisa, ton assistante CareerPulse',''), A={ fait:done(d) }, info=DEFIS[d.type];
+    var o=sheet('Bilan de la semaine','Avec Lisa, ton assistante CareerPulse',''), A={ fait:done(d) }, info=DEFIS[d.type].slice(); info[0]=dlab(d);
     o.body.innerHTML='<div class="cpw-log cj-log"></div><div class="cpw-input cj-in"></div>';
     var log=o.body.querySelector('.cj-log'), inp=o.body.querySelector('.cj-in');
     function down(){ setTimeout(function(){ o.sc.scrollTo({ top:o.sc.scrollHeight, behavior:'smooth' }); },60); }
     function bot(html,cb){ var m=document.createElement('div'); m.className='cpw-row'; m.innerHTML=av('sm')+'<div class="cpw-b"><span class="cpw-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ m.querySelector('.cpw-b').innerHTML=html; down(); if(cb) cb(); },550); }
     function me(t){ var m=document.createElement('div'); m.className='cpw-me'; m.textContent=t; log.appendChild(m); down(); }
     function chips(list,cb){ inp.innerHTML='<div class="cpw-chips">'+list.map(function(x,i){ return '<button type="button" class="cpw-chip" data-i="'+i+'">'+esc(x)+'</button>'; }).join('')+'</div>'; down();
-      inp.onclick=function(e){ var b=e.target.closest('[data-i]'); if(!b) return; inp.innerHTML=''; var v=list[+b.getAttribute('data-i')]; me(v); cb(v); }; }
+      inp.onclick=function(e){ var b=e.target.closest('[data-i]'); if(!b) return; var v=list[+b.getAttribute('data-i')]; if(/^Autre/.test(v)){ cb(v); return; } inp.innerHTML=''; me(v); cb(v); }; }
     var Q=[
       function(n){ if(d.type==='cand'){ bot('Ton défi de la '+wkLabel(d.week)+' : <b>'+info[0].toLowerCase()+'</b>, objectif <b>'+d.cible+'</b>. D\'après ton suivi, tu en as fait <b>'+A.fait+'</b>. C\'est bien ça ?',function(){ chips(['Oui, c\'est ça','J\'en ai fait plus'],function(v){ if(/plus/.test(v)){ bot('Combien en as-tu fait au total ?',function(){ var L=[]; for(var i=A.fait;i<=Math.max(d.cible+3,A.fait+3);i++) L.push(String(i)); chips(L,function(x){ A.fait=+x; n(); }); }); } else n(); }); }); }
         else bot('Ton défi de la '+wkLabel(d.week)+' : <b>'+info[0].toLowerCase()+'</b>, objectif <b>'+d.cible+'</b>. Tu en as noté <b>'+A.fait+'</b>. Combien en as-tu fait au total ?',function(){ var L=[]; for(var i=0;i<=Math.max(d.cible+2,A.fait);i++) L.push(String(i)); chips(L,function(x){ A.fait=+x; n(); }); }); },
       function(n){ bot('As-tu reçu des <b>réponses</b> de recruteurs cette semaine ?',function(){ chips(['Oui, au moins une','Pas encore'],function(v){ A.rep=/^Oui/.test(v); n(); }); }); },
       function(n){ bot('Comment s\'est passée ta semaine, honnêtement ?',function(){ chips(['Très bien 💪','Correcte 🙂','Difficile 😕'],function(v){ A.hum=v; n(); }); }); },
-      function(n){ bot('Qu\'est-ce qui t\'a le plus <b>freiné</b> ?',function(){ chips(['Le manque de temps','Peu d\'offres adaptées','Le manque de confiance','Rien, tout roule'],function(v){ A.frein=v; n(); }); }); }
+      function(n){ bot('Qu\'est-ce qui t\'a le plus <b>freiné</b> ?',function(){ chips(['Le manque de temps','Peu d\'offres adaptées','Le manque de confiance','Rien, tout roule','Autre chose…'],function(v){ if(/^Autre/.test(v)){ writePage('Ce qui t\'a freiné','Dis-moi en quelques mots ce qui t\'a <b>freiné</b> cette semaine. Je m\'en sers pour te conseiller.',{ area:true, ph:'Ex : Je ne savais pas quoi écrire dans mes relances', max:240 },function(t){ A.frein=t; inp.innerHTML=''; me(t); n(); }); return; } A.frein=v; n(); }); }); }
     ];
     var k=0; function step(){ if(k<Q.length){ Q[k++](step); } else result(); }
     function result(){
@@ -18011,7 +18000,7 @@ window.cpSheetArrows=function(sc,host){
       var mot= ok ? ['Défi réussi : tu prouves que tu sais tenir un objectif. C\'est exactement ce que cherchent les recruteurs.','Bravo ! Une semaine comme ça, c\'est la régularité qui finit par payer.'][d.cible%2]
         : pc>=50 ? 'Tu n\'es pas loin : '+pc+' %, c\'est une vraie semaine de travail. La prochaine, on y va jusqu\'au bout.'
         : 'Cette semaine a été plus dure, et c\'est normal. L\'important, c\'est de repartir : on ajuste l\'objectif et on avance.';
-      var cons={ 'Le manque de temps':'Bloque 2 créneaux fixes de 30 minutes dans ta semaine, comme des rendez-vous : c\'est plus efficace qu\'une grosse session.', 'Peu d\'offres adaptées':'Élargis un peu ta recherche : métiers proches, villes voisines, télétravail. Et tente une candidature spontanée par semaine.', 'Le manque de confiance':'Relis ton profil et note 3 réussites concrètes de ton parcours. Tu as plus de valeur que tu ne le penses.', 'Rien, tout roule':'Garde ce rythme et vise un cran plus haut la semaine prochaine : '+Math.min(50,d.cible+1)+' au lieu de '+d.cible+'.' }[A.frein];
+      var cons={ 'Le manque de temps':'Bloque 2 créneaux fixes de 30 minutes dans ta semaine, comme des rendez-vous : c\'est plus efficace qu\'une grosse session.', 'Peu d\'offres adaptées':'Élargis un peu ta recherche : métiers proches, villes voisines, télétravail. Et tente une candidature spontanée par semaine.', 'Le manque de confiance':'Relis ton profil et note 3 réussites concrètes de ton parcours. Tu as plus de valeur que tu ne le penses.', 'Rien, tout roule':'Garde ce rythme et vise un cran plus haut la semaine prochaine : '+Math.min(50,d.cible+1)+' au lieu de '+d.cible+'.' }[A.frein] || 'Merci de me l\'avoir dit. Transforme ce frein en une petite action concrète pour lundi, et note-la dans ton Portfolio, rubrique Tâches : on la vérifiera ensemble au prochain bilan.';
       var sug= ok ? Math.min(50,d.cible+1) : (pc<50 ? Math.max(1,Math.ceil(d.cible/2)) : d.cible);
       var items=[['Objectif atteint ('+A.fait+'/'+d.cible+')',ok],['Réponses de recruteurs',A.rep],['Moral de la semaine',!/Difficile/.test(A.hum)]];
       bot('Voici ton bilan 👇',function(){
@@ -18167,12 +18156,14 @@ window.cpSheetArrows=function(sc,host){
     if(a==='mode' && ADDO){ var keep={}; ['cj-co','cj-po','cj-li','cj-ad','cj-da','cj-mo','cj-pl','cj-et'].forEach(function(i){ var e=$(i); if(e) keep[i]=e.value; }); ADDO.mode=b.getAttribute('data-m'); ADDO.render(); Object.keys(keep).forEach(function(i){ var e=$(i); if(e) e.value=keep[i]; }); return; }
     if(a==='save' && ADDO){ ADDO.save(b); return; }
     if(DEFO){
-      if(a==='dt'){ DEFO.pick.type=b.getAttribute('data-t'); DEFO.render(); return; }
+      if(a==='dt'){ var tt=b.getAttribute('data-t'); if(tt==='autre'){ writePage('Ton défi','Quel <b>défi</b> veux-tu te lancer cette semaine ? Écris-le simplement, je t\'aide à le tenir.',{ ph:'Ex : Aller à 2 forums emploi', v:DEFO.pick.label||'', max:60 },function(v){ DEFO.pick.type='autre'; DEFO.pick.label=v; DEFO.render(); }); return; }
+        DEFO.pick.type=tt; DEFO.pick.label=''; DEFO.render(); return; }
+      if(a==='downn'){ writePage('Ton objectif','Combien veux-tu en faire <b>cette semaine</b> ? Choisis un chiffre réaliste, entre 1 et 50.',{ num:true, ph:'Ex : 4', v:NBS.indexOf(DEFO.pick.cible)<0?DEFO.pick.cible:'' },function(v){ DEFO.pick.cible=v; DEFO.render(); }); return; }
       if(a==='dn'){ DEFO.pick.cible=+b.getAttribute('data-n'); DEFO.render(); return; }
-      if(a==='dch'){ DEFO.change=true; var cd=curDefi(); if(cd) DEFO.pick={ type:cd.type, cible:cd.cible }; DEFO.render(); return; }
-      if(a==='dgo'){ var own=parseInt(val('cj-own'),10); if(own>0) DEFO.pick.cible=Math.min(50,own); if(!user()){ say('Connecte-toi pour relever un défi'); return; }
-        var old=curDefi(); S.st.defi={ week:wk(), type:DEFO.pick.type, cible:DEFO.pick.cible, manuel:old&&old.type===DEFO.pick.type?(old.manuel||0):0, debut:new Date().toISOString() };
-        DEFO.change=false; saveSt(); say('C\'est parti ! Défi : '+DEFIS[DEFO.pick.type][0].toLowerCase()+' · objectif '+DEFO.pick.cible+' 💪'); DEFO.render(); return; }
+      if(a==='dch'){ DEFO.change=true; var cd=curDefi(); if(cd) DEFO.pick={ type:cd.type, cible:cd.cible, label:cd.label||'' }; DEFO.render(); return; }
+      if(a==='dgo'){ if(DEFO.pick.type==='autre' && !DEFO.pick.label){ say('Écris ton défi avant de valider'); return; } if(!user()){ say('Connecte-toi pour relever un défi'); return; }
+        var old=curDefi(); S.st.defi={ week:wk(), type:DEFO.pick.type, label:DEFO.pick.type==='autre'?DEFO.pick.label:'', cible:DEFO.pick.cible, manuel:old&&old.type===DEFO.pick.type?(old.manuel||0):0, debut:new Date().toISOString() };
+        DEFO.change=false; saveSt(); say('C\'est parti ! Défi : '+dlab(DEFO.pick).toLowerCase()+' · objectif '+DEFO.pick.cible+' 💪'); DEFO.render(); return; }
       if(a==='dm'){ var d=curDefi(); if(!d) return; d.manuel=Math.max(0,(d.manuel||0)+(+b.getAttribute('data-d'))); saveSt(); DEFO.render(); if(d.manuel===d.cible) say('Défi réussi 🎉 Tu peux faire ton bilan'); return; }
     }
   }
@@ -18181,7 +18172,6 @@ window.cpSheetArrows=function(sc,host){
     var cv=e.target.closest('[data-conv]'); if(cv && inZone(cv)){ openConv(cv.getAttribute('data-conv')); return; }
     var b=e.target.closest('[data-cj]'); if(!b || !inZone(b)) return; act(b.getAttribute('data-cj'),b);
   });
-  document.addEventListener('input',function(e){ if(e.target.id==='cj-own' && DEFO){ var n=parseInt(e.target.value,10); if(n>0){ DEFO.pick.cible=Math.min(50,n); [].forEach.call(document.querySelectorAll('.cj-nbs button'),function(x){ x.classList.remove('on'); }); e.target.parentNode.classList.add('on'); } } });
   document.addEventListener('change',function(e){ var s=e.target.closest('.cps-st'); if(!s || !inZone(s)) return; var id=s.getAttribute('data-id'), c=col(); if(!c) return;
     c.doc(id).set({ statut:s.value, majAt:new Date().toISOString() },{ merge:true }).then(function(){ S.list.forEach(function(x){ if(x.id===id) x.statut=s.value; }); say('Statut mis à jour'); if(LISTO) LISTO.render(); drawAll(); }).catch(function(){ say('Mise à jour impossible pour le moment'); }); });
 
