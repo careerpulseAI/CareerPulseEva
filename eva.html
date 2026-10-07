@@ -31117,6 +31117,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     document.addEventListener(t,function(){_lastUserAct=Date.now();},true);
   });
   var _go=window.go;
+  document.addEventListener('click',function(e){ var t=e.target && e.target.closest && e.target.closest('[onclick]'); if(t && /^\s*go\(\s*'eva'\s*\)\s*;?\s*$/.test(t.getAttribute('onclick')||'')) window._cpBackTap=Date.now(); },true);
   var REDUCE=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   function swap(args){
     var r=_go.apply(window,args);
@@ -31129,7 +31130,8 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     if(EMBED){ if(user && window.cpMenuLeave) window.cpMenuLeave(id); return; }
     if(document.getElementById('s-'+id)){
       // Retour à l'accueil EVA (mobile) : l'accueil glisse par-dessus la page quittée
-      if(PART==='eva' && id==='eva' && window.innerWidth<900 && document.startViewTransition && !REDUCE){
+      /* Uniquement sur un vrai bouton « retour » : sinon les fonctions qui ouvrent l'accueil EVA puis le remplissent (Portfolio, chat diagnostic…) seraient effacées */
+      if(PART==='eva' && id==='eva' && window.innerWidth<900 && document.startViewTransition && !REDUCE && Date.now()-(window._cpBackTap||0)<700){
         var cur=document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,.screen.active');
         if(cur && cur.id!=='s-eva'){
           var bargs=arguments, root=document.documentElement;
