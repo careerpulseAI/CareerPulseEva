@@ -17686,8 +17686,8 @@ window.cpSheetArrows=function(sc,host){
   var PUB=['Un profil complet et visible, c\'est ce que les recruteurs CareerPulse regardent en premier.','Chaque candidature notée ici, c\'est une relance que tu n\'oublieras jamais.','Avec CareerPulse, tu avances chaque semaine avec un objectif clair, et je suis là pour te le faire tenir.','Ton profil CareerPulse est gratuit : complète-le une fois, les recruteurs le retrouvent à tout moment.'];
   var S={ list:[], convs:[], st:{ exp:'', comp:[], defi:null, hist:[], profil:'' } };
   var PROFS={ dem:'Demandeur d\'emploi', etu:'Étudiant(e)', rec:'En reconversion', frl:'Freelance' };
-  /* Liens vers EVA (eva.html) : le Portfolio s'ouvre sur le bon profil et la bonne rubrique */
-  function pf(tab){ return 'eva.html#pf-'+(S.st.profil||'dem')+'-'+tab; }
+  /* Liens vers EVA (eva.html) : chaque lien ouvre la page du menu EVA correspondante */
+  function pf(){ return 'eva.html#eva-workspace'; }
   var EV={ quiz:['eva.html#eva-entretien','Quiz et mises en situation','Entraîne-toi avec EVA avant de postuler'],
     itw:['eva.html#eva-entretien','Simulation d\'entretien avec EVA','Prépare tes prochains entretiens, à ton rythme'],
     moral:['eva.html#eva-bienetre','Motivation & Équilibre','EVA t\'aide à reprendre confiance'],
