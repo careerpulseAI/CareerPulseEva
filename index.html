@@ -2988,7 +2988,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       <button type="button" class="pchoice emp" onclick="go('pro-employeur')">
         <div class="pchoice-top">
           <span class="pchoice-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/><path d="M3 13h18"/></svg></span>
-          <span class="ptag soon">Bientôt</span>
+          <span class="ptag ok">Ouvert en test</span>
         </div>
         <h2>Je suis employeur</h2>
         <p>Publiez vos offres et trouvez des candidats prêts à postuler.</p>
@@ -2997,7 +2997,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Publication d'offres et profils anonymisés</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Réponses des candidats en un clic</li>
         </ul>
-        <span class="pchoice-go">Être prévenu de l'ouverture</span>
+        <span class="pchoice-go">Accéder à l'espace employeur</span>
       </button>
     </div>
 
@@ -3026,16 +3026,8 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 <div class="ptop"><button type="button" data-cp-back="0" class="pback" onclick="go('pro')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Espace pros</button><button type="button" data-cp-back="0" class="pback-site" onclick="go('home')" aria-label="Retour à l'accueil CareerPulse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg><span class="t">Retour au site</span></button></div>
 
     
-    <div class="pcard">
-      <div class="pcard-hd">
-        <span class="pchoice-ico" style="background:#eef2ff;color:#1e3a8a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/><path d="M3 13h18"/></svg></span>
-        <div><h2>Espace employeur</h2><span>Ouverture prochaine</span></div>
-      </div>
-      <p>L'espace employeur est en préparation : publication d'offres, profils anonymisés et réponses des candidats en un clic, avec un compte vérifié par SIRET.</p>
-      <p>Laissez-nous votre adresse et nous vous écrivons dès l'ouverture.</p>
-      <a class="pbtn pri" href="mailto:careerpulse-pro@outlook.com?subject=Espace%20employeur%20%E2%80%94%20%C3%AAtre%20pr%C3%A9venu&body=Bonjour%2C%0A%0AJe%20souhaite%20%C3%AAtre%20pr%C3%A9venu(e)%20de%20l'ouverture%20de%20l'espace%20employeur%20CareerPulse.%0A%0AEntreprise%20%3A%0ASIRET%20%3A%0AVille%20%3A%0A">Être prévenu par e-mail</a>
-    </div>
-  
+<div id="emp-body"><div class="pload"><div class="pspin"></div>Chargement…</div></div>
+<div id="emp-root"></div>
 </div></div>
 <div class="screen" id="s-mentions-legales">
 <div class="wrap" style="padding-top:10px;padding-bottom:40px">
@@ -18190,5 +18182,411 @@ window.cpSheetArrows=function(sc,host){
 </script>
 
 
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   ESPACE EMPLOYEUR — même structure que l'espace centre de formation
+   Inscription · vérification SIRET par CareerPulse · offres · profils anonymisés · messagerie
+   Collections : employeurs · offres_emploi · emploi_conversations (lue aussi par le candidat)
+═══════════════════════════════════════════════════════════════ */
+(function(){
+  var SECTEURS=['Tech & Dev','Data / IA','Marketing Digital','Commercial & Vente','Finance','RH & Recrutement','Design / UX','Chef de projet','Luxe & Mode','Santé','Juridique','Autre'];
+  var CONTRATS=['CDI','CDD','Intérim','Alternance','Stage','Freelance / Mission'];
+  var TELE=['Sur site','Hybride','Télétravail complet'];
+  var ST={ tab:'cands', emp:null, offres:[], cands:[], convs:[], q:'', edit:null, open:null };
+  function $(id){ return document.getElementById(id); }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function toast(m){ if(window.ecShowToast) ecShowToast(m); }
+  function auth(){ return window.fbAuth || (typeof fbAuth!=='undefined' ? fbAuth : null); }
+  function db(){ return window.fbDb; }
+  function me(){ var A=auth(); return A&&A.currentUser; }
+  function now(){ return new Date().toISOString(); }
+  function isOn(){ var e=$('s-pro-employeur'); return !!(e && e.classList.contains('active')); }
+  function setHash(h){ try{ history.replaceState(null,'','#'+h); }catch(e){} }
+  function S(p,w){ return '<svg viewBox="0 0 24 24"'+(w?' width="'+w+'" height="'+w+'"':'')+' fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  var I={
+    brief:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/><path d="M3 13h18"/>',
+    users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/>',
+    lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
+    check:'<path d="m5 12 5 5L20 7"/>', send:'<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>',
+    search:'<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>', pin:'<path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+    pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>', trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>',
+    pause:'<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>', play:'<path d="M7 4v16l13-8z"/>',
+    mail:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/>', back:'<path d="M15 18l-6-6 6-6"/>', chev:'<path d="m9 18 6-6-6-6"/>', x:'<path d="M18 6 6 18M6 6l12 12"/>'
+  };
+  function opt(list,v,ph){ return (ph?'<option value="">'+ph+'</option>':'')+list.map(function(o){ return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>'; }).join(''); }
+  function sel(id,list,v,ph){ return '<select id="'+id+'" style="font:500 .95rem/1.2 inherit;padding:13px 14px;border:1px solid #d1d5db;border-radius:12px;background:#fff">'+opt(list,v,ph)+'</select>'; }
+
+  /* Rendu de la zone haute (connexion, inscription, vérification) et de l'espace */
+  function setBody(html){ $('emp-body').innerHTML=html; $('emp-root').innerHTML=''; if(window.cpProSetLong) cpProSetLong(html.indexOf('pe-nom')>-1); }
+  function head(t,s){ return '<div class="pcard-hd"><span class="pchoice-ico" style="background:#eef2ff;color:#1e3a8a">'+S(I.brief)+'</span><div><h2>'+t+'</h2><span>'+s+'</span></div></div>'; }
+
+  function loginHtml(){
+    return '<div class="pcard">'+head('Espace employeur','Connexion à votre compte entreprise')
+      +'<div class="pf"><label for="pel-email">E-mail</label><input id="pel-email" type="email" autocomplete="email" inputmode="email"></div>'
+      +'<div class="pf"><label for="pel-pass">Mot de passe</label><input id="pel-pass" type="password" autocomplete="current-password"></div>'
+      +'<div class="perr" id="pel-err"></div>'
+      +'<button class="pbtn pri" id="pel-go" type="button">Se connecter</button>'
+      +'<div style="text-align:center;margin-top:12px"><button class="plinkbtn" type="button" id="pel-forgot">Mot de passe oublié ?</button></div>'
+      +'<div class="psep">ou</div>'
+      +'<button class="pbtn sec" id="pel-google" type="button"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.6 12.2c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.6c2.1-1.9 3.3-4.8 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.5-1 7.3-2.7l-3.6-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.1v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 0 1 0-4.4V7H2.1a11 11 0 0 0 0 10z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3 .6 4.2 1.6l3.1-3.1A11 11 0 0 0 2.1 7l3.7 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>Continuer avec Google</button>'
+      +'<div class="pnote">Pas encore de compte employeur ? <button class="plinkbtn" type="button" id="pel-signup">Créer mon compte employeur</button></div></div>';
+  }
+  function siretOk(v){ v=String(v).replace(/\s/g,''); if(!/^\d{14}$/.test(v)) return false; var t=0; for(var i=0;i<14;i++){ var n=+v[i]; if(i%2===0){ n*=2; if(n>9) n-=9; } t+=n; } return t%10===0 || /^356000000/.test(v); }
+  function empFields(){
+    return '<div class="pf"><label for="pe-nom">Nom de l\'entreprise *</label><input id="pe-nom" maxlength="120" autocomplete="organization"></div>'
+      +'<div class="pf"><label for="pe-siret">SIRET * <small style="font-weight:600;color:#64748b">(14 chiffres)</small></label><input id="pe-siret" inputmode="numeric" maxlength="17" placeholder="123 456 789 00012"></div>'
+      +'<div class="pf"><label for="pe-sect">Secteur d\'activité *</label>'+sel('pe-sect',SECTEURS,'','Choisir un secteur')+'</div>'
+      +'<div class="pf"><label for="pe-ville">Ville *</label><input id="pe-ville" maxlength="60" autocomplete="address-level2"></div>'
+      +'<div class="pf"><label for="pe-cnom">Nom du contact *</label><input id="pe-cnom" maxlength="80" autocomplete="name"></div>'
+      +'<div class="pf"><label for="pe-cfct">Fonction du contact *</label><input id="pe-cfct" maxlength="80" placeholder="Ex : Responsable RH, gérant"></div>'
+      +'<div class="pf"><label for="pe-tel">Téléphone</label><input id="pe-tel" type="tel" maxlength="20" autocomplete="tel"></div>'
+      +'<div class="pf"><label for="pe-site">Site internet</label><input id="pe-site" maxlength="200" placeholder="https://"></div>';
+  }
+  function readEmp(){
+    var g=function(id){ var e=$(id); return e?String(e.value||'').trim():''; };
+    return { nom:g('pe-nom'), siret:g('pe-siret').replace(/\s/g,''), secteur:g('pe-sect'), ville:g('pe-ville'), contactNom:g('pe-cnom'), contactFonction:g('pe-cfct'), tel:g('pe-tel'), site:g('pe-site') };
+  }
+  function checkEmp(o,er){
+    if(!o.nom||!o.ville||!o.secteur){ er.textContent='Indiquez le nom de l\'entreprise, son secteur et sa ville.'; return false; }
+    if(!siretOk(o.siret)){ er.textContent='Le SIRET doit contenir 14 chiffres valides.'; return false; }
+    if(!o.contactNom||!o.contactFonction){ er.textContent='Indiquez le nom et la fonction du contact.'; return false; }
+    return true;
+  }
+  var ENG='<label style="display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.78rem;line-height:1.5;color:#334155;font-weight:600"><input type="checkbox" id="pe-eng" style="margin-top:3px;accent-color:#1e3a8a;width:16px;height:16px;flex-shrink:0">Je certifie l\'exactitude de ces informations et je m\'engage à proposer de vraies offres d\'emploi, sans frais pour les candidats, dans le respect de la non-discrimination à l\'embauche (art. L1132-1 du Code du travail).</label>';
+  function signupHtml(){
+    return '<div class="pcard">'+head('Créer mon compte employeur','Votre compte est vérifié par CareerPulse avant activation')
+      +empFields()
+      +'<div class="pf"><label for="pe-email">E-mail de connexion *</label><input id="pe-email" type="email" autocomplete="email" inputmode="email"></div>'
+      +'<div class="pf"><label for="pe-pass">Mot de passe * <small style="font-weight:600;color:#64748b">(8 caractères minimum)</small></label><input id="pe-pass" type="password" autocomplete="new-password"></div>'
+      +ENG+'<div class="perr" id="pe-err"></div>'
+      +'<button class="pbtn pri" id="pe-go" type="button">Créer mon compte employeur</button>'
+      +'<div style="text-align:center;margin-top:12px"><button class="plinkbtn" type="button" id="pe-back">J\'ai déjà un compte : me connecter</button></div></div>';
+  }
+  function authErr(e){
+    var c=(e&&e.code)||'';
+    if(c==='auth/invalid-credential'||c==='auth/wrong-password'||c==='auth/user-not-found'||c==='auth/invalid-login-credentials') return 'E-mail ou mot de passe incorrect.';
+    if(c==='auth/invalid-email') return 'Cette adresse e-mail n\'est pas valide.';
+    if(c==='auth/too-many-requests') return 'Trop de tentatives. Réessayez dans quelques minutes.';
+    if(c==='auth/popup-closed-by-user'||c==='auth/cancelled-popup-request') return '';
+    if(c==='auth/network-request-failed') return 'Connexion internet indisponible. Vérifiez votre réseau.';
+    return 'La connexion a échoué. Réessayez.';
+  }
+  function bindLogin(){
+    var A=auth(), go_=$('pel-go'), em=$('pel-email'), pw=$('pel-pass'), er=$('pel-err');
+    function doLogin(){
+      er.textContent='';
+      if(!em.value.trim()||!pw.value){ er.textContent='Saisissez votre e-mail et votre mot de passe.'; return; }
+      go_.disabled=true; go_.textContent='Connexion…'; setHash('pro-employeur');
+      A.signInWithEmailAndPassword(em.value.trim(),pw.value).catch(function(e){ er.textContent=authErr(e); go_.disabled=false; go_.textContent='Se connecter'; });
+    }
+    go_.onclick=doLogin; pw.addEventListener('keydown',function(e){ if(e.key==='Enter') doLogin(); });
+    $('pel-signup').onclick=function(){ setBody(signupHtml()); bindSignup(); };
+    $('pel-google').onclick=function(){ er.textContent=''; setHash('pro-employeur'); A.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){ er.textContent=authErr(e); }); };
+    $('pel-forgot').onclick=function(){ var v=em.value.trim(); if(!v){ er.textContent='Saisissez votre e-mail ci-dessus, puis cliquez à nouveau sur « Mot de passe oublié ? ».'; em.focus(); return; }
+      A.sendPasswordResetEmail(v,{ url:location.origin+location.pathname+'#pro-employeur' }).then(function(){ toast('E-mail de réinitialisation envoyé à '+v); }).catch(function(e){ er.textContent=authErr(e); }); };
+  }
+  function bindSignup(){
+    var A=auth(), er=$('pe-err'), go_=$('pe-go');
+    $('pe-back').onclick=function(){ setBody(loginHtml()); bindLogin(); };
+    go_.onclick=function(){
+      er.textContent='';
+      var o=readEmp(), em=String($('pe-email').value||'').trim(), pw=$('pe-pass').value||'';
+      if(!checkEmp(o,er)) return;
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ er.textContent='Indiquez une adresse e-mail valide.'; return; }
+      if(pw.length<8){ er.textContent='Le mot de passe doit contenir au moins 8 caractères.'; return; }
+      if(!$('pe-eng').checked){ er.textContent='Cochez l\'engagement pour créer votre compte.'; return; }
+      go_.disabled=true; go_.textContent='Création du compte…'; if(window.cpBusy) cpBusy(true); setHash('pro-employeur');
+      A.createUserWithEmailAndPassword(em,pw).then(function(cred){
+        var u=cred.user, t=now(); o.email=em; o.statutDemande='en_attente'; o.demandeAt=t; o.engagement=t;
+        return db().collection('employeurs').doc(u.uid).set(o).then(function(){ return u.sendEmailVerification({ url:location.origin+location.pathname+'#pro-employeur' }).catch(function(){}); });
+      }).then(function(){ if(window.cpBusy) cpBusy(false); toast('Compte créé : confirmez votre e-mail'); rendering=false; render(); })
+      .catch(function(e){ if(window.cpBusy) cpBusy(false); go_.disabled=false; go_.textContent='Créer mon compte employeur'; var c=(e&&e.code)||'';
+        er.textContent = c==='auth/email-already-in-use' ? 'Un compte existe déjà avec cet e-mail : connectez-vous, puis complétez votre demande.'
+          : c==='auth/weak-password' ? 'Mot de passe trop faible : 8 caractères minimum.'
+          : c==='permission-denied' ? 'Enregistrement refusé : les règles Firestore doivent être mises à jour.'
+          : authErr(e)||'La création du compte a échoué. Réessayez.'; });
+    };
+  }
+  function pendingHtml(){
+    return '<div class="pcard"><div class="pcard-hd"><span class="pchoice-ico" style="background:#eef2ff;color:#1e3a8a">'+S(I.mail)+'</span><div><h2>Confirmez votre e-mail</h2></div></div>'
+      +'<p>Un lien de confirmation a été envoyé à votre adresse. Cliquez dessus (pensez aux spams), puis revenez ici.</p>'
+      +'<button class="pbtn pri" type="button" id="pev-done">J\'ai confirmé mon e-mail</button>'
+      +'<button class="pbtn sec" type="button" id="pev-send">Renvoyer le lien</button></div>';
+  }
+  function notEmpHtml(){
+    return '<div class="pcard">'+head('Compléter ma demande','Ce compte n\'est pas encore un compte employeur')
+      +'<div class="pinfo">'+S('<circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/>')+'<span>Vous êtes connecté avec un compte qui n\'est pas un compte employeur (par exemple votre compte membre). Si vous avez déjà un compte employeur, déconnectez-vous puis reconnectez-vous avec celui-ci.</span></div>'
+      +'<p>Sinon, renseignez votre entreprise : CareerPulse vérifie votre SIRET, puis active votre espace.</p>'
+      +empFields()+ENG+'<div class="perr" id="pe-err"></div>'
+      +'<button class="pbtn pri" type="button" id="pen-send">Envoyer ma demande</button>'
+      +'<button class="pbtn sec" type="button" id="pen-other">J\'ai déjà un compte employeur</button></div>';
+  }
+
+  var rendering=false;
+  function render(){
+    if(!isOn() || rendering) return;
+    var A=auth(); if(!A || !$('emp-body')) return;
+    if(!window._cpAuthInitialized && !window._proAuthSeen && !window._empAuthSeen){ setBody('<div class="pload"><div class="pspin"></div>Chargement…</div>'); return; }
+    var u=A.currentUser;
+    if(!u){ setBody(loginHtml()); bindLogin(); return; }
+    if(!u.emailVerified && !(u.providerData||[]).some(function(p){ return p.providerId==='google.com'; })){
+      setBody(pendingHtml());
+      $('pev-done').onclick=function(){ u.reload().then(function(){ if(A.currentUser.emailVerified) render(); else toast('E-mail pas encore confirmé. Vérifiez votre boîte de réception.'); }); };
+      $('pev-send').onclick=function(){ u.sendEmailVerification({ url:location.origin+location.pathname+'#pro-employeur' }).then(function(){ toast('Lien renvoyé.'); }).catch(function(){ toast('Envoi impossible pour le moment. Réessayez dans quelques minutes.'); }); };
+      return;
+    }
+    rendering=true; setBody('<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>');
+    var get=function(){ return db().collection('employeurs').doc(u.uid).get(); };
+    get().catch(function(){ return u.getIdToken(true).then(get); }).then(function(d){
+      rendering=false;
+      if(!d.exists){
+        setBody(notEmpHtml());
+        $('pen-other').onclick=function(){ setHash('pro-employeur'); if(window.fbLogout) fbLogout(); };
+        $('pen-send').onclick=function(){ var er=$('pe-err'), b=this; er.textContent=''; var o=readEmp(); if(!checkEmp(o,er)) return; if(!$('pe-eng').checked){ er.textContent='Cochez l\'engagement pour envoyer votre demande.'; return; }
+          var t=now(); o.email=u.email||''; o.statutDemande='en_attente'; o.demandeAt=t; o.engagement=t; b.disabled=true;
+          db().collection('employeurs').doc(u.uid).set(o).then(function(){ toast('Demande envoyée'); render(); }).catch(function(e){ b.disabled=false; er.textContent=(e&&e.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Envoi impossible pour le moment. Réessayez.'; }); };
+        return;
+      }
+      $('emp-body').innerHTML=''; if(window.cpProSetLong) cpProSetLong(true);
+      ST.emp=d.data()||{}; open();
+    }).catch(function(e){ rendering=false; setBody('<div class="pcard"><div class="pinfo"><span>Accès à la base impossible ('+esc((e&&e.code)||'erreur')+'). Rechargez la page.</span></div></div>'); });
+  }
+
+  /* ── L'espace employeur (même présentation que l'espace centre) ── */
+  function logoutBar(){ return '<div class="ofc-lockbar"><span class="ofc-lockbar-ic">'+S(I.lock)+'</span><div><b>Votre espace employeur</b><span>Pensez à vous déconnecter quand vous avez terminé.</span></div><button type="button" class="ofc-btn out" data-ea="logout">'+S('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',16)+'Se déconnecter</button></div>'; }
+  function hero(){
+    return logoutBar()+'<div class="ofc-hero emp-hero"><span class="ofc-k"><i></i>Espace employeur</span>'
+      +'<h2>Vos offres rencontrent les bons candidats.</h2>'
+      +'<p>Publiez vos offres et découvrez les profils anonymisés des membres qui ont choisi d\'être visibles. Proposez un échange : le candidat vous répond en un clic, dans une messagerie protégée.</p>'
+      +'<div class="ofc-steps">'
+      +'<div class="ofc-step"><b><em>1</em>Publiez</b><span>Vos offres, claires et complètes.</span></div>'
+      +'<div class="ofc-step"><b><em>2</em>Découvrez</b><span>Les profils anonymisés qui correspondent.</span></div>'
+      +'<div class="ofc-step"><b><em>3</em>Proposez</b><span>Un échange sur l\'un de vos postes.</span></div>'
+      +'<div class="ofc-step"><b><em>4</em>Le candidat répond</b><span>En un clic, dans la messagerie.</span></div></div>'
+      +'<div class="ofc-law">'+S(I.lock)+'<span>Seuls les membres qui ont rendu leur profil visible apparaissent, sans nom ni coordonnées. Le candidat choisit ensuite ce qu\'il partage avec vous.</span></div></div>';
+  }
+  function tabs(){
+    var T=[['cands','Candidats',I.users,0],['offres','Mes offres',I.brief,ST.offres.length],['msg','Messages',I.inbox,ST.convs.filter(function(c){ return c.unreadEmp; }).length],['ent','Mon entreprise',I.brief,0]];
+    return '<div class="ofc-tabs" role="tablist">'+T.map(function(t){ return '<button type="button" data-etab="'+t[0]+'" class="'+(ST.tab===t[0]?'on':'')+'">'+S(t[2],15)+t[1]+(t[3]?'<i>'+t[3]+'</i>':'')+'</button>'; }).join('')+'</div>';
+  }
+  function draw(){
+    var root=$('emp-root'); if(!root) return; var o=ST.emp||{};
+    if(!(o.verifie && o.proActif)){
+      root.innerHTML='<div class="ofc">'+hero()+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET et coordonnées). Dès sa validation, vous pourrez publier vos offres et découvrir les profils.</span></div></div></div>';
+      root.onclick=onClick; return;
+    }
+    root.innerHTML='<div class="ofc">'+hero()+tabs()+'<div id="emp-tab">'+tabHtml()+'</div></div>';
+    root.onclick=onClick;
+    var q=$('emp-q'); if(q) q.oninput=function(){ ST.q=q.value; var l=$('emp-clist'); if(l) l.innerHTML=candList(); };
+  }
+
+  /* Profils anonymisés : prénom + initiale, jamais de coordonnées */
+  function label(p){ var n=String(p.name||'').trim().split(/\s+/); return (n[0]||'Candidat')+(n[1]?' '+n[1][0].toUpperCase()+'.':''); }
+  function comps(p){ var c=p.competences; if(Array.isArray(c)) return c; return String(c||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean); }
+  function norm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  function score(p,words){ if(!words.length) return 1; var h=norm([p.titre,p.secteur,p.ville,p.accroche,comps(p).join(' ')].join(' ')); return words.filter(function(w){ return h.indexOf(w)>-1; }).length; }
+  function candList(){
+    var words=norm(ST.q).split(/[\s,]+/).filter(function(w){ return w.length>2; });
+    var L=ST.cands.map(function(p){ return { p:p, s:score(p,words) }; }).filter(function(x){ return x.s>0; }).sort(function(a,b){ return b.s-a.s; });
+    if(!L.length) return '<div class="ofc-empty">'+S(I.users)+(ST.cands.length?'Aucun profil ne correspond à votre recherche.':'Aucun profil visible pour le moment.<br>Les membres qui rendent leur profil visible apparaîtront ici.')+'</div>';
+    return L.map(function(x){ var p=x.p, done=ST.convs.some(function(c){ return c.candUid===p.uid; }), cs=comps(p).slice(0,6);
+      return '<div class="ofc-item emp-cand"><span class="ofc-item-ico">'+S(I.users)+'</span><div class="ofc-item-b">'
+        +'<div class="ofc-item-t">'+esc(label(p))+(p.titre?' · '+esc(p.titre):'')+'</div>'
+        +'<div class="ofc-item-s">'+esc([p.secteur,p.ville,p.exp].filter(Boolean).join(' · '))+'</div>'
+        +(p.accroche?'<p class="emp-acc">'+esc(String(p.accroche).slice(0,260))+'</p>':'')
+        +(cs.length?'<div class="emp-tags">'+cs.map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('')+'</div>':'')
+        +'<div class="ofc-btns">'+(done?'<span class="ofc-tag pub">● Échange proposé</span>':'<button type="button" class="ofc-btn pri" data-ea="prop" data-c="'+esc(p.uid)+'">'+S(I.send,16)+'Proposer un échange</button>')+'</div>'
+        +'<div class="emp-prop" id="emp-prop-'+esc(p.uid)+'"></div></div></div>'; }).join('');
+  }
+  function propForm(uid){
+    var pubs=ST.offres.filter(function(f){ return f.statut==='publiee'; }), o=ST.emp||{};
+    return '<div class="ofc-f">'
+      +'<label class="full">Poste proposé *<select data-psel>'+pubs.map(function(f){ return '<option value="'+esc(f.id)+'">'+esc(f.titre+' · '+f.contrat+(f.ville?' · '+f.ville:''))+'</option>'; }).join('')+'<option value="_autre">Autre poste (à préciser)</option></select></label>'
+      +'<label class="full" data-pautre style="'+(pubs.length?'display:none':'')+'">Intitulé du poste<input data-ptitre maxlength="120" placeholder="Ex : Commercial terrain H/F"></label>'
+      +'<label class="full">Votre message *<textarea data-pmsg maxlength="1000">Bonjour, votre profil a retenu notre attention chez '+esc(o.nom||'nous')+'. Seriez-vous disponible pour échanger sur ce poste ?</textarea></label></div>'
+      +'<div class="ofc-btns"><button type="button" class="ofc-btn pri" data-ea="send" data-c="'+esc(uid)+'">'+S(I.send,16)+'Envoyer la proposition</button><button type="button" class="ofc-btn" data-ea="cancelprop" data-c="'+esc(uid)+'">'+S(I.x,16)+'Annuler</button></div>';
+  }
+  function offreForm(f){
+    f=f||{};
+    return '<div class="ofc-card ofc-cat"><div class="ofc-cat-hd"><span class="ofc-k"><i></i>Offre d\'emploi</span><h3>'+(f.id?'Modifier l\'offre':'Nouvelle offre')+'</h3><p>Une offre claire aide les candidats à vous répondre plus vite.</p></div>'
+      +'<div class="ofc-sec"><div class="ofc-f">'
+      +'<label class="full">Intitulé du poste *<input id="emp-ot" maxlength="120" value="'+esc(f.titre)+'" placeholder="Ex : Assistant(e) RH H/F"></label>'
+      +'<label>Type de contrat *<select id="emp-oc">'+opt(CONTRATS,f.contrat)+'</select></label>'
+      +'<label>Ville *<input id="emp-ov" maxlength="60" value="'+esc(f.ville)+'" placeholder="Ex : Caen"></label>'
+      +'<label>Télétravail<select id="emp-otl">'+opt(TELE,f.teletravail)+'</select></label>'
+      +'<label>Salaire<input id="emp-os" maxlength="60" value="'+esc(f.salaire)+'" placeholder="Ex : 28 000 – 32 000 € brut/an"></label>'
+      +'<label class="full">Compétences recherchées<input id="emp-ok" maxlength="200" value="'+esc(f.competences)+'" placeholder="Ex : Relation client, Pack Office, Anglais"></label>'
+      +'<label class="full">Description du poste *<textarea id="emp-od" maxlength="3000" placeholder="Missions, profil recherché, conditions…">'+esc(f.description)+'</textarea></label>'
+      +'</div></div><div id="emp-oerr" class="ofc-err" role="alert" style="display:none"></div>'
+      +'<div class="ofc-btns ofc-cta"><button type="button" class="ofc-btn pri" data-ea="osave" data-pub="1">'+S(I.check,16)+'Publier</button><button type="button" class="ofc-btn" data-ea="osave" data-pub="0">Enregistrer en brouillon</button>'+(f.id?'<button type="button" class="ofc-btn" data-ea="ocancel">'+S(I.x,16)+'Annuler</button>':'')+'</div></div>';
+  }
+  function offreList(){
+    if(!ST.offres.length) return '<div class="ofc-card"><div class="ofc-empty">'+S(I.brief)+'Vous n\'avez pas encore publié d\'offre.<br>Votre première offre apparaîtra ici.</div></div>';
+    return '<div class="ofc-card"><h3>Vos offres</h3><p>'+ST.offres.filter(function(f){ return f.statut==='publiee'; }).length+' publiée(s) · proposées aux candidats dans vos échanges.</p>'
+      +ST.offres.map(function(f){ var pub=f.statut==='publiee';
+        return '<div class="ofc-item"><span class="ofc-item-ico">'+S(I.brief)+'</span><div class="ofc-item-b"><div class="ofc-item-t">'+esc(f.titre)+'</div>'
+          +'<div class="ofc-item-s">'+esc([f.contrat,f.ville,f.teletravail,f.salaire].filter(Boolean).join(' · '))+'</div>'
+          +'<span class="ofc-tag '+(pub?'pub':'draft')+'">'+(pub?'● Publiée':'Brouillon')+'</span>'
+          +'<div class="ofc-btns"><button type="button" class="ofc-btn" data-ea="oedit" data-id="'+esc(f.id)+'">'+S(I.pen,16)+'Modifier</button>'
+          +'<button type="button" class="ofc-btn" data-ea="otoggle" data-id="'+esc(f.id)+'">'+S(pub?I.pause:I.play,16)+(pub?'Dépublier':'Publier')+'</button>'
+          +'<button type="button" class="ofc-btn dan" data-ea="odel" data-id="'+esc(f.id)+'">'+S(I.trash,16)+'Supprimer</button></div></div></div>'; }).join('')+'</div>';
+  }
+  function tabHtml(){
+    var o=ST.emp||{};
+    if(ST.tab==='cands') return '<div class="ofc-card"><h3>Candidats visibles</h3><p>Profils anonymisés des membres qui ont choisi d\'être visibles par les recruteurs.</p>'
+      +'<label class="emp-search">'+S(I.search,18)+'<input id="emp-q" value="'+esc(ST.q)+'" placeholder="Ex : commercial, Caen, anglais…"></label><div id="emp-clist">'+candList()+'</div></div>';
+    if(ST.tab==='offres') return offreForm(ST.edit)+offreList();
+    if(ST.tab==='msg'){
+      var C=ST.convs;
+      if(!C.length) return '<div class="ofc-card"><h3>Messages</h3><div class="ofc-empty">'+S(I.inbox)+'Quand vous proposerez un échange à un candidat, la conversation apparaîtra ici avec sa réponse.</div></div>';
+      return '<div class="ofc-card"><h3>Messages</h3><p>Vos échanges avec les candidats, dans la messagerie protégée.</p>'
+        +C.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
+          return '<button type="button" class="ofc-conv" data-econv="'+esc(c.id)+'"><span class="ofc-dot'+(c.unreadEmp?' on':'')+'"></span><span class="ofc-conv-t"><b>'+esc(c.candLabel||'Candidat')+' · '+esc(c.poste||'')+'</b><span>'+(c.statut==='close'?'Conversation close':c.lastFrom==='cand'?'Réponse du candidat':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+S(I.chev,16)+'</button>'; }).join('')+'</div>';
+    }
+    return '<div class="ofc-card"><h3>Mon entreprise</h3><p>Ces informations sont visibles par un candidat <b>uniquement</b> dans un échange que vous lui proposez.</p>'
+      +'<div class="ofc-f"><label>Nom de l\'entreprise *<input id="emp-enom" value="'+esc(o.nom)+'"></label><label>Ville<input id="emp-eville" value="'+esc(o.ville)+'"></label>'
+      +'<label>Secteur<select id="emp-esect">'+opt(SECTEURS,o.secteur)+'</select></label><label>Téléphone<input id="emp-etel" value="'+esc(o.tel)+'"></label>'
+      +'<label>Nom du contact<input id="emp-ecnom" value="'+esc(o.contactNom)+'"></label><label>Fonction du contact<input id="emp-ecfct" value="'+esc(o.contactFonction)+'"></label>'
+      +'<label class="full">Site internet<input id="emp-esite" value="'+esc(o.site)+'" placeholder="https://"></label>'
+      +(o.siret?'<label>SIRET<input value="'+esc(o.siret)+'" disabled></label>':'')
+      +'</div><div class="ofc-btns"><button type="button" class="ofc-btn pri" data-ea="esave">Enregistrer</button></div></div>';
+  }
+  function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
+  function oerr(m){ var e=$('emp-oerr'); if(!e) return; e.textContent=m; e.style.display=m?'':'none'; }
+
+  function loadAll(){
+    var u=me(); if(!u||!db()) return Promise.resolve();
+    var a=db().collection('offres_emploi').where('empUid','==',u.uid).get().then(function(q){ ST.offres=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(x,y){ return String(y.updatedAt||'').localeCompare(String(x.updatedAt||'')); }); }).catch(function(){ ST.offres=[]; });
+    var b=db().collection('emploi_conversations').where('empUid','==',u.uid).get().then(function(q){ ST.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(x,y){ return String(y.lastAt||'').localeCompare(String(x.lastAt||'')); }); }).catch(function(){ ST.convs=[]; });
+    var c=db().collection('profils').where('visible','==',true).limit(300).get().then(function(q){ ST.cands=q.docs.map(function(d){ var x=d.data(); x.uid=d.id; return x; }).filter(function(p){ return p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ ST.cands=[]; });
+    return Promise.all([a,b,c]);
+  }
+  function open(){
+    var r=$('emp-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>';
+    var o=ST.emp||{}; if(!(o.verifie && o.proActif)){ draw(); return; }
+    loadAll().then(draw);
+  }
+
+  function onClick(e){
+    var t=e.target.closest('[data-etab]'); if(t){ ST.tab=t.getAttribute('data-etab'); ST.edit=null; draw(); return; }
+    var cv=e.target.closest('[data-econv]'); if(cv){ openConv(cv.getAttribute('data-econv')); return; }
+    var b=e.target.closest('[data-ea]'); if(!b) return; var a=b.getAttribute('data-ea'), u=me(); if(!u) return;
+    if(a==='logout'){ try{ history.replaceState(null,'','#pro-employeur'); }catch(x){} if(window.fbLogout) fbLogout(); else auth().signOut().then(function(){ location.reload(); }); return; }
+    if(a==='prop'){ var box=$('emp-prop-'+b.getAttribute('data-c')); if(!box) return; box.innerHTML=propForm(b.getAttribute('data-c')); b.style.display='none';
+      var s=box.querySelector('[data-psel]'); s.onchange=function(){ box.querySelector('[data-pautre]').style.display=s.value==='_autre'?'':'none'; }; if(s.value==='_autre') box.querySelector('[data-pautre]').style.display=''; return; }
+    if(a==='cancelprop'){ var bx=$('emp-prop-'+b.getAttribute('data-c')); if(bx) bx.innerHTML=''; var pb=document.querySelector('[data-ea="prop"][data-c="'+b.getAttribute('data-c')+'"]'); if(pb) pb.style.display=''; return; }
+    if(a==='send'){
+      var cu=b.getAttribute('data-c'), bx2=$('emp-prop-'+cu), p=ST.cands.filter(function(x){ return x.uid===cu; })[0]; if(!bx2||!p) return;
+      var sv=bx2.querySelector('[data-psel]').value, f=ST.offres.filter(function(x){ return x.id===sv; })[0];
+      var poste=f?f.titre:String(bx2.querySelector('[data-ptitre]').value||'').trim(), msg=String(bx2.querySelector('[data-pmsg]').value||'').trim();
+      if(!poste){ toast('Indiquez le poste proposé'); return; } if(!msg){ toast('Écrivez un message au candidat'); return; }
+      if(ST.convs.some(function(c){ return c.candUid===cu && c.poste===poste; })){ toast('Ce poste a déjà été proposé à ce candidat'); return; }
+      var t0=now(), o=ST.emp||{}, d={ empUid:u.uid, empNom:o.nom||'', empVille:o.ville||'', empSecteur:o.secteur||'', candUid:cu, candLabel:label(p), poste:poste, offreId:f?f.id:'',
+        offre:f?{ titre:f.titre, contrat:f.contrat||'', ville:f.ville||'', teletravail:f.teletravail||'', salaire:f.salaire||'', description:String(f.description||'').slice(0,1500) }:null,
+        messages:[{ from:'emp', text:msg.slice(0,1000), at:t0 }], statut:'ouverte', lastAt:t0, lastFrom:'emp', unreadCand:true, unreadEmp:false, createdAt:t0, updatedAt:t0 };
+      b.disabled=true;
+      db().collection('emploi_conversations').add(d).then(function(r){ d.id=r.id; ST.convs.unshift(d); toast('Proposition envoyée à '+d.candLabel); var l=$('emp-clist'); if(l) l.innerHTML=candList(); })
+        .catch(function(x){ b.disabled=false; toast((x&&x.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+      return;
+    }
+    if(a==='osave'){
+      var pub=b.getAttribute('data-pub')==='1', ed=ST.edit||{};
+      var f2={ empUid:u.uid, empNom:(ST.emp||{}).nom||'', titre:val('emp-ot'), contrat:val('emp-oc'), ville:val('emp-ov'), teletravail:val('emp-otl'), salaire:val('emp-os'), competences:val('emp-ok'), description:val('emp-od'), statut:pub?'publiee':'brouillon', updatedAt:now() };
+      if(!f2.titre||!f2.ville||!f2.description){ oerr('Indiquez au moins l\'intitulé, la ville et la description du poste.'); return; } oerr('');
+      b.disabled=true;
+      var ref=ed.id?db().collection('offres_emploi').doc(ed.id):db().collection('offres_emploi').doc();
+      if(!ed.id) f2.createdAt=f2.updatedAt;
+      ref.set(f2,{merge:true}).then(function(){ f2.id=ref.id; ST.offres=[f2].concat(ST.offres.filter(function(x){ return x.id!==ref.id; })); ST.edit=null; toast(pub?'Offre publiée':'Brouillon enregistré'); draw(); })
+        .catch(function(x){ b.disabled=false; oerr((x&&x.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Enregistrement impossible pour le moment.'); });
+      return;
+    }
+    if(a==='ocancel'){ ST.edit=null; draw(); return; }
+    var id=b.getAttribute('data-id'), of=ST.offres.filter(function(x){ return x.id===id; })[0];
+    if(a==='oedit' && of){ ST.edit=of; draw(); var c=document.querySelector('#emp-tab .ofc-cat'); if(c) c.scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+    if(a==='otoggle' && of){ var ns=of.statut==='publiee'?'brouillon':'publiee'; db().collection('offres_emploi').doc(id).update({ statut:ns, updatedAt:now() }).then(function(){ of.statut=ns; draw(); }).catch(function(){ toast('Modification impossible pour le moment'); }); return; }
+    if(a==='odel' && of){ if(!confirm('Supprimer cette offre ?')) return; db().collection('offres_emploi').doc(id).delete().then(function(){ ST.offres=ST.offres.filter(function(x){ return x.id!==id; }); draw(); }).catch(function(){ toast('Suppression impossible pour le moment'); }); return; }
+    if(a==='esave'){
+      var o2={ nom:val('emp-enom'), ville:val('emp-eville'), secteur:val('emp-esect'), tel:val('emp-etel'), contactNom:val('emp-ecnom'), contactFonction:val('emp-ecfct'), site:val('emp-esite') };
+      if(!o2.nom){ toast('Indiquez le nom de l\'entreprise'); return; } b.disabled=true;
+      db().collection('employeurs').doc(u.uid).set(o2,{merge:true}).then(function(){ Object.assign(ST.emp,o2); toast('Informations enregistrées'); b.disabled=false; }).catch(function(){ b.disabled=false; toast('Enregistrement impossible pour le moment'); });
+    }
+  }
+
+  /* ── Messagerie protégée (même présentation que l'espace centre) ── */
+  var UNSUB=null;
+  function closeConv(){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet.emp-sheet'); if(x) x.remove(); if(!document.querySelector('.ofcm-sheet,.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); draw(); }
+  function fmtAt(iso){ try{ var d=new Date(iso); return d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' })+' '+d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
+  function openConv(id){
+    var c=ST.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
+    var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet';
+    sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><div><b class="ofcm-who"></b><span>'+esc(c.poste||'')+'</span></div><em>🔒 Protégé</em></div>'
+      +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre message…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S(I.send)+'</button></div></div></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var list=sh.querySelector('.ofcm-list'), ref=db().collection('emploi_conversations').doc(c.id);
+    function info(x){
+      var p=ST.cands.filter(function(z){ return z.uid===x.candUid; })[0], h='';
+      if(p) h+='<div class="ofcm-card"><b>Profil du candidat</b><div class="ofcm-g">'
+        +[['Poste visé',p.titre],['Secteur',p.secteur],['Ville',p.ville],['Expérience',p.exp]].filter(function(r){ return r[1]; }).map(function(r){ return '<div><span>'+r[0]+'</span><i>'+esc(r[1])+'</i></div>'; }).join('')+'</div>'
+        +(p.accroche?'<p>'+esc(String(p.accroche).slice(0,400))+'</p>':'')+'</div>';
+      var rep=(x.messages||[]).some(function(m){ return m.from==='cand'; }), sh2=[];
+      if(p && rep){ if(p.shareEmail && p.emailPublic) sh2.push('E-mail : <i>'+esc(p.emailPublic)+'</i>'); if(p.shareTel && p.telPublic) sh2.push('Téléphone : <i>'+esc(p.telPublic)+'</i>'); }
+      h+='<div class="ofcm-card"><b>Coordonnées partagées</b><p>'+(sh2.length?sh2.join('<br>'):'Le candidat n\'a pas partagé ses coordonnées : échangez ici, dans la messagerie protégée.')+'</p></div>';
+      return h;
+    }
+    function rend(x){
+      sh.querySelector('.ofcm-who').textContent=x.candLabel||'Candidat';
+      sh.querySelector('.ofcm-aside').innerHTML=info(x);
+      var closed=x.statut==='close';
+      list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise')+'</div>'
+        +(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='emp'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='emp'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
+        +(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<div style="text-align:center;margin:8px 0"><button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button></div>');
+      list.scrollTop=list.scrollHeight;
+      sh.querySelector('.ofcm-ft').style.display=closed?'none':'';
+      if(x.unreadEmp) ref.update({ unreadEmp:false }).catch(function(){});
+      c=Object.assign({ id:c.id },x); ST.convs=ST.convs.map(function(z){ return z.id===c.id?c:z; });
+      var cb=list.querySelector('[data-close-conv]'); if(cb) cb.onclick=function(){ if(!confirm('Clore cette conversation ?')) return; ref.update({ statut:'close', updatedAt:now() }).catch(function(){ toast('Modification impossible pour le moment'); }); };
+    }
+    rend(c);
+    UNSUB=ref.onSnapshot(function(d){ if(d.exists) rend(d.data()); },function(){});
+    if(window.cpSheetArrows) cpSheetArrows(list,sh.querySelector('.ofcm-chat'));
+    sh.querySelector('.ofcm-x').onclick=closeConv;
+    sh.addEventListener('click',function(e){ if(e.target===sh) closeConv(); });
+    sh.querySelector('.ofcm-send').onclick=function(){
+      var ta=sh.querySelector('.ofcm-in'), t=String(ta.value||'').trim(); if(!t) return;
+      if((c.messages||[]).length>=60){ toast('Conversation complète'); return; }
+      var n=now(); ta.value='';
+      ref.update({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'emp', text:t, at:n }), updatedAt:n, lastAt:n, lastFrom:'emp', unreadCand:true })
+        .catch(function(e){ ta.value=t; toast((e&&e.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+    };
+  }
+
+  /* Ouverture de l'écran : rendu à chaque arrivée sur l'espace employeur */
+  var was=false;
+  function tick(){ var on=isOn(); if(on && !was){ rendering=false; render(); } was=on; }
+  function init(){
+    try{ new MutationObserver(function(){ clearTimeout(window._empT); window._empT=setTimeout(tick,30); }).observe(document.body,{ subtree:true, attributes:true, attributeFilter:['class'] }); }catch(e){}
+    var A=auth(); if(A) A.onAuthStateChanged(function(){ window._empAuthSeen=true; if(isOn()){ rendering=false; render(); } });
+    tick();
+  }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+  window.cpEmpRender=render;
+})();
+</script>
+<style id="emp-css">
+/* Espace employeur : mêmes composants que l'espace centre, accent bleu nuit */
+.cpro #emp-root{ max-width:980px; margin:0 auto; }
+#emp-root{ max-width:860px; margin:0 auto; padding:18px 18px 60px; font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,Arial,sans-serif; color:#0f172a; }
+#emp-root *{ box-sizing:border-box; }
+#emp-root:empty{ display:none; }
+@media (max-width:720px){ #emp-root{ padding:14px 14px 40px; } }
+.emp-hero{ background:radial-gradient(120% 140% at 100% 0%,rgba(129,140,248,.22),transparent 55%),linear-gradient(135deg,#1e3a8a,#312e81) !important; }
+.emp-search{ display:flex; align-items:center; gap:10px; padding:12px 14px; border:1px solid #d1d5db; border-radius:14px; background:#fff; margin:6px 0 14px; color:#64748b; }
+.emp-search input{ border:none; outline:none; flex:1; font:500 .95rem/1.3 inherit; background:transparent; color:#0f172a; min-width:0; }
+.emp-acc{ margin:6px 0 8px; font-size:.82rem; line-height:1.55; color:#334155; }
+.emp-tags{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 10px; }
+.emp-tags span{ font-size:.72rem; font-weight:700; padding:5px 10px; border-radius:999px; background:#eef2ff; color:#1e3a8a; }
+.emp-prop:empty{ display:none; } .emp-prop{ margin-top:10px; padding-top:10px; border-top:1px dashed #e2e8f0; }
+</style>
 </body>
 </html>
