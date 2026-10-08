@@ -20674,7 +20674,9 @@ function pfRenderTab(tab){
   pfRenderTabs();
   var el=document.getElementById('pf-content');
   if(!el) return;
-  if(tab==='taches'){ el.innerHTML='<div class="tk-pf"></div>'; if(typeof cpTkRender==='function') cpTkRender(el.firstChild); var ob=document.getElementById('pf-eva-bubble-root'); if(ob) ob.remove(); return; }
+  if(tab==='taches'){ el.innerHTML='<div style="font-size:.46rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#0e7490;margin-bottom:6px;">Organisation</div>'
+    +'<div style="font-size:.92rem;font-weight:900;color:#0f172a;line-height:1.25;margin-bottom:5px;letter-spacing:-.01em;">Mes tâches · '+((EWC[EWP]||{}).nom||'')+'</div>'
+    +'<div style="font-size:.62rem;color:#64748b;line-height:1.55;margin-bottom:14px;">Chaque tâche avec sa date, son statut et tes commentaires. Coche-la dès qu\'elle est faite.</div><div class="tk-pf"></div>'; if(typeof cpTkRender==='function') cpTkRender(el.querySelector('.tk-pf')); var ob=document.getElementById('pf-eva-bubble-root'); if(ob) ob.remove(); return; }
   if(tab==='agenda'){ pfRenderAgenda(el); pfMaybeSyncTabFromFirestore('agenda', function(){ if(PF_TAB==='agenda') pfRenderAgenda(el); }); }
   else if(tab==='notes'){ pfRenderNotes(el); pfMaybeSyncTabFromFirestore('notes', function(){ if(PF_TAB==='notes') pfRenderNotes(el); }); }
   else if(tab==='contacts'){ pfRenderContacts(el); pfMaybeSyncTabFromFirestore('contacts', function(){ if(PF_TAB==='contacts') pfRenderContacts(el); }); }
@@ -26940,7 +26942,7 @@ window.etrInit=function(){jnlTab(0);document.getElementById('jnl-hdr-sub').textC
     taches:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 2.5 2.5L16 9"/></svg>',
     membre:'<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.2-4 4.3-6 8-6s6.8 2 8 6"/></svg>'
   };
-  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-taches','Tâches',I.taches],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de ma motivation',I.suivi],['eva-of','Organismes de formation',I.school],['eva-identity','À propos d\'EVA',I.about]];
+  var NAV=[['eva','Accueil EVA',I.home],['eva-droits','Droits & aides',I.droits],['eva-workspace','Conseils & pro',I.conseils],['eva-entretien','Quiz et mises en situation',I.entretien],['eva-bienetre','Motivation & Équilibre',I.bienetre],['eva-tracker','Suivi de ma motivation',I.suivi],['eva-of','Organismes de formation',I.school],['eva-identity','À propos d\'EVA',I.about]];
   var CP=[['membre','Espace membre',I.membre],['abo','Abonnement',I.abo],['contact','Contact CareerPulse',I.contact],['avis','Donne ton avis',I.avis]];
   var LOGO='<svg viewBox="0 0 32 32" width="22" height="22" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8.5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-8l-5 4v-4H9a3 3 0 0 1-3-3z" fill="rgba(255,255,255,.2)"/><path d="M16 9l1.35 3.15L20.5 13.5l-3.15 1.35L16 18l-1.35-3.15L11.5 13.5l3.15-1.35z" fill="#fff" stroke="none"/></svg>';
   var CPMARK='<svg viewBox="0 0 32 32" width="15" height="15" fill="none"><path d="M22.6 9.3A9.4 9.4 0 1 0 22.6 22.7" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><path d="M9.5 16h3.2l1.9-3.6 2.8 7.2 1.9-3.6h4.2" stroke="#a7f3d0" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -30960,12 +30962,13 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 /* ═══ Tâches : un module simple, partagé par le menu EVA et le Portfolio ═══ */
 (function(){
   var KEY='cp_taches_v1';
-  var PROF=[['sal','Salarié'],['dem','Demandeur d\'emploi'],['frl','Freelance'],['etu','Étudiant / Reconversion']];
+  var PROF=[['sal','Salarié'],['dem','Demandeur d\'emploi'],['frl','Freelance'],['etu','Étudiant'],['rec','Reconversion']];
   var SUG={
     sal:['Préparer mon entretien annuel','Fixer mes objectifs du trimestre','Compte-rendu de la réunion d\'équipe','Relancer un collègue sur un dossier','Poser mes congés','Faire le point sur mon CPF'],
     dem:['Envoyer 3 candidatures','Relancer une candidature (J+7)','Préparer mon RDV France Travail','M\'actualiser chaque mois','Mettre à jour mon CV','Préparer un entretien'],
     frl:['Envoyer un devis','Relancer une facture en retard','Déclarer mon chiffre d\'affaires URSSAF','Prospecter 5 clients','Livrer une mission','Mettre à jour mes tarifs'],
-    etu:['Chercher une alternance ou un stage','Monter mon dossier CPF','Rendre un dossier ou un devoir','Prendre RDV pour un bilan de compétences','Faire ma demande de bourse (DSE)','Préparer un oral']
+    etu:['Chercher une alternance ou un stage','Envoyer 3 candidatures de stage','Rendre un dossier ou un devoir','Faire ma demande de bourse (DSE)','Préparer un oral','Mettre à jour mon CV étudiant'],
+    rec:['Prendre RDV avec un conseiller CEP','Monter mon dossier CPF','Prendre RDV pour un bilan de compétences','Contacter 3 professionnels du métier visé','Choisir ma formation certifiante','Préparer mon dossier Transitions Pro']
   };
   var ST={afaire:'À faire',encours:'En cours',fait:'Fait'};
   var CHK='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>';
@@ -30975,7 +30978,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
   function today(){ var d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
   function nowTxt(ts){ var d=new Date(ts); return pad(d.getDate())+'/'+pad(d.getMonth()+1)+' à '+pad(d.getHours())+':'+pad(d.getMinutes()); }
   function fmtDate(s){ if(!s) return ''; var p=s.split('-'); return p.length===3 ? p[2]+'/'+p[1]+'/'+p[0] : s; }
-  function defProf(){ var m={dem:'dem',frl:'frl',etu:'etu',rec:'etu'}; return m[window.EWP]||'sal'; }
+  function defProf(){ var m={dem:'dem',frl:'frl',etu:'etu',rec:'rec'}; return m[window.EWP]||'sal'; }
   function load(){ var d; try{ d=JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){} d=d||{}; d.tasks=d.tasks||[]; d.perso=d.perso||[]; d.prof=d.prof||defProf(); return d; }
   function save(d){
     try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){}
@@ -30985,10 +30988,11 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
   function render(host){
     if(!host) return;
     var d=load(), v=host._tk||(host._tk={tab:'tasks',filt:'all',open:null,edit:null,form:false,pre:''});
+    var fixed=host.classList.contains('tk-pf') ? (SUG[window.EWP]?window.EWP:'dem') : null; v.p=fixed||d.prof; if(!SUG[v.p]) v.p='sal';
     var h='<div class="tk">';
     if(v.open){ h+=detail(d,v); }
     else{
-      h+='<div class="tk-prof">'+PROF.map(function(p){ return '<button type="button" data-a="prof" data-v="'+p[0]+'" class="'+(d.prof===p[0]?'on':'')+'">'+p[1]+'</button>'; }).join('')+'</div>';
+      if(!fixed) h+='<div class="tk-prof">'+PROF.map(function(p){ return '<button type="button" data-a="prof" data-v="'+p[0]+'" class="'+(d.prof===p[0]?'on':'')+'">'+p[1]+'</button>'; }).join('')+'</div>';
       h+='<div class="tk-tabs"><button type="button" data-a="tab" data-v="tasks" class="'+(v.tab==='tasks'?'on':'')+'">Mes tâches</button><button type="button" data-a="tab" data-v="perso" class="'+(v.tab==='perso'?'on':'')+'">Infos perso</button></div>';
       h+= v.tab==='tasks' ? tasks(d,v) : perso(d,v);
     }
@@ -30996,11 +31000,11 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     if(!host._tkOn){ host._tkOn=1; host.addEventListener('click',function(e){ act(host,e); }); }
   }
   function tasks(d,v){
-    var mine=d.tasks.filter(function(t){ return (t.prof||'sal')===d.prof; });
+    var mine=d.tasks.filter(function(t){ return (t.prof||'sal')===v.p; });
     var n={afaire:0,encours:0,fait:0}; mine.forEach(function(t){ n[t.statut||'afaire']++; });
     var h='<div class="tk-stats"><div><b>'+n.afaire+'</b><span>À faire</span></div><div><b>'+n.encours+'</b><span>En cours</span></div><div><b>'+n.fait+'</b><span>Faites</span></div></div>';
     if(v.form) h+=taskForm(null,v.pre);
-    else h+='<button type="button" class="tk-btn pri full" data-a="new">+ Nouvelle tâche</button><div class="tk-sug" style="margin-top:10px">'+SUG[d.prof].map(function(s){ return '<button type="button" data-a="sug" data-v="'+esc(s)+'">+ '+esc(s)+'</button>'; }).join('')+'</div>';
+    else h+='<button type="button" class="tk-btn pri full" data-a="new">+ Nouvelle tâche</button><div class="tk-sug" style="margin-top:10px">'+SUG[v.p].map(function(s){ return '<button type="button" data-a="sug" data-v="'+esc(s)+'">+ '+esc(s)+'</button>'; }).join('')+'</div>';
     h+='<div class="tk-filt" style="margin-top:14px">'+[['all','Toutes'],['afaire','À faire'],['encours','En cours'],['fait','Faites']].map(function(f){ return '<button type="button" data-a="filt" data-v="'+f[0]+'" class="'+(v.filt===f[0]?'on':'')+'">'+f[1]+'</button>'; }).join('')+'</div>';
     var list=mine.filter(function(t){ return v.filt==='all' || (t.statut||'afaire')===v.filt; })
       .sort(function(a,b){ var x=(a.statut==='fait')-(b.statut==='fait'); if(x) return x; return ((a.date||'9999')+(a.heure||'')).localeCompare((b.date||'9999')+(b.heure||'')); });
@@ -31077,7 +31081,7 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
     else if(a==='add'||a==='upd'){
       var ti=val(host,'tk-ti'); if(!ti){ var f=host.querySelector('#tk-ti'); if(f){ f.focus(); f.style.borderColor='#dc2626'; } return; }
       var o={titre:ti,desc:val(host,'tk-de'),date:val(host,'tk-da'),heure:val(host,'tk-he'),statut:val(host,'tk-st')||'afaire',prio:val(host,'tk-pr')||'normale'};
-      if(a==='add'){ o.id=uid(); o.prof=d.prof; o.comments=[]; o.ts=Date.now(); d.tasks.push(o); v.form=false; v.pre=''; }
+      if(a==='add'){ o.id=uid(); o.prof=v.p; o.comments=[]; o.ts=Date.now(); d.tasks.push(o); v.form=false; v.pre=''; }
       else { var t2=task(v.open); if(t2) Object.keys(o).forEach(function(k){ t2[k]=o[k]; }); v.edit=null; }
       save(d);
     }
