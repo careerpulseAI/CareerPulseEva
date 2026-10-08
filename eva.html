@@ -5258,18 +5258,23 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
     <button class="ew-hdr-back" id="ew-back">
       <svg width="16" height="16" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
     </button>
-    <div class="ew-hdr-ttl" id="ew-ttl">Conseils pratiques & professionnels</div>
+    <div class="ew-hdr-ttl" id="ew-ttl">Mon Portfolio</div>
   </div>
 
   <!-- P0 : Choix profil -->
   <div class="ew-panel on" id="ew-p0">
     <div class="ew-p0-scroll">
       <div class="ew-hero">
-        <div class="ew-hero-ttl">Conseils pratiques & professionnels</div>
+        <div class="ew-hero-ttl">Mon Portfolio</div>
         <div class="ew-hero-sub">Des conseils sur-mesure, des diagnostics personnalisés — EVA t'accompagne selon ton profil</div>
       </div>
       <div class="ew-sec-lbl">Choisis ton profil</div>
       <div class="ew-ptiles">
+        <div class="ew-ptile" data-p="sal" onclick="ewOpen('sal')">
+          <div class="ew-ptile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/><path d="M3 13h18"/></svg></div>
+          <div class="ew-ptile-nom">Salarié</div>
+          <div class="ew-ptile-sub">Contrat, paie, congés, évolution</div>
+        </div>
         <div class="ew-ptile" data-p="dem" onclick="ewOpen('dem')">
           <div class="ew-ptile-ico"><svg viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
           <div class="ew-ptile-nom">Demandeur d'emploi</div>
@@ -5302,22 +5307,6 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
     </div>
     <div class="ew-p1-scroll">
       <div class="ew-mod-cards">
-        <div class="ew-mod-card" onclick="ewGoConseils()">
-          <div class="ew-mod-card-top">
-            <div class="ew-mod-card-ico" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border:1.5px solid #bbf7d0;">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            </div>
-            <div class="ew-mod-card-txt">
-              <div class="ew-mod-card-ttl">Conseils pratiques & professionnels</div>
-              <div class="ew-mod-card-sub">Organismes, entretiens, négociation, contrats, droits — tout en détail pour ton profil</div>
-            </div>
-            <div class="ew-mod-card-arr">›</div>
-          </div>
-          <div class="ew-mod-card-footer">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-            <span id="ew-conseils-count">— sujets · Conseils personnalisés par EVA</span>
-          </div>
-        </div>
         <div class="ew-mod-card" onclick="ewGoDiagnosticChat()">
           <div class="ew-mod-card-top">
             <div class="ew-mod-card-ico" style="background:linear-gradient(135deg,#f8fafc,#f1f5f9);border:1.5px solid #e2e8f0;">
