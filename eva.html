@@ -4478,18 +4478,19 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
         </div>
       </div>
 
-      <!-- ── DEMANDEUR D'EMPLOI ── -->
+      <!-- ── DEMANDEUR D'EMPLOI · ÉTUDIANT (binôme) ── -->
       <div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:16px;margin-bottom:10px;overflow:hidden;">
         <div style="display:flex;align-items:center;gap:11px;padding:14px 14px 14px;">
           <div style="width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,#d1fae5,#a7f3d0);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="7" r="4"/><path d="M10.3 15H7a4 4 0 0 0-4 4v2"/><circle cx="17" cy="17" r="3"/><path d="m21 21-1.9-1.9"/></svg>
           </div>
           <div style="flex:1;min-width:0;">
-            <div style="font-size:.76rem;font-weight:700;color:#0f172a;">Demandeur d'emploi</div>
-            <div style="font-size:.54rem;color:#64748b;margin-top:1px;">Retour à l'emploi · ARE · Motivations · Droits</div>
+            <div style="font-size:.76rem;font-weight:700;color:#0f172a;">Demandeur d'emploi · Étudiant</div>
+            <div style="font-size:.54rem;color:#64748b;margin-top:1px;">Retour à l'emploi · ARE · Stage · Alternance</div>
           </div>
         </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #f1f5f9;">
+        <div style="font-size:.46rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748b;background:#f8fafc;border-top:1px solid #f1f5f9;padding:7px 14px;">Demandeur d'emploi</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #f1f5f9;" data-path="Demandeur d'emploi">
           <div onclick="go('entretien-demandeur')" onmousedown="this.style.background='#f8fafc'" onmouseup="this.style.background=''" ontouchstart="this.style.background='#f8fafc'" ontouchend="this.style.background=''" style="padding:12px 12px 13px;cursor:pointer;border-right:1px solid #f1f5f9;-webkit-tap-highlight-color:transparent;">
             <div style="font-size:.52rem;font-weight:800;color:#047857;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:4px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg> QCM Droits</div>
             <div style="font-size:.64rem;font-weight:600;color:#0f172a;line-height:1.35;margin-bottom:6px;">15 ou 25 questions sur l'ARE, les droits et la recherche d'emploi</div>
@@ -4498,6 +4499,19 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
           <div onclick="go('mise-situation-demandeur')" onmousedown="this.style.background='#f8fafc'" onmouseup="this.style.background=''" ontouchstart="this.style.background='#f8fafc'" ontouchend="this.style.background=''" style="padding:12px 12px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;">
             <div style="font-size:.52rem;font-weight:800;color:#7c3aed;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:4px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Mise en situation</div>
             <div style="font-size:.64rem;font-weight:600;color:#0f172a;line-height:1.35;margin-bottom:6px;">Entretien de retour à l'emploi — recruteur terrain réel</div>
+            <div style="font-size:.48rem;font-weight:700;color:#7c3aed;background:#f5f3ff;border:1px solid #e9d5ff;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">Entrer <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+          </div>
+        </div>
+        <div style="font-size:.46rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#64748b;background:#f8fafc;border-top:1px solid #f1f5f9;padding:7px 14px;">Étudiant</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid #f1f5f9;" data-path="Étudiant">
+          <div onclick="go('entretien-etudiant')" onmousedown="this.style.background='#f8fafc'" onmouseup="this.style.background=''" ontouchstart="this.style.background='#f8fafc'" ontouchend="this.style.background=''" style="padding:12px 12px 13px;cursor:pointer;border-right:1px solid #f1f5f9;-webkit-tap-highlight-color:transparent;">
+            <div style="font-size:.52rem;font-weight:800;color:#047857;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:4px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="13" y2="16"/></svg> QCM Droits</div>
+            <div style="font-size:.64rem;font-weight:600;color:#0f172a;line-height:1.35;margin-bottom:6px;">15 ou 25 questions sur le stage, l'alternance et les aides étudiantes</div>
+            <div style="font-size:.48rem;font-weight:700;color:#047857;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">Démarrer <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
+          </div>
+          <div onclick="go('mise-situation-etudiant')" onmousedown="this.style.background='#f8fafc'" onmouseup="this.style.background=''" ontouchstart="this.style.background='#f8fafc'" ontouchend="this.style.background=''" style="padding:12px 12px 13px;cursor:pointer;-webkit-tap-highlight-color:transparent;">
+            <div style="font-size:.52rem;font-weight:800;color:#7c3aed;letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;gap:4px;"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Mise en situation</div>
+            <div style="font-size:.64rem;font-weight:600;color:#0f172a;line-height:1.35;margin-bottom:6px;">Entretien de stage ou d'alternance — recruteur réel</div>
             <div style="font-size:.48rem;font-weight:700;color:#7c3aed;background:#f5f3ff;border:1px solid #e9d5ff;border-radius:20px;padding:2px 8px;display:inline-flex;align-items:center;gap:3px;">Entrer <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></div>
           </div>
         </div>
@@ -4802,6 +4816,28 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
   <div class="nova-result" id="nq-sal-result"></div>
 </div>
 
+<!-- QCM Étudiant -->
+<div class="nova-screen" id="s-entretien-etudiant">
+  <div class="nova-hd">
+    <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">QCM · Droits Étudiant</div></div>
+    <div class="nova-hd-badge">QCM</div>
+  </div>
+  <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="nq-etu-bar"></div></div><div class="nova-prog-meta"><span id="nq-etu-step">Question 1 / 15</span><span id="nq-etu-pct">0%</span></div></div>
+  <div class="nova-feed" id="nq-etu-feed"></div>
+  <div class="nova-choices" id="nq-etu-choices"></div>
+</div>
+<div class="nova-screen" id="s-entretien-etudiant-result">
+  <div class="nova-hd">
+    <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Résultat · Étudiant</div></div>
+    <div class="nova-hd-badge">SCORE</div>
+  </div>
+  <div class="nova-result" id="nq-etu-result"></div>
+</div>
+
 <!-- QCM Demandeur -->
 <div class="nova-screen" id="s-entretien-demandeur">
   <div class="nova-hd">
@@ -4890,6 +4926,28 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
     <div class="nova-hd-badge">SCORE</div>
   </div>
   <div class="nova-result" id="ns-sal-result"></div>
+</div>
+
+<!-- Simulation Étudiant -->
+<div class="nova-screen" id="s-mise-situation-etudiant">
+  <div class="nova-hd">
+    <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Entretien · Stage & alternance</div></div>
+    <div class="nova-hd-badge">QCM</div>
+  </div>
+  <div class="nova-prog"><div class="nova-prog-track"><div class="nova-prog-bar" id="ns-etu-bar"></div></div><div class="nova-prog-meta"><span id="ns-etu-step">Situation 1 / 6</span><span id="ns-etu-pct">0%</span></div></div>
+  <div class="nova-feed" id="ns-etu-feed"></div>
+  <div class="nova-choices" id="ns-etu-choices"></div>
+</div>
+<div class="nova-screen" id="s-mise-situation-etudiant-result">
+  <div class="nova-hd">
+    <button class="nova-hd-back" onclick="go('eva-entretien')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="nova-hd-avatar"><svg viewBox="0 0 24 24"><path d="M12 2a5 5 0 1 1 0 10A5 5 0 0 1 12 2z"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><div class="nova-hd-dot"></div></div>
+    <div class="nova-hd-info"><div class="nova-hd-name">Mise en situation</div><div class="nova-hd-sub">Analyse · Entretien étudiant</div></div>
+    <div class="nova-hd-badge">SCORE</div>
+  </div>
+  <div class="nova-result" id="ns-etu-result"></div>
 </div>
 
 <!-- Simulation Demandeur -->
@@ -7874,6 +7932,18 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 </style>
 
 <div id="cp-end" hidden></div>
+<style>
+/* Quiz : carte binôme Demandeur d'emploi · Étudiant (deux chemins) */
+.evx-duo{ display:flex; flex-direction:column; gap:10px; }
+.evx-duo-p{ border:1px solid color-mix(in srgb,var(--c1,#2563eb) 18%,#e3e9f4); border-radius:14px; padding:10px 12px 12px; background:#fff; }
+.evx-duo-h{ font-size:.6rem; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--c1,#2563eb); margin-bottom:4px; }
+.evx-duo-p ul{ margin:0 0 10px !important; }
+.evx-duo-b{ display:flex; gap:6px; justify-content:flex-end; }
+.evx-duo-b button{ position:static !important; border:none; background:#f1f5f9; color:#334155; border-radius:99px; padding:8px 12px; font:700 .68rem/1 inherit; cursor:pointer; display:inline-flex; align-items:center; gap:6px; }
+.evx-duo-b button.pri{ background:var(--c1,#2563eb); color:#fff; box-shadow:0 8px 18px -8px var(--c1,#2563eb); }
+.evx-duo-b button svg{ width:13px; height:13px; }
+.evx-duo-b button:active{ transform:scale(.96); }
+</style>
 <script src="eva.js" charset="utf-8"></script>
 </body>
 </html>
