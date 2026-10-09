@@ -18354,7 +18354,7 @@ window.cpSheetArrows=function(sc,host){
   }
 
   /* ── L'espace employeur (même présentation que l'espace centre) ── */
-  function logoutBar(){ return '<div class="ofc-lockbar"><span class="ofc-lockbar-ic">'+S(I.lock)+'</span><div><b>Votre espace employeur</b><span>Pour quitter votre espace, déconnectez-vous.</span></div><button type="button" class="ofc-btn out" data-ea="logout">'+S('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',16)+'Se déconnecter</button></div>'; }
+  function logoutBar(){ return '<div class="ofc-lockbar"><span class="ofc-lockbar-ic">'+S(I.lock)+'</span><div><b>Votre espace employeur</b><span>Pour quitter votre espace, déconnectez-vous. Par mesure de sécurité, si vous quittez le site sans vous déconnecter, votre compte se déconnecte automatiquement.</span></div><button type="button" class="ofc-btn out" data-ea="logout">'+S('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',16)+'Se déconnecter</button></div>'; }
   function hero(){
     return logoutBar()+'<div class="ofc-hero emp-hero"><span class="ofc-k"><i></i>Espace employeur</span>'
       +'<h2>Vos offres rencontrent les bons candidats.</h2>'
@@ -18646,5 +18646,11 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
   if(document.readyState!=='loading') apply(); else document.addEventListener('DOMContentLoaded',apply);
 })();
 </script>
+<style id="msg-full-css">
+/* Messageries centre de formation et employeur : plein écran aussi sur mobile */
+.ofcm-sheet:has(.ofcm-pro), .ofcm-sheet.emp-sheet{ align-items:stretch !important; justify-content:stretch !important; padding:0 !important; }
+.ofcm-box.ofcm-pro{ max-width:none !important; width:100vw !important; height:100vh !important; height:100dvh !important; border-radius:0 !important; box-shadow:none !important; }
+.ofcm-box.ofcm-pro .ofcm-ft{ padding-bottom:max(16px, env(safe-area-inset-bottom)) !important; }
+</style>
 </body>
 </html>
