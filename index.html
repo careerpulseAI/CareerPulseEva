@@ -18588,5 +18588,35 @@ window.cpSheetArrows=function(sc,host){
 .emp-tags span{ font-size:.72rem; font-weight:700; padding:5px 10px; border-radius:999px; background:#eef2ff; color:#1e3a8a; }
 .emp-prop:empty{ display:none; } .emp-prop{ margin-top:10px; padding-top:10px; border-top:1px dashed #e2e8f0; }
 </style>
+<style id="pro-fix-css">
+/* Espace pros : cases à cocher visibles (le réglage général du site masquait leur apparence) */
+#s-pro-centre input[type="checkbox"], #s-pro-employeur input[type="checkbox"]{ -webkit-appearance:checkbox !important; appearance:auto !important; }
+/* Espace pros : œil pour afficher / masquer le mot de passe */
+.cpro .pw-wrap{ position:relative; display:block; }
+.cpro .pw-wrap input{ padding-right:48px !important; width:100%; }
+.cpro .pw-wrap .pw-eye{ position:absolute !important; top:50% !important; right:6px !important; left:auto !important; bottom:auto !important; margin:0 !important; padding:0 !important; transform:translateY(-50%) !important; width:38px !important; height:38px !important; min-height:0 !important; border:none !important; background:transparent !important; box-shadow:none !important; border-radius:10px; display:flex !important; align-items:center; justify-content:center; color:#64748b; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+.cpro .pw-eye:active{ background:#f1f5f9; }
+.cpro .pw-eye svg{ width:20px; height:20px; }
+</style>
+<script>
+/* Espace pros (centre de formation et employeur) : œil sur chaque champ mot de passe */
+(function(){
+  var EYE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+  var OFF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 19C5.6 19 2 12 2 12a18.5 18.5 0 0 1 4.1-5.1M9.9 5.2A9.6 9.6 0 0 1 12 5c6.4 0 10 7 10 7a18.6 18.6 0 0 1-2.2 3.2M14.1 14.1a3 3 0 1 1-4.2-4.2"/><path d="M2 2l20 20"/></svg>';
+  function add(root){
+    [].forEach.call(root.querySelectorAll('.pf input[type="password"]'),function(inp){
+      if(inp.parentNode.classList.contains('pw-wrap')) return;
+      var w=document.createElement('span'); w.className='pw-wrap'; inp.parentNode.insertBefore(w,inp); w.appendChild(inp);
+      var b=document.createElement('button'); b.type='button'; b.className='pw-eye'; b.setAttribute('aria-label','Afficher le mot de passe'); b.innerHTML=EYE; w.appendChild(b);
+      b.onclick=function(){ var show=inp.type==='password'; inp.type=show?'text':'password'; b.innerHTML=show?OFF:EYE; b.setAttribute('aria-label',show?'Masquer le mot de passe':'Afficher le mot de passe'); inp.focus(); };
+    });
+  }
+  function init(){
+    ['s-pro-centre','s-pro-employeur'].forEach(function(id){ var s=document.getElementById(id); if(!s) return; add(s);
+      try{ new MutationObserver(function(){ add(s); }).observe(s,{ childList:true, subtree:true }); }catch(e){} });
+  }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
 </body>
 </html>
