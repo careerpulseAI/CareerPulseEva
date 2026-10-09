@@ -17570,7 +17570,7 @@ window.cpSheetArrows=function(sc,host){
   function closeConv(){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet'); if(x) x.remove(); document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(draw); }
   function openConv(id){
     var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv();
-    var sh=document.createElement('div'); sh.className='ofcm-sheet';
+    var sh=document.createElement('div'); sh.className='ofcm-sheet'; sh.setAttribute('data-rep','formation:'+c.id);
     sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b class="ofcm-who"></b><span>'+esc(c.formationTitre||'')+'</span></div><em>🔒 Protégé</em></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div></div></div>';
     sh.querySelector('.ofcm-box').classList.add('ofcm-pro');
@@ -18015,7 +18015,7 @@ window.cpSheetArrows=function(sc,host){
   var UNSUB=null;
   function openConv(id){
     var c=S.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
-    var sh=document.createElement('div'); sh.className='cpw-sheet';
+    var sh=document.createElement('div'); sh.className='cpw-sheet'; sh.setAttribute('data-rep','emploi:'+c.id);
     sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button><span class="cpw-logo">'+I(P.pulse,20)+'</span><div class="cpw-ht"><b>'+esc(c.empNom||'Recruteur')+'</b><span>'+esc(c.poste||'Messagerie protégée')+'</span></div></div><div class="cpw-scroll"><div class="cpw-log cps-thread"></div></div><div class="cpw-ft"><textarea class="cpw-in" maxlength="1500" placeholder="Écris ton message…"></textarea><button type="button" class="cpw-send" aria-label="Envoyer">'+I(P.send,20)+'</button></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var log=sh.querySelector('.cpw-log'), ref=convCol().doc(id);
@@ -18391,9 +18391,10 @@ window.cpSheetArrows=function(sc,host){
     var L=ST.cands.map(function(p){ return { p:p, s:score(p,words) }; }).filter(function(x){ return x.s>0; }).sort(function(a,b){ return b.s-a.s; });
     if(!L.length) return '<div class="ofc-empty">'+S(I.users)+(ST.cands.length?'Aucun profil ne correspond à votre recherche.':'Aucun profil visible pour le moment.<br>Les membres qui rendent leur profil visible apparaîtront ici.')+'</div>';
     return L.map(function(x){ var p=x.p, done=ST.convs.some(function(c){ return c.candUid===p.uid; }), cs=comps(p).slice(0,6);
-      return '<div class="ofc-item emp-cand"><span class="ofc-item-ico">'+S(I.users)+'</span><div class="ofc-item-b">'
-        +'<div class="ofc-item-t">'+esc(label(p))+(p.titre?' · '+esc(p.titre):'')+'</div>'
-        +'<div class="ofc-item-s">'+esc([p.secteur,p.ville,p.exp].filter(Boolean).join(' · '))+'</div>'
+      var op=!!(ST.openC&&ST.openC[p.uid]);
+      return '<div class="ofc-item emp-cand'+(op?' open':'')+'" data-cand="'+esc(p.uid)+'"><button type="button" class="emp-tog" data-ea="tog" data-c="'+esc(p.uid)+'" aria-expanded="'+op+'"><span class="ofc-item-ico">'+S(I.users)+'</span><span class="emp-tog-t">'
+        +'<span class="ofc-item-t">'+esc(label(p))+(p.titre?' · '+esc(p.titre):'')+'</span>'
+        +'<span class="ofc-item-s">'+esc([p.secteur,p.ville,p.exp].filter(Boolean).join(' · '))+'</span>'+(done?'<span class="emp-done">● Échange proposé</span>':'')+'</span><span class="emp-chev">'+S(I.chev,18)+'</span></button><div class="ofc-item-b emp-more">'
         +(p.accroche?'<p class="emp-acc">'+esc(String(p.accroche).slice(0,260))+'</p>':'')
         +(cs.length?'<div class="emp-tags">'+cs.map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('')+'</div>':'')
         +'<div class="ofc-btns">'+(done?'<span class="ofc-tag pub">● Échange proposé</span>':'<button type="button" class="ofc-btn pri" data-ea="prop" data-c="'+esc(p.uid)+'">'+S(I.send,16)+'Proposer un échange</button>')+'</div>'
@@ -18473,6 +18474,7 @@ window.cpSheetArrows=function(sc,host){
     var cv=e.target.closest('[data-econv]'); if(cv){ openConv(cv.getAttribute('data-econv')); return; }
     var b=e.target.closest('[data-ea]'); if(!b) return; var a=b.getAttribute('data-ea'), u=me(); if(!u) return;
     if(a==='logout'){ if(window.cpEmpUnlock) cpEmpUnlock(); try{ history.replaceState(null,'','#pro-employeur'); }catch(x){} if(window.fbLogout) fbLogout(); else auth().signOut().then(function(){ location.reload(); }); return; }
+    if(a==='tog'){ var cid=b.getAttribute('data-c'), card=b.closest('.emp-cand'); ST.openC=ST.openC||{}; ST.openC[cid]=!ST.openC[cid]; if(card){ card.classList.toggle('open',ST.openC[cid]); b.setAttribute('aria-expanded',ST.openC[cid]); } return; }
     if(a==='prop'){ var box=$('emp-prop-'+b.getAttribute('data-c')); if(!box) return; box.innerHTML=propForm(b.getAttribute('data-c')); b.style.display='none';
       var s=box.querySelector('[data-psel]'); s.onchange=function(){ box.querySelector('[data-pautre]').style.display=s.value==='_autre'?'':'none'; }; if(s.value==='_autre') box.querySelector('[data-pautre]').style.display=''; return; }
     if(a==='cancelprop'){ var bx=$('emp-prop-'+b.getAttribute('data-c')); if(bx) bx.innerHTML=''; var pb=document.querySelector('[data-ea="prop"][data-c="'+b.getAttribute('data-c')+'"]'); if(pb) pb.style.display=''; return; }
@@ -18519,7 +18521,7 @@ window.cpSheetArrows=function(sc,host){
   function fmtAt(iso){ try{ var d=new Date(iso); return d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' })+' '+d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
   function openConv(id){
     var c=ST.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
-    var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet';
+    var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet'; sh.setAttribute('data-rep','emploi:'+c.id);
     sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><div><b class="ofcm-who"></b><span>'+esc(c.poste||'')+'</span></div><em>🔒 Protégé</em></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre message…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S(I.send)+'</button></div></div></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
@@ -18652,5 +18654,99 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
 .ofcm-box.ofcm-pro{ max-width:none !important; width:100vw !important; height:100vh !important; height:100dvh !important; border-radius:0 !important; box-shadow:none !important; }
 .ofcm-box.ofcm-pro .ofcm-ft{ padding-bottom:max(16px, env(safe-area-inset-bottom)) !important; }
 </style>
+<style id="emp-drawer-css">
+/* Espace employeur : carte candidat en tiroir */
+.emp-cand{ display:block !important; padding:0 !important; overflow:hidden; }
+.emp-tog{ display:flex; align-items:center; gap:12px; width:100%; padding:14px; border:none; background:none; text-align:left; cursor:pointer; font:inherit; color:inherit; -webkit-tap-highlight-color:transparent; }
+.emp-tog .ofc-item-ico{ flex-shrink:0; }
+.emp-tog-t{ flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+.emp-tog-t .ofc-item-t, .emp-tog-t .ofc-item-s{ display:block; }
+.emp-done{ align-self:flex-start; margin-top:4px; font-size:.7rem; font-weight:800; padding:3px 9px; border-radius:999px; background:#dcfce7; color:#047857; }
+.emp-chev{ flex-shrink:0; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#eef2ff; color:#1e3a8a; transition:transform .25s ease; }
+.emp-cand.open .emp-chev{ transform:rotate(90deg); }
+.emp-more{ display:none !important; padding:0 14px 14px !important; }
+.emp-cand.open .emp-more{ display:block !important; animation:empOpen .25s ease both; }
+@keyframes empOpen{ from{ opacity:0; transform:translateY(-4px); } }
+</style>
+<script>
+/* ═══ Messageries : bouton ⋯ « Signaler un abus » (employeur, centre de formation, candidat) ═══
+   Le signalement est enregistré dans « reports » ; l'équipe CareerPulse l'examine dans la console. */
+(function(){
+  if(window.cpReportInit) return; window.cpReportInit=true;
+  var MOTIFS=[
+    'Propos irrespectueux ou inappropriés',
+    'Insistance après un refus',
+    'Demande d\'argent ou de paiement',
+    'Offre ou proposition qui semble fausse',
+    'Demande d\'informations personnelles sans rapport',
+    'Propos discriminatoires',
+    'Publicité ou messages sans rapport',
+    'Autre'
+  ];
+  var css='.cprep-dots{ flex-shrink:0; width:38px; height:38px; margin-left:8px; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.14); color:#fff; display:flex !important; align-items:center; justify-content:center; cursor:pointer; position:relative; padding:0; }'
+    +'.cprep-dots svg{ width:18px; height:18px; }'
+    +'.cprep-menu{ position:absolute; top:44px; right:0; z-index:5; min-width:220px; background:#fff; color:#0f172a; border-radius:14px; box-shadow:0 18px 40px -16px rgba(15,23,42,.45); border:1px solid #e2e8f0; padding:6px; }'
+    +'.cprep-menu button{ display:flex; align-items:center; gap:9px; width:100%; padding:11px 12px; border:none; background:none; border-radius:10px; font:700 .86rem/1.2 inherit; color:#b91c1c; cursor:pointer; text-align:left; }'
+    +'.cprep-menu button:hover{ background:#fef2f2; } .cprep-menu svg{ width:17px; height:17px; flex-shrink:0; }'
+    +'.cprep-sheet{ position:fixed; inset:0; z-index:9800; background:rgba(15,23,42,.5); display:flex; align-items:flex-end; justify-content:center; }'
+    +'@media (min-width:700px){ .cprep-sheet{ align-items:center; } }'
+    +'.cprep-box{ width:100%; max-width:520px; max-height:92vh; overflow:auto; background:#fff; color:#0f172a; border-radius:22px 22px 0 0; padding:20px 18px calc(18px + env(safe-area-inset-bottom)); font-family:\'DM Sans\',-apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif; }'
+    +'@media (min-width:700px){ .cprep-box{ border-radius:22px; } }'
+    +'.cprep-box h3{ margin:0 0 4px; font-size:1.1rem; font-weight:800; } .cprep-box > p{ margin:0 0 14px; font-size:.84rem; line-height:1.55; color:#475569; }'
+    +'.cprep-opts{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }'
+    +'.cprep-opts label{ display:flex; align-items:center; gap:10px; padding:12px 13px; border:1px solid #e2e8f0; border-radius:12px; font-size:.88rem; font-weight:600; cursor:pointer; }'
+    +'.cprep-opts label:has(input:checked){ border-color:#1e40af; background:#eff6ff; }'
+    +'.cprep-opts input{ -webkit-appearance:radio !important; appearance:auto !important; width:17px; height:17px; margin:0; accent-color:#1e40af; flex-shrink:0; }'
+    +'.cprep-box textarea{ width:100%; box-sizing:border-box; min-height:84px; padding:12px; border:1px solid #d1d5db; border-radius:12px; font:500 .9rem/1.45 inherit; resize:vertical; }'
+    +'.cprep-err{ color:#b91c1c; font-size:.8rem; font-weight:700; min-height:18px; margin:6px 0; }'
+    +'.cprep-btns{ display:flex; gap:8px; } .cprep-btns button{ flex:1; padding:13px; border-radius:12px; font:800 .9rem/1 inherit; cursor:pointer; border:1px solid #d1d5db; background:#fff; color:#0f172a; }'
+    +'.cprep-btns .go{ border:none; background:linear-gradient(135deg,#1e40af,#047857); color:#fff; }'
+    +'.cprep-note{ margin-top:12px; font-size:.74rem; line-height:1.5; color:#64748b; }';
+  var st=document.createElement('style'); st.id='cprep-css'; st.textContent=css; (document.head||document.documentElement).appendChild(st);
+  function S(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function toast(m){ if(window.ecShowToast) ecShowToast(m); else alert(m); }
+  function user(){ var A=window.fbAuth||(typeof fbAuth!=='undefined'?fbAuth:null); return A&&A.currentUser; }
+  function openForm(rep){
+    var p=String(rep||'').split(':'), ctx=p[0]||'', conv=p.slice(1).join(':');
+    var sh=document.createElement('div'); sh.className='cprep-sheet';
+    sh.innerHTML='<div class="cprep-box" role="dialog" aria-label="Signaler un abus"><h3>Signaler un abus</h3>'
+      +'<p>Votre signalement est confidentiel : l\'autre personne n\'en est pas informée. L\'équipe CareerPulse l\'examine avec attention.</p>'
+      +'<div class="cprep-opts">'+MOTIFS.map(function(m,i){ return '<label><input type="radio" name="cprep-m" value="'+esc(m)+'"'+(i===0?'':'')+'>'+esc(m)+'</label>'; }).join('')+'</div>'
+      +'<textarea maxlength="800" placeholder="Précisez si vous le souhaitez (facultatif, obligatoire pour « Autre »)"></textarea>'
+      +'<div class="cprep-err"></div><div class="cprep-btns"><button type="button" class="no">Annuler</button><button type="button" class="go">Envoyer le signalement</button></div>'
+      +'<div class="cprep-note">En cas de danger immédiat, contactez le 17 ou le 112.</div></div>';
+    document.body.appendChild(sh);
+    function close(){ sh.remove(); }
+    sh.addEventListener('click',function(e){ if(e.target===sh) close(); });
+    sh.querySelector('.no').onclick=close;
+    sh.querySelector('.go').onclick=function(){
+      var r=sh.querySelector('input[name="cprep-m"]:checked'), t=String(sh.querySelector('textarea').value||'').trim(), er=sh.querySelector('.cprep-err'), b=this;
+      if(!r){ er.textContent='Choisissez un motif.'; return; }
+      if(r.value==='Autre' && t.length<5){ er.textContent='Précisez le motif en quelques mots.'; return; }
+      var u=user(), db=window.fbDb; if(!u||!db){ er.textContent='Connectez-vous pour envoyer un signalement.'; return; }
+      b.disabled=true; b.textContent='Envoi…';
+      db.collection('reports').add({ reporterUid:u.uid, type:'message', contexte:ctx, convId:conv, motif:r.value, commentaire:t.slice(0,800), createdAt:new Date().toISOString() })
+        .then(function(){ close(); toast('Merci. Votre signalement a bien été transmis à l\'équipe CareerPulse.'); })
+        .catch(function(){ b.disabled=false; b.textContent='Envoyer le signalement'; er.textContent='Envoi impossible pour le moment. Réessayez.'; });
+    };
+  }
+  function addDots(sh){
+    if(sh._cprep) return; var hd=sh.querySelector('.ofcm-hd,.cpw-hd,.ofm-hd'); if(!hd) return; sh._cprep=1;
+    var b=document.createElement('button'); b.type='button'; b.className='cprep-dots'; b.setAttribute('aria-label','Plus d\'options');
+    b.innerHTML=S('<circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/>');
+    hd.appendChild(b);
+    b.onclick=function(e){ e.stopPropagation(); var m=b.querySelector('.cprep-menu'); if(m){ m.remove(); return; }
+      m=document.createElement('div'); m.className='cprep-menu'; m.innerHTML='<button type="button">'+S('<path d="M4 22V4a1 1 0 0 1 1-1h12l-2 4 2 4H5"/>')+'Signaler un abus</button>';
+      m.querySelector('button').onclick=function(ev){ ev.stopPropagation(); m.remove(); openForm(sh.getAttribute('data-rep')); };
+      b.appendChild(m); };
+  }
+  document.addEventListener('click',function(){ var m=document.querySelector('.cprep-menu'); if(m) m.remove(); });
+  function scan(){ [].forEach.call(document.querySelectorAll('[data-rep]'),addDots); }
+  function init(){ try{ new MutationObserver(scan).observe(document.body,{ childList:true }); }catch(e){} scan(); }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+})();
+
+</script>
 </body>
 </html>
