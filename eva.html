@@ -7934,13 +7934,18 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 .evx-duo-b button:active{ transform:scale(.96); }
 </style>
 <style id="evs-lisa-css">
-#eva-side .evs-item.evs-lisa, #eva-sheet .evs-item.evs-lisa{ gap:11px; margin:2px 0 6px; padding:10px 12px !important; border-radius:16px !important; color:#fff !important; background:radial-gradient(120% 120% at 100% 0%,rgba(110,231,183,.35),transparent 60%),linear-gradient(135deg,#1e3a8a,#1e40af 45%,#047857) !important; box-shadow:0 12px 24px -16px rgba(30,64,175,.85); }
-.evs-lisa img{ width:38px; height:38px; border-radius:50%; object-fit:cover; flex-shrink:0; border:2px solid #fff; box-shadow:0 4px 10px -4px rgba(0,0,0,.4); }
-.evs-lisa span{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-.evs-lisa b{ font-size:.86rem; font-weight:800; color:#fff; }
-.evs-lisa small{ font-size:.68rem; font-weight:600; color:rgba(255,255,255,.85); line-height:1.3; white-space:normal; }
-.evs-lisa:hover{ filter:brightness(1.06); }
-#eva-side .evs-lisa{ padding:9px 10px !important; gap:9px; } #eva-side .evs-lisa img{ width:32px; height:32px; } #eva-side .evs-lisa b{ font-size:.78rem; white-space:nowrap; } #eva-side .evs-lisa small{ font-size:.6rem; }
+/* Bouton Lisa du menu EVA : blanc et bleu dégradé, même taille que les autres titres */
+#eva-side .evs-item.evs-lisa, #eva-sheet .evs-item.evs-lisa{ color:#1e3a8a !important; font-weight:700; background:linear-gradient(90deg,#ffffff 0%,#eff6ff 55%,#dbeafe 100%) !important; box-shadow:inset 0 0 0 1px #bfdbfe; }
+#eva-side .evs-item.evs-lisa:hover, #eva-sheet .evs-item.evs-lisa:hover{ background:linear-gradient(90deg,#ffffff 0%,#dbeafe 60%,#bfdbfe 100%) !important; }
+.evs-lisa img{ width:18px; height:18px; border-radius:50%; object-fit:cover; flex-shrink:0; box-shadow:0 0 0 1.5px #fff, 0 0 0 3px #93c5fd; }
+#eva-sheet .evs-lisa img{ width:20px; height:20px; }
+.evs-lisa span{ color:#1e3a8a; }
+</style>
+<style id="ofw-prev-css">
+/* Questionnaire formation : réponse déjà enregistrée en surbrillance */
+.ofw-inp.ofw-prev{ background:#fff7ed; border-color:#f59e0b; box-shadow:0 0 0 3px rgba(245,158,11,.15); }
+.ofw-prevnote{ margin:0 0 8px; padding:8px 11px; border-radius:11px; background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; font-size:.76rem; font-weight:700; }
+.ofw-btn.on{ box-shadow:0 0 0 3px rgba(245,158,11,.25), 0 6px 14px -8px rgba(180,83,9,.9) !important; }
 </style>
 <script src="eva.js" charset="utf-8"></script>
 </body>
