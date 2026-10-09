@@ -7960,6 +7960,16 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 .ofme-q select.ofw-inp{ -webkit-appearance:menulist; appearance:auto; background:#fff; }
 .ofme-act{ position:sticky; bottom:0; padding:10px 0; background:linear-gradient(180deg,rgba(255,255,255,0),#fff 30%); }
 </style>
+
+<!-- ══ Quiz et mises en situation : la photo d'EVA sur chaque QCM et simulation ══ -->
+<style id="evq-photo-css">
+#s-eva-entretien .evx-quick i{ position:relative; background:var(--eva-photo) center/cover no-repeat !important; border-radius:50% !important; box-shadow:0 0 0 2px #fff,0 4px 10px -5px rgba(79,70,229,.7); }
+#s-eva-entretien .evx-quick i svg{ position:absolute; right:-4px; bottom:-4px; width:9px !important; height:9px !important; padding:2px; box-sizing:content-box; border-radius:50%; border:1.5px solid #fff; }
+#s-eva-entretien .evx-quick button:nth-child(odd) i svg{ background:var(--cs); color:var(--c1); }
+#s-eva-entretien .evx-quick button:nth-child(even) i svg{ background:var(--c1); color:#fff; }
+#s-eva-entretien .evq-av{ width:18px; height:18px; border-radius:50%; flex-shrink:0; background:var(--eva-photo) center/cover no-repeat; box-shadow:0 0 0 1.5px #fff; display:inline-block; vertical-align:middle; margin-right:6px; }
+#s-eva-entretien .pfs-ac button.evq-b{ display:inline-flex; align-items:center; }
+</style>
 <script src="eva.js" charset="utf-8"></script>
 </body>
 </html>
