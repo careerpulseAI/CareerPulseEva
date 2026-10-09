@@ -16721,7 +16721,7 @@ window.cpEvx = window.cpEvx || {
         });
       }).then(function(){
         if(window.cpBusy) cpBusy(false);
-        toast('Compte créé : confirmez votre e-mail');
+        toast('Compte créé : confirmez votre e-mail'); if(window.cpDraftClear) cpDraftClear('org_signup');
         rendering=false; renderCentre();
       }).catch(function(e){
         if(window.cpBusy) cpBusy(false);
@@ -16801,7 +16801,7 @@ window.cpEvx = window.cpEvx || {
       if(!d.exists){ setBody(notOrgHtml(u)); $('pn-other').onclick=function(){ setHash('pro-centre'); if(window.fbLogout) fbLogout(); };
         $('pn-send').onclick=function(){ var er=$('ps-err'), b=this; er.textContent=''; var o=readOrg(); if(!checkOrg(o,er)) return; if(!$('ps-eng').checked){ er.textContent='Cochez l\'engagement pour envoyer votre demande.'; return; }
           var now=new Date().toISOString(); o.email=u.email||''; o.statutDemande='en_attente'; o.demandeAt=now; o.engagement=now; b.disabled=true;
-          window.fbDb.collection('organismes').doc(u.uid).set(o).then(function(){ toast('Demande envoyée'); renderCentre(); }).catch(function(e){ b.disabled=false; er.textContent=(e&&e.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Envoi impossible pour le moment. Réessayez.'; }); };
+          window.fbDb.collection('organismes').doc(u.uid).set(o).then(function(){ toast('Demande envoyée'); if(window.cpDraftClear) cpDraftClear('org_signup'); renderCentre(); }).catch(function(e){ b.disabled=false; er.textContent=(e&&e.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Envoi impossible pour le moment. Réessayez.'; }); };
         return; }
       $('centre-body').innerHTML='';
       if(typeof window.cpCatRender==='function') window.cpCatRender(d.data());
@@ -17547,7 +17547,7 @@ window.cpSheetArrows=function(sc,host){
       var ref=ST.edit&&ST.edit.id ? db().collection('formations').doc(ST.edit.id) : db().collection('formations').doc();
       if(!(ST.edit&&ST.edit.id)) f.createdAt=now;
       db().collection('organismes').doc(u.uid).set({ logo:f.orgLogo||'', site:f.orgSite||'' },{merge:true}).then(function(){ ST.org.logo=f.orgLogo; ST.org.site=f.orgSite; }).catch(function(){});
-      ref.set(f,{merge:true}).then(function(){ toast(pub?'Formation publiée':'Brouillon enregistré'); ST.edit=null; ST.flash=pub?'✅ Formation publiée : elle est maintenant recommandée aux membres dont le profil correspond.':'Brouillon enregistré : il n\'est pas visible par les membres tant qu\'il n\'est pas publié.'; return load(); }).then(function(){ draw(); var l=$('ofc-listcard'); if(l) l.scrollIntoView({ behavior:'smooth', block:'start' }); })
+      ref.set(f,{merge:true}).then(function(){ toast(pub?'Formation publiée':'Brouillon enregistré'); if(window.cpDraftClear) cpDraftClear('org_fiche'); ST.edit=null; ST.flash=pub?'✅ Formation publiée : elle est maintenant recommandée aux membres dont le profil correspond.':'Brouillon enregistré : il n\'est pas visible par les membres tant qu\'il n\'est pas publié.'; return load(); }).then(function(){ draw(); var l=$('ofc-listcard'); if(l) l.scrollIntoView({ behavior:'smooth', block:'start' }); })
         .catch(function(x){ b.disabled=false; var c=(x&&x.code)||'erreur'; formErr(c==='permission-denied'?'Enregistrement refusé : votre compte n\'est pas encore validé, ou les règles Firestore ne sont pas à jour.':'Enregistrement impossible ('+c+'). Vérifiez votre connexion et réessayez.'); });
     } else if(a==='cancel'){ ST.edit=null; draw(); }
     else if(a==='edit'){ ST.edit=ST.list.filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]||null; draw(); var ed=$('ofc-editor'); if(ed) ed.scrollIntoView({ behavior:'smooth', block:'start' }); }
@@ -18051,6 +18051,7 @@ window.cpSheetArrows=function(sc,host){
     if(document.querySelector('.cpw-sheet.cj-wiz')) return;
     var steps=only?STEPS.filter(function(s){ return s.sec===only; }):STEPS.slice();
     var A={}, k=0; steps.forEach(function(s){ A[s.id]= s.id==='_exp'?S.st.exp : s.id==='_comp'?(S.st.comp||[]).join(', ') : s.id[0]==='_'?'' : (s.t==='choice'?selTxt(s.id):val(s.id)); });
+    try{ var DR=JSON.parse(localStorage.getItem('cp_stream_draft')||'{}'); steps.forEach(function(s){ if(DR[s.id]!=null && DR[s.id]!=='' && s.id!=='_vis') A[s.id]=DR[s.id]; }); }catch(e){}
     var sh=document.createElement('div'); sh.className='cpw-sheet cj-wiz';
     sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button>'+av()+'<div class="cpw-ht"><b>Formulaire Stream</b><span>Lisa · '+(only?SECN[only]:'ton profil pro')+'</span></div><em class="cpw-step">1/'+steps.length+'</em></div>'
       +'<div class="cpw-pg"><i></i></div><div class="cpw-scroll"><div class="cpw-wrap"><div class="cpw-intro">'+av('lg')+'<div><b>'+(only?SECN[only]:'On construit ton profil ensemble')+'</b><p>'+(only?'Quelques questions et cette partie de ton profil est à jour.':'Je te pose les questions une à une : infos perso, expériences, compétences. Tu peux revenir en arrière à tout moment.')+'</p></div></div><div class="cpw-log"></div><div class="cpw-input"></div></div></div></div>';
@@ -18076,11 +18077,12 @@ window.cpSheetArrows=function(sc,host){
           if(s.gen) h+='<button type="button" class="cpw-gen" data-gen="1">'+I(P.wand,16)+'Proposer une accroche à partir de mes réponses</button>';
           h+='<div class="cpw-acts">'+(s.skip?'<button type="button" class="cpw-btn ghost" data-skip="1">Passer</button>':'')+'<button type="button" class="cpw-btn" data-ok="1">Valider'+I(P.chev,16)+'</button></div>';
         }
+        if(cur && s.id!=='_vis') h='<div class="cpw-prev">'+I(P.check,14)+'Ta réponse est enregistrée : garde-la ou modifie-la.</div>'+h;
         if(k>0) h+='<button type="button" class="cpw-backq" data-prev="1">'+I(P.back,14)+'Question précédente</button>';
-        inp.innerHTML=h; var f=inp.querySelector('.cpw-field'); if(f){ f.focus(); f.onkeydown=function(e){ if(e.key==='Enter' && s.t!=='area'){ e.preventDefault(); inp.querySelector('[data-ok]').click(); } }; } down();
+        inp.innerHTML=h; if(cur && s.id!=='_vis'){ var pf=inp.querySelector('.cpw-field'); if(pf) pf.classList.add('cpw-saved'); } var f=inp.querySelector('.cpw-field'); if(f){ f.focus(); f.onkeydown=function(e){ if(e.key==='Enter' && s.t!=='area'){ e.preventDefault(); inp.querySelector('[data-ok]').click(); } }; } down();
       });
     }
-    function answer(v){ A[steps[k].id]=v; me(v||'(passé)'); k++; ask(); }
+    function answer(v){ A[steps[k].id]=v; try{ var DR=JSON.parse(localStorage.getItem('cp_stream_draft')||'{}'); DR[steps[k].id]=v; localStorage.setItem('cp_stream_draft',JSON.stringify(DR)); }catch(e){} me(v||'(passé)'); k++; ask(); }
     function onInp(e){
       var b=e.target.closest('button'); if(!b) return; var s=steps[k]; if(!s) return;
       if(b.hasAttribute('data-v')){ answer(b.getAttribute('data-v')); return; }
@@ -18106,6 +18108,7 @@ window.cpSheetArrows=function(sc,host){
               if(el.tagName==='SELECT'){ [].slice.call(el.options).forEach(function(o){ if(o.textContent===A[s.id]) el.value=o.value; }); } else el.value=A[s.id]||''; el.dispatchEvent(new Event('input',{ bubbles:true })); });
             if('_exp' in A) S.st.exp=String(A._exp||'').trim();
             if('_comp' in A) S.st.comp=String(A._comp||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean).slice(0,20);
+            try{ localStorage.removeItem('cp_stream_draft'); }catch(e){}
             saveSt(); var u=user(); if(u&&db()&&('_exp' in A||'_comp' in A)) db().collection('profils').doc(u.uid).set({ experiences:S.st.exp, competences:S.st.comp, updatedAt:new Date().toISOString() },{ merge:true }).catch(function(){});
             if(typeof updateFpScore==='function') updateFpScore();
             if(infos && typeof saveFichePro==='function') saveFichePro();
@@ -18300,7 +18303,7 @@ window.cpSheetArrows=function(sc,host){
       A.createUserWithEmailAndPassword(em,pw).then(function(cred){
         var u=cred.user, t=now(); o.email=em; o.statutDemande='en_attente'; o.demandeAt=t; o.engagement=t;
         return db().collection('employeurs').doc(u.uid).set(o).then(function(){ return u.sendEmailVerification({ url:location.origin+location.pathname+'#pro-employeur' }).catch(function(){}); });
-      }).then(function(){ if(window.cpBusy) cpBusy(false); toast('Compte créé : confirmez votre e-mail'); rendering=false; render(); })
+      }).then(function(){ if(window.cpBusy) cpBusy(false); toast('Compte créé : confirmez votre e-mail'); if(window.cpDraftClear) cpDraftClear('emp_signup'); rendering=false; render(); })
       .catch(function(e){ if(window.cpBusy) cpBusy(false); go_.disabled=false; go_.textContent='Créer mon compte employeur'; var c=(e&&e.code)||'';
         er.textContent = c==='auth/email-already-in-use' ? 'Un compte existe déjà avec cet e-mail : connectez-vous, puis complétez votre demande.'
           : c==='auth/weak-password' ? 'Mot de passe trop faible : 8 caractères minimum.'
@@ -18345,7 +18348,7 @@ window.cpSheetArrows=function(sc,host){
         $('pen-other').onclick=function(){ setHash('pro-employeur'); if(window.fbLogout) fbLogout(); };
         $('pen-send').onclick=function(){ var er=$('pe-err'), b=this; er.textContent=''; var o=readEmp(); if(!checkEmp(o,er)) return; if(!$('pe-eng').checked){ er.textContent='Cochez l\'engagement pour envoyer votre demande.'; return; }
           var t=now(); o.email=u.email||''; o.statutDemande='en_attente'; o.demandeAt=t; o.engagement=t; b.disabled=true;
-          db().collection('employeurs').doc(u.uid).set(o).then(function(){ toast('Demande envoyée'); render(); }).catch(function(e){ b.disabled=false; er.textContent=(e&&e.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Envoi impossible pour le moment. Réessayez.'; }); };
+          db().collection('employeurs').doc(u.uid).set(o).then(function(){ toast('Demande envoyée'); if(window.cpDraftClear) cpDraftClear('emp_signup'); render(); }).catch(function(e){ b.disabled=false; er.textContent=(e&&e.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Envoi impossible pour le moment. Réessayez.'; }); };
         return;
       }
       $('emp-body').innerHTML=''; if(window.cpProSetLong) cpProSetLong(true);
@@ -18499,7 +18502,7 @@ window.cpSheetArrows=function(sc,host){
       b.disabled=true;
       var ref=ed.id?db().collection('offres_emploi').doc(ed.id):db().collection('offres_emploi').doc();
       if(!ed.id) f2.createdAt=f2.updatedAt;
-      ref.set(f2,{merge:true}).then(function(){ f2.id=ref.id; ST.offres=[f2].concat(ST.offres.filter(function(x){ return x.id!==ref.id; })); ST.edit=null; toast(pub?'Offre publiée':'Brouillon enregistré'); draw(); })
+      ref.set(f2,{merge:true}).then(function(){ f2.id=ref.id; ST.offres=[f2].concat(ST.offres.filter(function(x){ return x.id!==ref.id; })); ST.edit=null; toast(pub?'Offre publiée':'Brouillon enregistré'); if(window.cpDraftClear) cpDraftClear('emp_offre'); draw(); })
         .catch(function(x){ b.disabled=false; oerr((x&&x.code)==='permission-denied'?'Enregistrement refusé : les règles Firestore doivent être mises à jour.':'Enregistrement impossible pour le moment.'); });
       return;
     }
@@ -18758,6 +18761,48 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
 #emp-root .ofc-tabs button i{ background:#fff !important; color:#1e40af !important; }
 #emp-root .ofc-tabs button.on{ opacity:1; border-color:rgba(255,255,255,.85) !important; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.45),transparent 60%),linear-gradient(135deg,#1d4ed8,#2563eb 40%,#059669) !important; box-shadow:0 0 0 2px #fff, 0 0 0 4px rgba(37,99,235,.55), 0 16px 30px -14px rgba(30,64,175,.9) !important; }
 @media (min-width:721px){ #emp-root .ofc-tabs{ padding:6px; overflow:visible; flex-wrap:wrap; } #emp-root .ofc-tabs button{ padding:12px 14px; border-radius:14px; font-size:.84rem; } #emp-root .ofc-tabs button svg{ width:26px !important; height:26px !important; padding:5px !important; box-sizing:border-box; } }
+</style>
+<script>
+/* ═══ Formulaires pros (employeur, centre) : ce qui est tapé est gardé sur l'appareil.
+   En revenant, la personne retrouve ses réponses en surbrillance. Jamais de mot de passe. ═══ */
+(function(){
+  var F={
+    emp_signup:{ ids:['pe-nom','pe-siret','pe-sect','pe-ville','pe-cnom','pe-cfct','pe-tel','pe-site','pe-email'] },
+    emp_offre:{ ids:['emp-ot','emp-oc','emp-ov','emp-otl','emp-os','emp-ok','emp-od'], isNew:function(){ return !document.querySelector('[data-ea="ocancel"]'); } },
+    org_signup:{ ids:['ps-nom','ps-siret','ps-nda','ps-qual','ps-ville','ps-tel','ps-email'] },
+    org_fiche:{ ids:['ofc-titre','ofc-dom','ofc-certT','ofc-certC','ofc-qual','ofc-niv','ofc-niv-autre','ofc-mod','ofc-duree','ofc-date','ofc-prix','ofc-etab','ofc-ville','ofc-adr','ofc-prog','ofc-lien','ofc-site','ofc-pub-autre','ofc-fin-autre'], groups:['ofc-pub','ofc-fin'], isNew:function(){ return !document.querySelector('#ofc-editor [data-a="cancel"]'); } }
+  };
+  function key(n){ return 'cp_draft_'+n; }
+  function get(n){ try{ return JSON.parse(localStorage.getItem(key(n))||'null'); }catch(e){ return null; } }
+  function put(n,v){ try{ localStorage.setItem(key(n),JSON.stringify(v)); }catch(e){} }
+  window.cpDraftClear=function(n){ try{ localStorage.removeItem(key(n)); }catch(e){} };
+  function formOf(el){ for(var n in F){ var c=F[n]; if(el.id && c.ids.indexOf(el.id)>-1) return n; if(el.name && c.groups && c.groups.indexOf(el.name)>-1) return n; } return null; }
+  function collect(n){ var c=F[n], o={ v:{}, g:{} };
+    c.ids.forEach(function(id){ var e=document.getElementById(id); if(e && e.type!=='password') o.v[id]=e.value; });
+    (c.groups||[]).forEach(function(g){ o.g[g]=[].map.call(document.querySelectorAll('input[name="'+g+'"]:checked'),function(x){ return x.value; }); });
+    return o; }
+  function onEdit(e){ var t=e.target; if(!t || t.type==='password') return; var n=formOf(t); if(!n) return; var c=F[n]; if(c.isNew && !c.isNew()) return; put(n,collect(n)); t.classList.remove('cp-draft'); }
+  document.addEventListener('input',onEdit,true); document.addEventListener('change',onEdit,true);
+  function restore(){
+    for(var n in F){ var c=F[n], first=document.getElementById(c.ids[0]); if(!first || first._cpDraft) continue; first._cpDraft=1;
+      if(c.isNew && !c.isNew()) continue; var d=get(n); if(!d) continue; var any=false;
+      c.ids.forEach(function(id){ var e=document.getElementById(id), v=d.v&&d.v[id]; if(!e || v==null || v==='' || e.value) return;
+        e.value=v; if(e.value===v){ e.classList.add('cp-draft'); any=true; if(id==='ofc-niv-autre') e.style.display=''; } });
+      (c.groups||[]).forEach(function(g){ var vals=(d.g&&d.g[g])||[]; [].forEach.call(document.querySelectorAll('input[name="'+g+'"]'),function(x){ if(vals.indexOf(x.value)>-1 && !x.checked){ x.checked=true; any=true; var l=x.closest('label'); if(l) l.classList.add('cp-draft'); } }); });
+      if(any){ var host=first.closest('.pcard,.ofc-card'); if(host && !host.querySelector('.cp-draft-note')){ var m=document.createElement('div'); m.className='cp-draft-note'; m.textContent='Vos réponses précédentes ont été gardées : vérifiez-les puis continuez.'; var anchor=first.closest('.pf,.ofc-sec,label')||first; anchor.parentNode.insertBefore(m,anchor); } }
+    }
+  }
+  function init(){ try{ new MutationObserver(function(){ clearTimeout(window._cpDrT); window._cpDrT=setTimeout(restore,60); }).observe(document.body,{ childList:true, subtree:true }); }catch(e){} restore(); }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<style id="cp-draft-css">
+/* Réponses déjà enregistrées : surbrillance douce */
+.cp-draft, .cpw-field.cpw-saved{ background:#eff6ff !important; border-color:#93c5fd !important; box-shadow:0 0 0 3px rgba(59,130,246,.12) !important; }
+label.cp-draft{ border-radius:8px; }
+.cp-draft-note, .cpw-prev{ display:flex; align-items:center; gap:7px; margin:0 0 10px; padding:9px 12px; border-radius:12px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:.78rem; font-weight:700; line-height:1.4; }
+.cpw-prev svg{ flex-shrink:0; color:#1e40af; }
+.cpw-chip.on{ border-color:#1e40af !important; background:#dbeafe !important; color:#1e3a8a !important; box-shadow:0 0 0 3px rgba(59,130,246,.15); }
 </style>
 </body>
 </html>
