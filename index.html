@@ -18717,6 +18717,7 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
       +'<div class="cprep-err"></div><div class="cprep-btns"><button type="button" class="no">Annuler</button><button type="button" class="go">Envoyer le signalement</button></div>'
       +'<div class="cprep-note">En cas de danger immédiat, contactez le 17 ou le 112.</div></div></div>';
     document.body.appendChild(sh);
+    if(window.cpSheetArrows) cpSheetArrows(sh.querySelector('.cprep-box'),sh);
     function close(){ sh.remove(); }
     sh.addEventListener('click',function(e){ if(e.target===sh) close(); });
     sh.querySelector('.no').onclick=close;
@@ -18748,5 +18749,15 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
 })();
 
 </script>
+<style id="emp-tabs-css">
+/* Espace employeur : les 4 cartes en dégradé bleu-vert (ordinateur et mobile) */
+#emp-root .ofc-tabs{ background:none; border:none; padding:0; gap:8px; }
+#emp-root .ofc-tabs button{ color:#fff !important; border:1px solid transparent !important; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.22),transparent 60%),linear-gradient(135deg,#1e3a8a,#1e40af 45%,#047857) !important; box-shadow:0 10px 22px -16px rgba(30,64,175,.75) !important; opacity:.82; transition:opacity .2s, transform .2s, box-shadow .2s; }
+#emp-root .ofc-tabs button:hover{ opacity:1; }
+#emp-root .ofc-tabs button svg{ background:rgba(255,255,255,.16) !important; color:#fff !important; border-radius:10px; }
+#emp-root .ofc-tabs button i{ background:#fff !important; color:#1e40af !important; }
+#emp-root .ofc-tabs button.on{ opacity:1; border-color:rgba(255,255,255,.85) !important; background:radial-gradient(120% 90% at 100% 0%,rgba(110,231,183,.45),transparent 60%),linear-gradient(135deg,#1d4ed8,#2563eb 40%,#059669) !important; box-shadow:0 0 0 2px #fff, 0 0 0 4px rgba(37,99,235,.55), 0 16px 30px -14px rgba(30,64,175,.9) !important; }
+@media (min-width:721px){ #emp-root .ofc-tabs{ padding:6px; overflow:visible; flex-wrap:wrap; } #emp-root .ofc-tabs button{ padding:12px 14px; border-radius:14px; font-size:.84rem; } #emp-root .ofc-tabs button svg{ width:26px !important; height:26px !important; padding:5px !important; box-sizing:border-box; } }
+</style>
 </body>
 </html>
