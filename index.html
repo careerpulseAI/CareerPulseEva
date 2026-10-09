@@ -18689,10 +18689,10 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
     +'.cprep-menu button{ display:flex; align-items:center; gap:9px; width:100%; padding:11px 12px; border:none; background:none; border-radius:10px; font:700 .86rem/1.2 inherit; color:#b91c1c; cursor:pointer; text-align:left; }'
     +'.cprep-menu button:hover{ background:#fef2f2; } .cprep-menu svg{ width:17px; height:17px; flex-shrink:0; }'
     +'.cprep-sheet{ position:fixed; inset:0; z-index:9800; background:rgba(15,23,42,.5); display:flex; align-items:flex-end; justify-content:center; }'
-    +'@media (min-width:700px){ .cprep-sheet{ align-items:center; } }'
+    +'@media (min-width:700px){ .cprep-sheet{ align-items:stretch; } }'
     +'.cprep-box{ width:100%; max-width:520px; max-height:92vh; overflow:auto; background:#fff; color:#0f172a; border-radius:22px 22px 0 0; padding:20px 18px calc(18px + env(safe-area-inset-bottom)); font-family:\'DM Sans\',-apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif; }'
-    +'@media (min-width:700px){ .cprep-box{ border-radius:22px; } }'
-    +'.cprep-box h3{ margin:0 0 4px; font-size:1.1rem; font-weight:800; } .cprep-box > p{ margin:0 0 14px; font-size:.84rem; line-height:1.55; color:#475569; }'
+    +'@media (min-width:700px){ .cprep-box{ max-width:none; width:100vw; height:100vh; height:100dvh; max-height:none; border-radius:0; padding:48px 24px; background:radial-gradient(60% 45% at 0% 0%,rgba(16,185,129,.10),transparent 70%),radial-gradient(60% 45% at 100% 100%,rgba(59,130,246,.10),transparent 70%),#fff; } .cprep-in{ max-width:560px; margin:0 auto; } }'+'.cprep-ok{ text-align:center; padding:26px 6px 10px; } .cprep-ok i{ display:inline-flex; width:58px; height:58px; border-radius:50%; align-items:center; justify-content:center; background:linear-gradient(135deg,#1e40af,#047857); color:#fff; margin-bottom:14px; } .cprep-ok i svg{ width:28px; height:28px; }'+'.cprep-ok h3{ margin:0 0 8px; } .cprep-ok p{ margin:0 auto 18px; max-width:420px; font-size:.9rem; line-height:1.55; color:#475569; overflow-wrap:anywhere; } .cprep-ok button{ width:100%; max-width:320px; padding:13px; border:none; border-radius:12px; background:linear-gradient(135deg,#1e40af,#047857); color:#fff; font:800 .9rem/1 inherit; cursor:pointer; }'
+    +'.cprep-box h3{ margin:0 0 4px; font-size:1.1rem; font-weight:800; } .cprep-in > p{ margin:0 0 14px; font-size:.84rem; line-height:1.55; color:#475569; }'
     +'.cprep-opts{ display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }'
     +'.cprep-opts label{ display:flex; align-items:center; gap:10px; padding:12px 13px; border:1px solid #e2e8f0; border-radius:12px; font-size:.88rem; font-weight:600; cursor:pointer; }'
     +'.cprep-opts label:has(input:checked){ border-color:#1e40af; background:#eff6ff; }'
@@ -18710,12 +18710,12 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
   function openForm(rep){
     var p=String(rep||'').split(':'), ctx=p[0]||'', conv=p.slice(1).join(':');
     var sh=document.createElement('div'); sh.className='cprep-sheet';
-    sh.innerHTML='<div class="cprep-box" role="dialog" aria-label="Signaler un abus"><h3>Signaler un abus</h3>'
+    sh.innerHTML='<div class="cprep-box" role="dialog" aria-label="Signaler un abus"><div class="cprep-in"><h3>Signaler un abus</h3>'
       +'<p>Votre signalement est confidentiel : l\'autre personne n\'en est pas informée. L\'équipe CareerPulse l\'examine avec attention.</p>'
       +'<div class="cprep-opts">'+MOTIFS.map(function(m,i){ return '<label><input type="radio" name="cprep-m" value="'+esc(m)+'"'+(i===0?'':'')+'>'+esc(m)+'</label>'; }).join('')+'</div>'
       +'<textarea maxlength="800" placeholder="Précisez si vous le souhaitez (facultatif, obligatoire pour « Autre »)"></textarea>'
       +'<div class="cprep-err"></div><div class="cprep-btns"><button type="button" class="no">Annuler</button><button type="button" class="go">Envoyer le signalement</button></div>'
-      +'<div class="cprep-note">En cas de danger immédiat, contactez le 17 ou le 112.</div></div>';
+      +'<div class="cprep-note">En cas de danger immédiat, contactez le 17 ou le 112.</div></div></div>';
     document.body.appendChild(sh);
     function close(){ sh.remove(); }
     sh.addEventListener('click',function(e){ if(e.target===sh) close(); });
@@ -18727,7 +18727,7 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
       var u=user(), db=window.fbDb; if(!u||!db){ er.textContent='Connectez-vous pour envoyer un signalement.'; return; }
       b.disabled=true; b.textContent='Envoi…';
       db.collection('reports').add({ reporterUid:u.uid, type:'message', contexte:ctx, convId:conv, motif:r.value, commentaire:t.slice(0,800), createdAt:new Date().toISOString() })
-        .then(function(){ close(); toast('Merci. Votre signalement a bien été transmis à l\'équipe CareerPulse.'); })
+        .then(function(){ var bx=sh.querySelector('.cprep-in'); bx.innerHTML='<div class="cprep-ok"><i>'+S('<path d="m5 12 5 5L20 7"/>')+'</i><h3>Signalement envoyé</h3><p>Merci. Votre signalement a bien été transmis à l\'équipe CareerPulse, qui va l\'examiner avec attention.</p><button type="button">Fermer</button></div>'; bx.querySelector('button').onclick=close; setTimeout(function(){ if(sh.isConnected) close(); },6000); })
         .catch(function(){ b.disabled=false; b.textContent='Envoyer le signalement'; er.textContent='Envoi impossible pour le moment. Réessayez.'; });
     };
   }
