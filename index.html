@@ -18349,12 +18349,12 @@ window.cpSheetArrows=function(sc,host){
         return;
       }
       $('emp-body').innerHTML=''; if(window.cpProSetLong) cpProSetLong(true);
-      ST.emp=d.data()||{}; open();
+      ST.emp=d.data()||{}; if(window.cpEmpLock) cpEmpLock(u.uid); open();
     }).catch(function(e){ rendering=false; setBody('<div class="pcard"><div class="pinfo"><span>Accès à la base impossible ('+esc((e&&e.code)||'erreur')+'). Rechargez la page.</span></div></div>'); });
   }
 
   /* ── L'espace employeur (même présentation que l'espace centre) ── */
-  function logoutBar(){ return '<div class="ofc-lockbar"><span class="ofc-lockbar-ic">'+S(I.lock)+'</span><div><b>Votre espace employeur</b><span>Pensez à vous déconnecter quand vous avez terminé.</span></div><button type="button" class="ofc-btn out" data-ea="logout">'+S('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',16)+'Se déconnecter</button></div>'; }
+  function logoutBar(){ return '<div class="ofc-lockbar"><span class="ofc-lockbar-ic">'+S(I.lock)+'</span><div><b>Votre espace employeur</b><span>Pour quitter votre espace, déconnectez-vous.</span></div><button type="button" class="ofc-btn out" data-ea="logout">'+S('<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/>',16)+'Se déconnecter</button></div>'; }
   function hero(){
     return logoutBar()+'<div class="ofc-hero emp-hero"><span class="ofc-k"><i></i>Espace employeur</span>'
       +'<h2>Vos offres rencontrent les bons candidats.</h2>'
@@ -18472,7 +18472,7 @@ window.cpSheetArrows=function(sc,host){
     var t=e.target.closest('[data-etab]'); if(t){ ST.tab=t.getAttribute('data-etab'); ST.edit=null; draw(); return; }
     var cv=e.target.closest('[data-econv]'); if(cv){ openConv(cv.getAttribute('data-econv')); return; }
     var b=e.target.closest('[data-ea]'); if(!b) return; var a=b.getAttribute('data-ea'), u=me(); if(!u) return;
-    if(a==='logout'){ try{ history.replaceState(null,'','#pro-employeur'); }catch(x){} if(window.fbLogout) fbLogout(); else auth().signOut().then(function(){ location.reload(); }); return; }
+    if(a==='logout'){ if(window.cpEmpUnlock) cpEmpUnlock(); try{ history.replaceState(null,'','#pro-employeur'); }catch(x){} if(window.fbLogout) fbLogout(); else auth().signOut().then(function(){ location.reload(); }); return; }
     if(a==='prop'){ var box=$('emp-prop-'+b.getAttribute('data-c')); if(!box) return; box.innerHTML=propForm(b.getAttribute('data-c')); b.style.display='none';
       var s=box.querySelector('[data-psel]'); s.onchange=function(){ box.querySelector('[data-pautre]').style.display=s.value==='_autre'?'':'none'; }; if(s.value==='_autre') box.querySelector('[data-pautre]').style.display=''; return; }
     if(a==='cancelprop'){ var bx=$('emp-prop-'+b.getAttribute('data-c')); if(bx) bx.innerHTML=''; var pb=document.querySelector('[data-ea="prop"][data-c="'+b.getAttribute('data-c')+'"]'); if(pb) pb.style.display=''; return; }
@@ -18616,6 +18616,34 @@ window.cpSheetArrows=function(sc,host){
       try{ new MutationObserver(function(){ add(s); }).observe(s,{ childList:true, subtree:true }); }catch(e){} });
   }
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<style id="emp-lock-css">
+html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp-emp-lock [data-cp-back]{ display:none !important; }
+</style>
+<script>
+/* ═══ Compte employeur : espace fermé. On n'en sort qu'en se déconnectant (même principe que l'espace centre). ═══ */
+(function(){
+  var KEY='cp_emp_lock', H='#pro-employeur';
+  function on(){ try{ return !!sessionStorage.getItem(KEY); }catch(e){ return false; } }
+  function msg(){ var t='Pour quitter votre espace employeur, déconnectez-vous.'; if(window.ecShowToast) ecShowToast(t); else alert(t); }
+  function apply(){
+    if(!on()) return; document.documentElement.classList.add('cp-emp-lock');
+    var n=document.getElementById('cp-tnav-pros'), bar=n&&n.parentNode&&n.parentNode.parentNode;
+    if(bar && !bar._cpEmpLock){ bar._cpEmpLock=1; bar.querySelectorAll('a,button').forEach(function(b){ b.classList.add('cp-lock-hide'); }); }
+    if(location.hash!==H){ try{ history.replaceState(null,'',H); }catch(e){ location.hash='pro-employeur'; } setTimeout(function(){ _go('pro-employeur'); },0); }
+  }
+  window.cpEmpLock=function(uid){ try{ sessionStorage.setItem(KEY,uid||'1'); }catch(e){} apply(); };
+  window.cpEmpUnlock=function(){ try{ sessionStorage.removeItem(KEY); }catch(e){} document.documentElement.classList.remove('cp-emp-lock'); };
+  var _go=window.go;
+  window.go=go=function(id){ if(on() && id!=='pro-employeur'){ msg(); return; } return _go.apply(this,arguments); };
+  document.addEventListener('click',function(e){
+    if(!on()) return; var a=e.target.closest('a[href]'); if(!a) return;
+    var href=a.getAttribute('href')||''; if(href===H || a.target==='_blank' || /^mailto:|^tel:/.test(href)) return;
+    e.preventDefault(); e.stopPropagation(); msg();
+  },true);
+  window.addEventListener('hashchange',function(){ if(on() && location.hash!==H){ msg(); history.replaceState(null,'',H); _go('pro-employeur'); } });
+  if(document.readyState!=='loading') apply(); else document.addEventListener('DOMContentLoaded',apply);
 })();
 </script>
 </body>
