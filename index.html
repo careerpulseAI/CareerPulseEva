@@ -17942,12 +17942,12 @@ window.cpSheetArrows=function(sc,host){
   function openPlats(){
     sheet('Trouver des offres','Deux façons de trouver ton prochain poste',say2('Choisis où chercher : les offres publiées sur <b>CareerPulse</b> par des entreprises vérifiées, ou les offres des <b>autres sites</b> de référence. Ensuite, ajoute ta candidature ici : je te dirai quand relancer.')
       +'<div class="cpo-2p">'
-      +'<button type="button" class="cpo-2pb cp" data-cj="cpoffres"><span class="cpo-2pi"><img src="'+EVA_IMG+'" alt="EVA"></span><span><em>Publiée sur CareerPulse</em><b>Offres des entreprises CareerPulse</b><small>Présentées par EVA · postule en un clic</small></span>'+I(P.chev,18)+'</button>'
+      +'<button type="button" class="cpo-2pb cp" data-cj="cpoffres"><span class="cpo-2pi"><img src="'+CJ_IMG+'" alt="Lisa"></span><span><em>Publiée sur CareerPulse</em><b>Offres des entreprises CareerPulse</b><small>Présentées par Lisa · postule en un clic</small></span>'+I(P.chev,18)+'</button>'
       +'<button type="button" class="cpo-2pb" data-cj="plats2"><span class="cpo-2pi ext">'+I(P.ext,20)+'</span><span><em>Sites de référence</em><b>Offres sur d\'autres sites</b><small>Indeed, France Travail, Malt… pour postuler dès maintenant</small></span>'+I(P.chev,18)+'</button>'
       +'</div>');
   }
   function openCpOffres(){
-    var o=sheet('Offres CareerPulse','Entreprises vérifiées · présentées par EVA',evaSay('Bonjour, je suis <b>EVA</b> 👋 Ici, tu trouves <b>uniquement les offres publiées sur CareerPulse</b> par des entreprises dont nous avons vérifié le SIRET.<br>Pour être honnête avec toi : CareerPulse est jeune. Les offres apparaissent ici <b>au fur et à mesure que les employeurs s\'inscrivent</b> sur le site. En attendant, les autres sites de référence t\'attendent juste à côté.')
+    var o=sheet('Offres CareerPulse','Entreprises vérifiées · présentées par Lisa',say2('Ici, tu trouves <b>uniquement les offres publiées sur CareerPulse</b> par des entreprises dont nous avons vérifié le SIRET.<br>Pour être honnête avec toi : CareerPulse est jeune. Les offres apparaissent ici <b>au fur et à mesure que les employeurs s\'inscrivent</b> sur le site. En attendant, les autres sites de référence t\'attendent juste à côté.')
       +'<div id="cpo-cp-list"></div><button type="button" class="cj-main alt" data-cj="plats2">'+I(P.ext,18)+'Voir aussi les offres sur d\'autres sites</button>');
     if(window.cpOffresInto) cpOffresInto(o.body.querySelector('#cpo-cp-list'));
   }
@@ -18067,7 +18067,7 @@ window.cpSheetArrows=function(sc,host){
   /* ═══ Formulaire Stream : Lisa construit le profil, question par question ═══ */
   function opts(id){ var e=$(id); return e?[].slice.call(e.options).filter(function(o){ return o.value && !/…$/.test(o.textContent); }).map(function(o){ return o.textContent; }):[]; }
   var STEPS=[
-    { sec:'infos', id:'fp-name', q:'Pour commencer, quels sont ton <b>prénom</b> et ton <b>nom</b> ?', t:'text', ph:'Ex : Sophie Martin', why:'Ton nom n\'est visible des recruteurs que si tu rends ton profil visible.' },
+    { sec:'infos', id:'fp-name', q:'Pour commencer, quel est ton <b>prénom</b> ?', t:'text', ph:'Ex : Sophie', why:'💡 Conseil de Lisa : ton prénom suffit. Évite d\'écrire ton nom complet : les recruteurs CareerPulse ne voient que ton prénom et une initiale. Pas de photo non plus, ni ici ni sur ton CV : un profil sans photo limite les discriminations.' },
     { sec:'infos', id:'fp-titre', q:'Quel est ton <b>titre professionnel</b>, ou le poste que tu vises ?', t:'text', ph:'Ex : Développeuse web, Assistant RH…', why:'C\'est la première ligne que lit un recruteur : sois précis(e).' },
     { sec:'infos', id:'fp-secteur', q:'Dans quel <b>secteur</b> travailles-tu, ou veux-tu travailler ?', t:'choice' },
     { sec:'infos', id:'fp-ville', q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.', t:'text', ph:'Ex : Caen, Paris, télétravail…', chips:['Télétravail','Toute la France'] },
@@ -18078,7 +18078,7 @@ window.cpSheetArrows=function(sc,host){
     { sec:'infos', id:'_mob', q:'Jusqu\'où es-tu <b>prêt(e) à te déplacer</b> pour travailler ?', t:'choice', list:['Ma ville uniquement','Mon département','Ma région','Toute la France','Télétravail uniquement'] },
     { sec:'infos', id:'fp-accroche', q:'Ton <b>accroche</b> : en 2 ou 3 phrases, qui es-tu et que cherches-tu ?', t:'area', ph:'Qui tu es, ce que tu sais faire, ce que tu cherches…', gen:true },
     { sec:'infos', id:'fp-email-public', q:'Une adresse e-mail de <b>contact</b> pour les recruteurs ? (facultatif)', t:'text', ph:'ton@email.com', skip:true },
-    { sec:'infos', id:'fp-tel-public', q:'Et un <b>téléphone</b> ? (facultatif)', t:'text', ph:'06 12 34 56 78', skip:true },
+    { sec:'infos', id:'fp-tel-public', q:'Et un <b>téléphone</b> ? (facultatif)', t:'text', ph:'06 12 34 56 78', skip:true, why:'💡 Conseil de Lisa : évite de noter ton numéro. Échange d\'abord avec les recruteurs dans la messagerie protégée de CareerPulse ; tu donneras ton numéro quand tu le décideras.' },
     { sec:'exp', id:'_exp', q:'Parlons de tes <b>expériences</b>. Écris-en une par ligne : poste, entreprise, années.', t:'area', ph:'Ex : Vendeuse — Boulangerie Martin — 2022-2024\nStage accueil — Mairie de Caen — 2021', why:'Stages, jobs d\'été, bénévolat : tout compte, surtout si tu débutes.', skip:true },
     { sec:'comp', id:'_comp', q:'Quelles sont tes <b>compétences</b> principales ? Sépare-les par des virgules (3 au minimum).', t:'text', ph:'Ex : Relation client, Pack Office, Anglais', add:['Travail en équipe','Organisation','Relation client','Pack Office','Anglais','Gestion du temps','Permis B','Autonomie'] },
     { sec:'vis', id:'_vis', q:'Ton profil est prêt ! Veux-tu le rendre <b>visible par les recruteurs</b> CareerPulse ?', t:'choice', list:['Oui, rends-le visible','Plus tard'] }
@@ -19658,7 +19658,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
       +kv(IC.home,'Mode de travail',f.teletravail)+kv(IC.pin,'Lieu',[f.adresse,f.ville].filter(Boolean).join(', '))+kv(IC.cal,'Début',debutTxt(f))
       +kv(IC.users,'Postes à pourvoir',f.nbPostes&&f.nbPostes!=='1'?f.nbPostes:'')+kv(IC.cal,'Candidature avant le',lim)+kv(IC.users,'Contact',f.contact)
       +'</div>'+btn+'<p class="cpo-foot">Publiée le '+esc(pub)+(f.id?' · Réf. '+ref(f.id):'')+'<br>Candidature gratuite. Aucune somme ne peut vous être demandée.</p></div>';
-    return '<div'+(o.inline?' class="cpo-page cpo-inline"':'')+' style="--oc:'+col+';--oc2:'+col2+'">'+h+'<div class="cpo-body"><div class="cpo-main">'+main+'</div><aside class="cpo-side">'+side+'</aside></div>'+(o.apply&&!o.inline?'<div class="cpo-bar">'+btn+'</div>':'')+'</div>';
+    return '<div'+(o.inline?' class="cpo-page cpo-inline"':'')+' style="--oc:'+col+';--oc2:'+col2+'">'+h+'<div class="cpo-body"><div class="cpo-main">'+main+'</div><aside class="cpo-side">'+side+'</aside></div>'+'</div>';
   }
   function shareUrl(id){ return location.origin+location.pathname+'#offre='+encodeURIComponent(id); }
   function share(f){ var u=shareUrl(f.id), t=f.titre+' · '+(f.empNom||'')+' — offre sur CareerPulse';
@@ -19879,6 +19879,38 @@ html body #emp-root .ofc-tabs button svg{ background:linear-gradient(135deg,#eff
 html body #emp-root .ofc-tabs button svg *{ stroke:url(#cpEtg); }
 html body #emp-root .ofc-tabs button i{ background:linear-gradient(135deg,#1e40af,#059669) !important; color:#fff !important; }
 html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important; background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#1e40af,#059669) border-box !important; box-shadow:0 14px 30px -18px rgba(30,64,175,.55) !important; }
+
+/* ── Corrections : conseils de Lisa, page d'offre plus nette, fiche candidat sur mobile ── */
+.cpc-tip{ display:flex; gap:8px; align-items:flex-start; margin:10px 0 0; padding:10px 12px; border-radius:12px; background:#fffbeb; border:1px solid #fde68a; color:#78350f; font-size:.74rem; line-height:1.5; }
+.cpc-tip b{ font-weight:800; }
+.cpc-kv b, .cpc-id b{ overflow-wrap:break-word !important; word-break:normal !important; hyphens:none; }
+.cpo-page .cpo-body{ padding-bottom:calc(30px + env(safe-area-inset-bottom)); gap:18px; }
+.cpo-page .cpo-card{ padding:18px 18px 16px; margin-bottom:16px; border-radius:20px; }
+.cpo-page .cpo-card h2{ padding-bottom:12px; margin-bottom:14px; border-bottom:1px solid #eef2f7; font-size:1.02rem !important; line-height:1.2; }
+.cpo-page .cpo-card p, .cpo-page .cpo-card li{ font-size:.9rem !important; font-weight:400 !important; line-height:1.65 !important; color:#334155 !important; }
+.cpo-page .cpo-card h3{ margin:14px 0 8px !important; font-size:.72rem !important; font-weight:800 !important; }
+.cpo-page .cpo-kv{ gap:12px; } .cpo-page .cpo-kv span{ font-size:.64rem !important; } .cpo-page .cpo-kv b{ font-size:.9rem !important; font-weight:700 !important; }
+.cpo-page .cpo-kv > div + div{ padding-top:12px; border-top:1px solid #f1f5f9; }
+.cpo-page .cpo-foot{ margin:12px 0 0 !important; font-size:.72rem !important; font-weight:500 !important; line-height:1.55 !important; color:#94a3b8 !important; }
+.cpo-page .cpo-apply{ font-size:.95rem !important; padding:15px !important; }
+@media (max-width:600px){
+  #emp-root .ofc-card:has(#emp-clist){ padding:16px 12px !important; }
+  .emp-cand .emp-tog{ padding:12px !important; }
+  .emp-cand .emp-more{ padding:0 8px 10px !important; }
+  .emp-more .cpc{ margin:2px 0 10px; border-radius:16px; }
+  .cpc-hd{ padding:14px 12px 12px; } .cpc-bd{ padding:12px 12px 14px; }
+  .cpc-top{ gap:12px; } .cpc-av{ width:52px; height:52px; font-size:1.1rem; }
+  .cpc-id b{ font-size:1.05rem; } .cpc-id span{ font-size:.86rem; }
+  .cpc-badges{ gap:5px; margin-top:10px; } .cpc-badges span{ padding:4px 8px; font-size:.64rem; white-space:nowrap; }
+  .cpc-match{ gap:10px; padding:8px 10px; } .cpc-ring{ width:44px; height:44px; font-size:.64rem; } .cpc-ring::before{ inset:4px; }
+  .cpc-match small{ font-size:.6rem; } .cpc-match span{ font-size:.76rem; line-height:1.3; }
+  .cpc-acc{ padding:10px 12px; font-size:.84rem; line-height:1.55; }
+  .cpc-kv{ gap:6px; } .cpc-kv div{ padding:8px 9px; } .cpc-kv b{ font-size:.78rem; }
+  .cpc-tl{ padding-left:12px; } .cpc-tl b{ font-size:.82rem; } .cpc-tl span{ font-size:.72rem; }
+  .emp-more .cpdv-row{ display:grid; grid-template-columns:1fr 1fr; gap:6px; } .emp-more .cpdv-b{ justify-content:center; padding:10px 8px; font-size:.74rem; }
+  .cpc-note{ font-size:.66rem; }
+}
+.emp-more .ofc-tag.pub{ display:inline-flex !important; align-items:center; gap:6px; width:auto !important; max-width:none !important; white-space:nowrap; padding:7px 12px !important; border-radius:99px; font-size:.74rem !important; }
 </style>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="cpEtg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e40af"/><stop offset="1" stop-color="#059669"/></linearGradient></defs></svg>
 <script>
@@ -19918,6 +19950,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     var h='<div class="cpc">'+'<div class="cpc-hd">'+(o.self?'<div class="cpc-self">'+S(IC.eye)+'<span>Voici ce que voient les recruteurs'+(p.visible?'':' quand ton profil est visible')+' (sans tes coordonnées).</span></div>':'')
       +'<div class="cpc-top">'+(o.avatar?'<span class="cpc-av-w">'+o.avatar+'</span>':'<span class="cpc-av">'+esc(ini(name))+'</span>')+'<div class="cpc-id"><b>'+esc(name)+'</b><span>'+esc(p.titre||'Poste visé à compléter')+'</span></div></div>'
       +'<div class="cpc-badges">'+badges.join('')+'</div>'
+      +(o.self?'<div class="cpc-tip">💡 <span><b>Conseil de Lisa :</b> ton prénom suffit, et pas de photo, ni sur ton profil ni sur ton CV. Les recruteurs CareerPulse ne voient que ton prénom et une initiale : c\'est plus juste pour tout le monde.</span></div>':'')
       +(m&&m.s>0?'<div class="cpc-match"><span class="cpc-ring" style="--m:'+m.s+'"><b>'+m.s+' %</b></span><span><small>Correspondance avec votre offre</small>'+esc(m.f.titre)+'</span></div>':'')+'</div>';
     h+='<div class="cpc-bd">'+(p.accroche?'<p class="cpc-acc">'+esc(String(p.accroche).slice(0,600))+'</p>':'');
     var ex=exps(p.experiences); if(ex) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.brief)+'Expériences</div><ul class="cpc-tl">'+ex+'</ul></div>';
@@ -19925,7 +19958,8 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(kv.length) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.target)+'Ce que je recherche</div><div class="cpc-kv">'+kv.map(function(x){ return '<div><small>'+x[0]+'</small><b>'+esc(x[1])+'</b></div>'; }).join('')+'</div></div>';
     if(o.emp && o.docs) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.doc)+'Documents</div>'+o.docs+'</div>';
     if(o.self){ var d=[]; if(p.cvDispo) d.push('CV'); if(p.lmDispo) d.push('lettre de motivation'); h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.doc)+'Documents</div><div class="cpc-ct">'+S(IC.doc)+'<span>'+(d.length?'Ton '+d.join(' et ta ')+' '+(d.length>1?'sont prêts':'est prêt')+' pour les recruteurs.':'Ajoute ton CV et ta lettre plus haut pour les partager.')+'</span></div></div>';
-      if(o.contact) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.lock)+'Mes coordonnées (privées)</div><div class="cpc-ct">'+S(IC.chat)+'<span>'+o.contact+'</span></div></div>'; }
+      if(o.contact) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.lock)+'Mes coordonnées (privées)</div><div class="cpc-ct">'+S(IC.chat)+'<span>'+o.contact+'</span></div>'
+        +(/(?:\d[\s.\-]?){9,}/.test(o.contact)?'<div class="cpc-tip">💡 <span><b>Conseil de Lisa :</b> évite de laisser ton numéro de téléphone. Échange d\'abord dans la messagerie protégée de CareerPulse, puis donne ton numéro quand tu le décides. Tu peux le retirer avec « Modifier mon profil avec Lisa ».</span></div>':'')+'</div>'; }
     if(o.emp) h+='<p class="cpc-note">🔒 Profil anonymisé : prénom et initiale seulement. Les coordonnées ne sont visibles que si le candidat les partage, après sa réponse.</p>';
     return h+'</div></div>';
   };
