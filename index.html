@@ -17743,7 +17743,7 @@ window.cpSheetArrows=function(sc,host){
   function first(){ return val('fp-name').split(/\s+/)[0]||''; }
   function coach(){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
-    if(!S.st.profil){
+    if(!chosen()){
       return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton <b>profil</b> pour que je t\'accompagne au mieux :</p>'
         +'<div class="cj-pfs">'+['dem','etu','sal','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+'</button>'; }).join('')+'</div></div></div>';
     }
@@ -17772,8 +17772,8 @@ window.cpSheetArrows=function(sc,host){
   function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
   function drawHero(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
-    if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=S.st.profil==='frl'?'Ton espace freelance':ht._t0; }
-    if(S.st.profil==='frl' && window.cpFrl){ var fh=cpFrl.hero(); if(gl) gl.textContent=fh.label; if($('cps-pct')) $('cps-pct').textContent=fh.pct+' %'; if($('cps-bar')) $('cps-bar').style.width=fh.pct+'%';
+    if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=(chosen()&&S.st.profil==='frl')?'Ton espace freelance':ht._t0; }
+    if(chosen() && S.st.profil==='frl' && window.cpFrl){ var fh=cpFrl.hero(); if(gl) gl.textContent=fh.label; if($('cps-pct')) $('cps-pct').textContent=fh.pct+' %'; if($('cps-bar')) $('cps-bar').style.width=fh.pct+'%';
       if($('cps-name')) $('cps-name').textContent=first(); if($('cps-sub')) $('cps-sub').textContent=fh.sub; if($('cps-next-t')) $('cps-next-t').textContent=fh.next[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',fh.next[1]); return; }
     if(gl) gl.textContent='Profil complété';
     var p=profPct();
@@ -17789,7 +17789,7 @@ window.cpSheetArrows=function(sc,host){
   function relN(){ return S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length; }
   function drawHome(){
     var b=$('cj-home'); if(!b) return;
-    if(S.st.profil==='frl' && window.cpFrl){ b.innerHTML=cpFrl.home(); return; } /* menu Freelance à part */
+    if(chosen() && S.st.profil==='frl' && window.cpFrl){ b.innerHTML=pfBar()+cpFrl.home(); return; } /* menu Freelance à part */
     var d=curDefi(), pb=pendingBilan(), tipI=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5), tip=TIPS[tipI%TIPS.length];
     var weekN=S.list.filter(function(x){ return inWeek(x.date,wk()); }).length, itw=cnt('itw'), p=profPct();
     var defi = pb ? '<button type="button" class="cj-box cj-defi" data-cj="bilan"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Bilan à faire</b><small>Ton défi de la '+wkLabel(pb.week)+'</small></span><em class="cj-score">'+done(pb)+'/'+pb.cible+'</em></button>'
@@ -17810,7 +17810,7 @@ window.cpSheetArrows=function(sc,host){
       +'</div>'
       +(S.st.profil==='etu'?'<button type="button" class="cj-box cj-etuf" data-cj="etuform"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Stages, alternance & formations</b><small>BTS, BUT (ex-DUT), licence, alternance, stages, jobs étudiants : les sites officiels</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>':'')
       +'<button type="button" class="cj-box cj-tip cj-mtip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
-    b.innerHTML=coach()+tiles
+    b.innerHTML=pfBar()+coach()+tiles
       +'<div class="cj-inv"><span class="cj-ic b sm">'+I(P.share,20)+'</span><span class="cj-box-t"><b>Invite un(e) ami(e) en recherche</b><small>CareerPulse Stream, le profil pro et le suivi des candidatures sont gratuits pour les membres.</small></span><button type="button" class="cj-btn ghost" data-cj="inv-ami">Partager</button></div>';
   }
   function drawProfTop(){
@@ -17841,9 +17841,13 @@ window.cpSheetArrows=function(sc,host){
       +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+(/^(lm|cv|docs)$/.test(r[0])?'<span class="cj-up'+(r[3]?' on':'')+'">'+(r[3]?(r[0]==='docs'?'Ajouter':'Remplacer'):'Ajouter')+'</span>':'')+I(P.chev,15)+'</button>'; }).join('')+'</div>'; }
 
   /* ── Étudiant et Salarié : liste de tâches (à la place du défi) ── */
-  function isT(){ return S.st.profil==='etu' || S.st.profil==='sal'; }
+  function chosen(){ return !!S.st.profil && S.st.pfv===2; } /* pfv 2 = choix fait parmi les 4 profils actuels */
+  function isT(){ return chosen() && (S.st.profil==='etu' || S.st.profil==='sal'); }
+  var PFI={ dem:'<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/>', etu:'<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4V11"/>', sal:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>', frl:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>' };
+  function pfBar(){ if(!chosen()) return ''; var cur=S.st.profil==='rec'?'dem':S.st.profil;
+    return '<div class="cj-pfbar" role="tablist" aria-label="Mon profil">'+['dem','etu','sal','frl'].map(function(k){ return '<button type="button" role="tab" aria-selected="'+(k===cur)+'" class="'+(k===cur?'on':'')+'" data-cj="pf" data-p="'+k+'"><i>'+I(PFI[k],16)+'</i><span>'+(k==='dem'?'Emploi · Reconversion':k==='etu'?'Étudiant':k==='sal'?'Salarié':'Freelance')+'</span></button>'; }).join('')+'</div>'; }
   function tasks(){ var k='tasks_'+S.st.profil; return (S.st[k]=S.st[k]||[]); }
-  function candSub(){ return S.st.profil==='sal'?'Tu penses à changer de secteur, de métier ou de poste ? Pose ta candidature ici':S.st.profil==='etu'?'Tu as terminé tes études ou tu cherches un job saisonnier ? Postule ici':'Postuler et suivre'; }
+  function candSub(){ return !chosen()?'Postuler et suivre':S.st.profil==='sal'?'Tu penses à changer de secteur, de métier ou de poste ? Pose ta candidature ici':S.st.profil==='etu'?'Tu as terminé tes études ou tu cherches un job saisonnier ? Postule ici':'Postuler et suivre'; }
   var TSUG={ etu:['Trouver mon stage','Envoyer mes candidatures d\'alternance','Demander ma convention de stage','Mettre à jour mon CV','Préparer ma candidature (Parcoursup, Mon Master, école)','Chercher un job étudiant ou saisonnier','Préparer un entretien de stage ou d\'alternance','Vérifier mes aides (bourse, logement)'],
     sal:['Préparer mon entretien annuel','Mettre à jour mon CV','Faire le point sur mes compétences','Consulter mes droits à la formation (CPF)','Vérifier ma fiche de paie','Poser mes congés','Demander un retour à mon manager','Me renseigner sur un bilan de compétences'] };
   var TKO=null;
@@ -18224,8 +18228,8 @@ window.cpSheetArrows=function(sc,host){
     if(a==='wiz'){ if(profPct()>=100 || !user()) { wizard(); } else { var f=firstSec(); wizard(f==='infos'&&!val('fp-name')?null:f); } return; }
     if(a==='sec'){ var s=b.getAttribute('data-s'); if(s==='lm'||s==='cv'||s==='docs') openProf(s); else wizard(s); return; }
     if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
-    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]+' ✓'); drawAll(); return; }
-    if(a==='pfch'){ S.st.profil=''; drawAll(); return; }
+    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); S.st.pfv=2; saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]+' ✓'); drawAll(); return; }
+    if(a==='pfch'){ S.st.pfv=0; drawAll(); return; }
     if(a==='tch'){ document.querySelectorAll('.cj-sheet').forEach(function(x){ if(x.querySelector('.cj-olink')) x.remove(); }); openTasks(); return; }
     if(a==='etuform'){ openEtuForm(); return; }
     if(a==='tadd'){ var tn=$('cj-tnew'); addTask(tn&&tn.value); return; }
@@ -20738,7 +20742,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     'Relance une facture le lendemain de son échéance : poliment, mais sans attendre.','Mets de côté une partie de chaque paiement pour tes cotisations et tes impôts.'];
   var D={ uid:null, loaded:false, loading:null, prof:{}, clients:[], missions:[], defi:null };
   function ST(){ return window.cpStream ? cpStream.st() : {}; }
-  function on(){ return ST().profil==='frl'; }
+  function on(){ var s=ST(); return s.profil==='frl' && s.pfv===2; }
   function ref(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid):null; }
   function loc(k,v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem('cpfrl_'+k)||'null'); localStorage.setItem('cpfrl_'+k,JSON.stringify(v)); }catch(e){ return null; } }
   function load(){
@@ -20967,6 +20971,15 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
 #s-profil .cj-etuf{ display:flex; margin-top:14px; background:linear-gradient(135deg,#f0fdf4,#eff6ff); border-color:#bbf7d0; }
 a.cj-olink{ text-decoration:none !important; color:inherit !important; }
 a.cj-olink .cj-box-t b{ color:#0f172a; } a.cj-olink .cj-box-t small{ color:#64748b; }
+</style>
+<style id="cj-pfbar-css">
+#s-profil .cj-pfbar{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:0 0 12px; padding:5px; border-radius:18px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 12px 26px -24px rgba(15,23,42,.8); }
+#s-profil .cj-pfbar button{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; min-width:0; padding:8px 4px; border:none; border-radius:13px; background:transparent; cursor:pointer; font:700 .68rem/1.2 'DM Sans',sans-serif; color:#475569; text-align:center; }
+#s-profil .cj-pfbar button i{ width:28px; height:28px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#1e40af; background:linear-gradient(145deg,#eff6ff,#ecfdf5); }
+#s-profil .cj-pfbar button span{ overflow-wrap:anywhere; }
+#s-profil .cj-pfbar button.on{ color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 10px 20px -14px rgba(30,64,175,.9); }
+#s-profil .cj-pfbar button.on i{ color:#fff; background:rgba(255,255,255,.2); }
+@media (min-width:821px){ #s-profil .cj-pfbar button{ flex-direction:row; gap:8px; padding:10px 8px; font-size:.82rem; } }
 </style>
 </body>
 </html>
