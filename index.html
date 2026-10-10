@@ -17685,7 +17685,7 @@ window.cpSheetArrows=function(sc,host){
   var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Relis ta candidature à voix haute avant l\'envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne ta ville et ta mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
   var PUB=['Un profil complet et visible, c\'est ce que les recruteurs CareerPulse regardent en premier.','Chaque candidature notée ici, c\'est une relance que tu n\'oublieras jamais.','Avec CareerPulse, tu avances chaque semaine avec un objectif clair, et je suis là pour te le faire tenir.','Ton profil CareerPulse est gratuit : complète-le une fois, les recruteurs le retrouvent à tout moment.'];
   var S={ list:[], convs:[], st:{ exp:'', comp:[], defi:null, hist:[], profil:'' } };
-  var PROFS={ dem:'Demandeur d\'emploi', etu:'Étudiant(e)', rec:'En reconversion', frl:'Freelance' };
+  var PROFS={ dem:'Demandeur d\'emploi · Reconversion', etu:'Étudiant(e)', rec:'Demandeur d\'emploi · Reconversion', sal:'Salarié(e)', frl:'Freelance' };
   /* Liens vers EVA (eva.html) : chaque lien ouvre la page du menu EVA correspondante */
   function pf(){ return 'eva.html#eva-workspace'; }
   var EV={ quiz:['eva.html#eva-entretien','Quiz et mises en situation','Entraîne-toi avec EVA avant de postuler'],
@@ -17744,10 +17744,14 @@ window.cpSheetArrows=function(sc,host){
   function coach(){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
     if(!S.st.profil){
-      return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Pour bien t\'accompagner, dis-moi ta <b>situation</b> :</p>'
-        +'<div class="cj-pfs">'+['dem','etu','rec','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+'</button>'; }).join('')+'</div></div></div>';
+      return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton <b>profil</b> pour que je t\'accompagne au mieux :</p>'
+        +'<div class="cj-pfs">'+['dem','etu','sal','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+'</button>'; }).join('')+'</div></div></div>';
     }
-    if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
+    if(isT()){ var tk=tasks(), left=tk.filter(function(x){ return !x.done; }).length;
+      if(!tk.length){ m.push('Bonjour'+(n?' '+esc(n):'')+' 👋 Organise-toi avec ta <b>liste de tâches</b> : je te propose les plus utiles pour '+(S.st.profil==='etu'?'tes études et ta recherche de stage ou d\'alternance':'ta vie au travail et ton évolution')+'.'); act=['Voir mes tâches','tch']; }
+      else if(left){ m.push('Bonjour'+(n?' '+esc(n):'')+' 👋 Il te reste <b>'+left+' tâche'+(left>1?'s':'')+'</b> à faire. On en coche une aujourd\'hui ?'); act=['Voir mes tâches','tch']; }
+      else { m.push('Bravo'+(n?' '+esc(n):'')+' 🎉 Toutes tes tâches sont faites. Ajoutes-en une nouvelle quand tu veux.'); act=['Voir mes tâches','tch']; } }
+    else if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
     else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
     else { var f=done(d), r=Math.max(0,d.cible-f), lab=dlab(d).toLowerCase();
       if(f>=d.cible){ m.push('Bravo '+esc(hi)+'ton défi est <b>réussi</b> 🎉 Tu peux faire ton bilan dès maintenant.'); act=['Faire mon bilan','bilan']; }
@@ -17765,7 +17769,7 @@ window.cpSheetArrows=function(sc,host){
   }
 
   /* ── Hero ── */
-  function next(){ var p=profPct(); return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
+  function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
   function drawHero(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
     if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=S.st.profil==='frl'?'Ton espace freelance':ht._t0; }
@@ -17792,16 +17796,19 @@ window.cpSheetArrows=function(sc,host){
       : d ? '<button type="button" class="cj-box cj-defi" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>'+esc(dlab(d))+' · objectif '+d.cible+'</small></span><em class="cj-score">'+done(d)+'/'+d.cible+'</em><i class="cj-bar"><i style="width:'+dpct(d)+'%"></i></i><span class="cj-mini">'+(done(d)>=d.cible?'Défi relevé, bravo ! Fais ton bilan quand tu veux.':'Encore '+(d.cible-done(d))+' pour relever le défi.')+'</span></button>'
       : '<button type="button" class="cj-box cj-defi off" data-cj="defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Défi de la semaine</b><small>Choisis ton objectif : de 1 à 10, ou ton propre chiffre</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
     var conv=S.convs.length, unread=S.convs.some(function(c){ return c.unreadCand; });
+    var tk=tasks(), tkd=tk.filter(function(x){ return x.done; }).length;
     var tiles='<div class="cj-tiles">'
-      +'<button type="button" class="cj-tile" data-cj="'+(pb?'bilan':'defi')+'"><span class="cj-ic b">'+I(P.pulse,22)+'</span><b>Mes défis et mes objectifs</b><small>'+(pb?'Bilan à faire':d?esc(dlab(d)):'Ton défi de la semaine')+'</small>'
-        +'<span class="cj-tm"><strong>'+(pb?done(pb)+'/'+pb.cible:d?done(d)+'/'+d.cible:'—')+'</strong><em>'+(pb?'semaine passée':d?(done(d)>=d.cible?'défi réussi 🎉':'défi en cours'):'à choisir')+'</em></span><i class="cj-bar"><i style="width:'+(pb?dpct(pb):dpct(d))+'%"></i></i></button>'
+      +(isT()?'<button type="button" class="cj-tile" data-cj="tch"><span class="cj-ic b">'+I(P.list,22)+'</span><b>Mes tâches</b><small>'+(S.st.profil==='etu'?'Stage, alternance, dossiers…':'Évolution, formation, entretien annuel…')+'</small>'
+        +'<span class="cj-tm"><strong>'+(tk.length?tkd+'/'+tk.length:'—')+'</strong><em>'+(tk.length?(tkd===tk.length?'tout est fait 🎉':'tâches faites'):'à créer')+'</em></span><i class="cj-bar"><i style="width:'+(tk.length?Math.round(tkd/tk.length*100):0)+'%"></i></i></button>':'<button type="button" class="cj-tile" data-cj="'+(pb?'bilan':'defi')+'"><span class="cj-ic b">'+I(P.pulse,22)+'</span><b>Mes défis et mes objectifs</b><small>'+(pb?'Bilan à faire':d?esc(dlab(d)):'Ton défi de la semaine')+'</small>'
+        +'<span class="cj-tm"><strong>'+(pb?done(pb)+'/'+pb.cible:d?done(d)+'/'+d.cible:'—')+'</strong><em>'+(pb?'semaine passée':d?(done(d)>=d.cible?'défi réussi 🎉':'défi en cours'):'à choisir')+'</em></span><i class="cj-bar"><i style="width:'+(pb?dpct(pb):dpct(d))+'%"></i></i></button>')
       +'<button type="button" class="cj-tile" data-cj="prof"><span class="cj-ic b">'+I(P.user,22)+'</span><b>Profil & documents</b><small>Ton CV visible pour les recruteurs</small>'
         +'<span class="cj-tm"><strong>'+p+' %</strong><em>'+(p<100?'profil complété':'profil complet ✓')+'</em></span><i class="cj-bar"><i style="width:'+p+'%"></i></i></button>'
-      +'<button type="button" class="cj-tile" data-cj="list" data-f="all"><span class="cj-ic b">'+I(P.brief,22)+'</span><b>Candidatures</b><small>Postuler et suivre</small>'
+      +'<button type="button" class="cj-tile" data-cj="list" data-f="all"><span class="cj-ic b">'+I(P.brief,22)+'</span><b>Candidatures</b><small>'+candSub()+'</small>'
         +'<span class="cj-tm"><strong>'+cnt('all')+'</strong><em>'+(relN()?relN()+' à relancer':cnt('itw')?cnt('itw')+' entretien'+(cnt('itw')>1?'s':''):'postulée'+(cnt('all')>1?'s':''))+'</em></span><span class="cj-tdots">'+['all','cours','itw','rep'].map(function(f,i){ return '<i class="c'+i+'">'+cnt(f)+'</i>'; }).join('')+'</span></button>'
       +'<button type="button" class="cj-tile" data-cj="rec"><span class="cj-ic g">'+I(P.users,22)+'</span><b>Recruteurs & messages</b><small>Échanger avec les recruteurs</small>'
         +'<span class="cj-tm"><strong>'+conv+'</strong><em>message'+(conv>1?'s':'')+(unread?' · nouveau':'')+'</em></span><span class="cj-tvis'+(visOn()?' on':'')+'">'+I(P.eye,13)+(visOn()?'Profil visible':'Profil privé')+'</span></button>'
       +'</div>'
+      +(S.st.profil==='etu'?'<button type="button" class="cj-box cj-etuf" data-cj="etuform"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Stages, alternance & formations</b><small>BTS, BUT (ex-DUT), licence, alternance, stages, jobs étudiants : les sites officiels</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>':'')
       +'<button type="button" class="cj-box cj-tip cj-mtip" data-cj="tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>';
     b.innerHTML=coach()+tiles
       +'<div class="cj-inv"><span class="cj-ic b sm">'+I(P.share,20)+'</span><span class="cj-box-t"><b>Invite un(e) ami(e) en recherche</b><small>CareerPulse Stream, le profil pro et le suivi des candidatures sont gratuits pour les membres.</small></span><button type="button" class="cj-btn ghost" data-cj="inv-ami">Partager</button></div>';
@@ -17832,6 +17839,36 @@ window.cpSheetArrows=function(sc,host){
     b.innerHTML=say2((p<100?'Ton profil est à <b>'+p+' %</b>. Touche une étape : je te pose les questions, une à une.':'Ton profil est <b>complet</b> 👏 Pense à le rendre visible pour les recruteurs.')+(dm.length?'<br>Il te manque '+dm.map(function(x){ return '<b>'+x[1]+'</b>'; }).join(' et ')+' : touche la ligne pour l\'ajouter.':''))
       +'<div class="cj-box cj-comp">'+ring(p)+'<span class="cj-box-t"><b>Complétude du profil</b><small>Infos perso, expériences, compétences, lettre et documents.</small></span></div>'
       +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+(/^(lm|cv|docs)$/.test(r[0])?'<span class="cj-up'+(r[3]?' on':'')+'">'+(r[3]?(r[0]==='docs'?'Ajouter':'Remplacer'):'Ajouter')+'</span>':'')+I(P.chev,15)+'</button>'; }).join('')+'</div>'; }
+
+  /* ── Étudiant et Salarié : liste de tâches (à la place du défi) ── */
+  function isT(){ return S.st.profil==='etu' || S.st.profil==='sal'; }
+  function tasks(){ var k='tasks_'+S.st.profil; return (S.st[k]=S.st[k]||[]); }
+  function candSub(){ return S.st.profil==='sal'?'Tu penses à changer de secteur, de métier ou de poste ? Pose ta candidature ici':S.st.profil==='etu'?'Tu as terminé tes études ou tu cherches un job saisonnier ? Postule ici':'Postuler et suivre'; }
+  var TSUG={ etu:['Trouver mon stage','Envoyer mes candidatures d\'alternance','Demander ma convention de stage','Mettre à jour mon CV','Préparer ma candidature (Parcoursup, Mon Master, école)','Chercher un job étudiant ou saisonnier','Préparer un entretien de stage ou d\'alternance','Vérifier mes aides (bourse, logement)'],
+    sal:['Préparer mon entretien annuel','Mettre à jour mon CV','Faire le point sur mes compétences','Consulter mes droits à la formation (CPF)','Vérifier ma fiche de paie','Poser mes congés','Demander un retour à mon manager','Me renseigner sur un bilan de compétences'] };
+  var TKO=null;
+  function openTasks(){
+    var o=sheet('Mes tâches',S.st.profil==='etu'?'Tes études, ton stage, ton alternance':'Ta vie au travail et ton évolution',''); TKO=o;
+    o.render=function(){ var L=tasks(), sug=TSUG[S.st.profil].filter(function(t){ return !L.some(function(x){ return x.t===t; }); }), dn=L.filter(function(x){ return x.done; }).length;
+      o.body.innerHTML=say2(L.length?'Coche chaque tâche dès qu\'elle est faite : tu vois tout de suite où tu en es. <b>'+dn+' / '+L.length+'</b> faite'+(dn>1?'s':'')+'.':'Voici les tâches que je te conseille. Ajoute celles qui te concernent, ou écris les tiennes.')
+        +(L.length?'<div class="cj-tasks">'+L.map(function(x,i){ return '<div class="cj-task'+(x.done?' done':'')+'"><button type="button" class="cj-ck'+(x.done?' on':'')+'" data-cj="tdone" data-i="'+i+'" aria-label="Fait">'+(x.done?I(P.check,13):'')+'</button><span>'+esc(x.t)+'</span><button type="button" class="cj-tdel" data-cj="tdel" data-i="'+i+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div>'; }).join('')+'</div>':'')
+        +'<div class="cj-form"><label>Ajouter une tâche<span style="display:flex;gap:8px"><input id="cj-tnew" maxlength="90" placeholder="Ex : Appeler l\'entreprise X" style="flex:1"><button type="button" class="cj-btn" data-cj="tadd" style="margin:0">'+I(P.plus,16)+'Ajouter</button></span></label></div>'
+        +(sug.length?'<div class="cps-sec"><span class="cps-si">'+I(P.bulb)+'</span>Les conseils de Lisa</div><div class="cj-tsug">'+sug.map(function(t){ return '<button type="button" data-cj="tsug" data-t="'+esc(t)+'">'+I(P.plus,14)+esc(t)+'</button>'; }).join('')+'</div>':'');
+    };
+    o.render();
+  }
+  function addTask(t){ t=String(t||'').trim(); if(!t) return; var L=tasks(); if(L.length>=40){ say('40 tâches maximum'); return; } if(!L.some(function(x){ return x.t===t; })) L.push({ t:t, done:false, at:new Date().toISOString() }); saveSt(); if(TKO) TKO.render(); }
+  var ETUF=[
+    ['Formations : BTS, BUT (ex-DUT), licence, master',[['Onisep','https://www.onisep.fr','Toutes les formations et les établissements, partout en France'],['Parcoursup','https://www.parcoursup.gouv.fr','Candidater aux formations après le bac (BTS, BUT, licence…)'],['Mon Master','https://www.monmaster.gouv.fr','Candidater en master']]],
+    ['Alternance et apprentissage',[['La bonne alternance','https://labonnealternance.apprentissage.beta.gouv.fr','Les entreprises qui recrutent en alternance et les centres de formation d\'apprentis'],['1jeune1solution','https://www.1jeune1solution.gouv.fr','Offres d\'alternance, de stage et d\'emploi pour les jeunes']]],
+    ['Stages',[['1jeune1solution','https://www.1jeune1solution.gouv.fr','Des offres de stage dans toute la France'],['Onisep','https://www.onisep.fr','Conseils pour trouver et réussir ton stage']]],
+    ['Jobs étudiants et saisonniers',[['Jobaviz (Crous)','https://www.jobaviz.fr','La plateforme des Crous pour les jobs étudiants'],['France Travail','https://www.francetravail.fr','Offres d\'emploi saisonnier et de premier emploi']]],
+    ['Aides et vie étudiante',[['MesServices.etudiant.gouv.fr','https://www.messervices.etudiant.gouv.fr','Bourse, logement Crous et services étudiants'],['etudiant.gouv.fr','https://www.etudiant.gouv.fr','Le site officiel de la vie étudiante']]] ];
+  function openEtuForm(){
+    sheet('Stages, alternance & formations','Les sites officiels, partout en France',say2('Voici les sites <b>officiels</b> pour trouver ta formation (BTS, BUT, licence, master), ton alternance, ton stage ou un job étudiant. Ils couvrent <b>toute la France</b>.')
+      +ETUF.map(function(g){ return '<div class="cps-sec"><span class="cps-si">'+I(P.ext)+'</span>'+esc(g[0])+'</div>'+g[1].map(function(x){ return '<a class="cj-box cj-olink" href="'+x[1]+'" target="_blank" rel="noopener"><span class="cj-ic b sm">'+I(P.ext,18)+'</span><span class="cj-box-t"><b>'+esc(x[0])+'</b><small>'+esc(x[2])+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></a>'; }).join(''); }).join('')
+      +'<button type="button" class="cj-main" data-cj="tch">'+I(P.list,18)+'Noter mes démarches dans mes tâches</button>');
+  }
   function drawAll(){ drawHero(); drawHome(); drawProfTop(); drawCheck(); }
   window.cpStream={ st:function(){ return S.st; }, save:function(){ return saveSt(); }, draw:function(){ drawAll(); }, sheet:function(t,sub,html,onClose){ return sheet(t,sub,html,onClose); } };
 
@@ -18187,8 +18224,14 @@ window.cpSheetArrows=function(sc,host){
     if(a==='wiz'){ if(profPct()>=100 || !user()) { wizard(); } else { var f=firstSec(); wizard(f==='infos'&&!val('fp-name')?null:f); } return; }
     if(a==='sec'){ var s=b.getAttribute('data-s'); if(s==='lm'||s==='cv'||s==='docs') openProf(s); else wizard(s); return; }
     if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
-    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]); drawAll(); return; }
+    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]+' ✓'); drawAll(); return; }
     if(a==='pfch'){ S.st.profil=''; drawAll(); return; }
+    if(a==='tch'){ document.querySelectorAll('.cj-sheet').forEach(function(x){ if(x.querySelector('.cj-olink')) x.remove(); }); openTasks(); return; }
+    if(a==='etuform'){ openEtuForm(); return; }
+    if(a==='tadd'){ var tn=$('cj-tnew'); addTask(tn&&tn.value); return; }
+    if(a==='tsug'){ addTask(b.getAttribute('data-t')); return; }
+    if(a==='tdone'){ var tl=tasks(), ti=+b.getAttribute('data-i'); if(tl[ti]){ tl[ti].done=!tl[ti].done; saveSt(); if(TKO) TKO.render(); if(tl[ti].done) say('Bien joué ✓'); } return; }
+    if(a==='tdel'){ var tl2=tasks(); tl2.splice(+b.getAttribute('data-i'),1); saveSt(); if(TKO) TKO.render(); return; }
     if(a==='paste'){ var li=$('cj-li'); if(!li) return; if(navigator.clipboard && navigator.clipboard.readText){ navigator.clipboard.readText().then(function(t){ li.value=String(t||'').trim(); if(!li.value) li.focus(); }).catch(function(){ li.focus(); say('Appuie longuement dans le champ, puis « Coller »'); }); } else li.focus(); return; }
     if(a==='vis'){ toggleVis(); return; } if(a==='inv-rec'){ share(true); return; } if(a==='inv-ami'){ share(false); return; }
     if(a==='photo'){ var fi=$('fp-photo'); if(fi){ fi.click(); if(!fi._cps){ fi._cps=1; fi.addEventListener('change',function(){ setTimeout(drawProfTop,400); setTimeout(drawProfTop,1200); }); } } return; }
@@ -20910,5 +20953,20 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   window.cpFrl={ home:home, hero:hero, load:load, data:function(){ return D; } };
 })();
 </script>
+
+<style id="cj-tasks-css">
+.cj-tasks{ display:flex; flex-direction:column; gap:8px; }
+.cj-task{ display:flex; align-items:center; gap:10px; padding:12px; border-radius:16px; background:#fff; border:1px solid #e2e8f0; }
+.cj-task span{ flex:1; min-width:0; font-size:.88rem; font-weight:600; color:#0f172a; line-height:1.4; overflow-wrap:anywhere; }
+.cj-task.done span{ color:#94a3b8; text-decoration:line-through; }
+.cj-task .cj-ck{ width:26px; height:26px; flex-shrink:0; border-radius:8px; cursor:pointer; padding:0; }
+.cj-tdel{ width:34px; height:34px; flex-shrink:0; border-radius:10px; border:1px solid #e2e8f0; background:#fff; color:#b91c1c; cursor:pointer; display:flex; align-items:center; justify-content:center; padding:0; }
+.cj-tsug{ display:flex; flex-wrap:wrap; gap:8px; }
+.cj-tsug button{ display:inline-flex; align-items:center; gap:6px; padding:9px 12px; border-radius:999px; border:1.5px dashed #93c5fd; background:#f8fbff; font:700 .78rem 'DM Sans',sans-serif; color:#1e3a8a; cursor:pointer; text-align:left; }
+.cj-tsug button:hover{ border-style:solid; background:#eff6ff; }
+#s-profil .cj-etuf{ display:flex; margin-top:14px; background:linear-gradient(135deg,#f0fdf4,#eff6ff); border-color:#bbf7d0; }
+a.cj-olink{ text-decoration:none !important; color:inherit !important; }
+a.cj-olink .cj-box-t b{ color:#0f172a; } a.cj-olink .cj-box-t small{ color:#64748b; }
+</style>
 </body>
 </html>
