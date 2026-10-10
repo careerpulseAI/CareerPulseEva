@@ -2966,7 +2966,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     <div class="phero">
       <div class="phero-k"><i></i>Espace professionnels</div>
       <h1>Les bons candidats viennent à vous.</h1>
-      <p>Centres de formation vérifiés : publiez vos formations, EVA les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui prennent contact, jamais l'inverse.</p>
+      <p>Centres de formation vérifiés : publiez vos formations, CareerPulse les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui prennent contact, jamais l'inverse.</p>
     </div>
 
     <div class="pchoices">
@@ -2979,7 +2979,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
         <p>Publiez vos formations et recevez les demandes des candidats intéressés.</p>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Fiches formation vérifiées : certification, Qualiopi, financements</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Recommandées par EVA aux profils qui correspondent</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Recommandées par CareerPulse aux profils qui correspondent</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Demandes et échanges dans une messagerie protégée</li>
         </ul>
         <span class="pchoice-go">Accéder à l'espace centre</span>
@@ -3006,7 +3006,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       <div class="psteps">
         <div class="pstep"><b>Votre compte est vérifié</b><p>SIRET et, pour les centres, numéro de déclaration d'activité. Chaque compte est validé par l'équipe CareerPulse.</p></div>
         <div class="pstep"><b>Vous publiez vos formations</b><p>Des fiches complètes : certification, programme, dates, prix et financements possibles.</p></div>
-        <div class="pstep"><b>Le candidat vous écrit</b><p>EVA recommande votre formation aux membres dont le profil correspond. S'il est intéressé, c'est lui qui vous contacte.</p></div>
+        <div class="pstep"><b>Le candidat vous écrit</b><p>CareerPulse recommande votre formation aux membres dont le profil correspond. S'il est intéressé, c'est lui qui vous contacte.</p></div>
       </div>
       <div class="prule">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
@@ -7659,21 +7659,9 @@ function ecCloseTicket(){
 }
 
 function cpRenderFreeBadges(){
-  // Offre exceptionnelle : EVA gratuit pour essai, sans date de fin — abonnement bloqué.
-  var free = true;
-  var txtSmall, txtBig;
-  txtSmall = '🎁 Offre exceptionnelle · EVA gratuit pour essai';
-  txtBig   = '🎁 Offre exceptionnelle — EVA gratuit pour essai, en illimité';
-  var bg = 'rgba(5,150,105,.12)';
-  var col = '#059669';
-  var anim = 'livePulse 2s ease-in-out infinite';
-  [['cp-free-badge-evacard',txtSmall],['cp-free-badge-quizcard',txtSmall],['eva-splash-free-badge',txtBig],['cp-free-badge-quizhub',txtBig],['cp-free-badge-docs',txtBig]].forEach(function(pair){
-    var el = document.getElementById(pair[0]);
-    if(!el) return;
-    el.textContent = pair[1];
-    el.style.background = bg;
-    el.style.color = col;
-    el.style.animation = anim;
+  // Badges « Offre exceptionnelle » retirés (quiz et EVA) : on masque les emplacements.
+  ['cp-free-badge-evacard','cp-free-badge-quizcard','eva-splash-free-badge','cp-free-badge-quizhub','cp-free-badge-docs'].forEach(function(id){
+    var el = document.getElementById(id); if(!el) return; el.textContent=''; el.style.display='none';
   });
 }
 document.addEventListener('DOMContentLoaded',function(){ ecInit(); _ecStartSplashClock(); cpRenderFreeBadges(); setInterval(cpRenderFreeBadges, 60000); });
@@ -14488,13 +14476,13 @@ go=function(page){
     <div style="width:24px;height:24px;border-radius:7px;background:#f0fdf4;border:1px solid #bbf7d0;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px">
      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
     </div>
-    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Généré par EVA IA</strong> — laisse notre assistante t'aider à rédiger un profil qui te ressemble vraiment.</div>
+    <div style="font-size:.62rem;color:#334155;line-height:1.6"><strong>Rédigé avec Lisa</strong> — laisse notre assistante t'aider à rédiger un profil qui te ressemble vraiment.</div>
    </div>
   </div>
  </div>
 
  <!-- Bouton retour bas -->
- <div class="vp-rich"><div class="vp-sec"><div class="vp-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>En 3 étapes</div><div class="vp-steps"><div><i>1</i><span><b>Crée ton compte</b> gratuit en 30 secondes.</span></div><div><i>2</i><span><b>Complète ton profil</b> : titre, secteur, accroche — EVA t'aide à rédiger.</span></div><div><i>3</i><span><b>Range tes documents</b> : ils te suivent partout, sur mobile et ordinateur.</span></div></div></div><div class="vp-sec"><div class="vp-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Ce que tu peux conserver</div><div class="vp-grid"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>CV</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg><span>Lettres</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span>Diplômes</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg><span>Attestations</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/></svg><span>Contrats</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg><span>Fiches de paie</span></div></div></div><div class="vp-eva"><div class="vp-ev-av">EVA</div><div><b>EVA rédige avec toi</b><p>« Commercial terrain, 6 ans d'expérience, je transforme les premiers rendez-vous en clients fidèles. » — une accroche claire en quelques secondes ✨</p></div></div><div class="vp-trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Privé &amp; sécurisé</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg>Mobile &amp; ordi</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>Gratuit pour essai</span></div></div>
+ <div class="vp-rich"><div class="vp-sec"><div class="vp-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>En 3 étapes</div><div class="vp-steps"><div><i>1</i><span><b>Crée ton compte</b> gratuit en 30 secondes.</span></div><div><i>2</i><span><b>Complète ton profil</b> : titre, secteur, accroche — Lisa t'aide à rédiger.</span></div><div><i>3</i><span><b>Range tes documents</b> : ils te suivent partout, sur mobile et ordinateur.</span></div></div></div><div class="vp-sec"><div class="vp-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>Ce que tu peux conserver</div><div class="vp-grid"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg><span>CV</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg><span>Lettres</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span>Diplômes</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z"/><path d="m9 12 2 2 4-4"/></svg><span>Attestations</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/></svg><span>Contrats</span></div><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18M7 15h3"/></svg><span>Fiches de paie</span></div></div></div><div class="vp-eva"><div class="vp-ev-av" data-lisa-av>Lisa</div><div><b>Lisa rédige avec toi</b><p>« Commercial terrain, 6 ans d'expérience, je transforme les premiers rendez-vous en clients fidèles. » — une accroche claire en quelques secondes ✨</p></div></div><div class="vp-trust"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Privé &amp; sécurisé</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></svg>Mobile &amp; ordi</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>Gratuit pour essai</span></div></div>
  <button class="vp-cta" onclick="if(window.innerWidth<900){go('profil');}else{history.back();}" style="width:100%;background:#059669;border:none;border-radius:11px;padding:13px;font-size:.72rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:7px">
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
   Crée ton profil et conserve tes documents dans ton espace perso CareerPulse →
@@ -17246,7 +17234,7 @@ window.cpSheetArrows=function(sc,host){
 };
 </script>
 <script>
-/* ═══ EVA Pro : l'assistante des centres de formation (questions en tiroirs, réponses vérifiées) ═══ */
+/* ═══ Assistante CareerPulse Pro : l'aide des centres de formation (questions en tiroirs, réponses vérifiées) ═══ */
 (function(){
   var MAIL='careerpulse-pro@outlook.com';
   var T=[
@@ -17255,7 +17243,7 @@ window.cpSheetArrows=function(sc,host){
     ['Puis-je préparer une fiche sans la publier ?','Oui : cliquez sur <b>Enregistrer en brouillon</b>. Un brouillon n\'est visible par aucun membre. Vous le publiez quand vous êtes prêt.'],
     ['Comment modifier une formation publiée ?','Dans la liste de vos formations, cliquez sur <b>Modifier</b>, faites vos changements puis <b>Publier</b>. La page vue par les membres est mise à jour immédiatement.'],
     ['Dépublier ou supprimer, quelle différence ?','<b>Dépublier</b> masque la formation aux membres sans rien effacer : vous pouvez la republier en un clic. <b>Supprimer</b> efface définitivement la fiche. Les conversations déjà ouvertes avec des candidats restent accessibles.'],
-    ['Comment est calculé le pourcentage de correspondance ?','EVA compare votre fiche au profil du membre sur plusieurs critères : <b>lieu</b>, <b>modalité</b>, <b>public visé</b>, <b>financements</b> et <b>métier ou mots-clés</b>. Le membre voit chaque critère avec ✓ ou ✗ : le pourcentage est toujours expliqué.'],
+    ['Comment est calculé le pourcentage de correspondance ?','CareerPulse compare votre fiche au profil du membre sur plusieurs critères : <b>lieu</b>, <b>modalité</b>, <b>public visé</b>, <b>financements</b> et <b>métier ou mots-clés</b>. Le membre voit chaque critère avec ✓ ou ✗ : le pourcentage est toujours expliqué.'],
     ['Comment améliorer ma correspondance avec les profils ?','Remplissez tout : public visé, financements réellement possibles, ville, modalité, et des <b>mots-clés précis</b> (le métier visé, les outils enseignés). Plus la fiche est complète, plus elle atteint les bons profils. 🎯'],
     ['Comment voir ma page comme un candidat ?','Cliquez sur <b>Aperçu candidat</b> dans le formulaire, ou sur <b>Voir ma page</b> dans la liste de vos formations. 👀'],
     ['Comment ajouter mon logo et mes couleurs ?','Dans la section <b>Identité visuelle</b> du formulaire : choisissez votre logo (il est réduit automatiquement) et l\'une des 7 couleurs de page. Ajoutez aussi le lien de votre site : il apparaît sur votre page.'],
@@ -17313,6 +17301,7 @@ window.cpSheetArrows=function(sc,host){
    ]]
   ];
   var tab='use', q='';
+  var LG='<span class="cpp-c" aria-hidden="true">C</span>';
   function esc(t){ return String(t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function plain(h){ return h.replace(/<[^>]+>/g,'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
   var CH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
@@ -17321,19 +17310,19 @@ window.cpSheetArrows=function(sc,host){
     var n=plain(q), out=[];
     T.forEach(function(t){ t[3].forEach(function(x,i){ if(n ? (plain(x[0]+' '+x[1]).indexOf(n)>-1) : t[0]===tab) out.push([t,x,i]); }); });
     if(!out.length) return '<div class="evp-empty">🔎 Aucune question ne correspond. Essayez un autre mot, ou écrivez-nous à <b>'+MAIL+'</b>.</div>';
-    return out.map(function(r){ return '<div class="evp-q"><button type="button" class="evp-qb"><span class="evp-qe">'+r[0][1]+'</span><span class="evp-qt">'+esc(r[1][0])+'</span><span class="evp-ch">'+CH+'</span></button><div class="evp-a"><div class="evp-ai"><span class="evp-av">'+SP+'</span><div class="evp-bub" data-a="'+encodeURIComponent(r[1][1])+'"></div></div></div></div>'; }).join('');
+    return out.map(function(r){ return '<div class="evp-q"><button type="button" class="evp-qb"><span class="evp-qe">'+r[0][1]+'</span><span class="evp-qt">'+esc(r[1][0])+'</span><span class="evp-ch">'+CH+'</span></button><div class="evp-a"><div class="evp-ai"><span class="evp-av cpp">'+LG+'</span><div class="evp-bub" data-a="'+encodeURIComponent(r[1][1])+'"></div></div></div></div>'; }).join('');
   }
   function nav(){ return T.map(function(t){ return '<button type="button" class="evp-tab'+(t[0]===tab&&!q?' on':'')+'" data-t="'+t[0]+'"><span class="evp-te">'+t[1]+'</span><span class="evp-tt">'+t[2]+'</span><em>'+t[3].length+'</em></button>'; }).join(''); }
   function open(){
     if(document.querySelector('.evp-sheet')) return;
     var total=T.reduce(function(a,t){ return a+t[3].length; },0);
     var sh=document.createElement('div'); sh.className='evp-sheet';
-    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo">'+SP+'<i></i></span><div class="evp-ht"><b>EVA Pro</b><span>L\'assistante des centres de formation ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
+    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo cpp">'+LG+'<i></i></span><div class="evp-ht"><b>Assistante CareerPulse Pro</b><span>L\'aide des centres de formation ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
       +'<div class="evp-scroll"><div class="evp-wrap">'
-      +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total+' réponses vérifiées</div><h3>Bonjour 👋 Je suis EVA Pro.</h3><p>Je réponds à vos questions sur CareerPulse, les règles du démarchage CPF, les certifications, les financements et la messagerie. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
+      +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total+' réponses vérifiées</div><h3>Bonjour 👋 Je suis l\'assistante CareerPulse Pro.</h3><p>Je réponds à vos questions sur CareerPulse, les règles du démarchage CPF, les certifications, les financements et la messagerie. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
       +'<label class="evp-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Rechercher une question… (ex : Qualiopi, OPCO, délai)"></label></div>'
       +'<div class="evp-grid"><nav class="evp-nav">'+nav()+'</nav><div class="evp-list">'+list()+'</div></div>'
-      +'<div class="evp-foot">📩 Une autre question ? Écrivez à <b>'+MAIL+'</b></div>'
+      +'<div class="evp-foot cpp-foot"><a class="cpp-mail" href="mailto:'+MAIL+'?subject='+encodeURIComponent('Question espace centre de formation')+'">📩 Contacter CareerPulse</a><span>Une autre question ? <b>'+MAIL+'</b></span></div>'
       +'</div></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var L=sh.querySelector('.evp-list'), N=sh.querySelector('.evp-nav'), sc=sh.querySelector('.evp-scroll');
@@ -17351,7 +17340,7 @@ window.cpSheetArrows=function(sc,host){
     if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.evp-box'));
   }
   window.cpEvaPro=open;
-  window.cpEvaProCard=function(){ return '<button type="button" class="evp-cta" data-a="evapro"><span class="evp-cta-ic">'+SP+'</span><span class="evp-cta-t"><b>Une question ? EVA Pro vous répond 💬</b><span>Démarchage CPF, certifications, financements, messagerie : '+T.reduce(function(a,t){ return a+t[3].length; },0)+' réponses vérifiées.</span></span><span class="evp-cta-go">Ouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>'; };
+  window.cpEvaProCard=function(){ return '<button type="button" class="evp-cta" data-a="evapro"><span class="evp-cta-ic cpp">'+LG+'</span><span class="evp-cta-t"><b>Une question ? CareerPulse vous répond 💬</b><span>Démarchage CPF, certifications, financements, messagerie : '+T.reduce(function(a,t){ return a+t[3].length; },0)+' réponses vérifiées.</span></span><span class="evp-cta-go">Ouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>'; };
 })();
 </script>
 <script>
@@ -17377,10 +17366,10 @@ window.cpSheetArrows=function(sc,host){
   function hero(o){
     return lockBar()+'<div class="ofc-hero"><span class="ofc-k"><i></i>Espace centre de formation</span>'
       +'<h2>Vos formations rencontrent les bons candidats.</h2>'
-      +'<p>Publiez vos formations : EVA les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui viennent vers vous.</p>'
+      +'<p>Publiez vos formations : CareerPulse les recommande aux membres dont le profil correspond, avec un pourcentage de correspondance expliqué. Ce sont les candidats intéressés qui viennent vers vous.</p>'
       +'<div class="ofc-steps">'
       +'<div class="ofc-step"><b><em>1</em>Publiez</b><span>Vos fiches formation, vérifiées et complètes.</span></div>'
-      +'<div class="ofc-step"><b><em>2</em>EVA recommande</b><span>Aux membres dont le profil correspond.</span></div>'
+      +'<div class="ofc-step"><b><em>2</em>CareerPulse recommande</b><span>Aux membres dont le profil correspond.</span></div>'
       +'<div class="ofc-step"><b><em>3</em>Le candidat écrit</b><span>Il vous contacte s\'il est intéressé.</span></div>'
       +'<div class="ofc-step"><b><em>4</em>Vous échangez</b><span>Dans une messagerie protégée.</span></div></div>'
       +'<div class="ofc-law">'+S(I.lock)+'<span>Vous ne contactez jamais un candidat le premier : c\'est lui qui vient vers vous. Ce fonctionnement respecte l\'interdiction du démarchage des titulaires du CPF (art. L6323-8-1 du Code du travail).</span></div></div>';
@@ -17431,7 +17420,7 @@ window.cpSheetArrows=function(sc,host){
          '<label>Établissement<input id="ofc-etab" maxlength="120" value="'+esc(f.etablissement)+'" placeholder="Ex : Campus Caen Centre"></label>'
         +'<label>Ville *<input id="ofc-ville" maxlength="60" value="'+esc(f.ville)+'" placeholder="Ex : Caen"></label>'
         +'<label class="full">Adresse<input id="ofc-adr" maxlength="160" value="'+esc(f.adresse)+'" placeholder="Numéro, rue, code postal"></label>')
-      +sec(5,'Public et financements','Aide EVA à recommander votre formation aux bons profils',
+      +sec(5,'Public et financements','Aide CareerPulse à recommander votre formation aux bons profils',
          '<label class="full">Public visé'+chk('ofc-pub',STATUTS,f.publics,'Précisez le public : ex. personnes en situation de handicap, seniors…')+'</label>'
         +'<label class="full">Financements possibles'+chk('ofc-fin',FIN,f.financements,'Précisez le financement : ex. Agefiph, fonds d\'assurance formation (FAF)…')+'</label>')
       +sec(6,'Programme','Une ligne par module ; « Objectif : … » devient un titre',
@@ -17883,7 +17872,7 @@ window.cpSheetArrows=function(sc,host){
     function render(){
       var L=filtered(o.f), tabs=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses'],['week','Cette semaine'],['rel','À relancer']];
       var msg={ all:'Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.', cours:'Tes candidatures en attente de réponse. Sans nouvelles après 7 jours, une relance montre ta motivation.', itw:'Tes entretiens : prépare-les avec les quiz d\'EVA, c\'est là que tout se joue.', rep:'Les réponses reçues. Une réponse négative n\'est pas un échec : demande un retour, ça aide pour la suite.', week:'Tes candidatures de cette semaine : elles comptent pour ton défi.', rel:'Ces candidatures attendent depuis 7 jours ou plus : un court message poli suffit pour relancer.' }[o.f];
-      o.body.innerHTML=say2(msg)+'<div class="cj-tabs">'+tabs.map(function(t){ return '<button type="button" class="'+(t[0]===o.f?'on':'')+'" data-cj="lf" data-f="'+t[0]+'">'+t[1]+' <em>'+filtered(t[0]).length+'</em></button>'; }).join('')+'</div>'
+      o.body.innerHTML=say2(msg)+(o.f==='itw'?'<div class="cj-evas">'+ev('quiz')+'</div>':'')+'<div class="cj-tabs">'+tabs.map(function(t){ return '<button type="button" class="'+(t[0]===o.f?'on':'')+'" data-cj="lf" data-f="'+t[0]+'">'+t[1]+' <em>'+filtered(t[0]).length+'</em></button>'; }).join('')+'</div>'
         +'<div class="cj-2b"><button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
         +(L.length?'<div class="cj-list">'+L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
           return '<div class="cj-it"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb'+(x.preuveType==='pdf'?' pdf':'')+'" data-cj="proof" data-id="'+x.id+'">'+(x.preuveType==='pdf'?I(P.doc,22)+'<small>PDF</small>':'<img src="'+x.preuve+'" alt="Preuve">')+'</button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
@@ -19755,7 +19744,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
     if(!box){ var w=sc.querySelector('.wrap'), plat=w&&[].filter.call(w.children,function(x){ return /Plateformes/.test(x.textContent||'') && x.style && x.style.textAlign==='left'; })[0]; box=document.createElement('div'); box.id='cpo-list'; box.className='cpo-list'; if(plat) plat.parentNode.insertBefore(box,plat); else if(w) w.appendChild(box); else return; }
     var EI=window.CP_EVA_IMG||'';
     box.innerHTML='<div class="cpo-lh">'+S(IC.shield)+'Offres publiées sur CareerPulse <em>vérifiées</em></div>'
-      +(EI?'<div class="cpo-eva"><img alt="EVA" src="'+EI+'"><span><b>EVA</b> · Les offres des employeurs CareerPulse apparaissent ici au fur et à mesure que les entreprises s\'inscrivent sur le site.</span></div>':'')
+      +'<div class="cpo-eva"><span class="cpo-eva-c">C</span><span><b>CareerPulse</b> · Les offres des employeurs CareerPulse apparaissent ici au fur et à mesure que les entreprises s\'inscrivent sur le site.</span></div>'
       +'<div id="cpo-items"></div>';
     loadInto($('cpo-items'));
   }
@@ -19860,6 +19849,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
 .cpo-sent{ flex:1; display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:11px; border-radius:12px; background:#ecfdf5; color:#047857; font:800 .78rem/1 'DM Sans',sans-serif; border:1px solid #a7f3d0; } .cpo-sent svg{ width:15px; height:15px; }
 .cpo-count{ margin:0 0 8px; font-size:.7rem; font-weight:700; color:#64748b; }
 .cpo-eva{ display:flex; align-items:center; gap:10px; margin:0 0 10px; padding:10px 12px; border-radius:14px; background:linear-gradient(135deg,#f5f3ff,#eff6ff); border:1px solid #e0e7ff; font-size:.74rem; line-height:1.45; color:#334155; }
+.cpo-eva-c{ width:38px; height:38px; border-radius:12px; flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font:900 1.1rem/1 'DM Sans',sans-serif; background:linear-gradient(145deg,#1e40af,#059669); box-shadow:0 2px 8px rgba(5,150,105,.35); }
 .cpo-eva img{ width:38px; height:38px; border-radius:50%; object-fit:cover; flex-shrink:0; box-shadow:0 0 0 2px #fff; }
 /* ── « Trouver des offres » : deux pages ── */
 .cpo-2p{ display:grid; gap:10px; margin-top:6px; }
@@ -20005,7 +19995,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     ['Quels candidats apparaissent dans mon espace ?','Uniquement les <b>membres CareerPulse</b> qui ont choisi de rendre leur profil visible par les recruteurs. Un membre peut masquer son profil à tout moment : il disparaît alors de votre liste.'],
     ['Pourquoi les profils sont-ils anonymisés ?','Pour limiter les discriminations et protéger les candidats : vous voyez leur <b>prénom et une initiale</b>, leur poste visé, leurs expériences et leurs compétences, mais ni photo ni coordonnées. Le candidat choisit ensuite ce qu\'il partage avec vous.'],
     ['Comment rechercher un profil précis ?','Dans l\'onglet <b>Candidats</b>, tapez un ou plusieurs mots dans la barre de recherche : un métier, une ville, une compétence (par exemple « commercial Caen anglais »). Les profils les plus proches apparaissent en premier. Touchez un nom pour ouvrir sa fiche complète en tiroir.'],
-    ['Comment est calculé le pourcentage de correspondance ?','EVA compare le profil à vos <b>offres publiées</b> sur trois critères : l\'intitulé du poste, les compétences recherchées et la ville (ou le télétravail). Le pourcentage affiché est celui de l\'offre qui correspond le mieux, et son intitulé est écrit à côté. Sans offre publiée, il n\'y a pas de pourcentage.'],
+    ['Comment est calculé le pourcentage de correspondance ?','CareerPulse compare le profil à vos <b>offres publiées</b> sur trois critères : l\'intitulé du poste, les compétences recherchées et la ville (ou le télétravail). Le pourcentage affiché est celui de l\'offre qui correspond le mieux, et son intitulé est écrit à côté. Sans offre publiée, il n\'y a pas de pourcentage.'],
     ['Comment contacter un candidat ?','Ouvrez sa fiche puis cliquez sur <b>Proposer un échange</b> : choisissez l\'une de vos offres (ou un autre poste) et écrivez votre message. Le candidat reçoit votre proposition dans son espace et vous répond dans la messagerie protégée.']
    ]],
    ['doc','📄','CV et lettres',[
@@ -20035,23 +20025,24 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
   function plain(h){ return h.replace(/<[^>]+>/g,'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
   var CH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
   var SP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9.4l-4.2 1.8L12 16l-1.8-4.8L6 9.4l4.2-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>';
+  var LG='<span class="cpp-c" aria-hidden="true">C</span>';
   function total(){ return T.reduce(function(a,t){ return a+t[3].length; },0); }
   function list(){
     var n=plain(q), out=[];
     T.forEach(function(t){ t[3].forEach(function(x,i){ if(n ? (plain(x[0]+' '+x[1]).indexOf(n)>-1) : t[0]===tab) out.push([t,x,i]); }); });
     if(!out.length) return '<div class="evp-empty">🔎 Aucune question ne correspond. Essayez un autre mot, ou écrivez-nous à <b>'+MAIL+'</b>.</div>';
-    return out.map(function(r){ return '<div class="evp-q"><button type="button" class="evp-qb"><span class="evp-qe">'+r[0][1]+'</span><span class="evp-qt">'+esc(r[1][0])+'</span><span class="evp-ch">'+CH+'</span></button><div class="evp-a"><div class="evp-ai"><span class="evp-av">'+SP+'</span><div class="evp-bub" data-a="'+encodeURIComponent(r[1][1])+'"></div></div></div></div>'; }).join('');
+    return out.map(function(r){ return '<div class="evp-q"><button type="button" class="evp-qb"><span class="evp-qe">'+r[0][1]+'</span><span class="evp-qt">'+esc(r[1][0])+'</span><span class="evp-ch">'+CH+'</span></button><div class="evp-a"><div class="evp-ai"><span class="evp-av cpp">'+LG+'</span><div class="evp-bub" data-a="'+encodeURIComponent(r[1][1])+'"></div></div></div></div>'; }).join('');
   }
   function nav(){ return T.map(function(t){ return '<button type="button" class="evp-tab'+(t[0]===tab&&!q?' on':'')+'" data-t="'+t[0]+'"><span class="evp-te">'+t[1]+'</span><span class="evp-tt">'+t[2]+'</span><em>'+t[3].length+'</em></button>'; }).join(''); }
   function open(){
     if(document.querySelector('.evp-sheet')) return;
     var sh=document.createElement('div'); sh.className='evp-sheet evp-emp';
-    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo">'+SP+'<i></i></span><div class="evp-ht"><b>EVA Pro</b><span>L\'assistante des employeurs ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
+    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo cpp">'+LG+'<i></i></span><div class="evp-ht"><b>Assistante CareerPulse Pro</b><span>L\'aide des employeurs ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
       +'<div class="evp-scroll"><div class="evp-wrap">'
-      +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total()+' réponses vérifiées</div><h3>Bonjour 👋 Je suis EVA Pro.</h3><p>Je vous explique comment fonctionne votre espace employeur : publier une offre, trouver des candidats, lire les CV, gérer les candidatures et la messagerie, et les règles à respecter. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
+      +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total()+' réponses vérifiées</div><h3>Bonjour 👋 Je suis l\'assistante CareerPulse Pro.</h3><p>Je vous explique comment fonctionne votre espace employeur : publier une offre, trouver des candidats, lire les CV, gérer les candidatures et la messagerie, et les règles à respecter. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
       +'<label class="evp-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Rechercher une question… (ex : SIRET, CV, SMIC, logo)"></label></div>'
       +'<div class="evp-grid"><nav class="evp-nav">'+nav()+'</nav><div class="evp-list">'+list()+'</div></div>'
-      +'<div class="evp-foot">📩 Une autre question ? Écrivez à <b>'+MAIL+'</b></div>'
+      +'<div class="evp-foot cpp-foot"><a class="cpp-mail" href="mailto:'+MAIL+'?subject='+encodeURIComponent('Question espace employeur')+'">📩 Contacter CareerPulse</a><span>Une autre question ? <b>'+MAIL+'</b></span></div>'
       +'</div></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var L=sh.querySelector('.evp-list'), N=sh.querySelector('.evp-nav'), sc=sh.querySelector('.evp-scroll');
@@ -20069,10 +20060,27 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.evp-box'));
   }
   window.cpEvaProEmp=open;
-  window.cpEvaProEmpCard=function(){ return '<button type="button" class="evp-cta" data-a="evapro-emp"><span class="evp-cta-ic">'+SP+'</span><span class="evp-cta-t"><b>Comment marche mon espace ? EVA Pro vous répond 💬</b><span>Offres, candidats, CV, candidatures, messagerie et règles : '+total()+' réponses vérifiées, classées par thème.</span></span><span class="evp-cta-go">Ouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>'; };
+  window.cpEvaProEmpCard=function(){ return '<button type="button" class="evp-cta" data-a="evapro-emp"><span class="evp-cta-ic cpp">'+LG+'</span><span class="evp-cta-t"><b>Comment marche mon espace ? CareerPulse vous répond 💬</b><span>Offres, candidats, CV, candidatures, messagerie et règles : '+total()+' réponses vérifiées, classées par thème.</span></span><span class="evp-cta-go">Ouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>'; };
   document.addEventListener('click',function(e){ var b=e.target.closest('[data-a="evapro-emp"]'); if(!b) return; e.preventDefault(); open(); });
 })();
 </script>
 
+
+<style id="cpp-assist-css">
+.cpp-c{ display:inline-flex; align-items:center; justify-content:center; width:100%; height:100%; border-radius:inherit; font:900 1.1rem/1 'DM Sans',sans-serif; color:#fff !important; -webkit-text-fill-color:#fff; background:linear-gradient(145deg,#1e40af,#059669); }
+.evp-logo.cpp{ padding:0; overflow:visible; } .evp-logo.cpp .cpp-c{ font-size:1.3rem; border-radius:14px; box-shadow:0 2px 8px rgba(5,150,105,.35); }
+.evp-av.cpp{ padding:0; background:none; } .evp-av.cpp .cpp-c{ font-size:.95rem; border-radius:11px; }
+.evp-cta-ic.cpp{ padding:0; background:none; border:none; } .evp-cta-ic.cpp .cpp-c{ font-size:1.45rem; border-radius:16px; box-shadow:0 0 0 1px rgba(255,255,255,.35); }
+.cpp-foot{ display:flex; flex-direction:column; align-items:center; gap:8px; }
+.cpp-mail{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 20px; border-radius:14px; text-decoration:none !important; color:#fff !important; font:800 .9rem/1 'DM Sans',sans-serif; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 14px 28px -16px rgba(30,64,175,.9); }
+.cpp-mail:active{ transform:scale(.98); }
+.cpp-foot span{ font-size:.78rem; color:#64748b; overflow-wrap:anywhere; text-align:center; }
+</style>
+
+<script>
+/* Page « Notre vision » de Mon profil : la photo de Lisa */
+(function(){ function run(){ var a=document.querySelector('[data-lisa-av]'); if(!a||!window.CP_LISA_IMG||a.querySelector('img')) return; a.innerHTML='<img alt="Lisa" src="'+CP_LISA_IMG+'" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">'; a.style.padding='0'; a.style.overflow='hidden'; }
+  if(document.readyState!=='loading') setTimeout(run,0); else document.addEventListener('DOMContentLoaded',run); window.addEventListener('load',run); })();
+</script>
 </body>
 </html>
