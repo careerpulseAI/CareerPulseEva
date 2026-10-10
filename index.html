@@ -18422,10 +18422,10 @@ window.cpSheetArrows=function(sc,host){
   function draw(){
     var root=$('emp-root'); if(!root) return; var o=ST.emp||{};
     if(!(o.verifie && o.proActif)){
-      root.innerHTML='<div class="ofc">'+hero()+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET et coordonnées). Dès sa validation, vous pourrez publier vos offres et découvrir les profils.</span></div></div></div>';
+      root.innerHTML='<div class="ofc">'+hero()+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET et coordonnées). Dès sa validation, vous pourrez publier vos offres et découvrir les profils.</span></div></div></div>';
       root.onclick=onClick; return;
     }
-    root.innerHTML='<div class="ofc">'+hero()+tabs()+'<div id="emp-tab">'+tabHtml()+'</div></div>';
+    root.innerHTML='<div class="ofc">'+hero()+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+tabs()+'<div id="emp-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
     var q=$('emp-q'); if(q) q.oninput=function(){ ST.q=q.value; var l=$('emp-clist'); if(l) l.innerHTML=candList(); };
   }
@@ -19963,6 +19963,114 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(o.emp) h+='<p class="cpc-note">🔒 Profil anonymisé : prénom et initiale seulement. Les coordonnées ne sont visibles que si le candidat les partage, après sa réponse.</p>';
     return h+'</div></div>';
   };
+})();
+</script>
+
+
+<!-- ══ EVA Pro dans l'espace employeur : 40 questions-réponses en tiroirs ══ -->
+<script>
+(function(){
+  if(window.cpEvaProEmp) return;
+  var MAIL='careerpulse-pro@outlook.com';
+  var T=[
+   ['cpt','🏢','Mon compte et la vérification',[
+    ['Pourquoi CareerPulse demande-t-il mon SIRET ?','Pour protéger les candidats : chaque entreprise est <b>vérifiée</b> avant de pouvoir publier une offre ou contacter un membre. Le SIRET permet de confirmer que votre entreprise existe réellement. C\'est ce qui permet d\'afficher le badge « Entreprise vérifiée par CareerPulse » sur vos offres. ✅'],
+    ['Combien de temps dure la validation de mon compte ?','L\'équipe CareerPulse vérifie votre SIRET et vos coordonnées dès réception de votre demande, en général sous quelques jours ouvrés. Tant que la vérification est en cours, votre espace affiche « Compte en cours de vérification ». Dès la validation, les onglets <b>Candidats</b>, <b>Mes offres</b> et <b>Messages</b> s\'ouvrent automatiquement à votre prochaine visite.'],
+    ['Comment modifier les informations de mon entreprise ?','Ouvrez l\'onglet <b>Mon entreprise</b> : vous pouvez changer le nom, la ville, le secteur, le téléphone, le contact et le site internet, puis cliquer sur <b>Enregistrer</b>. Le SIRET ne se modifie pas en ligne : pour le corriger, écrivez-nous à <b>'+MAIL+'</b>.'],
+    ['J\'ai oublié mon mot de passe, que faire ?','Sur la page de connexion de l\'espace employeur, saisissez votre e-mail puis cliquez sur <b>« Mot de passe oublié ? »</b>. Vous recevez un lien pour en créer un nouveau. Pensez à regarder dans vos spams.'],
+    ['Combien coûte l\'espace employeur ?','L\'espace employeur est <b>offert pendant le lancement de CareerPulse</b> : publication d\'offres, accès aux profils visibles et messagerie. Si une formule payante arrive, vous serez <b>prévenu à l\'avance</b>, sans aucun prélèvement automatique.']
+   ]],
+   ['pub','📝','Publier une offre',[
+    ['Comment publier une offre d\'emploi ?','Ouvrez <b>Mes offres</b> : le formulaire se remplit en <b>6 étapes</b> (le poste, le contrat, le salaire et les avantages, la description, la candidature, l\'apparence). Une barre de progression vous guide. À la dernière étape, cliquez sur <b>Publier l\'offre</b> : elle apparaît aussitôt dans la page « Offres CareerPulse » des membres. 🚀'],
+    ['Mes réponses sont-elles gardées si je quitte le formulaire ?','Oui : ce que vous tapez est <b>gardé sur votre appareil</b>. En revenant, vous retrouvez vos réponses en surbrillance. Vous pouvez aussi cliquer sur <b>Enregistrer en brouillon</b> à la dernière étape : un brouillon n\'est visible par aucun candidat.'],
+    ['À quoi servent les cases « Autre » ?','Chaque liste de choix (contrat, horaires, avantages, diplôme…) a sa case <b>« Autre »</b>. En la cochant, une zone s\'ouvre pour écrire librement ce qui ne figure pas dans la liste, par exemple « CDI de chantier » ou « horaires 6h-13h ».'],
+    ['Que sont les questions de présélection ?','Ce sont <b>jusqu\'à 3 questions</b> que vous posez à chaque candidat, par exemple « Êtes-vous disponible le week-end ? ». Le candidat doit y répondre pour envoyer sa candidature, et vous lisez ses réponses dans <b>Messages</b>, en haut de la conversation.'],
+    ['Faut-il mettre une date limite de candidature ?','C\'est facultatif. Si vous indiquez une date limite, elle s\'affiche dans l\'encadré « En bref » de l\'offre, et l\'offre n\'apparaît plus aux candidats une fois la date passée.']
+   ]],
+   ['page','🎨','Ma page d\'offre',[
+    ['Comment ajouter le logo de mon entreprise ?','À l\'étape 6 <b>Apparence</b>, cliquez sur <b>Ajouter un logo</b> et choisissez une image PNG ou JPG. Elle est <b>réduite automatiquement</b> pour s\'afficher nettement. Votre logo est gardé pour vos prochaines offres.'],
+    ['Puis-je choisir la couleur de mon offre ?','Oui : 8 couleurs vous sont proposées à l\'étape 6, ou la vôtre avec <b>« Autre »</b>. La couleur habille le bandeau, les titres et le bouton « Postuler » de la page officielle. Elle est aussi gardée pour vos prochaines offres.'],
+    ['Comment voir mon offre comme un candidat ?','Dans la liste de vos offres, cliquez sur <b>Aperçu</b>. Une bande « Aperçu : voici exactement ce que verra le candidat » s\'affiche en haut. Le bouton « Postuler » est remplacé par un cadre en pointillés, car il ne fonctionne que pour les candidats.'],
+    ['Comment partager mon offre ?','Sur une offre publiée, cliquez sur <b>Partager</b> : le lien direct de l\'offre est copié, ou partagé depuis votre téléphone. La personne qui l\'ouvre arrive directement sur la page de l\'offre. Elle doit être membre CareerPulse (inscription gratuite) pour postuler.'],
+    ['Modifier, dépublier ou supprimer : quelle différence ?','<b>Modifier</b> ouvre l\'offre dans le formulaire, et les changements sont visibles dès que vous publiez. <b>Dépublier</b> masque l\'offre aux candidats sans rien effacer : vous la republiez en un clic. <b>Supprimer</b> efface l\'offre définitivement. Les conversations déjà ouvertes restent accessibles.']
+   ]],
+   ['loi','⚖️','Les règles d\'une offre',[
+    ['Quelles mentions sont interdites dans une offre ?','La loi interdit toute <b>discrimination</b> (article L1132-1 du Code du travail) : limite ou fourchette d\'âge, sexe, origine, nationalité (sauf exceptions légales), situation de famille, apparence, état de santé, etc. Seuls « débutant » ou « expérimenté » sont admis pour parler d\'expérience. Le formulaire vous avertit avec un message doux s\'il repère une mention à risque.'],
+    ['Le salaire doit-il respecter le SMIC ?','Oui, si vous indiquez un salaire fixe, il doit être au moins égal au <b>SMIC</b> : 12,31 € brut de l\'heure, soit 1 867,02 € brut par mois à temps plein (montant au 1er juin 2026). Le formulaire vous prévient si le salaire semble trop bas. Ce contrôle ne s\'applique pas à l\'apprentissage, au contrat de professionnalisation, au stage ni au freelance, qui ont leurs propres règles.'],
+    ['Puis-je écrire « CDD avec possibilité de CDI » ?','Non : un CDD ne peut pas annoncer une embauche en CDI à son issue, car il doit correspondre à un besoin temporaire. Le formulaire vous le signale si cette mention apparaît dans votre offre.'],
+    ['Peut-on demander de l\'argent à un candidat ?','Jamais. Une candidature est <b>toujours gratuite</b> : aucun frais d\'inscription, de caution ou de matériel ne peut être demandé (articles L5331-1 et L5331-5). Chaque offre CareerPulse le rappelle au candidat.'],
+    ['La fourchette de salaire va-t-elle devenir obligatoire ?','C\'est prévu. Le projet de loi de transposition de la directive européenne sur la <b>transparence des salaires</b> prévoit d\'indiquer la rémunération ou une fourchette dès l\'offre. Le texte est en discussion au Parlement, avec une entrée en vigueur envisagée en 2028. Indiquer une fourchette dès maintenant rassure les candidats.']
+   ]],
+   ['cand','👥','Trouver des candidats',[
+    ['Quels candidats apparaissent dans mon espace ?','Uniquement les <b>membres CareerPulse</b> qui ont choisi de rendre leur profil visible par les recruteurs. Un membre peut masquer son profil à tout moment : il disparaît alors de votre liste.'],
+    ['Pourquoi les profils sont-ils anonymisés ?','Pour limiter les discriminations et protéger les candidats : vous voyez leur <b>prénom et une initiale</b>, leur poste visé, leurs expériences et leurs compétences, mais ni photo ni coordonnées. Le candidat choisit ensuite ce qu\'il partage avec vous.'],
+    ['Comment rechercher un profil précis ?','Dans l\'onglet <b>Candidats</b>, tapez un ou plusieurs mots dans la barre de recherche : un métier, une ville, une compétence (par exemple « commercial Caen anglais »). Les profils les plus proches apparaissent en premier. Touchez un nom pour ouvrir sa fiche complète en tiroir.'],
+    ['Comment est calculé le pourcentage de correspondance ?','EVA compare le profil à vos <b>offres publiées</b> sur trois critères : l\'intitulé du poste, les compétences recherchées et la ville (ou le télétravail). Le pourcentage affiché est celui de l\'offre qui correspond le mieux, et son intitulé est écrit à côté. Sans offre publiée, il n\'y a pas de pourcentage.'],
+    ['Comment contacter un candidat ?','Ouvrez sa fiche puis cliquez sur <b>Proposer un échange</b> : choisissez l\'une de vos offres (ou un autre poste) et écrivez votre message. Le candidat reçoit votre proposition dans son espace et vous répond dans la messagerie protégée.']
+   ]],
+   ['doc','📄','CV et lettres',[
+    ['Quand puis-je voir le CV d\'un candidat ?','Quand le candidat l\'a <b>ajouté</b> et a choisi de le <b>partager</b> avec les recruteurs, et que son profil est visible. Les boutons <b>Voir le CV</b> et <b>Voir la lettre</b> apparaissent alors sur sa fiche. Sinon, la fiche indique « Pas encore de CV ni de lettre partagés ».'],
+    ['Comment lire et télécharger un CV ?','Cliquez sur <b>Voir le CV</b> : il s\'ouvre en plein écran, page par page, sur ordinateur comme sur téléphone. Le bouton <b>Télécharger</b>, en haut à droite, l\'enregistre en PDF sur votre appareil.'],
+    ['Pourquoi les CV sont-ils au format PDF ?','Le PDF s\'affiche à l\'identique sur tous les appareils et ne se modifie pas. Les candidats déposent un PDF de <b>700 Ko maximum</b>, ce qui garantit une ouverture rapide.'],
+    ['Qu\'est-ce qu\'une « lettre rédigée avec CareerPulse » ?','Certains candidats rédigent leur lettre de motivation avec l\'outil CareerPulse. Elle s\'affiche alors mise en page, avec la mention « Lettre rédigée avec CareerPulse », et vous pouvez la <b>télécharger en PDF</b>.'],
+    ['Pourquoi un CV n\'est-il plus disponible ?','Le candidat garde la main sur ses documents : il peut <b>remplacer</b> son CV, <b>couper le partage</b> ou masquer son profil. Dans ce cas, le message « Ce document n\'est plus partagé par le candidat » s\'affiche. Les CV joints à une candidature restent visibles dans la conversation.']
+   ]],
+   ['msg','📨','Candidatures et messages',[
+    ['Comment reçois-je une candidature ?','Quand un membre clique sur <b>Postuler</b> sur votre offre, une conversation s\'ouvre dans l\'onglet <b>Messages</b>, marquée « Nouvelle candidature ». Le chiffre sur la carte Messages indique les messages non lus.'],
+    ['Où voir les réponses aux questions et le CV joint ?','Ouvrez la conversation : l\'encadré <b>« Candidature reçue »</b> montre le poste, les réponses à vos questions de présélection et, si le candidat les a joints, les boutons <b>Voir le CV</b> et <b>Voir la lettre</b>.'],
+    ['Comment répondre à un candidat ?','Dans la conversation, écrivez votre message en bas puis appuyez sur la flèche d\'envoi. Le candidat est prévenu dans son espace. Les échanges restent dans la <b>messagerie protégée</b> de CareerPulse.'],
+    ['Comment clore une conversation ?','Cliquez sur <b>Clore la conversation</b> sous les messages, puis confirmez. Plus personne ne peut écrire, mais l\'historique reste consultable. C\'est utile une fois le poste pourvu, ou si la candidature ne correspond pas.'],
+    ['Comment signaler un abus ?','Dans une conversation, touchez les <b>⋯</b> en haut à droite, puis <b>Signaler un abus</b>. Choisissez un motif et ajoutez un commentaire si vous le souhaitez. Votre signalement est confidentiel et l\'équipe CareerPulse l\'examine.']
+   ]],
+   ['rgpd','🔒','Confidentialité et sécurité',[
+    ['Quand puis-je voir les coordonnées d\'un candidat ?','Seulement si le candidat a <b>choisi de les partager</b>, et après qu\'il vous a répondu. Elles s\'affichent alors dans l\'encadré « Coordonnées partagées » de la conversation. Sinon, vous échangez dans la messagerie protégée.'],
+    ['Que dois-je faire des données des candidats ?','Utilisez-les <b>uniquement pour le recrutement</b> concerné, comme le prévoit le RGPD. Ne conservez pas un CV téléchargé au-delà du nécessaire, et supprimez-le si le candidat le demande. La CNIL recommande de ne pas conserver un dossier de candidat plus de <b>2 ans après le dernier contact</b>, et d\'en informer le candidat.'],
+    ['Pourquoi passer par la messagerie protégée ?','Elle protège les deux côtés : <b>aucune coordonnée n\'est exposée</b> tant que le candidat ne l\'a pas décidé, chaque échange est rattaché à votre entreprise vérifiée, et un abus peut être signalé. C\'est aussi un historique clair de vos recrutements.'],
+    ['Comment sécuriser mon compte employeur ?','Choisissez un mot de passe d\'au moins 8 caractères, utilisé uniquement sur CareerPulse, et <b>déconnectez-vous</b> après chaque visite, surtout sur un ordinateur partagé. Par sécurité, votre compte se déconnecte automatiquement si vous quittez le site sans vous déconnecter.'],
+    ['Comment contacter l\'équipe CareerPulse ?','Écrivez-nous à <b>'+MAIL+'</b> en précisant le nom de votre entreprise. Pour un abus dans une conversation, utilisez plutôt le bouton <b>⋯ Signaler un abus</b> : il nous transmet directement les bonnes informations.']
+   ]]
+  ];
+  var tab='cpt', q='';
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function plain(h){ return h.replace(/<[^>]+>/g,'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
+  var CH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  var SP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 4.6L18 9.4l-4.2 1.8L12 16l-1.8-4.8L6 9.4l4.2-1.8z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>';
+  function total(){ return T.reduce(function(a,t){ return a+t[3].length; },0); }
+  function list(){
+    var n=plain(q), out=[];
+    T.forEach(function(t){ t[3].forEach(function(x,i){ if(n ? (plain(x[0]+' '+x[1]).indexOf(n)>-1) : t[0]===tab) out.push([t,x,i]); }); });
+    if(!out.length) return '<div class="evp-empty">🔎 Aucune question ne correspond. Essayez un autre mot, ou écrivez-nous à <b>'+MAIL+'</b>.</div>';
+    return out.map(function(r){ return '<div class="evp-q"><button type="button" class="evp-qb"><span class="evp-qe">'+r[0][1]+'</span><span class="evp-qt">'+esc(r[1][0])+'</span><span class="evp-ch">'+CH+'</span></button><div class="evp-a"><div class="evp-ai"><span class="evp-av">'+SP+'</span><div class="evp-bub" data-a="'+encodeURIComponent(r[1][1])+'"></div></div></div></div>'; }).join('');
+  }
+  function nav(){ return T.map(function(t){ return '<button type="button" class="evp-tab'+(t[0]===tab&&!q?' on':'')+'" data-t="'+t[0]+'"><span class="evp-te">'+t[1]+'</span><span class="evp-tt">'+t[2]+'</span><em>'+t[3].length+'</em></button>'; }).join(''); }
+  function open(){
+    if(document.querySelector('.evp-sheet')) return;
+    var sh=document.createElement('div'); sh.className='evp-sheet evp-emp';
+    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo">'+SP+'<i></i></span><div class="evp-ht"><b>EVA Pro</b><span>L\'assistante des employeurs ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
+      +'<div class="evp-scroll"><div class="evp-wrap">'
+      +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total()+' réponses vérifiées</div><h3>Bonjour 👋 Je suis EVA Pro.</h3><p>Je vous explique comment fonctionne votre espace employeur : publier une offre, trouver des candidats, lire les CV, gérer les candidatures et la messagerie, et les règles à respecter. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
+      +'<label class="evp-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Rechercher une question… (ex : SIRET, CV, SMIC, logo)"></label></div>'
+      +'<div class="evp-grid"><nav class="evp-nav">'+nav()+'</nav><div class="evp-list">'+list()+'</div></div>'
+      +'<div class="evp-foot">📩 Une autre question ? Écrivez à <b>'+MAIL+'</b></div>'
+      +'</div></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var L=sh.querySelector('.evp-list'), N=sh.querySelector('.evp-nav'), sc=sh.querySelector('.evp-scroll');
+    function close(){ sh.remove(); if(!document.querySelector('.ofcm-sheet')) document.documentElement.classList.remove('ofcm-lock'); }
+    sh.querySelector('.evp-x').onclick=close;
+    sh.querySelector('.evp-search input').oninput=function(e){ q=e.target.value.trim(); N.innerHTML=nav(); L.innerHTML=list(); };
+    N.onclick=function(e){ var b=e.target.closest('[data-t]'); if(!b) return; tab=b.getAttribute('data-t'); q=''; sh.querySelector('.evp-search input').value=''; N.innerHTML=nav(); L.innerHTML=list(); var on=N.querySelector('.on'); if(on && window.innerWidth<900){ N.scrollTo({ left:on.offsetLeft-12, behavior:'smooth' }); } };
+    L.onclick=function(e){
+      var b=e.target.closest('.evp-qb'); if(!b) return; var it=b.parentNode, was=it.classList.contains('open');
+      L.querySelectorAll('.evp-q.open').forEach(function(x){ x.classList.remove('open'); });
+      if(was) return; it.classList.add('open');
+      var bub=it.querySelector('.evp-bub');
+      if(!bub.getAttribute('data-done')){ bub.innerHTML='<span class="evp-dots"><i></i><i></i><i></i></span>'; setTimeout(function(){ bub.innerHTML=decodeURIComponent(bub.getAttribute('data-a')); bub.setAttribute('data-done','1'); },650); }
+    };
+    if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.evp-box'));
+  }
+  window.cpEvaProEmp=open;
+  window.cpEvaProEmpCard=function(){ return '<button type="button" class="evp-cta" data-a="evapro-emp"><span class="evp-cta-ic">'+SP+'</span><span class="evp-cta-t"><b>Comment marche mon espace ? EVA Pro vous répond 💬</b><span>Offres, candidats, CV, candidatures, messagerie et règles : '+total()+' réponses vérifiées, classées par thème.</span></span><span class="evp-cta-go">Ouvrir<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></button>'; };
+  document.addEventListener('click',function(e){ var b=e.target.closest('[data-a="evapro-emp"]'); if(!b) return; e.preventDefault(); open(); });
 })();
 </script>
 
