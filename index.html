@@ -20123,7 +20123,9 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
 .lsx-reco-q{ margin:0 0 10px; font-size:.8rem; font-weight:800; color:#0f172a; }
 .lsx-tabs{ display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin:0 0 12px; }
 .lsx-tab{ position:static !important; display:flex; flex-direction:column; align-items:center; gap:4px; padding:9px 4px; border-radius:13px; border:1px solid #e2e8f0; background:#f8fafc; color:#334155; font:700 .66rem/1.15 'DM Sans',sans-serif; cursor:pointer; text-align:center; transition:all .18s; }
-.lsx-tab span{ font-size:1.05rem; line-height:1; }
+.lsx-tab .lsx-ti{ width:32px; height:32px; border-radius:11px; display:flex; align-items:center; justify-content:center; color:#1e40af; background:linear-gradient(145deg,#eff6ff,#ecfdf5); box-shadow:inset 0 0 0 1px rgba(30,64,175,.12),0 6px 14px -10px rgba(30,64,175,.7); transition:all .18s; }
+.lsx-tab .lsx-ti svg{ width:18px; height:18px; stroke-width:1.9; }
+.lsx-tab.on .lsx-ti{ color:#fff; background:rgba(255,255,255,.18); box-shadow:inset 0 0 0 1px rgba(255,255,255,.4); }
 .lsx-tab.on{ border-color:transparent; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 10px 20px -14px rgba(30,64,175,.9); }
 .lsx-pick{ padding:13px; border-radius:15px; background:linear-gradient(135deg,#f8fbff,#f1fdf7); border:1px solid #dbeafe; animation:lsxUp .3s ease-out both; }
 .lsx-pick-k{ font-size:.6rem; font-weight:800; letter-spacing:.14em; text-transform:uppercase; color:#059669; }
@@ -20163,7 +20165,10 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
   function cta(){ return member()?'<button type="button" class="lsx-cta" data-lsx="espace">'+S(IC.home)+'Ouvrir Mon espace</button>':'<button type="button" class="lsx-cta" data-lsx="signup">'+S(IC.userplus)+'Créer mon compte gratuit</button><p class="lsx-note">Inscription gratuite en 30 secondes · sans engagement</p>'; }
   /* Chaque page : un hero, puis des « moments » de Lisa placés entre les sections de la page */
   var FT_CV='https://www.francetravail.fr/candidat/vos-services-en-ligne/creez-un-cv-a-partir-de-votre-pr.html';
-  var PROF=[['dem','🔎','Demandeur d\'emploi'],['etu','🎓','Étudiant'],['rec','🔄','Reconversion'],['fre','💼','Freelance']];
+  var PROF=[['dem','<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/><path d="M8 10.5h5M10.5 8v5" opacity=".55"/>','Demandeur d\'emploi'],
+    ['etu','<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4V11"/><path d="M21.5 9v5.5"/>','Étudiant'],
+    ['rec','<path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.5"/><path d="M4 20v-4.5h4.5"/>','Reconversion'],
+    ['fre','<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m9.5 9.5-2 1.5 2 1.5M14.5 9.5l2 1.5-2 1.5"/>','Freelance']];
   /* Recommandations de Lisa : le site idéal pour chaque profil */
   var RECO={
     cvlettre:{ q:'Pour ton CV, dis-moi qui tu es 👇',
@@ -20185,7 +20190,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
       +x.go.map(function(g){ return '<button type="button" class="lsx-go" data-lsx="open" data-u="'+g[1]+'">'+g[0]+S('<path d="M7 17 17 7M8 7h9v9"/>')+'</button>'; }).join('')+'</div>'; }
   function recoHtml(k){ var R=RECO[k];
     return '<div class="lsx-reco" data-reco="'+k+'"><p class="lsx-reco-q">'+R.q+'</p><div class="lsx-tabs" role="tablist">'
-      +PROF.map(function(z){ return '<button type="button" role="tab" class="lsx-tab'+(PICK[k]===z[0]?' on':'')+'" data-lsx="prof" data-p="'+z[0]+'" aria-selected="'+(PICK[k]===z[0])+'"><span>'+z[1]+'</span>'+z[2]+'</button>'; }).join('')
+      +PROF.map(function(z){ return '<button type="button" role="tab" class="lsx-tab'+(PICK[k]===z[0]?' on':'')+'" data-lsx="prof" data-p="'+z[0]+'" aria-selected="'+(PICK[k]===z[0])+'"><span class="lsx-ti">'+S(z[1])+'</span>'+z[2]+'</button>'; }).join('')
       +'</div><div class="lsx-pick-slot">'+pickHtml(k)+'</div><div class="lsx-crit">'+S('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'<span>'+R.crit+'</span></div></div>'; }
   /* Chaque page : un hero, puis des « moments » de Lisa placés entre les sections de la page */
   var PAGES={
@@ -20194,21 +20199,21 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
         top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton profil : je te montre le <b>site idéal pour créer ton CV</b> et pourquoi je le recommande.'],
               ['r'] ],
         plat:[],
-        end:[ ['g'], ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
+        end:[ ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
                 +li(IC.folder,'Range ton CV et ta lettre','Dans Mon espace, avec tes diplômes et attestations.')
                 +li(IC.share,'Partage-le aux recruteurs vérifiés','Seulement si tu le décides.')
                 +li(IC.send,'Postule en un clic','Aux offres CareerPulse, avec ton CV et ta lettre joints.'); }],
-              ['cta'] ] } },
+              ['cta'], ['g'] ] } },
     emploi:{ eyebrow:'✦ Offres d\'emploi', title:'Trouve et postule<br><em>aux meilleures offres.</em>', sub:'Des milliers d\'offres en France, directement sur les plateformes de référence.',
       slots:{
         top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton profil : je te montre la <b>plateforme idéale pour trouver un emploi</b> et pourquoi je la recommande.'],
               ['r'] ],
         plat:[],
-        end:[ ['g'], ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
+        end:[ ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
                 +li(IC.list,'Suis toutes tes candidatures','Et je te rappelle quand relancer.')
                 +li(IC.eye,'Un profil visible des recruteurs','Les entreprises vérifiées peuvent te contacter.')
                 +li(IC.send,'Postule en un clic aux offres CareerPulse','Avec une messagerie protégée.'); }],
-              ['cta'] ] } }
+              ['cta'], ['g'] ] } }
   };
   var PLAY={}; /* état de lecture par page */
   function find(sc){ var w=sc.querySelector('.wrap'); if(!w) return null; var kids=[].slice.call(w.children);
@@ -20225,7 +20230,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(f.title) f.title.classList.add('lsx-hide');
     f.w.insertBefore(hero,f.w.firstChild); hero.parentNode.insertBefore(bar,hero.nextSibling); bar.parentNode.insertBefore(top,bar.nextSibling);
     f.plat.insertBefore(mid,f.plat.firstChild);
-    if(f.vision) f.w.insertBefore(end,f.vision); else f.w.appendChild(end);
+    if(f.vision){ f.w.insertBefore(end,f.vision); f.vision.classList.add('lsx-hide'); } else f.w.appendChild(end);
     return true;
   }
   function itemHtml(it){
@@ -20328,6 +20333,29 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
 .lsxg-join p{ margin:0 0 10px; font-size:.78rem; line-height:1.5; color:#1e293b; }
 .lsxg-join p b{ color:#0f172a; }
 .lsxg-toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:99999; padding:10px 16px; border-radius:99px; background:#0f172a; color:#fff; font:700 .78rem/1 'DM Sans',sans-serif; box-shadow:0 12px 26px -12px rgba(0,0,0,.6); animation:lsxUp .25s ease-out both; }
+.lsxg-trust{ display:flex; gap:9px; align-items:flex-start; margin:0 0 13px; padding:11px 12px; border-radius:14px; background:linear-gradient(135deg,#ecfdf5,#eff6ff); border:1px solid #bbf7d0; font-size:.74rem; line-height:1.5; color:#334155; }
+.lsxg-trust svg{ width:18px; height:18px; flex-shrink:0; margin-top:1px; color:#059669; }
+.lsxg-trust b{ color:#065f46; }
+.lsxg-trust-s{ margin:0 0 4px; padding:9px 11px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.7rem; line-height:1.5; color:#475569; }
+.lsxg-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin:0 0 7px; }
+.lsxg-meta .lsxg-tag{ margin:0; }
+.lsxg-lv{ padding:3px 8px; border-radius:7px; font-size:.6rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#1e40af; background:#eff6ff; }
+.lsxg-lv.d{ color:#9a3412; background:#fff7ed; }
+.lsxg-time{ margin-left:auto; display:inline-flex; align-items:center; gap:4px; padding:4px 9px; border-radius:99px; font-size:.72rem; font-weight:800; color:#0f172a; background:#f1f5f9; transition:all .2s; }
+.lsxg-time svg{ width:14px; height:14px; } .lsxg-time b{ min-width:16px; text-align:right; font-variant-numeric:tabular-nums; }
+.lsxg-time.hot{ color:#fff; background:#ef4444; animation:lsxgBeat .9s ease-in-out infinite; } .lsxg-time.off{ opacity:.45; }
+.lsxg-tbar{ height:4px; margin:0 0 12px; border-radius:99px; background:#f1f5f9; overflow:hidden; }
+.lsxg-tbar i{ display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#f59e0b,#10b981); transition:width .2s linear; }
+.lsxg-src{ display:flex; gap:7px; align-items:flex-start; margin-top:8px; padding-top:8px; border-top:1px dashed #cbd5e1; font-size:.7rem; line-height:1.45; color:#475569; }
+.lsxg-src svg{ width:14px; height:14px; flex-shrink:0; margin-top:1px; color:#059669; }
+.lsxg-src a{ color:#1d4ed8 !important; font-weight:700; text-decoration:underline; text-underline-offset:2px; overflow-wrap:anywhere; }
+.lsxg-cd{ display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:230px; text-align:center; }
+.lsxg-cd-n{ display:flex; align-items:center; justify-content:center; width:120px; height:120px; border-radius:50%; font:900 3.4rem/1 'DM Sans',sans-serif; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 22px 40px -20px rgba(30,64,175,.9); animation:lsxgPop .9s ease-out both; }
+.lsxg-cd-n.go{ width:auto; height:auto; padding:22px 26px; border-radius:24px; font-size:1.5rem; }
+.lsxg-cd p{ margin:16px 0 0; font-size:.78rem; font-weight:700; color:#64748b; }
+@keyframes lsxgPop{ 0%{ transform:scale(.4); opacity:0; } 35%{ transform:scale(1.08); opacity:1; } 100%{ transform:scale(1); } }
+@keyframes lsxgBeat{ 50%{ transform:scale(1.07); } }
+@media (prefers-reduced-motion: reduce){ .lsxg-cd-n, .lsxg-time.hot{ animation:none !important; } }
 @media (min-width:700px){ .lsxg-q{ font-size:1.02rem; } .lsxg-op{ font-size:.86rem; } .lsxg-sh{ grid-template-columns:repeat(6,1fr); } .lsxg-bd{ padding:18px 20px 20px; } }
 @media (prefers-reduced-motion: reduce){ .lsxg, .lsxg-ex{ animation:none !important; } }
 </style>
@@ -20336,97 +20364,122 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
   if(window.cpLsxGame) return;
   function S(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
   function esc(t){ return String(t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  /* [question, [bonne réponse, autre, autre], explication] — la bonne réponse est toujours écrite en premier, l'ordre est mélangé à l'affichage */
+  /* Sources officielles */
+  var CT='https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006072050/', CE='https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006071191/', CCOM='https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000005634379/', CGI='https://www.legifrance.gouv.fr/codes/texte_lc/LEGITEXT000006069577/';
+  var SRC={
+    L1221_6:['Code du travail, art. L1221-6 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1221-6'], L1221_7:['Code du travail, art. L1221-7 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1221-7'], L1221_8:['Code du travail, art. L1221-8 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1221-8'], L1221_9:['Code du travail, art. L1221-9 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1221-9'],
+    L1132_1:['Code du travail, art. L1132-1 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1132-1'], L1225_2:['Code du travail, art. L1225-2 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1225-2'], L5331_2:['Code du travail, art. L5331-2 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l5331-2'], L5331_4:['Code du travail, art. L5331-4 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l5331-4'],
+    L6222_1:['Code du travail, art. L6222-1 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l6222-1'], L6222_7:['Code du travail, art. L6222-7-1 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l6222-7-1'], L6222_27:['Code du travail, art. L6222-27 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l6222-27'],
+    L1242_12:['Code du travail, art. L1242-12 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1242-12'], L1242_13:['Code du travail, art. L1242-13 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1242-13'], L1243_2:['Code du travail, art. L1243-2 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1243-2'], L1243_8:['Code du travail, art. L1243-8 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1243-8'], L1243_10:['Code du travail, art. L1243-10 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1243-10'],
+    L1237_1:['Code du travail, art. L1237-1 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l1237-1'], L3231_2:['Code du travail, art. L3231-2 : le SMIC (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l3231-2'], L5212_1:['Code du travail, art. L5212-1 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l5212-1'], L5212_2:['Code du travail, art. L5212-2 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l5212-2'], L5412_1:['Code du travail, art. L5412-1 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l5412-1'], L8221_6:['Code du travail, art. L8221-6 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/l8221-6'], R4624_10:['Code du travail, art. R4624-10 (code.travail.gouv.fr)','https://code.travail.gouv.fr/code-du-travail/r4624-10'],
+    L124_5:['Code de l\'éducation, art. L124-5 (Légifrance)',CE], L124_6:['Code de l\'éducation, art. L124-6 (Légifrance)',CE], L124_7:['Code de l\'éducation, art. L124-7 (Légifrance)',CE],
+    L441_10:['Code de commerce, art. L441-10 (Légifrance)',CCOM], L441_9:['Code de commerce, art. L441-9 : mentions des factures (Légifrance)',CCOM], DGCCRF40:['DGCCRF : l\'indemnité forfaitaire de 40 € (economie.gouv.fr)','https://www.economie.gouv.fr/files/directions_services/dgccrf/actualites/breves/2013/QR_indemnite_forfaitaire.pdf'], CGI293B:['Code général des impôts, art. 293 B (Légifrance)',CGI],
+    SP_ESSAI:['service-public.fr : fiche « Période d\'essai »','https://www.service-public.fr/particuliers/vosdroits/F1643'], SP_DISCRI:['service-public.fr : fiche « Discrimination au travail »','https://www.service-public.fr/particuliers/vosdroits/F1642'],
+    DDD:['Défenseur des droits','https://www.defenseurdesdroits.fr/'], FT_DISCRI:['France Travail : les recours en cas de discrimination à l\'embauche','https://francetravail.fr/candidat/vos-recherches/preparer-votre-candidature/accompagne-dans-sa-recherche/les-recours-en-cas-de-discrimina.html'],
+    CNIL_REC:['CNIL : recommandation sur les données des candidats au recrutement','https://cnil.fr/sites/cnil/files/2023-10/recommandation_collecte_et_utilisation_dinformations_nominatives_lors_doperations_de_recrutement.pdf'], CNIL_DUR:['CNIL : référentiel des durées de conservation (RH)','https://www.cnil.fr/sites/default/files/2026-04/referentiel_durees_de_conservation_gestion_des_ressources_humaines.pdf'],
+    CECRL:['Conseil de l\'Europe : Cadre européen commun de référence pour les langues','https://www.coe.int/fr/web/common-european-framework-reference-languages'],
+    FT_CV:['France Travail : créer un CV à partir de son profil de compétences','https://www.francetravail.fr/candidat/vos-services-en-ligne/creez-un-cv-a-partir-de-votre-pr.html'],
+    FT_FAUX:['France Travail : reconnaître les fausses offres d\'emploi','https://www.francetravail.fr/candidat/soyez-vigilants/fausses-offres-d-emploi.html'], FT_ARNAQ:['France Travail : arnaques à l\'emploi, les bons réflexes','https://www.francetravail.fr/candidat/soyez-vigilants/arnaques-a-lemploi--adoptez-les.html'], ECO_FRAUD:['economie.gouv.fr : offres d\'emploi frauduleuses','https://www.economie.gouv.fr/particuliers/eviter-les-arnaques/offres-demploi-frauduleuses-comment-les-reperer'],
+    FT_RECONV:['France Travail : démissionner avec un projet de reconversion','https://www.francetravail.fr/candidat/mes-droits-aux-aides-et-allocati/a-chaque-situation-son-allocatio/quelle-est-ma-situation-professi/je-perds-ou-je-quitte-un-emploi/je-veux-demissionner-et-jai-un-p.html'],
+    FT_DEMIS:['France Travail : les démissions qui ouvrent droit au chômage','https://www.francetravail.fr/files/live/sites/PE/files/fichiers-en-telechargement/com557-les-demissions-qui-ouvrent-droit-a-l-allocation-chomage2586680047463033257.pdf'],
+    FT_IMM:['France Travail : réaliser une immersion professionnelle','https://www.francetravail.fr/candidat/votre-projet-professionnel/definir-votre-projet-professionn/realiser-une-immersion-professio.html'],
+    FT:['France Travail (francetravail.fr)','https://www.francetravail.fr/'], CPF:['Mon Compte Formation (site officiel du CPF)','https://www.moncompteformation.gouv.fr/'], VAE:['France VAE (site officiel)','https://vae.gouv.fr/'],
+    ECO_STAGE:['economie.gouv.fr : accueil d\'un stagiaire, les règles','https://www.economie.gouv.fr/entreprises/gerer-ses-ressources-humaines-et-ses-salaries/accueil-dun-stagiaire-quelles-sont-vos'],
+    FT_OFFRES:['France Travail : repères juridiques sur les offres d\'emploi','https://www.francetravail.fr/files/live/sites/PE/files/fichiers-en-telechargement/fichiers-en-telechargement---emp/Reperes-juridiques-offres'],
+    SMIC26:['info.gouv.fr : le SMIC revalorisé le 1er juin 2026','https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026'],
+    CNIL_PERT:['CNIL : vérifier la pertinence des données','https://www.cnil.fr/fr/verifier-la-pertinence-des-donnees']
+  };
+  /* [question, [bonne réponse, autre, autre], explication, [sources], niveau m = moyen, d = difficile] */
   var QUIZ=[
-    ['Combien de temps un recruteur passe-t-il sur un CV au premier tri ?',['Quelques secondes','Environ 5 minutes','Environ 20 minutes'],'Le premier tri est très rapide : un CV clair, avec le poste visé bien en vue, fait toute la différence.'],
-    ['Quelle longueur pour un CV quand on débute ?',['Une page','Trois pages','Cinq pages'],'Une page suffit au début : on garde l\'essentiel et ce qui sert le poste visé.'],
-    ['Dans quel ordre présenter ses expériences ?',['De la plus récente à la plus ancienne','De la plus ancienne à la plus récente','Au hasard'],'Le recruteur veut voir d\'abord ce que tu as fait en dernier.'],
-    ['En France, la photo sur un CV est…',['Facultative','Obligatoire','Interdite'],'Tu es libre d\'en mettre une ou non. Si tu en mets une : récente, souriante, fond neutre.'],
-    ['Quel format choisir pour envoyer ton CV ?',['PDF','Une photo prise au téléphone','Un fichier .txt'],'Le PDF garde ta mise en page intacte sur tous les écrans.'],
-    ['Quelle adresse e-mail faire figurer sur ton CV ?',['prenom.nom@…','bgdu93@…','lechatfou@…'],'Une adresse sobre avec ton prénom et ton nom fait tout de suite plus sérieux.'],
-    ['À quoi sert l\'accroche en haut du CV ?',['Dire en une phrase le poste que tu vises','Raconter toute ta vie','Donner ta situation familiale'],'Une phrase courte : le poste visé et ce que tu apportes.'],
-    ['Étudiant sans expérience : que mettre en avant ?',['Stages, projets, jobs étudiants, bénévolat','Rien du tout','Seulement ton bac'],'Tout ce que tu as fait compte : chaque projet montre des compétences.'],
-    ['En reconversion, comment valoriser ton ancien métier ?',['Mettre en avant les compétences transférables','Le cacher','Tout recopier sans trier'],'Organisation, relation client, gestion… beaucoup de compétences servent dans un nouveau métier.'],
-    ['Freelance : qu\'est-ce qui remplace souvent le CV auprès des clients ?',['Un portfolio et des avis clients','Un bulletin scolaire','Un relevé bancaire'],'Les clients veulent voir tes réalisations et ce qu\'en disent tes anciens clients.'],
-    ['Tu as une période sans emploi dans ton parcours. Que faire ?',['L\'expliquer simplement (formation, projet…)','Changer les dates','Inventer un emploi'],'Une explication honnête et positive passe très bien. Un mensonge peut être découvert.'],
-    ['Les logiciels de tri des recruteurs lisent mieux un CV…',['Simple, avec des titres clairs','Rempli d\'images et de colonnes','Scanné en image'],'Des titres classiques (Expériences, Formation, Compétences) et du vrai texte.'],
-    ['Faut-il adapter ton CV à chaque offre ?',['Oui, en reprenant les mots-clés de l\'offre','Non, jamais','Seulement ton prénom'],'Quelques ajustements ciblés augmentent beaucoup tes chances.'],
-    ['Quelle information n\'a pas sa place sur un CV ?',['Ta religion','Tes compétences','Ton e-mail'],'Tes opinions et ta vie privée ne regardent pas le recruteur.'],
-    ['Une lettre de motivation tient idéalement sur…',['Une page','Trois pages','Une seule ligne'],'Court et précis : le recruteur doit la lire en une minute.'],
-    ['Ta lettre de motivation commence de préférence par…',['Ce qui t\'attire dans l\'entreprise ou le poste','Ton salaire souhaité','Tes dates de congés'],'Montre dès le début que tu as choisi cette entreprise.'],
-    ['Dans une lettre de motivation, il vaut mieux…',['Donner des exemples concrets','Recopier ton CV','Parler de toi sans lien avec le poste'],'Un exemple réel vaut mieux que dix adjectifs.'],
-    ['Une faute d\'orthographe dans un CV…',['Peut faire écarter ta candidature','N\'a aucune importance','Montre ta créativité'],'Relis-toi et fais relire : c\'est la base.'],
-    ['Quelles compétences mettre sur ton CV ?',['Celles qui correspondent au poste','Toutes celles possibles','Aucune'],'Mieux vaut peu de compétences, mais utiles pour le poste.'],
-    ['Les « savoir-être » (soft skills), ce sont…',['Des qualités : écoute, organisation, autonomie…','Des logiciels','Des diplômes'],'Ce sont tes qualités humaines, de plus en plus regardées par les recruteurs.'],
-    ['Comment indiquer ton niveau dans une langue ?',['Avec un niveau clair (ex. B2, courant)','« Je me débrouille » sans plus','Ne rien mettre'],'Le niveau européen (de A1 à C2) est compris partout.'],
-    ['Quel nom donner au fichier de ton CV ?',['CV_Prenom_Nom.pdf','document1.pdf','final_final_v3.pdf'],'Le recruteur retrouve ton CV en un coup d\'œil.'],
-    ['À quoi servent les centres d\'intérêt sur un CV ?',['Montrer ta personnalité','Remplir la page','À rien'],'Un sport d\'équipe, une association… ça parle de toi. Reste précis.'],
-    ['Demandeur d\'emploi : où créer un CV gratuitement avec le service public ?',['Sur France Travail','Sur un site payant obligatoire','Nulle part'],'Ton espace France Travail permet de créer un CV à partir de ton profil de compétences.'],
-    ['Ta date de naissance sur le CV est…',['Facultative','Obligatoire','À mettre en premier'],'Rien ne t\'oblige à l\'indiquer.'],
-    ['Pour une candidature spontanée, ta lettre doit…',['Expliquer ce que tu peux apporter à l\'entreprise','Demander n\'importe quel poste','Être la même pour toutes'],'Montre que tu connais l\'entreprise et ce que tu peux lui apporter.'],
-    ['Pour l\'alternance, ton CV doit montrer…',['Ta formation, ton rythme école/entreprise et ta motivation','Seulement tes vacances','Rien de spécial'],'L\'entreprise veut savoir quand tu seras présent et ce que tu prépares.'],
-    ['Mentir sur un diplôme…',['Peut être vérifié et te coûter ton poste','Est sans risque','Est conseillé'],'Les diplômes se vérifient facilement. L\'honnêteté paie toujours.'],
-    ['Des chiffres dans un CV (ex. « 30 clients par jour »)…',['Rendent tes résultats concrets','Sont interdits','Ennuient toujours'],'Un chiffre rend une expérience concrète et crédible.'],
-    ['Pour un premier emploi, ta formation se place…',['En haut du CV','Tout en bas','Nulle part'],'Quand l\'expérience est courte, la formation est ton point fort.'],
-    ['Le titre de ton CV doit être…',['Le poste que tu vises','« Curriculum Vitae »','Ton surnom'],'Le recruteur sait tout de suite pour quel poste tu postules.'],
-    ['Avant d\'envoyer ta candidature, tu…',['Relis et fais relire','Envoies vite sans relire','Envoies sans pièce jointe'],'Deux minutes de relecture évitent bien des erreurs.'],
-    ['Freelance : ton tarif s\'exprime le plus souvent…',['Par jour (TJM)','Par an','Par semaine de vacances'],'Le TJM, c\'est le tarif journalier : la référence pour les missions.'],
-    ['Comment se termine une lettre de motivation ?',['Une demande d\'entretien et une formule de politesse','« Bisous »','Sans rien'],'Propose un échange et termine poliment.'],
-    ['Le permis B sur un CV…',['Est utile, surtout si le poste demande de se déplacer','Est interdit','Ne sert jamais'],'Pour beaucoup de postes, c\'est un vrai plus.'],
-    ['Un lien vers ton LinkedIn ou ton portfolio…',['Est un plus s\'il est à jour','Est interdit','Doit être caché'],'Vérifie qu\'il est à jour et cohérent avec ton CV.'],
-    ['Reconversion : une formation récente doit…',['Apparaître clairement : elle prouve ton projet','Être cachée','Être notée sans détail'],'Elle montre que ton projet est réfléchi et sérieux.'],
-    ['Les couleurs sur un CV ?',['Une ou deux couleurs sobres','Dix couleurs flashy','Du jaune sur fond blanc'],'Sobre et lisible : la couleur doit guider l\'œil, pas le fatiguer.'],
-    ['Sans réponse à ta candidature, quand relancer ?',['Après 7 à 10 jours environ','Le lendemain matin','Jamais'],'Une relance polie montre ta motivation.'],
-    ['Combien de candidatures envoyer avec le même CV, sans rien changer ?',['Le moins possible : on adapte à chaque offre','Des centaines','Toutes'],'Un CV ciblé obtient plus de réponses qu\'un envoi en masse.']
+    ['Dans un formulaire de candidature, quelles questions un recruteur peut-il te poser ?',['Seulement celles qui ont un lien direct avec le poste et tes compétences','Toutes les questions qu\'il veut','Uniquement des questions sur ta vie privée'],'Les informations demandées doivent servir uniquement à évaluer ta capacité à occuper le poste ou tes aptitudes professionnelles.',['L1221_6'],'m'],
+    ['Quand le recruteur te pose des questions légitimes sur ton parcours, la loi t\'impose…',['De répondre de bonne foi','De ne rien dire','De fournir tes relevés bancaires'],'Le candidat doit répondre de bonne foi : c\'est aussi pour ça qu\'un mensonge sur un diplôme peut coûter cher.',['L1221_6'],'d'],
+    ['Avant un test de personnalité ou une mise en situation, le recruteur doit…',['T\'informer des méthodes et techniques utilisées','Garder la méthode secrète','Te faire payer le test'],'Le candidat est informé à l\'avance des méthodes et techniques d\'aide au recrutement utilisées.',['L1221_8'],'m'],
+    ['Les résultats des tests de recrutement doivent rester…',['Confidentiels','Publiés en ligne','Envoyés à tes anciens employeurs'],'La loi prévoit que les résultats obtenus restent confidentiels.',['L1221_8'],'d'],
+    ['Une entreprise peut-elle collecter des infos sur toi avec un outil dont tu n\'as pas été informé ?',['Non, tout dispositif doit être porté à ta connaissance avant','Oui, toujours','Oui, si c\'est sur Internet'],'Aucune information te concernant ne peut être collectée par un dispositif que tu ne connaissais pas au préalable.',['L1221_9','CNIL_REC'],'d'],
+    ['Sauf opposition de ta part, combien de temps une entreprise peut-elle garder ton CV si tu n\'es pas retenu ?',['2 ans maximum après le dernier contact','Toute la vie','10 ans'],'La CNIL recommande une conservation de 2 ans maximum après le dernier contact avec le candidat.',['CNIL_DUR'],'d'],
+    ['Tu n\'as pas été retenu et tu veux que l\'entreprise efface ton CV. C\'est possible ?',['Oui, tu peux demander la suppression de tes données','Non, jamais','Seulement en payant'],'Le RGPD te donne un droit d\'accès et d\'effacement sur tes données de candidat.',['CNIL_REC'],'m'],
+    ['Une offre d\'emploi publiée en France doit en principe être rédigée…',['En français','En anglais','Dans la langue de l\'employeur'],'Une offre doit être rédigée en français. Une partie peut être dans une autre langue seulement si le poste le justifie, après la version française.',['L5331_4','FT_OFFRES'],'d'],
+    ['Un recruteur écarte un candidat à cause de son lieu de résidence. C\'est…',['Une discrimination interdite','Normal et autorisé','Obligatoire pour certains postes'],'Le lieu de résidence fait partie des critères de discrimination interdits, comme l\'origine, le nom ou l\'âge.',['L1132_1','SP_DISCRI'],'m'],
+    ['Quelle peine maximale risque l\'auteur d\'une discrimination à l\'embauche ?',['3 ans de prison et 45 000 € d\'amende','Un simple avertissement','100 € d\'amende'],'La discrimination est un délit : jusqu\'à 3 ans de prison et 45 000 € d\'amende.',['SP_DISCRI'],'d'],
+    ['Qui peut t\'accompagner gratuitement si tu penses être victime de discrimination à l\'embauche ?',['Le Défenseur des droits','Ton banquier','Personne'],'Le Défenseur des droits accompagne et oriente gratuitement les victimes de discrimination.',['DDD','FT_DISCRI'],'m'],
+    ['Une candidate est-elle obligée de dire au recruteur qu\'elle est enceinte ?',['Non, elle n\'est pas tenue de le révéler','Oui, toujours','Oui, si on lui demande'],'La loi dit clairement que la candidate n\'est pas tenue de révéler son état de grossesse.',['L1225_2'],'m'],
+    ['Dans le Cadre européen pour les langues (CECRL), que signifie le niveau B2 ?',['Utilisateur indépendant, niveau avancé','Débutant complet','Langue maternelle'],'A = élémentaire, B = indépendant, C = expérimenté. B2 est le haut du niveau indépendant.',['CECRL'],'d'],
+    ['Quel est le niveau le plus élevé du CECRL ?',['C2','A1','B2'],'L\'échelle va de A1 (débutant) à C2 (maîtrise).',['CECRL'],'m'],
+    ['Que signifie le niveau A2 du CECRL ?',['Utilisateur élémentaire','Utilisateur expérimenté','Bilingue'],'A1 et A2 sont les niveaux élémentaires : à éviter de présenter comme « courant » sur un CV.',['CECRL'],'m'],
+    ['Un recruteur écarte un CV à cause de l\'apparence physique sur la photo. C\'est…',['Une discrimination interdite','Un choix libre','Une obligation légale'],'L\'apparence physique fait partie des critères de discrimination interdits.',['L1132_1'],'m'],
+    ['Le CV anonyme est aujourd\'hui en France…',['Possible mais facultatif pour l\'employeur','Obligatoire dans toutes les entreprises','Interdit'],'La loi permet d\'examiner les candidatures de façon anonyme, mais ce n\'est plus une obligation.',['L1221_7'],'d'],
+    ['Une entreprise veut analyser ton écriture (graphologie) à partir de ta lettre. Elle doit…',['T\'informer de cette méthode au préalable','Le faire en secret','Te demander de l\'argent'],'Toute méthode d\'aide au recrutement doit être annoncée au candidat avant d\'être utilisée.',['L1221_8'],'d'],
+    ['Mentir sur un diplôme exigé pour le poste peut…',['Justifier la rupture du contrat une fois découvert','N\'avoir aucune conséquence','Être conseillé par les recruteurs'],'Le candidat doit répondre de bonne foi. Un mensonge sur un élément essentiel peut entraîner la fin du contrat.',['L1221_6'],'m'],
+    ['Étudiant : à partir de quelle durée ton stage doit-il obligatoirement être gratifié ?',['Plus de 2 mois','Dès le 1er jour','Plus de 6 mois'],'Au-delà de 2 mois (consécutifs ou non) au cours d\'une même année d\'enseignement, la gratification est obligatoire.',['L124_6','ECO_STAGE'],'m'],
+    ['Quelle est la durée maximale d\'un stage dans la même entreprise, par année d\'enseignement ?',['6 mois','12 mois','2 mois'],'Un stage ne peut pas dépasser 6 mois par année d\'enseignement dans le même organisme d\'accueil.',['L124_5','ECO_STAGE'],'d'],
+    ['Un stagiaire a-t-il accès au restaurant d\'entreprise ou aux titres-restaurant ?',['Oui, dans les mêmes conditions que les salariés','Non, jamais','Seulement s\'il paie le double'],'Le stagiaire accède au restaurant d\'entreprise ou aux titres-restaurant comme les salariés.',['ECO_STAGE'],'d'],
+    ['Jusqu\'à quel âge peut-on en principe signer un contrat d\'apprentissage ?',['29 ans révolus (avant 30 ans), sauf exceptions','18 ans','Sans aucune limite pour tout le monde'],'L\'apprentissage est ouvert de 16 à 29 ans révolus. Des exceptions existent : handicap, création d\'entreprise, sportif de haut niveau…',['L6222_1'],'m'],
+    ['Comment est fixé le salaire minimum d\'un apprenti ?',['En pourcentage du SMIC, selon son âge et son année','Librement, même à 0 €','Toujours au double du SMIC'],'La rémunération minimale de l\'apprenti dépend de son âge et de son année d\'apprentissage.',['L6222_27'],'m'],
+    ['Quelle est en principe la durée d\'un contrat d\'apprentissage ?',['De 6 mois à 3 ans','1 semaine','10 ans'],'La durée correspond à celle du cycle de formation : entre 6 mois et 3 ans en principe.',['L6222_7'],'d'],
+    ['Micro-entrepreneur en franchise de TVA : quelle mention est obligatoire sur tes factures ?',['« TVA non applicable, art. 293 B du CGI »','« TVA offerte »','Aucune mention'],'En franchise de TVA, cette mention exacte doit figurer sur chaque facture.',['CGI293B'],'d'],
+    ['Entre professionnels, combien vaut l\'indemnité forfaitaire pour frais de recouvrement en cas de retard ?',['40 €','5 €','400 €'],'En plus des pénalités de retard, le client professionnel doit une indemnité forfaitaire de 40 €.',['L441_10','DGCCRF40'],'d'],
+    ['Sans accord particulier, quel est le délai de paiement d\'une facture entre professionnels ?',['30 jours après la réception ou l\'exécution de la prestation','1 an','Quand le client le souhaite'],'À défaut d\'accord, c\'est 30 jours. Un accord peut aller jusqu\'à 60 jours après la date d\'émission.',['L441_10'],'d'],
+    ['Freelance : quel numéro identifie ton entreprise et doit figurer sur tes factures ?',['Le numéro SIREN ou SIRET','Ton numéro de sécurité sociale','Ton numéro de téléphone'],'Le SIREN (ou SIRET) identifie ton entreprise et fait partie des mentions de la facture.',['L441_9'],'m'],
+    ['Reconversion : pour toucher le chômage après une démission pour reconversion, il faut…',['Faire valider son projet avant de démissionner','Démissionner d\'abord, puis demander','Rien de spécial'],'Il faut remplir une condition d\'activité (5 ans) et faire valider le projet par une commission (Transitions Pro) avant la démission.',['FT_RECONV'],'d'],
+    ['Sur quel site officiel utilise-t-on son compte personnel de formation (CPF) ?',['moncompteformation.gouv.fr','Un site trouvé par SMS','Les réseaux sociaux'],'Le seul site officiel est moncompteformation.gouv.fr. Méfie-toi des appels et SMS qui en parlent.',['CPF'],'m'],
+    ['Un bilan de compétences peut-il être financé avec le CPF ?',['Oui','Non, jamais','Seulement pour les étudiants'],'Le bilan de compétences fait partie des actions finançables avec le CPF.',['CPF'],'m'],
+    ['Combien un salarié à temps plein gagne-t-il en principe chaque année sur son CPF ?',['500 € (plafond de 5 000 €)','50 €','5 000 € par an'],'500 € par an dans la limite de 5 000 €. C\'est 800 € (plafond 8 000 €) pour les salariés peu qualifiés.',['CPF'],'d'],
+    ['À quoi sert la VAE (validation des acquis de l\'expérience) ?',['Obtenir tout ou partie d\'un diplôme grâce à son expérience','Valider un permis de conduire','Toucher une prime'],'La VAE reconnaît ton expérience pour obtenir un diplôme ou une certification.',['VAE'],'m'],
+    ['Une entreprise de 20 salariés ou plus doit employer des travailleurs handicapés à hauteur de…',['6 % de son effectif','1 %','25 %'],'C\'est l\'obligation d\'emploi de travailleurs handicapés : 6 % de l\'effectif.',['L5212_1','L5212_2'],'d'],
+    ['Un CDD doit-il obligatoirement être écrit ?',['Oui, sinon il peut être requalifié en CDI','Non, un accord oral suffit','Seulement pour les cadres'],'Le CDD doit être établi par écrit et indiquer précisément son motif.',['L1242_12'],'m'],
+    ['À la fin d\'un CDD, l\'indemnité de fin de contrat (prime de précarité) est en principe égale à…',['10 % de la rémunération brute totale','1 %','50 %'],'Elle est d\'au moins 10 % du total des salaires bruts perçus, sauf exceptions.',['L1243_8'],'m'],
+    ['Quel est le SMIC horaire brut au 1er juin 2026 ?',['12,31 €','9,50 €','15,00 €'],'Depuis le 1er juin 2026, le SMIC est à 12,31 € brut de l\'heure, soit 1 867,02 € brut par mois pour 35 h.',['SMIC26','L3231_2'],'d'],
+    ['Avant de contacter tes anciens employeurs pour des références, le recruteur doit…',['T\'en informer','Le faire sans te le dire','Te demander de l\'argent'],'La prise de références est une collecte d\'informations : le candidat doit en être informé avant.',['L1221_9','CNIL_REC'],'d'],
+    ['Sur France Travail, ton CV en ligne peut être vu par les recruteurs…',['Si tu choisis de le rendre visible','Jamais','Même si tu refuses'],'Ton CV est créé à partir de ton profil de compétences, et c\'est toi qui décides de sa visibilité.',['FT_CV'],'m']
   ];
   var SIT=[
-    ['Une offre te plaît, mais tu n\'as pas toutes les compétences demandées.',['Tu postules en mettant en avant ce que tu sais faire','Tu abandonnes','Tu mens sur ton CV'],'Les offres décrivent un profil idéal : postule si tu as l\'essentiel.'],
-    ['Un recruteur t\'appelle à l\'improviste, tu es dans un endroit bruyant.',['Tu proposes poliment de le rappeler dans quelques minutes','Tu raccroches','Tu réponds en criant'],'Mieux vaut rappeler au calme, avec ton CV sous les yeux.'],
-    ['Une offre te demande de payer des frais pour être embauché.',['Tu te méfies : c\'est souvent une arnaque','Tu paies vite','Tu donnes ta carte bancaire'],'Un employeur sérieux ne fait jamais payer un candidat.'],
-    ['Tu as un entretien demain matin.',['Tu te renseignes sur l\'entreprise et prépares des exemples','Tu improvises','Tu n\'y penses pas'],'Connaître l\'entreprise et avoir 2 ou 3 exemples prêts te rend plus serein.'],
-    ['Tu vas arriver en retard à ton entretien.',['Tu préviens dès que possible','Tu n\'y vas pas','Tu arrives sans rien dire'],'Prévenir montre ton sérieux, même en cas d\'imprévu.'],
-    ['Le recruteur te dit : « Parlez-moi de vous ».',['Tu résumes ton parcours en lien avec le poste','Tu racontes ta vie depuis l\'enfance','Tu dis « tout est sur mon CV »'],'Une ou deux minutes : qui tu es, ce que tu as fait, pourquoi ce poste.'],
-    ['On te demande ton principal défaut.',['Un vrai défaut et ce que tu fais pour t\'améliorer','« Je n\'en ai aucun »','Un défaut grave sans explication'],'L\'honnêteté et l\'envie de progresser plaisent aux recruteurs.'],
-    ['On te demande ton salaire souhaité.',['Tu donnes une fourchette réaliste','Tu dis « je ne sais pas »','Tu demandes le triple'],'Renseigne-toi avant sur les salaires du métier dans ta région.'],
-    ['Étudiant : tu cherches une alternance et la rentrée approche.',['Tu postules tôt et auprès de plusieurs entreprises','Tu attends septembre','Tu envoies une seule candidature'],'Les entreprises recrutent souvent leurs alternants plusieurs mois avant la rentrée.'],
-    ['En reconversion, on te demande pourquoi tu changes de métier.',['Tu expliques ton projet et ce que tu as déjà fait','Tu critiques ton ancien patron','Tu dis « pour l\'argent »'],'Un projet clair et des actions concrètes rassurent le recruteur.'],
-    ['Freelance : un client veut démarrer sans devis ni contrat.',['Tu proposes un devis écrit avant de commencer','Tu commences sans rien','Tu refuses de lui répondre'],'Un devis signé protège les deux côtés.'],
-    ['Pas de réponse 10 jours après ta candidature.',['Tu relances poliment par e-mail','Tu appelles tous les jours','Tu abandonnes'],'Une relance courte et polie peut relancer ta candidature.'],
-    ['Ton entretien se passe en visio.',['Tu testes connexion, son et caméra avant','Tu te connectes depuis le bus','Tu coupes ta caméra sans prévenir'],'Un essai 10 minutes avant évite le stress technique.'],
-    ['Fin d\'entretien : « Avez-vous des questions ? »',['Tu poses une ou deux questions sur le poste','Tu dis « non »','Tu demandes tes jours de congés en premier'],'Une bonne question montre ton intérêt pour le poste.'],
-    ['Tu reçois un refus.',['Tu remercies et demandes un retour pour progresser','Tu réponds avec colère','Tu ignores le message'],'Un retour t\'aide pour la suite, et tu laisses une bonne image.'],
-    ['Deux offres te sont proposées en même temps.',['Tu compares missions, salaire, trajet et évolution','Tu prends la première','Tu tires à pile ou face'],'Pose tout à plat : la bonne offre n\'est pas toujours la mieux payée.'],
-    ['Un « recruteur » te demande tes codes bancaires dès le premier message.',['Tu refuses et vérifies l\'entreprise','Tu les envoies','Tu envoies seulement la moitié'],'Personne n\'a à connaître tes codes. C\'est une arnaque.'],
-    ['Tu veux trouver des offres plus vite.',['Tu crées des alertes avec des mots-clés précis','Tu regardes une fois par mois','Tu attends qu\'on t\'appelle'],'Les alertes t\'envoient les nouvelles offres dès leur publication.'],
-    ['Tu rêves d\'une entreprise qui n\'a publié aucune offre.',['Tu envoies une candidature spontanée ciblée','Tu attends','Tu abandonnes l\'idée'],'Beaucoup de postes sont pourvus sans annonce.'],
-    ['En entretien, on te demande si tu as des projets d\'enfants.',['Tu recentres poliment sur tes compétences','Tu te fâches','Tu inventes une réponse'],'Ta vie familiale ne doit pas jouer dans un recrutement : reste calme et ramène au poste.'],
-    ['Tu passes un entretien de groupe.',['Tu participes et tu écoutes les autres','Tu monopolises la parole','Tu restes muet'],'Le recruteur regarde comment tu travailles avec les autres.'],
-    ['Quelle tenue pour ton entretien ?',['Propre et adaptée au style de l\'entreprise','Ton pyjama','Une tenue de soirée à paillettes'],'Renseigne-toi sur le style de l\'entreprise et reste soigné.'],
-    ['Ton téléphone sonne pendant l\'entretien.',['Tu t\'excuses et le coupes','Tu réponds','Tu fais comme si de rien n\'était'],'Le mieux : le mettre en silencieux avant d\'entrer.'],
-    ['On te propose un CDD alors que tu voulais un CDI.',['Tu réfléchis : expérience, suite possible','Tu refuses sans réfléchir','Tu signes sans lire'],'Un CDD peut être un tremplin : pèse le pour et le contre.'],
-    ['Ton entretien vient de se terminer.',['Tu envoies un court message de remerciement','Tu n\'envoies jamais rien','Tu demandes la réponse toutes les heures'],'Un merci rapide laisse une très bonne impression.'],
-    ['Tu ne comprends pas une question du recruteur.',['Tu lui demandes de la reformuler','Tu réponds au hasard','Tu changes de sujet'],'Demander une précision est normal et montre ton écoute.'],
-    ['Étudiant : tu cherches un job à côté des cours.',['Tu choisis des horaires compatibles avec tes études','Tu acceptes 50 h par semaine','Tu sèches les cours'],'Tes études restent la priorité : vise un rythme tenable.'],
-    ['Reconversion : tu n\'as aucune expérience dans le nouveau métier.',['Tu fais un stage ou une immersion pour te tester','Tu attends','Tu inventes une expérience'],'Une immersion en entreprise te fait découvrir le métier et rassure les recruteurs.'],
-    ['Freelance : un client paie en retard.',['Tu relances poliment avec la facture et la date d\'échéance','Tu publies sa facture en ligne','Tu ne dis rien'],'Une relance claire et polie suffit le plus souvent.'],
-    ['Demandeur d\'emploi : tu as rendez-vous avec ton conseiller.',['Tu prépares tes questions et ton projet','Tu oublies le rendez-vous','Tu viens sans rien'],'Un rendez-vous préparé est un rendez-vous utile.'],
-    ['Un recruteur peut voir ton profil public sur les réseaux.',['Tu soignes ce qui est visible publiquement','Tu publies n\'importe quoi','Tu gardes une photo de soirée en profil'],'Vérifie ce qu\'on voit de toi quand on tape ton nom.'],
-    ['On te demande un exemple de réussite.',['Tu racontes la situation, ton action et le résultat','Tu dis « j\'ai toujours réussi »','Tu parles d\'un collègue'],'Situation, action, résultat : un exemple simple et concret.'],
-    ['Le salaire n\'est pas indiqué dans l\'offre.',['Tu te renseignes et poses la question au bon moment','Tu ne postules pas','Tu le demandes dès la première phrase'],'On en parle souvent en fin d\'entretien ou au deuxième échange.'],
-    ['Ton entretien a lieu loin de chez toi.',['Tu prévois ton trajet avec de l\'avance','Tu pars à la dernière minute','Tu ne regardes pas l\'adresse'],'Arrive 10 minutes en avance : tu seras plus détendu.'],
-    ['Une offre semble trop belle : gros salaire, aucun diplôme, travail facile à la maison.',['Tu vérifies l\'entreprise avant tout','Tu fonces','Tu envoies tes papiers d\'identité'],'Vérifie le nom, le site et les avis de l\'entreprise avant d\'envoyer quoi que ce soit.'],
-    ['Ton dernier entretien s\'est mal passé.',['Tu notes ce que tu peux améliorer','Tu arrêtes de chercher','Tu accuses le recruteur'],'Chaque entretien t\'entraîne pour le suivant.'],
-    ['Étudiant : on te demande tes disponibilités pour un stage.',['Tu donnes des dates précises de début et de fin','« Je verrai »','Tu ne réponds pas'],'Des dates claires facilitent la décision de l\'entreprise.'],
-    ['Un ami travaille dans une entreprise qui recrute.',['Tu lui demandes conseil ou de transmettre ton CV','Tu ne lui en parles pas','Tu exiges qu\'il te fasse embaucher'],'Le réseau aide beaucoup, avec tact.'],
-    ['Freelance : un client te demande une grosse remise.',['Tu négocies en ajustant le contenu de la mission','Tu acceptes tout','Tu te fâches'],'Moins cher, oui, mais pour une mission plus courte ou plus simple.'],
-    ['Le recruteur te demande quand tu peux commencer.',['Tu donnes une date réaliste, préavis compris','« Jamais »','« Hier »'],'Sois honnête : un préavis est normal et compris par les recruteurs.']
+    ['En entretien, on te demande si tu as un projet de grossesse.',['Tu n\'es pas obligée de répondre et tu recentres sur tes compétences','Tu dois répondre en détail','Tu quittes l\'entretien en criant'],'Cette question n\'a pas de lien avec le poste et la candidate n\'est pas tenue de révéler une grossesse.',['L1225_2','L1132_1'],'m'],
+    ['Une offre te demande de payer des « frais de dossier » avant l\'embauche.',['Tu ne paies pas : c\'est un signe d\'arnaque','Tu paies pour garder ta place','Tu envoies ta carte bancaire'],'Une offre d\'emploi doit être gratuite pour le candidat : aucune somme ne peut lui être demandée.',['FT_FAUX','FT_OFFRES'],'m'],
+    ['Un « recruteur » te propose d\'encaisser un chèque sur ton compte et de lui reverser une partie.',['Tu refuses et tu signales l\'annonce','Tu acceptes, c\'est une mission simple','Tu donnes ton RIB pour aller plus vite'],'C\'est une arnaque connue : tu risques d\'être complice d\'une escroquerie.',['ECO_FRAUD','FT_ARNAQ'],'d'],
+    ['Avant même un entretien, on te demande ta pièce d\'identité et ton RIB par message.',['Tu vérifies l\'entreprise avant d\'envoyer quoi que ce soit','Tu envoies tout de suite','Tu envoies aussi tes codes bancaires'],'Ces documents ne sont demandés qu\'au moment de l\'embauche, par une entreprise dont tu as vérifié l\'existence.',['FT_ARNAQ'],'m'],
+    ['Au premier entretien, le recruteur te demande ton numéro de sécurité sociale.',['Tu expliques poliment qu\'il ne sert qu\'au moment de l\'embauche','Tu le donnes, c\'est obligatoire','Tu donnes celui d\'un ami'],'Au stade du recrutement, on ne peut te demander que des informations utiles pour évaluer ta candidature. Ton numéro de sécurité sociale sert à l\'employeur au moment de l\'embauche, pour la déclaration.',['L1221_6','CNIL_PERT'],'d'],
+    ['Tu es en CDI d\'employé, en période d\'essai depuis 3 semaines, et tu veux partir.',['Tu dois prévenir l\'employeur 48 heures avant','Tu dois faire un préavis d\'un mois','Tu ne peux pas partir'],'Pendant l\'essai, le salarié présent depuis au moins 8 jours prévient 48 heures avant.',['SP_ESSAI'],'d'],
+    ['L\'employeur rompt ta période d\'essai après 2 mois de présence.',['Il doit te prévenir 2 semaines avant','Il n\'a aucun délai à respecter','Il doit te prévenir 6 mois avant'],'De 1 à 3 mois de présence, le délai de prévenance de l\'employeur est de 2 semaines.',['SP_ESSAI'],'d'],
+    ['Tu es embauché comme cadre en CDI. Quelle est la durée maximale de ta période d\'essai initiale ?',['4 mois','2 semaines','1 an'],'4 mois pour un cadre, 3 mois pour un agent de maîtrise, 2 mois pour un employé.',['SP_ESSAI'],'m'],
+    ['Ton employeur veut renouveler ta période d\'essai sans ton accord écrit.',['Impossible : il faut ton accord exprès, prévu par la branche et le contrat','Il peut le faire seul','Il peut la prolonger autant qu\'il veut'],'Le renouvellement exige un accord de branche, une clause dans le contrat et ton accord exprès.',['SP_ESSAI'],'d'],
+    ['Demandeur d\'emploi, tu refuses sans motif légitime des offres raisonnables d\'emploi.',['Tu t\'exposes à une sanction : suspension de ton allocation, voire radiation','Il ne se passe rien','Ton allocation augmente'],'Depuis la loi pour le plein emploi, les sanctions sont progressives : suspension ou suppression de l\'allocation, et radiation possible. Elles s\'alourdissent en cas de répétition.',['L5412_1','FT'],'d'],
+    ['Ton CDD se termine et l\'employeur te propose un CDI pour le même poste, que tu refuses.',['Tu perds l\'indemnité de fin de contrat','Tu touches une double prime','Rien ne change'],'Si tu refuses un CDI pour un emploi similaire, l\'indemnité de fin de contrat n\'est pas due.',['L1243_10'],'d'],
+    ['5 jours après ton embauche en CDD, tu n\'as toujours pas reçu ton contrat.',['C\'est irrégulier : il doit t\'être transmis dans les 2 jours ouvrables','C\'est normal, il a 3 mois','Un CDD n\'a pas besoin d\'être écrit'],'Le contrat de CDD doit être remis au salarié au plus tard dans les 2 jours ouvrables suivant l\'embauche.',['L1242_13'],'d'],
+    ['Tu es en CDD et on te propose un CDI ailleurs.',['Tu peux rompre ton CDD en justifiant de ton embauche en CDI','Tu dois attendre la fin du CDD','Tu dois payer ton employeur'],'La rupture anticipée du CDD est possible si le salarié justifie d\'une embauche en CDI (avec un préavis).',['L1243_2'],'d'],
+    ['Étudiant : on te propose un stage de 3 mois sans aucune gratification.',['C\'est illégal : au-delà de 2 mois, la gratification est obligatoire','C\'est normal pour un stage','Tu dois payer l\'entreprise'],'Un stage de plus de 2 mois dans une même année d\'enseignement doit être gratifié.',['L124_6'],'m'],
+    ['Étudiant : une entreprise veut te garder 8 mois en stage la même année.',['C\'est interdit au-delà de 6 mois par année d\'enseignement','C\'est possible sans limite','C\'est obligatoire'],'La durée d\'un stage est limitée à 6 mois par année d\'enseignement dans le même organisme.',['L124_5'],'d'],
+    ['Étudiant : on te prend en stage pour remplacer un salarié en congé.',['C\'est interdit : un stage ne remplace pas un salarié','C\'est le principe du stage','C\'est autorisé l\'été'],'Un stagiaire ne peut pas occuper un poste permanent ni remplacer un salarié absent.',['L124_7','ECO_STAGE'],'d'],
+    ['Apprenti, ton employeur te paie moins que le minimum prévu.',['Il doit respecter le pourcentage du SMIC fixé selon ton âge et ton année','Il fait ce qu\'il veut','Un apprenti n\'est pas payé'],'La rémunération minimale de l\'apprenti est encadrée par la loi.',['L6222_27'],'m'],
+    ['Reconversion : tu veux démissionner et toucher le chômage pour ton nouveau projet.',['Tu fais valider ton projet par Transitions Pro avant de démissionner','Tu démissionnes et tu verras','Tu demandes à un ami de valider'],'Le projet doit être validé avant la démission, avec au moins 5 ans d\'activité salariée.',['FT_RECONV'],'d'],
+    ['Reconversion : tu veux découvrir un métier avant de te lancer.',['Tu demandes une immersion professionnelle en entreprise','Tu démissionnes tout de suite','Tu inventes une expérience'],'L\'immersion professionnelle (PMSMP) permet de tester un métier quelques jours ou semaines.',['FT_IMM'],'m'],
+    ['Reconversion : tu veux faire un bilan de compétences.',['Tu peux le financer avec ton CPF','Il est réservé aux cadres','Il coûte toujours 10 000 € de ta poche'],'Le bilan de compétences est finançable avec le compte personnel de formation.',['CPF'],'m'],
+    ['On t\'appelle pour te proposer d\'utiliser « gratuitement » tes droits CPF.',['Tu raccroches : le démarchage CPF est une arnaque fréquente','Tu donnes tes identifiants','Tu valides la formation proposée'],'Ne communique jamais tes identifiants. Passe uniquement par le site officiel.',['CPF'],'m'],
+    ['Freelance : ton client professionnel paie avec 20 jours de retard.',['Tu peux réclamer des pénalités de retard et 40 € d\'indemnité forfaitaire','Tu n\'as droit à rien','Tu dois lui faire une remise'],'Entre professionnels, le retard entraîne des pénalités et une indemnité forfaitaire de 40 €.',['L441_10','DGCCRF40'],'d'],
+    ['Freelance : ton client t\'impose des horaires fixes, ses outils et te donne des ordres comme à un salarié.',['Tu risques une requalification en contrat de travail','C\'est normal en freelance','Tu deviens automatiquement fonctionnaire'],'Un lien de subordination permanent peut faire requalifier la relation en contrat de travail.',['L8221_6'],'d'],
+    ['Freelance en franchise de TVA, tu prépares ta première facture.',['Tu ajoutes « TVA non applicable, art. 293 B du CGI »','Tu ajoutes 20 % de TVA quand même','Tu ne mets aucune mention'],'Cette mention est obligatoire quand tu ne factures pas la TVA.',['CGI293B'],'d'],
+    ['En entretien, on te demande quelle est ta religion.',['Tu peux ne pas répondre et recentrer sur le poste','Tu dois répondre','Tu dois apporter un justificatif'],'La religion fait partie des critères de discrimination : la question n\'a pas de lien avec le poste.',['L1132_1','L1221_6'],'m'],
+    ['On te fait passer un test de personnalité surprise, sans aucune explication.',['Tu demandes à quoi il sert : tu dois être informé des méthodes','Tu refuses tout l\'entretien','Tu réponds au hasard'],'Le candidat doit être informé à l\'avance des méthodes utilisées, et celles-ci doivent être pertinentes.',['L1221_8'],'d'],
+    ['Les méthodes de recrutement utilisées par l\'entreprise doivent être…',['Pertinentes au regard du poste','Les plus longues possibles','Secrètes'],'La loi exige que les méthodes soient pertinentes au regard de la finalité poursuivie.',['L1221_8'],'d'],
+    ['Après un refus, tu veux savoir ce que l\'entreprise garde sur toi.',['Tu peux demander l\'accès à tes données ou leur suppression','Tu n\'as aucun droit','Tu dois porter plainte'],'Le RGPD te donne un droit d\'accès et d\'effacement. La conservation est limitée à 2 ans.',['CNIL_REC','CNIL_DUR'],'m'],
+    ['Tu penses avoir été écarté à cause de ton nom.',['Tu gardes les preuves et tu peux saisir le Défenseur des droits','Tu ne peux rien faire','Tu changes de nom'],'Le nom fait partie des critères interdits. Plusieurs recours existent, et le Défenseur des droits est gratuit.',['SP_DISCRI','DDD','FT_DISCRI'],'m'],
+    ['Ton entretien visio est enregistré sans que tu aies été prévenu.',['C\'est irrégulier : tu dois être informé avant','C\'est toujours autorisé','C\'est obligatoire'],'Tout dispositif de collecte d\'informations doit être porté à la connaissance du candidat au préalable.',['L1221_9','CNIL_REC'],'d'],
+    ['Demandeur d\'emploi indemnisé, tu reprends un petit job à temps partiel.',['Tu le déclares lors de ton actualisation mensuelle','Tu ne dis rien','Tu arrêtes de t\'actualiser'],'Chaque mois, tu déclares tes heures et tes revenus : le cumul avec ton allocation est possible sous conditions.',['FT'],'m'],
+    ['On te propose un temps plein payé 10 € brut de l\'heure.',['C\'est sous le SMIC (12,31 € au 1er juin 2026) : c\'est illégal','C\'est correct','C\'est le minimum légal'],'Aucun salarié ne peut être payé sous le SMIC horaire, sauf cas particuliers prévus par la loi (apprentis, jeunes…).',['SMIC26','L3231_2'],'d'],
+    ['Une entreprise de 50 salariés te dit qu\'elle « n\'a pas d\'obligation » envers les travailleurs handicapés.',['C\'est faux : dès 20 salariés, l\'obligation est de 6 %','C\'est vrai','L\'obligation commence à 5 000 salariés'],'Les entreprises de 20 salariés et plus doivent employer 6 % de travailleurs handicapés.',['L5212_1','L5212_2'],'d'],
+    ['Tu viens d\'être embauché. Quand dois-tu passer la visite d\'information et de prévention ?',['Dans les 3 mois après ta prise de poste, en principe','Jamais','Avant même l\'entretien'],'La visite d\'information et de prévention a lieu dans les 3 mois suivant la prise de poste.',['R4624_10'],'d'],
+    ['Tu veux quitter ton CDI et toucher le chômage, sans projet de reconversion.',['La rupture conventionnelle homologuée peut ouvrir droit au chômage','Une démission simple ouvre toujours droit au chômage','Il suffit d\'arrêter de venir'],'Une démission n\'ouvre droit au chômage que dans des cas précis. La rupture conventionnelle, elle, le permet sous conditions.',['FT_DEMIS'],'d'],
+    ['Tu démissionnes de ton CDI. Qui fixe la durée de ton préavis ?',['La convention collective, les usages ou ton contrat','Une durée légale unique de 1 an','Personne, tu pars le jour même'],'Le Code du travail renvoie à la convention collective, aux usages ou au contrat.',['L1237_1'],'d'],
+    ['Une offre précise : « candidat de moins de 30 ans uniquement ».',['C\'est interdit : une offre ne peut pas fixer de limite d\'âge, sauf exceptions','C\'est autorisé partout','C\'est obligatoire'],'Une offre ne peut pas fixer d\'âge minimum, maximum ou de fourchette d\'âge. Seuls « débutant » ou « expérimenté » sont admis.',['L5331_2','FT_OFFRES'],'m'],
+    ['Demandeur d\'emploi indemnisé, tu veux créer ta micro-entreprise.',['Tu peux demander à garder tes allocations ou un capital (ARCE) à France Travail','Tu perds tout automatiquement','Tu dois cacher ton activité'],'France Travail propose deux options : le maintien partiel des allocations ou l\'aide à la création (ARCE).',['FT'],'d'],
+    ['Tu as oublié ton actualisation mensuelle à France Travail.',['Tu te réinscris vite : tu risques d\'être désinscrit','Ça n\'a aucune importance','Tu attends 6 mois'],'Sans actualisation, tu cesses d\'être inscrit comme demandeur d\'emploi : réagis au plus vite.',['FT'],'m'],
+    ['Un recruteur te propose un CDI par oral, sans jamais rien écrire.',['Un CDI à temps plein peut être oral, mais demande une confirmation écrite','C\'est forcément illégal','Un CDI oral n\'existe pas en France'],'Le CDI à temps plein peut ne pas être écrit, contrairement au CDD. Garde toujours une trace écrite de l\'offre.',['L1242_12'],'d']
   ];
   var CFG={
-    cvlettre:{ bank:QUIZ, kind:'quiz', title:'Mini quiz CV & Lettre', sub:'Quiz général · les 4 profils', tag:'Question', ask:'',
-      intro:'C\'est un <b>quiz général qui regroupe les 4 profils</b> : demandeur d\'emploi, étudiant, reconversion et freelance. C\'est <b>simple et ludique</b>, rien de compliqué : juste pour te mettre dans la situation. <b>10 questions</b> tirées au hasard parmi 40 sur le CV et la lettre de motivation.',
+    cvlettre:{ bank:QUIZ, kind:'quiz', title:'Mini QCM CV & candidature', sub:'Quiz général · les 4 profils', tag:'Question', ask:'',
+      intro:'C\'est un <b>quiz général qui regroupe les 4 profils</b> : demandeur d\'emploi, étudiant, reconversion et freelance. <b>10 questions</b> tirées au hasard parmi 40, de <b>niveau moyen à difficile</b>, sur le CV, la candidature et tes droits. Tu as <b>15 secondes</b> par question, et chaque réponse est expliquée avec sa <b>source officielle</b>.',
       start:'Commencer le quiz', name:'mini quiz CV de CareerPulse', more:'Inscris-toi gratuitement pour accéder au <b>quiz complet</b> et à des questions adaptées à <b>ton profil</b>.' },
     emploi:{ bank:SIT, kind:'sit', title:'Mini mises en situation', sub:'Recherche d\'emploi & entretien · les 4 profils', tag:'Situation', ask:'Que fais-tu ?',
-      intro:'Ce sont des <b>mises en situation générales qui regroupent les 4 profils</b> : demandeur d\'emploi, étudiant, reconversion et freelance. C\'est <b>simple et ludique</b>, rien de compliqué : juste pour te mettre dans la situation. <b>10 situations</b> tirées au hasard parmi 40, de la recherche d\'emploi jusqu\'à l\'entretien.',
+      intro:'Ce sont des <b>mises en situation générales qui regroupent les 4 profils</b> : demandeur d\'emploi, étudiant, reconversion et freelance. <b>10 situations</b> tirées au hasard parmi 40, de <b>niveau moyen à difficile</b>, de la recherche d\'emploi jusqu\'au contrat. Tu as <b>15 secondes</b> pour choisir, et chaque réponse est expliquée avec sa <b>source officielle</b>.',
       start:'Commencer les mises en situation', name:'mini mises en situation de CareerPulse', more:'Si tu veux des <b>mises en situation qui correspondent à ton profil</b>, inscris-toi gratuitement.' }
   };
   var ST={};
@@ -20435,15 +20488,15 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
   function member(){ try{ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return !!(u&&(u.emailVerified||(u.providerData||[]).some(function(p){ return p.providerId==='google.com'; }))); }catch(e){ return false; } }
   function head(k){ var C=CFG[k]; return '<div class="lsxg-hd">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'<div><b>'+C.title+'</b><span>Avec Lisa · '+C.sub+'</span></div></div>'; }
   function startView(k){ var C=CFG[k];
-    return '<p class="lsxg-say">'+C.intro+'</p><div class="lsxg-chips"><span>🔎 Demandeur d\'emploi</span><span>🎓 Étudiant</span><span>🔄 Reconversion</span><span>💼 Freelance</span></div>'
+    return '<p class="lsxg-say">'+C.intro+'</p>'+'<div class="lsxg-trust">'+S('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'<span><b>Réponses officielles et vérifiées.</b> Chaque réponse s\'appuie sur un texte de loi ou un site officiel, cité en source. Les lois évoluent : si une règle change, la source te permet de vérifier la version à jour en un clic.</span></div><div class="lsxg-chips"><span>🔎 Demandeur d\'emploi</span><span>🎓 Étudiant</span><span>🔄 Reconversion</span><span>💼 Freelance</span></div>'
       +'<button type="button" class="lsxg-btn" data-g="start">'+S('<path d="M8 5v14l11-7z" fill="currentColor"/>')+C.start+'</button>'; }
   function qView(k){ var C=CFG[k], s=ST[k], q=s.qs[s.i], n=s.qs.length;
     var h='<div class="lsxg-top"><span>'+C.tag+' '+(s.i+1)+' / '+n+'</span><em>Score : '+s.score+'</em></div><div class="lsxg-prog"><i style="width:'+(s.i/n*100)+'%"></i></div>'
-      +'<span class="lsxg-tag">'+(C.kind==='sit'?'Mise en situation':'Quiz CV & Lettre')+'</span><p class="lsxg-q">'+esc(q.t)+'</p>'+(C.ask?'<p class="lsxg-ask">'+C.ask+'</p>':'');
+      +'<div class="lsxg-meta"><span class="lsxg-tag">'+(C.kind==='sit'?'Mise en situation':'QCM CV & candidature')+'</span><span class="lsxg-lv '+q.lv+'">'+(q.lv==='d'?'Difficile':'Moyen')+'</span><span class="lsxg-time'+(s.done?' off':'')+'" data-time>'+S('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>')+'<b>'+(s.done?0:s.left)+'</b> s</span></div><div class="lsxg-tbar"><i data-tbar style="width:'+(s.done?0:s.left/T*100)+'%"></i></div><p class="lsxg-q">'+esc(q.t)+'</p>'+(C.ask?'<p class="lsxg-ask">'+C.ask+'</p>':'');
     h+=q.o.map(function(o,j){ var cls=''; if(s.done){ if(j===q.ok) cls=' ok'; else if(j===s.pick) cls=' ko'; }
       return '<button type="button" class="lsxg-op'+cls+'" data-g="pick" data-j="'+j+'"'+(s.done?' disabled':'')+'><i>'+'ABC'[j]+'</i>'+esc(o)+'</button>'; }).join('');
     if(s.done){ var good=s.pick===q.ok;
-      h+='<div class="lsxg-ex'+(good?'':' ko')+'"><b>'+(good?'Bien joué ! ✅':'Pas tout à fait 💡')+'</b>'+esc(q.x)+'</div>'
+      h+='<div class="lsxg-ex'+(good?'':' ko')+'"><b>'+(good?'Bien joué ! ✅':(s.pick===-1?'Temps écoulé ⏱️':'Pas tout à fait 💡'))+'</b>'+esc(q.x)+'<div class="lsxg-src">'+S('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16"/>')+'<span>Source'+(q.src.length>1?'s':'')+' : '+q.src.map(function(k){ var x=SRC[k]; return '<a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>'; }).join(' · ')+'</span></div></div>'
         +'<button type="button" class="lsxg-btn" data-g="next">'+(s.i+1<n?'Suivant':'Voir mon résultat')+S('<path d="M5 12h14M13 6l6 6-6 6"/>')+'</button>'; }
     return h; }
   function verdict(sc,n){ var r=sc/n; return r>=.9?['Excellent ! 🏆','Tu maîtrises très bien le sujet.']:r>=.7?['Très bien ! 👏','Encore quelques réflexes à prendre et tu seras au top.']:r>=.5?['Pas mal ! 💪','Tu as les bases, on peut aller plus loin ensemble.']:['C\'est un début ! 🌱','Chaque question t\'a appris quelque chose : on continue ?']; }
@@ -20452,12 +20505,24 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     function b(id,t){ return '<button type="button" data-g="share" data-s="'+id+'">'+S(ic[id])+t+'</button>'; }
     return '<div class="lsxg-score"><div class="lsxg-ring"><svg viewBox="0 0 84 84"><circle cx="42" cy="42" r="'+R+'" stroke="#e2e8f0" stroke-width="9" fill="none"/><circle cx="42" cy="42" r="'+R+'" stroke="url(#lsxgG'+k+')" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="'+L.toFixed(1)+'" stroke-dashoffset="'+(L*(1-s.score/n)).toFixed(1)+'"/><defs><linearGradient id="lsxgG'+k+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e40af"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs></svg><b>'+s.score+'<small>/'+n+'</small></b></div>'
       +'<div><h4>'+v[0]+'</h4><p>'+v[1]+'</p></div></div>'
+      +'<p class="lsxg-trust-s">✅ Réponses vérifiées sur les textes officiels. Les lois peuvent évoluer : les sources citées te permettent toujours de vérifier la règle à jour.</p>'
       +'<div class="lsxg-sh-t">Partage ton résultat</div><div class="lsxg-sh">'+b('wa','WhatsApp')+b('fb','Facebook')+b('li','LinkedIn')+b('x','X')+b('mail','E-mail')+b('copy','Copier')+'</div>'
       +'<div class="lsxg-join"><p>'+C.more+'</p>'+(member()?'<button type="button" class="lsxg-btn" data-lsx="espace">Ouvrir Mon espace</button>':'<button type="button" class="lsxg-btn" data-lsx="signup">'+S('<circle cx="9" cy="8" r="4"/><path d="M2 21c.9-3.9 3.6-6 7-6s6.1 2.1 7 6"/><path d="M19 8v6M16 11h6"/>')+'Créer mon compte gratuit</button>')+'</div>'
       +'<button type="button" class="lsxg-btn alt" data-g="start">'+S('<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>')+'Rejouer avec 10 nouvelles questions</button>'; }
-  function body(k){ var s=ST[k]; return !s||!s.qs?startView(k):(s.i>=s.qs.length?endView(k):qView(k)); }
+  var T=15; /* secondes par question */
+  function cdView(n){ return '<div class="lsxg-cd"><div class="lsxg-cd-n'+(n===0?' go':'')+'" data-cd>'+(n===0?'C\'est parti !':n)+'</div><p>Prépare-toi : 15 secondes par question ⏱️</p></div>'; }
+  function body(k){ var s=ST[k]; if(s&&s.cd!==undefined&&s.cd!==null) return cdView(s.cd); return !s||!s.qs?startView(k):(s.i>=s.qs.length?endView(k):qView(k)); }
+  function cardOf(k){ return document.querySelector('.lsxg[data-game="'+k+'"]'); }
+  function stopT(s){ if(s&&s.tm){ clearInterval(s.tm); s.tm=null; } }
+  function countdown(k){ var s=ST[k]; s.cd=3; var c=cardOf(k); if(c) render(c);
+    s.tm=setInterval(function(){ var c=cardOf(k); if(!c){ stopT(s); return; } s.cd--; if(s.cd<0){ stopT(s); s.cd=null; render(c); timer(k); return; } render(c); },900); }
+  function timer(k){ var s=ST[k]; stopT(s); s.left=T; var t0=Date.now();
+    s.tm=setInterval(function(){ var c=cardOf(k); if(!c||s.done){ stopT(s); return; }
+      var left=Math.max(0,T-(Date.now()-t0)/1000); s.left=Math.ceil(left);
+      var b=c.querySelector('[data-time] b'), bar=c.querySelector('[data-tbar]'), tw=c.querySelector('[data-time]'); if(b) b.textContent=s.left; if(bar) bar.style.width=(left/T*100)+'%'; if(tw) tw.classList.toggle('hot',left<=5);
+      if(left<=0){ stopT(s); s.pick=-1; s.done=true; render(c); } },200); }
   function render(card){ var k=card.getAttribute('data-game'); card.querySelector('.lsxg-bd').innerHTML=body(k); }
-  window.cpLsxGame=function(k){ if(!CFG[k]) return ''; return '<div class="lsxg" data-game="'+k+'">'+head(k)+'<div class="lsxg-bd">'+body(k)+'</div></div>'; };
+  window.cpLsxGame=function(k){ if(!CFG[k]) return ''; var s0=ST[k]; if(s0&&s0.cd!==null&&s0.cd!==undefined){ stopT(s0); s0.cd=null; s0.qs=null; } return '<div class="lsxg" data-game="'+k+'">'+head(k)+'<div class="lsxg-bd">'+body(k)+'</div></div>'; };
   function shareUrl(k){ var base=/^https:/.test(location.protocol)?location.origin+location.pathname:'https://career-pulse-eva.vercel.app/'; return base+'#'+k; }
   function toast(t){ var d=document.createElement('div'); d.className='lsxg-toast'; d.textContent=t; document.body.appendChild(d); setTimeout(function(){ d.remove(); },2200); }
   function share(k,how){ var C=CFG[k], s=ST[k], url=shareUrl(k), txt='J\'ai eu '+s.score+'/'+s.qs.length+' au '+C.name+' 🎯 Et toi, tu fais combien ?', E=encodeURIComponent;
@@ -20466,10 +20531,10 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(how==='mail'){ location.href=map.mail; return; }
     window.open(map[how],'_blank','noopener,width=620,height=560'); }
   document.addEventListener('click',function(e){ var b=e.target.closest('[data-g]'); if(!b) return; var card=b.closest('.lsxg'); if(!card) return; var k=card.getAttribute('data-game'), a=b.getAttribute('data-g'), C=CFG[k];
-    if(a==='start'){ ST[k]={ i:0, score:0, done:false, qs:shuf(C.bank).slice(0,10).map(function(q){ var o=shuf([0,1,2]); return { t:q[0], o:o.map(function(x){ return q[1][x]; }), ok:o.indexOf(0), x:q[2] }; }) }; render(card); card.scrollIntoView({ block:'nearest', behavior:'smooth' }); return; }
+    if(a==='start'){ stopT(ST[k]); ST[k]={ i:0, score:0, done:false, left:T, qs:shuf(C.bank).slice(0,10).map(function(q){ var o=shuf([0,1,2]); return { t:q[0], o:o.map(function(x){ return q[1][x]; }), ok:o.indexOf(0), x:q[2], src:q[3], lv:q[4] }; }) }; countdown(k); card.scrollIntoView({ block:'nearest', behavior:'smooth' }); return; }
     var s=ST[k]; if(!s) return;
-    if(a==='pick' && !s.done){ s.pick=+b.getAttribute('data-j'); s.done=true; if(s.pick===s.qs[s.i].ok) s.score++; render(card); return; }
-    if(a==='next'){ s.i++; s.done=false; s.pick=null; render(card); var top=card.getBoundingClientRect().top; if(top<0) card.scrollIntoView({ block:'start', behavior:'smooth' }); return; }
+    if(a==='pick' && !s.done){ stopT(s); s.pick=+b.getAttribute('data-j'); s.done=true; if(s.pick===s.qs[s.i].ok) s.score++; render(card); return; }
+    if(a==='next'){ s.i++; s.done=false; s.pick=null; s.left=T; render(card); if(s.i<s.qs.length) timer(k); var top=card.getBoundingClientRect().top; if(top<0) card.scrollIntoView({ block:'start', behavior:'smooth' }); return; }
     if(a==='share'){ share(k,b.getAttribute('data-s')); return; }
   });
 })();
