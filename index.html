@@ -2339,7 +2339,7 @@ button.cj-own{ cursor:pointer; background:#fff; font-family:'DM Sans',sans-serif
  <div class="cta-card coach" onclick="go('quiz-hub')" onmousedown="this.style.opacity='.9'" onmouseup="this.style.opacity='1'" ontouchstart="this.style.opacity='.9'" ontouchend="this.style.opacity='1'">
   <div class="cta-head">
    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-   <span>Quiz Professionnel</span><span class="cta-tag m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" fill="currentColor" fill-opacity=".18"/><path d="M5 19h14"/></svg>Membres</span>
+   <span>Quiz Pro</span><span class="cta-tag m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" fill="currentColor" fill-opacity=".18"/><path d="M5 19h14"/></svg>Membres</span>
   </div>
   <div class="cta-ico-wrap">
    <div class="cta-ico">
@@ -14699,7 +14699,27 @@ go=function(page){
   document.body.appendChild(box);
   var up=box.children[0], down=box.children[1];
   function activeScreen(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
+  /* Pages et fiches ouvertes par-dessus le site (offre, Mon espace, etc.) */
+  var OVS='.cpo-page,.cpdv,.cpw-sheet,.evp-sheet,.ofcm-sheet,.cprep-sheet,.lsxg-ov';
+  function topOverlay(){ var l=[].filter.call(document.querySelectorAll(OVS),function(e){ return e.getClientRects().length; });
+    /* toute autre page ouverte en plein écran par-dessus le site */
+    var W=window.innerWidth, H=window.innerHeight;
+    [].forEach.call(document.body.children,function(e){ if(e===box||l.indexOf(e)>-1||/^(SCRIPT|STYLE|IFRAME|CANVAS)$/.test(e.tagName)||e.classList.contains('screen')) return;
+      var cs=getComputedStyle(e); if(cs.position!=='fixed'||cs.display==='none'||cs.visibility==='hidden'||cs.pointerEvents==='none'||+cs.opacity===0) return;
+      var r=e.getBoundingClientRect(); if(r.width<W*.8||r.height<H*.8) return; l.push(e); });
+    if(!l.length) return null; l.sort(function(a,b){ return (parseInt(getComputedStyle(a).zIndex)||0)-(parseInt(getComputedStyle(b).zIndex)||0); }); return l[l.length-1]; }
+  function bestIn(root){ var best=null, bestGap=40;
+    [root].concat([].slice.call(root.querySelectorAll('*'))).forEach(function(el){
+      if(el.clientHeight<120) return; var gap=el.scrollHeight-el.clientHeight; if(gap<=bestGap) return;
+      var oy=getComputedStyle(el).overflowY; if(oy!=='auto'&&oy!=='scroll') return; if(!el.getClientRects().length) return;
+      best=el; bestGap=gap; });
+    return best; }
   function target(){
+    var ov=topOverlay();
+    if(ov){ box.style.zIndex='99990';
+      var own=ov.querySelector('.cpsa'); if(own && getComputedStyle(own).display!=='none') return null; /* la fiche a déjà ses flèches */
+      return bestIn(ov); }
+    box.style.zIndex='';
     var sc=activeScreen(); if(!sc) return null;
     if(getComputedStyle(sc).position!=='fixed'){ var d=document.scrollingElement; return d.scrollHeight-d.clientHeight>40 ? d : null; }
     var best=null, bestGap=40;
@@ -20257,9 +20277,8 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     function visible(el){ var r=el.getBoundingClientRect(); return r.top < (window.innerHeight||800)-40; }
     function step(){
       if(st.stop) return; if(st.paused){ st.t=setTimeout(step,300); return; }
-      var x=st.q.shift(); if(!x){ live(key,'Présentation terminée'); mark(key); return; }
+      var x=st.q.shift(); if(!x){ all(key); return; } /* Lisa a fini : toute la page s'affiche */
       var sl=x[0], it=x[1];
-      if(!sl.childElementCount && !visible(sl) && sl.getAttribute('data-slot')!=='top'){ st.q.unshift(x); st.t=setTimeout(step,350); return; } /* on attend que la section soit à l'écran */
       if(it[0]==='b'){ var row=document.createElement('div'); row.className='lsx-row'; row.innerHTML='<img class="lsx-av" alt="Lisa" src="'+lisa()+'"><div class="lsx-b"><span class="lsx-dots"><i></i><i></i><i></i></span></div>'; sl.appendChild(row);
         st.t=setTimeout(function(){ if(st.stop) return; row.querySelector('.lsx-b').innerHTML=it[1]; st.t=setTimeout(step,650); },Math.min(1400,500+it[1].length*4)); }
       else { var tmp=document.createElement('div'); tmp.innerHTML=itemHtml(it); while(tmp.firstChild) sl.appendChild(tmp.firstChild); st.t=setTimeout(step,600); }
@@ -20297,7 +20316,9 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
 .lsxg-say{ margin:0 0 12px; padding:11px 13px; border-radius:14px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.8rem; line-height:1.55; color:#1e293b; }
 .lsxg-say b{ color:#0f172a; }
 .lsxg-chips{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 13px; }
-.lsxg-chips span{ padding:5px 9px; border-radius:99px; font-size:.66rem; font-weight:800; color:#1e3a8a; background:#eff6ff; border:1px solid #dbeafe; }
+.lsxg-chips span{ display:inline-flex; align-items:center; gap:6px; padding:4px 10px 4px 4px; border-radius:99px; font-size:.66rem; font-weight:800; color:#1e3a8a; background:#eff6ff; border:1px solid #dbeafe; }
+.lsxg-chips i{ width:22px; height:22px; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 4px 10px -6px rgba(30,64,175,.8); }
+.lsxg-chips i svg{ width:13px; height:13px; stroke-width:2.1; }
 .lsxg-btn{ position:static !important; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; border:none; border-radius:14px; cursor:pointer; color:#fff; font:800 .86rem/1 'DM Sans',sans-serif; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 14px 26px -16px rgba(30,64,175,.9); }
 .lsxg-btn svg{ width:17px; height:17px; }
 .lsxg-btn.alt{ margin-top:8px; background:#fff; color:#0f172a; border:1px solid #e2e8f0; box-shadow:none; }
@@ -20337,6 +20358,18 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
 .lsxg-trust svg{ width:18px; height:18px; flex-shrink:0; margin-top:1px; color:#059669; }
 .lsxg-trust b{ color:#065f46; }
 .lsxg-trust-s{ margin:0 0 4px; padding:9px 11px; border-radius:12px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.7rem; line-height:1.5; color:#475569; }
+.lsxg-x{ display:none; position:static !important; margin-left:auto; width:38px; height:38px; flex-shrink:0; border-radius:50%; border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.12); color:#fff; cursor:pointer; align-items:center; justify-content:center; }
+.lsxg-x svg{ width:18px; height:18px; }
+.lsxg.fs .lsxg-x{ display:flex; }
+.lsxg-hd > div{ min-width:0; }
+.lsxg-ov{ position:fixed; inset:0; z-index:99500; overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; background:radial-gradient(120% 80% at 50% 0%,#e0f2fe 0%,#f1f5f9 55%,#eef2f7 100%); animation:lsxUp .3s ease-out both; }
+.lsxg-ov-in{ min-height:100%; box-sizing:border-box; display:flex; flex-direction:column; justify-content:center; max-width:720px; margin:0 auto; padding:16px; }
+.lsxg.fs{ margin:0; border-radius:24px; box-shadow:0 30px 60px -36px rgba(15,23,42,.9); }
+.lsxg.fs .lsxg-q{ font-size:1.05rem; }
+html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
+@media (max-width:520px){ .lsxg-ov-in{ padding:0; justify-content:flex-start; } .lsxg.fs{ min-height:100vh; min-height:100dvh; border-radius:0; border:none; } }
+@media (min-width:700px){ .lsxg-ov-in{ max-width:880px; padding:32px 24px; } .lsxg.fs .lsxg-hd{ padding:18px 24px; } .lsxg.fs .lsxg-hd img{ width:56px; height:56px; } .lsxg.fs .lsxg-hd b{ font-size:1.15rem; } .lsxg.fs .lsxg-hd span{ font-size:.78rem; }
+  .lsxg.fs .lsxg-bd{ padding:26px 32px 30px; min-height:420px; } .lsxg.fs .lsxg-q{ font-size:1.3rem; } .lsxg.fs .lsxg-op{ padding:16px 18px; font-size:.95rem; } .lsxg.fs .lsxg-ex{ font-size:.86rem; } .lsxg.fs .lsxg-say{ font-size:.9rem; } .lsxg.fs .lsxg-cd{ min-height:380px; } }
 .lsxg-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin:0 0 7px; }
 .lsxg-meta .lsxg-tag{ margin:0; }
 .lsxg-lv{ padding:3px 8px; border-radius:7px; font-size:.6rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#1e40af; background:#eff6ff; }
@@ -20486,9 +20519,9 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
   function shuf(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
   function lisa(){ return window.CP_LISA_IMG||''; }
   function member(){ try{ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return !!(u&&(u.emailVerified||(u.providerData||[]).some(function(p){ return p.providerId==='google.com'; }))); }catch(e){ return false; } }
-  function head(k){ var C=CFG[k]; return '<div class="lsxg-hd">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'<div><b>'+C.title+'</b><span>Avec Lisa · '+C.sub+'</span></div></div>'; }
+  function head(k){ var C=CFG[k]; return '<div class="lsxg-hd">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'<div><b>'+C.title+'</b><span>Avec Lisa · '+C.sub+'</span></div><button type="button" class="lsxg-x" data-g="close" aria-label="Fermer">'+S('<path d="M6 6l12 12M18 6 6 18"/>')+'</button></div>'; }
   function startView(k){ var C=CFG[k];
-    return '<p class="lsxg-say">'+C.intro+'</p>'+'<div class="lsxg-trust">'+S('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'<span><b>Réponses officielles et vérifiées.</b> Chaque réponse s\'appuie sur un texte de loi ou un site officiel, cité en source. Les lois évoluent : si une règle change, la source te permet de vérifier la version à jour en un clic.</span></div><div class="lsxg-chips"><span>🔎 Demandeur d\'emploi</span><span>🎓 Étudiant</span><span>🔄 Reconversion</span><span>💼 Freelance</span></div>'
+    return '<p class="lsxg-say">'+C.intro+'</p>'+'<div class="lsxg-trust">'+S('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'<span><b>Réponses officielles et vérifiées.</b> Chaque réponse s\'appuie sur un texte de loi ou un site officiel, cité en source. Les lois évoluent : si une règle change, la source te permet de vérifier la version à jour en un clic.</span></div><div class="lsxg-chips">'+[['<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/>','Demandeur d\'emploi'],['<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4V11"/><path d="M21.5 9v5.5"/>','Étudiant'],['<path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.5"/><path d="M4 20v-4.5h4.5"/>','Reconversion'],['<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m9.5 9.5-2 1.5 2 1.5M14.5 9.5l2 1.5-2 1.5"/>','Freelance']].map(function(z){ return '<span><i>'+S(z[0])+'</i>'+z[1]+'</span>'; }).join('')+'</div>'
       +'<button type="button" class="lsxg-btn" data-g="start">'+S('<path d="M8 5v14l11-7z" fill="currentColor"/>')+C.start+'</button>'; }
   function qView(k){ var C=CFG[k], s=ST[k], q=s.qs[s.i], n=s.qs.length;
     var h='<div class="lsxg-top"><span>'+C.tag+' '+(s.i+1)+' / '+n+'</span><em>Score : '+s.score+'</em></div><div class="lsxg-prog"><i style="width:'+(s.i/n*100)+'%"></i></div>'
@@ -20522,7 +20555,11 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
       var b=c.querySelector('[data-time] b'), bar=c.querySelector('[data-tbar]'), tw=c.querySelector('[data-time]'); if(b) b.textContent=s.left; if(bar) bar.style.width=(left/T*100)+'%'; if(tw) tw.classList.toggle('hot',left<=5);
       if(left<=0){ stopT(s); s.pick=-1; s.done=true; render(c); } },200); }
   function render(card){ var k=card.getAttribute('data-game'); card.querySelector('.lsxg-bd').innerHTML=body(k); }
-  window.cpLsxGame=function(k){ if(!CFG[k]) return ''; var s0=ST[k]; if(s0&&s0.cd!==null&&s0.cd!==undefined){ stopT(s0); s0.cd=null; s0.qs=null; } return '<div class="lsxg" data-game="'+k+'">'+head(k)+'<div class="lsxg-bd">'+body(k)+'</div></div>'; };
+  var FS={};
+  function openFs(k,card){ if(FS[k]) return; var ph=document.createElement('div'); ph.className='lsxg-hold'; ph.setAttribute('data-hold',k); card.parentNode.insertBefore(ph,card);
+    var ov=document.createElement('div'); ov.className='lsxg-ov'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true'); ov.innerHTML='<div class="lsxg-ov-in"></div>'; ov.firstChild.appendChild(card); document.body.appendChild(ov); document.documentElement.classList.add('lsxg-lock'); card.classList.add('fs'); FS[k]=ov; }
+  function closeFs(k){ var ov=FS[k]; if(!ov) return; stopT(ST[k]); ST[k]=null; var card=ov.querySelector('.lsxg'), ph=document.querySelector('.lsxg-hold[data-hold="'+k+'"]'); card.classList.remove('fs'); if(ph){ ph.parentNode.replaceChild(card,ph); render(card); } else card.remove(); ov.remove(); FS[k]=null; if(!document.querySelector('.lsxg-ov')) document.documentElement.classList.remove('lsxg-lock'); }
+  window.cpLsxGame=function(k){ if(!CFG[k]) return ''; if(FS[k]) return '<div class="lsxg-hold" data-hold="'+k+'"></div>'; var s0=ST[k]; if(s0&&s0.cd!==null&&s0.cd!==undefined){ stopT(s0); s0.cd=null; s0.qs=null; } return '<div class="lsxg" data-game="'+k+'">'+head(k)+'<div class="lsxg-bd">'+body(k)+'</div></div>'; };
   function shareUrl(k){ var base=/^https:/.test(location.protocol)?location.origin+location.pathname:'https://career-pulse-eva.vercel.app/'; return base+'#'+k; }
   function toast(t){ var d=document.createElement('div'); d.className='lsxg-toast'; d.textContent=t; document.body.appendChild(d); setTimeout(function(){ d.remove(); },2200); }
   function share(k,how){ var C=CFG[k], s=ST[k], url=shareUrl(k), txt='J\'ai eu '+s.score+'/'+s.qs.length+' au '+C.name+' 🎯 Et toi, tu fais combien ?', E=encodeURIComponent;
@@ -20530,11 +20567,13 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(how==='copy'){ var all=txt+' '+url; try{ navigator.clipboard.writeText(all).then(function(){ toast('Lien copié ✅'); },function(){ prompt('Copie ce texte :',all); }); }catch(e){ prompt('Copie ce texte :',all); } return; }
     if(how==='mail'){ location.href=map.mail; return; }
     window.open(map[how],'_blank','noopener,width=620,height=560'); }
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ Object.keys(FS).forEach(function(k){ if(FS[k]) closeFs(k); }); } });
   document.addEventListener('click',function(e){ var b=e.target.closest('[data-g]'); if(!b) return; var card=b.closest('.lsxg'); if(!card) return; var k=card.getAttribute('data-game'), a=b.getAttribute('data-g'), C=CFG[k];
-    if(a==='start'){ stopT(ST[k]); ST[k]={ i:0, score:0, done:false, left:T, qs:shuf(C.bank).slice(0,10).map(function(q){ var o=shuf([0,1,2]); return { t:q[0], o:o.map(function(x){ return q[1][x]; }), ok:o.indexOf(0), x:q[2], src:q[3], lv:q[4] }; }) }; countdown(k); card.scrollIntoView({ block:'nearest', behavior:'smooth' }); return; }
+    if(a==='close'){ closeFs(k); return; }
+    if(a==='start'){ openFs(k,card); stopT(ST[k]); ST[k]={ i:0, score:0, done:false, left:T, qs:shuf(C.bank).slice(0,10).map(function(q){ var o=shuf([0,1,2]); return { t:q[0], o:o.map(function(x){ return q[1][x]; }), ok:o.indexOf(0), x:q[2], src:q[3], lv:q[4] }; }) }; countdown(k); if(card.parentNode) card.parentNode.scrollTop=0; return; }
     var s=ST[k]; if(!s) return;
     if(a==='pick' && !s.done){ stopT(s); s.pick=+b.getAttribute('data-j'); s.done=true; if(s.pick===s.qs[s.i].ok) s.score++; render(card); return; }
-    if(a==='next'){ s.i++; s.done=false; s.pick=null; s.left=T; render(card); if(s.i<s.qs.length) timer(k); var top=card.getBoundingClientRect().top; if(top<0) card.scrollIntoView({ block:'start', behavior:'smooth' }); return; }
+    if(a==='next'){ s.i++; s.done=false; s.pick=null; s.left=T; render(card); if(s.i<s.qs.length) timer(k); var top=card.getBoundingClientRect().top; var ovi=card.parentNode; if(ovi&&ovi.classList.contains('lsxg-ov-in')) ovi.parentNode.scrollTop=0; return; }
     if(a==='share'){ share(k,b.getAttribute('data-s')); return; }
   });
 })();
