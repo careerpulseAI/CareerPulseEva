@@ -17745,7 +17745,7 @@ window.cpSheetArrows=function(sc,host){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
     if(!S.st.profil){
       return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Pour bien t\'accompagner, dis-moi ta <b>situation</b> :</p>'
-        +'<div class="cj-pfs">'+['dem','etu','rec','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+(k==='frl'?' <small>bientôt</small>':'')+'</button>'; }).join('')+'</div></div></div>';
+        +'<div class="cj-pfs">'+['dem','etu','rec','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+'</button>'; }).join('')+'</div></div></div>';
     }
     if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
     else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
@@ -17767,6 +17767,11 @@ window.cpSheetArrows=function(sc,host){
   /* ── Hero ── */
   function next(){ var p=profPct(); return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
   function drawHero(){
+    var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
+    if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=S.st.profil==='frl'?'Ton espace freelance':ht._t0; }
+    if(S.st.profil==='frl' && window.cpFrl){ var fh=cpFrl.hero(); if(gl) gl.textContent=fh.label; if($('cps-pct')) $('cps-pct').textContent=fh.pct+' %'; if($('cps-bar')) $('cps-bar').style.width=fh.pct+'%';
+      if($('cps-name')) $('cps-name').textContent=first(); if($('cps-sub')) $('cps-sub').textContent=fh.sub; if($('cps-next-t')) $('cps-next-t').textContent=fh.next[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',fh.next[1]); return; }
+    if(gl) gl.textContent='Profil complété';
     var p=profPct();
     if($('cps-pct')) $('cps-pct').textContent=p+' %'; if($('cps-bar')) $('cps-bar').style.width=p+'%';
     if($('cps-name')) $('cps-name').textContent=first(); if($('cps-sub')) $('cps-sub').textContent=val('fp-titre')?val('fp-titre')+' · ton espace emploi CareerPulse':'Ton profil, tes candidatures et les recruteurs CareerPulse, au même endroit.';
@@ -17780,6 +17785,7 @@ window.cpSheetArrows=function(sc,host){
   function relN(){ return S.list.filter(function(x){ return x.statut==='Envoyée'&&days(x.date)>=7; }).length; }
   function drawHome(){
     var b=$('cj-home'); if(!b) return;
+    if(S.st.profil==='frl' && window.cpFrl){ b.innerHTML=cpFrl.home(); return; } /* menu Freelance à part */
     var d=curDefi(), pb=pendingBilan(), tipI=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5), tip=TIPS[tipI%TIPS.length];
     var weekN=S.list.filter(function(x){ return inWeek(x.date,wk()); }).length, itw=cnt('itw'), p=profPct();
     var defi = pb ? '<button type="button" class="cj-box cj-defi" data-cj="bilan"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Bilan à faire</b><small>Ton défi de la '+wkLabel(pb.week)+'</small></span><em class="cj-score">'+done(pb)+'/'+pb.cible+'</em></button>'
@@ -17827,6 +17833,7 @@ window.cpSheetArrows=function(sc,host){
       +'<div class="cj-box cj-comp">'+ring(p)+'<span class="cj-box-t"><b>Complétude du profil</b><small>Infos perso, expériences, compétences, lettre et documents.</small></span></div>'
       +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+(/^(lm|cv|docs)$/.test(r[0])?'<span class="cj-up'+(r[3]?' on':'')+'">'+(r[3]?(r[0]==='docs'?'Ajouter':'Remplacer'):'Ajouter')+'</span>':'')+I(P.chev,15)+'</button>'; }).join('')+'</div>'; }
   function drawAll(){ drawHero(); drawHome(); drawProfTop(); drawCheck(); }
+  window.cpStream={ st:function(){ return S.st; }, save:function(){ return saveSt(); }, draw:function(){ drawAll(); }, sheet:function(t,sub,html,onClose){ return sheet(t,sub,html,onClose); } };
 
   /* ── Pages en plein écran ── */
   function sheet(t,sub,html,onClose){
@@ -18180,7 +18187,7 @@ window.cpSheetArrows=function(sc,host){
     if(a==='wiz'){ if(profPct()>=100 || !user()) { wizard(); } else { var f=firstSec(); wizard(f==='infos'&&!val('fp-name')?null:f); } return; }
     if(a==='sec'){ var s=b.getAttribute('data-s'); if(s==='lm'||s==='cv'||s==='docs') openProf(s); else wizard(s); return; }
     if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
-    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Ta page Freelance arrive bientôt : en attendant, je t\'accompagne ici 😉'); else say('C\'est noté : '+PROFS[S.st.profil]); drawAll(); return; }
+    if(a==='pf'){ S.st.profil=b.getAttribute('data-p'); saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]); drawAll(); return; }
     if(a==='pfch'){ S.st.profil=''; drawAll(); return; }
     if(a==='paste'){ var li=$('cj-li'); if(!li) return; if(navigator.clipboard && navigator.clipboard.readText){ navigator.clipboard.readText().then(function(t){ li.value=String(t||'').trim(); if(!li.value) li.focus(); }).catch(function(){ li.focus(); say('Appuie longuement dans le champ, puis « Coller »'); }); } else li.focus(); return; }
     if(a==='vis'){ toggleVis(); return; } if(a==='inv-rec'){ share(true); return; } if(a==='inv-ami'){ share(false); return; }
@@ -20606,6 +20613,301 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   var t=null; function soon(){ clearTimeout(t); t=setTimeout(run,120); }
   try{ new MutationObserver(soon).observe(document.body,{ subtree:true, childList:true, attributes:true, attributeFilter:['class'] }); }catch(e){}
   if(document.readyState!=='loading') soon(); else document.addEventListener('DOMContentLoaded',soon);
+})();
+</script>
+
+<!-- ══ Mon espace : menu Freelance (partie 1A : bascule, tableau de bord, Mon activité, Clients & missions, Lisa) ══ -->
+<style id="cpfrl-css">
+.frl-kpis{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:14px 0; }
+.frl-kpi{ position:relative; overflow:hidden; padding:13px 12px; border-radius:18px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 16px 32px -30px rgba(15,23,42,.8); text-align:left; }
+.frl-kpi::before{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:linear-gradient(90deg,#1e40af,#059669); }
+.frl-kpi b{ display:block; font-size:1.25rem; font-weight:900; color:#1e40af; line-height:1.1; letter-spacing:-.02em; overflow-wrap:anywhere; }
+.frl-kpi span{ display:block; margin-top:4px; font-size:.68rem; font-weight:700; color:#64748b; line-height:1.3; }
+.frl-kpi.g b{ color:#047857; } .frl-kpi.o b{ color:#c2410c; }
+@media (max-width:640px){ .frl-kpis{ grid-template-columns:1fr 1fr; } }
+@media (min-width:821px){ .frl-kpi b{ font-size:1.55rem; } .frl-kpi span{ font-size:.76rem; } }
+.frl-pipe{ display:flex; gap:6px; margin-top:8px; width:100%; }
+.frl-pipe i{ flex:1; font-style:normal; text-align:center; font-size:.64rem; font-weight:900; padding:4px 0; border-radius:7px; }
+.frl-s0{ background:#f1f5f9; color:#475569; } .frl-s1{ background:#eff6ff; color:#1e40af; } .frl-s2{ background:#fff7ed; color:#c2410c; } .frl-s3{ background:#f5f3ff; color:#6d28d9; } .frl-s4{ background:#ecfdf5; color:#047857; }
+.frl-note{ font-size:.72rem; line-height:1.5; color:#64748b; text-align:center; margin:4px 0 0; }
+.frl-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+.frl-chips button{ padding:7px 11px; border-radius:999px; border:1.5px solid #dbe4ef; background:#fff; font:700 .76rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; }
+.frl-chips button.on{ background:#1e3a8a; border-color:#1e3a8a; color:#fff; }
+.frl-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+.frl-tags span{ display:inline-flex; align-items:center; gap:5px; padding:5px 6px 5px 10px; border-radius:999px; background:#eff6ff; color:#1e3a8a; font-size:.76rem; font-weight:700; }
+.frl-tags button{ width:20px; height:20px; border-radius:50%; border:none; background:#dbeafe; color:#1e3a8a; cursor:pointer; font-size:.8rem; line-height:1; padding:0; }
+.cj-form textarea.frl-ta{ width:100%; box-sizing:border-box; padding:12px; border-radius:12px; border:1.5px solid #dbe4ef; background:#f8fafc; font:500 .9rem 'DM Sans',sans-serif; color:#0f172a; resize:vertical; min-height:96px; }
+.cj-form textarea.frl-ta:focus{ outline:none; border-color:#1e40af; background:#fff; }
+.frl-hint{ font-size:.7rem; font-weight:600; color:#64748b; line-height:1.45; }
+.frl-steps{ display:flex; gap:6px; overflow-x:auto; padding-bottom:2px; scrollbar-width:none; } .frl-steps::-webkit-scrollbar{ display:none; }
+.frl-steps button{ flex:1 0 auto; display:flex; flex-direction:column; align-items:center; gap:2px; min-width:72px; padding:8px 10px; border-radius:14px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; font:700 .7rem 'DM Sans',sans-serif; color:#334155; }
+.frl-steps button b{ font-size:1.05rem; font-weight:900; color:#1e40af; }
+.frl-steps button.on{ background:#1e3a8a; border-color:#1e3a8a; color:#fff; } .frl-steps button.on b{ color:#fff; }
+.frl-it{ display:flex; flex-direction:column; gap:8px; padding:13px; border-radius:18px; border:1px solid #e2e8f0; background:#fff; box-shadow:0 14px 28px -28px rgba(15,23,42,.8); }
+.frl-it-hd{ display:flex; align-items:flex-start; gap:10px; }
+.frl-it-hd > div{ flex:1; min-width:0; }
+.frl-it-hd b{ display:block; font-size:.92rem; font-weight:800; color:#0f172a; overflow-wrap:anywhere; }
+.frl-it-hd small{ display:block; margin-top:2px; font-size:.74rem; color:#64748b; line-height:1.4; overflow-wrap:anywhere; }
+.frl-amt{ flex-shrink:0; font-size:.95rem; font-weight:900; color:#047857; white-space:nowrap; }
+.frl-it-ft{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+.frl-it-ft select{ flex:1; min-width:150px; padding:9px 10px; border-radius:11px; border:1.5px solid #dbe4ef; background:#f8fafc; font:700 .8rem 'DM Sans',sans-serif; color:#0f172a; }
+.frl-ib{ display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:8px 11px; border-radius:11px; border:1px solid #e2e8f0; background:#fff; font:700 .76rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; }
+.frl-ib svg{ width:15px; height:15px; } .frl-ib.del{ color:#b91c1c; } a.frl-ib{ text-decoration:none !important; color:#334155 !important; }
+.frl-it-ft select{ min-width:120px; }
+.frl-empty{ padding:22px 14px; border-radius:18px; border:1.5px dashed #cbd5e1; text-align:center; font-size:.82rem; color:#64748b; line-height:1.5; background:#f8fafc; }
+.frl-badge{ display:inline-block; padding:3px 8px; border-radius:7px; font-size:.64rem; font-weight:800; }
+.frl-defi-n{ display:flex; align-items:center; justify-content:center; gap:14px; margin:6px 0; }
+.frl-defi-n button{ width:46px; height:46px; border-radius:50%; border:1.5px solid #cbd5e1; background:#fff; font:900 1.3rem 'DM Sans',sans-serif; color:#1e3a8a; cursor:pointer; }
+.frl-defi-n b{ font-size:2rem; font-weight:900; color:#1e40af; min-width:90px; text-align:center; }
+.frl-types{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.frl-types button{ display:flex; align-items:center; gap:9px; padding:11px; border-radius:15px; border:1.5px solid #e2e8f0; background:#fff; text-align:left; cursor:pointer; font:700 .8rem 'DM Sans',sans-serif; color:#0f172a; }
+.frl-types button.on{ border-color:#1e40af; background:#eff6ff; }
+.frl-types .cj-ic{ width:34px; height:34px; border-radius:11px; } .frl-types .cj-ic svg{ width:17px !important; height:17px !important; }
+@media (max-width:420px){ .frl-types{ grid-template-columns:1fr; } }
+.frl-legal{ font-size:.68rem; color:#94a3b8; text-align:center; line-height:1.5; margin:10px 0 0; }
+</style>
+<script>
+(function(){
+  if(window.cpFrl) return;
+  function $(id){ return document.getElementById(id); }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function user(){ return window._fbUser || (window.fbAuth && fbAuth.currentUser) || null; }
+  function db(){ return window.fbDb; }
+  function toastMsg(m){ if(typeof toast==='function') toast(m); }
+  function I(p,w){ return '<svg viewBox="0 0 24 24" width="'+(w||18)+'" height="'+(w||18)+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  var P={ brief:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>', users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', bulb:'<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+    chev:'<path d="m9 18 6-6-6-6"/>', plus:'<path d="M12 5v14M5 12h14"/>', check:'<path d="m5 12 5 5L20 7"/>', pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>', trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>',
+    send:'<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>', doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/>',
+    chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>', star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>', laptop:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m9.5 9.5-2 1.5 2 1.5M14.5 9.5l2 1.5-2 1.5"/>',
+    id:'<rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="9" cy="10" r="2.2"/><path d="M5.5 16c.8-1.6 2-2.4 3.5-2.4s2.7.8 3.5 2.4M14 9h4M14 13h4"/>', share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/>',
+    trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>', mail:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/>', clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' };
+  var STEPS=[['prospect','Prospect'],['devis','Devis envoyé'],['cours','En cours'],['terminee','Terminée'],['payee','Payée']];
+  var STATUTS=[['micro','Micro-entreprise (auto-entrepreneur)'],['ei','Entreprise individuelle (régime réel)'],['societe','Société (EURL, SASU…)'],['projet','Pas encore créée']];
+  var ACTIV=[['bnc','Prestations de services (activité libérale)'],['bic_s','Prestations de services (commerciale ou artisanale)'],['vente','Vente de marchandises']];
+  var MODES=[['distance','À distance'],['site','Sur site'],['mixte','Les deux']];
+  var DISPO=[['now','Disponible maintenant'],['soon','Disponible bientôt'],['partiel','Disponible à temps partiel'],['busy','Pas disponible pour le moment']];
+  var DEFIS={ pros:['Contacter des prospects','prospects contactés',P.users], devis:['Envoyer des devis','devis envoyés',P.doc], rel:['Relancer des paiements','relances faites',P.bell],
+    port:['Enrichir mon portfolio','réalisations ajoutées',P.star], decl:['Faire ma déclaration URSSAF','déclaration faite',P.check], autre:['Autre défi','actions faites',P.target] };
+  var TIPS=['Note chaque prospect dès le premier échange : un contact oublié, c\'est une mission perdue.','Envoie ton devis dans les 48 h après un rendez-vous : c\'est là que le client est le plus motivé.',
+    'Fixe ton tarif journalier en partant de tes charges et de tes jours réellement facturables, pas seulement du marché.','Demande un avis à chaque client satisfait : c\'est ton meilleur argument pour le suivant.',
+    'Bloque un créneau fixe chaque semaine pour ta prospection, même quand tu as des missions.','Garde toujours une trace écrite de ce qui est convenu : prix, délais, livrables.',
+    'Relance une facture le lendemain de son échéance : poliment, mais sans attendre.','Mets de côté une partie de chaque paiement pour tes cotisations et tes impôts.'];
+  var D={ uid:null, loaded:false, loading:null, prof:{}, clients:[], missions:[], defi:null };
+  function ST(){ return window.cpStream ? cpStream.st() : {}; }
+  function on(){ return ST().profil==='frl'; }
+  function ref(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid):null; }
+  function loc(k,v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem('cpfrl_'+k)||'null'); localStorage.setItem('cpfrl_'+k,JSON.stringify(v)); }catch(e){ return null; } }
+  function load(){
+    var u=user(); if(!u){ D.prof=loc('prof')||{}; D.clients=loc('clients')||[]; D.missions=loc('missions')||[]; D.defi=loc('defi'); D.loaded=true; return Promise.resolve(); }
+    if(D.uid===u.uid && (D.loaded||D.loading)) return D.loading||Promise.resolve();
+    D.uid=u.uid; var r=ref(); if(!r){ D.loaded=true; return Promise.resolve(); }
+    function all(c){ return r.collection(c).get().then(function(q){ var a=[]; q.forEach(function(d){ var x=d.data(); x.id=d.id; a.push(x); }); return a; }).catch(function(){ return []; }); }
+    D.loading=Promise.all([ r.collection('freelance').doc('profil').get().then(function(d){ return d.exists?d.data():{}; }).catch(function(){ return {}; }),
+      r.collection('freelance').doc('defi').get().then(function(d){ return d.exists?d.data():null; }).catch(function(){ return null; }), all('frl_clients'), all('frl_missions') ])
+      .then(function(v){ D.prof=v[0]||{}; D.defi=v[1]; D.clients=v[2]; D.missions=v[3]; D.loaded=true; D.loading=null; redraw(); });
+    return D.loading;
+  }
+  function saveDoc(kind,data){ var r=ref(); if(!r){ loc(kind,data); return Promise.resolve(); } return r.collection('freelance').doc(kind).set(data).catch(function(){ toastMsg('Enregistrement impossible pour le moment'); }); }
+  function saveItem(c,x){ var r=ref(), d=JSON.parse(JSON.stringify(x)); delete d.id;
+    if(!r){ var L=c==='frl_clients'?D.clients:D.missions; if(!x.id) x.id='l'+Date.now(); loc(c==='frl_clients'?'clients':'missions',L); return Promise.resolve(x); }
+    if(x.id) return r.collection(c).doc(x.id).set(d).then(function(){ return x; });
+    return r.collection(c).add(d).then(function(nr){ x.id=nr.id; return x; }); }
+  function delItem(c,id){ var r=ref(); if(!r){ loc(c==='frl_clients'?'clients':'missions',c==='frl_clients'?D.clients:D.missions); return Promise.resolve(); } return r.collection(c).doc(id).delete(); }
+  function redraw(){ if(window.cpStream) cpStream.draw(); }
+
+  /* ── Calculs ── */
+  function eur(n){ n=Math.round(+n||0); return n.toLocaleString('fr-FR')+' €'; }
+  function amt(m){ return +m.montant||0; }
+  function paidIn(m,y,mo){ if(m.statut!=='payee'||!m.paidAt) return false; var d=new Date(m.paidAt); return d.getFullYear()===y && (mo==null||d.getMonth()===mo); }
+  function caMois(){ var d=new Date(); return D.missions.filter(function(m){ return paidIn(m,d.getFullYear(),d.getMonth()); }).reduce(function(s,m){ return s+amt(m); },0); }
+  function caAn(){ var d=new Date(); return D.missions.filter(function(m){ return paidIn(m,d.getFullYear()); }).reduce(function(s,m){ return s+amt(m); },0); }
+  function nb(s){ return D.missions.filter(function(m){ return m.statut===s; }).length; }
+  function attente(){ return D.missions.filter(function(m){ return m.statut==='terminee'; }); }
+  function client(id){ return D.clients.filter(function(c){ return c.id===id; })[0]; }
+  var PFIELDS=['nom','metier','statut','activite','tjm','dispo','mode','ville','presentation'];
+  function pct(){ var p=D.prof||{}, n=PFIELDS.filter(function(k){ return p[k]; }).length+((p.competences||[]).length?1:0); return Math.round(n/(PFIELDS.length+1)*100); }
+  function monday(d){ d=new Date(d||Date.now()); d.setHours(0,0,0,0); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d; }
+  function wk(){ var m=monday(); return m.getFullYear()+'-'+('0'+(m.getMonth()+1)).slice(-2)+'-'+('0'+m.getDate()).slice(-2); }
+  function curDefi(){ return D.defi && D.defi.week===wk() ? D.defi : null; }
+  function first(){ var e=$('fp-name'); var n=e?String(e.value||'').trim():''; return n.split(/\s+/)[0]||''; }
+  function lisa(){ return window.CJ_IMG||window.CP_LISA_IMG||''; }
+  function av(sm){ return '<span class="cj-av'+(sm?' sm':'')+'">'+(lisa()?'<img src="'+lisa()+'" alt="Lisa">':'')+'</span>'; }
+  function say(html){ return '<div class="cj-say">'+av(true)+'<div>'+html+'</div></div>'; }
+
+  /* ── Lisa (coach du tableau de bord) ── */
+  function coach(){
+    var n=first(), m=[], act=null, p=pct(), d=curDefi(), at=attente().length;
+    if(!D.loaded) m.push('Je prépare ton espace Freelance…');
+    else if(p<100){ m.push((n?'Bonjour '+esc(n)+' 👋 ':'Bienvenue dans ton espace Freelance 👋 ')+'Commence par décrire <b>ton activité</b> : métier, statut, tarif. Ton activité est complétée à <b>'+p+' %</b>.'); act=['Décrire mon activité','frl-act']; }
+    else if(!D.missions.length){ m.push('Ton activité est prête 👏 Ajoute ta <b>première mission</b>, même au stade de prospect : je t\'aide à la suivre jusqu\'au paiement.'); act=['Ajouter une mission','frl-madd']; }
+    else if(at){ m.push('Tu as <b>'+at+' mission'+(at>1?'s':'')+' terminée'+(at>1?'s':'')+'</b> pas encore payée'+(at>1?'s':'')+'. Pense à vérifier que ton client a bien tout reçu.'); act=['Voir mes missions','frl-miss']; }
+    else if(!d){ m.push('Choisis ton <b>défi freelance de la semaine</b> : prospecter, envoyer des devis, relancer… Je t\'aide à le tenir.'); act=['Choisir mon défi','frl-defi']; }
+    else { var r=Math.max(0,d.cible-(d.manuel||0)); m.push(r?'Ton défi « '+esc(DEFIS[d.type][0].toLowerCase())+' » avance : <b>'+(d.manuel||0)+' / '+d.cible+'</b>. Encore '+r+' et c\'est gagné 💪':'Défi de la semaine réussi 🎉 Bravo, la régularité fait les freelances qui durent.'); act=['Voir mon défi','frl-defi']; }
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">Freelance · changer</button></div>'
+      +m.map(function(x){ return '<p>'+x+'</p>'; }).join('')+(act?'<button type="button" class="cj-btn" data-frl="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+'</div></div>';
+  }
+  function home(){
+    load();
+    var tip=TIPS[(new Date().getDate())%TIPS.length], d=curDefi(), cours=nb('cours'), p=pct();
+    var kpis='<div class="frl-kpis"><div class="frl-kpi g"><b>'+eur(caMois())+'</b><span>encaissé ce mois-ci</span></div><div class="frl-kpi"><b>'+eur(caAn())+'</b><span>encaissé en '+new Date().getFullYear()+'</span></div>'
+      +'<div class="frl-kpi o"><b>'+attente().length+'</b><span>mission'+(attente().length>1?'s':'')+' à faire payer</span></div><div class="frl-kpi"><b>'+cours+'</b><span>mission'+(cours>1?'s':'')+' en cours</span></div></div>';
+    var tiles='<div class="cj-tiles">'
+      +'<button type="button" class="cj-tile" data-frl="frl-act"><span class="cj-ic b">'+I(P.id,22)+'</span><b>Mon activité</b><small>Métier, statut, tarif, disponibilité</small><span class="cj-tm"><strong>'+p+' %</strong><em>'+(p<100?'activité complétée':'activité complète ✓')+'</em></span><i class="cj-bar"><i style="width:'+p+'%"></i></i></button>'
+      +'<button type="button" class="cj-tile" data-frl="frl-miss"><span class="cj-ic g">'+I(P.brief,22)+'</span><b>Clients & missions</b><small>Du premier contact au paiement</small><span class="cj-tm"><strong>'+D.missions.length+'</strong><em>mission'+(D.missions.length>1?'s':'')+' · '+D.clients.length+' client'+(D.clients.length>1?'s':'')+'</em></span>'
+        +'<span class="frl-pipe">'+STEPS.map(function(s,i){ return '<i class="frl-s'+i+'" title="'+s[1]+'">'+nb(s[0])+'</i>'; }).join('')+'</span></button>'
+      +'<button type="button" class="cj-tile" data-frl="frl-defi"><span class="cj-ic b">'+I(P.target,22)+'</span><b>Mon défi de la semaine</b><small>'+(d?esc(DEFIS[d.type][0]):'Prospecter, relancer, déclarer…')+'</small><span class="cj-tm"><strong>'+(d?(d.manuel||0)+'/'+d.cible:'—')+'</strong><em>'+(d?((d.manuel||0)>=d.cible?'défi réussi 🎉':'défi en cours'):'à choisir')+'</em></span><i class="cj-bar"><i style="width:'+(d?Math.min(100,Math.round((d.manuel||0)/d.cible*100)):0)+'%"></i></i></button>'
+      +'<button type="button" class="cj-tile" disabled style="cursor:default;opacity:.92"><span class="cj-ic y">'+I(P.doc,22)+'</span><b>Devis, factures & chiffre d\'affaires</b><small>Factures PDF, relances, URSSAF</small><span class="cj-tm"><strong style="font-size:1rem">Bientôt</strong><em>arrive très vite dans ton espace</em></span></button>'
+      +'</div>';
+    return coach()+kpis+tiles
+      +'<button type="button" class="cj-box cj-tip cj-mtip" data-frl="frl-tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil freelance du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
+      +'<p class="frl-legal">Ces outils t\'aident à t\'organiser : ils ne remplacent pas un expert-comptable.</p>';
+  }
+  function hero(){ var p=pct(); return { pct:p, label:'Activité complétée', sub:'Ton activité freelance : clients, missions et chiffre d\'affaires, au même endroit.', next:p<100?['Décrire mon activité','frl-act']:(!D.missions.length?['Ajouter ma première mission','frl-madd']:['Voir mes clients et missions','frl-miss']) }; }
+
+  /* ── Fiches ── */
+  function sheet(t,sub,html){ return cpStream.sheet(t,sub,html); }
+  function opts(list,v){ return '<option value="">Choisir…</option>'+list.map(function(o){ return '<option value="'+o[0]+'"'+(o[0]===v?' selected':'')+'>'+esc(o[1])+'</option>'; }).join(''); }
+  function v(id){ var e=$(id); return e?String(e.value||'').trim():''; }
+
+  function openAct(){
+    var p=JSON.parse(JSON.stringify(D.prof||{})); p.competences=p.competences||[];
+    var o=sheet('Mon activité','Ce que tu proposes à tes clients',''); var tags=p.competences.slice();
+    function tagsHtml(){ return tags.map(function(t,i){ return '<span>'+esc(t)+'<button type="button" data-frl="frl-tdel" data-i="'+i+'" aria-label="Retirer">×</button></span>'; }).join(''); }
+    o.body.innerHTML=say('Décris ton activité en quelques minutes. Tout reste <b>privé</b> : rien n\'est montré aux employeurs sans ton accord.')
+      +'<div class="cj-form">'
+      +'<label>Nom commercial ou ton nom<input id="frl-nom" maxlength="80" placeholder="Ex : Studio Martin, ou Sophie Martin" value="'+esc(p.nom||'')+'"></label>'
+      +'<label>Ton métier<input id="frl-metier" maxlength="80" placeholder="Ex : Développeuse web, graphiste, coach sportif" value="'+esc(p.metier||'')+'"></label>'
+      +'<div class="cj-2"><label>Statut<select id="frl-statut">'+opts(STATUTS,p.statut)+'</select></label><label>Type d\'activité<select id="frl-activite">'+opts(ACTIV,p.activite)+'</select></label></div>'
+      +'<span class="frl-hint">Le type d\'activité servira à calculer ton plafond et tes cotisations (dans la prochaine mise à jour).</span>'
+      +'<label>Numéro SIRET (facultatif)<input id="frl-siret" maxlength="17" inputmode="numeric" placeholder="14 chiffres" value="'+esc(p.siret||'')+'"></label>'
+      +'<div class="cj-2"><label>Tarif journalier (€ HT)<input id="frl-tjm" type="number" min="0" step="10" inputmode="numeric" placeholder="Ex : 350" value="'+esc(p.tjm||'')+'"></label><label>Disponibilité<select id="frl-dispo">'+opts(DISPO,p.dispo)+'</select></label></div>'
+      +'<div class="cj-2"><label>Façon de travailler<select id="frl-mode">'+opts(MODES,p.mode)+'</select></label><label>Ville<input id="frl-ville" maxlength="60" placeholder="Ex : Caen" value="'+esc(p.ville||'')+'"></label></div>'
+      +'<label>Compétences<span style="display:flex;gap:8px"><input id="frl-comp" maxlength="40" placeholder="Ex : WordPress" style="flex:1"><button type="button" class="frl-ib" data-frl="frl-tadd">'+I(P.plus,15)+'Ajouter</button></span></label>'
+      +'<div class="frl-tags" id="frl-tags">'+tagsHtml()+'</div>'
+      +'<label>Présentation<textarea id="frl-pres" class="frl-ta" maxlength="600" placeholder="En 3 phrases : ce que tu fais, pour qui, et ce qui te distingue.">'+esc(p.presentation||'')+'</textarea></label>'
+      +'<button type="button" class="cj-main" data-frl="frl-asave">'+I(P.check,18)+'Enregistrer mon activité</button></div>';
+    o.tags=tags; o.tagsHtml=tagsHtml; ACT=o;
+  }
+  var ACT=null, MISS=null, DEF=null;
+  function addTag(){ if(!ACT) return; var e=$('frl-comp'), t=e?e.value.trim():''; if(!t) return; if(ACT.tags.length>=15){ toastMsg('15 compétences maximum'); return; } if(ACT.tags.indexOf(t)<0) ACT.tags.push(t); e.value=''; $('frl-tags').innerHTML=ACT.tagsHtml(); e.focus(); }
+  function saveAct(b){
+    var siret=v('frl-siret').replace(/\s/g,''); if(siret && !/^\d{14}$/.test(siret)){ toastMsg('Le SIRET doit contenir 14 chiffres'); return; }
+    var p={ nom:v('frl-nom'), metier:v('frl-metier'), statut:v('frl-statut'), activite:v('frl-activite'), siret:siret, tjm:v('frl-tjm')?Math.max(0,+v('frl-tjm')):'', dispo:v('frl-dispo'), mode:v('frl-mode'), ville:v('frl-ville'), competences:ACT.tags.slice(), presentation:v('frl-pres'), updatedAt:new Date().toISOString() };
+    if(!p.metier){ toastMsg('Indique au moins ton métier'); var m=$('frl-metier'); if(m) m.focus(); return; }
+    b.disabled=true; D.prof=p; saveDoc('profil',p).then(function(){ toastMsg('Ton activité est enregistrée ✓'); ACT.close(); ACT=null; });
+  }
+
+  function openMiss(tab,f){
+    var o=sheet('Clients & missions','Du premier contact au paiement',''); o.tab=tab||'m'; o.f=f||'all'; MISS=o;
+    o.render=function(){
+      var h='<div class="cj-tabs"><button type="button" class="'+(o.tab==='m'?'on':'')+'" data-frl="frl-tab" data-t="m">Missions <em>'+D.missions.length+'</em></button><button type="button" class="'+(o.tab==='c'?'on':'')+'" data-frl="frl-tab" data-t="c">Clients <em>'+D.clients.length+'</em></button></div>';
+      if(o.tab==='m'){
+        h+='<div class="frl-steps"><button type="button" class="'+(o.f==='all'?'on':'')+'" data-frl="frl-f" data-f="all"><b>'+D.missions.length+'</b>Toutes</button>'+STEPS.map(function(s){ return '<button type="button" class="'+(o.f===s[0]?'on':'')+'" data-frl="frl-f" data-f="'+s[0]+'"><b>'+nb(s[0])+'</b>'+s[1]+'</button>'; }).join('')+'</div>'
+          +'<button type="button" class="cj-main" data-frl="frl-madd">'+I(P.plus,18)+'Ajouter une mission</button>';
+        var L=D.missions.filter(function(m){ return o.f==='all'||m.statut===o.f; }).sort(function(a,b){ return String(b.createdAt||'').localeCompare(String(a.createdAt||'')); });
+        h+=L.length?L.map(function(m){ var c=client(m.clientId), i=STEPS.map(function(s){ return s[0]; }).indexOf(m.statut);
+          return '<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(m.titre)+'</b><small>'+(c?esc(c.nom):'Client non précisé')+(m.debut?' · du '+new Date(m.debut).toLocaleDateString('fr-FR')+(m.fin?' au '+new Date(m.fin).toLocaleDateString('fr-FR'):''):'')+'</small></div>'+(amt(m)?'<span class="frl-amt">'+eur(amt(m))+'</span>':'')+'</div>'
+            +(m.notes?'<small style="font-size:.76rem;color:#475569;line-height:1.45">'+esc(m.notes)+'</small>':'')
+            +'<div class="frl-it-ft"><span class="frl-badge frl-s'+i+'">'+(STEPS[i]?STEPS[i][1]:'')+'</span><select data-frl-st="'+m.id+'" aria-label="Étape">'+STEPS.map(function(s){ return '<option value="'+s[0]+'"'+(s[0]===m.statut?' selected':'')+'>'+s[1]+'</option>'; }).join('')+'</select>'
+            +'<button type="button" class="frl-ib" data-frl="frl-medit" data-id="'+m.id+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-mdel" data-id="'+m.id+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; }).join('')
+          :'<div class="frl-empty">'+(o.f==='all'?'Aucune mission pour l\'instant.<br>Ajoute ta première mission, même au stade de prospect.':'Aucune mission à cette étape.')+'</div>';
+      } else {
+        h+='<button type="button" class="cj-main" data-frl="frl-cadd">'+I(P.plus,18)+'Ajouter un client</button>';
+        h+=D.clients.length?D.clients.slice().sort(function(a,b){ return String(a.nom).localeCompare(String(b.nom)); }).map(function(c){ var ms=D.missions.filter(function(m){ return m.clientId===c.id; }), tot=ms.filter(function(m){ return m.statut==='payee'; }).reduce(function(s,m){ return s+amt(m); },0);
+          return '<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(c.nom)+'</b><small>'+[c.contact,c.email,c.tel,c.ville].filter(Boolean).map(esc).join(' · ')+'</small></div><span class="frl-amt">'+eur(tot)+'</span></div>'
+            +'<div class="frl-it-ft"><span class="frl-badge frl-s1">'+ms.length+' mission'+(ms.length>1?'s':'')+'</span><span style="flex:1"></span>'+(c.email?'<a class="frl-ib" href="mailto:'+esc(c.email)+'">'+I(P.mail)+'Écrire</a>':'')
+            +'<button type="button" class="frl-ib" data-frl="frl-cedit" data-id="'+c.id+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-cdel" data-id="'+c.id+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; }).join('')
+          :'<div class="frl-empty">Aucun client pour l\'instant.<br>Ajoute tes clients et tes prospects pour les retrouver facilement.</div>';
+      }
+      o.body.innerHTML=say(o.tab==='m'?'Fais avancer chaque mission d\'une étape à l\'autre, du <b>prospect</b> jusqu\'au <b>paiement</b>. Quand tu passes une mission en « Payée », elle compte dans ton chiffre d\'affaires.':'Ton carnet de clients et de prospects. Les coordonnées restent <b>privées</b>.')+h;
+    };
+    o.render();
+  }
+  function openMEdit(id,pre){
+    var m=id?JSON.parse(JSON.stringify(D.missions.filter(function(x){ return x.id===id; })[0]||{})):{ statut:'prospect' }; if(pre) Object.assign(m,pre);
+    var o=sheet(id?'Modifier la mission':'Nouvelle mission','Une mission, un client, un montant','');
+    o.body.innerHTML=say(id?'Mets à jour ta mission.':'Ajoute ta mission. Seul le <b>titre</b> est obligatoire : tu complètes le reste quand tu veux.')
+      +'<div class="cj-form"><label>Titre de la mission *<input id="frl-mt" maxlength="90" placeholder="Ex : Création du site vitrine" value="'+esc(m.titre||'')+'"></label>'
+      +'<label>Client<select id="frl-mc"><option value="">Pas encore de client</option>'+D.clients.map(function(c){ return '<option value="'+c.id+'"'+(c.id===m.clientId?' selected':'')+'>'+esc(c.nom)+'</option>'; }).join('')+'<option value="__new">+ Nouveau client…</option></select></label>'
+      +'<div class="cj-2"><label>Étape<select id="frl-ms">'+STEPS.map(function(s){ return '<option value="'+s[0]+'"'+(s[0]===m.statut?' selected':'')+'>'+s[1]+'</option>'; }).join('')+'</select></label><label>Montant (€ HT)<input id="frl-mm" type="number" min="0" step="10" inputmode="numeric" placeholder="Ex : 1 200" value="'+esc(m.montant||'')+'"></label></div>'
+      +'<div class="cj-2"><label>Début<input id="frl-md" type="date" value="'+esc(m.debut||'')+'"></label><label>Fin<input id="frl-mf" type="date" value="'+esc(m.fin||'')+'"></label></div>'
+      +'<label>Notes<textarea id="frl-mn" class="frl-ta" maxlength="500" placeholder="Ce qui est convenu : livrables, délais, conditions…">'+esc(m.notes||'')+'</textarea></label>'
+      +'<button type="button" class="cj-main" id="frl-msave">'+I(P.check,18)+(id?'Enregistrer':'Ajouter la mission')+'</button></div>';
+    var sel=$('frl-mc'); sel.onchange=function(){ if(sel.value==='__new'){ sel.value=''; openCEdit(null,function(c){ var op=document.createElement('option'); op.value=c.id; op.textContent=c.nom; op.selected=true; sel.insertBefore(op,sel.lastElementChild); }); } };
+    $('frl-msave').onclick=function(){ var b=this, t=v('frl-mt'); if(!t){ toastMsg('Donne un titre à ta mission'); $('frl-mt').focus(); return; }
+      var st=v('frl-ms'), x={ id:id||null, titre:t, clientId:v('frl-mc'), statut:st, montant:v('frl-mm')?Math.max(0,+v('frl-mm')):'', debut:v('frl-md'), fin:v('frl-mf'), notes:v('frl-mn'), createdAt:m.createdAt||new Date().toISOString(), paidAt:st==='payee'?(m.paidAt||new Date().toISOString()):'' };
+      b.disabled=true; if(!id) D.missions.push(x); else D.missions=D.missions.map(function(y){ return y.id===id?x:y; });
+      saveItem('frl_missions',x).then(function(){ toastMsg(id?'Mission mise à jour ✓':'Mission ajoutée ✓'); o.close(); if(MISS&&document.body.contains(MISS.sh)) MISS.render(); }).catch(function(){ b.disabled=false; toastMsg('Enregistrement impossible pour le moment'); }); };
+  }
+  function openCEdit(id,cb){
+    var c=id?JSON.parse(JSON.stringify(D.clients.filter(function(x){ return x.id===id; })[0]||{})):{};
+    var o=sheet(id?'Modifier le client':'Nouveau client','Ton carnet de clients reste privé','');
+    o.body.innerHTML='<div class="cj-form"><label>Nom du client ou de l\'entreprise *<input id="frl-cn" maxlength="80" placeholder="Ex : Boulangerie Martin" value="'+esc(c.nom||'')+'"></label>'
+      +'<label>Personne à contacter<input id="frl-cc" maxlength="80" placeholder="Ex : Julie Martin" value="'+esc(c.contact||'')+'"></label>'
+      +'<div class="cj-2"><label>E-mail<input id="frl-ce" type="email" maxlength="100" placeholder="contact@exemple.fr" value="'+esc(c.email||'')+'"></label><label>Téléphone<input id="frl-ct" type="tel" maxlength="20" value="'+esc(c.tel||'')+'"></label></div>'
+      +'<label>Ville<input id="frl-cv" maxlength="60" value="'+esc(c.ville||'')+'"></label>'
+      +'<label>Notes<textarea id="frl-cnote" class="frl-ta" maxlength="400" placeholder="Comment vous vous êtes connus, ses besoins…">'+esc(c.notes||'')+'</textarea></label>'
+      +'<button type="button" class="cj-main" id="frl-csave">'+I(P.check,18)+(id?'Enregistrer':'Ajouter le client')+'</button></div>';
+    $('frl-csave').onclick=function(){ var b=this, n=v('frl-cn'); if(!n){ toastMsg('Indique le nom du client'); $('frl-cn').focus(); return; }
+      var e=v('frl-ce'); if(e && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){ toastMsg('Vérifie l\'adresse e-mail'); return; }
+      var x={ id:id||null, nom:n, contact:v('frl-cc'), email:e, tel:v('frl-ct'), ville:v('frl-cv'), notes:v('frl-cnote'), createdAt:c.createdAt||new Date().toISOString() };
+      b.disabled=true; if(!id) D.clients.push(x); else D.clients=D.clients.map(function(y){ return y.id===id?x:y; });
+      saveItem('frl_clients',x).then(function(r){ toastMsg(id?'Client mis à jour ✓':'Client ajouté ✓'); o.close(); if(cb) cb(r||x); if(MISS&&document.body.contains(MISS.sh)) MISS.render(); }).catch(function(){ b.disabled=false; toastMsg('Enregistrement impossible pour le moment'); }); };
+  }
+  function openDefi(){
+    var o=sheet('Mon défi de la semaine','Un objectif freelance clair, chaque semaine',''); DEF=o; var d=curDefi(); o.pick=d?{ type:d.type, cible:d.cible }:{ type:'pros', cible:3 }; o.change=!d;
+    o.render=function(){ var d=curDefi();
+      if(d && !o.change){ var f=d.manuel||0;
+        o.body.innerHTML=say(f>=d.cible?'Défi réussi 🎉 Tu as tenu ton objectif cette semaine : bravo !':'Note chaque action dès qu\'elle est faite : je compte avec toi.')
+          +'<div class="cj-form" style="text-align:center"><b style="font-size:1rem">'+esc(DEFIS[d.type][0])+'</b><div class="frl-defi-n"><button type="button" data-frl="frl-dm" data-d="-1" aria-label="Moins">−</button><b>'+f+' / '+d.cible+'</b><button type="button" data-frl="frl-dm" data-d="1" aria-label="Plus">+</button></div>'
+          +'<i class="cj-bar"><i style="width:'+Math.min(100,Math.round(f/d.cible*100))+'%"></i></i><span class="frl-hint">'+esc(DEFIS[d.type][1])+' cette semaine</span>'
+          +'<button type="button" class="cj-main alt" data-frl="frl-dch">'+I(P.pen,18)+'Changer de défi</button></div>';
+        return; }
+      o.body.innerHTML=say('Choisis ton défi et ton objectif pour la semaine. Un défi réaliste vaut mieux qu\'un défi impossible 😉')
+        +'<div class="frl-types">'+Object.keys(DEFIS).map(function(k){ return '<button type="button" class="'+(o.pick.type===k?'on':'')+'" data-frl="frl-dt" data-t="'+k+'"><span class="cj-ic '+(k==='rel'||k==='decl'?'g':'b')+'">'+I(DEFIS[k][2])+'</span>'+esc(DEFIS[k][0])+'</button>'; }).join('')+'</div>'
+        +'<div class="frl-chips">'+[1,2,3,5,10].map(function(n){ return '<button type="button" class="'+(o.pick.cible===n?'on':'')+'" data-frl="frl-dn" data-n="'+n+'">'+n+'</button>'; }).join('')+'</div>'
+        +'<button type="button" class="cj-main" data-frl="frl-dgo">'+I(P.check,18)+'Je relève ce défi</button>';
+    };
+    o.render();
+  }
+  function saveDefi(d){ D.defi=d; return saveDoc('defi',d); }
+
+  /* ── Clics ── */
+  document.addEventListener('click',function(e){
+    var nx=e.target.closest('#cps-next'); if(nx && on()){ var g=nx.getAttribute('data-go')||''; if(/^frl-/.test(g)){ e.stopPropagation(); act(g,nx); } return; }
+    var b=e.target.closest('[data-frl]'); if(!b) return; act(b.getAttribute('data-frl'),b);
+  },true);
+  function act(a,b){
+    if(a==='frl-act'){ openAct(); return; }
+    if(a==='frl-miss'){ openMiss('m'); return; }
+    if(a==='frl-madd'){ openMEdit(null); return; }
+    if(a==='frl-defi'){ openDefi(); return; }
+    if(a==='frl-tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
+    if(a==='frl-tadd'){ addTag(); return; }
+    if(a==='frl-tdel' && ACT){ ACT.tags.splice(+b.getAttribute('data-i'),1); $('frl-tags').innerHTML=ACT.tagsHtml(); return; }
+    if(a==='frl-asave' && ACT){ saveAct(b); return; }
+    if(a==='frl-tab' && MISS){ MISS.tab=b.getAttribute('data-t'); MISS.render(); return; }
+    if(a==='frl-f' && MISS){ MISS.f=b.getAttribute('data-f'); MISS.render(); return; }
+    if(a==='frl-medit'){ openMEdit(b.getAttribute('data-id')); return; }
+    if(a==='frl-cadd'){ openCEdit(null); return; }
+    if(a==='frl-cedit'){ openCEdit(b.getAttribute('data-id')); return; }
+    if(a==='frl-mdel'){ if(!confirm('Supprimer cette mission ?')) return; var id=b.getAttribute('data-id'); D.missions=D.missions.filter(function(m){ return m.id!==id; }); delItem('frl_missions',id).then(function(){ if(MISS) MISS.render(); }); return; }
+    if(a==='frl-cdel'){ var cid=b.getAttribute('data-id'), n=D.missions.filter(function(m){ return m.clientId===cid; }).length; if(!confirm('Supprimer ce client ?'+(n?' Ses '+n+' mission'+(n>1?'s':'')+' resteront, sans client.':''))) return;
+      D.clients=D.clients.filter(function(c){ return c.id!==cid; }); delItem('frl_clients',cid).then(function(){ if(MISS) MISS.render(); }); return; }
+    if(DEF){
+      if(a==='frl-dt'){ DEF.pick.type=b.getAttribute('data-t'); DEF.render(); return; }
+      if(a==='frl-dn'){ DEF.pick.cible=+b.getAttribute('data-n'); DEF.render(); return; }
+      if(a==='frl-dch'){ DEF.change=true; DEF.render(); return; }
+      if(a==='frl-dgo'){ var cd=curDefi(); saveDefi({ week:wk(), type:DEF.pick.type, cible:DEF.pick.cible, manuel:cd&&cd.type===DEF.pick.type?(cd.manuel||0):0 }).then(function(){ toastMsg('C\'est parti pour ton défi 💪'); DEF.change=false; DEF.render(); }); return; }
+      if(a==='frl-dm'){ var dd=curDefi(); if(!dd) return; dd.manuel=Math.max(0,(dd.manuel||0)+(+b.getAttribute('data-d'))); saveDefi(dd).then(function(){ DEF.render(); if(dd.manuel===dd.cible) toastMsg('Défi réussi, bravo 🎉'); }); return; }
+    }
+  }
+  /* Changement d'étape directement dans la liste */
+  document.addEventListener('change',function(e){ var s=e.target.closest('[data-frl-st]'); if(!s) return; var id=s.getAttribute('data-frl-st'), m=D.missions.filter(function(x){ return x.id===id; })[0]; if(!m) return;
+    m.statut=s.value; m.paidAt=s.value==='payee'?(m.paidAt||new Date().toISOString()):''; saveItem('frl_missions',m).then(function(){ toastMsg(s.value==='payee'?'Mission payée : elle compte dans ton chiffre d\'affaires 💶':'Étape mise à jour ✓'); if(MISS) MISS.render(); }); });
+
+  window.cpFrl={ home:home, hero:hero, load:load, data:function(){ return D; } };
 })();
 </script>
 </body>
