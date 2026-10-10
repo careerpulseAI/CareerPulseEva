@@ -17744,8 +17744,10 @@ window.cpSheetArrows=function(sc,host){
   function coach(){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
     if(!chosen()){
-      return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton <b>profil</b> pour que je t\'accompagne au mieux :</p>'
-        +'<div class="cj-pfs">'+['dem','etu','sal','frl'].map(function(k){ return '<button type="button" data-cj="pf" data-p="'+k+'">'+PROFS[k]+'</button>'; }).join('')+'</div></div></div>';
+      var PC=[['dem','Demandeur d\'emploi · Reconversion','Tu cherches un emploi ou tu changes de métier : profil, CV, candidatures et défis de la semaine.',PFI.dem],['etu','Étudiant(e)','Tes cours, tes devoirs, ton école, ton stage ou ton alternance.',PFI.etu],['sal','Salarié(e)','Ton quotidien au travail, ton entretien annuel, ta formation et ton évolution.',PFI.sal],['frl','Freelance','Ton activité, tes clients, tes missions et ton chiffre d\'affaires.',PFI.frl]];
+      return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Je te présente les <b>4 profils</b> de ton espace :</p>'
+        +'<div class="cj-pcards">'+PC.map(function(c,i){ return '<button type="button" class="cj-pcard pc-'+c[0]+'" style="--d:'+(0.5+i*1.1)+'s" data-cj="pf" data-p="'+c[0]+'"><i>'+I(c[3],22)+'</i><span><b>'+c[1]+'</b><small>'+c[2]+'</small></span>'+I(P.chev,18)+'</button>'; }).join('')+'</div>'
+        +'<p class="cj-pq" style="--d:5s">Alors, <b>quel est ton profil ?</b> Touche ta carte 👆</p></div></div>';
     }
     if(isT()){ var tk=tasks(), left=tk.filter(function(x){ return !x.done; }).length;
       if(!tk.length){ m.push('Bonjour'+(n?' '+esc(n):'')+' 👋 Organise-toi avec ta <b>liste de tâches</b> : je te propose les plus utiles pour '+(S.st.profil==='etu'?'tes études et ta recherche de stage ou d\'alternance':'ta vie au travail et ton évolution')+'.'); act=['Voir mes tâches','tch']; }
@@ -17774,6 +17776,8 @@ window.cpSheetArrows=function(sc,host){
   function drawHero(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
     if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=!chosen()?ht._t0:({ frl:'Ton espace freelance', etu:'Ton espace étudiant', sal:'Ton espace salarié' })[S.st.profil]||ht._t0; }
+    var esh=(isT()&&window.cpES)?cpES.hero():null;
+    if(esh){ if(gl) gl.textContent=esh.label; if($('cps-pct')) $('cps-pct').textContent=esh.pct+' %'; if($('cps-bar')) $('cps-bar').style.width=esh.pct+'%'; if($('cps-name')) $('cps-name').textContent=''; if($('cps-sub')) $('cps-sub').textContent=esh.sub; if($('cps-next-t')) $('cps-next-t').textContent=esh.next[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',esh.next[1]); return; }
     if(chosen() && S.st.profil==='frl' && window.cpFrl){ var fh=cpFrl.hero(); if(gl) gl.textContent=fh.label; if($('cps-pct')) $('cps-pct').textContent=fh.pct+' %'; if($('cps-bar')) $('cps-bar').style.width=fh.pct+'%';
       if($('cps-name')) $('cps-name').textContent=first(); if($('cps-sub')) $('cps-sub').textContent=fh.sub; if($('cps-next-t')) $('cps-next-t').textContent=fh.next[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',fh.next[1]); return; }
     if(gl) gl.textContent='Profil complété';
@@ -17791,6 +17795,8 @@ window.cpSheetArrows=function(sc,host){
   function drawHome(){
     var b=$('cj-home'); if(!b) return;
     if(chosen() && S.st.profil==='frl' && window.cpFrl){ b.innerHTML=pfBar()+cpFrl.home(); return; } /* menu Freelance à part */
+    if(isT() && window.cpES){ b.innerHTML=pfBar()+cpES.home(); return; } /* Étudiant et Salarié : pages à part, vierges */
+    if(!chosen()){ b.innerHTML=coach(); return; } /* d'abord le choix du profil */
     var d=curDefi(), pb=pendingBilan(), tipI=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5), tip=TIPS[tipI%TIPS.length];
     var weekN=S.list.filter(function(x){ return inWeek(x.date,wk()); }).length, itw=cnt('itw'), p=profPct();
     var defi = pb ? '<button type="button" class="cj-box cj-defi" data-cj="bilan"><span class="cj-ic g sm">'+I(P.trophy,20)+'</span><span class="cj-box-t"><b>Bilan à faire</b><small>Ton défi de la '+wkLabel(pb.week)+'</small></span><em class="cj-score">'+done(pb)+'/'+pb.cible+'</em></button>'
@@ -18317,7 +18323,8 @@ window.cpSheetArrows=function(sc,host){
     }
   }
   document.addEventListener('click',function(e){
-    var nx=e.target.closest('#cps-next'); if(nx){ var g=nx.getAttribute('data-go'); act(g==='wiz'?'wiz':g,nx); return; }
+    var nx=e.target.closest('#cps-next'); if(nx && /^es-/.test(nx.getAttribute('data-go')||'')){ var tb=document.querySelector('#cj-home [data-cj="es-tasks"]'); if(tb) tb.click(); return; }
+    if(nx){ var g=nx.getAttribute('data-go'); act(g==='wiz'?'wiz':g,nx); return; }
     var cv=e.target.closest('[data-conv]'); if(cv && inZone(cv)){ openConv(cv.getAttribute('data-conv')); return; }
     var b=e.target.closest('[data-cj]'); if(!b || !inZone(b)) return; act(b.getAttribute('data-cj'),b);
   });
@@ -21126,5 +21133,219 @@ html.pf-sal .cj-pres-n{ background:linear-gradient(135deg,#7c4a1e,#b8864b) !impo
 @media (prefers-reduced-motion: reduce){ .cj-pres-it{ animation:none; opacity:1; transform:none; } }
 em.cj-ty{ font-style:normal; display:inline-block; margin-left:6px; padding:2px 7px; border-radius:6px; font-size:.62rem; font-weight:800; vertical-align:middle; color:#6d28d9; background:#f5f3ff; }
 </style>
+<style id="cj-pcards-css">
+#s-profil .cj-pcards{ display:grid; grid-template-columns:1fr; gap:9px; margin-top:12px; }
+@media (min-width:700px){ #s-profil .cj-pcards{ grid-template-columns:1fr 1fr; } }
+#s-profil .cj-pcard{ position:relative; overflow:hidden; display:flex; align-items:center; gap:12px; width:100%; padding:14px; border:none; border-radius:20px; cursor:pointer; text-align:left; color:#fff; box-shadow:0 18px 32px -22px rgba(15,23,42,.9); opacity:0; transform:translateY(10px); animation:cjPres .5s ease-out var(--d,0s) forwards; font-family:'DM Sans',sans-serif; }
+#s-profil .cj-pcard::after{ content:""; position:absolute; right:-40px; top:-50px; width:140px; height:140px; border-radius:50%; border:1px solid rgba(255,255,255,.22); box-shadow:0 0 0 18px rgba(255,255,255,.05); pointer-events:none; }
+#s-profil .cj-pcard i{ width:46px; height:46px; flex-shrink:0; border-radius:15px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.18); box-shadow:inset 0 0 0 1px rgba(255,255,255,.35); }
+#s-profil .cj-pcard span{ flex:1; min-width:0; }
+#s-profil .cj-pcard b{ display:block; font-size:.95rem; font-weight:800; line-height:1.25; color:#fff; }
+#s-profil .cj-pcard small{ display:block; margin-top:3px; font-size:.74rem; line-height:1.4; color:rgba(255,255,255,.88); }
+#s-profil .cj-pcard > svg{ flex-shrink:0; opacity:.85; }
+#s-profil .cj-pcard:active{ transform:scale(.98); }
+#s-profil .pc-dem{ background:linear-gradient(135deg,#0b2a52,#1e40af 50%,#059669 120%); }
+#s-profil .pc-etu{ background:linear-gradient(135deg,#3b0764,#6d28d9 50%,#a855f7 120%); }
+#s-profil .pc-sal{ background:linear-gradient(135deg,#3b2416,#7c4a1e 50%,#b8864b 120%); }
+#s-profil .pc-frl{ background:linear-gradient(135deg,#7c2d12,#c2410c 50%,#f59e0b 120%); }
+#s-profil .cj-pq{ opacity:0; animation:cjPres .5s ease-out var(--d,0s) forwards; margin-top:12px !important; }
+@media (prefers-reduced-motion: reduce){ #s-profil .cj-pcard, #s-profil .cj-pq{ animation:none; opacity:1; transform:none; } }
+</style>
+
+<!-- ══ Mon espace : profils Étudiant et Salarié (pages simples, données à part, en lien avec EVA) ══ -->
+<style id="cpes-css">
+.es-sub-ic{ width:30px; height:30px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; color:#fff; }
+.es-sub-ic svg{ width:16px !important; height:16px !important; }
+.es-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+@media (min-width:700px){ .es-grid{ grid-template-columns:repeat(3,1fr); } }
+.es-grid button{ display:flex; align-items:center; gap:9px; padding:11px; border-radius:15px; border:1.5px solid #e2e8f0; background:#fff; text-align:left; cursor:pointer; font:700 .78rem/1.3 'DM Sans',sans-serif; color:#0f172a; min-width:0; }
+.es-grid button:hover{ border-color:var(--es1); }
+.es-grid button span{ min-width:0; overflow-wrap:anywhere; }
+.es-day{ display:flex; flex-direction:column; gap:8px; }
+.es-t{ display:flex; align-items:center; gap:10px; padding:12px; border-radius:16px; background:#fff; border:1px solid #e2e8f0; cursor:pointer; text-align:left; width:100%; font-family:'DM Sans',sans-serif; }
+.es-t .cj-ck{ width:26px; height:26px; flex-shrink:0; border-radius:8px; padding:0; }
+.es-t-b{ flex:1; min-width:0; }
+.es-t-b b{ display:block; font-size:.88rem; font-weight:700; color:#0f172a; overflow-wrap:anywhere; }
+.es-t-b small{ display:block; margin-top:2px; font-size:.72rem; color:#64748b; }
+.es-t.done .es-t-b b{ color:#94a3b8; text-decoration:line-through; }
+.es-ok{ flex-shrink:0; padding:3px 8px; border-radius:7px; font-size:.62rem; font-weight:800; }
+.es-ok.y{ color:#047857; background:#ecfdf5; } .es-ok.n{ color:#b45309; background:#fffbeb; } .es-ok.w{ color:#64748b; background:#f1f5f9; }
+.es-h{ margin:6px 0 0; font-size:.72rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#64748b; }
+.es-quick{ display:flex; flex-wrap:wrap; gap:7px; }
+.es-quick button{ display:inline-flex; align-items:center; gap:6px; padding:8px 12px; border-radius:999px; border:1.5px dashed var(--es2); background:var(--ess); font:700 .76rem 'DM Sans',sans-serif; color:var(--es1); cursor:pointer; text-align:left; }
+.es-yn{ display:flex; gap:8px; } .es-yn button{ flex:1; padding:11px; border-radius:12px; border:1.5px solid #dbe4ef; background:#fff; font:700 .82rem 'DM Sans',sans-serif; cursor:pointer; color:#334155; }
+.es-yn button.on{ color:#fff; border-color:transparent; background:linear-gradient(135deg,var(--es1),var(--es2)); }
+.cj-form textarea.es-ta{ width:100%; box-sizing:border-box; padding:12px; border-radius:12px; border:1.5px solid #dbe4ef; background:#f8fafc; font:500 .9rem 'DM Sans',sans-serif; color:#0f172a; resize:vertical; min-height:80px; }
+.es-del{ padding:12px; border-radius:14px; border:1px solid #fecaca; background:#fff; color:#b91c1c; font:700 .82rem 'DM Sans',sans-serif; cursor:pointer; }
+html.pf-etu{ --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; } html.pf-sal{ --es1:#7c4a1e; --es2:#b8864b; --ess:#faf5ef; }
+.es-sub-ic{ background:linear-gradient(135deg,var(--es1,#1e40af),var(--es2,#059669)); }
+</style>
+<script>
+(function(){
+  if(window.cpES) return;
+  function $(id){ return document.getElementById(id); }
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function user(){ return window._fbUser || (window.fbAuth && fbAuth.currentUser) || null; }
+  function db(){ return window.fbDb; }
+  function msg(m){ if(typeof toast==='function') toast(m); }
+  function I(p,w){ return '<svg viewBox="0 0 24 24" width="'+(w||18)+'" height="'+(w||18)+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  var P={ list:'<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>', user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>', brief:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>',
+    chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/>', school:'<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4V11"/><path d="M21.5 9v5.5"/>', chev:'<path d="m9 18 6-6-6-6"/>', plus:'<path d="M12 5v14M5 12h14"/>',
+    check:'<path d="m5 12 5 5L20 7"/>', ext:'<path d="M14 3h7v7M10 14 21 3M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>', bulb:'<path d="M9 18h6M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z"/>',
+    book:'<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5V21h16"/>', pen:'<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>', star:'<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', cal:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18"/>', users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',
+    target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', chart:'<path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/>', trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/>',
+    euro:'<path d="M17 6.5A7 7 0 1 0 17 17.5"/><path d="M4 10h9M4 14h9"/>', home:'<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>', doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',
+    mail:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/>', sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/>',
+    shield:'<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/>', trash:'<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>' };
+  /* Sujets de tâches (besoins réels du quotidien) */
+  var SUJ={
+    sal:[['prio','Mes priorités du jour',P.target],['reu','Réunion',P.users],['dossier','Dossier ou projet',P.doc],['manager','Point avec mon manager',P.chat],['annuel','Entretien annuel d\'évaluation',P.star],['pro','Entretien professionnel',P.chart],['perf','Objectifs & performance',P.trophy],['form','Formation (CPF, plan de formation)',P.book],['vae','VAE',P.school],['bilan','Bilan de compétences',P.bulb],['evol','Évolution, promotion, mobilité',P.brief],['salaire','Demande d\'augmentation',P.euro],['conges','Congés & absences',P.sun],['admin','Paie, frais & administratif',P.doc],['sante','Visite médicale & bien-être',P.heart],['autre','Autre',P.pen]],
+    etu:[['cours','Cours',P.book],['devoir','Devoir ou TD',P.pen],['revision','Révisions',P.bulb],['exam','Examen ou partiel',P.star],['projet','Exposé ou projet de groupe',P.users],['rapport','Mémoire ou rapport de stage',P.doc],['stage','Recherche de stage',P.brief],['alt','Recherche d\'alternance',P.brief],['job','Job étudiant',P.euro],['orient','Orientation (Parcoursup, Mon Master)',P.school],['bourse','Bourse & logement (Crous)',P.home],['admin','Inscription & administratif',P.doc],['rdv','Rendez-vous (prof, tuteur, entreprise)',P.cal],['sante','Santé & bien-être',P.heart],['autre','Autre',P.pen]] };
+  var HINT={ annuel:'Bilan de l\'année écoulée et objectifs de l\'année à venir, avec ton manager.', pro:'Obligatoire tous les 2 ans : il porte sur ton évolution et ta formation, pas sur ta performance.', vae:'La VAE permet d\'obtenir tout ou partie d\'un diplôme grâce à ton expérience.',
+    form:'Ton CPF finance des formations, des bilans de compétences ou un permis : regarde tes droits.', exam:'Note la date, les chapitres à revoir et ton objectif de note.', rapport:'Découpe le travail : plan, recherches, rédaction, relecture.' };
+  var DAY={ sal:[['prio','Noter mes 3 priorités du jour'],['admin','Répondre aux mails importants'],['reu','Préparer ma prochaine réunion'],['perf','Noter une réussite de la semaine'],['form','Regarder une formation qui m\'intéresse'],['prio','Faire le point en fin de journée']],
+    etu:[['cours','Relire le cours du jour'],['devoir','Avancer un devoir'],['revision','Réviser 30 minutes'],['admin','Lire les mails de l\'école'],['stage','Regarder une offre de stage ou d\'alternance'],['cours','Préparer le sac et l\'emploi du temps de demain']] };
+  var TIPS={ etu:['Commence tes recherches d\'alternance tôt : beaucoup d\'entreprises recrutent plusieurs mois avant la rentrée.','Révise un peu chaque jour plutôt que tout la veille : ta mémoire retient mieux.','Note tes dates d\'examens dès qu\'elles tombent, avec un objectif pour chacune.','Un job étudiant compte comme une vraie expérience sur ton CV.','Relance une candidature de stage une semaine après l\'envoi.'],
+    sal:['Prépare ton entretien annuel avec 3 réussites chiffrées : c\'est ton meilleur argument.','L\'entretien professionnel a lieu tous les 2 ans : profite-en pour parler formation et évolution.','Consulte ton compte CPF une fois par an : tes droits s\'accumulent.','Garde une trace écrite des objectifs fixés avec ton manager.','Un bilan de compétences t\'aide à y voir clair avant de changer de métier.'] };
+  var D={ uid:null, loaded:{}, loading:{}, data:{} };
+  function ST(){ return window.cpStream?cpStream.st():{}; }
+  function pf(){ return ST().profil; }
+  function ref(k){ var u=user(); return u&&db()?db().collection('users').doc(u.uid).collection('espace').doc(k):null; }
+  function blank(){ return { tasks:[], prof:{}, cands:[] }; }
+  function cur(){ var k=pf(); return D.data[k]||(D.data[k]=blank()); }
+  function load(k){ var u=user(); if(!u){ if(!D.loaded[k]){ try{ D.data[k]=JSON.parse(localStorage.getItem('cpes_'+k)||'null')||blank(); }catch(e){ D.data[k]=blank(); } D.loaded[k]=1; } return; }
+    if(D.uid!==u.uid){ D.uid=u.uid; D.loaded={}; D.loading={}; D.data={}; }
+    if(D.loaded[k]||D.loading[k]) return; var r=ref(k); if(!r){ D.loaded[k]=1; return; }
+    D.loading[k]=1; r.get().then(function(d){ D.data[k]=Object.assign(blank(),d.exists?d.data():{}); D.loaded[k]=1; D.loading[k]=0; redraw(); }).catch(function(){ D.loaded[k]=1; D.loading[k]=0; }); }
+  function save(){ var k=pf(), r=ref(k), x=cur(); try{ localStorage.setItem('cpes_'+k,JSON.stringify(x)); }catch(e){} if(r) return r.set(x).catch(function(){ msg('Enregistrement impossible pour le moment'); }); return Promise.resolve(); }
+  function redraw(){ if(window.cpStream) cpStream.draw(); }
+  function today(){ var d=new Date(); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  function sj(id){ return SUJ[pf()].filter(function(s){ return s[0]===id; })[0]||SUJ[pf()][SUJ[pf()].length-1]; }
+  function todays(){ var t=today(); return cur().tasks.filter(function(x){ return x.date===t || (!x.date && !x.fait); }); }
+  function lisa(){ return window.CP_LISA_IMG||''; }
+  function av(sm){ return '<span class="cj-av'+(sm?' sm':'')+'">'+(lisa()?'<img src="'+lisa()+'" alt="Lisa">':'')+'</span>'; }
+  function say(h){ return '<div class="cj-say">'+av(true)+'<div>'+h+'</div></div>'; }
+  function eva(href,t,sub){ return '<a class="cj-eva" href="'+href+'"><span class="cj-av sm eva"><img src="'+(window.CP_EVA_IMG||'')+'" alt="EVA"></span><span class="cj-box-t"><b>'+t+'</b><small>'+sub+'</small></span><em>EVA</em>'+I(P.chev,15)+'</a>'; }
+  function lnk(t,u,sub){ return '<a class="cj-box cj-olink" href="'+u+'" target="_blank" rel="noopener"><span class="cj-ic b sm">'+I(P.ext,18)+'</span><span class="cj-box-t"><b>'+esc(t)+'</b><small>'+esc(sub)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></a>'; }
+  function box(a,ic,t,sub,c){ return '<button type="button" class="cj-box" '+a+'><span class="cj-ic '+(c||'b')+' sm">'+I(ic,20)+'</span><span class="cj-box-t"><b>'+t+'</b><small>'+sub+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'; }
+  var PROF_F={ sal:[['prenom','Ton prénom','text','Ex : Sophie'],['poste','Ton poste actuel','text','Ex : Assistante de direction'],['vise','Le poste que tu vises','text','Ex : Responsable administrative'],['secteur','Ton secteur','text','Ex : Santé, commerce, BTP'],['ville','Ta ville','text','Ex : Caen'],['exp','Ton expérience','sel',['Moins d\'1 an','1 à 3 ans','3 à 5 ans','5 à 10 ans','Plus de 10 ans']],['comp','Tes compétences clés','text','Ex : gestion de planning, Excel, management'],['dispo','Ta disponibilité','sel',['Immédiate','Préavis à faire','Je réfléchis pour l\'instant']],['accroche','Ton accroche','area','En 2 ou 3 phrases : qui tu es, ce que tu apportes, ce que tu cherches.']],
+    etu:[['prenom','Ton prénom','text','Ex : Lucas'],['formation','Ta formation','text','Ex : BTS MCO, BUT GEA, Licence'],['ecole','Ton école','text','Ex : IUT de Caen'],['niveau','Ton niveau','sel',['Bac','Bac+1','Bac+2','Bac+3','Bac+4','Bac+5 et plus']],['recherche','Tu recherches','sel',['Un stage','Une alternance','Un job étudiant','Un job saisonnier','Mon premier emploi']],['ville','Ta ville','text','Ex : Caen']] };
+  function pct(){ var f=PROF_F[pf()], p=cur().prof||{}; return Math.round(f.filter(function(x){ return p[x[0]]; }).length/f.length*100); }
+  var CARDS={
+    sal:[['es-tasks',P.list,'Mes tâches','Réunions, entretien annuel, formation, VAE…'],['es-prof',P.user,'Mon profil','Ton parcours et le poste que tu vises'],['es-cand',P.brief,'Candidatures','Postuler et t\'entraîner à l\'entretien'],['es-msg',P.chat,'Messages','Tes échanges avec tes futurs employeurs']],
+    etu:[['es-tasks',P.list,'Mes tâches','Cours, devoirs, examens, stage…'],['es-ecol',P.school,'Écoles & formations','Les sites officiels et les formations EVA'],['es-cand',P.brief,'Candidater','Tu as fini tes études ? CV, lettre et candidatures'],['es-msg',P.chat,'Messages','Tes échanges avec les employeurs']] };
+  function home(){ var k=pf(); load(k); var c=cur(), T=todays(), td=T.filter(function(x){ return x.fait; }).length, conv=window.cpStream&&cpStream.convs?cpStream.convs():0, p=pct();
+    var M={ 'es-tasks':'<span class="cj-tm"><strong>'+(T.length?td+'/'+T.length:'0')+'</strong><em>'+(T.length?'faites aujourd\'hui':'aucune tâche aujourd\'hui')+'</em></span><i class="cj-bar"><i style="width:'+(T.length?Math.round(td/T.length*100):0)+'%"></i></i>',
+      'es-prof':'<span class="cj-tm"><strong>'+p+' %</strong><em>'+(p<100?'profil complété':'profil complet ✓')+'</em></span><i class="cj-bar"><i style="width:'+p+'%"></i></i>',
+      'es-ecol':'<span class="cj-tm"><strong>'+ECOL.length+'</strong><em>sites officiels + EVA</em></span>',
+      'es-cand':'<span class="cj-tm"><strong>'+c.cands.length+'</strong><em>candidature'+(c.cands.length>1?'s':'')+'</em></span>',
+      'es-msg':'<span class="cj-tm"><strong>'+conv+'</strong><em>message'+(conv>1?'s':'')+'</em></span>' };
+    var n=(c.prof&&c.prof.prenom)||'', left=T.length-td, m;
+    if(!c.tasks.length) m='Bonjour'+(n?' '+esc(n):'')+' 👋 Bienvenue dans ton espace '+(k==='etu'?'étudiant':'salarié')+'. Commence par <b>organiser ta journée</b> : ajoute tes tâches, je t\'aide à les suivre.';
+    else if(left) m='Bonjour'+(n?' '+esc(n):'')+' 👋 Il te reste <b>'+left+' tâche'+(left>1?'s':'')+'</b> aujourd\'hui. On s\'y met ?';
+    else m='Bravo'+(n?' '+esc(n):'')+' 🎉 Ta journée est bouclée. Pense à préparer demain.';
+    var tip=TIPS[k][(new Date().getDate())%TIPS[k].length];
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">'+(k==='etu'?'Étudiant(e)':'Salarié(e)')+' · changer</button></div><p>'+m+'</p>'
+      +'<button type="button" class="cj-btn" data-cj="es-tasks">'+(c.tasks.length?'Voir mes tâches':'Organiser ma journée')+I(P.chev,16)+'</button>'
+      +(window.cpStream&&cpStream.pres?cpStream.pres(k,CARDS[k].map(function(x){ return '<b>'+x[2]+'</b> : '+x[3].charAt(0).toLowerCase()+x[3].slice(1)+(/[…?.]$/.test(x[3])?'':'.'); })):'')+'</div></div>'
+      +'<div class="cj-tiles">'+CARDS[k].map(function(x,i){ return '<button type="button" class="cj-tile" data-cj="'+x[0]+'"><span class="cj-ic '+(i===3?'g':'b')+'">'+I(x[1],22)+'</span><b>'+x[2]+'</b><small>'+x[3]+'</small>'+M[x[0]]+'</button>'; }).join('')+'</div>'
+      +'<div class="cj-box cj-tip cj-mtip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Le conseil de Lisa</b><small>'+esc(tip)+'</small></span></div>';
+  }
+  function hero(){ var k=pf(), T=todays(), dn=T.filter(function(x){ return x.fait; }).length, p=T.length?Math.round(dn/T.length*100):0; return { pct:p, label:'Ma journée : '+dn+' / '+T.length+' tâche'+(T.length>1?'s':''), sub:k==='etu'?'Tes cours, tes démarches et tes candidatures, au même endroit.':'Ton quotidien au travail, ton évolution et tes candidatures, au même endroit.', next:['Organiser ma journée','es-tasks'] }; }
+
+  /* ── Mes tâches ── */
+  var TK=null;
+  function openTasks(){ var k=pf(), o=cpStream.sheet('Mes tâches',k==='etu'?'Tes cours, tes devoirs, tes démarches':'Ton quotidien au travail et ton évolution',''); TK=o; o.f='today';
+    o.render=function(){ var c=cur(), t=today(), L=c.tasks.slice().sort(function(a,b){ return String((a.date||'9')+(a.heure||'')).localeCompare(String((b.date||'9')+(b.heure||''))); });
+      var groups={ today:L.filter(function(x){ return x.date===t || (!x.date && !x.fait); }), next:L.filter(function(x){ return x.date && x.date>t; }), done:L.filter(function(x){ return x.fait && x.date!==t && (!x.date || x.date<t); }), late:L.filter(function(x){ return !x.fait && x.date && x.date<t; }) };
+      var tabs=[['today','Aujourd\'hui'],['next','À venir'],['late','En retard'],['done','Terminées']];
+      var list=groups[o.f];
+      o.body.innerHTML=say(k==='etu'?'Organise tes <b>cours</b>, tes <b>devoirs</b> et tes <b>démarches</b>. Touche une tâche pour noter l\'heure, la date, ton objectif et s\'il est atteint.':'Organise ton <b>quotidien au travail</b> : réunions, entretien annuel, formation, VAE… Touche une tâche pour noter l\'heure, la date, ton objectif et s\'il est atteint.')
+        +'<div class="cj-tabs">'+tabs.map(function(x){ return '<button type="button" class="'+(o.f===x[0]?'on':'')+'" data-cj="es-tf" data-f="'+x[0]+'">'+x[1]+' <em>'+groups[x[0]].length+'</em></button>'; }).join('')+'</div>'
+        +'<button type="button" class="cj-main" data-cj="es-new">'+I(P.plus,18)+'Nouvelle tâche</button>'
+        +(list.length?'<div class="es-day">'+list.map(taskRow).join('')+'</div>':'<div class="frl-empty">'+(o.f==='today'?'Rien de prévu aujourd\'hui. Ajoute une tâche ou pioche dans ta journée type 👇':'Aucune tâche ici.')+'</div>')
+        +(o.f==='today'?'<p class="es-h">Ta journée type, en un clic</p><div class="es-quick">'+DAY[k].map(function(x,i){ return '<button type="button" data-cj="es-quick" data-i="'+i+'">'+I(P.plus,14)+esc(x[1])+'</button>'; }).join('')+'</div>':'')
+        +'<p class="es-h">Pour aller plus loin</p>'+eva('eva.html#eva-workspace','Mon Portfolio avec EVA','Tâches, agenda, dossiers et contacts : ton organisation complète');
+    };
+    o.render(); }
+  function taskRow(x){ var s=sj(x.sujet), d=x.date?new Date(x.date+'T12:00:00').toLocaleDateString('fr-FR',{ weekday:'short', day:'numeric', month:'short' }):'';
+    var ok=x.objectif?(x.atteint==='oui'?'<span class="es-ok y">Objectif atteint</span>':x.atteint==='non'?'<span class="es-ok n">Pas atteint</span>':'<span class="es-ok w">Objectif</span>'):'';
+    return '<div class="es-t'+(x.fait?' done':'')+'"><button type="button" class="cj-ck'+(x.fait?' on':'')+'" data-cj="es-done" data-id="'+x.id+'" aria-label="Fait">'+(x.fait?I(P.check,13):'')+'</button><span class="es-sub-ic">'+I(s[2])+'</span>'
+      +'<span class="es-t-b" data-cj="es-open" data-id="'+x.id+'" role="button" tabindex="0"><b>'+esc(x.titre||s[1])+'</b><small>'+esc(s[1])+(d?' · '+d:'')+(x.heure?' · '+x.heure:'')+'</small></span>'+ok+'</div>'; }
+  function openNew(){ var k=pf(); var o=cpStream.sheet('Nouvelle tâche','Choisis le sujet','');
+    o.body.innerHTML=say('De quoi s\'agit-il ? Choisis un <b>sujet</b>, puis remplis les détails.')+'<div class="es-grid">'+SUJ[k].map(function(s){ return '<button type="button" data-cj="es-pick" data-s="'+s[0]+'"><span class="es-sub-ic">'+I(s[2])+'</span><span>'+esc(s[1])+'</span></button>'; }).join('')+'</div>'; }
+  function openTask(id,pre){ var c=cur(), x=id?JSON.parse(JSON.stringify(c.tasks.filter(function(t){ return t.id===id; })[0]||{})):Object.assign({ date:today() },pre||{}); var s=sj(x.sujet);
+    var o=cpStream.sheet(id?'Ma tâche':'Nouvelle tâche',s[1],''); o.atteint=x.atteint||'';
+    o.body.innerHTML=(HINT[x.sujet]?say(HINT[x.sujet]):'')+'<div class="cj-form">'
+      +'<label>Sujet<select id="es-s">'+SUJ[pf()].map(function(z){ return '<option value="'+z[0]+'"'+(z[0]===s[0]?' selected':'')+'>'+esc(z[1])+'</option>'; }).join('')+'</select></label>'
+      +'<label>Titre<input id="es-ti" maxlength="90" placeholder="'+esc(s[1])+'" value="'+esc(x.titre||'')+'"></label>'
+      +'<div class="cj-2"><label>Date<input id="es-da" type="date" value="'+esc(x.date||'')+'"></label><label>Heure<input id="es-he" type="time" value="'+esc(x.heure||'')+'"></label></div>'
+      +'<label>Description<textarea id="es-de" class="es-ta" maxlength="600" placeholder="Ce qu\'il faut faire, les points à aborder…">'+esc(x.description||'')+'</textarea></label>'
+      +'<label>Objectif<input id="es-ob" maxlength="140" placeholder="Ex : obtenir une formation Excel, finir le chapitre 3" value="'+esc(x.objectif||'')+'"></label>'
+      +'<label>Objectif atteint ?</label><div class="es-yn"><button type="button" data-cj="es-yn" data-v="oui" class="'+(o.atteint==='oui'?'on':'')+'">Oui</button><button type="button" data-cj="es-yn" data-v="non" class="'+(o.atteint==='non'?'on':'')+'">Non</button><button type="button" data-cj="es-yn" data-v="" class="'+(!o.atteint?'on':'')+'">Pas encore</button></div>'
+      +'<button type="button" class="cj-main" data-cj="es-save">'+I(P.check,18)+(id?'Enregistrer':'Ajouter la tâche')+'</button>'
+      +(id?'<button type="button" class="es-del" data-cj="es-del">Supprimer la tâche</button>':'')+'</div>';
+    o.id=id; o.x=x; TASK=o; }
+  var TASK=null;
+  function saveTask(b){ var o=TASK; if(!o) return; var c=cur(), id=o.id||('t'+Date.now()), sj0=$('es-s').value;
+    var x={ id:id, sujet:sj0, titre:$('es-ti').value.trim(), date:$('es-da').value, heure:$('es-he').value, description:$('es-de').value.trim(), objectif:$('es-ob').value.trim(), atteint:o.atteint, fait:o.x.fait||o.atteint==='oui', cree:o.x.cree||new Date().toISOString() };
+    if(o.id) c.tasks=c.tasks.map(function(t){ return t.id===id?x:t; }); else c.tasks.push(x);
+    b.disabled=true; save(); msg(o.id?'Tâche mise à jour ✓':'Tâche ajoutée ✓'); closeSheet(o); if(TK&&document.body.contains(TK.sh)) TK.render(); }
+  function closeSheet(o){ if(o&&o.sh){ o.sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); } redraw(); }
+
+  /* ── Mon profil (salarié et étudiant, vierge) ── */
+  function openProf(){ var k=pf(), p=cur().prof||{}; var o=cpStream.sheet('Mon profil',k==='etu'?'Ta formation et ce que tu recherches':'Ton parcours et le poste que tu vises','');
+    o.body.innerHTML=say(k==='etu'?'Présente-toi en quelques lignes : je t\'oriente vers les bons sites et les bonnes démarches.':'Présente ton parcours et le poste que tu vises. Tout reste <b>privé</b> dans ton espace salarié.')
+      +'<div class="cj-form">'+PROF_F[k].map(function(f){ var v=p[f[0]]||'';
+        return '<label>'+esc(f[1])+(f[2]==='sel'?'<select id="es-p-'+f[0]+'"><option value="">Choisir…</option>'+f[3].map(function(z){ return '<option'+(z===v?' selected':'')+'>'+esc(z)+'</option>'; }).join('')+'</select>':f[2]==='area'?'<textarea id="es-p-'+f[0]+'" class="es-ta" maxlength="500" placeholder="'+esc(f[3])+'">'+esc(v)+'</textarea>':'<input id="es-p-'+f[0]+'" maxlength="120" placeholder="'+esc(f[3])+'" value="'+esc(v)+'">')+'</label>'; }).join('')
+      +'<button type="button" class="cj-main" data-cj="es-psave">'+I(P.check,18)+'Enregistrer mon profil</button></div>';
+    PROFO=o; }
+  var PROFO=null;
+  function saveProf(b){ var k=pf(), p={}; PROF_F[k].forEach(function(f){ var e=$('es-p-'+f[0]); p[f[0]]=e?e.value.trim():''; }); cur().prof=p; b.disabled=true; save(); msg('Ton profil est enregistré ✓'); closeSheet(PROFO); }
+
+  /* ── Écoles & formations (étudiant) ── */
+  var ECOL=[['Onisep','https://www.onisep.fr','Toutes les formations et les établissements, partout en France'],['Parcoursup','https://www.parcoursup.gouv.fr','Candidater après le bac : BTS, BUT, licence, écoles'],['Mon Master','https://www.monmaster.gouv.fr','Candidater en master'],['La bonne alternance','https://labonnealternance.apprentissage.beta.gouv.fr','Formations en alternance et entreprises qui recrutent'],['1jeune1solution','https://www.1jeune1solution.gouv.fr','Stages, alternance, aides pour les jeunes'],['MesServices.etudiant.gouv.fr','https://www.messervices.etudiant.gouv.fr','Bourse, logement Crous et services étudiants']];
+  function openEcol(){ cpStream.sheet('Écoles & formations','Les sites officiels, partout en France',say('Voici les sites <b>officiels</b> pour trouver ton école et ta formation (BTS, BUT, licence, master, alternance), et les formations proposées par les centres avec EVA.')
+      +eva('eva.html#eva-of','Les formations avec EVA','Les formations des centres qui correspondent à ton profil')+'<p class="es-h">Écoles et formations</p>'+ECOL.map(function(x){ return lnk(x[0],x[1],x[2]); }).join('')); }
+
+  /* ── Candidatures ── */
+  function openCand(){ var k=pf(), c=cur(); var o=cpStream.sheet(k==='etu'?'Candidater':'Candidatures',k==='etu'?'Tu as fini tes études ? Lance-toi':'Postuler à de nouveaux postes',''); CANDO=o;
+    o.render=function(){ var L=c.cands.slice().reverse();
+      o.body.innerHTML=say(k==='etu'?'Tu as terminé tes études ? Crée ton <b>CV</b> et ta <b>lettre de motivation</b>, puis postule. Je t\'aide à suivre chaque candidature.':'Tu vises un nouveau poste ? Postule sur CareerPulse ou sur les sites de référence, et <b>entraîne-toi à l\'entretien</b> avec EVA.')
+        +box('data-cj="cpoffres"',P.brief,'Les offres des entreprises CareerPulse','Des employeurs vérifiés, candidature en un clic','g')
+        +(k==='etu'?'<p class="es-h">Créer ton CV et ta lettre</p>'+lnk('Canva','https://www.canva.com/fr_fr/cv/','Des modèles de CV gratuits et modernes')+lnk('France Travail','https://www.francetravail.fr/candidat/vos-services-en-ligne/creez-un-cv-a-partir-de-votre-pr.html','Créer ton CV gratuitement, visible des recruteurs')
+            +'<p class="es-h">Trouver ton premier emploi</p>'+lnk('1jeune1solution','https://www.1jeune1solution.gouv.fr','Offres d\'emploi et d\'alternance pour les jeunes')+lnk('Jobaviz (Crous)','https://www.jobaviz.fr','Jobs étudiants et saisonniers')
+          :'<p class="es-h">Sites de référence</p>'+lnk('France Travail','https://candidat.francetravail.fr/offres/recherche','Le service public de l\'emploi')+lnk('Indeed','https://fr.indeed.com','Le plus grand choix d\'offres')+lnk('Apec','https://www.apec.fr','Offres et conseils pour les cadres'))
+        +eva('eva.html#eva-entretien','Simulateur d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J')
+        +'<p class="es-h">Mon suivi</p><div class="cj-form"><div class="cj-2"><label>Entreprise<input id="es-c-co" maxlength="80" placeholder="Ex : Boulangerie Martin"></label><label>Poste<input id="es-c-po" maxlength="80" placeholder="Ex : Assistant(e) RH"></label></div><button type="button" class="cj-main" data-cj="es-cadd">'+I(P.plus,18)+'Ajouter à mon suivi</button></div>'
+        +(L.length?'<div class="es-day">'+L.map(function(x){ return '<div class="es-t"><span class="es-sub-ic">'+I(P.brief)+'</span><span class="es-t-b"><b>'+esc(x.poste||x.entreprise)+'</b><small>'+esc(x.poste?x.entreprise:'')+' · le '+new Date(x.date).toLocaleDateString('fr-FR')+'</small></span><select data-es-cst="'+x.id+'" aria-label="Statut" style="padding:7px;border-radius:9px;border:1px solid #dbe4ef;font:700 .74rem \'DM Sans\',sans-serif">'+['Envoyée','Relancée','Entretien','Acceptée','Refusée'].map(function(st){ return '<option'+(st===x.statut?' selected':'')+'>'+st+'</option>'; }).join('')+'</select></div>'; }).join('')+'</div>':'');
+    }; o.render(); }
+  var CANDO=null;
+  function addCand(){ var co=$('es-c-co').value.trim(), po=$('es-c-po').value.trim(); if(!co){ msg('Indique l\'entreprise'); $('es-c-co').focus(); return; } cur().cands.push({ id:'c'+Date.now(), entreprise:co, poste:po, statut:'Envoyée', date:new Date().toISOString() }); save(); msg('Candidature ajoutée ✓'); CANDO.render(); }
+
+  /* ── Messages ── */
+  function openMsg(){ cpStream.sheet('Messages',pf()==='etu'?'Tes échanges avec les employeurs':'Tes échanges avec tes futurs employeurs',say('Les employeurs vérifiés de CareerPulse t\'écrivent ici. Tes <b>coordonnées restent privées</b> tant que tu ne les partages pas.')
+      +box('data-cj="rec"',P.chat,'Ouvrir mes messages',(window.cpStream&&cpStream.convs?cpStream.convs():0)+' conversation(s)','g')); }
+
+  /* ── Clics ── */
+  document.addEventListener('click',function(e){ var b=e.target.closest('[data-cj]'); if(!b) return; var a=b.getAttribute('data-cj'); if(!/^es-/.test(a)) return; e.stopPropagation();
+    if(a==='es-tasks'){ openTasks(); return; } if(a==='es-prof'){ openProf(); return; } if(a==='es-ecol'){ openEcol(); return; } if(a==='es-cand'){ openCand(); return; } if(a==='es-msg'){ openMsg(); return; }
+    if(a==='es-tf' && TK){ TK.f=b.getAttribute('data-f'); TK.render(); return; }
+    if(a==='es-new'){ openNew(); return; }
+    if(a==='es-pick'){ var sh=b.closest('.cj-sheet'); if(sh) sh.remove(); openTask(null,{ sujet:b.getAttribute('data-s') }); return; }
+    if(a==='es-quick'){ var q=DAY[pf()][+b.getAttribute('data-i')]; cur().tasks.push({ id:'t'+Date.now(), sujet:q[0], titre:q[1], date:today(), heure:'', description:'', objectif:'', atteint:'', fait:false, cree:new Date().toISOString() }); save(); msg('Ajoutée à ta journée ✓'); if(TK) TK.render(); redraw(); return; }
+    if(a==='es-open'){ openTask(b.getAttribute('data-id')); return; }
+    if(a==='es-done'){ var t=cur().tasks.filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]; if(t){ t.fait=!t.fait; save(); if(TK) TK.render(); redraw(); if(t.fait) msg('Bien joué ✓'); } return; }
+    if(a==='es-yn' && TASK){ TASK.atteint=b.getAttribute('data-v'); [].forEach.call(b.parentNode.children,function(x){ x.classList.toggle('on',x===b); }); return; }
+    if(a==='es-save'){ saveTask(b); return; }
+    if(a==='es-del' && TASK){ if(!confirm('Supprimer cette tâche ?')) return; var c=cur(); c.tasks=c.tasks.filter(function(x){ return x.id!==TASK.id; }); save(); closeSheet(TASK); if(TK) TK.render(); return; }
+    if(a==='es-psave'){ saveProf(b); return; }
+    if(a==='es-cadd'){ addCand(); return; }
+  },true);
+  document.addEventListener('change',function(e){ var s=e.target.closest('[data-es-cst]'); if(!s) return; var x=cur().cands.filter(function(c){ return c.id===s.getAttribute('data-es-cst'); })[0]; if(x){ x.statut=s.value; save(); msg('Statut mis à jour ✓'); } });
+  window.cpES={ home:home, hero:hero };
+})();
+</script>
 </body>
 </html>
