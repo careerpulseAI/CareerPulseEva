@@ -20194,7 +20194,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
         top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton profil : je te montre le <b>site idéal pour créer ton CV</b> et pourquoi je le recommande.'],
               ['r'] ],
         plat:[],
-        end:[ ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
+        end:[ ['g'], ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
                 +li(IC.folder,'Range ton CV et ta lettre','Dans Mon espace, avec tes diplômes et attestations.')
                 +li(IC.share,'Partage-le aux recruteurs vérifiés','Seulement si tu le décides.')
                 +li(IC.send,'Postule en un clic','Aux offres CareerPulse, avec ton CV et ta lettre joints.'); }],
@@ -20204,7 +20204,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
         top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton profil : je te montre la <b>plateforme idéale pour trouver un emploi</b> et pourquoi je la recommande.'],
               ['r'] ],
         plat:[],
-        end:[ ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
+        end:[ ['g'], ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
                 +li(IC.list,'Suis toutes tes candidatures','Et je te rappelle quand relancer.')
                 +li(IC.eye,'Un profil visible des recruteurs','Les entreprises vérifiées peuvent te contacter.')
                 +li(IC.send,'Postule en un clic aux offres CareerPulse','Avec une messagerie protégée.'); }],
@@ -20232,6 +20232,7 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
     if(it[0]==='b') return '<div class="lsx-row"><img class="lsx-av" alt="Lisa" src="'+lisa()+'"><div class="lsx-b">'+it[1]+'</div></div>';
     if(it[0]==='c') return '<div class="lsx-card">'+it[1]()+'</div>';
     if(it[0]==='r') return recoHtml(it.k);
+    if(it[0]==='g') return window.cpLsxGame?cpLsxGame(it.k):'';
     return cta();
   }
   function seen(key){ try{ return sessionStorage.getItem('cp_lsx_'+key)==='1'; }catch(e){ return false; } }
@@ -20280,6 +20281,200 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
+<!-- ══ Pages visiteurs : mini quiz (CV) et mini mises en situation (recherche d'emploi) avec Lisa ══ -->
+<style id="lsxg-css">
+.lsxg{ margin:4px 0 14px; border-radius:22px; overflow:hidden; background:#fff; border:1px solid #e2e8f0; box-shadow:0 18px 40px -30px rgba(15,23,42,.85); text-align:left; animation:lsxUp .4s ease-out both; }
+.lsxg-hd{ display:flex; align-items:center; gap:11px; padding:14px 16px; color:#fff; background:linear-gradient(135deg,#0b1f3a 0%,#0c2f4a 55%,#064e3b 100%); }
+.lsxg-hd img{ width:46px; height:46px; border-radius:50%; object-fit:cover; flex-shrink:0; box-shadow:0 0 0 2px #fff,0 8px 18px -8px rgba(0,0,0,.6); }
+.lsxg-hd b{ display:block; font-size:.95rem; font-weight:800; line-height:1.2; }
+.lsxg-hd span{ display:block; margin-top:2px; font-size:.68rem; color:#a7f3d0; font-weight:700; }
+.lsxg-bd{ padding:15px 16px 16px; }
+.lsxg-say{ margin:0 0 12px; padding:11px 13px; border-radius:14px; background:#f8fafc; border:1px solid #e2e8f0; font-size:.8rem; line-height:1.55; color:#1e293b; }
+.lsxg-say b{ color:#0f172a; }
+.lsxg-chips{ display:flex; flex-wrap:wrap; gap:6px; margin:0 0 13px; }
+.lsxg-chips span{ padding:5px 9px; border-radius:99px; font-size:.66rem; font-weight:800; color:#1e3a8a; background:#eff6ff; border:1px solid #dbeafe; }
+.lsxg-btn{ position:static !important; display:flex; align-items:center; justify-content:center; gap:8px; width:100%; padding:14px; border:none; border-radius:14px; cursor:pointer; color:#fff; font:800 .86rem/1 'DM Sans',sans-serif; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 14px 26px -16px rgba(30,64,175,.9); }
+.lsxg-btn svg{ width:17px; height:17px; }
+.lsxg-btn.alt{ margin-top:8px; background:#fff; color:#0f172a; border:1px solid #e2e8f0; box-shadow:none; }
+.lsxg-top{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0 0 6px; font-size:.68rem; font-weight:800; color:#64748b; }
+.lsxg-top em{ font-style:normal; color:#059669; }
+.lsxg-prog{ height:6px; margin:0 0 13px; border-radius:99px; background:#e2e8f0; overflow:hidden; }
+.lsxg-prog i{ display:block; height:100%; border-radius:inherit; background:linear-gradient(90deg,#1e40af,#10b981); transition:width .35s ease; }
+.lsxg-tag{ display:inline-block; margin:0 0 6px; padding:3px 8px; border-radius:7px; font-size:.6rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#047857; background:#ecfdf5; }
+.lsxg-q{ margin:0 0 12px; font-size:.95rem; font-weight:800; line-height:1.4; color:#0f172a; }
+.lsxg-ask{ margin:-6px 0 11px; font-size:.74rem; font-weight:700; color:#64748b; }
+.lsxg-op{ position:static !important; display:flex; align-items:center; gap:10px; width:100%; margin:0 0 8px; padding:12px 13px; border-radius:14px; border:1.5px solid #e2e8f0; background:#fff; color:#1e293b; font:600 .8rem/1.4 'DM Sans',sans-serif; text-align:left; cursor:pointer; transition:border-color .15s, background .15s, transform .1s; }
+.lsxg-op:hover{ border-color:#93c5fd; } .lsxg-op:active{ transform:scale(.99); }
+.lsxg-op i{ width:24px; height:24px; flex-shrink:0; border-radius:8px; display:flex; align-items:center; justify-content:center; font-style:normal; font-size:.7rem; font-weight:800; color:#1e40af; background:#eff6ff; }
+.lsxg-op.ok{ border-color:#10b981; background:#ecfdf5; } .lsxg-op.ok i{ color:#fff; background:#10b981; }
+.lsxg-op.ko{ border-color:#f87171; background:#fef2f2; } .lsxg-op.ko i{ color:#fff; background:#ef4444; }
+.lsxg-op[disabled]{ cursor:default; } .lsxg-op[disabled]:not(.ok):not(.ko){ opacity:.55; }
+.lsxg-ex{ margin:4px 0 12px; padding:11px 13px; border-radius:14px; font-size:.76rem; line-height:1.55; color:#334155; background:#f8fafc; border-left:4px solid #10b981; animation:lsxUp .3s ease-out both; }
+.lsxg-ex.ko{ border-left-color:#f59e0b; }
+.lsxg-ex b{ display:block; margin-bottom:2px; color:#0f172a; }
+.lsxg-score{ display:flex; align-items:center; gap:14px; margin:0 0 12px; }
+.lsxg-ring{ position:relative; width:84px; height:84px; flex-shrink:0; }
+.lsxg-ring svg{ width:84px; height:84px; transform:rotate(-90deg); }
+.lsxg-ring b{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.25rem; font-weight:900; color:#0f172a; }
+.lsxg-ring b small{ font-size:.7rem; color:#64748b; font-weight:800; }
+.lsxg-score h4{ margin:0 0 3px; font-size:.98rem; font-weight:800; color:#0f172a; }
+.lsxg-score p{ margin:0; font-size:.76rem; line-height:1.5; color:#475569; }
+.lsxg-sh-t{ margin:14px 0 8px; font-size:.7rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:#64748b; }
+.lsxg-sh{ display:grid; grid-template-columns:repeat(3,1fr); gap:7px; }
+.lsxg-sh button{ position:static !important; display:flex; align-items:center; justify-content:center; gap:6px; padding:10px 6px; border-radius:12px; border:1px solid #e2e8f0; background:#fff; color:#0f172a; font:700 .7rem/1 'DM Sans',sans-serif; cursor:pointer; }
+.lsxg-sh button svg{ width:15px; height:15px; flex-shrink:0; }
+.lsxg-sh button:hover{ border-color:#cbd5e1; background:#f8fafc; }
+.lsxg-join{ margin:14px 0 0; padding:13px; border-radius:16px; background:linear-gradient(135deg,#f8fbff,#f1fdf7); border:1px solid #dbeafe; }
+.lsxg-join p{ margin:0 0 10px; font-size:.78rem; line-height:1.5; color:#1e293b; }
+.lsxg-join p b{ color:#0f172a; }
+.lsxg-toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:99999; padding:10px 16px; border-radius:99px; background:#0f172a; color:#fff; font:700 .78rem/1 'DM Sans',sans-serif; box-shadow:0 12px 26px -12px rgba(0,0,0,.6); animation:lsxUp .25s ease-out both; }
+@media (min-width:700px){ .lsxg-q{ font-size:1.02rem; } .lsxg-op{ font-size:.86rem; } .lsxg-sh{ grid-template-columns:repeat(6,1fr); } .lsxg-bd{ padding:18px 20px 20px; } }
+@media (prefers-reduced-motion: reduce){ .lsxg, .lsxg-ex{ animation:none !important; } }
+</style>
+<script>
+(function(){
+  if(window.cpLsxGame) return;
+  function S(p){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  function esc(t){ return String(t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  /* [question, [bonne réponse, autre, autre], explication] — la bonne réponse est toujours écrite en premier, l'ordre est mélangé à l'affichage */
+  var QUIZ=[
+    ['Combien de temps un recruteur passe-t-il sur un CV au premier tri ?',['Quelques secondes','Environ 5 minutes','Environ 20 minutes'],'Le premier tri est très rapide : un CV clair, avec le poste visé bien en vue, fait toute la différence.'],
+    ['Quelle longueur pour un CV quand on débute ?',['Une page','Trois pages','Cinq pages'],'Une page suffit au début : on garde l\'essentiel et ce qui sert le poste visé.'],
+    ['Dans quel ordre présenter ses expériences ?',['De la plus récente à la plus ancienne','De la plus ancienne à la plus récente','Au hasard'],'Le recruteur veut voir d\'abord ce que tu as fait en dernier.'],
+    ['En France, la photo sur un CV est…',['Facultative','Obligatoire','Interdite'],'Tu es libre d\'en mettre une ou non. Si tu en mets une : récente, souriante, fond neutre.'],
+    ['Quel format choisir pour envoyer ton CV ?',['PDF','Une photo prise au téléphone','Un fichier .txt'],'Le PDF garde ta mise en page intacte sur tous les écrans.'],
+    ['Quelle adresse e-mail faire figurer sur ton CV ?',['prenom.nom@…','bgdu93@…','lechatfou@…'],'Une adresse sobre avec ton prénom et ton nom fait tout de suite plus sérieux.'],
+    ['À quoi sert l\'accroche en haut du CV ?',['Dire en une phrase le poste que tu vises','Raconter toute ta vie','Donner ta situation familiale'],'Une phrase courte : le poste visé et ce que tu apportes.'],
+    ['Étudiant sans expérience : que mettre en avant ?',['Stages, projets, jobs étudiants, bénévolat','Rien du tout','Seulement ton bac'],'Tout ce que tu as fait compte : chaque projet montre des compétences.'],
+    ['En reconversion, comment valoriser ton ancien métier ?',['Mettre en avant les compétences transférables','Le cacher','Tout recopier sans trier'],'Organisation, relation client, gestion… beaucoup de compétences servent dans un nouveau métier.'],
+    ['Freelance : qu\'est-ce qui remplace souvent le CV auprès des clients ?',['Un portfolio et des avis clients','Un bulletin scolaire','Un relevé bancaire'],'Les clients veulent voir tes réalisations et ce qu\'en disent tes anciens clients.'],
+    ['Tu as une période sans emploi dans ton parcours. Que faire ?',['L\'expliquer simplement (formation, projet…)','Changer les dates','Inventer un emploi'],'Une explication honnête et positive passe très bien. Un mensonge peut être découvert.'],
+    ['Les logiciels de tri des recruteurs lisent mieux un CV…',['Simple, avec des titres clairs','Rempli d\'images et de colonnes','Scanné en image'],'Des titres classiques (Expériences, Formation, Compétences) et du vrai texte.'],
+    ['Faut-il adapter ton CV à chaque offre ?',['Oui, en reprenant les mots-clés de l\'offre','Non, jamais','Seulement ton prénom'],'Quelques ajustements ciblés augmentent beaucoup tes chances.'],
+    ['Quelle information n\'a pas sa place sur un CV ?',['Ta religion','Tes compétences','Ton e-mail'],'Tes opinions et ta vie privée ne regardent pas le recruteur.'],
+    ['Une lettre de motivation tient idéalement sur…',['Une page','Trois pages','Une seule ligne'],'Court et précis : le recruteur doit la lire en une minute.'],
+    ['Ta lettre de motivation commence de préférence par…',['Ce qui t\'attire dans l\'entreprise ou le poste','Ton salaire souhaité','Tes dates de congés'],'Montre dès le début que tu as choisi cette entreprise.'],
+    ['Dans une lettre de motivation, il vaut mieux…',['Donner des exemples concrets','Recopier ton CV','Parler de toi sans lien avec le poste'],'Un exemple réel vaut mieux que dix adjectifs.'],
+    ['Une faute d\'orthographe dans un CV…',['Peut faire écarter ta candidature','N\'a aucune importance','Montre ta créativité'],'Relis-toi et fais relire : c\'est la base.'],
+    ['Quelles compétences mettre sur ton CV ?',['Celles qui correspondent au poste','Toutes celles possibles','Aucune'],'Mieux vaut peu de compétences, mais utiles pour le poste.'],
+    ['Les « savoir-être » (soft skills), ce sont…',['Des qualités : écoute, organisation, autonomie…','Des logiciels','Des diplômes'],'Ce sont tes qualités humaines, de plus en plus regardées par les recruteurs.'],
+    ['Comment indiquer ton niveau dans une langue ?',['Avec un niveau clair (ex. B2, courant)','« Je me débrouille » sans plus','Ne rien mettre'],'Le niveau européen (de A1 à C2) est compris partout.'],
+    ['Quel nom donner au fichier de ton CV ?',['CV_Prenom_Nom.pdf','document1.pdf','final_final_v3.pdf'],'Le recruteur retrouve ton CV en un coup d\'œil.'],
+    ['À quoi servent les centres d\'intérêt sur un CV ?',['Montrer ta personnalité','Remplir la page','À rien'],'Un sport d\'équipe, une association… ça parle de toi. Reste précis.'],
+    ['Demandeur d\'emploi : où créer un CV gratuitement avec le service public ?',['Sur France Travail','Sur un site payant obligatoire','Nulle part'],'Ton espace France Travail permet de créer un CV à partir de ton profil de compétences.'],
+    ['Ta date de naissance sur le CV est…',['Facultative','Obligatoire','À mettre en premier'],'Rien ne t\'oblige à l\'indiquer.'],
+    ['Pour une candidature spontanée, ta lettre doit…',['Expliquer ce que tu peux apporter à l\'entreprise','Demander n\'importe quel poste','Être la même pour toutes'],'Montre que tu connais l\'entreprise et ce que tu peux lui apporter.'],
+    ['Pour l\'alternance, ton CV doit montrer…',['Ta formation, ton rythme école/entreprise et ta motivation','Seulement tes vacances','Rien de spécial'],'L\'entreprise veut savoir quand tu seras présent et ce que tu prépares.'],
+    ['Mentir sur un diplôme…',['Peut être vérifié et te coûter ton poste','Est sans risque','Est conseillé'],'Les diplômes se vérifient facilement. L\'honnêteté paie toujours.'],
+    ['Des chiffres dans un CV (ex. « 30 clients par jour »)…',['Rendent tes résultats concrets','Sont interdits','Ennuient toujours'],'Un chiffre rend une expérience concrète et crédible.'],
+    ['Pour un premier emploi, ta formation se place…',['En haut du CV','Tout en bas','Nulle part'],'Quand l\'expérience est courte, la formation est ton point fort.'],
+    ['Le titre de ton CV doit être…',['Le poste que tu vises','« Curriculum Vitae »','Ton surnom'],'Le recruteur sait tout de suite pour quel poste tu postules.'],
+    ['Avant d\'envoyer ta candidature, tu…',['Relis et fais relire','Envoies vite sans relire','Envoies sans pièce jointe'],'Deux minutes de relecture évitent bien des erreurs.'],
+    ['Freelance : ton tarif s\'exprime le plus souvent…',['Par jour (TJM)','Par an','Par semaine de vacances'],'Le TJM, c\'est le tarif journalier : la référence pour les missions.'],
+    ['Comment se termine une lettre de motivation ?',['Une demande d\'entretien et une formule de politesse','« Bisous »','Sans rien'],'Propose un échange et termine poliment.'],
+    ['Le permis B sur un CV…',['Est utile, surtout si le poste demande de se déplacer','Est interdit','Ne sert jamais'],'Pour beaucoup de postes, c\'est un vrai plus.'],
+    ['Un lien vers ton LinkedIn ou ton portfolio…',['Est un plus s\'il est à jour','Est interdit','Doit être caché'],'Vérifie qu\'il est à jour et cohérent avec ton CV.'],
+    ['Reconversion : une formation récente doit…',['Apparaître clairement : elle prouve ton projet','Être cachée','Être notée sans détail'],'Elle montre que ton projet est réfléchi et sérieux.'],
+    ['Les couleurs sur un CV ?',['Une ou deux couleurs sobres','Dix couleurs flashy','Du jaune sur fond blanc'],'Sobre et lisible : la couleur doit guider l\'œil, pas le fatiguer.'],
+    ['Sans réponse à ta candidature, quand relancer ?',['Après 7 à 10 jours environ','Le lendemain matin','Jamais'],'Une relance polie montre ta motivation.'],
+    ['Combien de candidatures envoyer avec le même CV, sans rien changer ?',['Le moins possible : on adapte à chaque offre','Des centaines','Toutes'],'Un CV ciblé obtient plus de réponses qu\'un envoi en masse.']
+  ];
+  var SIT=[
+    ['Une offre te plaît, mais tu n\'as pas toutes les compétences demandées.',['Tu postules en mettant en avant ce que tu sais faire','Tu abandonnes','Tu mens sur ton CV'],'Les offres décrivent un profil idéal : postule si tu as l\'essentiel.'],
+    ['Un recruteur t\'appelle à l\'improviste, tu es dans un endroit bruyant.',['Tu proposes poliment de le rappeler dans quelques minutes','Tu raccroches','Tu réponds en criant'],'Mieux vaut rappeler au calme, avec ton CV sous les yeux.'],
+    ['Une offre te demande de payer des frais pour être embauché.',['Tu te méfies : c\'est souvent une arnaque','Tu paies vite','Tu donnes ta carte bancaire'],'Un employeur sérieux ne fait jamais payer un candidat.'],
+    ['Tu as un entretien demain matin.',['Tu te renseignes sur l\'entreprise et prépares des exemples','Tu improvises','Tu n\'y penses pas'],'Connaître l\'entreprise et avoir 2 ou 3 exemples prêts te rend plus serein.'],
+    ['Tu vas arriver en retard à ton entretien.',['Tu préviens dès que possible','Tu n\'y vas pas','Tu arrives sans rien dire'],'Prévenir montre ton sérieux, même en cas d\'imprévu.'],
+    ['Le recruteur te dit : « Parlez-moi de vous ».',['Tu résumes ton parcours en lien avec le poste','Tu racontes ta vie depuis l\'enfance','Tu dis « tout est sur mon CV »'],'Une ou deux minutes : qui tu es, ce que tu as fait, pourquoi ce poste.'],
+    ['On te demande ton principal défaut.',['Un vrai défaut et ce que tu fais pour t\'améliorer','« Je n\'en ai aucun »','Un défaut grave sans explication'],'L\'honnêteté et l\'envie de progresser plaisent aux recruteurs.'],
+    ['On te demande ton salaire souhaité.',['Tu donnes une fourchette réaliste','Tu dis « je ne sais pas »','Tu demandes le triple'],'Renseigne-toi avant sur les salaires du métier dans ta région.'],
+    ['Étudiant : tu cherches une alternance et la rentrée approche.',['Tu postules tôt et auprès de plusieurs entreprises','Tu attends septembre','Tu envoies une seule candidature'],'Les entreprises recrutent souvent leurs alternants plusieurs mois avant la rentrée.'],
+    ['En reconversion, on te demande pourquoi tu changes de métier.',['Tu expliques ton projet et ce que tu as déjà fait','Tu critiques ton ancien patron','Tu dis « pour l\'argent »'],'Un projet clair et des actions concrètes rassurent le recruteur.'],
+    ['Freelance : un client veut démarrer sans devis ni contrat.',['Tu proposes un devis écrit avant de commencer','Tu commences sans rien','Tu refuses de lui répondre'],'Un devis signé protège les deux côtés.'],
+    ['Pas de réponse 10 jours après ta candidature.',['Tu relances poliment par e-mail','Tu appelles tous les jours','Tu abandonnes'],'Une relance courte et polie peut relancer ta candidature.'],
+    ['Ton entretien se passe en visio.',['Tu testes connexion, son et caméra avant','Tu te connectes depuis le bus','Tu coupes ta caméra sans prévenir'],'Un essai 10 minutes avant évite le stress technique.'],
+    ['Fin d\'entretien : « Avez-vous des questions ? »',['Tu poses une ou deux questions sur le poste','Tu dis « non »','Tu demandes tes jours de congés en premier'],'Une bonne question montre ton intérêt pour le poste.'],
+    ['Tu reçois un refus.',['Tu remercies et demandes un retour pour progresser','Tu réponds avec colère','Tu ignores le message'],'Un retour t\'aide pour la suite, et tu laisses une bonne image.'],
+    ['Deux offres te sont proposées en même temps.',['Tu compares missions, salaire, trajet et évolution','Tu prends la première','Tu tires à pile ou face'],'Pose tout à plat : la bonne offre n\'est pas toujours la mieux payée.'],
+    ['Un « recruteur » te demande tes codes bancaires dès le premier message.',['Tu refuses et vérifies l\'entreprise','Tu les envoies','Tu envoies seulement la moitié'],'Personne n\'a à connaître tes codes. C\'est une arnaque.'],
+    ['Tu veux trouver des offres plus vite.',['Tu crées des alertes avec des mots-clés précis','Tu regardes une fois par mois','Tu attends qu\'on t\'appelle'],'Les alertes t\'envoient les nouvelles offres dès leur publication.'],
+    ['Tu rêves d\'une entreprise qui n\'a publié aucune offre.',['Tu envoies une candidature spontanée ciblée','Tu attends','Tu abandonnes l\'idée'],'Beaucoup de postes sont pourvus sans annonce.'],
+    ['En entretien, on te demande si tu as des projets d\'enfants.',['Tu recentres poliment sur tes compétences','Tu te fâches','Tu inventes une réponse'],'Ta vie familiale ne doit pas jouer dans un recrutement : reste calme et ramène au poste.'],
+    ['Tu passes un entretien de groupe.',['Tu participes et tu écoutes les autres','Tu monopolises la parole','Tu restes muet'],'Le recruteur regarde comment tu travailles avec les autres.'],
+    ['Quelle tenue pour ton entretien ?',['Propre et adaptée au style de l\'entreprise','Ton pyjama','Une tenue de soirée à paillettes'],'Renseigne-toi sur le style de l\'entreprise et reste soigné.'],
+    ['Ton téléphone sonne pendant l\'entretien.',['Tu t\'excuses et le coupes','Tu réponds','Tu fais comme si de rien n\'était'],'Le mieux : le mettre en silencieux avant d\'entrer.'],
+    ['On te propose un CDD alors que tu voulais un CDI.',['Tu réfléchis : expérience, suite possible','Tu refuses sans réfléchir','Tu signes sans lire'],'Un CDD peut être un tremplin : pèse le pour et le contre.'],
+    ['Ton entretien vient de se terminer.',['Tu envoies un court message de remerciement','Tu n\'envoies jamais rien','Tu demandes la réponse toutes les heures'],'Un merci rapide laisse une très bonne impression.'],
+    ['Tu ne comprends pas une question du recruteur.',['Tu lui demandes de la reformuler','Tu réponds au hasard','Tu changes de sujet'],'Demander une précision est normal et montre ton écoute.'],
+    ['Étudiant : tu cherches un job à côté des cours.',['Tu choisis des horaires compatibles avec tes études','Tu acceptes 50 h par semaine','Tu sèches les cours'],'Tes études restent la priorité : vise un rythme tenable.'],
+    ['Reconversion : tu n\'as aucune expérience dans le nouveau métier.',['Tu fais un stage ou une immersion pour te tester','Tu attends','Tu inventes une expérience'],'Une immersion en entreprise te fait découvrir le métier et rassure les recruteurs.'],
+    ['Freelance : un client paie en retard.',['Tu relances poliment avec la facture et la date d\'échéance','Tu publies sa facture en ligne','Tu ne dis rien'],'Une relance claire et polie suffit le plus souvent.'],
+    ['Demandeur d\'emploi : tu as rendez-vous avec ton conseiller.',['Tu prépares tes questions et ton projet','Tu oublies le rendez-vous','Tu viens sans rien'],'Un rendez-vous préparé est un rendez-vous utile.'],
+    ['Un recruteur peut voir ton profil public sur les réseaux.',['Tu soignes ce qui est visible publiquement','Tu publies n\'importe quoi','Tu gardes une photo de soirée en profil'],'Vérifie ce qu\'on voit de toi quand on tape ton nom.'],
+    ['On te demande un exemple de réussite.',['Tu racontes la situation, ton action et le résultat','Tu dis « j\'ai toujours réussi »','Tu parles d\'un collègue'],'Situation, action, résultat : un exemple simple et concret.'],
+    ['Le salaire n\'est pas indiqué dans l\'offre.',['Tu te renseignes et poses la question au bon moment','Tu ne postules pas','Tu le demandes dès la première phrase'],'On en parle souvent en fin d\'entretien ou au deuxième échange.'],
+    ['Ton entretien a lieu loin de chez toi.',['Tu prévois ton trajet avec de l\'avance','Tu pars à la dernière minute','Tu ne regardes pas l\'adresse'],'Arrive 10 minutes en avance : tu seras plus détendu.'],
+    ['Une offre semble trop belle : gros salaire, aucun diplôme, travail facile à la maison.',['Tu vérifies l\'entreprise avant tout','Tu fonces','Tu envoies tes papiers d\'identité'],'Vérifie le nom, le site et les avis de l\'entreprise avant d\'envoyer quoi que ce soit.'],
+    ['Ton dernier entretien s\'est mal passé.',['Tu notes ce que tu peux améliorer','Tu arrêtes de chercher','Tu accuses le recruteur'],'Chaque entretien t\'entraîne pour le suivant.'],
+    ['Étudiant : on te demande tes disponibilités pour un stage.',['Tu donnes des dates précises de début et de fin','« Je verrai »','Tu ne réponds pas'],'Des dates claires facilitent la décision de l\'entreprise.'],
+    ['Un ami travaille dans une entreprise qui recrute.',['Tu lui demandes conseil ou de transmettre ton CV','Tu ne lui en parles pas','Tu exiges qu\'il te fasse embaucher'],'Le réseau aide beaucoup, avec tact.'],
+    ['Freelance : un client te demande une grosse remise.',['Tu négocies en ajustant le contenu de la mission','Tu acceptes tout','Tu te fâches'],'Moins cher, oui, mais pour une mission plus courte ou plus simple.'],
+    ['Le recruteur te demande quand tu peux commencer.',['Tu donnes une date réaliste, préavis compris','« Jamais »','« Hier »'],'Sois honnête : un préavis est normal et compris par les recruteurs.']
+  ];
+  var CFG={
+    cvlettre:{ bank:QUIZ, kind:'quiz', title:'Mini quiz CV & Lettre', sub:'Quiz général · les 4 profils', tag:'Question', ask:'',
+      intro:'C\'est un <b>quiz général qui regroupe les 4 profils</b> : demandeur d\'emploi, étudiant, reconversion et freelance. C\'est <b>simple et ludique</b>, rien de compliqué : juste pour te mettre dans la situation. <b>10 questions</b> tirées au hasard parmi 40 sur le CV et la lettre de motivation.',
+      start:'Commencer le quiz', name:'mini quiz CV de CareerPulse', more:'Inscris-toi gratuitement pour accéder au <b>quiz complet</b> et à des questions adaptées à <b>ton profil</b>.' },
+    emploi:{ bank:SIT, kind:'sit', title:'Mini mises en situation', sub:'Recherche d\'emploi & entretien · les 4 profils', tag:'Situation', ask:'Que fais-tu ?',
+      intro:'Ce sont des <b>mises en situation générales qui regroupent les 4 profils</b> : demandeur d\'emploi, étudiant, reconversion et freelance. C\'est <b>simple et ludique</b>, rien de compliqué : juste pour te mettre dans la situation. <b>10 situations</b> tirées au hasard parmi 40, de la recherche d\'emploi jusqu\'à l\'entretien.',
+      start:'Commencer les mises en situation', name:'mini mises en situation de CareerPulse', more:'Si tu veux des <b>mises en situation qui correspondent à ton profil</b>, inscris-toi gratuitement.' }
+  };
+  var ST={};
+  function shuf(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function lisa(){ return window.CP_LISA_IMG||''; }
+  function member(){ try{ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return !!(u&&(u.emailVerified||(u.providerData||[]).some(function(p){ return p.providerId==='google.com'; }))); }catch(e){ return false; } }
+  function head(k){ var C=CFG[k]; return '<div class="lsxg-hd">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'<div><b>'+C.title+'</b><span>Avec Lisa · '+C.sub+'</span></div></div>'; }
+  function startView(k){ var C=CFG[k];
+    return '<p class="lsxg-say">'+C.intro+'</p><div class="lsxg-chips"><span>🔎 Demandeur d\'emploi</span><span>🎓 Étudiant</span><span>🔄 Reconversion</span><span>💼 Freelance</span></div>'
+      +'<button type="button" class="lsxg-btn" data-g="start">'+S('<path d="M8 5v14l11-7z" fill="currentColor"/>')+C.start+'</button>'; }
+  function qView(k){ var C=CFG[k], s=ST[k], q=s.qs[s.i], n=s.qs.length;
+    var h='<div class="lsxg-top"><span>'+C.tag+' '+(s.i+1)+' / '+n+'</span><em>Score : '+s.score+'</em></div><div class="lsxg-prog"><i style="width:'+(s.i/n*100)+'%"></i></div>'
+      +'<span class="lsxg-tag">'+(C.kind==='sit'?'Mise en situation':'Quiz CV & Lettre')+'</span><p class="lsxg-q">'+esc(q.t)+'</p>'+(C.ask?'<p class="lsxg-ask">'+C.ask+'</p>':'');
+    h+=q.o.map(function(o,j){ var cls=''; if(s.done){ if(j===q.ok) cls=' ok'; else if(j===s.pick) cls=' ko'; }
+      return '<button type="button" class="lsxg-op'+cls+'" data-g="pick" data-j="'+j+'"'+(s.done?' disabled':'')+'><i>'+'ABC'[j]+'</i>'+esc(o)+'</button>'; }).join('');
+    if(s.done){ var good=s.pick===q.ok;
+      h+='<div class="lsxg-ex'+(good?'':' ko')+'"><b>'+(good?'Bien joué ! ✅':'Pas tout à fait 💡')+'</b>'+esc(q.x)+'</div>'
+        +'<button type="button" class="lsxg-btn" data-g="next">'+(s.i+1<n?'Suivant':'Voir mon résultat')+S('<path d="M5 12h14M13 6l6 6-6 6"/>')+'</button>'; }
+    return h; }
+  function verdict(sc,n){ var r=sc/n; return r>=.9?['Excellent ! 🏆','Tu maîtrises très bien le sujet.']:r>=.7?['Très bien ! 👏','Encore quelques réflexes à prendre et tu seras au top.']:r>=.5?['Pas mal ! 💪','Tu as les bases, on peut aller plus loin ensemble.']:['C\'est un début ! 🌱','Chaque question t\'a appris quelque chose : on continue ?']; }
+  function endView(k){ var C=CFG[k], s=ST[k], n=s.qs.length, v=verdict(s.score,n), R=34, L=2*Math.PI*R;
+    var ic={ wa:'<path d="M3 21l1.7-5A8.5 8.5 0 1 1 8 19.4z"/><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1.2-1.2 2 1-.5 1.5c-3.5.5-8-4-7.5-7.5L10.2 7l1 2z"/>', fb:'<path d="M15 3h-2.5A3.5 3.5 0 0 0 9 6.5V10H6v3.5h3V21h3.5v-7.5H15l.5-3.5h-3V7c0-.6.4-1 1-1H15z"/>', li:'<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M7.5 10.5V17M7.5 7.3v.2M11.5 17v-6.5M11.5 13.5c0-2 1.2-3 2.6-3S16.5 11.3 16.5 13v4"/>', x:'<path d="M4 4l16 16M20 4 4 20"/>', mail:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>', copy:'<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>' };
+    function b(id,t){ return '<button type="button" data-g="share" data-s="'+id+'">'+S(ic[id])+t+'</button>'; }
+    return '<div class="lsxg-score"><div class="lsxg-ring"><svg viewBox="0 0 84 84"><circle cx="42" cy="42" r="'+R+'" stroke="#e2e8f0" stroke-width="9" fill="none"/><circle cx="42" cy="42" r="'+R+'" stroke="url(#lsxgG'+k+')" stroke-width="9" fill="none" stroke-linecap="round" stroke-dasharray="'+L.toFixed(1)+'" stroke-dashoffset="'+(L*(1-s.score/n)).toFixed(1)+'"/><defs><linearGradient id="lsxgG'+k+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1e40af"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs></svg><b>'+s.score+'<small>/'+n+'</small></b></div>'
+      +'<div><h4>'+v[0]+'</h4><p>'+v[1]+'</p></div></div>'
+      +'<div class="lsxg-sh-t">Partage ton résultat</div><div class="lsxg-sh">'+b('wa','WhatsApp')+b('fb','Facebook')+b('li','LinkedIn')+b('x','X')+b('mail','E-mail')+b('copy','Copier')+'</div>'
+      +'<div class="lsxg-join"><p>'+C.more+'</p>'+(member()?'<button type="button" class="lsxg-btn" data-lsx="espace">Ouvrir Mon espace</button>':'<button type="button" class="lsxg-btn" data-lsx="signup">'+S('<circle cx="9" cy="8" r="4"/><path d="M2 21c.9-3.9 3.6-6 7-6s6.1 2.1 7 6"/><path d="M19 8v6M16 11h6"/>')+'Créer mon compte gratuit</button>')+'</div>'
+      +'<button type="button" class="lsxg-btn alt" data-g="start">'+S('<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>')+'Rejouer avec 10 nouvelles questions</button>'; }
+  function body(k){ var s=ST[k]; return !s||!s.qs?startView(k):(s.i>=s.qs.length?endView(k):qView(k)); }
+  function render(card){ var k=card.getAttribute('data-game'); card.querySelector('.lsxg-bd').innerHTML=body(k); }
+  window.cpLsxGame=function(k){ if(!CFG[k]) return ''; return '<div class="lsxg" data-game="'+k+'">'+head(k)+'<div class="lsxg-bd">'+body(k)+'</div></div>'; };
+  function shareUrl(k){ var base=/^https:/.test(location.protocol)?location.origin+location.pathname:'https://career-pulse-eva.vercel.app/'; return base+'#'+k; }
+  function toast(t){ var d=document.createElement('div'); d.className='lsxg-toast'; d.textContent=t; document.body.appendChild(d); setTimeout(function(){ d.remove(); },2200); }
+  function share(k,how){ var C=CFG[k], s=ST[k], url=shareUrl(k), txt='J\'ai eu '+s.score+'/'+s.qs.length+' au '+C.name+' 🎯 Et toi, tu fais combien ?', E=encodeURIComponent;
+    var map={ wa:'https://wa.me/?text='+E(txt+' '+url), fb:'https://www.facebook.com/sharer/sharer.php?u='+E(url), li:'https://www.linkedin.com/sharing/share-offsite/?url='+E(url), x:'https://twitter.com/intent/tweet?text='+E(txt)+'&url='+E(url), mail:'mailto:?subject='+E('Mon résultat sur CareerPulse')+'&body='+E(txt+'\n\n'+url) };
+    if(how==='copy'){ var all=txt+' '+url; try{ navigator.clipboard.writeText(all).then(function(){ toast('Lien copié ✅'); },function(){ prompt('Copie ce texte :',all); }); }catch(e){ prompt('Copie ce texte :',all); } return; }
+    if(how==='mail'){ location.href=map.mail; return; }
+    window.open(map[how],'_blank','noopener,width=620,height=560'); }
+  document.addEventListener('click',function(e){ var b=e.target.closest('[data-g]'); if(!b) return; var card=b.closest('.lsxg'); if(!card) return; var k=card.getAttribute('data-game'), a=b.getAttribute('data-g'), C=CFG[k];
+    if(a==='start'){ ST[k]={ i:0, score:0, done:false, qs:shuf(C.bank).slice(0,10).map(function(q){ var o=shuf([0,1,2]); return { t:q[0], o:o.map(function(x){ return q[1][x]; }), ok:o.indexOf(0), x:q[2] }; }) }; render(card); card.scrollIntoView({ block:'nearest', behavior:'smooth' }); return; }
+    var s=ST[k]; if(!s) return;
+    if(a==='pick' && !s.done){ s.pick=+b.getAttribute('data-j'); s.done=true; if(s.pick===s.qs[s.i].ok) s.score++; render(card); return; }
+    if(a==='next'){ s.i++; s.done=false; s.pick=null; render(card); var top=card.getBoundingClientRect().top; if(top<0) card.scrollIntoView({ block:'start', behavior:'smooth' }); return; }
+    if(a==='share'){ share(k,b.getAttribute('data-s')); return; }
+  });
+})();
+</script>
+
 <style id="cp-logo2-css">
 /* ═══ Nouveau logo CareerPulse (en-tête) ═══ */
 #tnav .logo .cp-lg-mark{ display:flex; align-items:center; justify-content:center; width:34px; height:31px; flex-shrink:0; }
