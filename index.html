@@ -9194,11 +9194,9 @@ function generateEvaAIPlan(uid, quizName, score, total, answers){
     '<div id="eva-trigger-'+uid+'" style="margin-bottom:14px">'
     +'<button onclick="evaOpen(\''+uid+'\')" '
     +'style="display:flex;align-items:center;gap:12px;width:100%;background:linear-gradient(135deg,#0a1628,#0f2744);border:1.5px solid rgba(52,211,153,.22);border-radius:16px;padding:15px 16px;cursor:pointer;font-family:inherit;transition:all .2s;text-align:left;box-shadow:0 4px 20px rgba(0,0,0,.25)">'
-    +'<div style="width:46px;height:46px;border-radius:13px;background:linear-gradient(135deg,#0f766e,#1e40af);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(15,118,110,.45)">'
-    +'<svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>'
-    +'</div>'
+    +'<img alt="Lisa" src="'+(window.CP_LISA_IMG||'')+'" style="width:48px;height:48px;border-radius:50%;object-fit:cover;flex-shrink:0;box-shadow:0 0 0 2px rgba(52,211,153,.6),0 4px 16px rgba(15,118,110,.45)">'
     +'<div style="flex:1">'
-    +'<div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-.01em">✨ Voir l\'analyse complète d\'Eva</div>'
+    +'<div style="font-size:.82rem;font-weight:800;color:#fff;margin-bottom:4px;letter-spacing:-.01em">✨ Voir l\'analyse complète de CareerPulse conseil</div>'
     +'<div style="font-size:.63rem;color:rgba(255,255,255,.45);line-height:1.4">Diagnostic · Exemples · Chiffres · Plan d\'action</div>'
     +'</div>'
     +'<div style="width:30px;height:30px;border-radius:50%;background:rgba(52,211,153,.12);border:1.5px solid rgba(52,211,153,.28);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
@@ -9223,26 +9221,21 @@ function evaOpen(uid){
   cb.innerHTML =
     '<div style="background:linear-gradient(160deg,#0a1628,#0f2744);border-radius:18px;overflow:hidden;margin-bottom:12px;border:1px solid rgba(52,211,153,.10);box-shadow:0 8px 32px rgba(0,0,0,.3)">'
     // ── Header ──
-    +'<div style="background:linear-gradient(135deg,#0f766e,#1e40af);padding:14px 16px;display:flex;align-items:center;gap:11px">'
-    +'<div style="width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;border:1px solid rgba(255,255,255,.15)">'
-    +'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>'
+    +'<div style="background:linear-gradient(135deg,#0f766e,#1e40af);padding:16px 18px">'
+    +'<div style="display:flex;align-items:center;gap:12px">'
+    +'<img alt="Lisa" src="'+(window.CP_LISA_IMG||'')+'" style="width:50px;height:50px;border-radius:50%;object-fit:cover;flex-shrink:0;box-shadow:0 0 0 2px #fff,0 6px 16px -6px rgba(0,0,0,.5)">'
+    +'<div style="flex:1;min-width:0">'
+    +'<div style="font-size:.92rem;font-weight:800;color:#fff;letter-spacing:-.01em;line-height:1.25">CareerPulse conseil</div>'
+    +'<div style="display:flex;align-items:center;gap:6px;margin-top:4px">'
+    +'<div style="width:7px;height:7px;background:#34d399;border-radius:50%;box-shadow:0 0 6px #34d399;animation:pulse 2s infinite;flex-shrink:0"></div>'
+    +'<span style="font-size:.62rem;color:rgba(255,255,255,.75);line-height:1.4">Avec Lisa · en ligne · '+ctx.dateStr+' à '+ctx.heureStr+'</span>'
     +'</div>'
-    +'<div style="flex:1">'
-    +'<div style="font-size:.8rem;font-weight:800;color:#fff;letter-spacing:-.01em">⭐ Eva · CareerPulse</div>'
-    +'<div style="display:flex;align-items:center;gap:6px;margin-top:3px">'
-    +'<div style="width:7px;height:7px;background:#34d399;border-radius:50%;box-shadow:0 0 6px #34d399;animation:pulse 2s infinite"></div>'
-    +'<span style="font-size:.52rem;color:rgba(255,255,255,.6)">En ligne · '+ctx.dateStr+' à '+ctx.heureStr+'</span>'
     +'</div>'
     +'</div>'
-    +'<div style="display:flex;align-items:center;gap:8px;">'
-    +'<div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:4px 10px;font-size:.5rem;font-weight:800;color:rgba(255,255,255,.75);letter-spacing:.05em;text-transform:uppercase;max-width:110px;text-align:center;line-height:1.3">'+ctx.quizName+'</div>'
-    +'<button id="eva-snd-btn-'+uid+'" onclick="_evaQuizToggleSound(\''+uid+'\')" title="Son" style="width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s">'
-    +'<svg id="eva-snd-ico-'+uid+'" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.85)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>'
-    +'</button>'
-    +'</div>'
+    +'<div style="display:inline-block;margin-top:12px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:99px;padding:5px 12px;font-size:.62rem;font-weight:800;color:#fff;letter-spacing:.03em;line-height:1.3">'+ctx.quizName+'</div>'
     +'</div>'
     // ── Zone messages ──
-    +'<div id="eva-msgs-'+uid+'" style="padding:16px 14px 12px;max-height:560px;overflow-y:auto;scroll-behavior:smooth"></div>'
+    +'<div id="eva-msgs-'+uid+'" class="cp-cons-msgs" style="padding:18px 18px 14px"></div>'
     +'</div>';
 
   // ── Toast son avant lancement du stream ──
@@ -9253,7 +9246,7 @@ function evaOpen(uid){
       _t.style.cssText='position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(12px);background:rgba(15,118,110,.97);backdrop-filter:blur(10px);border-radius:40px;padding:9px 14px 9px 11px;display:flex;align-items:center;gap:9px;z-index:9990;box-shadow:0 4px 24px rgba(0,0,0,.4);opacity:0;transition:opacity .3s,transform .3s;max-width:92vw;pointer-events:auto';
       _t.innerHTML=''
         +'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>'
-        +'<span style="font-size:.7rem;font-weight:700;color:#fff;white-space:nowrap">Eva va parler — son activé</span>'
+        +'<span style="font-size:.7rem;font-weight:700;color:#fff;white-space:nowrap">CareerPulse conseil va parler — son activé</span>'
         +'<button onclick="_evaQuizToggleSound(\''+uid+'\');this.closest(\'.eva-toast\').style.opacity=0;" style="background:rgba(255,255,255,.2);border:none;border-radius:20px;padding:3px 10px;font-size:.62rem;font-weight:800;color:#fff;cursor:pointer;font-family:inherit">Couper</button>';
       _t.querySelector('button').addEventListener('click',function(){ _t.style.opacity='0'; });
       document.body.appendChild(_t);
@@ -9431,14 +9424,12 @@ function evaNewBubble(uid){
   wrap.innerHTML =
     // Meta
     '<div style="display:flex;align-items:center;gap:7px;margin-bottom:7px">'
-    +'<div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,#0f766e,#1e40af);display:flex;align-items:center;justify-content:center;flex-shrink:0">'
-    +'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2z"/></svg>'
-    +'</div>'
-    +'<span style="font-size:.56rem;font-weight:800;color:#34d399;letter-spacing:.03em">Eva · CareerPulse</span>'
+    +'<img alt="Lisa" src="'+(window.CP_LISA_IMG||'')+'" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0">'
+    +'<span style="font-size:.66rem;font-weight:800;color:#34d399;letter-spacing:.02em">CareerPulse conseil</span>'
     +'<span style="font-size:.5rem;color:rgba(255,255,255,.28)">'+h+'</span>'
     +'</div>'
     // Texte
-    +'<div class="eva-bt" style="font-size:.84rem;color:rgba(255,255,255,.88);line-height:1.82;padding-left:31px;letter-spacing:.008em;animation:evaBubIn .28s ease both"></div>';
+    +'<div class="eva-bt" style="font-size:.86rem;color:rgba(255,255,255,.9);line-height:1.7;padding-left:0;letter-spacing:.005em;overflow-wrap:anywhere;animation:evaBubIn .28s ease both"></div>';
   msgs.appendChild(wrap);
   msgs.scrollTop = msgs.scrollHeight;
   return wrap.querySelector('.eva-bt');
@@ -20584,5 +20575,38 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
 #tnav .logo .cp-lg-mark{ display:flex; align-items:center; justify-content:center; width:34px; height:31px; flex-shrink:0; }
 #tnav .logo .cp-lg-mark svg{ width:34px; height:31px; display:block; filter:drop-shadow(0 2px 4px rgba(8,145,178,.25)); }
 </style>
+
+<style id="cp-quizfit-css">
+/* Quiz Pro (mobile) : les jokers tiennent sur une ligne, « Je dois interrompre » dessous, rien n'est coupé */
+@media (max-width: 899px){
+  [id$="-zone"] > div:first-child{ flex-wrap: wrap !important; row-gap: 7px !important; }
+  [id$="-zone"] > div:first-child > div:first-child{ flex: 1 1 100% !important; min-width: 0 !important; display: flex !important; }
+  [id$="-zone"] > div:first-child > div:first-child > *{ flex: 1 1 0 !important; min-width: 0 !important; justify-content: center !important; }
+  [id$="-zone"] > div:first-child > div:first-child span{ overflow: hidden; text-overflow: ellipsis; }
+  [id$="-zone"] > div:first-child > button{ margin-left: auto !important; }
+}
+/* Résultats : photo de Lisa en haut */
+.cp-res-lisa{ position:relative; overflow:visible !important; background:none !important; box-shadow:none !important; }
+.cp-res-lisa > img{ width:100%; height:100%; border-radius:50%; object-fit:cover; display:block; box-shadow:0 0 0 3px #fff,0 10px 24px -10px rgba(15,23,42,.55); }
+.cp-res-lisa > i{ position:absolute; right:-4px; bottom:-4px; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 0 3px #fff; }
+.cp-res-lisa > i svg{ width:15px !important; height:15px !important; }
+.cp-cons-msgs .eva-bt b, .cp-cons-msgs .eva-bt strong{ color:#fff; }
+</style>
+<script>
+/* Résultats des Quiz Pro : la photo de Lisa remplace l'icône du haut (l'icône devient un petit badge) */
+(function(){
+  function run(){ var L=window.CP_LISA_IMG; if(!L) return;
+    [].forEach.call(document.querySelectorAll('.screen[id$="-result"].active'),function(sc){
+      var lab=[].filter.call(sc.querySelectorAll('div'),function(d){ return !d.children.length && /^(ton )?r[ée]sultat$/i.test((d.textContent||'').trim()); })[0];
+      if(!lab) return; var c=lab.previousElementSibling; if(!c||c.classList.contains('cp-res-lisa')) return;
+      var cs=getComputedStyle(c); if(cs.borderRadius.indexOf('50%')<0 && parseFloat(cs.borderTopLeftRadius)<30) return;
+      var sv=c.querySelector('svg'), bg=cs.backgroundImage;
+      c.classList.add('cp-res-lisa'); c.innerHTML='<img alt="Lisa" src="'+L+'">'+(sv?'<i style="background:'+(bg&&bg!=='none'?bg:'#0f766e')+'">'+sv.outerHTML+'</i>':'');
+    }); }
+  var t=null; function soon(){ clearTimeout(t); t=setTimeout(run,120); }
+  try{ new MutationObserver(soon).observe(document.body,{ subtree:true, childList:true, attributes:true, attributeFilter:['class'] }); }catch(e){}
+  if(document.readyState!=='loading') soon(); else document.addEventListener('DOMContentLoaded',soon);
+})();
+</script>
 </body>
 </html>
