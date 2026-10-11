@@ -1890,6 +1890,31 @@ button.cj-own{ cursor:pointer; background:#fff; font-family:'DM Sans',sans-serif
 @media (prefers-reduced-motion: reduce){ #s-profil .cps-hero::after{ display:none; } }
 </style>
 
+<style id="cpes11-css">
+.es-simp{ display:flex; flex-direction:column; gap:12px; }
+.es-simp > *{ margin-top:0 !important; margin-bottom:0 !important; }
+.es-simp .es-eh{ display:none !important; }
+.es-simp .cj-stats span{ background:var(--ess); color:var(--es1); }
+.es-simp .cj-stats button{ transition:transform .15s, box-shadow .15s; }
+.es-simp .cj-stats button:hover{ transform:translateY(-1px); box-shadow:0 12px 24px -18px rgba(15,23,42,.5); }
+.es-simp .cj-bar{ background:var(--ess); }
+.es-simp .cj-bar > i{ background:linear-gradient(90deg,var(--es1),var(--es2)); }
+.es-simp .cj-ic.g{ background:linear-gradient(135deg,var(--es1),var(--es2)) !important; }
+.es-simp .cj-btn{ background:linear-gradient(135deg,var(--es1),var(--es2)); box-shadow:0 10px 20px -12px var(--es1); }
+.es-simp .cj-btn.ghost, html.pf-etu .cj-sheet .es-simp .cj-btn.ghost, html.pf-sal .cj-sheet .es-simp .cj-btn.ghost{ background:#fff !important; color:var(--esd) !important; border:1px solid var(--esb) !important; box-shadow:none !important; }
+.es-simp .cj-btn.ghost svg{ stroke:var(--esd) !important; }
+.es-simp .es-ctabs{ margin:0 !important; }
+.es-ctabs em{ font-style:normal; font-size:.7rem; font-weight:800; opacity:.6; margin-left:3px; }
+.es-simp .es-mc .cj-now-hd b{ overflow-wrap:anywhere; }
+.es-simp .es-mc .cj-score{ white-space:nowrap; }
+.es-day .es-t{ display:flex; align-items:center; gap:10px; }
+.es-day .es-t .es-t-b{ flex:1; min-width:0; }
+.es-day .es-t select{ width:auto !important; flex-shrink:0; }
+.es-day .es-t .es-rel{ display:inline !important; font-size:inherit; color:#e11d48; }
+.es-simp .es-mc .es-srch{ margin:12px 0 0; }
+.es-simp .cps-empty{ padding:16px; border-radius:16px; border:1px dashed #cbd5e1; background:#f8fafc; color:#64748b; font-size:.82rem; text-align:center; }
+.es-simp .es-dtip{ cursor:default; }
+</style>
 </head>
 <body>
 <!-- Notification "compte requis" pour sauvegarder des infos personnelles — toujours au niveau racine -->
@@ -21315,12 +21340,25 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(old) c.tasks=c.tasks.map(function(z){ return z.id===id?nt:z; }); else c.tasks.push(nt); save(); msg(old?'Tâche mise à jour ✓':'Tâche ajoutée ✓'); o.close(); refreshAll(); }
   function refreshAll(){ if(EDO&&document.body.contains(EDO.sh)) EDO.render(); if(OBJ&&document.body.contains(OBJ.sh)) OBJ.render(); redraw(); }
 
+  /* ══ Pages simples, sur le modèle Emploi · Reconversion : Lisa, conseil du jour, 3 chiffres, l'essentiel ══ */
+  function dayN(){ return Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5); }
+  function dTip(off){ var L=TIPS[pf()]||[]; return L.length?L[(dayN()+(off||0))%L.length]:''; }
+  function pl(n,a,b){ return n>1?b:a; }
+  function simpTop(t,off,K){ return say(t)+'<div class="cj-box cj-tip es-dtip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil du jour</b><small>'+esc(dTip(off))+'</small></span></div>'
+    +'<div class="cj-stats es-kpi">'+K.map(function(x){ return '<button type="button" '+x[0]+'><span>'+I(x[1],17)+'</span><b>'+x[2]+'</b><small>'+x[3]+'</small></button>'; }).join('')+'</div>'; }
+  function cTab(o,L,a,key){ return '<div class="es-tabs es-ctabs">'+L.map(function(x){ return '<button type="button" class="'+(o[key||'tab']===x[0]?'on':'')+'" data-cj="'+(a||'es-tab')+'" data-'+(a==='es-gtab'?'p':a==='es-cf'?'f':'t')+'="'+x[0]+'">'+x[1]+(x[2]!=null?' <em>'+x[2]+'</em>':'')+'</button>'; }).join('')+'</div>'; }
+  function nowCard(ic,t,sub,score,pc,acts){ return '<div class="cj-now es-mc"><div class="cj-now-hd"><span class="cj-ic g">'+I(ic,22)+'</span><div><b>'+t+'</b><small>'+sub+'</small></div>'+(score!=null?'<em class="cj-score">'+score+'</em>':'')+'</div>'+(pc!=null?'<i class="cj-bar lg"><i style="width:'+pc+'%"></i></i>':'')+(acts?'<div class="cj-acts">'+acts+'</div>':'')+'</div>'; }
+  function aBtn(a,ic,t,gh){ return '<button type="button" class="cj-btn'+(gh?' ghost':'')+'" '+a+'>'+(ic?I(ic,15):'')+t+'</button>'; }
+
   /* ══ 1. Ma semaine : Aujourd'hui / Semaine / Calendrier ══ */
   function openWeek(tab){ var k=pf(), o=cpStream.sheet('Ma semaine','Savoir quoi faire aujourd\'hui',''); EDO=o; PG=o; o.tab=tab||'auj'; o.j=dIdx(); o.form=null; var m0=new Date(); o.mo=new Date(m0.getFullYear(),m0.getMonth(),1); o.cd=today(); edtAttach(o);
-    o.render=function(){ var h=tabsH(o,[['auj','Aujourd\'hui'],['sem','Semaine'],['cal','Calendrier']]), now=new Date(), nm=now.getHours()*60+now.getMinutes();
+    o.body.classList.add('es-simp');
+    o.render=function(){ var now=new Date(), nm=now.getHours()*60+now.getMinutes(), IT0=dayItems(today(),dIdx()), nS=IT0.filter(function(x){ return x.k==='s'; }).length, a0=wk(), z0=wkEnd(), WT=cur().tasks.filter(function(t){ return t.date>=a0 && t.date<=z0; }), wd=WT.filter(function(t){ return t.fait; }).length, nx=IT0.filter(function(x){ return x.k==='s' && mins(x.f)>nm && !x.ok; })[0];
+      var lt=IT0.length?(nx?(mins(nx.d)<=nm?'En ce moment : <b>'+esc(nx.t)+'</b>, jusqu\'à '+esc(nx.f)+'.':'Prochain : <b>'+esc(nx.t)+'</b> à '+esc(nx.d)+'.'):'Ta journée est bouclée, bravo ✓'):(edt().length?'Rien de prévu aujourd\'hui : avance sur un objectif.':'Remplis '+(k==='etu'?'ton emploi du temps':'ton planning')+' dans l\'onglet <b>Semaine</b> : je te montre ensuite ta journée.');
+      var h=simpTop(lt,0,[['data-cj="es-tab" data-t="auj"',P.cal,nS,pl(nS,'créneau','créneaux')+' aujourd\'hui'],['data-cj="es-tab" data-t="auj"',P.check,wd+'/'+WT.length,'tâches faites cette semaine'],['data-cj="es-tab" data-t="sem"',P.clock,hrs(weekMins()),(k==='etu'?'de cours':'de travail')+' par semaine']])
+        +cTab(o,[['auj','Aujourd\'hui',IT0.length],['sem','Semaine',edt().length],['cal','Calendrier',null]]);
       if(o.tab==='auj'){ var IT=dayItems(today(),dIdx());
-        h+='<div class="es-ph"><b>Aujourd\'hui</b><span>'+now.toLocaleDateString('fr-FR',{ weekday:'short', day:'numeric', month:'short', year:'numeric' })+'</span></div>'
-          +(IT.length?'<div class="es-irs">'+IT.map(function(x){ return itemRow(x, x.k==='s'&&mins(x.d)<=nm&&mins(x.f)>nm); }).join('')+'</div>':'<div class="es-free">'+I(P.sun||P.cal,22)+'<b>Rien de prévu aujourd\'hui</b><small>Ajoute une tâche, ou remplis '+(k==='etu'?'ton emploi du temps':'ton planning')+' dans l\'onglet Semaine.</small></div>')
+        h+=(IT.length?'<div class="es-irs">'+IT.map(function(x){ return itemRow(x, x.k==='s'&&mins(x.d)<=nm&&mins(x.f)>nm); }).join('')+'</div>':'<div class="es-free">'+I(P.sun||P.cal,22)+'<b>Rien de prévu aujourd\'hui</b><small>Ajoute une tâche, ou remplis '+(k==='etu'?'ton emploi du temps':'ton planning')+' dans l\'onglet Semaine.</small></div>')
           +'<button type="button" class="cj-main" data-cj="es-qnew">'+I(P.plus,18)+'Ajouter une tâche</button>'; }
       else if(o.tab==='sem'){ h+=o.edtHtml(); var ds=(function(){ var d=new Date(wk()+'T12:00:00'); d.setDate(d.getDate()+o.j); return ymd(d); })(), TT=dayItems(ds,o.j).filter(function(x){ return x.k==='t'; });
         h=h.replace('<div class="es-dh">','<div class="es-dtasks"><div class="es-later-h"><b>Tâches de ce jour</b><button type="button" class="es-ladd" data-cj="es-qnew" data-d="'+ds+'" aria-label="Ajouter une tâche ce jour">'+I(P.plus,16)+'</button></div>'+(TT.length?TT.map(function(x){ return itemRow(x,false); }).join(''):'<p class="es-mini">Aucune tâche ce jour-là.</p>')+'</div><div class="es-dh">'); }
@@ -21333,27 +21371,30 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
           +'<div class="es-cal"><div class="es-cal-w">'+['L','M','M','J','V','S','D'].map(function(x){ return '<span>'+x+'</span>'; }).join('')+'</div><div class="es-cal-g">'+cells+'</div><p class="es-cal-l"><em class="s"></em>Créneau <em class="t"></em>Tâche</p></div>'
           +'<div class="es-ph"><b>'+sd.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long' }).replace(/^./,function(x){ return x.toUpperCase(); })+'</b><span>'+L2.length+' élément'+(L2.length>1?'s':'')+'</span></div>'
           +(L2.length?'<div class="es-irs">'+L2.map(function(x){ return itemRow(x,false); }).join('')+'</div>':'<div class="es-free"><b>Journée libre</b></div>'); }
-      o.body.innerHTML=h+cBox(0,k==='etu'?'Garde 15 minutes entre deux tâches pour souffler : tu restes plus efficace.':'Regroupe les tâches similaires, comme les mails ou les appels, pour gagner du temps.'); };
+      o.body.innerHTML=h; };
     o.render(); }
 
   /* ══ 2. Mes objectifs : Semaine / Mois / Année / Bilan ══ */
   function openObj(){ var k=pf(), o=cpStream.sheet('Mes objectifs',k==='etu'?'Avancer sur ce qui compte':'Avancer et préparer mon évolution',''); OBJ=o; PG=o; o.p='w'; o.pick=null; o.cible=null; o.perso=''; o.add=false;
-    o.render=function(){ var p=o.p, h='<div class="es-tabs">'+[['w','Semaine'],['m','Mois'],['y','Année'],['b','Bilan']].map(function(x){ return '<button type="button" class="'+(p===x[0]?'on':'')+'" data-cj="es-gtab" data-p="'+x[0]+'">'+x[1]+'</button>'; }).join('')+'</div>';
-      if(p==='b'){ var a=wk(), z=wkEnd(), WT=cur().tasks.filter(function(t){ return t.date>=a && t.date<=z; }), dn=WT.filter(function(t){ return t.fait; }).length, WG=goals('w'), ok=WG.filter(function(g){ return (g.fait||0)>=g.cible; }).length, B=(cur().bilans||[]).slice(-5).reverse();
-        h+='<div class="es-ph"><b>Le bilan de ma semaine</b><span>'+(isFri()?'C\'est le moment !':'Chaque vendredi')+'</span></div>'
-          +'<div class="es-bst"><div><b>'+ok+'/'+WG.length+'</b><span>objectifs atteints</span></div><div><b>'+dn+'/'+WT.length+'</b><span>tâches faites</span></div><div><b>'+goals('m').length+'</b><span>objectifs du mois</span></div></div>'
-          +'<button type="button" class="cj-main" data-cj="es-point">'+I(P.chat,18)+'Faire mon bilan avec Lisa</button>'
-          +(B.length?'<p class="es-h">Mes derniers bilans</p><div class="es-irs">'+B.map(function(x){ return '<div class="es-ir"><span class="es-ir-d" style="--c:#16a34a"></span><div class="es-ir-b"><small>Semaine du '+new Date(x.week+'T12:00:00').toLocaleDateString('fr-FR',{ day:'numeric', month:'short' })+'</small><b>'+(x.humeur||'Bilan fait')+'</b><span>'+x.faites+'/'+x.plan+' tâches'+(x.frein?' · '+esc(x.frein):'')+'</span></div></div>'; }).join('')+'</div>':''); }
-      else { var L=goals(p), R=RECO[k][p], ch=PER[p][2], cb=o.cible||(o.pick!=null?R[o.pick][2]:ch[1]), okn=L.filter(function(g){ return (g.fait||0)>=g.cible; }).length, pc=L.length?Math.round(okn/L.length*100):0, M2=p==='w'?missing():[];
-        h+='<div class="es-ph"><b>Mes objectifs '+(p==='w'?'de la semaine':p==='m'?'du mois':'de l\'année')+'</b><span>'+okn+'/'+L.length+' réalisés</span></div><i class="cj-bar es-gbar"><i style="width:'+pc+'%"></i></i>'
-          +(L.length?'<div class="es-gl">'+L.map(function(g){ var dn2=(g.fait||0)>=g.cible; return '<div class="es-gr'+(dn2?' on':'')+'"><button type="button" class="es-gck" data-cj="es-gck" data-id="'+g.id+'" aria-label="Réalisé">'+(dn2?I(P.check,13):'')+'</button><span class="es-gr-t">'+esc(g.label)+(g.cible>1?'<small>'+(g.fait||0)+' / '+g.cible+' '+esc(g.unite||'')+'</small>':'')+'</span>'+(g.cible>1&&!dn2?'<button type="button" class="es-gp" data-cj="es-om" data-id="'+g.id+'" data-d="1" aria-label="Plus un">+1</button>':'')+'<button type="button" class="es-gx" data-cj="es-gdel" data-id="'+g.id+'" aria-label="Supprimer">'+I('<path d="M18 6 6 18M6 6l12 12"/>',13)+'</button></div>'; }).join('')+'</div>'
-            :'<div class="es-free"><b>Aucun objectif pour l\'instant</b><small>Ajoute ton premier objectif, ou fixe-le avec Lisa.</small></div>')
+    o.body.classList.add('es-simp');
+    o.render=function(){ var p=o.p, WG=goals('w'), okw=WG.filter(function(g){ return (g.fait||0)>=g.cible; }).length, a=wk(), z=wkEnd(), WT=cur().tasks.filter(function(t){ return t.date>=a && t.date<=z; }), dn=WT.filter(function(t){ return t.fait; }).length, B0=(cur().bilans||[]);
+      var rest=WG.length-okw, lt=!WG.length?'Fixe <b>3 objectifs</b> pour ta semaine, pas plus : c\'est ce qui marche le mieux.':(rest<=0?'Tous tes objectifs de la semaine sont atteints 🎉 Fais ton bilan avec moi.':'Il te reste <b>'+rest+' '+pl(rest,'objectif','objectifs')+'</b> cette semaine. '+(isFri()?'C\'est la fin de semaine : pense à ton bilan.':'Tu peux le faire !'));
+      var h=simpTop(lt,1,[['data-cj="es-gtab" data-p="w"',P.target,okw+'/'+WG.length,'objectifs atteints cette semaine'],['data-cj="es-gtab" data-p="w"',P.check,dn+'/'+WT.length,'tâches faites cette semaine'],['data-cj="es-gtab" data-p="b"',P.trophy,B0.length,pl(B0.length,'bilan fait','bilans faits')]]);
+      if(p==='b'){ var B=B0.slice(-5).reverse();
+        h+=nowCard(P.trophy,'Le bilan de ma semaine',isFri()?'C\'est le moment !':'Chaque vendredi, en 5 minutes',null,null,aBtn('data-cj="es-point"',P.chat,'Faire mon bilan avec Lisa'))
+          +cTab(o,[['w','Semaine',WG.length],['m','Mois',goals('m').length],['y','Année',goals('y').length],['b','Bilan',null]],'es-gtab','p')
+          +(B.length?'<div class="es-irs">'+B.map(function(x){ return '<div class="es-ir"><span class="es-ir-d" style="--c:#16a34a"></span><div class="es-ir-b"><small>Semaine du '+new Date(x.week+'T12:00:00').toLocaleDateString('fr-FR',{ day:'numeric', month:'short' })+'</small><b>'+(x.humeur||'Bilan fait')+'</b><span>'+x.faites+'/'+x.plan+' tâches'+(x.frein?' · '+esc(x.frein):'')+'</span></div></div>'; }).join('')+'</div>':'<div class="cps-empty">Ton premier bilan apparaîtra ici.</div>'); }
+      else { var L=goals(p), R=RECO[k][p], ch=PER[p][2], cb=o.cible||(o.pick!=null?R[o.pick][2]:ch[1]), M2=p==='w'?missing():[], mg=L.filter(function(g){ return (g.fait||0)<g.cible; })[0], pl2=PER[p][1].replace(/^./,function(x){ return x.toUpperCase(); });
+        h+=mg?nowCard(P.target,esc(mg.label),pl2+(mg.unite?' · '+esc(mg.unite):''),(mg.fait||0)+'/'+mg.cible,Math.round(Math.min(mg.cible,mg.fait||0)/mg.cible*100),(mg.cible>1?aBtn('data-cj="es-om" data-id="'+mg.id+'" data-d="1"',P.plus,'+1'):aBtn('data-cj="es-gck" data-id="'+mg.id+'"',P.check,'C\'est fait'))+aBtn('data-cj="es-point"',P.trophy,'Faire mon bilan',1)+aBtn('data-cj="es-gadd"',P.plus,'Ajouter',1))
+          :(L.length?nowCard(P.trophy,'Objectifs atteints 🎉',pl2+' : '+L.length+'/'+L.length,null,100,aBtn('data-cj="es-point"',P.trophy,'Faire mon bilan')+aBtn('data-cj="es-gadd"',P.plus,'Ajouter un objectif',1))
+            :nowCard(P.target,'Aucun objectif '+PER[p][1],'Choisis-en un, seul(e) ou avec Lisa',null,null,aBtn('data-cj="es-gadd"',P.plus,'Ajouter un objectif')+aBtn('data-cj="es-gset"',P.chat,'Avec Lisa',1)));
+        h+=cTab(o,[['w','Semaine',WG.length],['m','Mois',goals('m').length],['y','Année',goals('y').length],['b','Bilan',null]],'es-gtab','p')
+          +(L.length?'<div class="es-gl">'+L.map(function(g){ var dn2=(g.fait||0)>=g.cible; return '<div class="es-gr'+(dn2?' on':'')+'"><button type="button" class="es-gck" data-cj="es-gck" data-id="'+g.id+'" aria-label="Réalisé">'+(dn2?I(P.check,13):'')+'</button><span class="es-gr-t">'+esc(g.label)+(g.cible>1?'<small>'+(g.fait||0)+' / '+g.cible+' '+esc(g.unite||'')+'</small>':'')+'</span>'+(g.cible>1&&!dn2?'<button type="button" class="es-gp" data-cj="es-om" data-id="'+g.id+'" data-d="1" aria-label="Plus un">+1</button>':'')+'<button type="button" class="es-gx" data-cj="es-gdel" data-id="'+g.id+'" aria-label="Supprimer">'+I('<path d="M18 6 6 18M6 6l12 12"/>',13)+'</button></div>'; }).join('')+'</div>':'')
           +(M2.length?'<button type="button" class="es-sugg" data-cj="es-plan">'+av(true)+'<span>Lisa te propose <b>'+M2.length+' tâche'+(M2.length>1?'s':'')+'</b> pour ces objectifs</span><em>Ajouter à Ma semaine</em></button>':'');
         if(o.add) h+='<div class="es-addg"><p class="es-h">Objectifs conseillés</p><div class="es-chips">'+R.map(function(r,i){ return '<button type="button" class="'+(o.pick===i?'on':'')+'" data-cj="es-opick" data-i="'+i+'">'+esc(r[0])+'</button>'; }).join('')+'</div>'
           +'<div class="cj-form"><input id="es-operso" maxlength="90" placeholder="Ou écris ton objectif perso" value="'+esc(o.perso||'')+'"><label>Combien '+PER[p][1]+' ?</label><div class="frl-chips">'+ch.map(function(n2){ return '<button type="button" class="'+(cb===n2?'on':'')+'" data-cj="es-ocib" data-n="'+n2+'">'+n2+'</button>'; }).join('')+'</div></div>'
-          +'<div class="es-2b"><button type="button" class="cj-main" data-cj="es-ogo">'+I(P.check,17)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="es-gset">'+I(P.chat,17)+'Avec Lisa</button></div></div>';
-        else h+='<button type="button" class="cj-main es-green" data-cj="es-gadd">'+I(P.plus,18)+'Ajouter un objectif</button>'; }
-      o.body.innerHTML=h+cBox(0,k==='etu'?'Choisis 3 objectifs importants cette semaine, pas plus.':'Concentre-toi sur 3 objectifs clés pour progresser durablement.'); };
+          +'<div class="es-2b"><button type="button" class="cj-main" data-cj="es-ogo">'+I(P.check,17)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="es-gset">'+I(P.chat,17)+'Avec Lisa</button></div></div>'; }
+      o.body.innerHTML=h+'<div class="cj-evas">'+eva('eva.html#eva-entretien','Simulation d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J')+'</div>'; };
     o.render(); }
 
   /* ══ 3a. Mes études (étudiant) : Explorer / Mes favoris / Mes recherches ══ */
@@ -21365,28 +21406,30 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function favs(){ var c=cur(); return c.fav||(c.fav=[]); }
   function linkRow(x){ var on=favs().some(function(f){ return f.u===x[1]; }); return '<div class="es-lk"><a href="'+x[1]+'" target="_blank" rel="noopener"><b>'+esc(x[0])+'</b><small>'+esc(x[2])+'</small></a><button type="button" class="es-star'+(on?' on':'')+'" data-cj="es-fav" data-u="'+esc(x[1])+'" data-n="'+esc(x[0])+'" data-s="'+esc(x[2])+'" aria-label="Favori">'+I(P.star,16)+'</button></div>'; }
   function openStudy(){ var o=cpStream.sheet('Mes études','Choisir et trouver ma formation',''); PG=o; o.tab='exp'; o.cat=null; o.srch=false;
-    o.render=function(){ var h=tabsH(o,[['exp','Explorer'],['fav','Mes favoris'],['rech','Mes recherches']]), c=cur();
-      if(o.tab==='exp'){ if(o.cat){ var C=ETCAT.filter(function(x){ return x[0]===o.cat; })[0]; h+='<button type="button" class="es-back" data-cj="es-catx">'+I(P.back,15)+'Tout explorer</button><div class="es-ph"><b>'+C[2]+'</b><span>'+C[3]+'</span></div><div class="es-lks">'+C[4].map(linkRow).join('')+'</div>'; }
-        else { if(o.srch) h+='<div class="es-srch"><input id="es-q" maxlength="80" placeholder="Ex : BTS commerce Caen, licence psychologie…"><button type="button" data-cj="es-qgo">Rechercher</button></div>';
-          h+='<div class="es-rows">'+ETCAT.map(function(x){ return x[4]?'<button type="button" class="es-row" data-cj="es-cat" data-c="'+x[0]+'"><span class="es-row-i">'+I(x[1],19)+'</span><span><b>'+x[2]+'</b><small>'+x[3]+'</small></span>'+I(P.chev,16)+'</button>':'<a class="es-row" href="eva.html#eva-of"><span class="es-row-i eva">'+I(x[1],19)+'</span><span><b>'+x[2]+'</b><small>'+x[3]+'</small></span>'+I(P.chev,16)+'</a>'; }).join('')+'</div>'
-            +(o.srch?'':'<button type="button" class="cj-main es-red" data-cj="es-srch">'+I(P.search||P.target,18)+'Rechercher une formation</button>'); } }
-      else if(o.tab==='fav') h+=(favs().length?'<div class="es-lks">'+favs().map(function(f){ return linkRow([f.n,f.u,f.s]); }).join('')+'</div>':'<div class="es-free"><b>Aucun favori</b><small>Touche l\'étoile d\'un site pour le garder ici.</small></div>');
-      else h+=((c.rech||[]).length?'<div class="es-lks">'+c.rech.map(function(q){ return '<div class="es-lk"><a href="'+qUrl(q)+'" target="_blank" rel="noopener"><b>'+esc(q)+'</b><small>Relancer la recherche</small></a></div>'; }).join('')+'</div><button type="button" class="es-back" data-cj="es-qclr">Effacer mes recherches</button>':'<div class="es-free"><b>Aucune recherche</b><small>Tes recherches de formation apparaîtront ici.</small></div>');
-      o.body.innerHTML=h+cBox(1,'Précise la ville, le secteur et le niveau dans ta recherche : tu trouveras plus vite la formation idéale.'); };
+    o.body.classList.add('es-simp');
+    o.render=function(){ var c=cur(), nf=favs().length, nr=(c.rech||[]).length, U={}; ETCAT.forEach(function(x){ (x[4]||[]).forEach(function(l){ U[l[1]]=1; }); }); var nsite=Object.keys(U).length;
+      var h=simpTop('Trouve ton école, ton stage ou ton alternance sur les <b>sites officiels</b>. Garde les meilleurs en favoris ⭐',2,[['data-cj="es-tab" data-t="fav"',P.star,nf,pl(nf,'favori','favoris')],['data-cj="es-tab" data-t="rech"',P.target,nr,pl(nr,'recherche','recherches')],['data-cj="es-tab" data-t="exp"',P.school,nsite,'sites officiels']])
+        +'<div class="cj-now es-mc"><div class="cj-now-hd"><span class="cj-ic g">'+I(P.school,22)+'</span><div><b>Rechercher une formation</b><small>Précise la ville, le secteur et le niveau</small></div></div><div class="es-srch"><input id="es-q" maxlength="80" placeholder="Ex : BTS commerce Caen"><button type="button" data-cj="es-qgo">Rechercher</button></div></div>'
+        +cTab(o,[['exp','Explorer',null],['fav','Favoris',nf],['rech','Recherches',nr]]);
+      if(o.tab==='exp'){ if(o.cat){ var C=ETCAT.filter(function(x){ return x[0]===o.cat; })[0]; h+='<button type="button" class="es-back" data-cj="es-catx">'+I(P.back,15)+'Tout explorer</button><div class="es-lks">'+C[4].map(linkRow).join('')+'</div>'; }
+        else h+='<div class="es-rows">'+ETCAT.filter(function(x){ return x[4]; }).map(function(x){ return '<button type="button" class="es-row" data-cj="es-cat" data-c="'+x[0]+'"><span class="es-row-i">'+I(x[1],19)+'</span><span><b>'+x[2]+'</b><small>'+x[3]+'</small></span>'+I(P.chev,16)+'</button>'; }).join('')+'</div>'; }
+      else if(o.tab==='fav') h+=(nf?'<div class="es-lks">'+favs().map(function(f){ return linkRow([f.n,f.u,f.s]); }).join('')+'</div>':'<div class="cps-empty">Touche l\'étoile d\'un site pour le garder ici.</div>');
+      else h+=(nr?'<div class="es-lks">'+c.rech.map(function(q){ return '<div class="es-lk"><a href="'+qUrl(q)+'" target="_blank" rel="noopener"><b>'+esc(q)+'</b><small>Relancer la recherche</small></a></div>'; }).join('')+'</div><button type="button" class="es-back" data-cj="es-qclr">Effacer mes recherches</button>':'<div class="cps-empty">Tes recherches de formation apparaîtront ici.</div>');
+      o.body.innerHTML=h+'<div class="cj-evas">'+eva('eva.html#eva-of','Les formations avec EVA','Les formations des centres qui correspondent à ton profil')+'</div>'; };
     o.render(); }
   function qUrl(q){ return 'https://www.google.com/search?q='+encodeURIComponent(q+' site:onisep.fr'); }
 
   /* ══ 3b. Mon évolution (salarié) ══ */
   function openEvo(){ var o=cpStream.sheet('Mon évolution','Progresser dans ma carrière',''); PG=o;
-    o.render=function(){ var p=pct();
-      o.body.innerHTML='<div class="es-rows">'
-        +'<button type="button" class="es-row" data-cj="es-prof"><span class="es-row-i o">'+I(P.user,19)+'</span><span><b>Mon profil (avec Lisa)</b><small>Valorise tes compétences · '+p+' % complété</small></span>'+I(P.chev,16)+'</button>'
-        +'<a class="es-row" href="eva.html#eva-of"><span class="es-row-i g">'+I(P.school,19)+'</span><span><b>Formations</b><small>Recommandations EVA</small></span>'+I(P.chev,16)+'</a>'
+    o.body.classList.add('es-simp');
+    o.render=function(){ var p=pct(), c=cur(), nc=c.cands.length, ny=goals('y').length;
+      o.body.innerHTML=simpTop(p<100?'Ton profil est complété à <b>'+p+' %</b>. Un profil complet t\'aide à préparer ton évolution.':'Ton profil est complet ✓ Regarde maintenant une formation, une VAE ou un bilan de compétences.',2,[['data-cj="es-prof"',P.user,p+' %','profil complété'],['data-cj="es-obj"',P.target,ny,pl(ny,'objectif','objectifs')+' de l\'année'],['data-cj="es-cp" data-p="suivi"',P.brief,nc,pl(nc,'candidature','candidatures')]])
+        +nowCard(P.user,'Mon profil','Ton parcours et le poste que tu vises',p+' %',p,aBtn('data-cj="es-prof"',P.wand,p<100?'Compléter avec Lisa':'Modifier avec Lisa')+aBtn('data-cj="es-cp" data-p="find"',P.brief,'Explorer les opportunités',1))
+        +'<p class="es-h">Me former et faire reconnaître mon expérience</p><div class="es-rows">'
         +'<a class="es-row" href="https://www.moncompteformation.gouv.fr" target="_blank" rel="noopener"><span class="es-row-i y">'+I(P.euro||P.star,19)+'</span><span><b>CPF</b><small>Consulte et utilise tes droits à la formation</small></span>'+I(P.ext,15)+'</a>'
         +'<a class="es-row" href="https://vae.gouv.fr" target="_blank" rel="noopener"><span class="es-row-i v">'+I(P.check,19)+'</span><span><b>VAE</b><small>Faire reconnaître ton expérience par un diplôme</small></span>'+I(P.ext,15)+'</a>'
         +'<a class="es-row" href="https://www.moncompteformation.gouv.fr" target="_blank" rel="noopener"><span class="es-row-i r">'+I(P.target,19)+'</span><span><b>Bilan de compétences</b><small>Faire le point sur ton avenir, finançable par ton CPF</small></span>'+I(P.ext,15)+'</a></div>'
-        +'<button type="button" class="cj-main es-orange" data-cj="es-cp" data-p="find">'+I(P.search||P.brief,18)+'Explorer les opportunités</button>'
-        +cBox(1,'Une nouvelle compétence peut ouvrir beaucoup d\'opportunités : regarde tes droits à la formation.'); };
+        +'<div class="cj-evas">'+eva('eva.html#eva-of','Les formations avec EVA','Les formations qui correspondent à ton profil')+'</div>'; };
     o.render(); }
   /* Un conseil de Lisa, différent dans chaque carte */
   var LCT={ sal:{ 'es-obj':['Un objectif clair, c\'est mieux.','Coche tes tâches : l\'objectif avance.','Vendredi : ton bilan en 5 minutes.','Découpe en petites étapes.'],
@@ -21511,19 +21554,26 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     docs:['Un CV adapté à chaque type de poste marche mieux qu\'un CV unique.','Nomme tes fichiers clairement : CV-Prenom-Nom.pdf.','Envoie toujours en PDF : la mise en page ne bouge pas.'],
     train:['Prépare ta présentation en 1 minute : parcours, compétences, projet.','Prépare 2 ou 3 questions à poser au recruteur.','Renseigne-toi sur l\'entreprise avant l\'entretien : site, actualités, valeurs.'],
     suivi:['Note chaque candidature le jour même : tu ne perds rien.','Sans réponse après une semaine, une relance polie montre ta motivation.','Un refus ? Demande un retour : ça t\'aide pour la suite.'] };
-  function ltip(k){ return '<div class="es-ltip">'+av(true)+'<div><b>Les conseils de Lisa</b><ul>'+LTIP[k].map(function(t){ return '<li>'+esc(t)+'</li>'; }).join('')+'</ul></div></div>'; }
+  function ltip(k){ var L=LTIP[k]; return cBox(0,L[dayN()%L.length]); } /* un seul conseil, le plus utile du jour */
+  var CF={ all:null, cours:['Envoyée','Relancée'], itw:['Entretien'], rep:['Acceptée','Refusée'] };
+  function isRel(y){ return y.statut==='Envoyée'&&(Date.now()-new Date(y.date).getTime())>=7*864e5; }
+  function candF(f){ var L=cur().cands; if(f==='rel') return L.filter(isRel); return CF[f]?L.filter(function(y){ return CF[f].indexOf(y.statut)>-1; }):L; }
+  function cfTabs(o){ var T=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses']]; if(relances()) T.push(['rel','À relancer']); return cTab(o,T.map(function(x){ return [x[0],x[1],candF(x[0]).length]; }),'es-cf','f'); }
+  function candRow(y){ var r=isRel(y); return '<div class="es-t"><span class="es-sub-ic">'+I(P.brief)+'</span><span class="es-t-b"><b>'+esc(y.poste||y.entreprise)+(y.via?' <em class="es-via">CareerPulse</em>':'')+'</b><small>'+esc(y.poste?y.entreprise:'')+' · le '+new Date(y.date).toLocaleDateString('fr-FR')+(r?' · <b class="es-rel">À relancer</b>':'')+'</small></span><select data-es-cst="'+y.id+'" aria-label="Statut" style="padding:7px;border-radius:9px;border:1px solid #dbe4ef;font:700 .74rem \'DM Sans\',sans-serif">'+['Envoyée','Relancée','Entretien','Acceptée','Refusée'].map(function(st){ return '<option'+(st===y.statut?' selected':'')+'>'+st+'</option>'; }).join('')+'</select></div>'; }
   function relances(){ return cur().cands.filter(function(x){ return x.statut==='Envoyée' && (Date.now()-new Date(x.date).getTime())>=7*864e5; }).length; }
   function docN(){ return dossier().n; }
   var CPG={ find:[P.brief,'Les offres','CareerPulse et les sites de référence'], fiche:[P.user,'Ma fiche','Ce que voient les employeurs'], docs:[P.doc,'Mes documents','CV, lettre et documents importants'], train:[P.star,'M\'entraîner','Entretien et présentation avec EVA'], suivi:[P.list,'Mon suivi','Tes candidatures et tes messages'] };
   function openCand(){ var k=pf(), c=cur(); var o=cpStream.sheet('Candidater',k==='etu'?'Postuler, étape par étape':'Changer de poste',''); CP_.push(o); o.hub=1;
-    o.render=function(){ var D0=dossier(), mc=myConvs().length, rl=relances();
-      var ST=[['fiche',P.user,'Ma fiche','Complète ta fiche, visible des employeurs',ready(k)?(c.vis?'Visible ✓':'Prête'):'À faire',ready(k)],
-        ['docs',P.doc,'Mes documents','CV, lettre, diplômes',D0.n+'/'+D0.t,D0.ok],
-        ['find',P.search||P.brief,'Les offres','Recherche et trouve des opportunités','CareerPulse + sites',false],
-        ['suivi',P.chat,'Mon suivi','Suis tes candidatures et tes messages',c.cands.length+' candidature'+(c.cands.length>1?'s':'')+(mc?' · '+mc+' message'+(mc>1?'s':''):'')+(rl?' · '+rl+' à relancer':''),false]];
-      o.body.innerHTML='<div class="es-steps">'+ST.map(function(x,i){ return '<button type="button" class="es-step'+(x[5]?' ok':'')+'" data-cj="es-cp" data-p="'+x[0]+'"><span class="es-step-n">'+(x[5]?I(P.check,14):(i+1))+'</span><span class="es-step-i">'+I(x[1],20)+'</span><span class="es-step-t"><b>'+x[2]+'</b><small>'+x[3]+'</small><em>'+esc(x[4])+'</em></span>'+I(P.chev,16)+'</button>'; }).join('')+'</div>'
-        +'<button type="button" class="cj-main es-violet" data-cj="es-cp" data-p="suivi">'+I(P.list,18)+'Voir mes candidatures</button>'
-        +cBox(1,'Un profil complet et ciblé reçoit plus de propositions.'); };
+    o.body.classList.add('es-simp'); o.f='all';
+    o.render=function(){ var D0=dossier(), mc=myConvs().length, rl=relances(), rd=ready(k), L=candF(o.f).slice().reverse(), nI=candF('itw').length;
+      var lt=!rd?'Commence par <b>ta fiche</b> : c\'est ce que voient les employeurs.':(!D0.ok?'Ta fiche est prête. Ajoute ton <b>CV</b> et ta <b>lettre</b> pour compléter ton dossier.':(rl?'Tu as <b>'+rl+' '+pl(rl,'candidature','candidatures')+' à relancer</b> : une semaine sans réponse, c\'est le bon moment.':'Ton dossier est prêt ✓ Ajoute chaque candidature dès que tu l\'envoies.'));
+      var pc=Math.round(((rd?1:0)+(D0.t?D0.n/D0.t:0))/2*100);
+      o.body.innerHTML=simpTop(lt,3,[['data-cj="es-cf" data-f="all"',P.doc,c.cands.length,pl(c.cands.length,'candidature','candidatures')],['data-cj="es-cf" data-f="'+(rl?'rel':'cours')+'"',P.clock,rl,pl(rl,'relance à faire','relances à faire')],['data-cj="es-cf" data-f="itw"',P.users,nI,pl(nI,'entretien','entretiens')]])
+        +nowCard(P.user,'Mon dossier',(rd?(c.vis?'Fiche visible ✓':'Fiche prête'):'Fiche à faire')+' · '+D0.n+'/'+D0.t+' documents',pc+' %',pc,aBtn('data-cj="es-cp" data-p="fiche"',P.user,'Ma fiche')+aBtn('data-cj="es-cp" data-p="docs"',P.doc,'Mes documents',1)+aBtn('data-cj="es-cp" data-p="suivi"',P.chat,'Messages'+(mc?' ('+mc+')':''),1))
+        +'<div class="cj-2b"><button type="button" class="cj-main" data-cj="es-gosuivi">'+I(P.plus,18)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="es-cp" data-p="find">'+I(P.search||P.brief,18)+'Trouver des offres</button></div>'
+        +cfTabs(o)
+        +(L.length?'<div class="es-day">'+L.slice(0,5).map(candRow).join('')+'</div>'+(L.length>5?'<button type="button" class="es-back" data-cj="es-cp" data-p="suivi">Voir mes '+L.length+' candidatures</button>':''):'<div class="cps-empty">Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : je calcule tes relances tout seul.</div>')
+        +'<div class="cj-evas">'+eva('eva.html#eva-entretien','Simulation d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J')+'</div>'; };
     o.render(); }
   function openCandPage(x){ var k=pf(), c=cur(), g=CPG[x]; var o=cpStream.sheet(g[1],g[2],''); CP_.push(o); if(x==='find') o.onFind=1;
     o.render=function(){ var h='';
@@ -21533,10 +21583,10 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
       if(x==='train') h=say('Un entretien, ça se prépare. Entraîne-toi avec EVA, à ton rythme, autant de fois que tu veux.')
         +eva('eva.html#eva-entretien','Simulateur d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J')
         +eva('eva.html#eva-bienetre','Gérer le stress avec EVA','Arriver serein(e) le jour de l\'entretien');
-      if(x==='suivi'){ var L=c.cands.slice().reverse(), rl=relances();
+      if(x==='suivi'){ o.f=o.f||'all'; var L=candF(o.f).slice().reverse(), rl=relances();
         h=say(rl?'Tu as <b>'+rl+' candidature'+(rl>1?'s':'')+' à relancer</b> : une semaine sans réponse, c\'est le bon moment.':'Ajoute chaque candidature dès que tu l\'envoies. Les candidatures faites sur CareerPulse s\'ajoutent toutes seules.')
           +'<div class="cj-form"><div class="cj-2"><label>Entreprise<input id="es-c-co" maxlength="80" placeholder="Ex : Boulangerie Martin"></label><label>Poste<input id="es-c-po" maxlength="80" placeholder="Ex : Assistant(e) RH"></label></div><button type="button" class="cj-main" data-cj="es-cadd">'+I(P.plus,18)+'Ajouter à mon suivi</button></div>'
-          +(L.length?'<div class="es-day">'+L.map(function(y){ var r=y.statut==='Envoyée'&&(Date.now()-new Date(y.date).getTime())>=7*864e5; return '<div class="es-t"><span class="es-sub-ic">'+I(P.brief)+'</span><span class="es-t-b"><b>'+esc(y.poste||y.entreprise)+(y.via?' <em class="es-via">CareerPulse</em>':'')+'</b><small>'+esc(y.poste?y.entreprise:'')+' · le '+new Date(y.date).toLocaleDateString('fr-FR')+(r?' · <b class="es-rel">À relancer</b>':'')+'</small></span><select data-es-cst="'+y.id+'" aria-label="Statut" style="padding:7px;border-radius:9px;border:1px solid #dbe4ef;font:700 .74rem \'DM Sans\',sans-serif">'+['Envoyée','Relancée','Entretien','Acceptée','Refusée'].map(function(st){ return '<option'+(st===y.statut?' selected':'')+'>'+st+'</option>'; }).join('')+'</select></div>'; }).join('')+'</div>':'<div class="frl-empty">Aucune candidature pour l\'instant.</div>'); }
+          +cfTabs(o)+(L.length?'<div class="es-day">'+L.map(candRow).join('')+'</div>':'<div class="frl-empty">Aucune candidature ici pour l\'instant.</div>'); }
       if(x==='suivi'){ var MC=myConvs(); h+='<p class="es-h">Mes messages</p>'+(MC.length?'<div class="cps-card">'+MC.map(function(cv){ var last=(cv.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-cj="es-conv" data-id="'+esc(cv.id)+'"><span class="cps-dot'+(cv.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(cv.empNom||'Employeur')+(cv.poste?' · '+esc(cv.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I(P.chev,16)+'</button>'; }).join('')+'</div>':'<div class="frl-empty">Aucun message pour l\'instant. Les employeurs t\'écriront ici.</div>')
         +'<p class="es-h">Préparer mes entretiens</p>'+eva('eva.html#eva-entretien','Simulateur d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J'); }
       o.body.innerHTML=h+ltip(x);
@@ -21967,7 +22017,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-qts'){ saveQT(); return; } if(a==='es-qtdel' && QT){ if(!confirm('Supprimer cette tâche ?')) return; var c5=cur(); c5.tasks=c5.tasks.filter(function(x){ return x.id!==QT.id; }); save(); msg('Tâche supprimée'); QT.close(); refreshAll(); return; }
     if(a==='es-gdocs'){ openCandPage('docs'); return; }
     if(a==='es-gset'){ document.querySelectorAll('.cj-sheet').forEach(function(x){ if(x.querySelector('.es-plog')) x.remove(); }); openPoint('set'); return; }
-    if(a==='es-gadd' && OBJ){ OBJ.add=!OBJ.add; OBJ.pick=null; OBJ.cible=null; OBJ.render(); return; }
+    if(a==='es-gadd' && OBJ){ OBJ.add=!OBJ.add; OBJ.pick=null; OBJ.cible=null; OBJ.render(); if(OBJ.add) setTimeout(function(){ var ag=OBJ.body.querySelector('.es-addg'); if(ag) ag.scrollIntoView({ behavior:'smooth', block:'start' }); },60); return; }
     if(a==='es-edt'){ openEdt(); return; } if(a==='es-edtj' && EDO){ EDO.j=+b.getAttribute('data-j'); if(EDO.form && !EDO.form.id){ edfKeep(); EDO.form.js=[EDO.j]; } EDO.render(); return; }
     if(a==='es-edtn' && EDO){ EDO.form={ js:[EDO.j], d:pf()==='etu'?'08:00':'09:00', f:pf()==='etu'?'10:00':'12:00', type:EDTT[pf()][0], t:'', lieu:'', who:'' }; EDO.render(); setTimeout(function(){ var x=$('es-edf'); if(x) x.scrollIntoView({ behavior:'smooth', block:'start' }); },60); return; }
     if(a==='es-edte'){ var se=edt().filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]; if(!se) return; if(!EDO||!document.body.contains(EDO.sh)) openWeek('sem'); EDO.tab='sem'; EDO.j=se.j; EDO.form={ id:se.id, js:[se.j], d:se.d, f:se.f, type:se.type, t:se.t||'', lieu:se.lieu||'', who:se.who||'' }; EDO.render(); setTimeout(function(){ var x=$('es-edf'); if(x) x.scrollIntoView({ behavior:'smooth', block:'start' }); },60); return; }
@@ -21977,6 +22027,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-edtd' && EDO && EDO.form){ if(!confirm('Supprimer ce créneau ?')) return; var fid=EDO.form.id; cur().edt=edt().filter(function(x){ return x.id!==fid; }); save(); EDO.form=null; EDO.render(); redraw(); return; }
     if(a==='es-edtq' && EDO){ [0,1,2,3,4].forEach(function(j){ edt().push({ id:'s'+Date.now()+'a'+j, j:j, d:'09:00', f:'12:30', type:'Travail', t:'Travail', lieu:'', who:'' }); edt().push({ id:'s'+Date.now()+'b'+j, j:j, d:'13:30', f:'17:00', type:'Travail', t:'Travail', lieu:'', who:'' }); }); save(); msg('Semaine type ajoutée ✓ Modifie-la à ta guise'); EDO.render(); redraw(); return; }
     if(a==='es-cp'){ openCandPage(b.getAttribute('data-p')); return; }
+    if(a==='es-cf'){ var sh1=b.closest('.cpw-sheet'), co=CP_.filter(function(x){ return x.sh===sh1; })[0]; if(co){ co.f=b.getAttribute('data-f'); co.render(); var tb=co.body.querySelector('.es-ctabs'); if(tb && b.closest('.es-kpi')) tb.scrollIntoView({ behavior:'smooth', block:'center' }); } return; }
     if(a==='es-tip'){ var ck=b.getAttribute('data-k'), cc=cur(); cc.tipSel=cc.tipSel===ck?'':ck; TIPAN=(pf()==='etu'&&cc.tipSel)?cc.tipSel:''; save(); drawTips(); return; }
     if(a==='es-tk'){ var c3=cur(), sk=c3.tipSel; if(!sk) return; c3.tipDone=c3.tipDone||{}; var Ld=c3.tipDone[sk]=c3.tipDone[sk]||[], ii=+b.getAttribute('data-i'), px=Ld.indexOf(ii); if(px>-1) Ld.splice(px,1); else Ld.push(ii); save(); b.classList.toggle('on',px<0); var tp=b.closest('.es-tp'); if(tp){ var tot=tp.querySelectorAll('.es-tk').length, nn=tp.querySelectorAll('.es-tk.on').length, rg=tp.querySelector('.es-ring'); rg.style.setProperty('--p',Math.round(nn/tot*100)); rg.querySelector('b').textContent=nn+'/'+tot; if(nn===tot && px<0) setTimeout(drawTips,350); else if(nn<tot && tp.querySelector('.es-tp-ok')) tp.querySelector('.es-tp-ok').remove(); } return; }
     if(a==='es-point'){ openPoint(); return; }
