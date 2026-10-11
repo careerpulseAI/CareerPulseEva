@@ -17919,6 +17919,9 @@ window.cpSheetArrows=function(sc,host){
     Q.push(['b','Alors, <b>quel est ton profil ?</b> Touche ta carte 👆']);
     var reduce=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     function put(x){ if(x[0]==='c'){ log.insertAdjacentHTML('beforeend','<div class="cj-intro-card">'+pcardHtml(x[1])+'</div>'); } else log.insertAdjacentHTML('beforeend','<div class="cj-intro-b">'+x[1]+'</div>'); }
+    function eq(){ var C=[].slice.call(log.querySelectorAll('.cj-pcard')); C.forEach(function(c){ c.style.minHeight=''; }); var m=0; C.forEach(function(c){ m=Math.max(m,c.getBoundingClientRect().height); }); if(m) C.forEach(function(c){ c.style.minHeight=Math.ceil(m)+'px'; }); }
+    if(!box._eq){ box._eq=1; window.addEventListener('resize',function(){ if(document.body.contains(box)) eq(); }); }
+    var put0=put; put=function(x){ put0(x); if(x[0]==='c') eq(); };
     if(reduce || box._skip){ Q.forEach(put); box.classList.add('done'); return; }
     var i=0; function step(){ if(!document.body.contains(box)) return; if(box._skip){ log.innerHTML=''; Q.forEach(put); box.classList.add('done'); return; }
       if(i>=Q.length){ box.classList.add('done'); return; } var x=Q[i++];
@@ -21309,22 +21312,26 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function slotRow(x){ var ci=Math.max(0,EDTT[pf()].indexOf(x.type)); return '<button type="button" class="es-sl" data-cj="es-edte" data-id="'+x.id+'" style="--c:'+EDTC[ci]+'"><span class="es-sl-h"><b>'+esc(x.d)+'</b><small>'+esc(x.f)+'</small></span><span class="es-sl-t"><b>'+esc(x.t||x.type)+'</b><small>'+esc([x.type,x.lieu,x.who].filter(Boolean).join(' · '))+'</small></span>'+I(P.pen,14)+'</button>'; }
   var EDO=null;
   function openEdt(){ var k=pf(), o=cpStream.sheet(edtName(),'Du lundi au dimanche',''); EDO=o; o.j=dIdx(); o.form=null;
-    o.render=function(){ var L=slots(o.j), wm=weekMins(), lab=k==='etu'?'de cours':'de travail';
+    o.render=function(){ var L=slots(o.j), wm=weekMins(), lab=k==='etu'?'de cours':'de travail', mon=new Date(wk()+'T12:00:00'), now=new Date(), nm=now.getHours()*60+now.getMinutes(), T=slots(dIdx());
+      var dd=function(i){ var d=new Date(mon); d.setDate(d.getDate()+i); return d.getDate(); };
       var h=say(k==='etu'?'Remplis ton <b>emploi du temps</b> de la semaine, du lundi au dimanche : cours, TD, examens, stage, job… Tu vois ta semaine d\'un coup d\'œil.':'Remplis ton <b>planning</b> de la semaine, du lundi au dimanche : horaires de travail, réunions, formations, télétravail… Tu vois ta semaine d\'un coup d\'œil.')
-        +'<div class="es-pills"><span><b>'+hrs(wm)+'</b> '+lab+' cette semaine</span><span><b>'+edt().length+'</b> créneau'+(edt().length>1?'x':'')+'</span></div>'
-        +'<div class="es-days">'+JOURS.map(function(d,i){ var n=slots(i).length; return '<button type="button" class="'+(i===o.j?'on':'')+(i===dIdx()?' td':'')+'" data-cj="es-edtj" data-j="'+i+'"><b>'+d.slice(0,3)+'</b><em>'+(n||'·')+'</em></button>'; }).join('')+'</div>'
-        +'<div class="es-wk">'+JOURS.map(function(d,i){ var S2=slots(i); return '<div class="es-wk-c'+(i===dIdx()?' td':'')+'"><b>'+d.slice(0,3)+'</b>'+(S2.length?S2.map(function(x){ var ci=Math.max(0,EDTT[k].indexOf(x.type)); return '<button type="button" data-cj="es-edte" data-id="'+x.id+'" style="--c:'+EDTC[ci]+'"><em>'+esc(x.d)+'</em>'+esc(x.t||x.type)+'</button>'; }).join(''):'<i>—</i>')+'</div>'; }).join('')+'</div>'
-        +'<p class="es-h">'+JOURS[o.j]+(o.j===dIdx()?' · aujourd\'hui':'')+'</p>'
-        +(L.length?'<div class="es-sls">'+L.map(slotRow).join('')+'</div>':'<div class="frl-empty">Rien de prévu ce jour-là.</div>');
-      if(o.form){ var f=o.form, T=EDTT[k];
-        h+='<div class="cj-form es-edf" id="es-edf"><b class="es-edf-t">'+(f.id?'Modifier le créneau':'Nouveau créneau')+'</b>'
-          +'<label>Jour'+(f.id?'':'s')+'</label><div class="frl-chips">'+JOURS.map(function(d,i){ return '<button type="button" class="'+(f.js.indexOf(i)>-1?'on':'')+'" data-cj="es-edfj" data-j="'+i+'">'+d.slice(0,3)+'</button>'; }).join('')+'</div>'
-          +'<div class="cj-2"><label>Début<input id="es-ed-d" type="time" value="'+esc(f.d)+'"></label><label>Fin<input id="es-ed-f" type="time" value="'+esc(f.f)+'"></label></div>'
-          +'<label>Type</label><div class="frl-chips">'+T.map(function(t){ return '<button type="button" class="'+(f.type===t?'on':'')+'" data-cj="es-edft" data-t="'+esc(t)+'">'+esc(t)+'</button>'; }).join('')+'</div>'
-          +'<label>Intitulé<input id="es-ed-t" maxlength="60" placeholder="'+(k==='etu'?'Ex : Mathématiques':'Ex : Réunion d\'équipe')+'" value="'+esc(f.t)+'"></label>'
-          +'<div class="cj-2"><label>'+(k==='etu'?'Salle':'Lieu')+'<input id="es-ed-l" maxlength="40" placeholder="'+(k==='etu'?'Ex : B204':'Ex : Bureau, à distance')+'" value="'+esc(f.lieu)+'"></label><label>'+(k==='etu'?'Professeur':'Avec qui')+'<input id="es-ed-w" maxlength="40" placeholder="'+(k==='etu'?'Ex : M. Martin':'Ex : Mon manager')+'" value="'+esc(f.who)+'"></label></div>'
+        +'<div class="es-eh"><div class="es-eh-m"><b>'+hrs(wm)+'</b><span>'+lab+' cette semaine</span></div><div class="es-eh-s"><span><b>'+edt().length+'</b>créneaux</span><span><b>'+T.length+'</b>aujourd\'hui</span><span><b>'+JOURS.filter(function(_,i){ return slots(i).length; }).length+'</b>jours remplis</span></div></div>'
+        +'<div class="es-days">'+JOURS.map(function(d,i){ var n=slots(i).length; return '<button type="button" class="'+(i===o.j?'on':'')+(i===dIdx()?' td':'')+'" data-cj="es-edtj" data-j="'+i+'"><small>'+d.slice(0,3)+'</small><b>'+dd(i)+'</b><i>'+(n?'<em></em>'.repeat(Math.min(3,n)):'')+'</i></button>'; }).join('')+'</div>'
+        +'<div class="es-wk">'+JOURS.map(function(d,i){ var S2=slots(i); return '<div class="es-wk-c'+(i===dIdx()?' td':'')+(i===o.j?' on':'')+'"><button type="button" class="es-wk-h" data-cj="es-edtj" data-j="'+i+'"><small>'+d.slice(0,3)+'</small><b>'+dd(i)+'</b></button>'+(S2.length?S2.map(function(x){ var ci=Math.max(0,EDTT[k].indexOf(x.type)); return '<button type="button" class="es-wk-b" data-cj="es-edte" data-id="'+x.id+'" style="--c:'+EDTC[ci]+'"><em>'+esc(x.d)+' – '+esc(x.f)+'</em><b>'+esc(x.t||x.type)+'</b></button>'; }).join(''):'<i>Libre</i>')+'</div>'; }).join('')+'</div>'
+        +'<div class="es-dh"><b>'+JOURS[o.j]+' '+dd(o.j)+'</b><span>'+(o.j===dIdx()?'Aujourd\'hui · ':'')+L.length+' créneau'+(L.length>1?'x':'')+(L.length?' · '+hrs(L.reduce(function(a,x){ return a+Math.max(0,mins(x.f)-mins(x.d)); },0)):'')+'</span></div>';
+      if(L.length){ var nowShown=false; h+='<div class="es-tline">'+L.map(function(x){ var ci=Math.max(0,EDTT[k].indexOf(x.type)), du=Math.max(0,mins(x.f)-mins(x.d)), cur0=o.j===dIdx()&&mins(x.d)<=nm&&mins(x.f)>nm, past=o.j===dIdx()&&mins(x.f)<=nm, pre='';
+          if(o.j===dIdx() && !nowShown && mins(x.d)>nm){ nowShown=true; pre='<div class="es-now"><span>Maintenant · '+('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)+'</span></div>'; }
+          return pre+'<button type="button" class="es-tl-r'+(cur0?' live':'')+(past?' past':'')+'" data-cj="es-edte" data-id="'+x.id+'" style="--c:'+EDTC[ci]+'"><span class="es-tl-t"><b>'+esc(x.d)+'</b><small>'+esc(x.f)+'</small></span><span class="es-tl-d"></span><span class="es-tl-c"><span class="es-tl-k">'+esc(x.type)+'</span><b>'+esc(x.t||x.type)+'</b><small>'+esc([x.lieu,x.who].filter(Boolean).join(' · ')||'Touche pour ajouter un lieu')+'</small><em>'+hrs(du)+(cur0?' · en cours':'')+'</em></span></button>'; }).join('')+'</div>'; }
+      else h+='<div class="es-free">'+I(P.sun||P.cal,22)+'<b>Journée libre</b><small>Rien de prévu ce jour-là.</small></div>';
+      if(o.form){ var f=o.form, T2=EDTT[k];
+        h+='<div class="es-edf" id="es-edf"><div class="es-edf-hd"><b>'+(f.id?'Modifier le créneau':'Nouveau créneau')+'</b><small>'+(f.id?'Change ce que tu veux':'Choisis un ou plusieurs jours')+'</small></div>'
+          +'<label class="es-lb">Jour'+(f.id?'':'s')+'</label><div class="es-djs">'+JOURS.map(function(d,i){ return '<button type="button" class="'+(f.js.indexOf(i)>-1?'on':'')+'" data-cj="es-edfj" data-j="'+i+'">'+d.slice(0,3)+'</button>'; }).join('')+'</div>'
+          +'<div class="es-hh"><label class="es-lb">Début<input id="es-ed-d" type="time" value="'+esc(f.d)+'"></label><span class="es-arrow">→</span><label class="es-lb">Fin<input id="es-ed-f" type="time" value="'+esc(f.f)+'"></label></div>'
+          +'<label class="es-lb">Type</label><div class="es-types">'+T2.map(function(t,i){ return '<button type="button" class="'+(f.type===t?'on':'')+'" data-cj="es-edft" data-t="'+esc(t)+'" style="--c:'+EDTC[i]+'"><i></i>'+esc(t)+'</button>'; }).join('')+'</div>'
+          +'<label class="es-lb">Intitulé<input id="es-ed-t" maxlength="60" placeholder="'+(k==='etu'?'Ex : Mathématiques':'Ex : Réunion d\'équipe')+'" value="'+esc(f.t)+'"></label>'
+          +'<div class="es-hh two"><label class="es-lb">'+(k==='etu'?'Salle':'Lieu')+'<input id="es-ed-l" maxlength="40" placeholder="'+(k==='etu'?'Ex : B204':'Ex : Bureau, à distance')+'" value="'+esc(f.lieu)+'"></label><label class="es-lb">'+(k==='etu'?'Professeur':'Avec qui')+'<input id="es-ed-w" maxlength="40" placeholder="'+(k==='etu'?'Ex : M. Martin':'Ex : Mon manager')+'" value="'+esc(f.who)+'"></label></div>'
           +'<button type="button" class="cj-main" data-cj="es-edts">'+I(P.check,18)+(f.id?'Enregistrer':'Ajouter')+'</button>'
-          +(f.id?'<button type="button" class="es-del" data-cj="es-edtd">Supprimer ce créneau</button>':'')+'<button type="button" class="es-del" data-cj="es-edtx" style="color:#64748b">Annuler</button></div>'; }
+          +'<div class="es-edf-ft">'+(f.id?'<button type="button" class="es-del" data-cj="es-edtd">Supprimer</button>':'')+'<button type="button" class="es-cancel" data-cj="es-edtx">Annuler</button></div></div>'; }
       else h+='<button type="button" class="cj-main" data-cj="es-edtn">'+I(P.plus,18)+'Ajouter un créneau</button>'
         +(k==='sal'&&!edt().length?'<button type="button" class="cj-main alt" data-cj="es-edtq">'+I(P.cal,18)+'Semaine type : 9h – 17h du lundi au vendredi</button>':'');
       o.body.innerHTML=h; };
@@ -21405,11 +21412,11 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     suivi:['Note chaque candidature le jour même : tu ne perds rien.','Sans réponse après une semaine, une relance polie montre ta motivation.','Un refus ? Demande un retour : ça t\'aide pour la suite.'] };
   function ltip(k){ return '<div class="es-ltip">'+av(true)+'<div><b>Les conseils de Lisa</b><ul>'+LTIP[k].map(function(t){ return '<li>'+esc(t)+'</li>'; }).join('')+'</ul></div></div>'; }
   function relances(){ return cur().cands.filter(function(x){ return x.statut==='Envoyée' && (Date.now()-new Date(x.date).getTime())>=7*864e5; }).length; }
-  function docN(){ var d=cur().docs||{}; return (d.cv?1:0)+(d.lm?1:0)+((d.docl||[]).length?1:0); }
+  function docN(){ return dossier().n; }
   var CPG={ find:[P.brief,'Trouver des offres','CareerPulse et les sites de référence'], fiche:[P.user,'Ma fiche candidature','Ce que voient les employeurs'], docs:[P.doc,'Mes documents','CV, lettre et documents importants'], train:[P.star,'M\'entraîner','Entretien et présentation avec EVA'], suivi:[P.list,'Mon suivi','Tes candidatures et tes relances'] };
   function openCand(){ var k=pf(), c=cur(); var o=cpStream.sheet(k==='etu'?'Candidater':'Candidatures',k==='etu'?'Tu as fini tes études ? Lance-toi':'Postuler à de nouveaux postes',''); CP_.push(o); o.hub=1;
     o.render=function(){ var p=c.prof||{}, rl=relances();
-      var met={ find:'<strong>2</strong><em>façons de chercher</em>', fiche:'<strong>'+(c.vis?'Visible':ready(k)?'Prête':'À faire')+'</strong><em>'+(c.vis?'par les employeurs':ready(k)?'à rendre visible':'avec Lisa')+'</em>', docs:'<strong>'+docN()+'/3</strong><em>rangés</em>', train:'<strong>EVA</strong><em>simulateur d\'entretien</em>', suivi:'<strong>'+c.cands.length+'</strong><em>candidature'+(c.cands.length>1?'s':'')+(rl?' · '+rl+' à relancer':'')+'</em>' };
+      var met={ find:'<strong>2</strong><em>façons de chercher</em>', fiche:'<strong>'+(c.vis?'Visible':ready(k)?'Prête':'À faire')+'</strong><em>'+(c.vis?'par les employeurs':ready(k)?'à rendre visible':'avec Lisa')+'</em>', docs:'<strong>'+docN()+'/'+dossier().t+'</strong><em>'+(dossier().ok?'dossier complet ✓':'déposés')+'</em>', train:'<strong>EVA</strong><em>simulateur d\'entretien</em>', suivi:'<strong>'+c.cands.length+'</strong><em>candidature'+(c.cands.length>1?'s':'')+(rl?' · '+rl+' à relancer':'')+'</em>' };
       var tip={ find:'Deux façons de chercher, au même endroit.', fiche:c.vis?'Ta fiche est visible : garde-la à jour.':'Prépare-la avant de postuler.', docs:docN()<2?'Commence par ton CV et ta lettre.':'Tes documents sont prêts à partir.', train:'Une simulation la veille, et tu arrives serein(e).', suivi:rl?'Pense à relancer aujourd\'hui.':'Note chaque candidature le jour même.' };
       o.body.innerHTML=say(k==='etu'?'Tu as terminé tes études ou tu cherches un stage ? Tout est rangé par étape : <b>touche une carte</b>, je te guide.':'Tu vises un nouveau poste ? Tout est rangé par étape : <b>touche une carte</b>, je te guide.')
         +'<div class="es-hub">'+Object.keys(CPG).map(function(x,i){ var g=CPG[x]; return '<button type="button" class="es-hc" data-cj="es-cp" data-p="'+x+'" style="animation-delay:'+(i*70)+'ms"><span class="es-hc-ic">'+I(g[0],21)+'</span><span class="es-hc-t"><b>'+g[1]+'</b><small>'+g[2]+'</small></span><span class="es-hc-m">'+met[x]+'</span><span class="es-hc-l">'+av(true)+'<i>'+esc(tip[x])+'</i></span><span class="es-hc-go">'+I(P.chev,16)+'</span></button>'; }).join('')+'</div>'; };
@@ -21437,30 +21444,41 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
 
   /* ══ Fiche candidature : EVA la construit en direct, même mise en forme que l'espace Emploi · Reconversion ══ */
   var FQ={
-    sal:[{k:'prenom',q:'Pour commencer, quel est ton <b>prénom</b> ?',t:'text',ph:'Ex : Sophie',why:'Ton prénom suffit : les employeurs CareerPulse ne voient que ton prénom et une initiale.'},
-      {k:'vise',q:'Quel <b>poste</b> vises-tu ?',t:'text',ph:'Ex : Responsable administrative',why:'C\'est la première ligne que lit un employeur : sois précis(e).'},
-      {k:'poste',q:'Et quel est ton <b>poste actuel</b> ?',t:'text',ph:'Ex : Assistante de direction',skip:1},
-      {k:'secteur',q:'Dans quel <b>secteur</b> veux-tu travailler ?',t:'text',ph:'Ex : Santé',fill:['Commerce','Santé','Industrie','BTP','Informatique','Administration','Transport','Hôtellerie-restauration']},
-      {k:'ville',q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.',t:'text',ph:'Ex : Caen',fill:['Télétravail','Toute la France']},
-      {k:'exp',q:'Combien d\'<b>années d\'expérience</b> as-tu ?',t:'choice',list:['Moins d\'1 an','1 à 3 ans','3 à 5 ans','5 à 10 ans','Plus de 10 ans']},
-      {k:'dispo',q:'Quand serais-tu <b>disponible</b> pour un nouveau poste ?',t:'choice',list:['Immédiate','Préavis à faire','Je réfléchis pour l\'instant'],why:'Les employeurs regardent cette information en premier.'},
-      {k:'contrat',q:'Quel(s) <b>type(s) de contrat</b> recherches-tu ?',t:'text',ph:'Ex : CDI',add:['CDI','CDD','Intérim','Temps partiel','Alternance'],skip:1},
-      {k:'mob',q:'Jusqu\'où es-tu <b>prêt(e) à te déplacer</b> ?',t:'choice',list:['Ma ville uniquement','Mon département','Ma région','Toute la France','Télétravail uniquement']},
-      {k:'exps',q:'Tes <b>expériences</b> : une par ligne (poste, entreprise, années).',t:'area',ph:'Ex : Assistante de direction — Clinique du Parc — 2019-2026',skip:1},
-      {k:'comp',q:'Tes <b>compétences</b> clés, séparées par des virgules (3 au minimum).',t:'text',ph:'Ex : Gestion de planning, Excel, Management',add:['Organisation','Travail en équipe','Pack Office','Management','Relation client','Gestion de projet','Anglais','Autonomie'],min:3},
-      {k:'accroche',q:'Ton <b>accroche</b> : en 2 ou 3 phrases, qui es-tu et que cherches-tu ?',t:'area',ph:'Qui tu es, ce que tu apportes, ce que tu cherches…',gen:1},
+    sal:[{k:'prenom',q:'Pour commencer, quel est ton <b>prénom</b> ?',t:'text',ph:'Ex : Sophie',tip:'Ton prénom suffit : les employeurs ne voient que ton prénom et une initiale. Pas de photo non plus, c\'est plus juste pour tout le monde.'},
+      {k:'vise',q:'Quel <b>poste</b> vises-tu ?',t:'text',ph:'Ex : Responsable administrative',tip:'Écris l\'intitulé exact que tu verrais sur une offre : c\'est ce que les employeurs recherchent.'},
+      {k:'poste',q:'Et quel est ton <b>poste actuel</b> ?',t:'text',ph:'Ex : Assistante de direction',skip:1,tip:'Ton entreprise actuelle n\'est jamais montrée : seul l\'intitulé de ton poste apparaît.'},
+      {k:'secteur',q:'Dans quel <b>secteur</b> veux-tu travailler ?',t:'text',ph:'Ex : Santé',fill:['Commerce','Santé','Industrie','BTP','Informatique','Administration','Transport','Hôtellerie-restauration'],tip:'Un seul secteur principal : ta fiche sera plus claire.'},
+      {k:'ville',q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.',t:'text',ph:'Ex : Caen',fill:['Télétravail','Toute la France'],tip:'Indique la ville, pas ton adresse : elle reste privée.'},
+      {k:'teletravail',q:'Quel <b>mode de travail</b> préfères-tu ?',t:'choice',list:['Sur site','Hybride','Télétravail complet','Peu importe'],tip:'Beaucoup d\'offres proposent l\'hybride : rester ouvert(e) te donne plus de choix.'},
+      {k:'exp',q:'Combien d\'<b>années d\'expérience</b> as-tu ?',t:'choice',list:['Moins d\'1 an','1 à 3 ans','3 à 5 ans','5 à 10 ans','Plus de 10 ans'],tip:'Compte toute ton expérience utile pour le poste visé, même hors de ton métier actuel.'},
+      {k:'dispo',q:'Quand serais-tu <b>disponible</b> pour un nouveau poste ?',t:'choice',list:['Immédiate','Préavis à faire','Je réfléchis pour l\'instant'],tip:'Les employeurs regardent cette information en premier : sois précis(e).'},
+      {k:'contrat',q:'Quel(s) <b>type(s) de contrat</b> recherches-tu ?',t:'text',ph:'Ex : CDI',add:['CDI','CDD','Intérim','Temps partiel','Alternance'],skip:1,tip:'Tu peux en choisir plusieurs.'},
+      {k:'salaire',q:'Quel <b>salaire</b> souhaites-tu ?',t:'text',ph:'Ex : 32 000 € brut par an',fill:['À discuter'],skip:1,tip:'Donne une fourchette en brut annuel : c\'est le format que comparent les employeurs.'},
+      {k:'mob',q:'Jusqu\'où es-tu <b>prêt(e) à te déplacer</b> ?',t:'choice',list:['Ma ville uniquement','Mon département','Ma région','Toute la France','Télétravail uniquement'],tip:'Plus ta zone est large, plus tu reçois de propositions.'},
+      {k:'permis',q:'As-tu le <b>permis</b> ?',t:'choice',list:['Oui, permis B','Oui, autre permis','Non'],tip:'Certains postes l\'exigent : c\'est une information utile.'},
+      {k:'exps',q:'Tes <b>expériences</b> : une par ligne (poste, entreprise, années).',t:'area',ph:'Ex : Assistante de direction — Clinique du Parc — 2019-2026',skip:1,tip:'De la plus récente à la plus ancienne. Ajoute un résultat concret si tu peux : « 40 dossiers par mois ».'},
+      {k:'formations',q:'Tes <b>formations</b> et <b>certifications</b> : une par ligne.',t:'area',ph:'Ex : Excel avancé — 2025',skip:1,tip:'Les formations récentes montrent que tu continues à progresser.'},
+      {k:'langues',q:'Quelles <b>langues</b> parles-tu ?',t:'text',ph:'Ex : Anglais courant',add:['Anglais','Espagnol','Allemand','Italien','Arabe','Portugais'],skip:1,tip:'Précise ton niveau : notions, courant ou bilingue.'},
+      {k:'comp',q:'Tes <b>compétences</b> clés, séparées par des virgules (3 au minimum).',t:'text',ph:'Ex : Gestion de planning, Excel, Management',add:['Organisation','Pack Office','Management','Relation client','Gestion de projet','Comptabilité','Anglais'],min:3,tip:'Reprends les mots-clés des offres qui t\'intéressent : c\'est comme ça qu\'on te trouve.'},
+      {k:'qualites',q:'Et tes <b>qualités</b> ?',t:'text',ph:'Ex : Rigueur, Autonomie',add:['Rigueur','Autonomie','Esprit d\'équipe','Sens du service','Adaptabilité','Leadership'],skip:1,tip:'3 qualités maximum, celles que tes collègues citeraient.'},
+      {k:'accroche',q:'Ton <b>accroche</b> : en 2 ou 3 phrases, qui es-tu et que cherches-tu ?',t:'area',ph:'Qui tu es, ce que tu apportes, ce que tu cherches…',gen:1,tip:'Une phrase sur ton parcours, une sur ce que tu apportes, une sur ce que tu cherches.'},
       {k:'_vis',q:'Ta fiche est prête ! Veux-tu la rendre <b>visible par les employeurs</b> CareerPulse ?',t:'choice',list:['Oui, rends-la visible','Plus tard']}],
-    etu:[{k:'prenom',q:'Pour commencer, quel est ton <b>prénom</b> ?',t:'text',ph:'Ex : Lucas',why:'Ton prénom suffit : les employeurs CareerPulse ne voient que ton prénom et une initiale.'},
-      {k:'recherche',q:'Que <b>recherches-tu</b> ?',t:'choice',list:['Un stage','Une alternance','Un job étudiant','Un job saisonnier','Mon premier emploi']},
-      {k:'formation',q:'Quelle est ta <b>formation</b> ?',t:'text',ph:'Ex : BTS MCO, BUT GEA, Licence',why:'C\'est la première ligne que lit un employeur.'},
-      {k:'niveau',q:'Quel est ton <b>niveau</b> ?',t:'choice',list:['Bac','Bac+1','Bac+2','Bac+3','Bac+4','Bac+5 et plus']},
-      {k:'ecole',q:'Dans quelle <b>école</b> ?',t:'text',ph:'Ex : IUT de Caen',skip:1},
-      {k:'secteur',q:'Dans quel <b>secteur</b> aimerais-tu travailler ?',t:'text',ph:'Ex : Commerce',fill:['Commerce','Santé','Informatique','Communication','Hôtellerie-restauration','Industrie','Banque-assurance','Animation']},
-      {k:'ville',q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.',t:'text',ph:'Ex : Caen',fill:['Télétravail','Toute la France']},
-      {k:'dispo',q:'Quand es-tu <b>disponible</b> ?',t:'choice',list:['Dès maintenant','Pour la rentrée','Pour l\'été','Date à préciser']},
-      {k:'exps',q:'Tes <b>expériences</b> : une par ligne. Stages, jobs d\'été, bénévolat : tout compte.',t:'area',ph:'Ex : Vendeur — Boulangerie Martin — été 2025',skip:1},
-      {k:'comp',q:'Tes <b>compétences</b>, séparées par des virgules (3 au minimum).',t:'text',ph:'Ex : Relation client, Excel, Anglais',add:['Travail en équipe','Organisation','Relation client','Pack Office','Anglais','Réseaux sociaux','Permis B','Autonomie'],min:3},
-      {k:'accroche',q:'Ton <b>accroche</b> : en 2 ou 3 phrases, qui es-tu et que cherches-tu ?',t:'area',ph:'Ta formation, ce que tu aimes, ce que tu cherches…',gen:1},
+    etu:[{k:'prenom',q:'Pour commencer, quel est ton <b>prénom</b> ?',t:'text',ph:'Ex : Lucas',tip:'Ton prénom suffit : les employeurs ne voient que ton prénom et une initiale. Pas de photo non plus.'},
+      {k:'recherche',q:'Que <b>recherches-tu</b> ?',t:'choice',list:['Un stage','Une alternance','Un job étudiant','Un job saisonnier','Mon premier emploi'],tip:'Choisis ce que tu cherches en priorité : tu pourras le changer.'},
+      {k:'duree',q:'Pour quelle <b>durée</b> ?',t:'choice',list:['Moins de 2 mois','2 à 4 mois','4 à 6 mois','Plus de 6 mois','1 à 3 ans (alternance)'],tip:'Indique la durée demandée par ton école : les entreprises la regardent tout de suite.'},
+      {k:'formation',q:'Quelle est ta <b>formation</b> ?',t:'text',ph:'Ex : BTS MCO, BUT GEA, Licence',tip:'Écris le nom complet du diplôme préparé, comme sur ton certificat de scolarité.'},
+      {k:'niveau',q:'Quel est ton <b>niveau</b> ?',t:'choice',list:['Bac','Bac+1','Bac+2','Bac+3','Bac+4','Bac+5 et plus'],tip:'Le niveau que tu prépares cette année.'},
+      {k:'ecole',q:'Dans quelle <b>école</b> ?',t:'text',ph:'Ex : IUT de Caen',skip:1,tip:'Le nom de ton établissement rassure les entreprises qui le connaissent.'},
+      {k:'secteur',q:'Dans quel <b>secteur</b> aimerais-tu travailler ?',t:'text',ph:'Ex : Commerce',fill:['Commerce','Santé','Informatique','Communication','Hôtellerie-restauration','Industrie','Banque-assurance','Animation'],tip:'Un secteur principal suffit.'},
+      {k:'ville',q:'Où veux-tu travailler ? <b>Ville</b>, région ou télétravail.',t:'text',ph:'Ex : Caen',fill:['Télétravail','Toute la France'],tip:'Pense aux transports : une entreprise à 30 minutes, c\'est déjà bien.'},
+      {k:'dispo',q:'Quand es-tu <b>disponible</b> ?',t:'choice',list:['Dès maintenant','Pour la rentrée','Pour l\'été','Date à préciser'],tip:'Donne la date de début demandée par ton école si tu la connais.'},
+      {k:'permis',q:'As-tu le <b>permis</b> ?',t:'choice',list:['Oui, permis B','En cours','Non'],tip:'« En cours » compte aussi : dis-le.'},
+      {k:'exps',q:'Tes <b>expériences</b> : une par ligne. Stages, jobs d\'été, bénévolat : tout compte.',t:'area',ph:'Ex : Vendeur — Boulangerie Martin — été 2025',skip:1,tip:'Même un job d\'été montre que tu es fiable : ajoute ce que tu as appris.'},
+      {k:'projets',q:'Des <b>projets</b> scolaires ou perso dont tu es fier(e) ? Un par ligne.',t:'area',ph:'Ex : Organisation d\'un événement pour l\'école — 2025',skip:1,tip:'Un projet de groupe prouve que tu sais travailler en équipe.'},
+      {k:'langues',q:'Quelles <b>langues</b> parles-tu ?',t:'text',ph:'Ex : Anglais B2',add:['Anglais','Espagnol','Allemand','Italien','Arabe','Portugais'],skip:1,tip:'Indique ton niveau, par exemple B1 ou B2 si tu le connais.'},
+      {k:'comp',q:'Tes <b>compétences</b>, séparées par des virgules (3 au minimum).',t:'text',ph:'Ex : Relation client, Excel, Anglais',add:['Relation client','Pack Office','Réseaux sociaux','Vente','Gestion de projet','Anglais','Canva'],min:3,tip:'Reprends les mots-clés des offres de stage qui t\'intéressent.'},
+      {k:'qualites',q:'Et tes <b>qualités</b> ?',t:'text',ph:'Ex : Curiosité, Rigueur',add:['Curiosité','Rigueur','Autonomie','Esprit d\'équipe','Ponctualité','Adaptabilité'],skip:1,tip:'3 qualités maximum, avec un exemple en tête si on te le demande.'},
+      {k:'accroche',q:'Ton <b>accroche</b> : en 2 ou 3 phrases, qui es-tu et que cherches-tu ?',t:'area',ph:'Ta formation, ce que tu aimes, ce que tu cherches…',gen:1,tip:'Ta formation, ce qui te motive, et ce que tu cherches avec les dates.'},
       {k:'_vis',q:'Ta fiche est prête ! Veux-tu la rendre <b>visible par les employeurs</b> CareerPulse ?',t:'choice',list:['Oui, rends-la visible','Plus tard']}] };
   function evaImg(){ return window.CP_EVA_IMG||''; }
   function evAv(){ return '<span class="cj-av sm eva es-eva">'+(evaImg()?'<img src="'+evaImg()+'" alt="EVA">':'')+'</span>'; }
@@ -21470,9 +21488,10 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function compArr(v){ return (Array.isArray(v)?v:String(v||'').split(',')).map(function(x){ return String(x).trim(); }).filter(Boolean).slice(0,20); }
   /* Ce que voit l'employeur (prénom seulement, jamais de coordonnées) */
   function pub(k){ var c=D.data[k]||blank(), p=c.prof||{}, d=c.docs||{};
-    var o={ name:p.prenom||'', secteur:p.secteur||'', ville:p.ville||'', accroche:p.accroche||'', competences:compArr(p.comp), disponibilite:p.dispo||'', updatedAt:c.ficheAt||new Date().toISOString() };
-    if(k==='etu'){ o.titre=[p.formation,p.niveau].filter(Boolean).join(' · ')||p.recherche||''; o.contratSouhaite=String(p.recherche||'').replace(/^(Un|Une|Mon) /,'').replace(/^./,function(x){ return x.toUpperCase(); }); o.experiences=[(p.formation?'Formation en cours — '+p.formation+(p.ecole?' — '+p.ecole:''):'')].concat(String(p.exps||'').split(/\n+/)).filter(function(x){ return String(x).trim(); }).join('\n'); }
-    else { o.titre=p.vise||p.poste||''; o.exp=p.exp||''; o.contratSouhaite=p.contrat||''; o.mobilite=p.mob||''; o.experiences=String(p.exps||''); if(p.poste) o.posteActuel=p.poste; }
+    var o={ name:p.prenom||'', secteur:p.secteur||'', ville:p.ville||'', accroche:p.accroche||'', competences:compArr(p.comp).concat(compArr(p.qualites),compArr(p.langues),/^Oui, permis B/.test(p.permis||'')?['Permis B']:[]).slice(0,20), disponibilite:p.dispo||'', updatedAt:c.ficheAt||new Date().toISOString() };
+    var xtra=function(pre,v){ return String(v||'').split(/\n+/).map(function(l){ return l.trim(); }).filter(Boolean).map(function(l){ return pre+' — '+l; }); };
+    if(k==='etu'){ o.titre=[p.formation,p.niveau].filter(Boolean).join(' · ')||p.recherche||''; o.contratSouhaite=String(p.recherche||'').replace(/^(Un|Une|Mon) /,'').replace(/^./,function(x){ return x.toUpperCase(); })+(p.duree?' · '+p.duree:''); o.experiences=[(p.formation?'Formation en cours — '+p.formation+(p.ecole?' — '+p.ecole:''):'')].concat(String(p.exps||'').split(/\n+/),xtra('Projet',p.projets)).filter(function(x){ return String(x).trim(); }).join('\n'); }
+    else { o.titre=p.vise||p.poste||''; o.exp=p.exp||''; o.contratSouhaite=p.contrat||''; o.mobilite=[p.mob,p.teletravail].filter(Boolean).join(' · '); o.salaire=p.salaire||''; o.experiences=String(p.exps||'').split(/\n+/).concat(xtra('Formation',p.formations)).filter(function(x){ return String(x).trim(); }).join('\n'); if(p.poste) o.posteActuel=p.poste; }
     o.cvDispo=!!(d.cv&&d.cv.share); o.lmDispo=!!(d.lm&&d.lm.share); return o; }
   function ready(k){ var p=(D.data[k]||blank()).prof||{}; return !!(p.prenom && (k==='etu'?(p.formation||p.recherche):(p.vise||p.poste))); }
   function demVis(){ return window._fpVis===true; }
@@ -21481,15 +21500,14 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     B.collection('profils').doc(u.uid).set(o,{ merge:true }).catch(function(){ msg('Enregistrement impossible pour le moment'); });
     var other=k==='etu'?'sal':'etu'; if(on){ if(D.data[other]) D.data[other].vis=false; var ro=ref(other); if(ro) ro.set({ vis:false },{ merge:true }).catch(function(){}); } }
   function setVis(on){ var k=pf();
-    if(on && !ready(k)){ msg('Ta fiche n\'est pas encore prête : complète d\'abord ton prénom et '+(k==='etu'?'ta formation':'le poste visé')); return; }
-    publish(on); msg(on?'✅ Ta fiche est visible par les employeurs CareerPulse':'🔒 Ta fiche est privée'); candRefresh(); }
+    publish(on); msg(!on?'🔒 Ta fiche est privée':ready(k)?'✅ Ta fiche est visible par les employeurs CareerPulse':'✅ Ta fiche est visible. Ajoute ton prénom et '+(k==='etu'?'ta formation':'le poste visé')+' pour apparaître chez les employeurs'); candRefresh(); }
   function ficheHtml(){ var k=pf(), c=cur(), p=c.prof||{}, has=!!(p.prenom||p.vise||p.formation), on=!!c.vis;
     var card=has&&window.cpCandCard?cpCandCard(Object.assign(pub(k),{ name:p.prenom||'Ton prénom', visible:on }),{ self:true })
       :'<div class="cps-pc empty">'+av(true)+'<div><b>Ta fiche candidature t\'attend</b><p>Réponds à mes questions : ta fiche se met en forme toute seule, prête pour les employeurs.</p></div></div>';
     return '<p class="es-h">Ma fiche candidature</p>'+card
       +'<button type="button" class="cps-wizcta es-wizcta" data-cj="es-fiche">'+av(true)+'<span><b>'+(has?'Modifier ma fiche avec Lisa':'Construire ma fiche avec Lisa')+'</b><small>Lisa te pose les questions une à une et met ta fiche en forme.</small></span>'+I(P.chev,18)+'</button>'
       +'<div class="cps-card cps-vis"><div class="cps-card-hd"><span class="cps-ic b">'+I(P.eye)+'</span><div><b>Visible par les employeurs</b><span>'+(on?'Ta fiche apparaît chez les employeurs vérifiés de CareerPulse : ils peuvent te proposer un échange.':'Ta fiche reste privée. Active-la quand elle est prête.')+'</span></div><button type="button" class="cps-sw'+(on?' on':'')+'" data-cj="es-vis" aria-label="Visible par les employeurs"><i></i></button></div>'
-      +(on&&demVis()?'<p class="cj-mini" style="margin:8px 0 0">Ta fiche Emploi · Reconversion est aussi visible : les employeurs voient celle-là en premier. Masque-la depuis cet espace si tu veux qu\'ils voient celle-ci.</p>':'')+'</div>'; }
+      +(on&&!ready(k)?'<p class="es-vwarn">⚠️ Ta fiche est visible, mais il manque ton <b>prénom</b> et '+(k==='etu'?'ta <b>formation</b>':'le <b>poste visé</b>')+' : complète-la avec Lisa pour apparaître chez les employeurs.</p>':'')+(on&&demVis()?'<p class="cj-mini" style="margin:8px 0 0">Ta fiche Emploi · Reconversion est aussi visible : les employeurs voient celle-là en premier. Masque-la depuis cet espace si tu veux qu\'ils voient celle-ci.</p>':'')+'</div>'; }
   /* Moteur commun : questions une à une, en direct (EVA pour la fiche candidature, Lisa pour le profil salarié) */
   function wiz(o){ if(document.querySelector('.cpw-sheet.es-wiz')) return; var steps=o.steps, A=o.A, i=0;
     var sh=document.createElement('div'); sh.className='cpw-sheet es-wiz cj-wiz'+(o.lisa?' es-lisa':'');
@@ -21515,6 +21533,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
           if(s.gen) h+='<button type="button" class="cpw-gen" data-gen="1">'+I(P.wand,16)+(o.lisa?'Lisa me propose une accroche':'EVA me propose une accroche')+'</button>';
           h+='<div class="cpw-acts">'+(s.skip?'<button type="button" class="cpw-btn ghost" data-skip="1">Passer</button>':'')+'<button type="button" class="cpw-btn" data-ok="1">Valider'+I(P.chev,16)+'</button></div>'; }
         if(cur0) h='<div class="cpw-prev">'+I(P.check,14)+'Ta réponse est enregistrée : garde-la ou modifie-la.</div>'+h;
+        if(s.tip) h+='<div class="es-wtip">'+av(true)+'<span><b>Conseil de Lisa</b>'+s.tip+'</span></div>';
         if(i>0) h+='<button type="button" class="cpw-backq" data-prev="1">'+I(P.back,14)+'Question précédente</button>';
         inp.innerHTML=h; var f=inp.querySelector('.cpw-field'); if(f){ if(window.innerWidth>=900) f.focus(); f.onkeydown=function(e){ if(e.key==='Enter' && s.t!=='area'){ e.preventDefault(); inp.querySelector('[data-ok]').click(); } }; } down(); }); }
     function answer(v){ A[steps[i].k]=v; me(v||'(passé)'); i++; ask(); }
@@ -21575,7 +21594,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
           if(b.hasAttribute('data-save')){ c.prof=Object.assign({},c.prof||{},A); save(); if(c.vis) publish(true); msg('Ton profil est enregistré ✓'); w.close(); if(PROFO&&document.body.contains(PROFO.sh)){ PROFO.sh.remove(); openProf(); } } }; }); } }); }
   /* ══ Trouver des offres : CareerPulse + autres sites, comme l'espace Emploi · Reconversion ══ */
   var ESAP=null;
-  function findHtml(){ return '<div class="cpo-2p">'
+  function findHtml(){ return '<div class="cpo-2p es-find">'
       +'<button type="button" class="cpo-2pb cp" data-cj="es-cpo"><span class="cpo-2pi"><img src="'+lisa()+'" alt="Lisa"></span><span><em>Publiée sur CareerPulse</em><b>Offres des entreprises CareerPulse</b><small>Entreprises vérifiées · postule en un clic</small></span>'+I(P.chev,18)+'</button>'
       +'<button type="button" class="cpo-2pb" data-cj="es-sites"><span class="cpo-2pi ext">'+I(P.ext,20)+'</span><span><em>Sites de référence</em><b>Offres sur d\'autres sites</b><small>'+(pf()==='etu'?'Stages, alternance, jobs étudiants…':'France Travail, Indeed, Apec…')+'</small></span>'+I(P.chev,18)+'</button></div>'; }
   var SITES={ sal:[['France Travail','https://candidat.francetravail.fr/offres/recherche','Le service public de l\'emploi'],['Indeed','https://fr.indeed.com','Le plus grand choix d\'offres'],['Apec','https://www.apec.fr','Offres et conseils pour les cadres'],['HelloWork','https://www.hellowork.com','Offres d\'emploi partout en France'],['Welcome to the Jungle','https://www.welcometothejungle.com/fr','Offres et coulisses des entreprises']],
@@ -21602,11 +21621,13 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     sal:{ w:[['Préparer mon entretien annuel','étapes faites',1],['Avancer un dossier important','séances de travail',3],['Regarder une formation sur mon CPF','formations regardées',1],['Faire le point avec mon manager','point fait',1],['Atteindre un objectif fixé par mon manager','étapes faites',3],['Me renseigner sur la VAE ou un bilan de compétences','recherches faites',1]],
       m:[['Suivre une formation (CPF ou employeur)','modules suivis',4],['Terminer un projet important','étapes',4],['Faire des points réguliers avec mon manager','points faits',2],['Mettre à jour mon CV et mon profil','mises à jour',1],['Développer mon réseau pro','contacts',5]],
       y:[['Obtenir une évolution ou une promotion','évolution',1],['Obtenir une certification ou un diplôme (VAE)','certification',1],['Négocier une augmentation','entretien',1],['Réussir mon entretien annuel','entretien',1],['Changer de poste ou de métier','nouveau poste',1]] } };
-  var PER={ w:['Semaine','cette semaine',[1,2,3,5]], m:['Mois','ce mois-ci',[1,2,4,8]], y:['Année','cette année',[1,2,3,6,12]] };
+  RECO.etu.d=[['Réviser un chapitre','chapitre',1],['Faire mes devoirs du jour','devoirs',2],['Relire mes cours du jour','séance',1],['Envoyer une candidature','candidature',1],['Préparer mon sac et mes affaires pour demain','fois',1]];
+  RECO.sal.d=[['Traiter mes 3 priorités du jour','priorités',3],['Répondre aux mails importants','fois',1],['Avancer sur mon dossier principal','séance',1],['Faire un point avec un collègue','point',1],['Préparer ma journée de demain','fois',1]];
+  var PER={ d:['Journée','aujourd\'hui',[1,2,3]], w:['Semaine','cette semaine',[1,2,3,5]], m:['Mois','ce mois-ci',[1,2,4,8]], y:['Année','cette année',[1,2,3,6,12]] }, PK=['d','w','m','y'];
   function wk(){ var d=new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate()-((d.getDay()+6)%7)); return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
   function ymd(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
   function wkEnd(){ var d=new Date(wk()+'T12:00:00'); d.setDate(d.getDate()+6); return ymd(d); }
-  function pkey(p){ var d=new Date(); return p==='w'?wk():p==='m'?d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2):String(d.getFullYear()); }
+  function pkey(p){ var d=new Date(); if(p==='d') return ymd(d); return p==='w'?wk():p==='m'?d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2):String(d.getFullYear()); }
   function allGoals(){ var c=cur(); if(!c.goals){ c.goals=[]; if(c.obj && c.obj.week===wk()) c.goals.push({ id:'g'+Date.now(), per:'w', key:c.obj.week, label:c.obj.label, cible:c.obj.cible, unite:c.obj.unite||'étapes', fait:c.obj.fait||0, src:c.obj.src||'perso' }); } return c.goals; }
   function goals(p){ return allGoals().filter(function(g){ return (!p||g.per===p) && g.key===pkey(g.per); }); }
   function obj(){ return goals('w')[0]||null; }
@@ -21617,6 +21638,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function rest(g){ return Math.max(0,g.cible-(g.fait||0)); }
   /* Le plan de Lisa : combien de tâches cette semaine, et lesquelles */
   function planItems(){ var L=[];
+    goals('d').forEach(function(g){ for(var i=0;i<rest(g);i++) L.push({ goal:g.id, per:'d', titre:g.label }); });
     goals('w').forEach(function(g){ for(var i=0;i<rest(g);i++) L.push({ goal:g.id, per:'w', titre:g.label }); });
     goals('m').forEach(function(g){ for(var i=0;i<Math.ceil(rest(g)/wLeft('m'));i++) L.push({ goal:g.id, per:'m', titre:'Avancer : '+g.label }); });
     goals('y').forEach(function(g){ for(var i=0;i<Math.ceil(rest(g)/wLeft('y'));i++) L.push({ goal:g.id, per:'y', titre:'Une étape vers : '+g.label }); });
@@ -21625,12 +21647,12 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function missing(){ var W=weekTasks(), have={}; W.forEach(function(t){ have[t.goal]=(have[t.goal]||0)+1; }); return planItems().filter(function(x){ if(have[x.goal]>0){ have[x.goal]--; return false; } return true; }); }
   function addPlan(){ var M=missing(); if(!M.length){ msg('Ton plan est déjà dans ta semaine ✓'); return; }
     var days=[], d=new Date(); d.setHours(12,0,0,0); var lastDay=((d.getDay()+6)%7)>=4?6:4; for(var k=(d.getDay()+6)%7;k<=lastDay;k++){ days.push(ymd(d)); d.setDate(d.getDate()+1); }
-    M.forEach(function(x,i){ cur().tasks.push({ id:'t'+Date.now()+i, sujet:'', titre:x.titre, date:days[i%days.length], heure:'', description:'', objectif:x.titre.replace(/^(Avancer : |Une étape vers : )/,''), atteint:'', fait:false, goal:x.goal, cree:new Date().toISOString() }); });
+    var di=0; M.forEach(function(x,i){ var dt=x.per==='d'?ymd(new Date()):days[(di++)%days.length]; cur().tasks.push({ id:'t'+Date.now()+i, sujet:'', titre:x.titre, date:dt, heure:'', description:'', objectif:x.titre.replace(/^(Avancer : |Une étape vers : )/,''), atteint:'', fait:false, goal:x.goal, cree:new Date().toISOString() }); });
     save(); msg(M.length+' tâche'+(M.length>1?'s':'')+' ajoutée'+(M.length>1?'s':'')+' à ta semaine ✓'); if(TK&&document.body.contains(TK.sh)) TK.render(); if(OBJ&&document.body.contains(OBJ.sh)) OBJ.render(); redraw(); }
   function planHtml(){ var G=goals(), W=weekTasks(), dn=W.filter(function(t){ return t.fait; }).length, P0=planItems(), M=missing();
-    if(!G.length) return '<div class="es-plan off">'+say('Fixe tes <b>objectifs</b> de la semaine, du mois et de l\'année : je te proposerai le bon nombre de tâches pour avancer, sans te surcharger.')+'<button type="button" class="cj-main" data-cj="es-obj">'+I(P.target,18)+'Fixer mes objectifs</button></div>';
-    var n={ w:0, m:0, y:0 }; P0.forEach(function(x){ n[x.per]++; });
-    var pills='<div class="es-pills">'+['w','m','y'].map(function(k){ return '<span class="'+(n[k]?'':'z')+'"><b>'+n[k]+'</b> '+PER[k][0].toLowerCase()+'</span>'; }).join('')+'</div>';
+    if(!G.length) return '<div class="es-plan off"><div class="es-plan-hd">'+av(true)+'<div><b>Mon plan de la semaine</b><small>Fixe tes objectifs de la journée, de la semaine, du mois et de l\'année : je te propose le bon nombre de tâches.</small></div></div><div class="es-2b"><button type="button" class="cj-main" data-cj="es-gset">'+I(P.chat,17)+'Fixer avec Lisa</button><button type="button" class="cj-main alt" data-cj="es-obj">'+I(P.target,17)+'Mes objectifs</button></div></div>';
+    var n={ d:0, w:0, m:0, y:0 }; P0.forEach(function(x){ n[x.per]++; });
+    var pills='<div class="es-pills">'+PK.map(function(k){ return '<span class="'+(n[k]?'':'z')+'"><b>'+n[k]+'</b> '+PER[k][0].toLowerCase()+'</span>'; }).join('')+'</div>';
     if(!W.length) return '<div class="es-plan">'+say('Cette semaine, je te propose <b>'+P0.length+' tâche'+(P0.length>1?'s':'')+'</b> pour avancer sur tes objectifs 👇')+pills
       +'<ul class="es-pl">'+P0.slice(0,6).map(function(x){ return '<li>'+esc(x.titre)+'</li>'; }).join('')+(P0.length>6?'<li class="more">+ '+(P0.length-6)+' autre'+(P0.length-6>1?'s':'')+'</li>':'')+'</ul>'
       +'<button type="button" class="cj-main" data-cj="es-plan">'+I(P.plus,18)+'Ajouter ces '+P0.length+' tâches à ma semaine</button><p class="cj-mini" style="text-align:center;margin:6px 0 0">Je les répartis sur tes jours. Tu peux les modifier ou les supprimer.</p></div>';
@@ -21644,22 +21666,26 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     return '<button type="button" class="cj-box cj-defi" data-cj="es-obj"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Mes objectifs</b><small>Semaine '+W.length+' · Mois '+Mo.length+' · Année '+Y.length+' · '+(T.length?'plan : '+dn+'/'+T.length+' tâches faites':'Lisa te propose '+n+' tâche'+(n>1?'s':''))+'</small></span><em class="cj-score">'+(T.length?dn+'/'+T.length:n)+'</em><i class="cj-bar"><i style="width:'+pc+'%"></i></i></button>'
       +(isFri()?'<button type="button" class="cj-box es-bilan" data-cj="es-point">'+av(true)+'<span class="cj-box-t"><b>C\'est l\'heure du bilan du vendredi</b><small>Lisa fait le point avec toi et te conseille pour la semaine prochaine</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>':''); }
   var OBJ=null;
-  function openObj(){ var o=cpStream.sheet('Mes objectifs',pf()==='etu'?'Ton cap pour tes études':'Ton cap pour ton travail',''); OBJ=o; o.p=o.p||'w'; o.pick=null; o.cible=null; o.perso='';
+  function lvlPct(p){ var L=goals(p), t=0, f=0; L.forEach(function(g){ t+=g.cible; f+=Math.min(g.cible,g.fait||0); }); return t?Math.round(f/t*100):0; }
+  function openObj(){ var o=cpStream.sheet('Mes objectifs',pf()==='etu'?'Ta journée, ta semaine, ton mois, ton année':'Ta journée, ta semaine, ton mois, ton année',''); OBJ=o; o.p=o.p||'w'; o.pick=null; o.cible=null; o.perso=''; o.add=false;
     o.render=function(){ var k=pf(), p=o.p, L=goals(p), R=RECO[k][p], ch=PER[p][2], cb=o.cible||(o.pick!=null?R[o.pick][2]:ch[1]);
-      o.body.innerHTML=say('Fixe tes objectifs de la <b>semaine</b>, du <b>mois</b> et de l\'<b>année</b>. Je te propose ensuite le bon nombre de <b>tâches</b> chaque semaine, et on fait le <b>bilan le vendredi</b>.')
-        +'<div class="cj-tabs">'+['w','m','y'].map(function(x){ return '<button type="button" class="'+(x===p?'on':'')+'" data-cj="es-gtab" data-p="'+x+'">'+PER[x][0]+' <em>'+goals(x).length+'</em></button>'; }).join('')+'</div>'
-        +(L.length?'<div class="es-goals">'+L.map(function(g){ var pc=Math.min(100,Math.round((g.fait||0)/g.cible*100)); return '<div class="es-goal'+(g.fait>=g.cible?' ok':'')+'"><div class="es-goal-t"><b>'+esc(g.label)+'</b><small>'+(g.fait||0)+' / '+g.cible+' '+esc(g.unite||'')+' '+PER[g.per][1]+'</small><i class="cj-bar"><i style="width:'+pc+'%"></i></i></div><div class="es-goal-a"><button type="button" data-cj="es-om" data-id="'+g.id+'" data-d="-1" aria-label="Moins">−</button><button type="button" data-cj="es-om" data-id="'+g.id+'" data-d="1" aria-label="Plus">+</button><button type="button" class="x" data-cj="es-gdel" data-id="'+g.id+'" aria-label="Annuler cet objectif">'+I(P.x||'<path d="M18 6 6 18M6 6l12 12"/>',14)+'</button></div></div>'; }).join('')+'</div>'
-          :'<div class="frl-empty">Aucun objectif '+(p==='w'?'cette semaine':p==='m'?'ce mois-ci':'cette année')+' pour l\'instant.</div>')
-        +'<p class="es-h">Ajouter un objectif · '+PER[p][0].toLowerCase()+'</p><div class="es-day">'+R.map(function(r,i){ var on=o.pick===i; return '<button type="button" class="es-t'+(on?' on':'')+'" data-cj="es-opick" data-i="'+i+'" style="'+(on?'border-color:var(--es1);background:var(--ess)':'')+'"><span class="es-sub-ic">'+I(P.target)+'</span><span class="es-t-b"><b>'+esc(r[0])+'</b><small>Conseillé : '+r[2]+' '+esc(r[1])+'</small></span></button>'; }).join('')+'</div>'
+      var h=say('Tes objectifs sur <b>4 niveaux</b> : la journée, la semaine, le mois et l\'année. Je te propose ensuite le bon nombre de <b>tâches</b>, et on fait le <b>bilan le vendredi</b>.')
+        +'<div class="es-lv">'+PK.map(function(x){ var pc=lvlPct(x), n=goals(x).length; return '<button type="button" class="'+(x===p?'on':'')+'" data-cj="es-gtab" data-p="'+x+'"><span class="es-ring sm" style="--p:'+pc+'"><b>'+pc+'%</b></span><span><b>'+PER[x][0]+'</b><small>'+n+' objectif'+(n>1?'s':'')+'</small></span></button>'; }).join('')+'</div>'
+        +'<div class="es-lv-hd"><b>'+PER[p][0]+'</b><span>'+(L.length?L.length+' objectif'+(L.length>1?'s':'')+' '+PER[p][1]:'Aucun objectif '+PER[p][1])+'</span></div>'
+        +(L.length?'<div class="es-goals">'+L.map(function(g){ var pc=Math.min(100,Math.round((g.fait||0)/g.cible*100)); return '<div class="es-goal'+(g.fait>=g.cible?' ok':'')+'"><div class="es-goal-t"><b>'+esc(g.label)+'</b><small>'+(g.fait||0)+' / '+g.cible+' '+esc(g.unite||'')+'</small><i class="cj-bar"><i style="width:'+pc+'%"></i></i></div><div class="es-goal-a"><button type="button" data-cj="es-om" data-id="'+g.id+'" data-d="-1" aria-label="Moins">−</button><button type="button" data-cj="es-om" data-id="'+g.id+'" data-d="1" aria-label="Plus">+</button><button type="button" class="x" data-cj="es-gdel" data-id="'+g.id+'" aria-label="Annuler cet objectif">'+I('<path d="M18 6 6 18M6 6l12 12"/>',14)+'</button></div></div>'; }).join('')+'</div>':'')
+        +'<div class="es-2b"><button type="button" class="cj-main" data-cj="es-gadd">'+I(P.plus,17)+(o.add?'Fermer':'Ajouter un objectif')+'</button><button type="button" class="cj-main alt" data-cj="es-gset">'+I(P.chat,17)+'Fixer avec Lisa</button></div>';
+      if(o.add) h+='<div class="es-addg"><p class="es-h">Objectifs conseillés · '+PER[p][0].toLowerCase()+'</p><div class="es-day">'+R.map(function(r,i){ var on=o.pick===i; return '<button type="button" class="es-t'+(on?' on':'')+'" data-cj="es-opick" data-i="'+i+'" style="'+(on?'border-color:var(--es1);background:var(--ess)':'')+'"><span class="es-sub-ic">'+I(P.target)+'</span><span class="es-t-b"><b>'+esc(r[0])+'</b><small>Conseillé : '+r[2]+' '+esc(r[1])+'</small></span></button>'; }).join('')+'</div>'
         +'<div class="cj-form"><input id="es-operso" maxlength="90" placeholder="Ou écris ton objectif perso" value="'+esc(o.perso||'')+'"><label>Combien '+PER[p][1]+' ?</label><div class="frl-chips">'+ch.map(function(n){ return '<button type="button" class="'+(cb===n?'on':'')+'" data-cj="es-ocib" data-n="'+n+'">'+n+'</button>'; }).join('')+'</div></div>'
-        +'<button type="button" class="cj-main" data-cj="es-ogo">'+I(P.plus,18)+'Ajouter cet objectif</button>'
-        +(goals().length?'<p class="es-h">Ma semaine</p>'+planHtml()+'<button type="button" class="cj-main alt" data-cj="es-point">'+I(P.chat,18)+(isFri()?'Faire mon bilan du vendredi avec Lisa':'Faire le point avec Lisa')+'</button>':'')+'<button type="button" class="cj-main alt" data-cj="es-tasks">'+I(P.list,18)+'Toutes mes tâches</button>'; };
+        +'<button type="button" class="cj-main" data-cj="es-ogo">'+I(P.check,18)+'Ajouter cet objectif</button></div>';
+      h+=(goals().length?'<p class="es-h">Mon plan de la semaine</p>'+planHtml()+'<button type="button" class="cj-main alt" data-cj="es-point">'+I(P.chat,18)+(isFri()?'Faire mon bilan du vendredi avec Lisa':'Faire le point avec Lisa')+'</button>':'')
+        +'<button type="button" class="cj-main alt" data-cj="es-tasks">'+I(P.list,18)+'Toutes mes tâches</button>';
+      o.body.innerHTML=h; };
     o.render(); }
   function startObj(){ var o=OBJ; if(!o) return; var k=pf(), p=o.p, R=RECO[k][p], perso=($('es-operso')||{}).value; perso=perso?perso.trim():''; var lab, cib, uni, src;
     if(perso){ lab=perso; cib=o.cible||PER[p][2][1]; uni='fois'; src='perso'; } else if(o.pick!=null){ var r=R[o.pick]; lab=r[0]; cib=o.cible||r[2]; uni=r[1]; src='reco'; } else { msg('Choisis un objectif ou écris le tien'); return; }
-    if(addGoal(p,lab,cib,uni,src)){ msg('Objectif ajouté 💪'); o.pick=null; o.cible=null; o.perso=''; o.render(); redraw(); } }
+    if(addGoal(p,lab,cib,uni,src)){ msg('Objectif ajouté 💪'); o.pick=null; o.cible=null; o.perso=''; o.add=false; o.render(); redraw(); } }
   /* Le point / le bilan du vendredi, en direct avec Lisa : réponses rapides, ajouter ou annuler des objectifs */
-  function openPoint(){ var c=cur(), fri=isFri(); var sh=cpStream.sheet(fri?'Le bilan du vendredi':'Le point avec Lisa','Tes objectifs et ta semaine',''); var log=document.createElement('div'); log.className='cj-intro-log es-plog'; sh.body.appendChild(log); var ans={};
+  function openPoint(mode){ var c=cur(), fri=isFri()&&mode!=='set'; var sh=cpStream.sheet(mode==='set'?'Fixer mes objectifs':fri?'Le bilan du vendredi':'Le point avec Lisa',mode==='set'?'Avec Lisa, en direct':'Tes objectifs et ta semaine',''); var log=document.createElement('div'); log.className='cj-intro-log es-plog'; sh.body.appendChild(log); var ans={};
     function down(){ setTimeout(function(){ sh.sc.scrollTo({ top:sh.sc.scrollHeight, behavior:'smooth' }); },60); }
     function bot(h,cb){ var m=document.createElement('div'); m.className='cj-say'; m.innerHTML=av(true)+'<div><span class="cj-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ if(!document.body.contains(m)) return; m.lastChild.innerHTML=h; down(); setTimeout(cb||function(){},350); },Math.min(1200,400+h.length*4)); }
     function me(t){ var m=document.createElement('div'); m.className='es-me'; m.textContent=t; log.appendChild(m); down(); }
@@ -21671,6 +21697,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
       d.innerHTML=G.map(function(g){ var pc=Math.min(100,Math.round((g.fait||0)/g.cible*100)); return '<div class="es-bc-r'+(g.fait>=g.cible?' ok':'')+'"><em>'+PER[g.per][0]+'</em><span><b>'+esc(g.label)+'</b><i class="cj-bar"><i style="width:'+pc+'%"></i></i></span><strong>'+(g.fait||0)+'/'+g.cible+'</strong></div>'; }).join(''); log.appendChild(d); down(); }
     var W=weekTasks(), dn=W.filter(function(t){ return t.fait; }).length, WG=goals('w'), ok=WG.filter(function(g){ return g.fait>=g.cible; }).length;
     var intro=(fri?'C\'est vendredi, l\'heure du <b>bilan</b> 😊 ':'On fait le point ensemble 😊 ')+(W.length?'Cette semaine, tu as fait <b>'+dn+' tâche'+(dn>1?'s':'')+' sur '+W.length+'</b> de ton plan':'Tu n\'as pas encore ajouté ton plan de tâches cette semaine')+(WG.length?', et atteint <b>'+ok+' objectif'+(ok>1?'s':'')+' sur '+WG.length+'</b> de la semaine.':'.');
+    if(mode==='set'){ bot('On fixe tes objectifs ensemble 🎯 Commence par la <b>journée</b> ou la <b>semaine</b> : un ou deux objectifs suffisent.',function(){ addFlow(); }); return; }
     if(!goals().length){ bot('On fait le point ensemble 😊 Tu n\'as pas encore d\'objectif. On en fixe un ?',function(){ addFlow(); }); return; }
     bot(intro,function(){ card(); bot('Comment s\'est passée ta semaine ?',function(){ chips(['Très bien 🎉','Bien','Difficile'],function(v){ ans.hum=v; var good=v==='Très bien 🎉';
       bot(good?'Super ! Qu\'est-ce qui t\'a le plus aidé ?':'Merci d\'être honnête. Qu\'est-ce qui t\'a le plus freiné ?',function(){ chips(good?['Mon organisation','Ma motivation','Mon plan de tâches','Un peu de tout']:['Le temps','La motivation','L\'organisation','Trop d\'objectifs'],function(f){ ans.frein=f;
@@ -21682,7 +21709,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     function route(k){ if(/^Ajouter/.test(k)) addFlow(); else if(/^Annuler/.test(k)) delFlow(); else nextWeek(); }
     function adjust(){ bot('Tu veux <b>ajuster tes objectifs</b> ?',function(){ chips(['Ajouter un objectif','Annuler un objectif','Tout est bon'],route); }); }
     function more(){ bot('Autre chose ?',function(){ chips(['Ajouter un objectif','Annuler un objectif','C\'est tout'],route); }); }
-    function addFlow(){ bot('Pour quelle période ?',function(){ chips(['La semaine','Le mois','L\'année'],function(v,i){ var p=['w','m','y'][i], R=RECO[pf()][p];
+    function addFlow(){ bot('Pour quelle période ?',function(){ chips(['La journée','La semaine','Le mois','L\'année'],function(v,i){ var p=PK[i], R=RECO[pf()][p];
       bot('Choisis un objectif conseillé, ou écris le tien 👇',function(){ chips(R.map(function(r){ return r[0]; }).concat(['✏️ Mon objectif perso']),function(lab,j){
         function put(l,cb2,u,src){ if(addGoal(p,l,cb2,u,src)) bot('C\'est ajouté ✓ <b>'+esc(l)+'</b> : '+cb2+' '+esc(u)+' '+PER[p][1]+'. Je l\'ajoute à ton plan de tâches.',more); else more(); }
         if(j<R.length) put(R[j][0],R[j][2],R[j][1],'reco');
@@ -21709,7 +21736,31 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
         ['dossier','Préparer un dossier',['Scanne en PDF, un document par fichier.','Nomme clairement : Diplome-BTS-2025.pdf.','Vérifie les dates de validité.','Garde une copie dans ton Portfolio EVA.'],[['eva.html#eva-workspace','Mon Portfolio avec EVA','Documents, tâches, agenda et contacts'],['eva.html#eva-of','Les formations avec EVA','Si ton dossier sert pour une formation ou une VAE']]]]] };
   var KEEP={ etu:['Tes diplômes et relevés de notes.','Tes conventions et attestations de stage.','Ton certificat de scolarité de l\'année.','Tes attestations de bourse et de logement.','Ta pièce d\'identité : garde-la en privé, elle n\'est jamais visible.'],
     sal:['Ton contrat de travail et ses avenants.','Tes bulletins de paie : à garder jusqu\'à ta retraite.','Tes attestations de formation et certificats.','Tes diplômes.','Tes comptes rendus d\'entretien annuel.'] };
-  function tipsHtml(){ var c=cur(), sel=c.tipSel||'', dn=c.tipDone||{};
+  var DTE={ cv:['Mon CV',[['star','Écrire mes expériences','Méthode STAR','La méthode STAR (Situation, Tâche, Action, Résultat) est celle qu\'utilisent les recruteurs en entretien. Utilise-la aussi sur ton CV : chaque expérience devient une preuve.',['Situation : où et quand ? Ex : job d\'été en boulangerie, 2025.','Tâche : ce qu\'on attendait de toi.','Action : ce que tu as fait, avec un verbe d\'action (organiser, conseiller, gérer).','Résultat : ce que ça a donné, chiffré si possible.','Une ligne par expérience, de la plus récente à la plus ancienne.'],[['Onisep','https://www.onisep.fr'],['1jeune1solution','https://www.1jeune1solution.gouv.fr']],[['eva.html#eva-workspace','Faire analyser mon CV par EVA','Dans ton Portfolio : EVA le lit comme un recruteur']]],
+        ['qqoqcp','L\'adapter à une offre','Méthode QQOQCP','QQOQCP est une méthode d\'analyse utilisée en gestion de projet : 6 questions pour décortiquer une offre avant d\'y répondre.',['Qui recrute ? L\'entreprise et son secteur.','Quoi ? Les missions et les 3 à 5 compétences demandées.','Où et quand ? Le lieu, la date de début, la durée.','Comment ? Stage, alternance ou job, et le rythme.','Pourquoi toi ? Relie chaque compétence demandée à une ligne de ton CV.'],[['Apec','https://www.apec.fr']],[['eva.html#eva-workspace','Faire analyser mon CV par EVA','EVA le compare à l\'offre'],['eva.html#eva-entretien','Préparer l\'entretien avec EVA','Le simulateur te pose les vraies questions']]]]],
+    lm:['Ma lettre',[['vmn','Écrire ma lettre','Méthode Vous – Moi – Nous','La structure Vous – Moi – Nous est la plus utilisée en France : 3 paragraphes, une idée chacun.',['Vous : ce qui t\'attire dans l\'entreprise, avec un fait précis.','Moi : ta formation et une expérience qui prouve ta motivation.','Nous : ce que tu apporterais pendant ton stage ou ton alternance.','Une page maximum, une formule de politesse simple.'],[['Onisep','https://www.onisep.fr']],[['eva.html#eva-workspace','Faire relire ma lettre par EVA','Dans ton Portfolio : des conseils ligne par ligne']]],
+        ['aida','Accrocher le recruteur','Méthode AIDA','AIDA (Attention, Intérêt, Désir, Action) vient du marketing : elle sert à capter l\'attention dès la première ligne.',['Attention : une première phrase sur l\'entreprise, pas sur toi.','Intérêt : montre que tu connais son activité.','Désir : prouve ce que tu peux apporter, avec un exemple.','Action : propose un entretien.'],[['Apec','https://www.apec.fr']],[['eva.html#eva-workspace','Faire analyser ma lettre par EVA','EVA repère ce qui accroche et ce qui manque']]]]],
+    doc:['Ranger mes documents',[['5s','Ranger mon dossier','Méthode 5S','La méthode 5S vient du lean management : 5 étapes pour un espace clair, où l\'on retrouve tout en quelques secondes.',['Trier : garde seulement les documents utiles.','Ranger : un dossier par thème (Scolarité, Stages, Candidatures).','Nettoyer : supprime les doublons et les vieilles versions.','Standardiser : un même format de nom, ex. 2025-06_Diplome_BTS.pdf.','Maintenir : fais le point une fois par mois.'],[['Mes services étudiant','https://www.messervices.etudiant.gouv.fr']],[['eva.html#eva-workspace','Ranger mes documents dans mon Portfolio','EVA classe tes dossiers au même endroit']]],
+        ['321','Ne rien perdre','Règle de sauvegarde 3-2-1','La règle 3-2-1 est la référence pour sauvegarder des fichiers importants.',['3 copies de chaque document important.','Sur 2 supports différents : ordinateur et clé USB, par exemple.','Dont 1 copie en ligne, dans ton Portfolio EVA.','Scanne en PDF, un document par fichier.'],[['Cybermalveillance.gouv.fr','https://www.cybermalveillance.gouv.fr']],[['eva.html#eva-workspace','Mon Portfolio avec EVA','Ta copie en ligne, toujours avec toi']]]]],
+    ana:['Analyser un document',[['swot','Me comparer à une offre','Méthode SWOT','La SWOT (Forces, Faiblesses, Opportunités, Menaces) est un outil classique de gestion pour faire le point avant une décision.',['Forces : les compétences demandées que tu as déjà.','Faiblesses : ce qui te manque, et comment le compenser.','Opportunités : ce que le poste peut t\'apprendre.','Menaces : la concurrence, les délais. Prépare ta réponse.'],[['Apec','https://www.apec.fr']],[['eva.html#eva-entretien','Préparer l\'entretien avec EVA','Transforme ta SWOT en réponses solides']]],
+        ['relire','Relire avant d\'envoyer','Relecture en 3 passages','Relire en plusieurs passages, avec un objectif différent à chaque fois, évite les erreurs qu\'on ne voit plus.',['1er passage : le fond. Chaque phrase est-elle utile ?','2e passage : la forme. Orthographe, dates, majuscules.','3e passage : à voix haute, ou fais relire par quelqu\'un.','Vérifie le nom de l\'entreprise et du destinataire.'],[['Onisep','https://www.onisep.fr']],[['eva.html#eva-workspace','Faire analyser mon document par EVA','Un regard de recruteur avant d\'envoyer']]]]] };
+  var TIPAN='';
+  function tipsEtu(){ var c=cur(), sel=c.tipSel||'', dn=c.tipDone||{};
+    var h='<div class="es-tips-hd">'+av(true)+'<div><b>Les conseils de Lisa</b><small>Des méthodes reconnues, pas à pas. Choisis un thème 👇</small></div></div>';
+    Object.keys(DTE).forEach(function(g){ var G=DTE[g]; h+='<div class="es-tg"><span>'+G[0]+'</span><div class="es-tc">'+G[1].map(function(x){ var key=g+':'+x[0]; return '<button type="button" class="'+(sel===key?'on':'')+'" data-cj="es-tip" data-k="'+key+'">'+esc(x[1])+'</button>'; }).join('')+'</div></div>'; });
+    var pr=sel.split(':'), it=sel&&DTE[pr[0]]?DTE[pr[0]][1].filter(function(x){ return x[0]===pr[1]; })[0]:null;
+    if(it){ var L=it[4], D0=dn[sel]||[], n=L.filter(function(_,i){ return D0.indexOf(i)>-1; }).length, pc=Math.round(n/L.length*100), an=TIPAN===sel;
+      h+='<div class="es-tp es-tpe'+(an?' an':'')+'"><div class="es-tp-hd"><span class="es-ring" style="--p:'+pc+'"><b>'+n+'/'+L.length+'</b></span><div><b>'+esc(it[1])+'</b><em class="es-meth">'+esc(it[2])+'</em></div></div>'
+        +'<div class="cj-say es-tsay">'+av(true)+'<div class="es-tsay-b">'+(an?'<span class="cj-dots"><i></i><i></i><i></i></span>':esc(it[3]))+'</div></div>'
+        +'<div class="es-tl">'+L.map(function(t,i){ var on=D0.indexOf(i)>-1; return '<button type="button" class="es-tk'+(on?' on':'')+(an?' es-hide':'')+'" data-cj="es-tk" data-i="'+i+'" style="animation-delay:0ms"><i>'+I('<path d="M5 12.5 10 17 19 7"/>',13)+'</i><span>'+esc(t)+'</span></button>'; }).join('')+'</div>'
+        +'<div class="es-tmore'+(an?' es-hide':'')+'"><p class="es-src">Sources : '+it[5].map(function(x){ return '<a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>'; }).join(' · ')+'</p><p class="es-h" style="margin-top:10px">Pour aller plus loin avec EVA</p>'+it[6].map(function(e){ return eva(e[0],e[1],e[2]); }).join('')
+        +(n===L.length?'<div class="es-tp-ok">🎉 Méthode appliquée : bravo !</div>':'')+'</div></div>'; }
+    return h; }
+  function animTips(){ var key=TIPAN; TIPAN=''; var tp=document.querySelector('.cj-sheet #es-tips .es-tpe.an'); if(!tp) return; var pr=key.split(':'), it=DTE[pr[0]][1].filter(function(x){ return x[0]===pr[1]; })[0];
+    var b=tp.querySelector('.es-tsay-b'), items=[].slice.call(tp.querySelectorAll('.es-tk.es-hide')), more=tp.querySelector('.es-tmore');
+    setTimeout(function(){ if(!document.body.contains(tp)) return; var parts=it[3].split(/(\s+)/), j=0, out='';
+      (function tick(){ if(!document.body.contains(tp)) return; if(j>=parts.length){ b.textContent=it[3]; var q=0; (function next(){ if(q<items.length){ items[q++].classList.remove('es-hide'); setTimeout(next,320); } else { more.classList.remove('es-hide'); tp.classList.remove('an'); } })(); return; } out+=parts[j++]; b.textContent=out; setTimeout(tick,18); })(); },650); }
+  function tipsHtml(){ if(pf()==='etu') return tipsEtu(); var c=cur(), sel=c.tipSel||'', dn=c.tipDone||{};
     var h='<div class="es-tips-hd">'+av(true)+'<div><b>Les conseils de Lisa</b><small>Choisis ce que tu veux faire : je te guide pas à pas 👇</small></div></div>';
     Object.keys(DTIP).forEach(function(g){ var G=DTIP[g]; h+='<div class="es-tg"><span>'+G[0]+'</span><div class="es-tc">'+G[1].map(function(x){ var key=g+':'+x[0]; return '<button type="button" class="'+(sel===key?'on':'')+'" data-cj="es-tip" data-k="'+key+'">'+esc(x[1])+'</button>'; }).join('')+'</div></div>'; });
     if(sel){ var pr=sel.split(':'), it=(DTIP[pr[0]]||[0,[]])[1].filter(function(x){ return x[0]===pr[1]; })[0];
@@ -21719,18 +21770,41 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
           +'<p class="es-h" style="margin-top:12px">Pour aller plus loin avec EVA</p>'+it[3].map(function(e){ return eva(e[0],e[1],e[2]); }).join('')
           +(n===L.length?'<div class="es-tp-ok">🎉 Tous les conseils sont cochés : ton '+(pr[0]==='lm'?'lettre est prête':pr[0]==='cv'?'CV est prêt':'dossier est prêt')+' !</div>':'')+'</div>'; } }
     return h; }
-  function drawTips(){ var t=document.querySelector('.cj-sheet #es-tips'); if(t) t.innerHTML=tipsHtml(); }
-  function docsHtml(){ var c=cur(), d=c.docs||(c.docs={});
+  function drawTips(){ var t=document.querySelector('.cj-sheet #es-tips'); if(t){ t.innerHTML=tipsHtml(); if(TIPAN) animTips(); } }
+  var REQ={ etu:[['dip','Diplôme ou relevé de notes','Ton dernier diplôme ou ton relevé de notes'],['scol','Certificat de scolarité','Celui de l\'année en cours'],['stage','Convention ou attestation de stage','Si tu as déjà fait un stage',1]],
+    sal:[['dip','Diplômes','Ton diplôme le plus élevé'],['form','Attestations de formation','Tes formations et certifications'],['contrat','Contrat de travail','Reste privé, jamais visible',1]] };
+  function dossier(){ var d=cur().docs||{}, rq=d.req||{}, L=[['cv',!!d.cv,0],['lm',!!d.lm,0]].concat(REQ[pf()].map(function(r){ return [r[0],!!rq[r[0]],r[3]?1:0]; }));
+    var need=L.filter(function(x){ return !x[2]; }), n=need.filter(function(x){ return x[1]; }).length; return { n:n, t:need.length, ok:n===need.length }; }
+  function fdate(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'short' }); }catch(e){ return ''; } }
+  function docRow(key,title,sub,x,opt,share){ var on=!!x;
+    return '<div class="es-doc'+(on?' ok':'')+'"><span class="es-dst">'+(on?I(P.check,15):I(P.doc,15))+'</span><div class="es-t-b"><b>'+title+(opt?' <em class="es-opt">facultatif</em>':'')+'</b><small>'+(on?'<span class="es-dep">Déposé</span> '+esc(x.name)+(x.at?' · '+fdate(x.at):''):esc(sub))+'</small>'
+      +(share&&on?'<label class="es-share"><input type="checkbox" data-es-share="'+key+'"'+(x.share?' checked':'')+'> Visible par les employeurs</label>':'')+'</div>'
+      +'<label class="frl-ib">'+I(P.plus,15)+(on?'Changer':'Déposer')+'<input type="file" accept="application/pdf,image/*" data-es-file="'+key+'" hidden></label></div>'; }
+  function docsHtml(){ var c=cur(), d=c.docs||(c.docs={}), rq=d.req||{}, S0=dossier(), pc=Math.round(S0.n/S0.t*100);
+    return '<div class="es-dos'+(S0.ok?' ok':'')+'"><span class="es-ring" style="--p:'+pc+'"><b>'+S0.n+'/'+S0.t+'</b></span><div><b>'+(S0.ok?'Dossier complet ✓':'Mon dossier')+'</b><small>'+(S0.ok?'Tous tes documents sont déposés.':(S0.t-S0.n)+' document'+(S0.t-S0.n>1?'s':'')+' à déposer pour compléter ton dossier.')+'</small></div></div>'
+      +'<div class="es-docs">'+docRow('cv','Mon CV','PDF ou image · 700 Ko maximum',d.cv,0,1)+docRow('lm','Ma lettre de motivation','PDF ou image · 700 Ko maximum',d.lm,0,1)
+      +REQ[pf()].map(function(r){ return docRow('req:'+r[0],r[1],r[2],rq[r[0]],r[3],0); }).join('')
+      +'<div class="es-doc"><span class="es-dst">'+I(P.doc,15)+'</span><div class="es-t-b"><b>Autres documents <em class="es-opt">facultatif</em></b><small>'+((d.docl||[]).length?(d.docl||[]).map(function(n){ return esc(n); }).join(', '):'Attestations, certificats… · 700 Ko par fichier')+'</small></div><label class="frl-ib">'+I(P.plus,15)+'Ajouter<input type="file" accept="application/pdf,image/*" data-es-file="doc" hidden></label></div></div>'
+      +'<p class="cj-mini" style="text-align:center">« Déposé » veut dire que ton document est bien rangé ici : il n\'est pas vérifié. Les employeurs voient ton CV et ta lettre seulement si tu coches « Visible » et que ta fiche est visible. Les autres documents restent privés.</p><div class="es-tips" id="es-tips">'+tipsHtml()+'</div>'; }
+  function checkFile(k,file){ var t=String(file.type||''), nm=String(file.name||'');
+    if(!/^application\/pdf$|^image\//.test(t)){ msg('Format non accepté : dépose un PDF ou une image'); return false; }
+    if(file.size<1024){ msg('Ce fichier semble vide : vérifie-le avant de le déposer'); return false; }
+    if(file.size>700*1024){ msg('Fichier trop lourd : 700 Ko maximum'); return false; }
+    var tips=[]; if(/^(img|dsc|scan|image|document|photo|whatsapp)[\W_]*\d*/i.test(nm)) tips.push('renomme-le clairement, par exemple Diplome-BTS-2025.pdf');
+    if(/^req:(dip|scol|stage|form|contrat)$/.test(k) && /^image\//.test(t)) tips.push('un PDF est plus lisible qu\'une photo pour ce type de document');
+    return tips; }
+  function docsHtml_old(){ var c=cur(), d=c.docs||(c.docs={});
     return '<div class="es-docs">'+DOCK.map(function(k){ var x=d[k[0]], list=k[0]==='doc'?(d.docl||[]):null;
       return '<div class="es-doc"><span class="es-sub-ic">'+I(P.doc)+'</span><div class="es-t-b"><b>'+k[1]+'</b><small>'+(k[0]==='doc'?(list.length?list.map(function(n){ return esc(n); }).join(', '):k[2]):(x?esc(x.name):k[2]))+'</small>'
         +(k[0]!=='doc'&&x?'<label class="es-share"><input type="checkbox" data-es-share="'+k[0]+'"'+(x.share?' checked':'')+'> Visible par les employeurs</label>':'')+'</div>'
         +'<label class="frl-ib">'+I(P.plus,15)+(k[0]==='doc'?'Ajouter':(x?'Changer':'Ajouter'))+'<input type="file" accept="application/pdf,image/*" data-es-file="'+k[0]+'" hidden></label></div>'; }).join('')+'</div>'
       +'<p class="cj-mini" style="text-align:center">Les employeurs vérifiés voient ton CV et ta lettre seulement si tu coches « Visible » et que ton profil est visible. Tes documents importants restent privés pour l\'instant.</p><div class="es-tips" id="es-tips">'+tipsHtml()+'</div>'; }
-  function putFile(k,file){ if(!file) return; if(file.size>700*1024){ msg('Fichier trop lourd : 700 Ko maximum'); return; } var r=new FileReader();
-    r.onload=function(){ var c=cur(), d=c.docs||(c.docs={}), data=r.result, nm=file.name;
+  function putFile(k,file){ if(!file) return; var ck=checkFile(k,file); if(ck===false) return; var r=new FileReader();
+    r.onload=function(){ var c=cur(), d=c.docs||(c.docs={}), data=r.result, nm=file.name, at=new Date().toISOString();
+      if(/^req:/.test(k)){ var rk=k.slice(4); (d.req=d.req||{})[rk]={ name:nm, at:at, type:file.type }; var rfq=dref('req_'+rk); if(rfq) rfq.set({ name:nm, data:data, type:file.type, at:at }); save(); var S1=dossier(); msg(S1.ok?'🎉 Dossier complet : tous tes documents sont déposés':'Déposé ✓'+(ck.length?' · Conseil de Lisa : '+ck.join(', '):'')); candRefresh(); return; }
       if(k==='doc'){ var id='doc_'+Date.now(); (d.docl=d.docl||[]).push(nm); var rf=dref(id); if(rf) rf.set({ name:nm, data:data, type:file.type, at:new Date().toISOString() }); }
-      else { d[k]={ name:nm, share:d[k]?d[k].share:false }; var rf2=dref(k); if(rf2) rf2.set({ name:nm, data:data, type:file.type, at:new Date().toISOString() }); if(d[k].share) share(k,true,{ name:nm, data:data, type:file.type }); }
-      save(); msg('Document rangé ✓'); candRefresh(); };
+      else { d[k]={ name:nm, at:at, share:d[k]?d[k].share:false }; var rf2=dref(k); if(rf2) rf2.set({ name:nm, data:data, type:file.type, at:new Date().toISOString() }); if(d[k].share) share(k,true,{ name:nm, data:data, type:file.type }); }
+      save(); var S2=dossier(); msg(S2.ok?'🎉 Dossier complet : tous tes documents sont déposés':'Déposé ✓'+(ck.length?' · Conseil de Lisa : '+ck.join(', '):'')); candRefresh(); };
     r.readAsDataURL(file); }
   function share(k,on,payload){ var u=user(), B=db(); if(!u||!B) return; var o={}; o[k==='cv'?'cvDispo':'lmDispo']=!!on; o[k==='cv'?'shareCv':'shareLm']=!!on; var sr=sref(k);
     if(on){ var go=function(pl){ if(sr&&pl) sr.set({ name:pl.name, data:pl.data, type:pl.type||'', at:new Date().toISOString(), from:pf() }).then(function(){ B.collection('profils').doc(u.uid).set(o,{ merge:true }); }).catch(function(){}); };
@@ -21764,6 +21838,8 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-om'){ var gg=allGoals().filter(function(g){ return g.id===b.getAttribute('data-id'); })[0]; if(!gg) return; gg.fait=Math.max(0,(gg.fait||0)+(+b.getAttribute('data-d'))); save(); if(OBJ) OBJ.render(); redraw(); if(gg.fait===gg.cible && +b.getAttribute('data-d')>0) msg('Objectif atteint, bravo 🎉'); return; }
     if(a==='es-gdel'){ if(!confirm('Annuler cet objectif ?')) return; delGoal(b.getAttribute('data-id')); msg('Objectif annulé'); if(OBJ) OBJ.render(); redraw(); return; }
     if(a==='es-plan'){ addPlan(); return; }
+    if(a==='es-gset'){ document.querySelectorAll('.cj-sheet').forEach(function(x){ if(x.querySelector('.es-plog')) x.remove(); }); openPoint('set'); return; }
+    if(a==='es-gadd' && OBJ){ OBJ.add=!OBJ.add; OBJ.pick=null; OBJ.cible=null; OBJ.render(); return; }
     if(a==='es-edt'){ openEdt(); return; } if(a==='es-edtj' && EDO){ EDO.j=+b.getAttribute('data-j'); if(EDO.form && !EDO.form.id){ edfKeep(); EDO.form.js=[EDO.j]; } EDO.render(); return; }
     if(a==='es-edtn' && EDO){ EDO.form={ js:[EDO.j], d:pf()==='etu'?'08:00':'09:00', f:pf()==='etu'?'10:00':'12:00', type:EDTT[pf()][0], t:'', lieu:'', who:'' }; EDO.render(); setTimeout(function(){ var x=$('es-edf'); if(x) x.scrollIntoView({ behavior:'smooth', block:'start' }); },60); return; }
     if(a==='es-edte' && EDO){ var se=edt().filter(function(x){ return x.id===b.getAttribute('data-id'); })[0]; if(!se) return; EDO.j=se.j; EDO.form={ id:se.id, js:[se.j], d:se.d, f:se.f, type:se.type, t:se.t||'', lieu:se.lieu||'', who:se.who||'' }; EDO.render(); setTimeout(function(){ var x=$('es-edf'); if(x) x.scrollIntoView({ behavior:'smooth', block:'start' }); },60); return; }
@@ -21773,7 +21849,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-edtd' && EDO && EDO.form){ if(!confirm('Supprimer ce créneau ?')) return; var fid=EDO.form.id; cur().edt=edt().filter(function(x){ return x.id!==fid; }); save(); EDO.form=null; EDO.render(); redraw(); return; }
     if(a==='es-edtq' && EDO){ [0,1,2,3,4].forEach(function(j){ edt().push({ id:'s'+Date.now()+'a'+j, j:j, d:'09:00', f:'12:30', type:'Travail', t:'Travail', lieu:'', who:'' }); edt().push({ id:'s'+Date.now()+'b'+j, j:j, d:'13:30', f:'17:00', type:'Travail', t:'Travail', lieu:'', who:'' }); }); save(); msg('Semaine type ajoutée ✓ Modifie-la à ta guise'); EDO.render(); redraw(); return; }
     if(a==='es-cp'){ openCandPage(b.getAttribute('data-p')); return; }
-    if(a==='es-tip'){ var ck=b.getAttribute('data-k'), cc=cur(); cc.tipSel=cc.tipSel===ck?'':ck; save(); drawTips(); return; }
+    if(a==='es-tip'){ var ck=b.getAttribute('data-k'), cc=cur(); cc.tipSel=cc.tipSel===ck?'':ck; TIPAN=(pf()==='etu'&&cc.tipSel)?cc.tipSel:''; save(); drawTips(); return; }
     if(a==='es-tk'){ var c3=cur(), sk=c3.tipSel; if(!sk) return; c3.tipDone=c3.tipDone||{}; var Ld=c3.tipDone[sk]=c3.tipDone[sk]||[], ii=+b.getAttribute('data-i'), px=Ld.indexOf(ii); if(px>-1) Ld.splice(px,1); else Ld.push(ii); save(); b.classList.toggle('on',px<0); var tp=b.closest('.es-tp'); if(tp){ var tot=tp.querySelectorAll('.es-tk').length, nn=tp.querySelectorAll('.es-tk.on').length, rg=tp.querySelector('.es-ring'); rg.style.setProperty('--p',Math.round(nn/tot*100)); rg.querySelector('b').textContent=nn+'/'+tot; if(nn===tot && px<0) setTimeout(drawTips,350); else if(nn<tot && tp.querySelector('.es-tp-ok')) tp.querySelector('.es-tp-ok').remove(); } return; }
     if(a==='es-point'){ openPoint(); return; }
     if(a==='es-fiche'){ openFiche(); return; } if(a==='es-pstream'){ if(PROFO&&PROFO.sh) PROFO.sh.remove(); openProfS(); return; } if(a==='es-vis'){ setVis(!cur().vis); var vh=b.closest('.es-vhint'); if(vh&&cur().vis) vh.remove(); return; }
@@ -21787,6 +21863,76 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   window.cpES={ home:home, hero:hero, go:function(a){ if(a==='es-edt') openEdt(); } };
 })();
 </script>
+<style id="cpes7-css">
+html.pf-etu .cpw-sheet .cps-pc::before, html.pf-sal .cpw-sheet .cps-pc::before, html.pf-etu .cpw-sheet .cpc::before, html.pf-sal .cpw-sheet .cpc::before{ background:linear-gradient(90deg,var(--es1),var(--es2)) !important; }
+/* 1. Les 4 cartes de profils : même taille */
+#s-profil .cj-intro-card .cj-pcard{ min-height:136px; box-sizing:border-box; }
+@media (min-width:821px){ #s-profil .cj-intro-card .cj-pcard{ min-height:118px; } }
+/* 3. Cartes de même taille */
+.cpo-2p.es-find{ grid-auto-rows:1fr; } .cpo-2p.es-find .cpo-2pb{ height:100%; box-sizing:border-box; }
+.es-hub{ grid-auto-rows:1fr; } .es-hc{ height:100%; box-sizing:border-box; }
+.es-2b{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin:10px 0; } .es-2b .cj-main{ margin:0 !important; font-size:.84rem !important; padding:12px 10px !important; }
+/* 2. Objectifs en 4 niveaux */
+.es-lv{ display:grid; grid-template-columns:repeat(4,1fr); gap:7px; margin:12px 0 10px; }
+.es-lv button{ display:flex; flex-direction:column; align-items:center; gap:6px; padding:11px 4px; border-radius:16px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s ease; }
+.es-lv button > span:last-child{ text-align:center; } .es-lv button b{ display:block; font-size:.76rem; color:#0f172a; } .es-lv button small{ display:block; font-size:.62rem; color:#64748b; }
+.es-lv button.on{ border-color:transparent; background:linear-gradient(135deg,var(--es1),var(--es2)); box-shadow:0 14px 26px -18px var(--es1); } .es-lv button.on b, .es-lv button.on small{ color:#fff; }
+.es-ring.sm{ width:40px; height:40px; } .es-ring.sm::before{ inset:4px; } .es-ring.sm b{ font-size:.62rem !important; }
+.es-lv-hd{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin:6px 2px 8px; } .es-lv-hd b{ font-size:1rem; color:#0f172a; } .es-lv-hd span{ font-size:.74rem; color:#64748b; }
+.es-addg{ margin-top:4px; padding:12px; border-radius:18px; background:var(--ess,#f5f3ff); border:1px solid var(--esb,#ddd6fe); animation:esUp .35s ease both; }
+.es-plan.off .es-plan-hd{ margin-bottom:4px; } .es-plan.off .es-plan-hd small{ line-height:1.4; }
+/* 4. Dossier */
+.es-dos{ display:flex; align-items:center; gap:12px; margin:4px 0 10px; padding:14px; border-radius:18px; background:linear-gradient(135deg,var(--ess,#eef2ff),#fff); border:1px solid var(--esb,#c7d2fe); }
+.es-dos b{ display:block; font-size:.95rem; color:#0f172a; } .es-dos small{ display:block; font-size:.74rem; color:#64748b; }
+.es-dos.ok{ background:linear-gradient(135deg,#ecfdf5,#fff); border-color:#a7f3d0; } .es-dos.ok b{ color:#047857; } .es-dos.ok .es-ring{ background:conic-gradient(#10b981 100%,#d1fae5 0); } .es-dos.ok .es-ring b{ color:#047857 !important; }
+.es-dst{ flex:none; width:32px; height:32px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; background:#f1f5f9; color:#94a3b8; }
+.es-doc.ok .es-dst{ background:#d1fae5; color:#047857; } .es-dep{ display:inline-block; padding:1px 7px; border-radius:999px; background:#ecfdf5; color:#047857; font-weight:800; font-size:.62rem; margin-right:3px; }
+.es-opt{ font-style:normal; font-size:.6rem; font-weight:700; color:#94a3b8; margin-left:4px; }
+/* 5. Visibilité */
+.es-vwarn{ margin:10px 0 0; padding:9px 11px; border-radius:12px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:.76rem; line-height:1.45; }
+/* 6. Conseil de Lisa sous chaque case */
+.es-wtip{ display:flex; align-items:flex-start; gap:9px; margin-top:10px; padding:10px 12px; border-radius:14px; background:var(--ess,#f5f3ff); border:1px solid var(--esb,#ddd6fe); animation:esUp .35s ease both; }
+.es-wtip .cj-av{ width:26px !important; height:26px !important; flex:none; } .es-wtip > span{ font-size:.76rem; line-height:1.45; color:#334155; } .es-wtip b{ display:block; font-size:.62rem; text-transform:uppercase; letter-spacing:.07em; color:var(--esd,#4c1d95); margin-bottom:2px; }
+/* 7. Emploi du temps / planning premium */
+.es-eh{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin:10px 0 12px; padding:16px; border-radius:20px; color:#fff; background:radial-gradient(120% 160% at 100% 0%,rgba(255,255,255,.22),transparent 55%),linear-gradient(130deg,var(--es0,#1e3a8a),var(--es1,#2563eb) 55%,var(--es2,#7c3aed)); box-shadow:0 20px 40px -26px var(--es1,#2563eb); }
+.es-eh-m b{ display:block; font:800 1.9rem/1 'DM Sans',sans-serif; letter-spacing:-.02em; } .es-eh-m span{ display:block; margin-top:4px; font-size:.74rem; opacity:.9; }
+.es-eh-s{ display:flex; gap:6px; } .es-eh-s span{ display:flex; flex-direction:column; align-items:center; min-width:52px; padding:7px 6px; border-radius:12px; background:rgba(255,255,255,.16); font-size:.58rem; text-align:center; line-height:1.2; } .es-eh-s b{ font-size:1rem; }
+#s-profil .es-days, .cpw-sheet .es-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; margin:0 0 12px; }
+.cpw-sheet .es-days button{ display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 0 6px; border-radius:14px; border:1px solid #e8edf4; background:#fff; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all .2s ease; }
+.cpw-sheet .es-days small{ font-size:.6rem; font-weight:700; color:#94a3b8; text-transform:uppercase; } .cpw-sheet .es-days b{ font-size:.95rem; color:#0f172a; } .cpw-sheet .es-days i{ display:flex; gap:2px; height:5px; } .cpw-sheet .es-days i em{ width:4px; height:4px; border-radius:50%; background:var(--es1,#2563eb); }
+.cpw-sheet .es-days button.td{ border-color:var(--esb,#c7d2fe); } .cpw-sheet .es-days button.on{ background:linear-gradient(135deg,var(--es1,#2563eb),var(--es2,#7c3aed)); border-color:transparent; box-shadow:0 12px 22px -16px var(--es1,#2563eb); } .cpw-sheet .es-days button.on small, .cpw-sheet .es-days button.on b{ color:#fff; } .cpw-sheet .es-days button.on i em{ background:#fff; }
+.cpw-sheet .es-wk{ display:none; }
+@media (min-width:900px){ .cpw-sheet .es-wk{ display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin:0 0 14px; } .cpw-sheet .es-days{ display:none; } }
+.cpw-sheet .es-wk-c{ min-height:150px; padding:6px; border-radius:16px; background:#fff; border:1px solid #e8edf4; display:flex; flex-direction:column; gap:5px; } .cpw-sheet .es-wk-c.td{ background:var(--ess,#eef2ff); border-color:var(--esb,#c7d2fe); } .cpw-sheet .es-wk-c.on{ box-shadow:0 0 0 2px var(--es1,#2563eb) inset; }
+.cpw-sheet .es-wk-h{ display:flex; align-items:baseline; justify-content:center; gap:5px; padding:4px 0 6px; border:0; background:none; cursor:pointer; font-family:'DM Sans',sans-serif; } .cpw-sheet .es-wk-h small{ font-size:.62rem; font-weight:800; text-transform:uppercase; color:#94a3b8; } .cpw-sheet .es-wk-h b{ font-size:.9rem; color:#0f172a; }
+.cpw-sheet .es-wk-c > i{ margin:auto; color:#cbd5e1; font-style:normal; font-size:.7rem; }
+.cpw-sheet .es-wk-b{ text-align:left; padding:7px 8px; border-radius:10px; border:0; background:color-mix(in srgb,var(--c) 12%,#fff); box-shadow:inset 3px 0 0 var(--c); cursor:pointer; font-family:'DM Sans',sans-serif; overflow:hidden; } .cpw-sheet .es-wk-b em{ display:block; font-style:normal; font-size:.58rem; font-weight:700; color:#64748b; } .cpw-sheet .es-wk-b b{ display:block; font-size:.7rem; color:#0f172a; line-height:1.25; }
+.es-dh{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; margin:2px 2px 10px; } .es-dh b{ font-size:1rem; color:#0f172a; } .es-dh span{ font-size:.74rem; color:#64748b; }
+.es-tline{ position:relative; display:grid; gap:9px; }
+.es-tl-r{ display:grid; grid-template-columns:46px 14px 1fr; align-items:stretch; gap:8px; width:100%; padding:0; border:0; background:none; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.es-tl-t{ padding-top:10px; } .es-tl-t b{ display:block; font-size:.84rem; color:#0f172a; } .es-tl-t small{ display:block; font-size:.7rem; color:#94a3b8; }
+.es-tl-d{ position:relative; } .es-tl-d::before{ content:""; position:absolute; left:50%; top:0; bottom:-9px; width:2px; margin-left:-1px; background:#e2e8f0; } .es-tl-d::after{ content:""; position:absolute; left:50%; top:13px; width:12px; height:12px; margin-left:-6px; border-radius:50%; background:#fff; border:3px solid var(--c); box-sizing:border-box; }
+.es-tl-c{ position:relative; display:block; padding:11px 12px; border-radius:16px; background:linear-gradient(135deg,color-mix(in srgb,var(--c) 10%,#fff),#fff); border:1px solid color-mix(in srgb,var(--c) 22%,#fff); box-shadow:0 12px 24px -22px rgba(15,23,42,.6); }
+.es-tl-k{ display:inline-block; padding:2px 8px; border-radius:999px; background:var(--c); color:#fff; font-size:.58rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; margin-bottom:5px; }
+.es-tl-c b{ display:block; font-size:.92rem; color:#0f172a; } .es-tl-c small{ display:block; margin-top:1px; font-size:.72rem; color:#64748b; } .es-tl-c em{ position:absolute; right:12px; top:11px; font-style:normal; font-size:.68rem; font-weight:800; color:var(--c); }
+.es-tl-r.live .es-tl-c{ box-shadow:0 0 0 2px var(--c),0 16px 30px -22px var(--c); } .es-tl-r.past{ opacity:.55; }
+.es-now{ display:flex; align-items:center; gap:8px; margin:-2px 0 -2px 52px; color:#e11d48; font-size:.66rem; font-weight:800; } .es-now::before{ content:""; width:8px; height:8px; border-radius:50%; background:#e11d48; } .es-now::after{ content:""; flex:1; height:2px; background:linear-gradient(90deg,#e11d48,transparent); }
+.es-free{ display:flex; flex-direction:column; align-items:center; gap:4px; padding:22px 12px; border-radius:18px; border:1.5px dashed #dbe4ef; background:#fff; color:var(--es1,#2563eb); } .es-free b{ color:#0f172a; font-size:.9rem; } .es-free small{ color:#64748b; font-size:.74rem; }
+.es-edf{ margin-top:14px; padding:16px; border-radius:20px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 22px 44px -32px rgba(15,23,42,.6); animation:esUp .35s ease both; }
+.es-edf-hd b{ display:block; font-size:1rem; color:#0f172a; } .es-edf-hd small{ display:block; font-size:.74rem; color:#64748b; margin-bottom:6px; }
+.es-lb{ display:block; margin:12px 0 6px; font-size:.7rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#475569; } .es-lb input{ display:block; width:100%; box-sizing:border-box; margin-top:6px; padding:12px 13px; border-radius:13px; border:1px solid #dbe4ef; background:#f8fafc; font:600 .9rem 'DM Sans',sans-serif; color:#0f172a; text-transform:none; letter-spacing:0; } .es-lb input:focus{ outline:none; border-color:var(--es1,#2563eb); box-shadow:0 0 0 3px rgba(124,58,237,.14); background:#fff; }
+.es-djs{ display:grid; grid-template-columns:repeat(7,1fr); gap:5px; } .es-djs button{ padding:9px 0; border-radius:11px; border:1px solid #e2e8f0; background:#fff; font:800 .72rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; } .es-djs button.on{ background:linear-gradient(135deg,var(--es1,#2563eb),var(--es2,#7c3aed)); border-color:transparent; color:#fff; }
+.es-hh{ display:grid; grid-template-columns:1fr auto 1fr; align-items:end; gap:8px; } .es-hh.two{ grid-template-columns:1fr 1fr; } .es-hh .es-lb{ margin-bottom:0; } .es-arrow{ padding-bottom:12px; color:#94a3b8; font-weight:800; }
+.es-types{ display:flex; flex-wrap:wrap; gap:6px; } .es-types button{ display:inline-flex; align-items:center; gap:6px; padding:8px 11px; border-radius:999px; border:1px solid #e2e8f0; background:#fff; font:700 .76rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; } .es-types button i{ width:8px; height:8px; border-radius:50%; background:var(--c); }
+.es-types button.on{ background:color-mix(in srgb,var(--c) 14%,#fff); border-color:var(--c); color:#0f172a; }
+.es-edf .cj-main{ margin-top:16px !important; } .es-edf-ft{ display:flex; justify-content:center; gap:14px; margin-top:8px; } .es-edf-ft button{ border:0; background:none; font:700 .8rem 'DM Sans',sans-serif; cursor:pointer; padding:6px; } .es-cancel{ color:#64748b; }
+/* 8. Conseils de Lisa en direct (étudiant) */
+.es-meth{ display:inline-block; margin-top:3px; padding:2px 9px; border-radius:999px; background:var(--ess,#f5f3ff); color:var(--esd,#4c1d95); font-style:normal; font-size:.66rem; font-weight:800; }
+.es-tsay{ margin:6px 0 10px !important; } .es-tsay-b{ font-size:.82rem; line-height:1.55; }
+.es-tpe .es-tk{ opacity:1; animation:none; } .es-tpe .es-tk:not(.es-hide){ animation:esIn .35s ease-out both; }
+.es-hide{ display:none !important; } .es-tmore:not(.es-hide){ animation:esUp .4s ease both; }
+.es-src{ margin:12px 0 0; font-size:.72rem; color:#64748b; } .es-src a{ color:var(--es1,#6d28d9); font-weight:700; text-decoration:none; }
+</style>
 <style id="cpes6-css">
 /* Cartes carrées, toutes identiques */
 #s-profil .cj-tiles.es-sq{ display:grid !important; grid-template-columns:1fr 1fr; gap:12px; }
