@@ -2710,6 +2710,16 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
 #s-profil .cps-hero #cps-next{ margin-top:auto; }
 .cj-coach-d{ margin:2px 0 6px !important; font-size:.78rem !important; font-weight:700; color:#64748b; }
 
+/* ══ Justificatifs et sincérité ══ */
+.fo-file{ display:flex; align-items:center; gap:8px; margin-top:5px; padding:10px 12px; border-radius:12px; border:1.5px dashed #cbd5e1; background:#f8fafc; cursor:pointer; position:relative; font:600 .8rem 'DM Sans',sans-serif; color:#475569; }
+.fo-file input{ position:absolute; inset:0; opacity:0; cursor:pointer; width:100%; }
+.fo-file.big{ padding:14px; border-radius:16px; background:#fff; line-height:1.4; }
+.fo-sinc{ display:flex; gap:8px; align-items:flex-start; margin:10px 0 0; padding:10px 12px; border-radius:14px; background:#fffbeb; border:1px solid #fde68a; color:#92400e; font-size:.78rem; line-height:1.45; }
+.fo-sinc svg{ flex:none; margin-top:1px; } .fo-sinc.in{ margin-top:12px; text-align:left; }
+.fo-cmp{ margin:8px 0 0; padding:8px 10px; border-radius:12px; background:#fff7ed; color:#7c2d12; font-size:.8rem; line-height:1.4; }
+.fo-pr{ display:block; margin-top:6px; font-size:.72rem; color:#b45309; } .fo-pr.ok{ color:#15803d; }
+.cj-res-cmp{ margin:10px 0 0; padding:10px 12px; border-radius:12px; background:#f1f5f9; font-size:.86rem; color:#0f172a; }
+
 </style>
 <script>
 /* ══ CareerPulse UI : fenêtre de confirmation du site, voix de Lisa, flèches de défilement (ordinateur), Infos diverses ══ */
@@ -2730,6 +2740,14 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
     var kd=function(e){ if(!d.parentNode){ document.removeEventListener('keydown',kd); return; } if(e.key==='Escape' && o.dismiss!==false) M.close(); }; document.addEventListener('keydown',kd);
     MD=M; requestAnimationFrame(function(){ d.classList.add('in'); var f=d.querySelector('.cpm-btns .pri'); if(f) try{ f.focus({ preventScroll:true }); }catch(e){} }); return M; }
   window.cpModal=cpModal;
+  window.cpAsk=function(ph,cb,title){ var opt={ lisa:true, dismiss:false, buttons:[] }, M=cpModal(opt); M.el.classList.add('ci-pop');
+    function ok(){ var f=document.getElementById('cp-ask'), v=f?f.value.trim():''; if(!v){ if(f) f.focus(); return; } M.close(true); cb(v); }
+    opt.buttons=[{ t:'Annuler', cls:'gh', fn:function(m){ m.close(true); } },{ t:'Valider', cls:'pri', fn:ok }];
+    M.set('<b class="cpm-t">'+(title||'Écris-le ici')+'</b><div class="ci-fm"><label>Ta réponse<input id="cp-ask" maxlength="90" placeholder="'+esc(ph||'')+'"></label></div><div class="cpm-btns"><button type="button" class="gh" data-mi="0">Annuler</button><button type="button" class="pri" data-mi="1">Valider</button></div>');
+    var f=document.getElementById('cp-ask'); if(f){ f.onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); ok(); } }; setTimeout(function(){ try{ f.focus(); }catch(x){} },120); } return M; };
+  window.cpReadProof=function(file,cb){ if(!file) return; var t=String(file.type||''), ok=/^image\//.test(t)||t==='application/pdf'; if(!ok){ cpModal({ icon:'ask', title:'Format non accepté', text:'Ajoute une image (photo, capture) ou un PDF.', buttons:[{ t:'OK', cls:'pri' }] }); return; }
+    if(file.size>700*1024){ cpModal({ icon:'ask', title:'Fichier trop lourd', text:'700 Ko maximum : fais une capture ou compresse ton PDF.', buttons:[{ t:'OK', cls:'pri' }] }); return; }
+    var r=new FileReader(); r.onload=function(){ cb({ name:file.name, type:t, data:r.result, at:new Date().toISOString() }); }; r.readAsDataURL(file); };
   var nat=window.confirm?window.confirm.bind(window):function(){ return true; }, last=null, lastT=0, pass=false;
   window.addEventListener('click',function(e){ if(!pass){ last=e.target; lastT=Date.now(); } },true);
   window.confirm=function(m){ if(pass) return true; var el=last; if(!el || Date.now()-lastT>1500 || !document.contains(el)) return nat(m);
@@ -19140,6 +19158,7 @@ window.cpSheetArrows=function(sc,host){
   }
 
   /* ── Mon Stream : défi de la semaine ── */
+  document.addEventListener('change',function(e){ var t=e.target; if(!t || t.id!=='cj-bpf' || !DEFO || !DEFO.A || !window.cpReadProof) return; var A=DEFO.A, was=['repv','hum','frein','preuve'].every(function(k){ return A[k]; }); cpReadProof(t.files[0],function(p){ A.preuve=p; var y=DEFO.sc?DEFO.sc.scrollTop:0; DEFO.render(); if(DEFO.sc) DEFO.sc.scrollTop=y; if(!was && ['repv','hum','frein','preuve'].every(function(k){ return A[k]; })){ var r=document.getElementById('cj-bres'); if(r) setTimeout(function(){ r.scrollIntoView({ behavior:'smooth', block:'start' }); },80); } }); });
   var DEFO=null, BFR=['Le manque de temps','Peu d\'offres adaptées','Le manque de confiance','Rien, tout roule'];
   function bq(n,t,opts,key,A){ return '<div class="cps-sec"><span class="cps-si">'+I(P.check)+'</span>'+n+'. '+t+'</div><div class="cj-nbs'+(key==='fait'?'':' cj-bq')+'">'+opts.map(function(v){ var on=A[key]===v||(key==='frein'&&v==='Autre chose…'&&A.frein&&BFR.indexOf(A.frein)<0); return '<button type="button" class="'+(on?'on':'')+'" data-cj="bq" data-k="'+key+'" data-v="'+esc(String(v))+'">'+(key==='frein'&&on&&v==='Autre chose…'?'Autre : '+esc(A.frein.slice(0,40)):esc(String(v)))+'</button>'; }).join('')+'</div>'; }
   function bRes(d,A){
@@ -19152,6 +19171,7 @@ window.cpSheetArrows=function(sc,host){
     var items=[['Objectif atteint ('+A.fait+'/'+d.cible+')',ok],['Réponses de recruteurs',rep],['Moral de la semaine',!/Difficile/.test(A.hum||'')]];
     var html='<div class="cps-sec"><span class="cps-si">'+I(P.trophy)+'</span>Ton bilan</div><div class="cj-res'+(ok?' ok':'')+'" id="cj-bres"><div class="cj-res-hd"><span class="cj-ic '+(ok?'g':'y')+'">'+I(ok?P.trophy:P.target,24)+'</span><div><b>'+(ok?'Défi réussi':'Défi non atteint')+'</b><small>'+wkLabel(d.week)+'</small></div><em>'+note+'<small>/10</small></em></div>'
       +'<i class="cj-bar lg"><i style="width:'+pc+'%"></i></i><ul class="cj-res-l">'+items.map(function(x){ return '<li class="'+(x[1]?'ok':'')+'"><span>'+I(x[1]?P.check:P.x,12)+'</span>'+x[0]+'</li>'; }).join('')+'</ul>'
+      +'<p class="cj-res-cmp">Tu visais <b>'+d.cible+'</b>, tu as fait <b>'+A.fait+'</b>'+(A.preuve?' · 📎 justificatif ajouté':'')+' : '+(ok?'objectif atteint 🎉':A.fait>0?'c\'est bien, mais l\'objectif n\'est pas atteint.':'l\'objectif n\'est pas atteint.')+'</p>'
       +'<p class="cj-res-m">'+mot+'</p><div class="cj-res-c"><b>Le conseil de Lisa</b><p>'+cons+'</p></div>'
       +'<div class="cj-evas">'+(/confiance/.test(A.frein||'')||/Difficile/.test(A.hum||'')?ev('moral'):'')+ev('itw')+'</div>'
       +'<button type="button" class="cj-main" data-cj="bsave2">'+I(P.check,18)+'Enregistrer et choisir mon prochain défi</button></div>';
@@ -19176,12 +19196,14 @@ window.cpSheetArrows=function(sc,host){
       var d=curDefi(), pb=pendingBilan();
       var bd=pb||(o.bil&&d&&o.bil.week===d.week?d:null);
       if(bd){ var A=o.A&&o.A.week===bd.week?o.A:(o.A={ week:bd.week, fait:done(bd) }), inf=DEFIS[bd.type].slice(); inf[0]=dlab(bd); var L=[]; for(var i=0;i<=Math.max(bd.cible+3,A.fait);i++) L.push(i);
-        var nq=['repv','hum','frein'].filter(function(k){ return !A[k]; }).length;
+        var nq=['repv','hum','frein','preuve'].filter(function(k){ return !A[k]; }).length;
         o.body.innerHTML=say2('C\'est l\'heure du <b>bilan</b> de ta '+wkLabel(bd.week)+' : <b>'+esc(inf[0].toLowerCase())+'</b>, objectif <b>'+bd.cible+'</b>. Réponds à ces 4 questions : ta note s\'affiche juste en dessous.')
           +bq(1,'Combien en as-tu fait au total ?'+(bd.type==='cand'?' (ton suivi : '+done(bd)+')':''),L,'fait',A)
           +bq(2,'As-tu reçu des réponses de recruteurs ?',['Oui, au moins une','Pas encore'],'repv',A)
           +bq(3,'Comment s\'est passée ta semaine ?',['Très bien 💪','Correcte 🙂','Difficile 😕'],'hum',A)
           +bq(4,'Qu\'est-ce qui t\'a le plus freiné ?',BFR.concat(['Autre chose…']),'frein',A)
+          +'<div class="cps-sec"><span class="cps-si">'+I(P.doc)+'</span>5. Ton justificatif</div><label class="fo-file big"><input id="cj-bpf" type="file" accept="image/*,application/pdf"><span>'+(A.preuve?'📎 '+esc(A.preuve.name)+' · touche pour changer':'Ajoute une preuve de ton défi : captures de candidatures, mails envoyés, relances… (PDF ou image, 700 Ko max)')+'</span></label>'
+          +'<p class="fo-sinc">Sois sincère dans tes infos : je me base uniquement sur ce que tu notes. Des infos fausses faussent tes statistiques et la vérité de ton évolution.</p>'
           +(nq?'<p class="cj-mini cj-bq-w">Encore '+nq+' réponse'+(nq>1?'s':'')+' et je te donne ta note.</p>':bRes(bd,A).html)+hist(); return; }
       var evq='<div class="cj-evas">'+(dow()>=4?ev('itw'):ev('quiz'))+'</div>';
       if(!d || o.change){ o.body.innerHTML=say2(o.change?'Pas de souci, on ajuste ton défi. Choisis ce qui te semble <b>réaliste et motivant</b>.':'Chaque semaine, on se fixe <b>un objectif clair</b>. Choisis ton défi et ton chiffre : de 1 à 10, ou ton propre objectif. Je te relance si ça coince 😉')+chooser()+evq+hist(); return; }
@@ -19230,7 +19252,8 @@ window.cpSheetArrows=function(sc,host){
       bot('Voici ton bilan 👇',function(){
         inp.innerHTML='<div class="cj-res'+(ok?' ok':'')+'"><div class="cj-res-hd"><span class="cj-ic '+(ok?'g':'y')+'">'+I(ok?P.trophy:P.target,24)+'</span><div><b>'+(ok?'Défi réussi':'Défi non atteint')+'</b><small>'+wkLabel(d.week)+'</small></div><em>'+note+'<small>/10</small></em></div>'
           +'<i class="cj-bar lg"><i style="width:'+pc+'%"></i></i><ul class="cj-res-l">'+items.map(function(x){ return '<li class="'+(x[1]?'ok':'')+'"><span>'+I(x[1]?P.check:P.x,12)+'</span>'+x[0]+'</li>'; }).join('')+'</ul>'
-          +'<p class="cj-res-m">'+mot+'</p><div class="cj-res-c"><b>Le conseil de Lisa</b><p>'+cons+'</p></div>'
+          +'<p class="cj-res-cmp">Tu visais <b>'+d.cible+'</b>, tu as fait <b>'+A.fait+'</b>'+(A.preuve?' · 📎 justificatif ajouté':'')+' : '+(ok?'objectif atteint 🎉':A.fait>0?'c\'est bien, mais l\'objectif n\'est pas atteint.':'l\'objectif n\'est pas atteint.')+'</p>'
+      +'<p class="cj-res-m">'+mot+'</p><div class="cj-res-c"><b>Le conseil de Lisa</b><p>'+cons+'</p></div>'
           +'<div class="cj-evas">'+(/confiance/.test(A.frein)||/Difficile/.test(A.hum)?ev('moral'):'')+ev('itw')+'</div>'
           +'<button type="button" class="cj-main" data-cj="bsave">'+I(P.check,18)+'Enregistrer et choisir mon prochain défi</button></div>'; down();
         inp.onclick=function(e){ var b=e.target.closest('[data-cj="bsave"]'); if(!b) return; b.disabled=true;
@@ -19375,11 +19398,13 @@ window.cpSheetArrows=function(sc,host){
   function inZone(el){ return el.closest('#s-profil') || el.closest('.cj-sheet'); }
   function act(a,b){
     if(a==='defi'){ openDefi(); return; } if(a==='bilan'){ openBilan(); return; }
+    if(a==='bq-x'){ return; }
     if(a==='bq' && DEFO && DEFO.A){ var BA=DEFO.A, bk=b.getAttribute('data-k'), bv=b.getAttribute('data-v'), was=['repv','hum','frein'].every(function(k){ return BA[k]; });
       function brd(){ var y=DEFO.sc?DEFO.sc.scrollTop:0; DEFO.render(); if(DEFO.sc) DEFO.sc.scrollTop=y; if(!was && ['repv','hum','frein'].every(function(k){ return BA[k]; })){ var r=$('cj-bres'); if(r) setTimeout(function(){ r.scrollIntoView({ behavior:'smooth', block:'start' }); },80); } }
       if(bk==='fait') BA.fait=+bv; else if(bk==='frein'&&/^Autre/.test(bv)){ writePage('Ce qui t\'a freiné','Dis-moi en quelques mots ce qui t\'a <b>freiné</b> cette semaine. Je m\'en sers pour te conseiller.',{ area:true, ph:'Ex : Je ne savais pas quoi écrire dans mes relances', max:240 },function(t){ if(String(t||'').trim()) BA.frein=String(t).trim(); brd(); }); return; } else BA[bk]=bv; brd(); return; }
-    if(a==='bsave2' && DEFO && DEFO.A){ var bd2=pendingBilan()||curDefi(), BA2=DEFO.A; if(!bd2) return; var R=bRes(bd2,BA2); b.disabled=true;
-      S.st.hist=(S.st.hist||[]).filter(function(h){ return h.week!==bd2.week; }).concat([{ week:bd2.week, type:bd2.type, cible:bd2.cible, fait:BA2.fait, pct:R.pc, ok:R.ok, note:R.note, rep:R.rep, humeur:BA2.hum, frein:BA2.frein }]).slice(-60);
+    if(a==='bsave2' && DEFO && DEFO.A){ var bd2=pendingBilan()||curDefi(), BA2=DEFO.A; if(!bd2) return; if(!BA2.preuve){ say('Ajoute ton justificatif pour enregistrer ton bilan'); return; } var R=bRes(bd2,BA2); b.disabled=true;
+      try{ var uu=user(); if(uu && window.fbDb) fbDb.collection('users').doc(uu.uid).collection('stream').doc('preuve_'+bd2.week).set({ week:bd2.week, name:BA2.preuve.name, type:BA2.preuve.type, data:BA2.preuve.data, at:BA2.preuve.at }).catch(function(){}); }catch(e){}
+      S.st.hist=(S.st.hist||[]).filter(function(h){ return h.week!==bd2.week; }).concat([{ week:bd2.week, type:bd2.type, cible:bd2.cible, fait:BA2.fait, pct:R.pc, ok:R.ok, note:R.note, rep:R.rep, humeur:BA2.hum, frein:BA2.frein, preuve:BA2.preuve?BA2.preuve.name:'' }]).slice(-60);
       S.st.defi=null; saveSt().then(function(){ say('Bilan enregistré ✅'); if(!DEFO) return; DEFO.A=null; DEFO.bil=null; DEFO.pick={ type:bd2.type, cible:R.sug }; DEFO.render(); if(DEFO.sc) DEFO.sc.scrollTo(0,0); try{ drawAll(); }catch(e){} }); return; } if(a==='add'){ openAdd(); return; } if(a==='plats'){ openPlats(); return; }
     if(a==='cpoffres'){ openCpOffres(); return; } if(a==='plats2'){ openOtherSites(); return; }
     if(a==='rec'){ openRec(); return; } if(a==='prof'){ openProf(); return; } if(a==='list'){ openList(b.getAttribute('data-f')); return; }
@@ -22094,11 +22119,16 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     var lag=C.filter(function(o){ var tot=(oEnd(o)-new Date(o.per==='w'?o.key+'T12:00:00':o.per==='m'?o.key+'-01T12:00:00':o.key+'-01-01T12:00:00'))/864e5+1, done=tot-oLeft(o); return oPc(o)<Math.round(done/tot*100)-15; });
     h+=lag.length?'Mon conseil : « '+esc(lag[0].titre)+' » est un peu en retard sur le calendrier. Bloque un créneau cette semaine rien que pour lui (prospection, relance, devis).':C.length?'Tu es dans le bon rythme : continue comme ça, et mets à jour tes chiffres dès qu\'ils bougent.':'Pense à mettre à jour tes chiffres pour que je puisse suivre ta progression.';
     return h; }
-  function objHtml(){ var C=objs().filter(function(o){ return oState(o)!=='next'; }).sort(function(a,b){ return String(b.key).localeCompare(String(a.key)); }).slice(0,5); if(!C.length) return ''; return '<p class="es-h">Tes objectifs freelance</p><ul class="cc-fx">'+C.map(function(o){ return '<li>'+oLine(o)+'</li>'; }).join('')+'</ul>'; }
+  function oCmp(o){ var u=oUnit(o), ok=(+o.actuel||0)>=(+o.cible||0);
+    if(o.type==='ca' && +o.depart>0 && o.pct!==''){ var real=Math.round(((+o.actuel||0)-o.depart)/o.depart*1000)/10; return 'Tu visais <b>+'+esc(o.pct)+' %</b> ('+fN(o.cible,u)+'), tu as réalisé <b>'+(real>=0?'+':'')+String(real).replace('.',',')+' %</b> ('+fN(o.actuel,u)+') : '+(ok?'objectif atteint, bravo 🎉':real>0?'c\'est bien, mais l\'objectif n\'est pas atteint.':'l\'objectif n\'est pas atteint, on ajuste ensemble.'); }
+    return 'Tu visais <b>'+fN(o.cible,u)+'</b>, tu as fait <b>'+fN(o.actuel,u)+'</b> : '+(ok?'objectif atteint, bravo 🎉':(+o.actuel||0)>0?'c\'est bien, mais l\'objectif n\'est pas atteint.':'l\'objectif n\'est pas encore atteint.'); }
+  function objHtml(){ var C=objs().filter(function(o){ return oState(o)!=='next'; }).sort(function(a,b){ return String(b.key).localeCompare(String(a.key)); }).slice(0,5); if(!C.length) return ''; return '<p class="es-h">Tes objectifs freelance</p><ul class="cc-fx">'+C.map(function(o){ return '<li>'+oLine(o)+(o.preuve?' 📎':'')+(+o.actuel>0?'<br><small>'+oCmp(o)+'</small>':'')+'</li>'; }).join('')+'</ul>'; }
   function oCard(o){ var u=oUnit(o), pc=oPc(o), st=oState(o), T=OT[o.type]||OT.autre;
     return '<div class="fo-c '+st+'"><div class="fo-c-h"><span class="cj-ic '+(o.type==='ca'?'g':'b')+' sm">'+I(T[2],18)+'</span><div><b>'+esc(o.titre)+'</b><small>'+OPER[o.per][0]+' · '+esc(pLab(o.per,o.key))+(st==='cur'?' · '+oLeft(o)+' j restants':st==='next'?' · à venir':' · terminé')+'</small></div><button type="button" class="fo-ed" data-frl="frl-oed" data-id="'+o.id+'" aria-label="Modifier">'+I(P.pen,15)+'</button></div>'
       +'<div class="fo-n"><b>'+fN(o.actuel,u)+'</b><span>sur '+fN(o.cible,u)+'</span><em>'+pc+' %</em></div><i class="cj-bar"><i style="width:'+pc+'%"></i></i>'
       +(o.depart?'<small class="fo-d">Point de départ : '+fN(o.depart,u)+(o.pct?' · objectif +'+esc(o.pct)+' %':'')+'</small>':'')
+      +(+o.actuel>0?'<p class="fo-cmp">'+oCmp(o)+'</p>':'')
+      +(st!=='next'?'<small class="fo-pr'+(o.preuve?' ok':'')+'">'+(o.preuve?'📎 Justificatif : '+esc(o.preuve.name)+' · '+new Date(o.preuve.at).toLocaleDateString('fr-FR',{ day:'numeric', month:'short' }):'Ajoute ton justificatif à la mise à jour de ton chiffre')+'</small>':'')
       +(st!=='next'?'<button type="button" class="fo-up" data-frl="frl-oup" data-id="'+o.id+'">'+I(P.plus,15)+'Mettre à jour mon chiffre</button>':'')+'</div>'; }
   function openDefi(){ var o=sheet('Mes objectifs','Simples, chiffrés, suivis par Lisa',''); DEF=o; OBO=o; o.bp=o.bp||'m';
     o.render=function(){ var L=objs(), C=L.filter(function(x){ return oState(x)==='cur'; }), N=L.filter(function(x){ return oState(x)==='next'; }), Pz=L.filter(function(x){ return oState(x)==='past'; }).sort(function(a,b){ return String(b.key).localeCompare(String(a.key)); });
@@ -22107,6 +22137,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
         +(C.length?'<p class="es-h">En cours</p><div class="fo-l">'+C.map(oCard).join('')+'</div>':'')
         +(N.length?'<p class="es-h">À venir</p><div class="fo-l">'+N.map(oCard).join('')+'</div>':'')
         +(Pz.length?'<p class="es-h">Terminés</p><div class="fo-l">'+Pz.slice(0,6).map(oCard).join('')+'</div>':'')
+        +'<p class="fo-sinc">'+I(P.shield||P.check,15)+'<span>Sois sincère dans tes infos : je me base uniquement sur ce que tu notes. Des infos fausses faussent tes statistiques et la vérité de ton évolution.</span></p>'
         +'<p class="es-h">Le bilan avec Lisa</p><div class="fo-bp">'+['w','m','y'].map(function(p){ return '<button type="button" class="'+(o.bp===p?'on':'')+'" data-frl="frl-obil" data-p="'+p+'">'+OPER[p][0]+'</button>'; }).join('')+'</div>'
         +'<div class="cj-say fo-bil">'+av(true)+'<div>'+objBilan(o.bp)+'</div></div>'; };
     o.render(); return o; }
@@ -22139,15 +22170,22 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
       M.body.querySelectorAll('[data-on]').forEach(function(b){ b.onclick=function(){ keep(); v.next=b.getAttribute('data-on')==='1'; draw(); }; });
       var upd=function(){ keep(); var cv=document.getElementById('fo-cv'); if(cv) cv.textContent=fN(calc(),'€'); }; ['fo-d','fo-p'].forEach(function(i){ var e=document.getElementById(i); if(e) e.oninput=upd; }); }
     draw(); }
-  function objUpd(id){ var o=objs().filter(function(x){ return x.id===id; })[0]; if(!o) return; var u=oUnit(o), M=oModal();
-    M.put('<b class="cpm-t">Où en es-tu ?</b><p class="cpm-p">« '+esc(o.titre)+' » · objectif <b>'+fN(o.cible,u)+'</b> sur '+esc(pLab(o.per,o.key))+'.</p><div class="ci-fm"><label>Mon total actuel'+(u?' ('+u+')':'')+'<input id="fo-a" inputmode="decimal" maxlength="12" value="'+esc(o.actuel||'')+'" placeholder="Ex : '+(u==='€'?'1200':'1')+'"></label><label>Un mot sur ta progression <em>(facultatif)</em><input id="fo-an" maxlength="140" placeholder="Ex : 2 devis signés cette semaine"></label></div><p class="ci-fm-e" id="fo-ae"></p>',
-      [{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } },{ t:'Enregistrer', cls:'pri', fn:function(){ var a=parseFloat(String(document.getElementById('fo-a').value).replace(/\s/g,'').replace(',','.')); if(isNaN(a)||a<0){ document.getElementById('fo-ae').textContent='Indique un nombre.'; return; }
-        o.actuel=a; (o.hist=o.hist||[]).push({ at:new Date().toISOString(), v:a, note:document.getElementById('fo-an').value.trim() }); if(o.hist.length>60) o.hist.shift(); saveObjs(); var pc=oPc(o);
-        M.put('<div class="or-gift">'+(pc>=100&&window.CP_GIFT?window.CP_GIFT:'')+'<b class="cpm-t">'+(pc>=100?'Objectif atteint, bravo !':'C\'est noté ✓')+'</b><p class="cpm-p">'+oLine(o)+'</p></div>',[{ t:'Fermer', cls:'pri', fn:function(){ M.close(); } }]); if(OBO && document.body.contains(OBO.sh)) OBO.render(); redraw(); } }]); }
+  function objUpd(id){ var o=objs().filter(function(x){ return x.id===id; })[0]; if(!o) return; var u=oUnit(o), M=oModal(), pf0=null;
+    function form(){ M.put('<b class="cpm-t">Ton vrai résultat</b><p class="cpm-p">« '+esc(o.titre)+' » · objectif <b>'+fN(o.cible,u)+'</b> sur '+esc(pLab(o.per,o.key))+'.</p>'
+      +'<div class="ci-fm"><label>Mon résultat réel'+(u?' ('+u+')':'')+'<input id="fo-a" inputmode="decimal" maxlength="12" value="'+esc(o.actuel||'')+'" placeholder="Ex : '+(u==='€'?'3090':'1')+'"></label>'
+      +'<label>Mon justificatif <em>(PDF ou image, 700 Ko max)</em><span class="fo-file"><input id="fo-f" type="file" accept="image/*,application/pdf"><span id="fo-fn">'+(pf0?'📎 '+esc(pf0.name):o.preuve?'📎 '+esc(o.preuve.name)+' (déjà ajouté)':'Facture, relevé, capture du tableau de bord…')+'</span></span></label>'
+      +'<label>Un mot sur ta progression <em>(facultatif)</em><input id="fo-an" maxlength="140" placeholder="Ex : 2 devis signés cette semaine"></label></div>'
+      +'<p class="fo-sinc in">Sois sincère dans tes infos : je me base uniquement sur ce que tu notes. Des infos fausses faussent tes statistiques et la vérité de ton évolution.</p><p class="ci-fm-e" id="fo-ae"></p>',
+      [{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } },{ t:'Enregistrer', cls:'pri', fn:function(){ var a=parseFloat(String(document.getElementById('fo-a').value).replace(/\s/g,'').replace(',','.')); if(isNaN(a)||a<0){ document.getElementById('fo-ae').textContent='Indique ton résultat en chiffres.'; return; } if(!pf0 && !o.preuve){ document.getElementById('fo-ae').textContent='Ajoute un justificatif : il appuie ton résultat.'; return; }
+        o.actuel=a; if(pf0){ o.preuve={ name:pf0.name, type:pf0.type, at:pf0.at }; saveDoc('preuve_'+o.id,{ obj:o.id, name:pf0.name, type:pf0.type, data:pf0.data, at:pf0.at }); }
+        (o.hist=o.hist||[]).push({ at:new Date().toISOString(), v:a, note:document.getElementById('fo-an').value.trim(), preuve:pf0?pf0.name:'' }); if(o.hist.length>60) o.hist.shift(); saveObjs(); var pc=oPc(o);
+        M.put('<div class="or-gift">'+(pc>=100&&window.CP_GIFT?window.CP_GIFT:'')+'<b class="cpm-t">'+(pc>=100?'Objectif atteint, bravo !':'C\'est noté ✓')+'</b><p class="cpm-p">'+oCmp(o)+'</p><p class="cpm-p">'+oLine(o)+'</p></div>',[{ t:'Fermer', cls:'pri', fn:function(){ M.close(); } }]); if(OBO && document.body.contains(OBO.sh)) OBO.render(); redraw(); } }]);
+      var fi=document.getElementById('fo-f'); if(fi) fi.onchange=function(){ var v=document.getElementById('fo-a').value; window.cpReadProof(fi.files[0],function(p){ pf0=p; form(); var x=document.getElementById('fo-a'); if(x) x.value=v; }); }; }
+    form(); }
   function saveDefi(d){ D.defi=d; return saveDoc('defi',d); }
   function openObj(){ var p=pct(), d=curDefi();
     sheet('Mon activité & mes objectifs','Ce que tu proposes et ton cap de la semaine',say('Ton activité décrite, et un objectif clair chaque semaine : c\'est la base d\'une activité freelance qui dure.')
-      +'<button type="button" class="cj-box" data-frl="frl-act"><span class="cj-ic b sm">'+I(P.id,20)+'</span><span class="cj-box-t"><b>Mon activité</b><small>Métier, statut, tarif, disponibilité · '+p+' % complétée</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
+
       +'<button type="button" class="cj-box" data-frl="frl-defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Mes objectifs</b><small>'+(function(){ var oc=objs().filter(function(o){ return oState(o)==='cur'; }); return oc.length?esc(oc[0].titre)+' · '+oPc(oc[0])+' %'+(oc.length>1?' · +'+(oc.length-1):''):'Chiffre d\'affaires, clients, partenariats…'; })()+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'); }
   function openProf(){ var x=D.prof||{}, has=!!x.metier;
     sheet('Profil & portfolio','Ce que verront tes futurs clients',say(has?'Voici ton <b>profil freelance</b> tel qu\'il sera présenté aux entreprises, quand tu choisiras d\'être visible.':'Décris d\'abord ton activité : ton profil freelance se construit à partir d\'elle.')
@@ -23205,7 +23243,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     function me(t){ var m=document.createElement('div'); m.className='es-me'; m.textContent=t; log.appendChild(m); down(); }
     function chips(list,cb){ var x=document.createElement('div'); x.className='es-quick es-pq'; x.innerHTML=list.map(function(v,i){ return '<button type="button" data-i="'+i+'">'+esc(v)+'</button>'; }).join(''); log.appendChild(x); down();
       x.onclick=function(e){ var b=e.target.closest('button'); if(!b) return; var i=+b.getAttribute('data-i'), v=list[i]; x.remove(); me(v); cb(v,i); }; }
-    function field(ph,cb){ var x=document.createElement('div'); x.className='es-pin'; x.innerHTML='<input maxlength="90" placeholder="'+esc(ph)+'"><button type="button">OK</button>'; log.appendChild(x); down(); var f=x.querySelector('input'); try{ f.focus({ preventScroll:true }); }catch(e){}
+    function field(ph,cb){ if(window.cpAsk){ cpAsk(ph,function(v){ me(v); cb(v); }); return; } var x=document.createElement('div'); x.className='es-pin'; x.innerHTML='<input maxlength="90" placeholder="'+esc(ph)+'"><button type="button">OK</button>'; log.appendChild(x); down(); var f=x.querySelector('input'); try{ f.focus({ preventScroll:true }); }catch(e){}
       function go(){ var v=f.value.trim(); if(!v){ f.focus(); return; } x.remove(); me(v); cb(v); } x.querySelector('button').onclick=go; f.onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); go(); } }; }
     function card(){ var G=goals(); if(!G.length) return; var d=document.createElement('div'); d.className='es-bcard';
       d.innerHTML=G.map(function(g){ var q=gProg(g), nt=gT(g).length; return '<div class="es-bc-r'+(gDone(g)?' ok':'')+'"><em>'+PER[g.per][0]+'</em><span><b>'+esc(g.label)+'</b><i class="cj-bar"><i style="width:'+gPc(g)+'%"></i></i></span><strong>'+(nt?q.f+'/'+q.t:(gDone(g)?'✓':'0'))+'</strong></div>'; }).join(''); log.appendChild(d); down(); }
@@ -23694,17 +23732,17 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     h+=T.length?'<br><b>Aujourd\'hui</b><ul>'+T.map(function(t){ return tLine(t); }).join('')+'</ul>':'<br>Aujourd\'hui, rien de prévu.';
     if(PT.length) h+='<b>À vérifier</b><ul>'+PT.slice(0,5).map(function(t){ return tLine(t,1); }).join('')+'</ul>';
     if(UP.length) h+='<b>À venir</b><ul>'+UP.map(function(t){ return tLine(t,1); }).join('')+'</ul>';
-    return h+'Écris-moi une tâche (ex : « réunion jeudi 14h »), je l\'ajoute à ton calendrier.'+tip(); }
+    return h+'Pour ajouter une tâche, touche une date dans ton calendrier : je la suis avec toi.'+tip(); }
   function nextCheck(){ var td=today(), now=new Date(), nm=now.getHours()*60+now.getMinutes(), L=pastTodo().concat(dayTasks(td).filter(function(t){ return tSt(t)==='todo' && (now.getHours()>=17 || (t.heure && mins(t.heure)+60<=nm)); })); var sk=(CHO&&CHO.skip)||[]; return L.filter(function(t){ return sk.indexOf(t.id)<0; })[0]||null; }
   var QR=['Mon programme du jour','En retard','Cette semaine','Faire le point'];
   var ADV=['Commence par la tâche la plus importante, le reste suivra.','Une tâche à la fois : c\'est plus efficace que tout en même temps.','Bloque un créneau précis pour chaque tâche importante.','Si une action prend moins de 2 minutes, fais-la tout de suite.','Prépare ta liste du lendemain le soir : tu gagnes du temps le matin.','Fais une pause de 5 minutes toutes les 25 minutes de travail.','Range ton téléphone loin de toi quand tu te concentres.','Garde une marge entre deux rendez-vous : tout prend plus de temps que prévu.','Découpe une grosse tâche en petites étapes faciles.','Coche chaque tâche faite : chaque petite victoire motive.','Bois de l\'eau et bouge un peu entre deux tâches.','Écris ce qui te bloque : souvent, la solution apparaît.','Pas plus de 3 priorités par jour, c\'est déjà très bien.','Le matin, tu es souvent plus concentré(e) : profites-en pour l\'important.','Relis ta semaine le vendredi : 10 minutes suffisent pour faire le point.','Réponds à tes mails à heures fixes plutôt qu\'en continu.','Prévois un moment rien que pour toi, ça compte aussi.','Mieux vaut avancer un peu chaque jour que tout faire d\'un coup.','Note les dates importantes dès que tu les connais.','Termine ta journée en notant ce que tu as réussi.'];
   var ADI=Math.floor(Math.random()*20);
   function tip(){ ADI=(ADI+1)%ADV.length; return '<span class="orc-tip">'+I(P.bulb,13)+'<span>'+ADV[ADI]+'</span></span>'; }
   function openOrChat(){ var o=cpStream.sheet('Lisa · mon organisation','Ta coach suit ton calendrier avec toi',''); CHO=o; o.skip=[]; o.body.classList.add('pl-k-'+pf(),'orc');
-    o.body.innerHTML='<div class="orc-log"></div><form class="orc-in" data-orc="1"><input id="orc-i" maxlength="120" autocomplete="off" placeholder="Ex : réviser le chapitre 3 demain 18h"><button type="submit" aria-label="Envoyer">'+I('<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',17)+'</button></form>';
+    o.body.innerHTML='<div class="orc-log"></div>';
     o.log=o.body.querySelector('.orc-log'); var H=chat().slice(-40);
     if(H.length) o.log.innerHTML=H.map(bub).join('')+'<p class="orc-sep">Aujourd\'hui</p>';
-    var c=cur(); if(c.chatDay!==today()){ c.chatDay=today(); lisaSay(summary()); } else lisaSay('Re ! '+(window.cpVoice?cpVoice.ack().replace(/\.$/,''):'Je suis là')+'. Que veux-tu ajouter ou vérifier ?');
+    var c=cur(); if(c.chatDay!==today()){ c.chatDay=today(); lisaSay(summary()); } else lisaSay('Re ! '+(window.cpVoice?cpVoice.ack().replace(/\.$/,''):'Je suis là')+'. On fait le point sur ton calendrier ?');
     setTimeout(ask,700); return o; }
   function bub(m){ return m.w==='l'?'<div class="orc-m l">'+lisaAv(true)+'<div>'+m.h+'</div></div>':'<div class="orc-m m"><div>'+m.h+'</div></div>'; }
   function down(){ if(CHO&&CHO.sc) setTimeout(function(){ CHO.sc.scrollTo({ top:CHO.sc.scrollHeight, behavior:'smooth' }); },40); }
@@ -23852,7 +23890,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     function bot(h,cb){ var m=document.createElement('div'); m.className='cj-say'; m.innerHTML=av()+'<div><span class="cj-dots"><i></i><i></i><i></i></span></div>'; log.appendChild(m); down(); setTimeout(function(){ if(!document.body.contains(m)) return; m.lastChild.innerHTML=h; down(); setTimeout(cb||function(){},300); },Math.min(1100,350+h.length*3)); }
     function me(t){ var m=document.createElement('div'); m.className='es-me'; m.textContent=t; log.appendChild(m); down(); }
     function chips(list,cb){ var x=document.createElement('div'); x.className='es-quick es-pq'; x.innerHTML=list.map(function(v,i){ return '<button type="button" data-i="'+i+'">'+esc(v)+'</button>'; }).join(''); log.appendChild(x); down(); x.onclick=function(e){ var b=e.target.closest('button'); if(!b) return; var i=+b.getAttribute('data-i'); x.remove(); me(list[i]); cb(list[i],i); }; }
-    function field(ph,cb){ var x=document.createElement('div'); x.className='es-pin'; x.innerHTML='<input maxlength="90" placeholder="'+esc(ph)+'"><button type="button">OK</button>'; log.appendChild(x); down(); var f=x.querySelector('input'); try{ f.focus({ preventScroll:true }); }catch(e){}
+    function field(ph,cb){ if(window.cpAsk){ cpAsk(ph,function(v){ me(v); cb(v); }); return; } var x=document.createElement('div'); x.className='es-pin'; x.innerHTML='<input maxlength="90" placeholder="'+esc(ph)+'"><button type="button">OK</button>'; log.appendChild(x); down(); var f=x.querySelector('input'); try{ f.focus({ preventScroll:true }); }catch(e){}
       function go(){ var v=f.value.trim(); if(!v){ f.focus(); return; } x.remove(); me(v); cb(v); } x.querySelector('button').onclick=go; f.onkeydown=function(e){ if(e.key==='Enter'){ e.preventDefault(); go(); } }; }
     var EVSEEN={}; function addEva(x){ if(!x||EVSEEN[x[0]]) return; EVSEEN[x[0]]=1; var l=document.createElement('div'); l.innerHTML=evaL(x); log.appendChild(l.firstChild); down(); }
     function ul(L){ return '<ul class="es-bl">'+L.map(function(x){ return '<li>'+x+'</li>'; }).join('')+'</ul>'; }
