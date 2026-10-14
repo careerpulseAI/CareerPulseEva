@@ -2698,6 +2698,18 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
 .fo-bil ul{ margin:6px 0 8px; padding-left:18px; } .fo-bil li{ margin:3px 0; }
 .fo-calc{ margin:-2px 0 0; font-size:.84rem; color:#9a3412; }
 
+/* ══ Rappel du profil · date sur la carte de Lisa · espace du bouton ══ */
+#s-profil .cps-rap{ display:flex; align-items:center; gap:10px; width:100%; margin:10px 0 0; padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); color:#fff; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; }
+#s-profil .cps-rap > svg{ flex:none; }
+#s-profil .cps-rap > span{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+#s-profil .cps-rap b{ font-size:.82rem; line-height:1.25; }
+#s-profil .cps-rap small{ font-size:.74rem; line-height:1.35; opacity:.92; }
+#s-profil .cps-rap > span > em{ font-style:normal; font-size:.68rem; font-weight:700; opacity:.8; text-decoration:underline; text-underline-offset:2px; }
+#s-profil .cps-rap .ci-st{ flex:none; }
+#s-profil .cps-fri{ margin-bottom:16px !important; }
+#s-profil .cps-hero #cps-next{ margin-top:auto; }
+.cj-coach-d{ margin:2px 0 6px !important; font-size:.78rem !important; font-weight:700; color:#64748b; }
+
 </style>
 <script>
 /* ══ CareerPulse UI : fenêtre de confirmation du site, voix de Lisa, flèches de défilement (ordinateur), Infos diverses ══ */
@@ -2804,6 +2816,7 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
       +'</div></section>';
     return h; }
   function dro(k,n){ return pref(k,'dr_'+n)===1; }
+  document.addEventListener('click',function(e){ var b=e.target.closest('[data-ci-go]'); if(!b) return; var d=document.querySelector('#cj-home details.ci-dr[data-dr="'+b.getAttribute('data-ci-go')+'"]'); if(!d) return; d.open=true; setTimeout(function(){ d.scrollIntoView({ behavior:'smooth', block:'start' }); },40); });
   document.addEventListener('toggle',function(e){ var d=e.target; if(!d || !d.classList || !d.classList.contains('ci-dr')) return; pref(d.getAttribute('data-k'),'dr_'+d.getAttribute('data-dr'),d.open?1:0); },true);
   /* ── 6. Les heures en français (24 h), partout sur le site ── */
   function frTime(inp){ if(inp.__fr || !inp.parentNode) return; inp.__fr=1; var w=document.createElement('span'); w.className='frt'; var hs=document.createElement('select'), ms=document.createElement('select'); hs.setAttribute('aria-label','Heure'); ms.setAttribute('aria-label','Minutes');
@@ -2893,7 +2906,13 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
         psave(k); M.close(); done(off?'C\'est noté, ta date est à jour ✓':ex?'C\'est modifié ✓':'C\'est ajouté ✓ '+(window.cpVoice?cpVoice.close(''):'')); } }]); }
     step1(); }
   function done(m){ if(typeof window.toast==='function') window.toast(m); else if(window.ecShowToast) ecShowToast(m); redraw(); reSheet(); }
-  window.cpInfo={ card:card, dates:dates, edit:function(k,key,kind){ lisaPop(kk(k),key,kind); } };
+  function rappel(k){ k=kk(k); var L=datesAll(k), f=function(re){ return L.filter(function(x){ return re.test(String(x[0])); })[0]; }, clean=function(t){ return String(t||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim(); }, x;
+    if(k==='dem') x=f(/Actualisation France Travail/);
+    else if(k==='frl') x=f(/chiffre d'affaires/);
+    else if(k==='etu'){ var b=f(/Bourse/), u=f(/Parcoursup/); if(b) return { k:k, dr:'dates', lab:'Dates à retenir', t:'Bourse Crous et inscriptions', s:esc(clean(b[1]).split('(')[0].trim())+' · Université ou autre établissement : Parcoursup, Mon Master et tes écoles ajoutées', chip:b[2]||'' }; x=u; }
+    else x=L[0];
+    if(!x) return null; var tx=clean(x[1]); if(/^Mensuelle \(avant/.test(tx)) tx='Mensuelle ou trimestrielle, même à 0 € : choisis ta périodicité pour voir ta prochaine date.'; return { k:k, dr:'dates', lab:'Dates à retenir', t:clean(x[0]), s:esc(tx.length>130?tx.slice(0,128)+'…':tx), chip:x[2]||'' }; }
+  window.cpInfo={ card:card, dates:dates, rappel:rappel, edit:function(k,key,kind){ lisaPop(kk(k),key,kind); } };
 })();
 
 </script>
@@ -18775,7 +18794,7 @@ window.cpSheetArrows=function(sc,host){
     else m.push(PUB[(new Date().getDate())%PUB.length]);
     if(!isT() && dow()===0) extra=evaLink(EV.quiz[0],'Lundi : on s\'échauffe avec EVA','Quiz et mises en situation pour bien démarrer ta semaine');
     else if(!isT() && dow()===4) extra=evaLink(EV.itw[0],'Vendredi : simulation d\'entretien','Entraîne-toi avec EVA pour tes prochains rendez-vous');
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS[S.st.profil])+' · changer</button>':'')+'</div>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS[S.st.profil])+' · changer</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
       +(act?'<button type="button" class="cj-btn" data-cj="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+(extra?(isT()?extra:'<div class="cj-coach-eva">'+extra+'</div>'):'')+'</div></div>';
   }
 
@@ -18783,8 +18802,11 @@ window.cpSheetArrows=function(sc,host){
   function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
   function hClock(){ var d=new Date(); return d.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long', year:'numeric' }).replace(/^./,function(x){ return x.toUpperCase(); })+' · '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
   function heroX(){ var f=$('cps-fri'); if(introOn()){ if(f) f.style.display='none'; return; } var sb=$('cps-sub'); if(sb){ sb.textContent=hClock(); sb.setAttribute('data-hclock','1'); } var gl=document.querySelector('#s-profil .cps-gauge-hd span'); if(gl) gl.textContent='Profil complété';
-    var g=document.querySelector('#s-profil .cps-gauge'); if(!f && g){ f=document.createElement('p'); f.id='cps-fri'; f.className='cps-fri'; g.parentNode.insertBefore(f,g.nextSibling); } if(f){ var d=new Date().getDay(); f.style.display=''; f.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18M8 15l2.5 2.5L16 12"/></svg><span>'+(d===5?'C\'est vendredi : fais ton petit bilan de la semaine avec Lisa, elle reprend tout ce que tu as noté.':(d===6||d===0)?'Ce week-end : prends 2 minutes pour ton petit bilan de la semaine avec Lisa.':'Vendredi : pense à faire ton petit bilan de la semaine avec Lisa.')+'</span>'; } }
-  setInterval(function(){ var sb=document.querySelector('[data-hclock]'); if(sb) sb.textContent=hClock(); },30000);
+    var g=document.querySelector('#s-profil .cps-gauge'), rp=$('cps-rap'); if(!rp && g){ rp=document.createElement('button'); rp.type='button'; rp.id='cps-rap'; rp.className='cps-rap'; g.parentNode.insertBefore(rp,g.nextSibling); }
+    if(rp){ var R=window.cpInfo&&cpInfo.rappel?cpInfo.rappel(S.st.profil):null; rp.style.display=R?'':'none'; if(R){ rp.setAttribute('data-ci-go',R.dr); rp.setAttribute('data-k',R.k); rp.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span><b>Rappel · '+R.t+'</b><small>'+R.s+'</small><em>Voir : Infos diverses › '+R.lab+'</em></span>'+(R.chip||''); } }
+    if(rp && f) rp.parentNode.insertBefore(f,rp.nextSibling);
+    if(!f && g){ f=document.createElement('p'); f.id='cps-fri'; f.className='cps-fri'; (rp||g).parentNode.insertBefore(f,(rp||g).nextSibling); } if(f){ var d=new Date().getDay(); f.style.display=''; f.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18M8 15l2.5 2.5L16 12"/></svg><span>'+(d===5?'C\'est vendredi : fais ton petit bilan de la semaine avec Lisa, elle reprend tout ce que tu as noté.':(d===6||d===0)?'Ce week-end : prends 2 minutes pour ton petit bilan de la semaine avec Lisa.':'Vendredi : pense à faire ton petit bilan de la semaine avec Lisa.')+'</span>'; } }
+  window.cpHClock=hClock; setInterval(function(){ document.querySelectorAll('[data-hclock]').forEach(function(x){ x.textContent=hClock(); }); },30000);
   function drawHero(){ drawHero0(); heroX(); }
   function drawHero0(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
@@ -21935,7 +21957,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     else if(at){ m.push('Tu as <b>'+at+' mission'+(at>1?'s':'')+' terminée'+(at>1?'s':'')+'</b> pas encore payée'+(at>1?'s':'')+'. Pense à vérifier que ton client a bien tout reçu.'); act=['Voir mes missions','frl-miss']; }
     else if(!objs().some(function(o){ return oState(o)!=='past'; })){ m.push('Fixe-toi un <b>objectif simple</b> : augmenter ton chiffre d\'affaires de 2 %, trouver de nouveaux clients, décrocher un partenariat… Je le suis avec toi.'); act=['Fixer mon objectif','frl-defi']; }
     else { var oc=objs().filter(function(o){ return oState(o)==='cur'; })[0]; m.push(oc?'Ton objectif '+oLine(oc):'Ton prochain objectif est prêt : '+oLine(objs().filter(function(o){ return oState(o)==='next'; })[0])); act=['Voir mes objectifs','frl-defi']; }
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">Freelance · changer</button></div>'
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">Freelance · changer</button></div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
       +m.map(function(x){ return '<p>'+x+'</p>'; }).join('')+(act?'<button type="button" class="cj-btn" data-frl="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')
       +(window.cpStream&&cpStream.pres?cpStream.pres('frl',['<b>Mon activité & mes objectifs</b> : ce que tu proposes, ton tarif et tes objectifs (chiffre d\'affaires, clients, partenariats).','<b>Profil & portfolio</b> : ton profil freelance, tes réalisations et les avis de tes clients.','<b>Missions & clients</b> : chaque mission, du premier contact jusqu\'au paiement.','<b>Clients & messages</b> : les entreprises qui te proposent une mission.']):'')+'</div></div>';
   }
@@ -23679,7 +23701,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   var ADI=Math.floor(Math.random()*20);
   function tip(){ ADI=(ADI+1)%ADV.length; return '<span class="orc-tip">'+I(P.bulb,13)+'<span>'+ADV[ADI]+'</span></span>'; }
   function openOrChat(){ var o=cpStream.sheet('Lisa · mon organisation','Ta coach suit ton calendrier avec toi',''); CHO=o; o.skip=[]; o.body.classList.add('pl-k-'+pf(),'orc');
-    o.body.innerHTML='<div class="orc-log"></div><div class="orc-qr">'+QR.map(function(q,i){ return '<button type="button" data-cj="es-orc-q" data-i="'+i+'">'+q+'</button>'; }).join('')+'</div><form class="orc-in" data-orc="1"><input id="orc-i" maxlength="120" autocomplete="off" placeholder="Ex : réviser le chapitre 3 demain 18h"><button type="submit" aria-label="Envoyer">'+I('<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',17)+'</button></form>';
+    o.body.innerHTML='<div class="orc-log"></div><form class="orc-in" data-orc="1"><input id="orc-i" maxlength="120" autocomplete="off" placeholder="Ex : réviser le chapitre 3 demain 18h"><button type="submit" aria-label="Envoyer">'+I('<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',17)+'</button></form>';
     o.log=o.body.querySelector('.orc-log'); var H=chat().slice(-40);
     if(H.length) o.log.innerHTML=H.map(bub).join('')+'<p class="orc-sep">Aujourd\'hui</p>';
     var c=cur(); if(c.chatDay!==today()){ c.chatDay=today(); lisaSay(summary()); } else lisaSay('Re ! '+(window.cpVoice?cpVoice.ack().replace(/\.$/,''):'Je suis là')+'. Que veux-tu ajouter ou vérifier ?');
