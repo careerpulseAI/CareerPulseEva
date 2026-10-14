@@ -15751,7 +15751,7 @@ go=function(page){
     return best; }
   function target(){
     var ov=topOverlay();
-    if(ov){ box.style.zIndex='99990';
+    if(ov){ box.style.zIndex=ov.classList.contains('cpm')?'2147483600':'99990'; /* au-dessus des fenêtres Lisa */
       var own=ov.querySelector('.cpsa'); if(own && getComputedStyle(own).display!=='none') return null; /* la fiche a déjà ses flèches */
       return bestIn(ov); }
     box.style.zIndex='';
@@ -19277,7 +19277,7 @@ window.cpSheetArrows=function(sc,host){
 
   /* ── Messagerie candidats / recruteurs ── */
   function convCol(){ return db()?db().collection('emploi_conversations'):null; }
-  function loadConvs(){ var u=user(), c=convCol(); if(!u||!c) return Promise.resolve(); return c.where('candUid','==',u.uid).get().then(function(q){ S.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); }); }).catch(function(){ S.convs=[]; }); }
+  function loadConvs(){ var u=user(), c=convCol(); if(!u||!c) return Promise.resolve(); return c.where('candUid','==',u.uid).get().then(function(q){ S.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).filter(function(x){ return x.type!=='mission'; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); }); }).catch(function(){ S.convs=[]; }); }
   var UNSUB=null;
   function openConv(id){
     var c=S.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
@@ -19686,7 +19686,7 @@ window.cpSheetArrows=function(sc,host){
   function label(p){ var n=String(p.name||'').trim().split(/\s+/); return (n[0]||'Candidat')+(n[1]?' '+n[1][0].toUpperCase()+'.':''); }
   function comps(p){ var c=p.competences; if(Array.isArray(c)) return c; return String(c||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean); }
   function norm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
-  function score(p,words){ if(!words.length) return 1; var h=norm([p.titre,p.secteur,p.ville,p.accroche,comps(p).join(' ')].join(' ')); return words.filter(function(w){ return h.indexOf(w)>-1; }).length; }
+  function score(p,words){ if(!words.length) return 1; var h=norm([p.titre,p.secteur,p.ville,p.accroche,comps(p).join(' '),(p.portfolio||[]).map(function(x){ return x.titre+' '+x.desc; }).join(' ')].join(' ')); return words.filter(function(w){ return h.indexOf(w)>-1; }).length; }
   function candList(){
     var words=norm(ST.q).split(/[\s,]+/).filter(function(w){ return w.length>2; });
     var L=ST.cands.map(function(p){ return { p:p, s:score(p,words) }; }).filter(function(x){ return x.s>0; }).sort(function(a,b){ return b.s-a.s; });
@@ -19695,15 +19695,23 @@ window.cpSheetArrows=function(sc,host){
       var op=!!(ST.openC&&ST.openC[p.uid]);
       return '<div class="ofc-item emp-cand'+(op?' open':'')+'" data-cand="'+esc(p.uid)+'"><button type="button" class="emp-tog" data-ea="tog" data-c="'+esc(p.uid)+'" aria-expanded="'+op+'"><span class="ofc-item-ico">'+S(I.users)+'</span><span class="emp-tog-t">'
         +'<span class="ofc-item-t">'+esc(label(p))+'</span>'
-        +'<span class="ofc-item-s">'+(p.esPf?'<em class="emp-esb '+p.esPf+'">'+(p.esPf==='etu'?'Étudiant(e)':'Salarié(e)')+'</em>':'')+esc(p.titre||[p.secteur,p.ville].filter(Boolean).join(' · '))+'</span>'+(done?'<span class="emp-done">● Échange proposé</span>':'')+'</span><span class="emp-chev">'+S(I.chev,18)+'</span></button><div class="ofc-item-b emp-more">'
-        +(window.cpCandCard?cpCandCard(Object.assign({ label:label(p) },p),{ emp:true, offres:ST.offres, docs:window.cpEmpDocBtns?cpEmpDocBtns(p,label(p)):'' })
+        +'<span class="ofc-item-s">'+(p.frl?'<em class="emp-esb frl">Freelance</em>':'')+(p.esPf?'<em class="emp-esb '+p.esPf+'">'+(p.esPf==='etu'?'Étudiant(e)':'Salarié(e)')+'</em>':'')+esc(p.titre||[p.secteur,p.ville].filter(Boolean).join(' · '))+'</span>'+(done?'<span class="emp-done">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'')+'</span><span class="emp-chev">'+S(I.chev,18)+'</span></button><div class="ofc-item-b emp-more">'
+        +(p.frl&&window.cpFrlCard?cpFrlCard(Object.assign({ label:label(p) },p),{ emp:true }):window.cpCandCard?cpCandCard(Object.assign({ label:label(p) },p),{ emp:true, offres:ST.offres, docs:window.cpEmpDocBtns?cpEmpDocBtns(p,label(p)):'' })
           :((p.accroche?'<p class="emp-acc">'+esc(String(p.accroche).slice(0,260))+'</p>':'')
         +(cs.length?'<div class="emp-tags">'+cs.map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('')+'</div>':'')
         +(window.cpEmpDocBtns?cpEmpDocBtns(p,label(p)):'')))
-        +'<div class="ofc-btns">'+(done?'<span class="ofc-tag pub">● Échange proposé</span>':'<button type="button" class="ofc-btn pri" data-ea="prop" data-c="'+esc(p.uid)+'">'+S(I.send,16)+'Proposer un échange</button>')+'</div>'
+        +'<div class="ofc-btns">'+(done?'<span class="ofc-tag pub">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'<button type="button" class="ofc-btn pri" data-ea="prop" data-c="'+esc(p.uid)+'">'+S(I.send,16)+(p.frl?'Proposer une mission':'Proposer un échange')+'</button>')+'</div>'
         +'<div class="emp-prop" id="emp-prop-'+esc(p.uid)+'"></div></div></div>'; }).join('');
   }
   function propForm(uid){
+    var fp=ST.cands.filter(function(x){ return x.uid===uid; })[0];
+    if(fp && fp.frl) return '<div class="ofc-f">'
+      +'<label class="full">Titre de la mission *<input data-mt maxlength="100" placeholder="Ex : Refonte de notre site internet"></label>'
+      +'<label>Budget (€ HT)<input data-mb type="number" min="0" step="50" inputmode="numeric" placeholder="Ex : 1500"></label><label>Durée<input data-md maxlength="40" placeholder="Ex : 3 semaines"></label>'
+      +'<label>Date de début<input data-mdeb type="date"></label><label>Lieu<select data-ml><option>À distance</option><option>Sur site</option><option>Les deux</option></select></label>'
+      +'<label class="full">Description de la mission *<textarea data-mdesc maxlength="1500" placeholder="Le besoin, les livrables attendus, les délais…"></textarea></label>'
+      +'<label class="full">Votre message *<textarea data-pmsg maxlength="1000">Bonjour, votre profil freelance a retenu notre attention chez '+esc((ST.emp||{}).nom||'nous')+'. Seriez-vous disponible pour cette mission ?</textarea></label></div>'
+      +'<div class="ofc-btns"><button type="button" class="ofc-btn pri" data-ea="send" data-c="'+esc(uid)+'">'+S(I.send,16)+'Envoyer la proposition</button><button type="button" class="ofc-btn" data-ea="cancelprop" data-c="'+esc(uid)+'">'+S(I.x,16)+'Annuler</button></div>';
     var pubs=ST.offres.filter(function(f){ return f.statut==='publiee'; }), o=ST.emp||{};
     return '<div class="ofc-f">'
       +'<label class="full">Poste proposé *<select data-psel>'+pubs.map(function(f){ return '<option value="'+esc(f.id)+'">'+esc(f.titre+' · '+f.contrat+(f.ville?' · '+f.ville:''))+'</option>'; }).join('')+'<option value="_autre">Autre poste (à préciser)</option></select></label>'
@@ -19747,7 +19755,7 @@ window.cpSheetArrows=function(sc,host){
       if(!C.length) return '<div class="ofc-card"><h3>Messages</h3><div class="ofc-empty">'+S(I.inbox)+'Quand vous proposerez un échange à un candidat, la conversation apparaîtra ici avec sa réponse.</div></div>';
       return '<div class="ofc-card"><h3>Messages</h3><p>Vos échanges avec les candidats, dans la messagerie protégée.</p>'
         +C.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
-          return '<button type="button" class="ofc-conv" data-econv="'+esc(c.id)+'"><span class="ofc-dot'+(c.unreadEmp?' on':'')+'"></span><span class="ofc-conv-t"><b>'+esc(c.candLabel||'Candidat')+' · '+esc(c.poste||'')+'</b><span>'+(c.statut==='close'?'Conversation close':(c.type==='candidature'&&!(c.messages||[]).some(function(m){ return m.from==='emp'; }))?'Nouvelle candidature':c.lastFrom==='cand'?'Réponse du candidat':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+S(I.chev,16)+'</button>'; }).join('')+'</div>';
+          return '<button type="button" class="ofc-conv" data-econv="'+esc(c.id)+'"><span class="ofc-dot'+(c.unreadEmp?' on':'')+'"></span><span class="ofc-conv-t"><b>'+esc(c.candLabel||'Candidat')+' · '+esc(c.poste||'')+'</b><span>'+(c.statut==='close'?'Conversation close':c.type==='mission'?(c.missionStatut==='acceptee'?'Mission acceptée':c.missionStatut==='declinee'?'Mission déclinée':c.lastFrom==='cand'?'Réponse du freelance':'Mission proposée · en attente'):(c.type==='candidature'&&!(c.messages||[]).some(function(m){ return m.from==='emp'; }))?'Nouvelle candidature':c.lastFrom==='cand'?'Réponse du candidat':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+S(I.chev,16)+'</button>'; }).join('')+'</div>';
     }
     return '<div class="ofc-card"><h3>Mon entreprise</h3><p>Ces informations sont visibles par un candidat <b>uniquement</b> dans un échange que vous lui proposez.</p>'
       +'<div class="ofc-f"><label>Nom de l\'entreprise *<input id="emp-enom" value="'+esc(o.nom)+'"></label><label>Ville<input id="emp-eville" value="'+esc(o.ville)+'"></label>'
@@ -19766,7 +19774,17 @@ window.cpSheetArrows=function(sc,host){
     var b=db().collection('emploi_conversations').where('empUid','==',u.uid).get().then(function(q){ ST.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(x,y){ return String(y.lastAt||'').localeCompare(String(x.lastAt||'')); }); }).catch(function(){ ST.convs=[]; });
     var c=db().collection('profils').where('visible','==',true).limit(300).get().then(function(q){ ST.cands=q.docs.map(function(d){ var x=d.data(); x.uid=d.id; return x; }).filter(function(p){ return p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ ST.cands=[]; });
     var e2=db().collection('profils').where('esVisible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.esFiche||{}; return Object.assign({},f,{ uid:d.id, esPf:x.esPf, cvDispo:x.cvDispo, lmDispo:x.lmDispo, shareCv:x.shareCv, shareLm:x.shareLm, updatedAt:x.esAt||f.updatedAt, visible:true }); }).filter(function(p){ return p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ return []; });
-    return Promise.all([a,b,c,e2]).then(function(r){ (r[3]||[]).forEach(function(p){ if(!ST.cands.some(function(x){ return x.uid===p.uid; })) ST.cands.push(p); }); });
+    var f3=db().collection('profils').where('frlVisible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.frlFiche||{}; return x.frlVisible===true?Object.assign({},f,{ uid:d.id, frl:true, visible:true, updatedAt:x.frlAt||f.updatedAt }):null; }).filter(function(p){ return p && p.uid!==u.uid && p.titre; }); }).catch(function(){ return []; });
+    return Promise.all([a,b,c,e2,f3]).then(function(r){ (r[3]||[]).forEach(function(p){ if(!ST.cands.some(function(x){ return x.uid===p.uid; })) ST.cands.push(p); });
+      (r[4]||[]).forEach(function(p){ ST.cands=ST.cands.filter(function(x){ return x.uid!==p.uid; }); p.avis=[]; p.avisNb=0; p.siretOk=p.siret?'wait':false; ST.cands.push(p); }); /* freelances : proposer une mission */
+      frlVerif(); });
+  }
+  /* Badge « Freelance vérifié » : SIRET contrôlé ici, dans l'annuaire officiel, et avis lus dans avis_freelance */
+  function frlVerif(){ var F=ST.cands.filter(function(p){ return p.frl; });
+    function rd(){ var l=$('emp-clist'); if(l && !l.querySelector('.emp-prop .ofc-f')) l.innerHTML=candList(); } /* ne coupe jamais une proposition en cours d'écriture */
+    F.forEach(function(p){ if(window.cpAvis) cpAvis(p.uid).then(function(A){ p.avis=A; p.avisNb=A.length; p.avisMoy=A.length?Math.round(A.reduce(function(s,a){ return s+a.note; },0)/A.length*10)/10:0; rd(); }); });
+    (function next(){ var p=F.filter(function(x){ return x.siretOk==='wait'; })[0]; if(!p||!window.cpSiret){ F.forEach(function(x){ if(x.siretOk==='wait') x.siretOk=false; }); rd(); return; }
+      cpSiret(p.siret).then(function(r){ p.siretOk=!!(r.ok && cpSiretNom(p.name,r.nom)); rd(); setTimeout(next,160); }); })();
   }
   function open(){
     var r=$('emp-root'); if(r) r.innerHTML='<div class="pload"><div class="pspin"></div>Ouverture de votre espace…</div>';
@@ -19781,10 +19799,20 @@ window.cpSheetArrows=function(sc,host){
     if(a==='logout'){ if(window.cpEmpUnlock) cpEmpUnlock(); try{ history.replaceState(null,'','#pro-employeur'); }catch(x){} if(window.fbLogout) fbLogout(); else auth().signOut().then(function(){ location.reload(); }); return; }
     if(a==='tog'){ var cid=b.getAttribute('data-c'), card=b.closest('.emp-cand'); ST.openC=ST.openC||{}; ST.openC[cid]=!ST.openC[cid]; if(card){ card.classList.toggle('open',ST.openC[cid]); b.setAttribute('aria-expanded',ST.openC[cid]); } return; }
     if(a==='prop'){ var box=$('emp-prop-'+b.getAttribute('data-c')); if(!box) return; box.innerHTML=propForm(b.getAttribute('data-c')); b.style.display='none';
-      var s=box.querySelector('[data-psel]'); s.onchange=function(){ box.querySelector('[data-pautre]').style.display=s.value==='_autre'?'':'none'; }; if(s.value==='_autre') box.querySelector('[data-pautre]').style.display=''; return; }
+      var s=box.querySelector('[data-psel]'); if(s) s.onchange=function(){ box.querySelector('[data-pautre]').style.display=s.value==='_autre'?'':'none'; }; if(s&&s.value==='_autre') box.querySelector('[data-pautre]').style.display=''; return; }
     if(a==='cancelprop'){ var bx=$('emp-prop-'+b.getAttribute('data-c')); if(bx) bx.innerHTML=''; var pb=document.querySelector('[data-ea="prop"][data-c="'+b.getAttribute('data-c')+'"]'); if(pb) pb.style.display=''; return; }
     if(a==='send'){
       var cu=b.getAttribute('data-c'), bx2=$('emp-prop-'+cu), p=ST.cands.filter(function(x){ return x.uid===cu; })[0]; if(!bx2||!p) return;
+      if(p.frl){ var q=function(k){ var e=bx2.querySelector('[data-'+k+']'); return e?String(e.value||'').trim():''; }, mt=q('mt'), md=q('mdesc'), mm=q('pmsg');
+        if(!mt){ toast('Indiquez le titre de la mission'); return; } if(!md){ toast('Décrivez la mission'); return; } if(!mm){ toast('Écrivez un message au freelance'); return; }
+        if(ST.convs.some(function(c){ return c.candUid===cu && c.poste===mt; })){ toast('Cette mission a déjà été proposée à ce freelance'); return; }
+        var tm=now(), om=ST.emp||{}, dm={ type:'mission', empUid:u.uid, empNom:om.nom||'', empVille:om.ville||'', empSecteur:om.secteur||'', candUid:cu, candLabel:label(p), poste:mt,
+          mission:{ titre:mt, budget:q('mb')?Math.max(0,Math.round(+q('mb'))):'', duree:q('md'), debut:q('mdeb'), lieu:q('ml'), desc:md.slice(0,1500) }, missionStatut:'attente',
+          messages:[{ from:'emp', text:mm.slice(0,1000), at:tm }], statut:'ouverte', lastAt:tm, lastFrom:'emp', unreadCand:true, unreadEmp:false, createdAt:tm, updatedAt:tm };
+        b.disabled=true;
+        db().collection('emploi_conversations').add(dm).then(function(r){ dm.id=r.id; ST.convs.unshift(dm); toast('Mission proposée à '+dm.candLabel); var l=$('emp-clist'); if(l) l.innerHTML=candList(); })
+          .catch(function(x){ b.disabled=false; toast((x&&x.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+        return; }
       var sv=bx2.querySelector('[data-psel]').value, f=ST.offres.filter(function(x){ return x.id===sv; })[0];
       var poste=f?f.titre:String(bx2.querySelector('[data-ptitre]').value||'').trim(), msg=String(bx2.querySelector('[data-pmsg]').value||'').trim();
       if(!poste){ toast('Indiquez le poste proposé'); return; } if(!msg){ toast('Écrivez un message au candidat'); return; }
@@ -19852,7 +19880,7 @@ window.cpSheetArrows=function(sc,host){
       sh.querySelector('.ofcm-who').textContent=x.candLabel||'Candidat';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       var closed=x.statut==='close';
-      list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">'+(x.type==='candidature'?'Conversation protégée · candidature reçue pour « '+esc(x.poste||'')+' »':'Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise'))+'</div>'
+      list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">'+(x.type==='mission'?'Conversation protégée · mission proposée par '+esc(x.empNom||'votre entreprise'):x.type==='candidature'?'Conversation protégée · candidature reçue pour « '+esc(x.poste||'')+' »':'Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise'))+'</div>'
         +(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='emp'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='emp'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
         +(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<div style="text-align:center;margin:8px 0"><button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button></div>');
       list.scrollTop=list.scrollHeight;
@@ -21035,8 +21063,26 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
   window.cpOffreMount=mount;
 
+  /* Avis de l'entreprise sur le freelance (mission acceptée) */
+  document.addEventListener('click',function(e){
+    var n=e.target.closest('[data-avn]'); if(n){ var w=n.closest('[data-avis]'), k=+n.getAttribute('data-avn'); document.querySelectorAll('[data-avis="'+w.getAttribute('data-avis')+'"]').forEach(function(z){ z.setAttribute('data-note',k); z.querySelectorAll('[data-avn]').forEach(function(b){ b.classList.toggle('on',+b.getAttribute('data-avn')<=k); }); }); return; }
+    var sb=e.target.closest('[data-avsend]'); if(!sb) return; var w2=sb.closest('[data-avis]'), id=w2.getAttribute('data-avis'), note=+w2.getAttribute('data-note')||0, tx=String((w2.querySelector('textarea')||{}).value||'').trim();
+    if(!note){ toast('Choisissez une note de 1 à 5 étoiles'); return; } if(!db()||!id) return; sb.disabled=true;
+    var cr=db().collection('emploi_conversations').doc(id), u0=user();
+    cr.get().then(function(d){ var c=d.exists?d.data():{}; if(!u0||c.empUid!==u0.uid||!c.candUid) throw { code:'permission-denied' };
+      return db().collection('avis_freelance').doc(id).set({ frlUid:c.candUid, empUid:u0.uid, empNom:c.empNom||'', mission:c.poste||'', note:note, texte:tx.slice(0,500), at:now() })
+        .then(function(){ return cr.update({ avis:{ note:note, texte:tx.slice(0,500), at:now() }, updatedAt:now() }); }); }).then(function(){ toast('Merci, votre avis est publié sur le profil du freelance');
+      document.querySelectorAll('[data-avis="'+id+'"]').forEach(function(z){ z.removeAttribute('data-avis'); z.innerHTML='<b>Votre avis</b><span class="frl-stars">'+[1,2,3,4,5].map(function(i){ return '<i class="'+(i<=note?'on':'')+'">★</i>'; }).join('')+'</span>'+(tx?'<p>« '+esc(tx)+' »</p>':''); }); })
+      .catch(function(x){ sb.disabled=false; toast((x&&x.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+  });
   /* ════════ Messagerie employeur : détails de la candidature ════════ */
   window.cpConvExtra=function(x){
+    if(x && x.type==='mission'){ var m=x.mission||{}, st=x.missionStatut||'attente', av=x.avis;
+      return '<div class="ofcm-card cpo-cx frl-ex"><span class="tg">'+S(IC.send)+'Mission proposée</span><b>'+esc(m.titre||x.poste||'')+'</b>'
+        +'<dl>'+[['Budget',m.budget?Number(m.budget).toLocaleString('fr-FR')+' € HT':'À discuter'],['Durée',m.duree],['Début',m.debut?new Date(m.debut+'T12:00:00').toLocaleDateString('fr-FR'):''],['Lieu',m.lieu]].filter(function(r){ return r[1]; }).map(function(r){ return '<dt>'+r[0]+'</dt><dd>'+esc(r[1])+'</dd>'; }).join('')+'</dl>'
+        +'<p class="frl-ex-st '+st+'">'+(st==='acceptee'?'✅ Le freelance a accepté la mission':st==='declinee'?'Le freelance a décliné la mission':'⏳ En attente de la réponse du freelance')+'</p>'
+        +(st==='acceptee'?(av&&av.note?'<div class="frl-ex-av"><b>Votre avis</b><span class="frl-stars">'+[1,2,3,4,5].map(function(i){ return '<i class="'+(i<=av.note?'on':'')+'">★</i>'; }).join('')+'</span>'+(av.texte?'<p>« '+esc(av.texte)+' »</p>':'')+'</div>'
+          :'<div class="frl-ex-av" data-avis="'+esc(x.id||'')+'"><b>Laisser un avis au freelance</b><small>Une fois la mission terminée : il s\'affichera sur son profil.</small><span class="frl-stars pick">'+[1,2,3,4,5].map(function(i){ return '<button type="button" data-avn="'+i+'" aria-label="'+i+' sur 5">★</button>'; }).join('')+'</span><textarea maxlength="500" placeholder="Qualité du travail, respect des délais, communication…"></textarea><button type="button" class="ofc-btn pri" data-avsend>Publier l\'avis</button></div>'):'')+'</div>'; }
     if(!x || x.type!=='candidature') return '';
     var P=x.pieces||{}, rp=x.reponses||[];
     return '<div class="ofcm-card cpo-cx"><span class="tg">'+S(IC.send)+'Candidature reçue</span><b>'+esc(x.poste||'')+'</b>'
@@ -21915,6 +21961,48 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
 .frl-types .cj-ic{ width:34px; height:34px; border-radius:11px; } .frl-types .cj-ic svg{ width:17px !important; height:17px !important; }
 @media (max-width:420px){ .frl-types{ grid-template-columns:1fr; } }
 .frl-legal{ font-size:.68rem; color:#94a3b8; text-align:center; line-height:1.5; margin:10px 0 0; }
+/* Partie 2 : visibilité + missions proposées par les entreprises */
+.frl-vis{ margin:12px 0; } .frl-vis .cps-sw[disabled]{ opacity:.45; cursor:not-allowed; }
+html.pf-frl .frl-vis .cps-sw.on{ background:linear-gradient(135deg,#ea580c,#f59e0b); }
+.frl-vis .cps-ic{ background:#fff7ed !important; color:#c2410c !important; }
+.frl-ck{ display:flex; align-items:center; gap:9px; margin:12px 0 0; padding-top:11px; border-top:1px solid #f1f5f9; font:600 .78rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; }
+.frl-ck input{ -webkit-appearance:checkbox !important; appearance:auto !important; display:inline-block !important; opacity:1 !important; position:static !important; width:18px; height:18px; margin:0; accent-color:#ea580c; flex-shrink:0; }
+.frl-cpc{ margin:12px 0; }
+.frl-cpc .cpc-tl li{ display:flex; flex-direction:column; gap:2px; }
+.frl-pd{ display:block; font-size:.76rem; color:#475569; line-height:1.5; overflow-wrap:anywhere; }
+.frl-pl{ display:inline-block; margin-top:3px; font-size:.74rem; font-weight:800; color:#c2410c !important; text-decoration:none !important; }
+.frl-h{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin:20px 2px 8px; }
+.frl-h b{ display:flex; align-items:center; gap:7px; font-size:.95rem; font-weight:800; color:#0f172a; } .frl-h b svg{ color:#ea580c; } .frl-h span{ font-size:.74rem; font-weight:700; color:#64748b; }
+.frl-add{ width:100%; padding:11px; margin-bottom:9px; border-style:dashed; border-color:#fdba74; color:#c2410c; background:#fffaf5; }
+.frl-it + .frl-it{ margin-top:9px; }
+.frl-stars{ display:inline-flex; gap:1px; font-size:.95rem; line-height:1; letter-spacing:0; } .frl-stars i{ font-style:normal; color:#e2e8f0; } .frl-stars i.on{ color:#f59e0b; }
+.frl-stars.pick button{ border:none; background:none; padding:2px 3px; font-size:1.55rem; line-height:1; color:#e2e8f0; cursor:pointer; } .frl-stars.pick button.on{ color:#f59e0b; }
+.frl-av{ padding:12px 13px; border-radius:16px; border:1px solid #fde7d2; background:#fffaf5; margin-bottom:8px; }
+.frl-av p{ margin:6px 0 4px; font-size:.8rem; color:#334155; line-height:1.5; } .frl-av small{ font-size:.7rem; color:#94a3b8; font-weight:700; }
+button.frl-it.frl-cv{ width:100%; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; transition:border-color .2s, box-shadow .2s; }
+button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234,88,12,.6); }
+.frl-cv .frl-it-ft > svg{ color:#94a3b8; }
+.frl-last{ display:block; font-size:.76rem; color:#475569; line-height:1.45; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.frl-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background:#ea580c; margin-right:6px; vertical-align:1px; }
+.frl-eav{ display:flex !important; align-items:center; justify-content:center; background:linear-gradient(135deg,#ea580c,#f59e0b) !important; color:#fff; font:800 .9rem 'DM Sans',sans-serif; }
+.frl-mc{ padding:15px; border-radius:20px; border:1px solid #fed7aa; background:linear-gradient(180deg,#fff7ed,#fff); box-shadow:0 18px 34px -30px rgba(234,88,12,.8); margin-bottom:14px; font-family:'DM Sans',sans-serif; }
+.frl-mc-k{ display:inline-flex; align-items:center; gap:5px; padding:3px 9px; border-radius:999px; background:#ffedd5; color:#c2410c; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.04em; }
+.frl-mc > b{ display:block; margin-top:9px; font-size:1.02rem; font-weight:900; color:#0f172a; overflow-wrap:anywhere; } .frl-mc > small{ display:block; margin-top:2px; font-size:.75rem; color:#64748b; }
+.frl-mc-g{ display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:8px; margin:12px 0 4px; }
+.frl-mc-g div{ padding:9px 10px; border-radius:13px; background:#fff; border:1px solid #f1f5f9; } .frl-mc-g span{ display:block; font-size:.64rem; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:.04em; } .frl-mc-g i{ display:block; margin-top:2px; font-style:normal; font-size:.84rem; font-weight:800; color:#0f172a; }
+.frl-mc p{ margin:10px 0 0; font-size:.8rem; color:#334155; line-height:1.55; white-space:pre-line; overflow-wrap:anywhere; }
+.frl-mc-b{ display:flex; gap:9px; align-items:stretch; margin-top:13px; } .frl-mc-b .cj-main{ flex:1; margin:0; } .frl-mc-b .frl-ib{ padding:0 16px; }
+.frl-mc-h{ display:block; margin-top:8px; font-size:.7rem; color:#94a3b8; line-height:1.45; }
+.frl-mc-st{ display:flex; align-items:center; gap:6px; margin:13px 0 8px; padding:10px 12px; border-radius:13px; background:#f1f5f9; color:#475569; font-size:.8rem; font-weight:800; } .frl-mc-st.ok{ background:#ecfdf5; color:#047857; }
+.frl-conv .cpw-m .frl-mt{ display:block; margin-top:3px; font-size:.62rem; opacity:.65; }
+.emp-esb.frl{ background:#ffedd5; color:#c2410c; }
+.frl-sir{ margin:12px 0; } .frl-sir .cps-ic{ background:#fff7ed; color:#c2410c; } .frl-sir.g .cps-ic{ background:#ecfdf5; color:#047857; } .frl-sir.r .cps-ic{ background:#fef2f2; color:#b91c1c; }
+.frl-sir.g{ border-color:#a7f3d0; } .frl-sir.r{ border-color:#fecaca; } .frl-sir .frl-ib{ margin-top:10px; }
+.cpc-badges .frl-vb{ background:#ecfdf5 !important; color:#047857 !important; border-color:#a7f3d0 !important; font-weight:800; }
+.frl-ex-st{ margin:8px 0 0; font-size:.78rem; font-weight:800; color:#475569; } .frl-ex-st.acceptee{ color:#047857; }
+.frl-ex-av{ margin-top:10px; padding:11px; border-radius:13px; background:#fffaf5; border:1px solid #fde7d2; } .frl-ex-av b{ display:block; font-size:.8rem; } .frl-ex-av small{ display:block; font-size:.7rem; color:#64748b; margin:2px 0 4px; }
+.frl-ex-av textarea{ width:100%; min-height:70px; margin:6px 0 8px; padding:9px 10px; border-radius:11px; border:1.5px solid #e2e8f0; font:500 .8rem 'DM Sans',sans-serif; resize:vertical; box-sizing:border-box; } .frl-ex-av p{ margin:6px 0 0; font-size:.78rem; color:#334155; }
+@media (max-width:420px){ .frl-mc-b{ flex-direction:column; } .frl-mc-b .frl-ib{ padding:11px; } }
 </style>
 <script>
 (function(){
@@ -21991,6 +22079,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     var n=first(), m=[], act=null, p=pct(), d=curDefi(), at=attente().length;
     if(!D.loaded) m.push('Je prépare ton espace Freelance…');
     else if(p<100){ m.push((n?'Bonjour '+esc(n)+' 👋 ':'Bienvenue dans ton espace Freelance 👋 ')+'Commence par décrire <b>ton activité</b> : métier, statut, tarif. Ton activité est complétée à <b>'+p+' %</b>.'); act=['Décrire mon activité','frl-act']; }
+    else if(unread()){ var nu=unread(); m.push('Tu as <b>'+nu+' nouveau'+(nu>1?'x':'')+' message'+(nu>1?'s':'')+'</b> d\'une entreprise qui te propose une mission. Réponds vite : c\'est souvent le premier qui répond qui décroche la mission.'); act=['Voir mes messages','frl-msg']; }
     else if(!D.missions.length){ m.push('Ton activité est prête 👏 Ajoute ta <b>première mission</b>, même au stade de prospect : je t\'aide à la suivre jusqu\'au paiement.'); act=['Ajouter une mission','frl-madd']; }
     else if(at){ m.push('Tu as <b>'+at+' mission'+(at>1?'s':'')+' terminée'+(at>1?'s':'')+'</b> pas encore payée'+(at>1?'s':'')+'. Pense à vérifier que ton client a bien tout reçu.'); act=['Voir mes missions','frl-miss']; }
     else if(!objs().some(function(o){ return oState(o)!=='past'; })){ m.push('Fixe-toi un <b>objectif simple</b> : augmenter ton chiffre d\'affaires de 2 %, trouver de nouveaux clients, décrocher un partenariat… Je le suis avec toi.'); act=['Fixer mon objectif','frl-defi']; }
@@ -22000,17 +22089,17 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
       +(window.cpStream&&cpStream.pres?cpStream.pres('frl',['<b>Mon activité & mes objectifs</b> : ce que tu proposes, ton tarif et tes objectifs (chiffre d\'affaires, clients, partenariats).','<b>Profil & portfolio</b> : ton profil freelance, tes réalisations et les avis de tes clients.','<b>Missions & clients</b> : chaque mission, du premier contact jusqu\'au paiement.','<b>Clients & messages</b> : les entreprises qui te proposent une mission.']):'')+'</div></div>';
   }
   function home(){
-    load();
+    load(); proLoad();
     var tip=TIPS[(new Date().getDate())%TIPS.length], d=curDefi(), cours=nb('cours'), p=pct();
     var kpis='<div class="frl-kpis"><div class="frl-kpi g"><b>'+eur(caMois())+'</b><span>encaissé ce mois-ci</span></div><div class="frl-kpi"><b>'+eur(caAn())+'</b><span>encaissé en '+new Date().getFullYear()+'</span></div>'
       +'<div class="frl-kpi o"><b>'+attente().length+'</b><span>mission'+(attente().length>1?'s':'')+' à faire payer</span></div><div class="frl-kpi"><b>'+cours+'</b><span>mission'+(cours>1?'s':'')+' en cours</span></div></div>';
-    var conv=0; /* espace Freelance vierge : ses propres messages */
+    var conv=PRO.convs.length, nu=unread(); /* propositions de mission reçues */
     var tiles='<div class="cj-tiles">'
       +'<button type="button" class="cj-tile" data-frl="frl-obj"><span class="cj-ic b">'+I(P.target,22)+'</span><b>Mon activité & mes objectifs</b><small>'+(d?'Défi : '+esc(DEFIS[d.type][0]):'Ton activité et ton défi de la semaine')+'</small><span class="cj-tm"><strong>'+p+' %</strong><em>'+(p<100?'activité complétée':'activité complète ✓')+(d?' · défi '+(d.manuel||0)+'/'+d.cible:'')+'</em></span><i class="cj-bar"><i style="width:'+p+'%"></i></i></button>'
       +'<button type="button" class="cj-tile" data-frl="frl-prof"><span class="cj-ic b">'+I(P.id,22)+'</span><b>Profil & portfolio</b><small>Ton profil freelance, tes réalisations, tes avis</small><span class="cj-tm"><strong>'+((D.prof&&D.prof.tjm)?eur(D.prof.tjm):'—')+'</strong><em>'+((D.prof&&D.prof.tjm)?'tarif journalier':'tarif à indiquer')+'</em></span></button>'
       +'<button type="button" class="cj-tile" data-frl="frl-miss"><span class="cj-ic b">'+I(P.brief,22)+'</span><b>Missions & clients</b><small>Du premier contact au paiement</small><span class="cj-tm"><strong>'+D.missions.length+'</strong><em>mission'+(D.missions.length>1?'s':'')+' · '+D.clients.length+' client'+(D.clients.length>1?'s':'')+'</em></span>'
         +'<span class="frl-pipe">'+STEPS.map(function(s,i){ return '<i class="frl-s'+i+'" title="'+s[1]+'">'+nb(s[0])+'</i>'; }).join('')+'</span></button>'
-      +'<button type="button" class="cj-tile" data-frl="frl-msg"><span class="cj-ic g">'+I(P.users,22)+'</span><b>Clients & messages</b><small>Les entreprises qui te proposent une mission</small><span class="cj-tm"><strong>'+conv+'</strong><em>message'+(conv>1?'s':'')+'</em></span></button>'
+      +'<button type="button" class="cj-tile" data-frl="frl-msg"><span class="cj-ic g">'+I(P.users,22)+'</span><b>Clients & messages</b><small>Les entreprises qui te proposent une mission</small><span class="cj-tm"><strong>'+conv+'</strong><em>proposition'+(conv>1?'s':'')+(nu?' · '+nu+' nouveau'+(nu>1?'x':''):'')+'</em></span></button>'
       +'</div>';
     return coach()+(window.cpCoach?cpCoach.card('frl'):'')+(window.cpInfo?cpInfo.card('frl'):'')+tiles+kpis
       +'<button type="button" class="cj-box cj-tip cj-mtip" data-frl="frl-tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil freelance du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
@@ -22033,7 +22122,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
       +'<label>Ton métier<input id="frl-metier" maxlength="80" placeholder="Ex : Développeuse web, graphiste, coach sportif" value="'+esc(p.metier||'')+'"></label>'
       +'<div class="cj-2"><label>Statut<select id="frl-statut">'+opts(STATUTS,p.statut)+'</select></label><label>Type d\'activité<select id="frl-activite">'+opts(ACTIV,p.activite)+'</select></label></div>'
       +'<span class="frl-hint">Le type d\'activité servira à calculer ton plafond et tes cotisations (dans la prochaine mise à jour).</span>'
-      +'<label>Numéro SIRET (facultatif)<input id="frl-siret" maxlength="17" inputmode="numeric" placeholder="14 chiffres" value="'+esc(p.siret||'')+'"></label>'
+      +'<label>Numéro SIRET <small style="font-weight:600;color:#94a3b8">(pour le badge « Freelance vérifié »)</small><input id="frl-siret" maxlength="17" inputmode="numeric" placeholder="14 chiffres" value="'+esc(p.siret||'')+'"></label>'
       +'<div class="cj-2"><label>Tarif journalier (€ HT)<input id="frl-tjm" type="number" min="0" step="10" inputmode="numeric" placeholder="Ex : 350" value="'+esc(p.tjm||'')+'"></label><label>Disponibilité<select id="frl-dispo">'+opts(DISPO,p.dispo)+'</select></label></div>'
       +'<div class="cj-2"><label>Façon de travailler<select id="frl-mode">'+opts(MODES,p.mode)+'</select></label><label>Ville<input id="frl-ville" maxlength="60" placeholder="Ex : Caen" value="'+esc(p.ville||'')+'"></label></div>'
       +'<label>Compétences<span style="display:flex;gap:8px"><input id="frl-comp" maxlength="40" placeholder="Ex : WordPress" style="flex:1"><button type="button" class="frl-ib" data-frl="frl-tadd">'+I(P.plus,15)+'Ajouter</button></span></label>'
@@ -22048,7 +22137,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     var siret=v('frl-siret').replace(/\s/g,''); if(siret && !/^\d{14}$/.test(siret)){ toastMsg('Le SIRET doit contenir 14 chiffres'); return; }
     var p={ nom:v('frl-nom'), metier:v('frl-metier'), statut:v('frl-statut'), activite:v('frl-activite'), siret:siret, tjm:v('frl-tjm')?Math.max(0,+v('frl-tjm')):'', dispo:v('frl-dispo'), mode:v('frl-mode'), ville:v('frl-ville'), competences:ACT.tags.slice(), presentation:v('frl-pres'), updatedAt:new Date().toISOString() };
     if(!p.metier){ toastMsg('Indique au moins ton métier'); var m=$('frl-metier'); if(m) m.focus(); return; }
-    b.disabled=true; D.prof=p; saveDoc('profil',p).then(function(){ toastMsg('Ton activité est enregistrée ✓'); ACT.close(); ACT=null; });
+    b.disabled=true; D.prof=p; saveDoc('profil',p).then(function(){ toastMsg('Ton activité est enregistrée ✓'); ACT.close(); ACT=null; PRO.sir=null; sirCheck(); if(PRO.vis) publish(true,true); if(PROF&&document.body.contains(PROF.sh)) PROF.render(); });
   }
 
   function openMiss(tab,f){
@@ -22205,13 +22294,191 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     sheet('Mon activité & mes objectifs','Ce que tu proposes et ton cap de la semaine',say('Ton activité décrite, et un objectif clair chaque semaine : c\'est la base d\'une activité freelance qui dure.')
 
       +'<button type="button" class="cj-box" data-frl="frl-defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Mes objectifs</b><small>'+(function(){ var oc=objs().filter(function(o){ return oState(o)==='cur'; }); return oc.length?esc(oc[0].titre)+' · '+oPc(oc[0])+' %'+(oc.length>1?' · +'+(oc.length-1):''):'Chiffre d\'affaires, clients, partenariats…'; })()+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'); }
-  function openProf(){ var x=D.prof||{}, has=!!x.metier;
-    sheet('Profil & portfolio','Ce que verront tes futurs clients',say(has?'Voici ton <b>profil freelance</b> tel qu\'il sera présenté aux entreprises, quand tu choisiras d\'être visible.':'Décris d\'abord ton activité : ton profil freelance se construit à partir d\'elle.')
-      +(has?'<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(x.nom||'')+'</b><small>'+esc(x.metier)+(x.ville?' · '+esc(x.ville):'')+'</small></div>'+(x.tjm?'<span class="frl-amt">'+eur(x.tjm)+' / jour</span>':'')+'</div>'
-        +(x.presentation?'<small style="font-size:.8rem;color:#334155;line-height:1.55">'+esc(x.presentation)+'</small>':'')
-        +((x.competences||[]).length?'<div class="frl-tags">'+x.competences.map(function(c){ return '<span style="padding-right:10px">'+esc(c)+'</span>'; }).join('')+'</div>':'')+'</div>':'')
-      +'<button type="button" class="cj-main" data-frl="frl-act">'+I(P.pen,18)+(has?'Modifier mon activité':'Décrire mon activité')+'</button>'
-      +'<div class="frl-empty">'+I(P.star,22)+'<br><b>Portfolio et avis clients</b><br>Tes réalisations et les avis de tes clients arrivent avec la prochaine mise à jour.</div>'); }
+
+
+
+  /* ══ Partie 2 : visibilité auprès des entreprises + propositions de mission ══
+     profils/{uid}.frlVisible + frlFiche (ce que voient les entreprises, jamais de coordonnées)
+     users/{uid}/freelance/portfolio { list } · emploi_conversations (type:'mission', candUid = freelance) */
+  var PRO={ uid:null, loaded:false, loading:null, vis:false, showTjm:true, port:[], convs:[], avis:[], sir:null }, PROF=null, MSGS=null;
+  /* SIRET vérifié dans l'annuaire officiel des entreprises (API Recherche d'entreprises, gratuite et ouverte).
+     Le résultat n'est jamais enregistré par le freelance : chaque entreprise le revérifie elle-même à l'affichage. */
+  var SIRC={};
+  function luhn(x){ if(/^356000000/.test(x)) return x.split('').reduce(function(a,c){ return a+(+c); },0)%5===0; var t=0; for(var i=0;i<14;i++){ var d=+x.charAt(13-i); if(i%2){ d*=2; if(d>9) d-=9; } t+=d; } return t%10===0; }
+  function nrm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim(); }
+  /* Le nom affiché (« Sophie M. ») doit correspondre au nom officiel : même premier mot, et l'initiale retrouvée */
+  window.cpSiretNom=function(label,off){ var L=nrm(label).split(' ').filter(Boolean), O=nrm(off).split(' ').filter(Boolean); if(!L.length||!O.length) return false;
+    if(O.indexOf(L[0])<0) return false; return L.length<2 || O.some(function(w){ return w!==L[0] && w.charAt(0)===L[1].charAt(0); }); };
+  window.cpSiret=function(x){ x=String(x||'').replace(/\D/g,''); if(!/^\d{14}$/.test(x)) return Promise.resolve({ ok:false, err:'format' }); if(!luhn(x)) return Promise.resolve({ ok:false, err:'format' });
+    if(SIRC[x]) return SIRC[x];
+    function ask(u){ return fetch(u,{ headers:{ Accept:'application/json' } }).then(function(r){ if(!r.ok) throw new Error('http '+r.status); return r.json(); }); }
+    function parse(j){ var e=null, un=null; ((j&&j.results)||[]).forEach(function(r){ ((r.matching_etablissements||[]).concat(r.siege?[r.siege]:[])).forEach(function(t){ if(!e && String(t.siret)===x){ e=t; un=r; } }); });
+      if(!e) return { ok:false, err:'introuvable', siret:x }; var a=String(e.etat_administratif||un.etat_administratif||'')==='A';
+      return { ok:a, err:a?'':'ferme', siret:x, nom:un.nom_complet||un.nom_raison_sociale||'', ville:e.libelle_commune||'' }; }
+    var q='?q='+x+'&page=1&per_page=1';
+    SIRC[x]=ask('https://recherche-entreprises.api.gouv.fr/search'+q).catch(function(){ return ask('/api/siret'+q); }).then(parse).catch(function(){ delete SIRC[x]; return { ok:false, err:'reseau', siret:x }; });
+    return SIRC[x]; };
+  function myName(){ var n=String((D.prof||{}).nom||'').trim().split(/\s+/); return (n[0]||'')+(n[1]?' '+n[1].charAt(0).toUpperCase()+'.':''); }
+  function sirCheck(){ var x=String((D.prof||{}).siret||''); if(!x){ PRO.sir=null; return Promise.resolve(); } if(PRO.sir&&PRO.sir.siret===x&&PRO.sir.st!=='wait') return Promise.resolve();
+    PRO.sir={ siret:x, st:'wait' }; return cpSiret(x).then(function(r){ var ok=r.ok && cpSiretNom(myName(),r.nom); PRO.sir={ siret:x, st:ok?'ok':(r.err||'nom'), r:r }; if(r.ok && !ok) PRO.sir.st='nom';
+      if(PROF&&document.body.contains(PROF.sh)) PROF.render(); redraw(); }); }
+  function sirOk(){ return !!(PRO.sir && PRO.sir.st==='ok'); }
+  var MST={ attente:['Nouvelle proposition','frl-s1'], acceptee:['Mission acceptée','frl-s4'], declinee:['Déclinée','frl-s0'] };
+  function lab(L,k){ var x=L.filter(function(o){ return o[0]===k; })[0]; return x?x[1]:''; }
+  function pRef(){ var u=user(); return u&&db()?db().collection('profils').doc(u.uid):null; }
+  function cCol(){ return db()?db().collection('emploi_conversations'):null; }
+  function nowI(){ return new Date().toISOString(); }
+  function proLoad(force){
+    var u=user(); if(!u||!db()){ PRO.port=loc('port')||[]; var vv=loc('vis')||{}; PRO.vis=!!vv.on; PRO.showTjm=vv.tjm!==false; PRO.loaded=true; return Promise.resolve(); }
+    if(!force && PRO.uid===u.uid && (PRO.loaded||PRO.loading)) return PRO.loading||Promise.resolve();
+    PRO.uid=u.uid; var r=ref();
+    PRO.loading=Promise.all([
+      r.collection('freelance').doc('portfolio').get().then(function(d){ return d.exists?((d.data()||{}).list||[]):[]; }).catch(function(){ return []; }),
+      pRef().get().then(function(d){ return d.exists?(d.data()||{}):{}; }).catch(function(){ return {}; }),
+      cCol().where('candUid','==',u.uid).get().then(function(q){ var a=[]; q.forEach(function(d){ var x=d.data(); x.id=d.id; if(x.type==='mission' && x.candUid===u.uid) a.push(x); }); return a.sort(function(x,y){ return String(y.lastAt||'').localeCompare(String(x.lastAt||'')); }); }).catch(function(){ return []; }),
+      cpAvis(u.uid)
+    ]).then(function(v){ PRO.port=v[0]; PRO.vis=!!v[1].frlVisible; PRO.showTjm=v[1].frlTjm!==false; PRO.convs=v[2]; PRO.avis=v[3]; PRO.loaded=true; PRO.loading=null;
+      if(PRO.vis && (v[1].frlFiche||{}).siret!==(String((D.prof||{}).siret||'')||'')) publish(true,true); /* SIRET modifié : la fiche publiée suit */
+      (D.loading||Promise.resolve()).then(sirCheck);
+      redraw(); if(PROF&&document.body.contains(PROF.sh)) PROF.render(); if(MSGS&&document.body.contains(MSGS.sh)) MSGS.render(); });
+    return PRO.loading;
+  }
+  function unread(){ return PRO.convs.filter(function(c){ return c.unreadCand && c.statut!=='close'; }).length; }
+  /* Avis clients : collection avis_freelance, écrite uniquement par l'entreprise de la mission (règles Firestore) */
+  window.cpAvis=function(uid){ var B=db(); if(!B||!uid) return Promise.resolve([]); return B.collection('avis_freelance').where('frlUid','==',uid).get().then(function(q){ var a=[]; q.forEach(function(d){ var x=d.data(); if(x.frlUid===uid && +x.note>0) a.push({ note:Math.min(5,Math.max(1,Math.round(+x.note))), texte:String(x.texte||'').slice(0,500), empNom:x.empNom||'', mission:x.mission||'', at:x.at||'' }); });
+    return a.sort(function(x,y){ return String(y.at).localeCompare(String(x.at)); }); }).catch(function(){ return []; }); };
+  function avisL(){ return PRO.avis||[]; }
+  function moy(A){ return A.length?Math.round(A.reduce(function(s,a){ return s+a.note; },0)/A.length*10)/10:0; }
+  /* Ce que voient les entreprises : prénom (ou 1er mot) + initiale, métier, réalisations. Jamais d'e-mail ni de téléphone.
+     Le SIRET n'est pas affiché : il sert seulement à l'entreprise pour revérifier le badge dans l'annuaire officiel. */
+  function fiche(){ var p=D.prof||{}, n=String(p.nom||'').trim().split(/\s+/);
+    return { name:(n[0]||'')+(n[1]?' '+n[1].charAt(0).toUpperCase()+'.':''), titre:p.metier||'', secteur:'Freelance', ville:p.ville||'', accroche:String(p.presentation||'').slice(0,600),
+      competences:(p.competences||[]).slice(0,20), disponibilite:lab(DISPO,p.dispo), mode:lab(MODES,p.mode), statutJ:lab(STATUTS,p.statut), tjm:(PRO.showTjm&&p.tjm)?(+p.tjm||''):'',
+      portfolio:PRO.port.slice(0,12).map(function(x){ return { titre:x.titre||'', client:x.client||'', annee:x.annee||'', desc:String(x.desc||'').slice(0,400), lien:x.lien||'' }; }),
+      siret:String(p.siret||''), updatedAt:nowI() }; }
+  function publish(on,quiet){ PRO.vis=!!on; var u=user(), B=db();
+    if(!u||!B){ loc('vis',{ on:PRO.vis, tjm:PRO.showTjm }); return Promise.resolve(); }
+    var o={ frlVisible:!!on, frlTjm:PRO.showTjm, frlAt:nowI() }; if(on) o.frlFiche=fiche();
+    return pRef().set(o,{ merge:true }).catch(function(){ if(!quiet) toastMsg('Enregistrement impossible pour le moment'); }); }
+  function savePort(){ var r=ref(); if(!r){ loc('port',PRO.port); return Promise.resolve(); } return r.collection('freelance').doc('portfolio').set({ list:PRO.port, at:nowI() }).then(function(){ if(PRO.vis) return publish(true,true); }).catch(function(){ toastMsg('Enregistrement impossible pour le moment'); }); }
+  function stars(n){ var h=''; for(var i=1;i<=5;i++) h+='<i class="'+(i<=Math.round(n)?'on':'')+'">★</i>'; return '<span class="frl-stars">'+h+'</span>'; }
+  function ago(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return ''; } }
+  /* Fiche freelance, même présentation que la fiche candidat (classes .cpc) — vue par le membre et par l'entreprise */
+  window.cpFrlCard=function(p,o){ o=o||{}; var S=function(x){ return I(x,16); }, name=o.emp?(p.label||p.name):(p.name||'Ton nom'), cs=p.competences||[], A=p.avis||[], PF=p.portfolio||[];
+    var ini=String(name||'?').trim().split(/\s+/).slice(0,2).map(function(w){ return w.charAt(0); }).join('').toUpperCase()||'?';
+    var b=[]; if(p.disponibilite) b.push('<span class="o">'+S(P.clock)+esc(p.disponibilite)+'</span>'); b.push(p.siretOk===true?'<span class="g frl-vb">'+S('<path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>')+'Freelance vérifié · SIRET actif</span>':p.siretOk==='wait'?'<span>'+S(P.clock)+'Vérification du SIRET…</span>':'<span>'+S(P.users)+'Membre CareerPulse</span>'); if(p.avisNb) b.push('<span>★ '+String(p.avisMoy).replace('.',',')+' · '+p.avisNb+' avis</span>');
+    var kv=[['Tarif journalier',p.tjm?eur(p.tjm)+' HT':''],['Façon de travailler',p.mode],['Ville',p.ville],['Statut',p.statutJ]].filter(function(x){ return x[1]; });
+    var h='<div class="cpc frl-cpc"><div class="cpc-hd">'+(o.self?'<div class="cpc-self">'+S('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>')+'<span>Voici ce que voient les entreprises'+(o.vis?'':' quand ton profil est visible')+' (sans tes coordonnées).</span></div>':'')
+      +'<div class="cpc-top"><span class="cpc-av">'+esc(ini)+'</span><div class="cpc-id"><b>'+esc(name)+'</b><span>'+esc(p.titre||'Ton métier à compléter')+'</span></div></div><div class="cpc-badges">'+b.join('')+'</div></div>'
+      +'<div class="cpc-bd">'+(p.accroche?'<p class="cpc-acc">'+esc(p.accroche)+'</p>':'');
+    if(PF.length) h+='<div class="cpc-sec"><div class="cpc-st">'+S(P.star)+'Réalisations</div><ul class="cpc-tl">'+PF.map(function(x){ return '<li><b>'+esc(x.titre)+'</b><span>'+esc([x.client,x.annee].filter(Boolean).join(' · '))+'</span>'+(x.desc?'<small class="frl-pd">'+esc(x.desc)+'</small>':'')+(x.lien?'<a class="frl-pl" href="'+esc(x.lien)+'" target="_blank" rel="noopener nofollow">Voir la réalisation ↗</a>':'')+'</li>'; }).join('')+'</ul></div>';
+    if(cs.length) h+='<div class="cpc-sec"><div class="cpc-st">'+S(P.target)+'Compétences</div><div class="cpc-sk">'+cs.map(function(c,i){ return '<span'+(i<3?' class="top"':'')+'>'+esc(c)+'</span>'; }).join('')+'</div></div>';
+    if(kv.length) h+='<div class="cpc-sec"><div class="cpc-st">'+S(P.brief)+'Mes conditions</div><div class="cpc-kv">'+kv.map(function(x){ return '<div><small>'+x[0]+'</small><b>'+esc(x[1])+'</b></div>'; }).join('')+'</div></div>';
+    if(A.length) h+='<div class="cpc-sec"><div class="cpc-st">'+S(P.users)+'Avis clients</div>'+A.slice(0,o.emp?6:12).map(function(a){ return '<div class="frl-av">'+stars(a.note)+'<p>'+(a.texte?'« '+esc(a.texte)+' »':'Pas de commentaire.')+'</p><small>'+esc(a.empNom)+(a.mission?' · '+esc(a.mission):'')+' · mission réalisée via CareerPulse</small></div>'; }).join('')+'</div>';
+    if(o.emp) h+='<p class="cpc-note">🔒 Profil anonymisé : prénom et initiale seulement. Proposez votre mission dans la messagerie protégée : le freelance choisit ce qu\'il partage.</p>';
+    return h+'</div></div>'; };
+
+  function sirCard(){ var x=D.prof||{}, z=PRO.sir, st=!x.siret?'none':z?z.st:'wait', r=(z&&z.r)||{};
+    var T={ none:['Ajoute ton SIRET','Le badge « Freelance vérifié » s\'affiche quand ton SIRET est vérifié dans l\'annuaire officiel des entreprises.','o'],
+      wait:['Vérification en cours…','Je contrôle ton SIRET dans l\'annuaire officiel des entreprises.','o'],
+      ok:['SIRET vérifié ✓','Entreprise active : '+esc(r.nom||'')+(r.ville?' · '+esc(r.ville):'')+'. Le badge « Freelance vérifié » est sur ton profil.','g'],
+      nom:['Le nom ne correspond pas','Nom officiel : « '+esc(r.nom||'')+' ». Dans « Mon activité », écris ton nom tel qu\'il apparaît à l\'INSEE (au moins le premier mot et l\'initiale du second).','r'],
+      ferme:['Entreprise fermée','L\'annuaire indique que cet établissement est fermé. Vérifie ton SIRET.','r'],
+      introuvable:['SIRET introuvable','Ce SIRET n\'est pas dans l\'annuaire public. Vérifie les 14 chiffres. Si ton entreprise est « non diffusible », écris-nous : careerpulse-pro@outlook.com','r'],
+      format:['SIRET invalide','Les 14 chiffres ne forment pas un SIRET valide. Vérifie-le dans « Mon activité ».','r'],
+      reseau:['Vérification impossible pour le moment','L\'annuaire officiel ne répond pas. Réessaie dans quelques minutes.','o'] }[st]||['','',''];
+    return '<div class="cps-card frl-sir '+T[2]+'"><div class="cps-card-hd"><span class="cps-ic">'+I('<path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>')+'</span><div><b>'+T[0]+'</b><span>'+T[1]+'</span></div></div>'
+      +(st==='none'||st==='nom'||st==='format'||st==='introuvable'||st==='ferme'?'<button type="button" class="frl-ib" data-frl="frl-act">'+I(P.pen)+(st==='none'?'Ajouter mon SIRET':'Corriger mon activité')+'</button>':st==='reseau'?'<button type="button" class="frl-ib" data-frl="frl-sir">Réessayer</button>':'')+'</div>'; }
+
+  /* ── Profil & portfolio ── */
+  function openProf(){ proLoad(); sirCheck(); var o=sheet('Profil & portfolio','Ce que verront les entreprises',''); PROF=o;
+    o.render=function(){ var x=D.prof||{}, has=!!x.metier, on=PRO.vis&&has, A=avisL();
+      o.body.innerHTML=say(has?(on?'Ton profil est <b>visible</b> : les entreprises vérifiées de CareerPulse peuvent te proposer une mission. Tu réponds dans <b>Clients & messages</b>.':'Ton profil est prêt. Rends-le <b>visible</b> quand tu veux : les entreprises vérifiées pourront te proposer des missions, sans jamais voir tes coordonnées.'):'Décris d\'abord ton activité : ton profil freelance se construit à partir d\'elle.')
+        +'<div class="cps-card cps-vis frl-vis"><div class="cps-card-hd"><span class="cps-ic b">'+I('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>')+'</span><div><b>Visible par les entreprises</b><span>'+(on?'Ton profil apparaît chez les entreprises vérifiées de CareerPulse.':has?'Ton profil reste privé. Active-le quand il est prêt.':'Indique au moins ton métier pour pouvoir l\'activer.')+'</span></div><button type="button" class="cps-sw'+(on?' on':'')+'" data-frl="frl-vis" aria-label="Visible par les entreprises"'+(has?'':' disabled')+'><i></i></button></div>'
+        +(has&&x.tjm?'<label class="frl-ck"><input type="checkbox" data-frl-tjm'+(PRO.showTjm?' checked':'')+'><span>Afficher mon tarif journalier (<b>'+eur(x.tjm)+'</b>)</span></label>':'')+'</div>'
+        +(has?sirCard():'')
+        +(has?cpFrlCard(Object.assign(fiche(),{ siretOk:sirOk()?true:(PRO.sir&&PRO.sir.st==='wait'?'wait':false), avis:A, avisMoy:moy(A), avisNb:A.length }),{ self:true, vis:on }):'')
+        +'<button type="button" class="cj-main" data-frl="frl-act">'+I(P.pen,18)+(has?'Modifier mon activité':'Décrire mon activité')+'</button>'
+        +'<div class="frl-h"><b>'+I(P.star,18)+'Mon portfolio</b><span>'+PRO.port.length+' réalisation'+(PRO.port.length>1?'s':'')+'</span></div>'
+        +'<button type="button" class="frl-ib frl-add" data-frl="frl-padd">'+I(P.plus,15)+'Ajouter une réalisation</button>'
+        +(PRO.port.length?PRO.port.map(function(r){ return '<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(r.titre)+'</b><small>'+esc([r.client,r.annee].filter(Boolean).join(' · ')||'Réalisation')+'</small></div></div>'
+          +(r.desc?'<small class="frl-pd">'+esc(r.desc)+'</small>':'')+'<div class="frl-it-ft">'+(r.lien?'<a class="frl-ib" href="'+esc(r.lien)+'" target="_blank" rel="noopener">'+I(P.share)+'Voir</a>':'')+'<span style="flex:1"></span><button type="button" class="frl-ib" data-frl="frl-ped" data-id="'+esc(r.id)+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-pdel" data-id="'+esc(r.id)+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; }).join('')
+          :'<div class="frl-empty">'+I(P.star,22)+'<br>Ajoute 2 ou 3 réalisations dont tu es fier(e) : un site, un logo, un accompagnement…<br>C\'est ce que les entreprises regardent en premier.</div>')
+        +'<div class="frl-h"><b>'+I(P.users,18)+'Avis clients</b><span>'+(A.length?'★ '+String(moy(A)).replace('.',',')+' · '+A.length+' avis':'aucun avis')+'</span></div>'
+        +(A.length?A.map(function(a){ return '<div class="frl-av">'+stars(a.note)+'<p>'+(a.texte?'« '+esc(a.texte)+' »':'Pas de commentaire.')+'</p><small>'+esc(a.empNom)+(a.mission?' · '+esc(a.mission):'')+(a.at?' · '+ago(a.at):'')+'</small></div>'; }).join('')
+          :'<div class="frl-empty">Quand une entreprise a travaillé avec toi via CareerPulse, elle peut laisser un <b>avis</b>.<br>Il s\'affiche ici et sur ton profil.</div>');
+    };
+    o.render();
+  }
+  function portForm(id){ var r=id?JSON.parse(JSON.stringify(PRO.port.filter(function(x){ return x.id===id; })[0]||{})):{};
+    var o=sheet(id?'Modifier la réalisation':'Nouvelle réalisation','Ton portfolio, vu par les entreprises','');
+    o.body.innerHTML=say('Une réalisation = ce que tu as fait, pour qui, et le résultat. Pas de données confidentielles de tes clients.')
+      +'<div class="cj-form"><label>Titre *<input id="frl-pt" maxlength="90" placeholder="Ex : Site vitrine pour une boulangerie" value="'+esc(r.titre||'')+'"></label>'
+      +'<div class="cj-2"><label>Client ou contexte<input id="frl-pc" maxlength="60" placeholder="Ex : Boulangerie, Caen" value="'+esc(r.client||'')+'"></label><label>Année<input id="frl-pa" type="number" min="1980" max="2100" inputmode="numeric" placeholder="'+new Date().getFullYear()+'" value="'+esc(r.annee||'')+'"></label></div>'
+      +'<label>Description<textarea id="frl-pdx" class="frl-ta" maxlength="400" placeholder="Ce que tu as fait et le résultat obtenu.">'+esc(r.desc||'')+'</textarea></label>'
+      +'<label>Lien (facultatif)<input id="frl-pl" type="url" maxlength="200" placeholder="https://" value="'+esc(r.lien||'')+'"></label>'
+      +'<button type="button" class="cj-main" id="frl-psave">'+I(P.check,18)+(id?'Enregistrer':'Ajouter au portfolio')+'</button></div>';
+    $('frl-psave').onclick=function(){ var t=v('frl-pt'), l=v('frl-pl'), y=v('frl-pa'); if(!t){ toastMsg('Donne un titre à ta réalisation'); $('frl-pt').focus(); return; }
+      if(l && !/^https?:\/\/[^\s.]+\.[^\s]+$/i.test(l)){ if(/^[^\s.]+\.[^\s]+$/.test(l)) l='https://'+l; else { toastMsg('Vérifie le lien (il commence par https://)'); return; } }
+      if(PRO.port.length>=12 && !id){ toastMsg('12 réalisations maximum'); return; }
+      var x={ id:id||('p'+Date.now().toString(36)), titre:t, client:v('frl-pc'), annee:y?String(Math.round(+y)):'', desc:v('frl-pdx'), lien:l, at:nowI() };
+      if(id) PRO.port=PRO.port.map(function(z){ return z.id===id?x:z; }); else PRO.port.unshift(x);
+      this.disabled=true; savePort().then(function(){ toastMsg(id?'Réalisation mise à jour ✓':'Réalisation ajoutée ✓'); o.close(); if(PROF&&document.body.contains(PROF.sh)) PROF.render(); }); };
+  }
+
+  /* ── Clients & messages : les propositions de mission des entreprises ── */
+  function mst(c){ return c.statut==='close'?['Conversation close','frl-s0']:(MST[c.missionStatut||'attente']||MST.attente); }
+  function openMsgs(){ var o=sheet('Clients & messages','Les entreprises qui te proposent une mission',''); MSGS=o; proLoad(true);
+    o.render=function(){ var L=PRO.convs, has=!!(D.prof||{}).metier;
+      o.body.innerHTML=say('Les entreprises vérifiées par CareerPulse qui voient ton profil peuvent te proposer une <b>mission</b>. Tu réponds ici, dans la messagerie protégée : tu choisis ce que tu partages.')
+        +(PRO.vis&&has?'':'<button type="button" class="cj-box" data-frl="frl-prof"><span class="cj-ic g sm">'+I(P.id,20)+'</span><span class="cj-box-t"><b>Ton profil n\'est pas encore visible</b><small>Rends-le visible dans « Profil & portfolio » pour recevoir des propositions.</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>')
+        +(!PRO.loaded?'<div class="frl-empty">Chargement de tes messages…</div>':L.length?L.map(function(c){ var m=c.mission||{}, s=mst(c), last=(c.messages||[]).slice(-1)[0]||{};
+          return '<button type="button" class="frl-it frl-cv" data-frl="frl-conv" data-id="'+esc(c.id)+'"><div class="frl-it-hd"><div><b>'+(c.unreadCand?'<i class="frl-dot"></i>':'')+esc(c.empNom||'Entreprise')+'</b><small>'+esc(m.titre||c.poste||'Mission')+'</small></div>'+(m.budget?'<span class="frl-amt">'+eur(m.budget)+'</span>':'')+'</div>'
+            +'<small class="frl-last">'+esc(String(last.text||'').slice(0,110))+'</small><div class="frl-it-ft"><span class="frl-badge '+s[1]+'">'+s[0]+'</span>'+(c.unreadCand?'<span class="frl-badge frl-s2">Nouveau message</span>':'')+'<span style="flex:1"></span>'+I(P.chev,16)+'</div></button>'; }).join('')
+          :'<div class="frl-empty">'+I(P.mail,22)+'<br>Aucune proposition pour l\'instant.<br>Un profil complet, avec 2 ou 3 réalisations, attire plus d\'entreprises.</div>');
+    };
+    o.render();
+  }
+  var CUNSUB=null, CONV=null;
+  function openConv(id){ var c=PRO.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
+    var sh=document.createElement('div'); sh.className='cpw-sheet cj-sheet frl-conv'; sh.setAttribute('data-rep','emploi:'+c.id);
+    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Retour">'+I('<path d="M15 18l-6-6 6-6"/>',22)+'</button><span class="cj-av sm frl-eav">'+esc(String(c.empNom||'E').charAt(0).toUpperCase())+'</span><div class="cpw-ht"><b>'+esc(c.empNom||'Entreprise')+'</b><span>🔒 Messagerie protégée</span></div></div><div class="cpw-scroll"><div class="cj-pg"><div class="frl-mc-w"></div><div class="cpw-log cps-thread"></div></div></div><div class="cpw-ft"><textarea class="cpw-in" maxlength="1500" placeholder="Écris ton message…"></textarea><button type="button" class="cpw-send" aria-label="Envoyer">'+I(P.send,20)+'</button></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    var cref=cCol().doc(c.id), sc=sh.querySelector('.cpw-scroll');
+    function card(x){ var m=x.mission||{}, st=x.missionStatut||'attente', closed=x.statut==='close';
+      return '<div class="frl-mc"><span class="frl-mc-k">'+I(P.brief,15)+'Proposition de mission</span><b>'+esc(m.titre||x.poste||'Mission')+'</b><small>'+esc([x.empNom,x.empVille,x.empSecteur].filter(Boolean).join(' · '))+'</small>'
+        +'<div class="frl-mc-g">'+[['Budget',m.budget?eur(m.budget)+' HT':'À discuter'],['Durée',m.duree],['Début',m.debut?new Date(m.debut+'T12:00:00').toLocaleDateString('fr-FR'):''],['Lieu',m.lieu]].filter(function(r){ return r[1]; }).map(function(r){ return '<div><span>'+r[0]+'</span><i>'+esc(r[1])+'</i></div>'; }).join('')+'</div>'
+        +(m.desc?'<p>'+esc(m.desc)+'</p>':'')
+        +(closed?'<div class="frl-mc-st">Cette conversation a été close par l\'entreprise.</div>'
+          :st==='acceptee'?'<div class="frl-mc-st ok">'+I(P.check,16)+'Mission acceptée · elle est dans tes missions</div><button type="button" class="frl-ib" data-frl="frl-cmiss">'+I(P.brief)+'Voir mes missions</button>'
+          :st==='declinee'?'<div class="frl-mc-st">Tu as décliné cette proposition.</div>'
+          :'<div class="frl-mc-b"><button type="button" class="cj-main" data-frl="frl-cacc">'+I(P.check,18)+'Accepter la mission</button><button type="button" class="frl-ib" data-frl="frl-cdec">Décliner</button></div><small class="frl-mc-h">Accepter ajoute la mission et le client dans « Missions & clients ». Tu peux d\'abord poser tes questions ici.</small>')+'</div>'; }
+    function render(x){ c=Object.assign({ id:c.id },x); PRO.convs=PRO.convs.map(function(z){ return z.id===c.id?c:z; });
+      sh.querySelector('.frl-mc-w').innerHTML=card(c);
+      sh.querySelector('.cpw-log').innerHTML=(c.messages||[]).map(function(m){ return '<div class="cpw-m '+(m.from==='cand'?'me':'them')+'"><p>'+esc(m.text)+'</p><span class="frl-mt">'+(m.from==='cand'?'Toi':esc(c.empNom||'Entreprise'))+' · '+(m.at?new Date(m.at).toLocaleString('fr-FR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }):'')+'</span></div>'; }).join('');
+      sh.querySelector('.cpw-ft').style.display=c.statut==='close'?'none':''; sc.scrollTop=sc.scrollHeight;
+      if(c.unreadCand){ c.unreadCand=false; cref.update({ unreadCand:false }).catch(function(){}); } }
+    function send(t,extra){ var n=nowI(), up=Object.assign({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:n }), lastAt:n, lastFrom:'cand', unreadEmp:true, updatedAt:n },extra||{});
+      return cref.update(up).then(function(){ var loc2=Object.assign({},c,extra||{}); loc2.messages=(c.messages||[]).concat([{ from:'cand', text:t, at:n }]); loc2.lastAt=n; render(loc2); }); }
+    render(c); CUNSUB=cref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
+    function close(){ if(CUNSUB){ CUNSUB(); CUNSUB=null; } CONV=null; sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); if(MSGS&&document.body.contains(MSGS.sh)) MSGS.render(); redraw(); }
+    sh.querySelector('.cpw-x').onclick=close;
+    sh.querySelector('.cpw-send').onclick=function(){ var ta=sh.querySelector('.cpw-in'), t=ta.value.trim(); if(!t) return; ta.value=''; send(t).catch(function(){ ta.value=t; toastMsg('Envoi impossible pour le moment'); }); };
+    CONV={ id:c.id,
+      acc:function(b){ b.disabled=true; accept(c).then(function(){ return send('✅ J\'accepte votre mission « '+((c.mission||{}).titre||c.poste||'')+' ». Échangeons ici pour fixer les derniers détails.',{ missionStatut:'acceptee', acceptedAt:nowI() }); })
+        .then(function(){ toastMsg('Mission acceptée : elle est dans tes missions 💼'); }).catch(function(){ b.disabled=false; toastMsg('Enregistrement impossible pour le moment'); }); },
+      dec:function(b){ if(!confirm('Décliner cette proposition ? L\'entreprise sera prévenue poliment.')) return; b.disabled=true;
+        send('Merci pour votre proposition. Je ne suis pas en mesure de l\'accepter pour le moment, mais n\'hésitez pas à revenir vers moi pour une prochaine mission.',{ missionStatut:'declinee' }).catch(function(){ b.disabled=false; toastMsg('Envoi impossible pour le moment'); }); },
+      miss:function(){ close(); openMiss('m'); } };
+    if(window.cpSheetArrows) cpSheetArrows(sc,sh.querySelector('.cpw-box'));
+  }
+  /* Accepter : le client et la mission arrivent dans « Missions & clients » */
+  function accept(c){ var m=c.mission||{}, nom=String(c.empNom||'Entreprise').trim();
+    if(D.missions.some(function(x){ return x.convId===c.id; })) return Promise.resolve();
+    var cl=D.clients.filter(function(x){ return String(x.nom||'').trim().toLowerCase()===nom.toLowerCase(); })[0];
+    var p=cl?Promise.resolve(cl):(function(){ var x={ id:null, nom:nom, contact:'', email:'', tel:'', ville:c.empVille||'', notes:'Client rencontré via CareerPulse.', createdAt:nowI() }; D.clients.push(x); return saveItem('frl_clients',x); })();
+    return p.then(function(k){ var x={ id:null, titre:m.titre||c.poste||'Mission', clientId:k.id, statut:'cours', montant:m.budget?Math.max(0,+m.budget):'', debut:m.debut||'', fin:'', notes:('Mission proposée via CareerPulse.'+(m.duree?' Durée : '+m.duree+'.':'')+(m.desc?' '+m.desc:'')).slice(0,500), convId:c.id, createdAt:nowI(), paidAt:'' };
+      D.missions.push(x); return saveItem('frl_missions',x); }); }
 
 
   /* ── Clics ── */
@@ -22222,7 +22489,13 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   function act(a,b){
     if(a==='frl-act'){ openAct(); return; }
     if(a==='frl-obj'){ openObj(); return; }
-    if(a==='frl-msg'){ sheet('Clients & messages','Les entreprises qui te proposent une mission',say('Ici arriveront les messages des entreprises qui te proposent une mission depuis ton <b>profil freelance</b>.')+'<div class="frl-empty">Aucun message pour l\'instant.</div>'); return; }
+    if(a==='frl-msg'){ openMsgs(); return; }
+    if(a==='frl-conv'){ openConv(b.getAttribute('data-id')); return; }
+    if(a==='frl-cacc' && CONV){ CONV.acc(b); return; } if(a==='frl-cdec' && CONV){ CONV.dec(b); return; } if(a==='frl-cmiss' && CONV){ CONV.miss(); return; }
+    if(a==='frl-vis'){ if(!(D.prof||{}).metier){ toastMsg('Indique d\'abord ton métier dans ton activité'); return; } var nv=!PRO.vis; publish(nv).then(function(){ toastMsg(nv?'✅ Ton profil est visible par les entreprises CareerPulse':'🔒 Ton profil est privé'); }); if(PROF) PROF.render(); return; }
+    if(a==='frl-sir'){ PRO.sir=null; sirCheck(); if(PROF) PROF.render(); return; }
+    if(a==='frl-padd'){ portForm(null); return; } if(a==='frl-ped'){ portForm(b.getAttribute('data-id')); return; }
+    if(a==='frl-pdel'){ if(!confirm('Supprimer cette réalisation ?')) return; var pid=b.getAttribute('data-id'); PRO.port=PRO.port.filter(function(x){ return x.id!==pid; }); savePort().then(function(){ if(PROF) PROF.render(); }); return; }
     if(a==='frl-prof'){ openProf(); return; }
     if(a==='frl-miss'){ openMiss('m'); return; }
     if(a==='frl-madd'){ openMEdit(null); return; }
@@ -22249,11 +22522,12 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
       if(a==='frl-dm'){ var dd=curDefi(); if(!dd) return; dd.manuel=Math.max(0,(dd.manuel||0)+(+b.getAttribute('data-d'))); saveDefi(dd).then(function(){ DEF.render(); if(dd.manuel===dd.cible) toastMsg('Défi réussi, bravo 🎉'); }); return; }
     }
   }
+  document.addEventListener('change',function(e){ var t=e.target.closest('[data-frl-tjm]'); if(!t) return; PRO.showTjm=t.checked; publish(PRO.vis,true); if(PROF) PROF.render(); });
   /* Changement d'étape directement dans la liste */
   document.addEventListener('change',function(e){ var s=e.target.closest('[data-frl-st]'); if(!s) return; var id=s.getAttribute('data-frl-st'), m=D.missions.filter(function(x){ return x.id===id; })[0]; if(!m) return;
     m.statut=s.value; m.paidAt=s.value==='payee'?(m.paidAt||new Date().toISOString()):''; saveItem('frl_missions',m).then(function(){ toastMsg(s.value==='payee'?'Mission payée : elle compte dans ton chiffre d\'affaires 💶':'Étape mise à jour ✓'); if(MISS) MISS.render(); }); });
 
-  window.cpFrl={ home:home, hero:hero, load:load, data:function(){ return D; }, objHtml:function(){ return objHtml(); } };
+  window.cpFrl={ home:home, hero:hero, load:load, data:function(){ return D; }, objHtml:function(){ return objHtml(); }, unread:function(){ return unread(); } };
 })();
 </script>
 
