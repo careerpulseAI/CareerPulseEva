@@ -2679,6 +2679,25 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
 @keyframes orS{ 0%{ opacity:0; transform:scale(.6); } 40%{ opacity:1; transform:scale(1.1); } 100%{ opacity:.85; transform:none; } }
 @media (prefers-reduced-motion:reduce){ .or-gift-s, .or-gift-lid, .or-gift-sp{ animation:none; opacity:1; } }
 
+/* ══ Hero simple · objectifs Freelance ══ */
+#s-profil .cps-fri{ display:flex; align-items:center; gap:8px; margin:10px 0 0; padding:9px 12px; border-radius:14px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22); font-size:.8rem; line-height:1.35; color:#fff; }
+#s-profil .cps-fri svg{ flex:none; }
+.fo-l{ display:grid; gap:10px; }
+.fo-c{ padding:14px; border-radius:18px; background:#fff; border:1px solid #eef1f5; box-shadow:0 18px 36px -32px rgba(15,23,42,.6); }
+.fo-c.past{ opacity:.8; }
+.fo-c-h{ display:flex; align-items:center; gap:10px; }
+.fo-c-h > div{ flex:1; min-width:0; } .fo-c-h b{ display:block; font-size:.95rem; color:#0f172a; } .fo-c-h small{ font-size:.74rem; color:#64748b; }
+.fo-ed{ flex:none; width:34px; height:34px; border-radius:11px; border:1px solid #e2e8f0; background:#fff; color:#475569; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.fo-n{ display:flex; align-items:baseline; gap:6px; margin:12px 0 6px; }
+.fo-n b{ font-size:1.4rem; color:#0f172a; } .fo-n span{ font-size:.8rem; color:#64748b; } .fo-n em{ margin-left:auto; font-style:normal; font-weight:900; color:#c2410c; }
+.fo-d{ display:block; margin-top:6px; font-size:.74rem; color:#64748b; }
+.fo-up{ width:100%; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:6px; height:40px; border-radius:12px; border:1.5px solid #fed7aa; background:#fff7ed; font:800 .82rem 'DM Sans',sans-serif; color:#c2410c; cursor:pointer; }
+.fo-bp, .fo-seg{ display:flex; padding:3px; border-radius:12px; background:#f1f5f9; }
+.fo-bp button, .fo-seg button{ flex:1; height:34px; border:0; border-radius:10px; background:transparent; font:800 .8rem 'DM Sans',sans-serif; color:#64748b; cursor:pointer; }
+.fo-bp button.on, .fo-seg button.on{ background:#fff; color:#0f172a; box-shadow:0 2px 8px -4px rgba(15,23,42,.35); }
+.fo-bil ul{ margin:6px 0 8px; padding-left:18px; } .fo-bil li{ margin:3px 0; }
+.fo-calc{ margin:-2px 0 0; font-size:.84rem; color:#9a3412; }
+
 </style>
 <script>
 /* ══ CareerPulse UI : fenêtre de confirmation du site, voix de Lisa, flèches de défilement (ordinateur), Infos diverses ══ */
@@ -18743,7 +18762,7 @@ window.cpSheetArrows=function(sc,host){
       else if(left){ m.push('Bonjour'+(n?' '+esc(n):'')+' 👋 Il te reste <b>'+left+' tâche'+(left>1?'s':'')+'</b> à faire. On en coche une aujourd\'hui ?'); act=['Voir mes tâches','tch']; }
       else { m.push('Bravo'+(n?' '+esc(n):'')+' 🎉 Toutes tes tâches sont faites. Ajoutes-en une nouvelle quand tu veux.'); act=['Voir mes tâches','tch']; }
       extra=presHtml(S.st.profil,PRO[S.st.profil].pres); }
-    else if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta semaine est terminée : faisons ton <b>bilan</b> ensemble, ça prend 2 minutes.'); act=['Faire mon bilan','bilan']; }
+    else if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta '+wkLabel(pb.week)+' est terminée : faisons son <b>bilan</b> ensemble, ça prend 2 minutes. Ensuite, tu choisis ton défi de cette semaine.'); act=['Faire mon bilan','bilan']; }
     else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
     else { var f=done(d), r=Math.max(0,d.cible-f), lab=dlab(d).toLowerCase();
       if(f>=d.cible){ m.push('Bravo '+esc(hi)+'ton défi est <b>réussi</b> 🎉 Tu peux faire ton bilan dès maintenant.'); act=['Faire mon bilan','bilan']; }
@@ -18762,7 +18781,12 @@ window.cpSheetArrows=function(sc,host){
 
   /* ── Hero ── */
   function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
-  function drawHero(){
+  function hClock(){ var d=new Date(); return d.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long', year:'numeric' }).replace(/^./,function(x){ return x.toUpperCase(); })+' · '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
+  function heroX(){ var f=$('cps-fri'); if(introOn()){ if(f) f.style.display='none'; return; } var sb=$('cps-sub'); if(sb){ sb.textContent=hClock(); sb.setAttribute('data-hclock','1'); } var gl=document.querySelector('#s-profil .cps-gauge-hd span'); if(gl) gl.textContent='Profil complété';
+    var g=document.querySelector('#s-profil .cps-gauge'); if(!f && g){ f=document.createElement('p'); f.id='cps-fri'; f.className='cps-fri'; g.parentNode.insertBefore(f,g.nextSibling); } if(f){ var d=new Date().getDay(); f.style.display=''; f.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18M8 15l2.5 2.5L16 12"/></svg><span>'+(d===5?'C\'est vendredi : fais ton petit bilan de la semaine avec Lisa, elle reprend tout ce que tu as noté.':(d===6||d===0)?'Ce week-end : prends 2 minutes pour ton petit bilan de la semaine avec Lisa.':'Vendredi : pense à faire ton petit bilan de la semaine avec Lisa.')+'</span>'; } }
+  setInterval(function(){ var sb=document.querySelector('[data-hclock]'); if(sb) sb.textContent=hClock(); },30000);
+  function drawHero(){ drawHero0(); heroX(); }
+  function drawHero0(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
     if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=!chosen()?ht._t0:({ frl:'Ton espace freelance', etu:'Ton espace étudiant', sal:'Ton espace salarié' })[S.st.profil]||ht._t0; }
     if(introOn()){ if(gl) gl.textContent='Choisis ton profil'; if($('cps-pct')) $('cps-pct').textContent=''; if($('cps-bar')) $('cps-bar').style.width='0%'; if($('cps-sub')) $('cps-sub').textContent='Lisa te présente les 4 profils de ton espace.'; if($('cps-next-t')) $('cps-next-t').textContent='Voir les 4 profils'; if($('cps-next')) $('cps-next').setAttribute('data-go','es-intro'); if(ht&&ht._t0) ht.textContent=ht._t0; return; }
@@ -18893,7 +18917,7 @@ window.cpSheetArrows=function(sc,host){
   /* ── Étudiant et Salarié : liste de tâches (à la place du défi) ── */
   function chosen(){ return !!S.st.profil && S.st.pfv===2; }
   /* ── À chaque arrivée dans Mon espace : Lisa présente les 4 profils en stream ── */
-  var INTRO=true, ITMR=null;
+  var INTRO=true, ITMR=null, ISKIP=false;
   function introOn(){ return INTRO || !chosen(); }
   var PCARD=[['dem','Demandeur d\'emploi · Reconversion','Tu cherches un emploi ou tu changes de métier : profil, CV, candidatures et défis de la semaine.'],['etu','Étudiant(e)','Tes cours, tes devoirs, ton école, ton stage ou ton alternance.'],['sal','Salarié(e)','Ton quotidien au travail, ton entretien annuel, ta formation et ton évolution.'],['frl','Freelance','Ton activité, tes clients, tes missions et ton chiffre d\'affaires.']];
   var PSAY={ dem:'Le premier, c\'est <b>Demandeur d\'emploi · Reconversion</b> : pour trouver un emploi ou changer de métier.', etu:'Ensuite, <b>Étudiant</b> : pour organiser tes cours, tes devoirs et trouver ton stage ou ton alternance.', sal:'Puis <b>Salarié</b> : pour ton quotidien au travail, ton entretien annuel et ton évolution.', frl:'Et enfin <b>Freelance</b> : pour gérer ton activité, tes clients et tes missions.' };
@@ -18911,7 +18935,8 @@ window.cpSheetArrows=function(sc,host){
     function eq(){ var C=[].slice.call(log.querySelectorAll('.cj-pcard')); C.forEach(function(c){ c.style.minHeight=''; }); var m=0; C.forEach(function(c){ m=Math.max(m,c.getBoundingClientRect().height); }); if(m) C.forEach(function(c){ c.style.minHeight=Math.ceil(m)+'px'; }); }
     if(!box._eq){ box._eq=1; window.addEventListener('resize',function(){ if(document.body.contains(box)) eq(); }); }
     var put0=put; put=function(x){ put0(x); if(x[0]==='c') eq(); };
-    if(reduce || box._skip){ Q.forEach(put); box.classList.add('done'); return; }
+    if(ISKIP) box._skip=true;
+    if(reduce || box._skip){ log.innerHTML=''; Q.forEach(put); box.classList.add('done'); return; }
     var i=0; function step(){ if(!document.body.contains(box)) return; if(box._skip){ log.innerHTML=''; Q.forEach(put); box.classList.add('done'); return; }
       if(i>=Q.length){ box.classList.add('done'); return; } var x=Q[i++];
       if(x[0]==='b'){ log.insertAdjacentHTML('beforeend','<div class="cj-intro-b typing"><span class="cj-dots"><i></i><i></i><i></i></span></div>'); var el=log.lastElementChild;
@@ -19341,7 +19366,7 @@ window.cpSheetArrows=function(sc,host){
     if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
     if(a==='pf'){ INTRO=false; S.st.profil=b.getAttribute('data-p'); S.st.pfv=2; saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]+' ✓'); drawAll(); return; }
     if(a==='pfch'){ INTRO=true; var hb=$('cj-home'); if(hb) hb.innerHTML=''; drawAll(); return; }
-    if(a==='iskip'){ var ib=b.closest('.cj-intro'); if(ib){ ib._skip=true; clearTimeout(ITMR); runIntro(ib); } return; }
+    if(a==='iskip'){ ISKIP=true; var ib=b.closest('.cj-intro'); if(ib){ ib._skip=true; clearTimeout(ITMR); ITMR=null; runIntro(ib); } return; }
     if(a==='tch'){ document.querySelectorAll('.cj-sheet').forEach(function(x){ if(x.querySelector('.cj-olink')) x.remove(); }); openTasks(); return; }
     if(a==='etuform'){ openEtuForm(); return; }
     if(a==='p2'){ openP2(); return; } if(a==='p2save'){ saveP2(b); return; } if(a==='p3'){ openP3(); return; } if(a==='p4'){ openP4(); return; }
@@ -21864,13 +21889,14 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   function ref(){ var u=user(); return u&&db()?db().collection('users').doc(u.uid):null; }
   function loc(k,v){ try{ if(v===undefined) return JSON.parse(localStorage.getItem('cpfrl_'+k)||'null'); localStorage.setItem('cpfrl_'+k,JSON.stringify(v)); }catch(e){ return null; } }
   function load(){
-    var u=user(); if(!u){ D.prof=loc('prof')||{}; D.clients=loc('clients')||[]; D.missions=loc('missions')||[]; D.defi=loc('defi'); D.loaded=true; return Promise.resolve(); }
+    var u=user(); if(!u){ D.prof=loc('prof')||{}; D.clients=loc('clients')||[]; D.missions=loc('missions')||[]; D.defi=loc('defi'); D.objs=((loc('objectifs')||{}).list)||[]; D.loaded=true; return Promise.resolve(); }
     if(D.uid===u.uid && (D.loaded||D.loading)) return D.loading||Promise.resolve();
     D.uid=u.uid; var r=ref(); if(!r){ D.loaded=true; return Promise.resolve(); }
     function all(c){ return r.collection(c).get().then(function(q){ var a=[]; q.forEach(function(d){ var x=d.data(); x.id=d.id; a.push(x); }); return a; }).catch(function(){ return []; }); }
     D.loading=Promise.all([ r.collection('freelance').doc('profil').get().then(function(d){ return d.exists?d.data():{}; }).catch(function(){ return {}; }),
-      r.collection('freelance').doc('defi').get().then(function(d){ return d.exists?d.data():null; }).catch(function(){ return null; }), all('frl_clients'), all('frl_missions') ])
-      .then(function(v){ D.prof=v[0]||{}; D.defi=v[1]; D.clients=v[2]; D.missions=v[3]; D.loaded=true; D.loading=null; redraw(); });
+      r.collection('freelance').doc('defi').get().then(function(d){ return d.exists?d.data():null; }).catch(function(){ return null; }), all('frl_clients'), all('frl_missions'),
+      r.collection('freelance').doc('objectifs').get().then(function(d){ return d.exists?d.data():null; }).catch(function(){ return null; }) ])
+      .then(function(v){ D.prof=v[0]||{}; D.defi=v[1]; D.clients=v[2]; D.missions=v[3]; D.objs=(v[4]&&v[4].list)||[]; D.loaded=true; D.loading=null; redraw(); });
     return D.loading;
   }
   function saveDoc(kind,data){ var r=ref(); if(!r){ loc(kind,data); return Promise.resolve(); } return r.collection('freelance').doc(kind).set(data).catch(function(){ toastMsg('Enregistrement impossible pour le moment'); }); }
@@ -21907,11 +21933,11 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     else if(p<100){ m.push((n?'Bonjour '+esc(n)+' 👋 ':'Bienvenue dans ton espace Freelance 👋 ')+'Commence par décrire <b>ton activité</b> : métier, statut, tarif. Ton activité est complétée à <b>'+p+' %</b>.'); act=['Décrire mon activité','frl-act']; }
     else if(!D.missions.length){ m.push('Ton activité est prête 👏 Ajoute ta <b>première mission</b>, même au stade de prospect : je t\'aide à la suivre jusqu\'au paiement.'); act=['Ajouter une mission','frl-madd']; }
     else if(at){ m.push('Tu as <b>'+at+' mission'+(at>1?'s':'')+' terminée'+(at>1?'s':'')+'</b> pas encore payée'+(at>1?'s':'')+'. Pense à vérifier que ton client a bien tout reçu.'); act=['Voir mes missions','frl-miss']; }
-    else if(!d){ m.push('Choisis ton <b>défi freelance de la semaine</b> : prospecter, envoyer des devis, relancer… Je t\'aide à le tenir.'); act=['Choisir mon défi','frl-defi']; }
-    else { var r=Math.max(0,d.cible-(d.manuel||0)); m.push(r?'Ton défi « '+esc(DEFIS[d.type][0].toLowerCase())+' » avance : <b>'+(d.manuel||0)+' / '+d.cible+'</b>. Encore '+r+' et c\'est gagné 💪':'Défi de la semaine réussi 🎉 Bravo, la régularité fait les freelances qui durent.'); act=['Voir mon défi','frl-defi']; }
+    else if(!objs().some(function(o){ return oState(o)!=='past'; })){ m.push('Fixe-toi un <b>objectif simple</b> : augmenter ton chiffre d\'affaires de 2 %, trouver de nouveaux clients, décrocher un partenariat… Je le suis avec toi.'); act=['Fixer mon objectif','frl-defi']; }
+    else { var oc=objs().filter(function(o){ return oState(o)==='cur'; })[0]; m.push(oc?'Ton objectif '+oLine(oc):'Ton prochain objectif est prêt : '+oLine(objs().filter(function(o){ return oState(o)==='next'; })[0])); act=['Voir mes objectifs','frl-defi']; }
     return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">Freelance · changer</button></div>'
       +m.map(function(x){ return '<p>'+x+'</p>'; }).join('')+(act?'<button type="button" class="cj-btn" data-frl="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')
-      +(window.cpStream&&cpStream.pres?cpStream.pres('frl',['<b>Mon activité & mes objectifs</b> : ce que tu proposes, ton tarif et ton défi de la semaine.','<b>Profil & portfolio</b> : ton profil freelance, tes réalisations et les avis de tes clients.','<b>Missions & clients</b> : chaque mission, du premier contact jusqu\'au paiement.','<b>Clients & messages</b> : les entreprises qui te proposent une mission.']):'')+'</div></div>';
+      +(window.cpStream&&cpStream.pres?cpStream.pres('frl',['<b>Mon activité & mes objectifs</b> : ce que tu proposes, ton tarif et tes objectifs (chiffre d\'affaires, clients, partenariats).','<b>Profil & portfolio</b> : ton profil freelance, tes réalisations et les avis de tes clients.','<b>Missions & clients</b> : chaque mission, du premier contact jusqu\'au paiement.','<b>Clients & messages</b> : les entreprises qui te proposent une mission.']):'')+'</div></div>';
   }
   function home(){
     load();
@@ -22022,27 +22048,85 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
       b.disabled=true; if(!id) D.clients.push(x); else D.clients=D.clients.map(function(y){ return y.id===id?x:y; });
       saveItem('frl_clients',x).then(function(r){ toastMsg(id?'Client mis à jour ✓':'Client ajouté ✓'); o.close(); if(cb) cb(r||x); if(MISS&&document.body.contains(MISS.sh)) MISS.render(); }).catch(function(){ b.disabled=false; toastMsg('Enregistrement impossible pour le moment'); }); };
   }
-  function openDefi(){
-    var o=sheet('Mon défi de la semaine','Un objectif freelance clair, chaque semaine',''); DEF=o; var d=curDefi(); o.pick=d?{ type:d.type, cible:d.cible }:{ type:'pros', cible:3 }; o.change=!d;
-    o.render=function(){ var d=curDefi();
-      if(d && !o.change){ var f=d.manuel||0;
-        o.body.innerHTML=say(f>=d.cible?'Défi réussi 🎉 Tu as tenu ton objectif cette semaine : bravo !':'Note chaque action dès qu\'elle est faite : je compte avec toi.')
-          +'<div class="cj-form" style="text-align:center"><b style="font-size:1rem">'+esc(DEFIS[d.type][0])+'</b><div class="frl-defi-n"><button type="button" data-frl="frl-dm" data-d="-1" aria-label="Moins">−</button><b>'+f+' / '+d.cible+'</b><button type="button" data-frl="frl-dm" data-d="1" aria-label="Plus">+</button></div>'
-          +'<i class="cj-bar"><i style="width:'+Math.min(100,Math.round(f/d.cible*100))+'%"></i></i><span class="frl-hint">'+esc(DEFIS[d.type][1])+' cette semaine</span>'
-          +'<button type="button" class="cj-main alt" data-frl="frl-dch">'+I(P.pen,18)+'Changer de défi</button></div>';
-        return; }
-      o.body.innerHTML=say('Choisis ton défi et ton objectif pour la semaine. Un défi réaliste vaut mieux qu\'un défi impossible 😉')
-        +'<div class="frl-types">'+Object.keys(DEFIS).map(function(k){ return '<button type="button" class="'+(o.pick.type===k?'on':'')+'" data-frl="frl-dt" data-t="'+k+'"><span class="cj-ic '+(k==='rel'||k==='decl'?'g':'b')+'">'+I(DEFIS[k][2])+'</span>'+esc(DEFIS[k][0])+'</button>'; }).join('')+'</div>'
-        +'<div class="frl-chips">'+[1,2,3,5,10].map(function(n){ return '<button type="button" class="'+(o.pick.cible===n?'on':'')+'" data-frl="frl-dn" data-n="'+n+'">'+n+'</button>'; }).join('')+'</div>'
-        +'<button type="button" class="cj-main" data-frl="frl-dgo">'+I(P.check,18)+'Je relève ce défi</button>';
-    };
-    o.render();
-  }
+  /* ── Mes objectifs freelance : simples, écrits par le membre, suivis par Lisa ── */
+  var OT={ ca:['Augmenter mon chiffre d\'affaires','€',P.euro||'<path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>'], cli:['Trouver de nouveaux clients','clients',P.users], par:['Décrocher des partenariats','partenariats',P.brief], autre:['Autre objectif','',P.target] };
+  var OPER={ w:['Semaine','la semaine','cette semaine'], m:['Mois','le mois','ce mois-ci'], y:['Année','l\'année','cette année'] }, OBO=null;
+  function objs(){ return D.objs||(D.objs=[]); }
+  function saveObjs(){ return saveDoc('objectifs',{ list:objs(), at:new Date().toISOString() }); }
+  function two(n){ return ('0'+n).slice(-2); }
+  function pKey(p,next){ var d=new Date(); d.setHours(12,0,0,0); if(p==='w'){ var m=new Date(wk()+'T12:00:00'); if(next) m.setDate(m.getDate()+7); return m.getFullYear()+'-'+two(m.getMonth()+1)+'-'+two(m.getDate()); } if(p==='m'){ var x=new Date(d.getFullYear(),d.getMonth()+(next?1:0),1); return x.getFullYear()+'-'+two(x.getMonth()+1); } return String(d.getFullYear()+(next?1:0)); }
+  function pLab(p,key){ if(p==='w'){ var a=new Date(key+'T12:00:00'); return 'semaine du '+a.getDate()+' '+a.toLocaleDateString('fr-FR',{ month:'long' }); } if(p==='m'){ var q=key.split('-'); return new Date(+q[0],+q[1]-1,1).toLocaleDateString('fr-FR',{ month:'long', year:'numeric' }); } return 'année '+key; }
+  function oEnd(o){ if(o.per==='w'){ var e=new Date(o.key+'T12:00:00'); e.setDate(e.getDate()+6); return e; } if(o.per==='m'){ var q=o.key.split('-'); return new Date(+q[0],+q[1],0,12); } return new Date(+o.key,11,31,12); }
+  function oLeft(o){ var t=new Date(); t.setHours(12,0,0,0); return Math.max(0,Math.round((oEnd(o)-t)/864e5)); }
+  function oState(o){ var c=pKey(o.per); return o.key===c?'cur':o.key>c?'next':'past'; }
+  function oUnit(o){ return o.unite!=null?o.unite:(OT[o.type]||OT.autre)[1]; }
+  function fN(n,u){ n=+n||0; return u==='€'?eur(n):(n.toLocaleString('fr-FR')+(u?' '+u:'')); }
+  function oPc(o){ var c=+o.cible||0; return c>0?Math.min(100,Math.round((+o.actuel||0)/c*100)):0; }
+  function oLine(o){ var u=oUnit(o), pc=oPc(o), st=oState(o), rest=Math.max(0,(+o.cible||0)-(+o.actuel||0)), j=oLeft(o);
+    if(st==='next') return '« '+esc(o.titre)+' » commence '+(o.per==='m'?'en ':'la ')+esc(pLab(o.per,o.key))+' : objectif <b>'+fN(o.cible,u)+'</b>.';
+    if(st==='past') return '« '+esc(o.titre)+' » ('+esc(pLab(o.per,o.key))+') : <b>'+fN(o.actuel,u)+'</b> sur '+fN(o.cible,u)+', soit <b>'+pc+' %</b>'+(pc>=100?' 🎉':'')+'.';
+    return '« '+esc(o.titre)+' » : <b>'+fN(o.actuel,u)+'</b> sur '+fN(o.cible,u)+' (<b>'+pc+' %</b>)'+(rest>0?', il reste <b>'+fN(rest,u)+'</b> en '+j+' jour'+(j>1?'s':'')+(u==='€'&&j>0?', soit environ '+fN(Math.ceil(rest/j),u)+' par jour':''):', objectif atteint 🎉')+'.'; }
+  function objBilan(p){ var L=objs().filter(function(o){ return o.per===p; }), C=L.filter(function(o){ return oState(o)==='cur'; }), N=L.filter(function(o){ return oState(o)==='next'; }), Pz=L.filter(function(o){ return oState(o)==='past'; }).sort(function(a,b){ return String(b.key).localeCompare(String(a.key)); }).slice(0,3);
+    if(!L.length) return 'Tu n\'as pas encore d\'objectif sur '+OPER[p][1]+'. Fixe-en un simple, par exemple : augmenter ton chiffre d\'affaires de 2 %, trouver 2 nouveaux clients ou décrocher un partenariat.';
+    var h='Voici ton bilan sur '+OPER[p][1]+', d\'après ce que tu as noté :<ul>'+C.concat(N).concat(Pz).map(function(o){ return '<li>'+oLine(o)+'</li>'; }).join('')+'</ul>';
+    var lag=C.filter(function(o){ var tot=(oEnd(o)-new Date(o.per==='w'?o.key+'T12:00:00':o.per==='m'?o.key+'-01T12:00:00':o.key+'-01-01T12:00:00'))/864e5+1, done=tot-oLeft(o); return oPc(o)<Math.round(done/tot*100)-15; });
+    h+=lag.length?'Mon conseil : « '+esc(lag[0].titre)+' » est un peu en retard sur le calendrier. Bloque un créneau cette semaine rien que pour lui (prospection, relance, devis).':C.length?'Tu es dans le bon rythme : continue comme ça, et mets à jour tes chiffres dès qu\'ils bougent.':'Pense à mettre à jour tes chiffres pour que je puisse suivre ta progression.';
+    return h; }
+  function objHtml(){ var C=objs().filter(function(o){ return oState(o)!=='next'; }).sort(function(a,b){ return String(b.key).localeCompare(String(a.key)); }).slice(0,5); if(!C.length) return ''; return '<p class="es-h">Tes objectifs freelance</p><ul class="cc-fx">'+C.map(function(o){ return '<li>'+oLine(o)+'</li>'; }).join('')+'</ul>'; }
+  function oCard(o){ var u=oUnit(o), pc=oPc(o), st=oState(o), T=OT[o.type]||OT.autre;
+    return '<div class="fo-c '+st+'"><div class="fo-c-h"><span class="cj-ic '+(o.type==='ca'?'g':'b')+' sm">'+I(T[2],18)+'</span><div><b>'+esc(o.titre)+'</b><small>'+OPER[o.per][0]+' · '+esc(pLab(o.per,o.key))+(st==='cur'?' · '+oLeft(o)+' j restants':st==='next'?' · à venir':' · terminé')+'</small></div><button type="button" class="fo-ed" data-frl="frl-oed" data-id="'+o.id+'" aria-label="Modifier">'+I(P.pen,15)+'</button></div>'
+      +'<div class="fo-n"><b>'+fN(o.actuel,u)+'</b><span>sur '+fN(o.cible,u)+'</span><em>'+pc+' %</em></div><i class="cj-bar"><i style="width:'+pc+'%"></i></i>'
+      +(o.depart?'<small class="fo-d">Point de départ : '+fN(o.depart,u)+(o.pct?' · objectif +'+esc(o.pct)+' %':'')+'</small>':'')
+      +(st!=='next'?'<button type="button" class="fo-up" data-frl="frl-oup" data-id="'+o.id+'">'+I(P.plus,15)+'Mettre à jour mon chiffre</button>':'')+'</div>'; }
+  function openDefi(){ var o=sheet('Mes objectifs','Simples, chiffrés, suivis par Lisa',''); DEF=o; OBO=o; o.bp=o.bp||'m';
+    o.render=function(){ var L=objs(), C=L.filter(function(x){ return oState(x)==='cur'; }), N=L.filter(function(x){ return oState(x)==='next'; }), Pz=L.filter(function(x){ return oState(x)==='past'; }).sort(function(a,b){ return String(b.key).localeCompare(String(a.key)); });
+      o.body.innerHTML=say(L.length?'Tes objectifs, avec tes propres chiffres. Mets-les à jour quand ils bougent : je fais le bilan avec toi.':'Fixe-toi un objectif <b>simple et chiffré</b> : augmenter ton chiffre d\'affaires de 2 %, trouver de nouveaux clients, décrocher un partenariat… C\'est toi qui écris, je le suis avec toi.')
+        +'<button type="button" class="cj-main" data-frl="frl-onew">'+I(P.plus,18)+'Nouvel objectif</button>'
+        +(C.length?'<p class="es-h">En cours</p><div class="fo-l">'+C.map(oCard).join('')+'</div>':'')
+        +(N.length?'<p class="es-h">À venir</p><div class="fo-l">'+N.map(oCard).join('')+'</div>':'')
+        +(Pz.length?'<p class="es-h">Terminés</p><div class="fo-l">'+Pz.slice(0,6).map(oCard).join('')+'</div>':'')
+        +'<p class="es-h">Le bilan avec Lisa</p><div class="fo-bp">'+['w','m','y'].map(function(p){ return '<button type="button" class="'+(o.bp===p?'on':'')+'" data-frl="frl-obil" data-p="'+p+'">'+OPER[p][0]+'</button>'; }).join('')+'</div>'
+        +'<div class="cj-say fo-bil">'+av(true)+'<div>'+objBilan(o.bp)+'</div></div>'; };
+    o.render(); return o; }
+  function oModal(){ var opt={ lisa:true, dismiss:false, buttons:[] }, M=cpModal(opt); M.el.classList.add('ci-pop','pl-pop');
+    M.put=function(h,bt){ opt.buttons=bt; M.set(h+'<div class="cpm-btns">'+bt.map(function(b,i){ return '<button type="button" class="'+(b.cls||'')+'" data-mi="'+i+'">'+b.t+'</button>'; }).join('')+'</div>'); }; return M; }
+  function objForm(id){ var ex=id?objs().filter(function(x){ return x.id===id; })[0]:null, v=ex?JSON.parse(JSON.stringify(ex)):{ type:'ca', titre:OT.ca[0], per:'m', next:true, depart:'', pct:'2', cible:'', note:'' }, M=oModal();
+    if(ex) v.next=oState(ex)==='next';
+    function g(i){ var e=document.getElementById(i); return e?e.value.trim():null; }
+    function keep(){ if(g('fo-t')!=null){ v.titre=g('fo-t'); v.depart=g('fo-d'); v.note=g('fo-no'); if(v.type==='ca') v.pct=g('fo-p'); else v.cible=g('fo-c'); } }
+    function calc(){ var d=parseFloat(String(v.depart).replace(/\s/g,'').replace(',','.'))||0, p=parseFloat(String(v.pct).replace(',','.'))||0; return v.type==='ca'?Math.round(d*(1+p/100)):(parseFloat(String(v.cible).replace(',','.'))||0); }
+    function draw(){ var u=OT[v.type][1], pl2=v.per==='w'?'semaine':v.per==='m'?'mois':'année';
+      var h='<b class="cpm-t">'+(ex?'Mon objectif':'Nouvel objectif')+'</b><p class="cpm-p">Un objectif simple et chiffré, c\'est le meilleur moyen d\'avancer. Dis-moi où tu en es et ce que tu vises.</p>'
+        +'<div class="ci-pk">'+Object.keys(OT).map(function(k){ return '<button type="button" class="'+(v.type===k?'on':'')+'" data-ot="'+k+'">'+I(OT[k][2],14)+OT[k][0].replace('Augmenter mon chiffre d\'affaires','Chiffre d\'affaires').replace('Trouver de nouveaux clients','Clients').replace('Décrocher des partenariats','Partenariats').replace('Autre objectif','Autre')+'</button>'; }).join('')+'</div>'
+        +'<div class="ci-fm"><label>Mon objectif<input id="fo-t" maxlength="80" value="'+esc(v.titre)+'"></label>'
+        +'<div class="pl-lb">Période</div><div class="fo-seg">'+['w','m','y'].map(function(p){ return '<button type="button" class="'+(v.per===p?'on':'')+'" data-op="'+p+'">'+OPER[p][0]+'</button>'; }).join('')+'</div>'
+        +'<div class="fo-seg">'+({ w:[[false,'Cette semaine'],[true,'La semaine prochaine']], m:[[false,'Ce mois-ci'],[true,'Le mois prochain']], y:[[false,'Cette année'],[true,'L\'année prochaine']] })[v.per].map(function(x){ return '<button type="button" class="'+(!!v.next===x[0]?'on':'')+'" data-on="'+(x[0]?1:0)+'">'+x[1]+'</button>'; }).join('')+'</div>'
+        +'<label>Ce que j\'ai fait '+(v.per==='w'?'la semaine dernière':v.per==='m'?'le mois dernier':'l\'année dernière')+(u?' ('+u+')':'')+' <em>'+(v.type==='ca'?'':'(facultatif)')+'</em><input id="fo-d" inputmode="decimal" maxlength="12" value="'+esc(v.depart)+'" placeholder="'+(v.type==='ca'?'Ex : 3000':'Ex : 2')+'"></label>'
+        +(v.type==='ca'?'<label>Je veux l\'augmenter de (%)<input id="fo-p" inputmode="decimal" maxlength="5" value="'+esc(v.pct)+'" placeholder="Ex : 2"></label><p class="fo-calc">Objectif : <b id="fo-cv">'+fN(calc(),'€')+'</b></p>'
+          :'<label>Mon objectif chiffré'+(u?' ('+u+')':'')+'<input id="fo-c" inputmode="decimal" maxlength="12" value="'+esc(v.cible)+'" placeholder="Ex : 3"></label>')
+        +'<label>Note <em>(facultatif)</em><input id="fo-no" maxlength="140" value="'+esc(v.note)+'" placeholder="Ex : relancer mes anciens clients, LinkedIn"></label></div><p class="ci-fm-e" id="fo-e"></p>';
+      var bt=[{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } }];
+      if(ex) bt.push({ t:'Supprimer', cls:'gh red', fn:function(){ D.objs=objs().filter(function(x){ return x.id!==ex.id; }); saveObjs(); M.close(); toastMsg('Objectif supprimé'); if(OBO) OBO.render(); redraw(); } });
+      bt.push({ t:'Enregistrer', cls:'pri', fn:function(){ keep(); var c=calc(), e=document.getElementById('fo-e'); if(!v.titre){ e.textContent='Écris ton objectif.'; return; } if(v.type==='ca' && !(parseFloat(v.depart)>0)){ e.textContent='Indique ton chiffre d\'affaires de départ.'; return; } if(!(c>0)){ e.textContent='Indique un objectif chiffré.'; return; }
+        var rec={ id:ex?ex.id:'o'+Date.now().toString(36), type:v.type, titre:v.titre, per:v.per, key:pKey(v.per,!!v.next), depart:parseFloat(String(v.depart).replace(',','.'))||0, pct:v.type==='ca'?v.pct:'', cible:c, unite:OT[v.type][1], actuel:ex&&ex.key===pKey(v.per,!!v.next)?(ex.actuel||0):0, note:v.note, hist:ex?(ex.hist||[]):[], cree:ex?ex.cree:new Date().toISOString() };
+        if(ex) D.objs=objs().map(function(x){ return x.id===ex.id?rec:x; }); else objs().push(rec);
+        saveObjs(); M.close(); toastMsg(ex?'Objectif mis à jour ✓':'C\'est noté : objectif '+fN(c,rec.unite)+' sur '+OPER[v.per][1]+' 💪'); if(OBO && document.body.contains(OBO.sh)){ OBO.bp=v.per; OBO.render(); } redraw(); } });
+      M.put(h,bt);
+      M.body.querySelectorAll('[data-ot]').forEach(function(b){ b.onclick=function(){ keep(); var k=b.getAttribute('data-ot'); if(!v.titre || Object.keys(OT).some(function(z){ return OT[z][0]===v.titre; })) v.titre=OT[k][0]==='Autre objectif'?'':OT[k][0]; v.type=k; draw(); }; });
+      M.body.querySelectorAll('[data-op]').forEach(function(b){ b.onclick=function(){ keep(); v.per=b.getAttribute('data-op'); draw(); }; });
+      M.body.querySelectorAll('[data-on]').forEach(function(b){ b.onclick=function(){ keep(); v.next=b.getAttribute('data-on')==='1'; draw(); }; });
+      var upd=function(){ keep(); var cv=document.getElementById('fo-cv'); if(cv) cv.textContent=fN(calc(),'€'); }; ['fo-d','fo-p'].forEach(function(i){ var e=document.getElementById(i); if(e) e.oninput=upd; }); }
+    draw(); }
+  function objUpd(id){ var o=objs().filter(function(x){ return x.id===id; })[0]; if(!o) return; var u=oUnit(o), M=oModal();
+    M.put('<b class="cpm-t">Où en es-tu ?</b><p class="cpm-p">« '+esc(o.titre)+' » · objectif <b>'+fN(o.cible,u)+'</b> sur '+esc(pLab(o.per,o.key))+'.</p><div class="ci-fm"><label>Mon total actuel'+(u?' ('+u+')':'')+'<input id="fo-a" inputmode="decimal" maxlength="12" value="'+esc(o.actuel||'')+'" placeholder="Ex : '+(u==='€'?'1200':'1')+'"></label><label>Un mot sur ta progression <em>(facultatif)</em><input id="fo-an" maxlength="140" placeholder="Ex : 2 devis signés cette semaine"></label></div><p class="ci-fm-e" id="fo-ae"></p>',
+      [{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } },{ t:'Enregistrer', cls:'pri', fn:function(){ var a=parseFloat(String(document.getElementById('fo-a').value).replace(/\s/g,'').replace(',','.')); if(isNaN(a)||a<0){ document.getElementById('fo-ae').textContent='Indique un nombre.'; return; }
+        o.actuel=a; (o.hist=o.hist||[]).push({ at:new Date().toISOString(), v:a, note:document.getElementById('fo-an').value.trim() }); if(o.hist.length>60) o.hist.shift(); saveObjs(); var pc=oPc(o);
+        M.put('<div class="or-gift">'+(pc>=100&&window.CP_GIFT?window.CP_GIFT:'')+'<b class="cpm-t">'+(pc>=100?'Objectif atteint, bravo !':'C\'est noté ✓')+'</b><p class="cpm-p">'+oLine(o)+'</p></div>',[{ t:'Fermer', cls:'pri', fn:function(){ M.close(); } }]); if(OBO && document.body.contains(OBO.sh)) OBO.render(); redraw(); } }]); }
   function saveDefi(d){ D.defi=d; return saveDoc('defi',d); }
   function openObj(){ var p=pct(), d=curDefi();
     sheet('Mon activité & mes objectifs','Ce que tu proposes et ton cap de la semaine',say('Ton activité décrite, et un objectif clair chaque semaine : c\'est la base d\'une activité freelance qui dure.')
       +'<button type="button" class="cj-box" data-frl="frl-act"><span class="cj-ic b sm">'+I(P.id,20)+'</span><span class="cj-box-t"><b>Mon activité</b><small>Métier, statut, tarif, disponibilité · '+p+' % complétée</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
-      +'<button type="button" class="cj-box" data-frl="frl-defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Mon défi de la semaine</b><small>'+(d?esc(DEFIS[d.type][0])+' · '+(d.manuel||0)+'/'+d.cible:'Prospecter, envoyer des devis, relancer…')+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'); }
+      +'<button type="button" class="cj-box" data-frl="frl-defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Mes objectifs</b><small>'+(function(){ var oc=objs().filter(function(o){ return oState(o)==='cur'; }); return oc.length?esc(oc[0].titre)+' · '+oPc(oc[0])+' %'+(oc.length>1?' · +'+(oc.length-1):''):'Chiffre d\'affaires, clients, partenariats…'; })()+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'); }
   function openProf(){ var x=D.prof||{}, has=!!x.metier;
     sheet('Profil & portfolio','Ce que verront tes futurs clients',say(has?'Voici ton <b>profil freelance</b> tel qu\'il sera présenté aux entreprises, quand tu choisiras d\'être visible.':'Décris d\'abord ton activité : ton profil freelance se construit à partir d\'elle.')
       +(has?'<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(x.nom||'')+'</b><small>'+esc(x.metier)+(x.ville?' · '+esc(x.ville):'')+'</small></div>'+(x.tjm?'<span class="frl-amt">'+eur(x.tjm)+' / jour</span>':'')+'</div>'
@@ -22065,6 +22149,8 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     if(a==='frl-miss'){ openMiss('m'); return; }
     if(a==='frl-madd'){ openMEdit(null); return; }
     if(a==='frl-defi'){ openDefi(); return; }
+    if(a==='frl-onew'){ objForm(null); return; } if(a==='frl-oed'){ objForm(b.getAttribute('data-id')); return; } if(a==='frl-oup'){ objUpd(b.getAttribute('data-id')); return; }
+    if(a==='frl-obil' && OBO){ OBO.bp=b.getAttribute('data-p'); OBO.render(); return; }
     if(a==='frl-tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
     if(a==='frl-tadd'){ addTag(); return; }
     if(a==='frl-tdel' && ACT){ ACT.tags.splice(+b.getAttribute('data-i'),1); $('frl-tags').innerHTML=ACT.tagsHtml(); return; }
@@ -22089,7 +22175,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   document.addEventListener('change',function(e){ var s=e.target.closest('[data-frl-st]'); if(!s) return; var id=s.getAttribute('data-frl-st'), m=D.missions.filter(function(x){ return x.id===id; })[0]; if(!m) return;
     m.statut=s.value; m.paidAt=s.value==='payee'?(m.paidAt||new Date().toISOString()):''; saveItem('frl_missions',m).then(function(){ toastMsg(s.value==='payee'?'Mission payée : elle compte dans ton chiffre d\'affaires 💶':'Étape mise à jour ✓'); if(MISS) MISS.render(); }); });
 
-  window.cpFrl={ home:home, hero:hero, load:load, data:function(){ return D; } };
+  window.cpFrl={ home:home, hero:hero, load:load, data:function(){ return D; }, objHtml:function(){ return objHtml(); } };
 })();
 </script>
 
@@ -23541,7 +23627,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     return m; }
   function orRow(t){ var st=tSt(t); return '<div class="or-t s-'+st+'"><button type="button" class="or-t-b" data-cj="es-or-ed" data-id="'+t.id+'"><span class="or-t-h">'+(t.heure?esc(t.heure):'—')+'</span><span class="or-t-x"><b>'+esc(t.titre||'Tâche')+'</b>'+((st==='pasfait'||st==='annule')&&t.raison?'<small>Raison : '+esc(t.raison)+'</small>':t.rappel&&t.rappel.on&&!t.rappel.sent?'<small>'+I(BELL,10)+' Rappel le '+esc(fmtD(t.rappel.date))+'</small>':'')+(t.description?'<small class="ds">'+esc(String(t.description).split(/\n+/).filter(function(x){ return x.trim(); }).slice(0,2).join('\n'))+'</small>':'')+'</span>'+I(P.chev,15)+'</button></div>'; }
   var SV={ ok:'<path d="M20 6 9 17l-5-5"/>', no:'<path d="M18 6 6 18M6 6l12 12"/>', an:'<circle cx="12" cy="12" r="9"/><path d="m5.6 5.6 12.8 12.8"/>', undo:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>' };
-  var GIFT='<svg class="or-gift-s" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true"><defs><linearGradient id="orgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/></linearGradient><linearGradient id="orgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><g class="or-gift-sp" fill="#f59e0b"><circle cx="20" cy="30" r="3"/><circle cx="100" cy="24" r="3.5"/><circle cx="108" cy="62" r="2.5"/><circle cx="14" cy="70" r="2.5"/><path d="M60 4l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g><rect x="26" y="56" width="68" height="50" rx="8" fill="url(#orgA)"/><rect x="54" y="56" width="12" height="50" fill="url(#orgB)"/><g class="or-gift-lid"><rect x="20" y="42" width="80" height="18" rx="6" fill="url(#orgA)"/><rect x="54" y="42" width="12" height="18" fill="url(#orgB)"/><path d="M60 42c-6-12-22-16-24-6-2 8 14 8 24 6zM60 42c6-12 22-16 24-6 2 8-14 8-24 6z" fill="url(#orgB)"/></g></svg>';
+  var GIFT=window.CP_GIFT='<svg class="or-gift-s" viewBox="0 0 120 120" width="96" height="96" aria-hidden="true"><defs><linearGradient id="orgA" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7c3aed"/><stop offset="1" stop-color="#c084fc"/></linearGradient><linearGradient id="orgB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><g class="or-gift-sp" fill="#f59e0b"><circle cx="20" cy="30" r="3"/><circle cx="100" cy="24" r="3.5"/><circle cx="108" cy="62" r="2.5"/><circle cx="14" cy="70" r="2.5"/><path d="M60 4l3 7 7 3-7 3-3 7-3-7-7-3 7-3z"/></g><rect x="26" y="56" width="68" height="50" rx="8" fill="url(#orgA)"/><rect x="54" y="56" width="12" height="50" fill="url(#orgB)"/><g class="or-gift-lid"><rect x="20" y="42" width="80" height="18" rx="6" fill="url(#orgA)"/><rect x="54" y="42" width="12" height="18" fill="url(#orgB)"/><path d="M60 42c-6-12-22-16-24-6-2 8 14 8 24 6zM60 42c6-12 22-16 24-6 2 8-14 8-24 6z" fill="url(#orgB)"/></g></svg>';
   function stHtml(t){ var st=tSt(t);
     if(st==='todo') return '<div class="or-acts"><button type="button" class="ok" data-os="fait">'+I(SV.ok,20)+'<span>Fait</span></button><button type="button" class="no" data-os="pasfait">'+I(SV.no,19)+'<span>Pas fait</span></button><button type="button" class="an" data-os="annule">'+I(SV.an,19)+'<span>Annuler</span></button></div>';
     return '<div class="or-done '+st+'"><span class="or-done-b">'+I(st==='fait'?SV.ok:st==='annule'?SV.an:SV.no,18)+(st==='fait'?'Fait':st==='annule'?'Annulée':'Pas fait')+'</span>'+((st!=='fait')&&t.raison?'<small>Raison : '+esc(t.raison)+'</small>':'')+'<button type="button" class="or-undo" data-os="todo">'+I(SV.undo,13)+'Remettre à faire</button></div>'; }
@@ -23733,6 +23819,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
       +'<p class="es-h">Tes 4 repères</p><div class="cc-ax">'+s.axes.map(function(a){ var L=lev(a[2]); return '<div class="cc-ax-r"><div><b>'+a[0]+'</b><em class="'+L[1]+'">'+L[0]+'</em><span>'+(a[2]==null?'—':a[2]+' %')+'</span></div><i class="cc-bar"><i style="width:'+a[1]+'%"></i></i><small>'+a[3]+'</small></div>'; }).join('')+'</div>'
       +'<p class="es-h">Les 8 dernières semaines</p><div class="cc-wk">'+s.wk8.map(function(w){ var d=new Date(w[0]+'T12:00:00'); return '<span><i style="height:'+Math.max(4,w[1]||0)+'%" class="'+(w[1]==null?'z':w[1]>=80?'g':w[1]>=50?'o':'r')+'"></i><small>'+d.getDate()+'/'+(d.getMonth()+1)+'</small></span>'; }).join('')+'</div>'
       +'<p class="es-h">Ce que j\'ai remarqué</p><ul class="cc-fx">'+[s.best?'Ton meilleur jour : <b>'+JN[s.best[0]]+'</b> ('+s.best[2]+' % de tâches faites)':'',s.worst&&s.worst[2]<s.best[2]?'Ton jour le plus difficile : <b>'+JN[s.worst[0]]+'</b> ('+s.worst[2]+' %)':'',s.top?'Raison n°1 des tâches pas faites : <b>'+esc(s.top)+'</b> ('+s.R[s.top]+' fois)':'',s.rep?'<b>'+s.rep+'</b> '+pl(s.rep,'tâche replanifiée','tâches replanifiées')+' en 30 jours':'',s.nA?'<b>'+s.nA+'</b> '+pl(s.nA,'tâche annulée','tâches annulées')+(s.topA?' (raison principale : <b>'+esc(s.topA.toLowerCase())+'</b>)':''):'',s.mood!=null?'Humeur moyenne : <b>'+s.mood+' %</b>':'',s.r7!=null&&s.rp!=null?'Tendance : <b>'+(s.r7-s.rp>=0?'+':'')+(s.r7-s.rp)+' points</b> sur 7 jours':''].filter(Boolean).map(function(x){ return '<li>'+x+'</li>'; }).join('')+(s.n?'':'<li>Pas encore assez d\'historique : reviens dans quelques jours.</li>')+'</ul>'
+      +(ad.k==='frl'&&window.cpFrl&&cpFrl.objHtml?cpFrl.objHtml():'')
       +'<div class="cj-say">'+av()+'<div><b>Mon conseil :</b> '+s.advice+'<small class="cc-ref">'+V.ref()+'</small></div></div>'
       +(s.links.length?'<p class="es-h">Où EVA peut t\'aider</p><div class="cj-evas">'+s.links.map(evaL).join('')+'</div>':'')+'</div>'; }
   /* Le chat de Lisa : basé sur l'agenda (aujourd'hui, hier, demain, la semaine) */
