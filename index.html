@@ -2720,27 +2720,6 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
 .fo-pr{ display:block; margin-top:6px; font-size:.72rem; color:#b45309; } .fo-pr.ok{ color:#15803d; }
 .cj-res-cmp{ margin:10px 0 0; padding:10px 12px; border-radius:12px; background:#f1f5f9; font-size:.86rem; color:#0f172a; }
 
-/* ══ Le hero en haut de chaque page ══ */
-.hp{ position:relative; overflow:hidden; width:calc(100% - 32px); max-width:760px; margin:16px auto 0; padding:18px; border-radius:24px; color:#fff; background-color:#1e3a8a; box-shadow:0 22px 44px -28px rgba(30,58,138,.7); box-sizing:border-box; font-family:'DM Sans',sans-serif; }
-.pl-wide .hp, .ec-wide .hp{ max-width:1048px; }
-.hp-top{ display:flex; align-items:center; gap:10px; }
-.hp-logo{ flex:none; width:38px; height:38px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.18); }
-.hp-top > div{ flex:1; min-width:0; } .hp-top b{ display:block; font-size:.9rem; } .hp-top span{ display:block; font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; opacity:.75; }
-.hp-live{ flex:none; display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); font-style:normal; font-size:.7rem; font-weight:800; }
-.hp-live i{ width:8px; height:8px; border-radius:50%; background:#4ade80; box-shadow:0 0 0 3px rgba(74,222,128,.25); }
-.hp h3{ margin:12px 0 2px; font-size:1.6rem; font-weight:900; letter-spacing:-.02em; color:#fff; }
-.hp-d{ margin:0; font-size:.85rem; opacity:.92; }
-.hp-g{ margin-top:12px; padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); }
-.hp-g > div{ display:flex; justify-content:space-between; align-items:center; font-size:.8rem; font-weight:800; margin-bottom:8px; }
-.hp-g > i{ display:block; height:8px; border-radius:999px; background:rgba(255,255,255,.2); overflow:hidden; } .hp-g > i > i{ display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,#a7f3d0,#fff); }
-.hp-r{ display:flex; align-items:center; gap:10px; width:100%; margin:10px 0 0; padding:10px 12px; border-radius:14px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.3); color:#fff; text-align:left; cursor:pointer; font-family:inherit; }
-.hp-r > svg{ flex:none; } .hp-r > span{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; } .hp-r b{ font-size:.82rem; line-height:1.25; } .hp-r small{ font-size:.74rem; line-height:1.35; opacity:.92; }
-.hp-r > span > em{ font-style:normal; font-size:.68rem; font-weight:700; opacity:.8; text-decoration:underline; text-underline-offset:2px; } .hp-r .ci-st{ flex:none; }
-.hp-f{ display:flex; align-items:center; gap:8px; margin:10px 0 0; padding:9px 12px; border-radius:14px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.22); font-size:.8rem; line-height:1.35; }
-.hp-f svg{ flex:none; }
-.hp-n{ display:flex; align-items:center; justify-content:space-between; width:100%; margin-top:14px; height:46px; padding:0 16px; border-radius:14px; border:0; background:#fff; color:#1e3a8a; font:800 .9rem 'DM Sans',sans-serif; cursor:pointer; box-shadow:0 12px 24px -16px rgba(0,0,0,.5); }
-html.pf-etu .hp-n{ color:#6d28d9; } html.pf-sal .hp-n{ color:#2563eb; } html.pf-frl .hp-n{ color:#c2410c; }
-
 </style>
 <script>
 /* ══ CareerPulse UI : fenêtre de confirmation du site, voix de Lisa, flèches de défilement (ordinateur), Infos diverses ══ */
@@ -2855,7 +2834,7 @@ html.pf-etu .hp-n{ color:#6d28d9; } html.pf-sal .hp-n{ color:#2563eb; } html.pf-
       +'</div></section>';
     return h; }
   function dro(k,n){ return pref(k,'dr_'+n)===1; }
-  document.addEventListener('click',function(e){ var b=e.target.closest('[data-ci-go]'); if(!b) return; if(b.closest('.cpw-sheet')){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); } var d=document.querySelector('#cj-home details.ci-dr[data-dr="'+b.getAttribute('data-ci-go')+'"]'); if(!d) return; d.open=true; setTimeout(function(){ d.scrollIntoView({ behavior:'smooth', block:'start' }); },40); });
+  document.addEventListener('click',function(e){ var b=e.target.closest('[data-ci-go]'); if(!b) return; var d=document.querySelector('#cj-home details.ci-dr[data-dr="'+b.getAttribute('data-ci-go')+'"]'); if(!d) return; d.open=true; setTimeout(function(){ d.scrollIntoView({ behavior:'smooth', block:'start' }); },40); });
   document.addEventListener('toggle',function(e){ var d=e.target; if(!d || !d.classList || !d.classList.contains('ci-dr')) return; pref(d.getAttribute('data-k'),'dr_'+d.getAttribute('data-dr'),d.open?1:0); },true);
   /* ── 6. Les heures en français (24 h), partout sur le site ── */
   function frTime(inp){ if(inp.__fr || !inp.parentNode) return; inp.__fr=1; var w=document.createElement('span'); w.className='frt'; var hs=document.createElement('select'), ms=document.createElement('select'); hs.setAttribute('aria-label','Heure'); ms.setAttribute('aria-label','Minutes');
@@ -18825,8 +18804,8 @@ window.cpSheetArrows=function(sc,host){
     else { var f=done(d), r=Math.max(0,d.cible-f), lab=dlab(d).toLowerCase();
       if(f>=d.cible){ m.push('Bravo '+esc(hi)+'ton défi est <b>réussi</b> 🎉 Tu peux faire ton bilan dès maintenant.'); act=['Faire mon bilan','bilan']; }
       else if(dow()>=4){ m.push(esc(hi)+'la semaine se termine : il te reste <b>'+r+'</b> pour ton défi « '+esc(lab)+' ». Un dernier effort, ou faisons le bilan.'); act=['Faire mon bilan','bilan']; }
-      else if(dow()>=2 && dpct(d)<50){ m.push('On est '+['lundi','mardi','mercredi','jeudi'][dow()]+' et ton défi est à <b>'+dpct(d)+' %</b>. Il te reste '+r+' : on s\'y met aujourd\'hui ?'); act=d.type==='cand'?['Envoyer ma candidature','add']:['Envoyer ma candidature','add']; }
-      else { m.push('Ton défi avance : <b>'+f+' / '+d.cible+'</b>. Continue comme ça, la régularité paie toujours.'); act=d.type==='cand'?['Envoyer ma candidature','add']:['Envoyer ma candidature','add']; } }
+      else if(dow()>=2 && dpct(d)<50){ m.push('On est '+['lundi','mardi','mercredi','jeudi'][dow()]+' et ton défi est à <b>'+dpct(d)+' %</b>. Il te reste '+r+' : on s\'y met aujourd\'hui ?'); act=d.type==='cand'?['Ajouter une candidature','add']:['Voir mon défi','defi']; }
+      else { m.push('Ton défi avance : <b>'+f+' / '+d.cible+'</b>. Continue comme ça, la régularité paie toujours.'); act=d.type==='cand'?['Ajouter une candidature','add']:['Voir mon défi','defi']; } }
     if(p<100) m.push('Ton profil est à <b>'+p+' %</b>. '+PUB[0]);
     var dm=docMiss(); if(dm.length) m.push('Il te manque encore '+dm.map(function(x){ return '<b>'+x[1]+'</b>'; }).join(' et ')+' : sans '+(dm.length>1?'eux':(dm[0][0]==='cv'?'lui':'elle'))+', les recruteurs ne peuvent pas te découvrir en entier.<span class="cj-dm">'+dm.map(function(x){ return '<button type="button" class="cj-dmb" data-cj="sec" data-s="'+x[0]+'">'+I(P.plus,14)+(x[0]==='cv'?'Ajouter mon CV':'Ajouter ma lettre')+'</button>'; }).join('')+'</span>');
     else if(!visOn()) m.push('Ton profil est complet 👏 Rends-le <b>visible</b> : les recruteurs CareerPulse pourront te trouver et te contacter.');
@@ -18838,7 +18817,7 @@ window.cpSheetArrows=function(sc,host){
   }
 
   /* ── Hero ── */
-  function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Envoyer ma candidature','add'])); }
+  function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Ajouter une candidature','add'])); }
   function hClock(){ var d=new Date(); return d.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long', year:'numeric' }).replace(/^./,function(x){ return x.toUpperCase(); })+' · '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
   function heroX(){ var f=$('cps-fri'); if(introOn()){ if(f) f.style.display='none'; return; } var sb=$('cps-sub'); if(sb){ sb.textContent=hClock(); sb.setAttribute('data-hclock','1'); } var gl=document.querySelector('#s-profil .cps-gauge-hd span'); if(gl) gl.textContent='Profil complété';
     var g=document.querySelector('#s-profil .cps-gauge'), rp=$('cps-rap'); if(!rp && g){ rp=document.createElement('button'); rp.type='button'; rp.id='cps-rap'; rp.className='cps-rap'; g.parentNode.insertBefore(rp,g.nextSibling); }
@@ -18847,17 +18826,6 @@ window.cpSheetArrows=function(sc,host){
     if(!f && g){ f=document.createElement('p'); f.id='cps-fri'; f.className='cps-fri'; (rp||g).parentNode.insertBefore(f,(rp||g).nextSibling); } if(f){ var d=new Date().getDay(); f.style.display=''; f.innerHTML='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18M8 15l2.5 2.5L16 12"/></svg><span>'+(d===5?'C\'est vendredi : fais ton petit bilan de la semaine avec Lisa, elle reprend tout ce que tu as noté.':(d===6||d===0)?'Ce week-end : prends 2 minutes pour ton petit bilan de la semaine avec Lisa.':'Vendredi : pense à faire ton petit bilan de la semaine avec Lisa.')+'</span>'; } }
   window.cpHClock=hClock; setInterval(function(){ document.querySelectorAll('[data-hclock]').forEach(function(x){ x.textContent=hClock(); }); },30000);
   function drawHero(){ drawHero0(); heroX(); }
-  function heroPg(sh){ try{ if(introOn() || !chosen()) return; var H=document.querySelector('#s-profil .cps-hero'), sc=sh.querySelector('.cpw-scroll'); if(!H || !sc) return;
-    var g=function(id){ var e=$(id); return e?e.textContent:''; }, ht=(document.querySelector('#s-profil .cps-hero-top div span')||{}).textContent||'', bar=$('cps-bar'), rp=$('cps-rap'), fr=$('cps-fri');
-    var d=document.createElement('div'); d.className='hp'; d.style.backgroundImage=getComputedStyle(H).backgroundImage;
-    d.innerHTML='<div class="hp-top"><span class="hp-logo"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><div><b>CareerPulse Stream</b><span>'+esc(ht)+'</span></div><em class="hp-live"><i></i>En direct</em></div>'
-      +'<h3>Bonjour '+esc(g('cps-name'))+'</h3><p class="hp-d" data-hclock="1">'+hClock()+'</p>'
-      +'<div class="hp-g"><div><span>Profil complété</span><b>'+esc(g('cps-pct'))+'</b></div><i><i style="width:'+(bar?bar.style.width||'0%':'0%')+'"></i></i></div>'
-      +(rp && rp.style.display!=='none'?'<button type="button" class="hp-r" data-ci-go="'+esc(rp.getAttribute('data-ci-go')||'dates')+'">'+rp.innerHTML+'</button>':'')
-      +(fr?'<p class="hp-f">'+fr.innerHTML+'</p>':'')
-      +'<button type="button" class="hp-n" data-hpn="1"><span>'+esc(g('cps-next-t'))+'</span><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>';
-    sc.insertBefore(d,sc.firstChild); }catch(e){} }
-  document.addEventListener('click',function(e){ var b=e.target.closest('[data-hpn]'); if(!b) return; var n=$('cps-next'); if(n) n.click(); });
   function drawHero0(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
     if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=!chosen()?ht._t0:({ frl:'Ton espace freelance', etu:'Ton espace étudiant', sal:'Ton espace salarié' })[S.st.profil]||ht._t0; }
@@ -19057,7 +19025,7 @@ window.cpSheetArrows=function(sc,host){
     var sh=document.createElement('div'); sh.className='cpw-sheet cj-sheet';
     sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Retour">'+I(P.back)+'</button>'+av()+'<div class="cpw-ht"><b>'+t+'</b><span>'+sub+'</span></div></div><div class="cpw-scroll"><div class="cj-pg">'+(html||'')+'</div></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
-    var o={ sh:sh, body:sh.querySelector('.cj-pg'), sc:sh.querySelector('.cpw-scroll') }; heroPg(sh);
+    var o={ sh:sh, body:sh.querySelector('.cj-pg'), sc:sh.querySelector('.cpw-scroll') };
     o.close=function(){ if(onClose) onClose(o); sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); drawAll(); };
     sh.querySelector('.cpw-x').onclick=o.close;
     if(window.cpSheetArrows) cpSheetArrows(o.sc,sh.querySelector('.cpw-box'));
