@@ -2610,6 +2610,38 @@ html.pf-dem .ci-hd-i, html.pf-dem .ci-kw button.on, html.pf-dem .ci-f-kw, html.p
 .orc-in input{ flex:1; min-width:0; height:42px; padding:0 10px; border:0; background:transparent; font:600 .9rem 'DM Sans',sans-serif; color:#0f172a; outline:none; }
 .orc-in button{ flex:none; width:42px; height:42px; border-radius:13px; border:0; background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
 
+/* ══ Tiroirs Infos diverses · heures en français · description des tâches · conseils de Lisa ══ */
+details.ci-dr{ display:block; }
+details.ci-dr > summary{ list-style:none; cursor:pointer; user-select:none; min-height:36px; }
+details.ci-dr > summary::-webkit-details-marker{ display:none; }
+details.ci-dr > summary .ci-chv{ flex:none; width:30px; height:30px; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#475569; background:#f8fafc; transition:transform .2s; }
+details.ci-dr[open] > summary .ci-chv{ transform:rotate(90deg); }
+details.ci-dr[open] > summary{ margin-bottom:8px; }
+details.ci-dr > *:not(summary){ animation:ciDr .22s ease; }
+details.ci-dr > *:not(summary) + *:not(summary){ margin-top:8px; }
+@keyframes ciDr{ from{ opacity:0; transform:translateY(-4px); } to{ opacity:1; transform:none; } }
+.ci-c-h em{ font-style:normal; font-size:.7rem; font-weight:800; padding:3px 8px; border-radius:999px; background:#f1f5f9; color:#475569; }
+.frt{ display:inline-flex; align-items:center; gap:4px; }
+.frt select{ height:40px; min-width:58px; padding:0 6px; border-radius:11px; border:1px solid #e5e7eb; background:#f9fafb; font:700 .9rem 'DM Sans',sans-serif; color:#111827; text-align:center; cursor:pointer; }
+.frt i{ font-style:normal; font-weight:800; color:#64748b; font-size:.85rem; }
+.ci-fm label .frt{ display:flex; margin-top:5px; } .ci-fm label .frt select{ flex:1; height:44px; }
+.or-add2{ display:flex; flex-direction:column; gap:8px; margin-top:12px; padding:10px; border-radius:18px; background:#f8fafc; border:1px solid #e2e8f0; }
+.or-add2 textarea{ width:100%; min-height:56px; padding:10px 12px; border-radius:12px; border:1px solid #e2e8f0; background:#fff; font:600 .92rem/1.4 'DM Sans',sans-serif; color:#0f172a; resize:vertical; outline:none; }
+.or-add2 textarea#or-ds{ min-height:70px; font-weight:500; font-size:.86rem; }
+.or-add2 textarea:focus{ border-color:var(--pa); box-shadow:0 0 0 3px var(--pl); }
+.or-add2-b{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.or-add2-b label{ display:flex; align-items:center; gap:8px; font:800 .76rem 'DM Sans',sans-serif; color:#475569; }
+.or-add2-b button{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; height:42px; padding:0 16px; border-radius:12px; border:0; background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; font:800 .84rem 'DM Sans',sans-serif; cursor:pointer; box-shadow:0 10px 20px -12px var(--pa); }
+.or-t-x small.ds{ color:#475569; }
+.or-sum{ display:flex; gap:10px; align-items:flex-start; margin-top:12px; padding:12px; border-radius:16px; background:#f5f3ff; text-align:left; }
+.or-sum .pl-av{ width:40px; height:40px; }
+.or-sum p{ margin:0; font-size:.84rem; line-height:1.45; color:#1e1b4b; }
+.or-sum p + p{ margin-top:4px; }
+.ci-fm textarea{ display:block; width:100%; margin-top:5px; min-height:80px; padding:10px 12px; border-radius:12px; border:1px solid #e5e7eb; background:#f9fafb; font:500 .88rem/1.4 'DM Sans',sans-serif; color:#111827; resize:vertical; outline:none; }
+.orc-tip{ display:flex; align-items:flex-start; gap:6px; margin-top:8px; padding:8px 10px; border-radius:12px; background:#fffbeb; color:#92400e; font-size:.8rem; line-height:1.4; }
+.orc-tip svg{ flex:none; margin-top:2px; color:#f59e0b; }
+.or-pop .cpm-av{ display:none; }
+
 </style>
 <script>
 /* ══ CareerPulse UI : fenêtre de confirmation du site, voix de Lisa, flèches de défilement (ordinateur), Infos diverses ══ */
@@ -2708,13 +2740,26 @@ html.pf-dem .ci-hd-i, html.pf-dem .ci-kw button.on, html.pf-dem .ci-f-kw, html.p
   function kk(k){ return k==='rec'?'dem':(k||'dem'); }
   function card(k){ k=kk(k); pload(k); var DL=datesAll(k), MA=mine(k,'aide'), MF=mine(k,'fin'), A=MA.concat(AIDES[k]||[]), kw=pref(k,'kw')||KW[k][0];
     var h='<section class="ci"><div class="ci-hd"><span class="ci-hd-i">'+I(IC.info,18)+'</span><div><b>Infos diverses</b><small data-ci-clock>'+clock()+'</small></div></div><div class="ci-g">'
-      +'<div class="ci-c"><div class="ci-c-h"><span>'+I(IC.cal,16)+'</span><b>Dates à retenir</b><button type="button" class="ci-plus" data-ci="add" data-k="'+k+'" data-kind="date" aria-label="Ajouter un organisme et ses dates" title="Ajouter un organisme">'+I(PLUS,15)+'</button></div><div class="ci-l">'+DL.slice(0,3).map(rowK(k)).join('')+'</div>'+(DL.length>3?'<button type="button" class="ci-more" data-ci="dates" data-k="'+k+'">Voir les '+DL.length+' dates'+I(IC.chev,13)+'</button>':'')+'</div>'
-      +'<div class="ci-c"><div class="ci-c-h"><span>'+I(IC.gift,16)+'</span><b>Mes aides</b><em>'+A.length+'</em><button type="button" class="ci-plus" data-ci="add" data-k="'+k+'" data-kind="aide" aria-label="Ajouter un organisme ou une aide" title="Ajouter un organisme">'+I(PLUS,15)+'</button></div><div class="ci-l">'+MA.slice(0,3).map(aideMine(k)).join('')+(AIDES[k]||[]).slice(0,Math.max(0,3-MA.length)).map(aide).join('')+'</div><button type="button" class="ci-more" data-ci="aides" data-k="'+k+'">Voir les '+A.length+' aides'+I(IC.chev,13)+'</button></div>'
-      +(k==='frl'?'<div class="ci-c"><div class="ci-c-h"><span>'+I(IC.bank,16)+'</span><b>Microfinancement</b><em>'+(FIN.length+MF.length)+'</em><button type="button" class="ci-plus" data-ci="add" data-k="'+k+'" data-kind="fin" aria-label="Ajouter un organisme de financement" title="Ajouter un organisme">'+I(PLUS,15)+'</button></div><div class="ci-l">'+MF.slice(0,3).map(aideMine(k)).join('')+FIN.slice(0,Math.max(0,3-MF.length)).map(fin).join('')+'</div><button type="button" class="ci-more" data-ci="fin" data-k="'+k+'">Voir les '+(FIN.length+MF.length)+' organismes'+I(IC.chev,13)+'</button></div>':'')
-      +'<div class="ci-c ci-s"><div class="ci-c-h"><span>'+I(IC.search,16)+'</span><b>Rechercher une formation</b></div><p class="ci-mini">Choisis d\'abord un mot-clé : il oriente ta recherche.</p><div class="ci-kw">'+KW[k].map(function(w){ return '<button type="button" class="'+(w===kw?'on':'')+'" data-ci="kw" data-k="'+k+'" data-w="'+esc(w)+'">'+esc(w)+'</button>'; }).join('')+'</div>'
-        +'<form class="ci-f" data-ci-form="'+k+'"><span class="ci-f-kw">'+esc(kw)+'</span><input name="q" maxlength="90" placeholder="Ex : '+esc(PH[k])+'" aria-label="Ta recherche"><button type="submit" aria-label="Rechercher">'+I(IC.search,17)+'</button></form></div>'
+      +'<details class="ci-c ci-dr" data-dr="dates" data-k="'+k+'"'+(dro(k,'dates')?' open':'')+'><summary class="ci-c-h"><span>'+I(IC.cal,16)+'</span><b>Dates à retenir</b><em>'+DL.length+'</em><button type="button" class="ci-plus" data-ci="add" data-k="'+k+'" data-kind="date" aria-label="Ajouter un organisme et ses dates" title="Ajouter un organisme">'+I(PLUS,15)+'</button><i class="ci-chv">'+I(IC.chev,15)+'</i></summary><div class="ci-l">'+DL.slice(0,3).map(rowK(k)).join('')+'</div>'+(DL.length>3?'<button type="button" class="ci-more" data-ci="dates" data-k="'+k+'">Voir les '+DL.length+' dates'+I(IC.chev,13)+'</button>':'')+'</details>'
+      +'<details class="ci-c ci-dr" data-dr="aides" data-k="'+k+'"'+(dro(k,'aides')?' open':'')+'><summary class="ci-c-h"><span>'+I(IC.gift,16)+'</span><b>Mes aides</b><em>'+A.length+'</em><button type="button" class="ci-plus" data-ci="add" data-k="'+k+'" data-kind="aide" aria-label="Ajouter un organisme ou une aide" title="Ajouter un organisme">'+I(PLUS,15)+'</button><i class="ci-chv">'+I(IC.chev,15)+'</i></summary><div class="ci-l">'+MA.slice(0,3).map(aideMine(k)).join('')+(AIDES[k]||[]).slice(0,Math.max(0,3-MA.length)).map(aide).join('')+'</div><button type="button" class="ci-more" data-ci="aides" data-k="'+k+'">Voir les '+A.length+' aides'+I(IC.chev,13)+'</button></details>'
+      +(k==='frl'?'<details class="ci-c ci-dr" data-dr="fin" data-k="'+k+'"'+(dro(k,'fin')?' open':'')+'><summary class="ci-c-h"><span>'+I(IC.bank,16)+'</span><b>Microfinancement</b><em>'+(FIN.length+MF.length)+'</em><button type="button" class="ci-plus" data-ci="add" data-k="'+k+'" data-kind="fin" aria-label="Ajouter un organisme de financement" title="Ajouter un organisme">'+I(PLUS,15)+'</button><i class="ci-chv">'+I(IC.chev,15)+'</i></summary><div class="ci-l">'+MF.slice(0,3).map(aideMine(k)).join('')+FIN.slice(0,Math.max(0,3-MF.length)).map(fin).join('')+'</div><button type="button" class="ci-more" data-ci="fin" data-k="'+k+'">Voir les '+(FIN.length+MF.length)+' organismes'+I(IC.chev,13)+'</button></details>':'')
+      +'<details class="ci-c ci-s ci-dr" data-dr="rech" data-k="'+k+'"'+(dro(k,'rech')?' open':'')+'><summary class="ci-c-h"><span>'+I(IC.search,16)+'</span><b>Rechercher une formation</b><i class="ci-chv">'+I(IC.chev,15)+'</i></summary><p class="ci-mini">Choisis d\'abord un mot-clé : il oriente ta recherche.</p><div class="ci-kw">'+KW[k].map(function(w){ return '<button type="button" class="'+(w===kw?'on':'')+'" data-ci="kw" data-k="'+k+'" data-w="'+esc(w)+'">'+esc(w)+'</button>'; }).join('')+'</div>'
+        +'<form class="ci-f" data-ci-form="'+k+'"><span class="ci-f-kw">'+esc(kw)+'</span><input name="q" maxlength="90" placeholder="Ex : '+esc(PH[k])+'" aria-label="Ta recherche"><button type="submit" aria-label="Rechercher">'+I(IC.search,17)+'</button></form></details>'
       +'</div></section>';
     return h; }
+  function dro(k,n){ return pref(k,'dr_'+n)===1; }
+  document.addEventListener('toggle',function(e){ var d=e.target; if(!d || !d.classList || !d.classList.contains('ci-dr')) return; pref(d.getAttribute('data-k'),'dr_'+d.getAttribute('data-dr'),d.open?1:0); },true);
+  /* ── 6. Les heures en français (24 h), partout sur le site ── */
+  function frTime(inp){ if(inp.__fr || !inp.parentNode) return; inp.__fr=1; var w=document.createElement('span'); w.className='frt'; var hs=document.createElement('select'), ms=document.createElement('select'); hs.setAttribute('aria-label','Heure'); ms.setAttribute('aria-label','Minutes');
+    function two(n){ return ('0'+n).slice(-2); }
+    function fill(){ var v=inp.value||'', h=v.slice(0,2), m=v.slice(3,5), H='<option value="">--</option>', M='<option value="">--</option>', mm=[]; for(var i=0;i<24;i++) H+='<option value="'+two(i)+'">'+two(i)+'</option>'; for(var q=0;q<60;q+=5) mm.push(two(q)); if(m && mm.indexOf(m)<0){ mm.push(m); mm.sort(); } mm.forEach(function(x){ M+='<option value="'+x+'">'+x+'</option>'; }); hs.innerHTML=H; ms.innerHTML=M; hs.value=h; ms.value=m; }
+    function sync(){ var h=hs.value, m=ms.value; if(h && !m){ m='00'; ms.value='00'; } if(!h){ inp.value=''; ms.value=''; } else inp.value=h+':'+m; inp.dispatchEvent(new Event('input',{ bubbles:true })); inp.dispatchEvent(new Event('change',{ bubbles:true })); }
+    hs.onchange=sync; ms.onchange=sync; w.appendChild(hs); var sep=document.createElement('i'); sep.textContent='h'; w.appendChild(sep); w.appendChild(ms);
+    inp.style.setProperty('display','none','important'); inp.parentNode.insertBefore(w,inp.nextSibling); inp.__frFill=fill; fill(); }
+  function frScan(){ var L=document.querySelectorAll('input[type="time"]'); for(var i=0;i<L.length;i++) frTime(L[i]); }
+  var frT=null; function frSoon(){ if(frT) return; frT=requestAnimationFrame(function(){ frT=null; try{ frScan(); }catch(x){} }); }
+  function frStart(){ frScan(); try{ new MutationObserver(frSoon).observe(document.body,{ childList:true, subtree:true }); }catch(x){} }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',frStart); else frStart();
   function sheet(t,sub,html){ if(window.cpStream && cpStream.sheet) return cpStream.sheet(t,sub,html); }
   function redraw(){ if(window.cpStream && cpStream.draw) cpStream.draw(); }
   document.addEventListener('click',function(e){ var b=e.target.closest('[data-ci]'); if(!b) return; e.preventDefault(); e.stopPropagation(); var a=b.getAttribute('data-ci'), k=b.getAttribute('data-k');
@@ -21844,7 +21889,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
         +'<span class="frl-pipe">'+STEPS.map(function(s,i){ return '<i class="frl-s'+i+'" title="'+s[1]+'">'+nb(s[0])+'</i>'; }).join('')+'</span></button>'
       +'<button type="button" class="cj-tile" data-frl="frl-msg"><span class="cj-ic g">'+I(P.users,22)+'</span><b>Clients & messages</b><small>Les entreprises qui te proposent une mission</small><span class="cj-tm"><strong>'+conv+'</strong><em>message'+(conv>1?'s':'')+'</em></span></button>'
       +'</div>';
-    return coach()+(window.cpCoach?cpCoach.card('frl'):'')+kpis+(window.cpInfo?cpInfo.card('frl'):'')+tiles
+    return coach()+(window.cpCoach?cpCoach.card('frl'):'')+(window.cpInfo?cpInfo.card('frl'):'')+tiles+kpis
       +'<button type="button" class="cj-box cj-tip cj-mtip" data-frl="frl-tip"><span class="cj-ic y sm">'+I(P.bulb,20)+'</span><span class="cj-box-t"><b>Conseil freelance du jour</b><small>'+esc(tip)+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'
       +'<p class="frl-legal">Ces outils t\'aident à t\'organiser : ils ne remplacent pas un expert-comptable.</p>';
   }
@@ -23447,14 +23492,19 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   /* ── Mon organisation : un vrai calendrier ── */
   function dayTasks(ds){ return cur().tasks.filter(function(t){ return (t.scope||'d')==='d' && t.date===ds; }).sort(byH); }
   function openOrga(ds){ var o=cpStream.sheet('Mon organisation','Mon calendrier et mes tâches, suivis par Lisa',''); ORO=o; o.cd=ds||today(); var d=new Date(o.cd+'T12:00:00'); o.mo=new Date(d.getFullYear(),d.getMonth(),1); o.sh.classList.add('pl-wide'); o.body.classList.add('pl-pg','pl-k-'+pf());
-    o.render=function(){ var a=document.activeElement, keepQ=a&&a.id==='or-q'?a.value:null; o.body.innerHTML=orHtml(o); if(keepQ!=null){ var q=$('or-q'); if(q){ q.value=keepQ; try{ q.focus({ preventScroll:true }); }catch(e){} } } }; o.render(); return o; }
+    o.render=function(){ var a=document.activeElement, q0=$('or-q'), d0=$('or-ds'), kq=q0?q0.value:'', kd=d0?d0.value:'', fid=a&&(a.id==='or-q'||a.id==='or-ds')?a.id:null; o.body.innerHTML=orHtml(o); var q=$('or-q'), dd=$('or-ds'); if(q&&kq) q.value=kq; if(dd&&kd) dd.value=kd; if(fid){ var f=$(fid); if(f) try{ f.focus({ preventScroll:true }); }catch(e){} } }; o.render(); return o; }
   function orCoachMsg(){ var c=cur(), n=(c.prof||{}).prenom||'', td=today(), T=actv(dayTasks(td)), dn=T.filter(isF).length, PT=pastTodo(), up=cur().tasks.filter(function(t){ return (t.scope||'d')==='d' && tSt(t)==='todo' && t.date>td && t.date<=addD(td,3); }).sort(function(a,b){ return a.date.localeCompare(b.date); });
     var m=(new Date().getHours()<18?'Bonjour':'Bonsoir')+(n?' '+esc(n):'')+' ! ';
     m+=T.length?'Aujourd\'hui : <b>'+T.length+' '+pl(T.length,'tâche','tâches')+'</b>, '+dn+' '+pl(dn,'faite','faites')+'.':'Rien de prévu aujourd\'hui : touche une date pour ajouter tes tâches.';
     if(PT.length) m+=' <b>'+PT.length+'</b> '+pl(PT.length,'tâche des jours d\'avant attend','tâches des jours d\'avant attendent')+' ton point.';
     if(up.length) m+=' On se rapproche : <b>'+esc(up[0].titre)+'</b> '+esc(lblD(up[0].date).replace(/\.$/,''))+'.';
     return m; }
-  function orRow(t){ var st=tSt(t); return '<div class="or-t s-'+st+'"><button type="button" class="or-t-b" data-cj="es-or-ed" data-id="'+t.id+'"><span class="or-t-h">'+(t.heure?esc(t.heure):'—')+'</span><span class="or-t-x"><b>'+esc(t.titre||'Tâche')+'</b>'+((st==='pasfait'||st==='annule')&&t.raison?'<small>Raison : '+esc(t.raison)+'</small>':t.rappel&&t.rappel.on&&!t.rappel.sent?'<small>'+I(BELL,10)+' Rappel le '+esc(fmtD(t.rappel.date))+'</small>':'')+'</span></button>'+ecAct(t)+'</div>'; }
+  function orRow(t){ var st=tSt(t); return '<div class="or-t s-'+st+'"><button type="button" class="or-t-b" data-cj="es-or-ed" data-id="'+t.id+'"><span class="or-t-h">'+(t.heure?esc(t.heure):'—')+'</span><span class="or-t-x"><b>'+esc(t.titre||'Tâche')+'</b>'+((st==='pasfait'||st==='annule')&&t.raison?'<small>Raison : '+esc(t.raison)+'</small>':t.rappel&&t.rappel.on&&!t.rappel.sent?'<small>'+I(BELL,10)+' Rappel le '+esc(fmtD(t.rappel.date))+'</small>':'')+(t.description?'<small class="ds">'+I(P.doc,10)+' '+esc(String(t.description).slice(0,60))+(String(t.description).length>60?'…':'')+'</small>':'')+'</span></button>'+ecAct(t)+'</div>'; }
+  function lisaSum(t){ var d=String(t.description||'').trim(), pts=d.split(/\n+/).map(function(x){ return x.replace(/^[\s•\-–*]+/,'').trim(); }).filter(Boolean), first=d.split(/[.!?](\s|$)|\n/)[0]||'';
+    var h='<p>Tu dois <b>'+esc(t.titre)+'</b> '+esc(lblD(t.date).replace(/\.$/,''))+(t.heure?' à '+esc(t.heure):'')+'.</p>';
+    if(d){ h+='<p>En résumé : « '+esc(first.slice(0,170))+(first.length>170?'…':'')+' »</p>'; if(pts.length>1) h+='<p>Tu as noté <b>'+pts.length+' points</b> : avance-les un par un, et coche la tâche quand tout est fait.</p>'; }
+    else h+='<p>Ajoute une description si tu veux : je t\'aide à ne rien oublier.</p>';
+    return '<div class="or-sum">'+lisaAv(true)+'<div>'+h+'</div></div>'; }
   function orHtml(o){ var td=today(), M=o.mo, sel=o.cd, first=(M.getDay()+6)%7, nd=new Date(M.getFullYear(),M.getMonth()+1,0).getDate(), cells='';
     for(var i=0;i<first;i++) cells+='<span></span>';
     for(var q=1;q<=nd;q++){ var ds=ymd(new Date(M.getFullYear(),M.getMonth(),q)), T=actv(dayTasks(ds)), todo=T.filter(function(t){ return tSt(t)==='todo'; }).length, all=T.length&&!todo&&T.every(isF);
@@ -23466,16 +23516,16 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
       +'<div class="or-wd">'+JOURS.map(function(J){ return '<span>'+J.slice(0,1)+'</span>'; }).join('')+'</div><div class="or-g">'+cells+'</div></div>'
       +'<div class="or-day"><div class="or-day-h"><b>'+esc(dLong(sel))+'</b><small>'+(A.length?A.length+' '+pl(A.length,'tâche','tâches')+' · '+dn+' '+pl(dn,'faite','faites'):'Aucune tâche')+'</small></div>'
       +(DT.length?'<div class="or-l">'+DT.map(orRow).join('')+'</div>':'<p class="or-e">'+(sel<td?'Rien de noté ce jour-là.':'Ajoute ce que tu dois faire ce jour-là : Lisa le suit avec toi.')+'</p>')
-      +(sel>=td?'<div class="or-add"><input id="or-q" maxlength="90" placeholder="Ajouter une tâche…" aria-label="Nouvelle tâche"><input id="or-h" type="time" aria-label="Heure (facultatif)"><button type="button" data-cj="es-or-add" data-d="'+sel+'" aria-label="Ajouter">'+I(P.plus,18)+'</button></div>'+(sel>=addD(td,2)?'<p class="or-hint">'+I(BELL,11)+' Lisa te le rappelle 2 jours avant.</p>':''):'')
+      +(sel>=td?'<div class="or-add2"><textarea id="or-q" rows="2" maxlength="120" placeholder="Ajouter une tâche…" aria-label="Nouvelle tâche"></textarea><textarea id="or-ds" rows="3" maxlength="600" placeholder="Description (facultatif) : détails, étapes, liens…" aria-label="Description"></textarea><div class="or-add2-b"><label>Heure <input id="or-h" type="time" aria-label="Heure (facultatif)"></label><button type="button" data-cj="es-or-add" data-d="'+sel+'">'+I(P.plus,16)+'Ajouter</button></div></div>'+(sel>=addD(td,2)?'<p class="or-hint">'+I(BELL,11)+' Lisa te le rappelle 2 jours avant.</p>':''):'')
       +'</div></div>'; }
-  function remDef(ds){ if(ds<addD(today(),2)) return null; return { on:true, date:addD(ds,-2), heure:'09:00', sent:false }; }
-  function orAdd(titre,ds,heure){ var t={ id:'t'+Date.now().toString(36)+Math.floor(Math.random()*99), titre:titre, date:ds, scope:'d', heure:heure||'', theme:themes()[0][0], etat:'todo', fait:false, sujet:'', description:'', goal:'', cree:new Date().toISOString(), rappel:remDef(ds) }; cur().tasks.push(t); save(); return t; }
-  function orEdit(id){ var t=cur().tasks.filter(function(x){ return x.id===id; })[0]; if(!t) return; var opt={ lisa:true, dismiss:false, buttons:[] }, M=cpModal(opt); M.el.classList.add('ci-pop','pl-pop');
+  function remDef(ds){ if(ds<addD(today(),2)) return null; var r={ on:true, date:addD(ds,-2), heure:'09:00', sent:false }; if(remAt(r.rappel?r:{ rappel:r })<=Date.now()){ var t=new Date(Date.now()+36e5); if(ymd(t)===r.date && t.getHours()<22) r.heure=hhmm(t); else { r.date=addD(r.date,1); r.heure='09:00'; } } return r; }
+  function orAdd(titre,ds,heure,desc){ var t={ id:'t'+Date.now().toString(36)+Math.floor(Math.random()*99), titre:titre, date:ds, scope:'d', heure:heure||'', theme:themes()[0][0], etat:'todo', fait:false, sujet:'', description:desc||'', goal:'', cree:new Date().toISOString(), rappel:remDef(ds) }; cur().tasks.push(t); save(); return t; }
+  function orEdit(id){ var t=cur().tasks.filter(function(x){ return x.id===id; })[0]; if(!t) return; var opt={ lisa:true, dismiss:false, buttons:[] }, M=cpModal(opt); M.el.classList.add('ci-pop','pl-pop','or-pop');
     function set(h,bt){ opt.buttons=bt; M.set(h+'<div class="cpm-btns">'+bt.map(function(b,i){ return '<button type="button" class="'+(b.cls||'')+'" data-mi="'+i+'">'+b.t+'</button>'; }).join('')+'</div>'); }
-    function form(){ set('<b class="cpm-t">Ma tâche</b><p class="cpm-p">Change ce que tu veux : je mets ton calendrier à jour.</p><div class="ci-fm"><label>Ce que je dois faire<input id="or-et" maxlength="90" value="'+esc(t.titre||'')+'"></label><div class="ci-fm-2"><label>Date<input id="or-ed" type="date" max="2050-12-31" value="'+esc(t.date)+'"></label><label>Heure <em>(facultatif)</em><input id="or-eh" type="time" value="'+esc(t.heure||'')+'"></label></div></div><p class="ci-fm-e" id="or-ee"></p>',
+    function form(){ set('<b class="cpm-t">Ma tâche</b>'+lisaSum(t)+'<div class="ci-fm"><label>Ce que je dois faire<input id="or-et" maxlength="120" value="'+esc(t.titre||'')+'"></label><label>Description <em>(facultatif)</em><textarea id="or-edsc" maxlength="600" placeholder="Détails, étapes, liens…">'+esc(t.description||'')+'</textarea></label><div class="ci-fm-2"><label>Date<input id="or-ed" type="date" max="2050-12-31" value="'+esc(t.date)+'"></label><label>Heure <em>(facultatif)</em><input id="or-eh" type="time" value="'+esc(t.heure||'')+'"></label></div></div><p class="ci-fm-e" id="or-ee"></p>',
       [{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } },{ t:'Supprimer', cls:'gh red', fn:function(){ set('<b class="cpm-t">Supprimer cette tâche ?</b><p class="cpm-p">« '+esc(t.titre)+' » sera retirée de ton calendrier.</p>',[{ t:'Non', cls:'gh', fn:form },{ t:'Oui, supprimer', cls:'pri red', fn:function(){ cur().tasks=cur().tasks.filter(function(z){ return z.id!==t.id; }); save(); M.close(); msg('Tâche supprimée'); refreshAll(); redraw(); } }]); } },
        { t:'Enregistrer', cls:'pri', fn:function(){ var ti=document.getElementById('or-et').value.trim(), d=document.getElementById('or-ed').value, h=document.getElementById('or-eh').value; if(!ti){ document.getElementById('or-ee').textContent='Écris ta tâche.'; return; } if(!d){ document.getElementById('or-ee').textContent='Choisis une date.'; return; }
-         var moved=d!==t.date; t.titre=ti; t.heure=h||''; if(moved){ t.date=d; t.rappel=remDef(d); } save(); M.close(); msg('C\'est à jour ✓'); if(moved && ORO){ ORO.cd=d; var dd=new Date(d+'T12:00:00'); ORO.mo=new Date(dd.getFullYear(),dd.getMonth(),1); } refreshAll(); redraw(); } }]); }
+         var moved=d!==t.date; t.titre=ti; t.heure=h||''; t.description=document.getElementById('or-edsc').value.trim(); if(moved){ t.date=d; t.rappel=remDef(d); } save(); M.close(); msg('C\'est à jour ✓'); if(moved && ORO){ ORO.cd=d; var dd=new Date(d+'T12:00:00'); ORO.mo=new Date(dd.getFullYear(),dd.getMonth(),1); } refreshAll(); redraw(); } }]); }
     form(); }
   /* ── Le chat de Lisa : elle reprend ton calendrier, suit tes tâches et en ajoute avec toi ── */
   function chat(){ var c=cur(); return c.chat||(c.chat=[]); }
@@ -23487,9 +23537,12 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     h+=T.length?'<br><b>Aujourd\'hui</b><ul>'+T.map(function(t){ return tLine(t); }).join('')+'</ul>':'<br>Aujourd\'hui, rien de prévu.';
     if(PT.length) h+='<b>À vérifier</b><ul>'+PT.slice(0,5).map(function(t){ return tLine(t,1); }).join('')+'</ul>';
     if(UP.length) h+='<b>À venir</b><ul>'+UP.map(function(t){ return tLine(t,1); }).join('')+'</ul>';
-    return h+'Écris-moi une tâche (ex : « réunion jeudi 14h »), je l\'ajoute à ton calendrier.'; }
+    return h+'Écris-moi une tâche (ex : « réunion jeudi 14h »), je l\'ajoute à ton calendrier.'+tip(); }
   function nextCheck(){ var td=today(), now=new Date(), nm=now.getHours()*60+now.getMinutes(), L=pastTodo().concat(dayTasks(td).filter(function(t){ return tSt(t)==='todo' && (now.getHours()>=17 || (t.heure && mins(t.heure)+60<=nm)); })); var sk=(CHO&&CHO.skip)||[]; return L.filter(function(t){ return sk.indexOf(t.id)<0; })[0]||null; }
   var QR=['Mon programme du jour','En retard','Cette semaine','Faire le point'];
+  var ADV=['Commence par la tâche la plus importante, le reste suivra.','Une tâche à la fois : c\'est plus efficace que tout en même temps.','Bloque un créneau précis pour chaque tâche importante.','Si une action prend moins de 2 minutes, fais-la tout de suite.','Prépare ta liste du lendemain le soir : tu gagnes du temps le matin.','Fais une pause de 5 minutes toutes les 25 minutes de travail.','Range ton téléphone loin de toi quand tu te concentres.','Garde une marge entre deux rendez-vous : tout prend plus de temps que prévu.','Découpe une grosse tâche en petites étapes faciles.','Coche chaque tâche faite : chaque petite victoire motive.','Bois de l\'eau et bouge un peu entre deux tâches.','Écris ce qui te bloque : souvent, la solution apparaît.','Pas plus de 3 priorités par jour, c\'est déjà très bien.','Le matin, tu es souvent plus concentré(e) : profites-en pour l\'important.','Relis ta semaine le vendredi : 10 minutes suffisent pour faire le point.','Réponds à tes mails à heures fixes plutôt qu\'en continu.','Prévois un moment rien que pour toi, ça compte aussi.','Mieux vaut avancer un peu chaque jour que tout faire d\'un coup.','Note les dates importantes dès que tu les connais.','Termine ta journée en notant ce que tu as réussi.'];
+  var ADI=Math.floor(Math.random()*20);
+  function tip(){ ADI=(ADI+1)%ADV.length; return '<span class="orc-tip">'+I(P.bulb,13)+'<span>'+ADV[ADI]+'</span></span>'; }
   function openOrChat(){ var o=cpStream.sheet('Lisa · mon organisation','Ta coach suit ton calendrier avec toi',''); CHO=o; o.skip=[]; o.body.classList.add('pl-k-'+pf(),'orc');
     o.body.innerHTML='<div class="orc-log"></div><div class="orc-qr">'+QR.map(function(q,i){ return '<button type="button" data-cj="es-orc-q" data-i="'+i+'">'+q+'</button>'; }).join('')+'</div><form class="orc-in" data-orc="1"><input id="orc-i" maxlength="120" autocomplete="off" placeholder="Ex : réviser le chapitre 3 demain 18h"><button type="submit" aria-label="Envoyer">'+I('<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',17)+'</button></form>';
     o.log=o.body.querySelector('.orc-log'); var H=chat().slice(-40);
@@ -23520,19 +23573,19 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     var p=parseT(v,ORO&&document.body.contains(ORO.sh)&&ORO.cd>=today()?ORO.cd:today()); if(!p.titre || p.titre.length<2){ lisaSay('Je n\'ai pas bien compris la tâche. Écris par exemple : « appeler le tuteur vendredi 10h ».'); return; }
     CHO.pend=p; lisaSay('Je l\'ajoute : <b>'+esc(p.titre)+'</b>, '+esc(lblD(p.date).replace(/\.$/,''))+(p.heure?' à '+esc(p.heure):'')+'. C\'est bon ?'+chips([['add','','Oui, ajoute'],['cancel','','Non']]),true); }
   function chAnswer(v,id){ if(!CHO) return; clearCh(); var t=id?cur().tasks.filter(function(x){ return x.id===id; })[0]:null, ad=coachAd();
-    if(v==='add' && CHO.pend){ var p=CHO.pend; CHO.pend=null; meSay('Oui, ajoute'); var nt=orAdd(p.titre,p.date,p.heure); lisaSay('C\'est noté dans ton calendrier ✓ <b>'+esc(nt.titre)+'</b>, '+esc(lblD(nt.date).replace(/\.$/,''))+(nt.heure?' à '+esc(nt.heure):'')+'.'+(nt.rappel?' OK, là on planifie : je te le rappelle le '+esc(fmtD(nt.rappel.date))+' à 9 h.':'')); refreshAll(); redraw(); setTimeout(ask,700); return; }
+    if(v==='add' && CHO.pend){ var p=CHO.pend; CHO.pend=null; meSay('Oui, ajoute'); var nt=orAdd(p.titre,p.date,p.heure); lisaSay('C\'est noté dans ton calendrier ✓ <b>'+esc(nt.titre)+'</b>, '+esc(lblD(nt.date).replace(/\.$/,''))+(nt.heure?' à '+esc(nt.heure):'')+'.'+(nt.rappel?' OK, là on planifie : je te le rappelle le '+esc(fmtD(nt.rappel.date))+' à '+esc(nt.rappel.heure.replace(':00',' h').replace(':',' h '))+'.':'')+tip()); refreshAll(); redraw(); setTimeout(ask,700); return; }
     if(v==='cancel'){ CHO.pend=null; meSay('Non'); lisaSay('Pas de souci, je n\'ajoute rien. Réécris-la comme tu veux.'); setTimeout(ask,700); return; }
     if(!t) return;
-    if(v==='ok'){ meSay('C\'est fait'); cpCoach.setSt(ad,t,'fait'); save(); lisaSay((window.cpVoice?cpVoice.ack():'Bravo !')+' <b>'+esc(t.titre)+'</b> est cochée ✓'); refreshAll(); redraw(); setTimeout(ask,600); return; }
-    if(v==='later'){ meSay('Plus tard'); CHO.skip.push(t.id); lisaSay('D\'accord, on en reparle plus tard.'); setTimeout(ask,600); return; }
+    if(v==='ok'){ meSay('C\'est fait'); cpCoach.setSt(ad,t,'fait'); save(); lisaSay((window.cpVoice?cpVoice.ack():'Bravo !')+' <b>'+esc(t.titre)+'</b> est cochée ✓'+tip()); refreshAll(); redraw(); setTimeout(ask,600); return; }
+    if(v==='later'){ meSay('Plus tard'); CHO.skip.push(t.id); lisaSay('D\'accord, on en reparle plus tard.'+tip()); setTimeout(ask,600); return; }
     if(v==='no'){ meSay('Pas fait'); lisaSay('Ça arrive. Qu\'est-ce qui t\'a empêché(e) ?'+chips(WHY.map(function(w,i){ return ['why'+i,t.id,w]; })),true); return; }
     if(/^why/.test(v)){ var r=WHY[+v.slice(3)]; meSay(r); cpCoach.setSt(ad,t,'pasfait',r); save(); lisaSay('C\'est noté dans ton suivi. '+(window.cpVoice?cpVoice.refAt(dayN()):'')+' On la replanifie ?'+chips([['tom',t.id,'Oui, demain'],['nott',t.id,'Non, merci']]),true); refreshAll(); redraw(); return; }
-    if(v==='tom'){ meSay('Oui, demain'); var n3=orAdd(t.titre,addD(today(),1),t.heure); lisaSay('C\'est replanifié pour demain ✓ <b>'+esc(n3.titre)+'</b>.'); refreshAll(); redraw(); setTimeout(ask,600); return; }
+    if(v==='tom'){ meSay('Oui, demain'); var n3=orAdd(t.titre,addD(today(),1),t.heure); lisaSay('C\'est replanifié pour demain ✓ <b>'+esc(n3.titre)+'</b>.'+tip()); refreshAll(); redraw(); setTimeout(ask,600); return; }
     if(v==='nott'){ meSay('Non, merci'); lisaSay('Très bien. '+(window.cpVoice?cpVoice.close((cur().prof||{}).prenom||''):'')); setTimeout(ask,600); } }
   function chQuick(i){ if(!CHO) return; clearCh(); meSay(QR[i]); var td=today();
     if(i===0){ var T=dayTasks(td); lisaSay(T.length?'Ton programme d\'aujourd\'hui :<ul>'+T.map(function(t){ return '<li>'+(isF(t)?'✓ ':tSt(t)==='annule'?'⊘ ':tSt(t)==='pasfait'?'✗ ':'')+'<b>'+esc(t.titre)+'</b>'+(t.heure?' · '+esc(t.heure):'')+'</li>'; }).join('')+'</ul>':'Rien de prévu aujourd\'hui. Écris-moi une tâche et je l\'ajoute.'); return; }
     if(i===1){ var PT=pastTodo(); lisaSay(PT.length?'Ces tâches attendent ton point :<ul>'+PT.map(function(t){ return tLine(t,1); }).join('')+'</ul>':'Rien en retard, bravo 👏'); if(PT.length) setTimeout(ask,500); return; }
-    if(i===2){ var W=weekT(); lisaSay(W.length?'Ce qu\'il reste cette semaine :<ul>'+W.map(function(t){ return tLine(t,1); }).join('')+'</ul>':'Ta semaine est à jour ✓'); return; }
+    if(i===2){ var W=weekT(); lisaSay(W.length?'Ce qu\'il reste cette semaine :<ul>'+W.map(function(t){ return tLine(t,1); }).join('')+'</ul>':'Ta semaine est à jour ✓'+tip()); return; }
     CHO.skip=[]; if(nextCheck()) ask(); else lisaSay('Tout est à jour, rien à vérifier pour l\'instant ✓'); }
   function plHandle(a,b){
     if(a==='es-pl-open'){ openPlan(); return true; }
@@ -23545,7 +23598,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-or-day' && ORO){ ORO.cd=b.getAttribute('data-d'); ORO.render(); var dy=ORO.body.querySelector('.or-day'); if(dy && window.innerWidth<1000) setTimeout(function(){ dy.scrollIntoView({ behavior:'smooth', block:'start' }); },30); return true; }
     if(a==='es-or-nav' && ORO){ ORO.mo=new Date(ORO.mo.getFullYear(),ORO.mo.getMonth()+(+b.getAttribute('data-n')),1); var td=today(); ORO.cd=td.slice(0,7)===ymd(ORO.mo).slice(0,7)?td:ymd(ORO.mo); ORO.render(); return true; }
     if(a==='es-or-today' && ORO){ ORO.cd=today(); var t0=new Date(); ORO.mo=new Date(t0.getFullYear(),t0.getMonth(),1); ORO.render(); return true; }
-    if(a==='es-or-add'){ var q=$('or-q'), hh=$('or-h'), v=q?q.value.trim():''; if(!v){ msg('Écris ta tâche'); if(q) q.focus(); return true; } var nt=orAdd(v,b.getAttribute('data-d'),hh?hh.value:'');
+    if(a==='es-or-add'){ var q=$('or-q'), hh=$('or-h'), v=q?q.value.trim():''; if(!v){ msg('Écris ta tâche'); if(q) q.focus(); return true; } var dsc=$('or-ds'), nt=orAdd(v,b.getAttribute('data-d'),hh?hh.value:'',dsc?dsc.value.trim():''); if(dsc) dsc.value='';
       chPush('l','J\'ai noté <b>'+esc(nt.titre)+'</b> pour '+esc(lblD(nt.date).replace(/\.$/,''))+(nt.heure?' à '+esc(nt.heure):'')+'.'); save();
       msg(nt.rappel?'OK, là on planifie 🗓️ Je te le rappelle le '+fmtD(nt.rappel.date):'Ajoutée ✓'); refreshAll(); redraw(); setTimeout(function(){ var f=$('or-q'); if(f) try{ f.focus({ preventScroll:true }); }catch(e){} },60); return true; }
     if(a==='es-or-ed'){ orEdit(b.getAttribute('data-id')); return true; }
@@ -23554,7 +23607,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-orc-a'){ chAnswer(b.getAttribute('data-v'),b.getAttribute('data-id')); return true; }
     return false; }
   document.addEventListener('submit',function(e){ var f=e.target.closest('[data-orc]'); if(!f) return; e.preventDefault(); var i=$('orc-i'), v=i?i.value.trim():''; if(!v) return; i.value=''; onText(v); },true);
-  document.addEventListener('keydown',function(e){ if(e.key==='Enter' && e.target && e.target.id==='or-q'){ e.preventDefault(); var bt=document.querySelector('[data-cj="es-or-add"]'); if(bt) bt.click(); } });
+  document.addEventListener('keydown',function(e){ if(e.key==='Enter' && !e.shiftKey && e.target && e.target.id==='or-q'){ e.preventDefault(); var bt=document.querySelector('[data-cj="es-or-add"]'); if(bt) bt.click(); } });
   window.cpES={ home:home, hero:hero, go:function(a){ if(a==='es-edt') openEdt(); }, coachAd:function(){ return coachAd(); } };
 })();
 </script>
