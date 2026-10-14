@@ -2476,6 +2476,139 @@ html.pf-dem .ci-hd-i, html.pf-dem .ci-kw button.on, html.pf-dem .ci-f-kw, html.p
 .cpm-btns .gh.red{ color:#e11d48; }
 .ci-pop .cpm-btns{ flex-wrap:wrap; }
 .ci-pop .cpm-btns button{ min-width:30%; }
+/* ══ Mon planning (façon Outlook) · Mon organisation · chat de Lisa ══ */
+.pl-k-etu, .es-k-etu{ --pa:#6d28d9; --pa2:#a855f7; --pl:#f5f3ff; --pt:#4c1d95; }
+.pl-k-sal, .es-k-sal{ --pa:#4338ca; --pa2:#7c3aed; --pl:#eef2ff; --pt:#312e81; }
+.cpw-sheet.pl-wide .cj-pg{ max-width:1080px !important; }
+.pl-av{ flex:none; width:46px; height:46px; border-radius:50%; overflow:hidden; background:#f1f5f9; box-shadow:0 0 0 3px #fff, 0 0 0 4px var(--pl,#eef2ff); }
+.pl-av.sm{ width:36px; height:36px; }
+.pl-av img{ width:100%; height:100%; object-fit:cover; display:block; }
+.pl-coach{ display:flex; align-items:center; gap:12px; padding:14px; border-radius:20px; background:#fff; border:1px solid #e9edf3; box-shadow:0 20px 40px -36px rgba(15,23,42,.55); }
+.pl-coach-t{ flex:1; min-width:0; }
+.pl-coach-t > b{ display:block; font-size:.74rem; letter-spacing:.04em; text-transform:uppercase; color:var(--pa); }
+.pl-coach-t p{ margin:3px 0 0; font-size:.88rem; line-height:1.45; color:#1e293b; }
+.pl-chat{ flex:none; display:inline-flex; align-items:center; gap:6px; height:40px; padding:0 14px; border-radius:12px; border:0; background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; font:800 .8rem 'DM Sans',sans-serif; cursor:pointer; box-shadow:0 10px 20px -12px var(--pa); }
+@media (max-width:520px){ .pl-coach{ flex-wrap:wrap; } .pl-chat{ width:100%; justify-content:center; } }
+/* barre */
+.pl-bar{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.pl-nav{ flex:1; min-width:220px; display:flex; align-items:center; gap:8px; }
+.pl-nav b{ flex:1; text-align:center; font-size:.92rem; color:#0f172a; }
+.pl-nav button, .or-cal-h button{ width:36px; height:36px; flex:none; border-radius:11px; border:1px solid #e2e8f0; background:#fff; color:#334155; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.pl-td{ height:36px; padding:0 12px; border-radius:11px; border:1px solid #e2e8f0; background:#fff; font:800 .78rem 'DM Sans',sans-serif; color:var(--pa); cursor:pointer; }
+.pl-new{ display:inline-flex; align-items:center; gap:6px; height:38px; padding:0 14px; border-radius:12px; border:0; background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; font:800 .8rem 'DM Sans',sans-serif; cursor:pointer; box-shadow:0 10px 20px -12px var(--pa); }
+@media (max-width:520px){ .pl-new{ flex:1; justify-content:center; } }
+/* grille Outlook */
+.pl-cal{ border-radius:18px; background:#fff; border:1px solid #e5e9f0; overflow:hidden; box-shadow:0 20px 40px -36px rgba(15,23,42,.55); }
+.pl-days{ display:grid; grid-template-columns:52px repeat(7,minmax(0,1fr)); border-bottom:1px solid #e5e9f0; background:#fbfcfe; }
+.pl-dh{ display:flex; flex-direction:column; align-items:center; gap:1px; padding:8px 0 6px; border:0; background:transparent; cursor:pointer; font-family:'DM Sans',sans-serif; position:relative; }
+.pl-dh small{ font-size:.66rem; font-weight:700; color:#64748b; text-transform:uppercase; }
+.pl-dh b{ width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:50%; font-size:.95rem; color:#0f172a; }
+.pl-dh i{ font-style:normal; font-size:.6rem; font-weight:800; color:#94a3b8; min-height:.8em; }
+.pl-dh.td b{ color:var(--pa); box-shadow:inset 0 0 0 1.5px var(--pa); }
+.pl-dh.sel b{ background:var(--pa); color:#fff; box-shadow:none; }
+.pl-body{ position:relative; display:grid; grid-template-columns:52px minmax(0,1fr); }
+.pl-hrs{ position:relative; border-right:1px solid #eef1f5; }
+.pl-hrs span{ position:absolute !important; right:8px; transform:translateY(-50%); font-size:.66rem; font-weight:700; color:#94a3b8; }
+.pl-hrs span:first-child{ transform:none; top:2px !important; }
+.pl-cols{ position:relative; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); }
+.pl-col{ position:relative; border-left:1px solid #f1f5f9; }
+.pl-col:first-child{ border-left:0; }
+.pl-col.td{ background:linear-gradient(180deg,var(--pl,#f5f3ff),transparent 60%); }
+.pl-cell{ position:absolute !important; left:0; right:0; height:44px; border:0; border-top:1px solid #f1f5f9; background:transparent; cursor:pointer; padding:0; }
+.pl-cell:hover{ background:rgba(99,102,241,.06); }
+.pl-ev{ position:absolute !important; left:3px; right:3px; z-index:1; display:flex; flex-direction:column; align-items:flex-start; gap:1px; padding:4px 6px 4px 8px; border:0; border-radius:8px; background:color-mix(in srgb,var(--c) 14%,#fff); box-shadow:inset 3px 0 0 var(--c); text-align:left; overflow:hidden; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.pl-ev:hover{ background:color-mix(in srgb,var(--c) 22%,#fff); }
+.pl-ev b{ font-size:.76rem; color:#0f172a; line-height:1.2; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pl-ev small{ font-size:.64rem; color:#475569; line-height:1.2; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.pl-ev.off{ background:repeating-linear-gradient(135deg,#f8fafc 0 6px,#eef1f5 6px 12px); box-shadow:inset 3px 0 0 #cbd5e1; }
+.pl-ev.off b{ text-decoration:line-through; color:#64748b; }
+.pl-now{ position:absolute !important; left:0; right:0; height:2px; background:#ef4444; z-index:2; pointer-events:none; }
+.pl-now i{ position:absolute; left:-4px; top:-3px; width:8px; height:8px; border-radius:50%; background:#ef4444; }
+@media (max-width:899px){ .pl-cols{ grid-template-columns:minmax(0,1fr); } .pl-col{ display:none; border-left:0; } .pl-col.sel{ display:block; } .pl-ev b{ font-size:.84rem; } .pl-ev small{ font-size:.72rem; } }
+.pl-tip{ display:flex; align-items:center; gap:8px; margin:0; font-size:.74rem; color:#64748b; }
+.pl-tip svg{ flex:none; color:#f59e0b; }
+/* fenêtre créneau */
+.pl-lb{ font:800 .72rem 'DM Sans',sans-serif; color:#374151; }
+.pl-js{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; margin-top:-4px; }
+.pl-js button{ height:38px; border-radius:11px; border:1px solid #e5e7eb; background:#f9fafb; font:800 .74rem 'DM Sans',sans-serif; color:#374151; cursor:pointer; }
+.pl-js button.on{ background:linear-gradient(135deg,#4f46e5,#7c3aed); border-color:transparent; color:#fff; }
+.ci-fm select{ display:block; width:100%; margin-top:5px; height:44px; padding:0 10px; border-radius:12px; border:1px solid #e5e7eb; background:#f9fafb; font:600 .9rem 'DM Sans',sans-serif; color:#111827; }
+.pl-pop .cpm-btns button{ min-width:calc(50% - 4px); }
+/* carte du haut de l'accueil */
+.plh{ margin:0 0 16px; padding:14px; border-radius:22px; background:#fff; border:1px solid #e9edf3; box-shadow:0 24px 48px -40px rgba(15,23,42,.6); }
+.plh-hd{ display:flex; align-items:center; gap:10px; }
+.plh-hd > div{ flex:1; min-width:0; }
+.plh-hd b{ display:block; font-size:1rem; color:#0f172a; }
+.plh-hd small{ font-size:.76rem; color:#64748b; }
+.plh-btn{ flex:none; display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 12px; border-radius:11px; border:1px solid #e2e8f0; background:#fff; font:800 .78rem 'DM Sans',sans-serif; color:var(--pa,#4338ca); cursor:pointer; }
+.plh-l{ display:grid; gap:6px; margin-top:12px; }
+.plh-r{ display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:14px; border:1px solid #eef1f5; background:#fbfcfe; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.plh-r i{ flex:none; width:3px; align-self:stretch; border-radius:3px; background:var(--c); }
+.plh-h{ flex:none; width:46px; display:flex; flex-direction:column; }
+.plh-h b{ font-size:.86rem; color:#0f172a; } .plh-h small{ font-size:.68rem; color:#94a3b8; }
+.plh-t{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.plh-t b{ font-size:.88rem; color:#0f172a; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .plh-t small{ font-size:.72rem; color:#64748b; }
+.plh-r em{ flex:none; font-style:normal; font-size:.66rem; font-weight:800; padding:4px 8px; border-radius:999px; background:var(--pl,#eef2ff); color:var(--pa,#4338ca); }
+.plh-r.live{ border-color:var(--pa,#4338ca); background:#fff; box-shadow:0 10px 20px -16px var(--pa,#4338ca); }
+.plh-r.past{ opacity:.55; }
+.plh-e{ width:100%; margin-top:12px; display:flex; align-items:center; justify-content:center; gap:6px; height:44px; border-radius:14px; border:1.5px dashed #cbd5e1; background:transparent; font:800 .82rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; }
+.plh-lisa{ margin:10px 0 0; padding:9px 11px; border-radius:12px; background:var(--pl,#f5f3ff); color:var(--pt,#4c1d95); font-size:.78rem; line-height:1.4; }
+/* organisation */
+.or-grid{ display:flex; flex-direction:column; gap:12px; }
+@media (min-width:1000px){ .or-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:14px; align-items:start; } }
+.or-cal, .or-day{ padding:14px; border-radius:20px; background:#fff; border:1px solid #e5e9f0; box-shadow:0 20px 40px -36px rgba(15,23,42,.55); min-width:0; }
+.or-cal-h{ display:flex; align-items:center; gap:8px; margin-bottom:10px; }
+.or-cal-h b{ flex:1; text-align:center; font-size:1rem; color:#0f172a; }
+.or-tdb{ width:100%; margin-bottom:8px; }
+.or-wd, .or-g{ display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:3px; }
+.or-wd span{ text-align:center; font-size:.68rem; font-weight:800; color:#94a3b8; padding-bottom:4px; }
+.or-g button{ aspect-ratio:1/1; min-height:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:12px; border:1px solid transparent; background:#fbfcfe; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.or-g button:hover{ border-color:#e2e8f0; }
+.or-g b{ font-size:.92rem; color:#0f172a; }
+.or-g i{ font-style:normal; min-width:16px; height:16px; padding:0 4px; border-radius:999px; background:var(--pa); color:#fff; font-size:.6rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+.or-g i.ok{ background:#16a34a; } .or-g i.z{ background:transparent; }
+.or-g button.past b{ color:#94a3b8; }
+.or-g button.td{ border-color:var(--pa); background:#fff; }
+.or-g button.td b{ color:var(--pa); }
+.or-g button.sel{ background:linear-gradient(135deg,var(--pa),var(--pa2)); border-color:transparent; box-shadow:0 10px 20px -12px var(--pa); }
+.or-g button.sel b{ color:#fff; } .or-g button.sel i:not(.z){ background:#fff; color:var(--pa); }
+.or-day-h{ display:flex; flex-direction:column; gap:2px; margin-bottom:10px; }
+.or-day-h b{ font-size:1rem; color:#0f172a; } .or-day-h small{ font-size:.76rem; color:#64748b; }
+.or-l{ display:grid; gap:6px; }
+.or-t{ display:flex; align-items:center; gap:6px; padding:3px 6px 3px 3px; border-radius:14px; border:1px solid #eef1f5; background:#fbfcfe; }
+.or-t-b{ flex:1; min-width:0; display:flex; align-items:center; gap:10px; padding:8px; border:0; background:transparent; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.or-t-h{ flex:none; width:42px; font-size:.8rem; font-weight:800; color:var(--pa); }
+.or-t-x{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.or-t-x b{ font-size:.88rem; color:#0f172a; line-height:1.25; overflow-wrap:anywhere; }
+.or-t-x small{ display:flex; align-items:center; gap:3px; font-size:.7rem; color:#64748b; }
+.or-t.s-fait .or-t-x b{ text-decoration:line-through; color:#64748b; }
+.or-t.s-annule{ opacity:.6; }
+.or-e{ margin:0; padding:14px; border-radius:14px; border:1.5px dashed #e2e8f0; text-align:center; font-size:.8rem; color:#64748b; }
+.or-add{ display:flex; gap:6px; margin-top:10px; padding:5px; border-radius:16px; background:#f8fafc; border:1px solid #e2e8f0; }
+.or-add input{ min-width:0; height:40px; border:0; background:transparent; font:600 .88rem 'DM Sans',sans-serif; color:#0f172a; outline:none; }
+.or-add input#or-q{ flex:1; padding:0 8px; }
+.or-add input#or-h{ flex:none; width:92px; padding:0 4px; border-left:1px solid #e2e8f0; }
+.or-add button{ flex:none; width:40px; height:40px; border-radius:12px; border:0; background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.or-hint{ display:flex; align-items:center; gap:5px; margin:6px 2px 0; font-size:.72rem; color:#b45309; }
+/* chat */
+.orc{ min-height:100%; }
+.orc-log{ display:flex; flex-direction:column; gap:10px; }
+.orc-m{ display:flex; align-items:flex-end; gap:8px; max-width:100%; }
+.orc-m > div{ max-width:min(560px,82%); padding:10px 13px; border-radius:18px; font-size:.88rem; line-height:1.45; }
+.orc-m.l > div{ background:#fff; border:1px solid #e9edf3; color:#1e293b; border-bottom-left-radius:6px; }
+.orc-m.m{ justify-content:flex-end; }
+.orc-m.m > div{ background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; border-bottom-right-radius:6px; }
+.orc-m ul{ margin:6px 0 8px; padding-left:18px; } .orc-m li{ margin:2px 0; }
+.orc-sep{ align-self:center; margin:4px 0; font-size:.68rem; font-weight:800; color:#94a3b8; text-transform:uppercase; letter-spacing:.06em; }
+.orc-ch{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.orc-ch button{ height:34px; padding:0 12px; border-radius:999px; border:1px solid var(--pa); background:#fff; font:800 .76rem 'DM Sans',sans-serif; color:var(--pa); cursor:pointer; }
+.orc-ch button:first-child{ background:var(--pa); color:#fff; }
+.orc-qr{ position:sticky; bottom:58px; display:flex; gap:6px; overflow-x:auto; padding:10px 0 6px; margin-top:auto; scrollbar-width:none; }
+.orc-qr::-webkit-scrollbar{ display:none; }
+.orc-qr button{ flex:none; height:34px; padding:0 12px; border-radius:999px; border:1px solid #e2e8f0; background:#fff; font:700 .76rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; }
+.orc-in{ position:sticky; bottom:0; display:flex; gap:6px; padding:6px; border-radius:18px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 -10px 30px -20px rgba(15,23,42,.4); }
+.orc-in input{ flex:1; min-width:0; height:42px; padding:0 10px; border:0; background:transparent; font:600 .9rem 'DM Sans',sans-serif; color:#0f172a; outline:none; }
+.orc-in button{ flex:none; width:42px; height:42px; border-radius:13px; border:0; background:linear-gradient(135deg,var(--pa),var(--pa2)); color:#fff; display:flex; align-items:center; justify-content:center; cursor:pointer; }
 
 </style>
 <script>
@@ -22087,12 +22220,11 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
         if(!nowShown && mins(x.d)>nm){ nowShown=true; pre='<div class="es-pnow"><i></i><span>Maintenant · '+('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2)+'</span></div>'; }
         return pre+'<button type="button" class="es-pr'+(live?' live':'')+(past?' past':'')+'" data-cj="es-edte" data-id="'+x.id+'" style="--c:'+x.c+'"><span class="es-pr-h"><b>'+esc(x.d)+'</b><small>'+esc(x.f)+'</small></span><span class="es-pr-bar"></span><span class="es-pr-t"><b>'+esc(x.t)+'</b><small>'+esc(x.sub)+'</small></span>'+(live?'<em>En cours</em>':'')+'</button>'; }).join('');
     var nm2=k==='etu'?'Mon emploi du temps du jour':'Mon planning du jour';
-    var hero='<div class="es-ph2"><div class="es-ph2-hd"><span class="es-ph2-av">'+(lisa()?'<img src="'+lisa()+'" alt="Lisa">':'')+'</span><div><b>'+nm2+'</b><small>'+(S.length?S.length+' créneau'+(S.length>1?'x':'')+' aujourd\'hui':'Rien de prévu aujourd\'hui')+'</small></div><button type="button" class="es-ph2-btn" data-cj="es-wk" data-t="auj">'+I(P.cal,15)+'<span>Mon calendrier</span></button></div>'
-      +(S.length?'<div class="es-ph2-l">'+rows+'</div>':'<div class="es-ph2-e"><b>'+(edt().length?'Journée libre':(k==='etu'?'Ton emploi du temps est vide':'Ton planning est vide'))+'</b><span>'+(edt().length?'Profite, ou avance sur un objectif.':'Remplis ta semaine, du lundi au dimanche : je te montre ici ta journée.')+'</span><button type="button" data-cj="es-wk" data-t="edt">'+I(P.plus,15)+(edt().length?'Ajouter un créneau':(k==='etu'?'Remplir mon emploi du temps':'Remplir mon planning'))+'</button></div>')+'</div>';
+    var hero=plHero();
     var TD0=dayT(today()), mD=TD0.filter(isF).length, WS0=wScore(0), WG0=goals('w'), sc0=pScore('w'), rl0=relances(), DS0=dossier(), cpc=Math.round(((ready(k)?1:0)+(DS0.t?DS0.n/DS0.t:0))/2*100);
-    var MET={ 'es-wk':[TD0.length?'Aujourd\'hui '+mD+'/'+TD0.length+' · semaine '+(WS0==null?'—':WS0+' %'):'Planning, rappels et suivi',WS0||0], 'es-obj':[WG0.length?'Score '+sc0+' % · '+WG0.filter(gDone).length+'/'+WG0.length:'Fixe ton objectif',sc0], 'es-etud':[favs().length+' favori'+(favs().length>1?'s':'')+' · '+(c.rech||[]).length+' recherche'+((c.rech||[]).length>1?'s':''),null], 'es-evo':['Profil '+pct()+' %',pct()], 'es-cand':[c.cands.length+' candidature'+(c.cands.length>1?'s':'')+(rl0?' · '+rl0+' à relancer':''),cpc] };
-    var C=k==='etu'?[['es-wk',P.cal,'Mon calendrier','Planning, rappels et suivi','b'],['es-obj',P.target,'Mes objectifs','Avancer sur ce qui compte','g'],['es-etud',P.school,'Mes études','Choisir et trouver ma formation','r'],['es-cand',P.doc,'Candidater','Postuler étape par étape','v']]
-      :[['es-wk',P.cal,'Mon calendrier','Planning, rappels et suivi','b'],['es-obj',P.target,'Mes objectifs','Avancer et préparer mon évolution','g'],['es-evo',P.chart,'Mon évolution','Progresser dans ma carrière','o'],['es-cand',P.doc,'Candidater','Changer de poste','v']];
+    var MET={ 'es-wk':[TD0.length?'Aujourd\'hui '+mD+'/'+TD0.length+' · semaine '+(WS0==null?'—':WS0+' %'):'Mon calendrier et mes tâches',WS0||0], 'es-evastat':['Score de la semaine '+(WS0==null?'—':WS0+' %'),WS0||0], 'es-obj':[WG0.length?'Score '+sc0+' % · '+WG0.filter(gDone).length+'/'+WG0.length:'Fixe ton objectif',sc0], 'es-etud':[favs().length+' favori'+(favs().length>1?'s':'')+' · '+(c.rech||[]).length+' recherche'+((c.rech||[]).length>1?'s':''),null], 'es-evo':['Profil '+pct()+' %',pct()], 'es-cand':[c.cands.length+' candidature'+(c.cands.length>1?'s':'')+(rl0?' · '+rl0+' à relancer':''),cpc] };
+    var C=k==='etu'?[['es-wk',P.cal,'Mon organisation','Mon calendrier et mes tâches','b'],['es-evastat',P.chart,'Mon bilan','Mes actions, analysées par Lisa','g'],['es-etud',P.school,'Mes études','Choisir et trouver ma formation','r'],['es-cand',P.doc,'Candidater','Postuler étape par étape','v']]
+      :[['es-wk',P.cal,'Mon organisation','Mon calendrier et mes tâches','b'],['es-evastat',P.chart,'Mon bilan','Mes actions, analysées par Lisa','g'],['es-evo',P.chart,'Mon évolution','Progresser dans ma carrière','o'],['es-cand',P.doc,'Candidater','Changer de poste','v']];
     var NAV=[['es-nav-home',P.home,'Accueil'],['es-nav-lisa',P.chat,'Lisa'],['eva',P.star,'EVA'],['es-nav-prof',P.user,'Mon profil'],['es-nav-set',P.pen,'Paramètres'],['es-nav-out',P.ext,'Déconnexion']];
     return '<div class="es-home es-k-'+k+'"><aside class="es-side">'+av()+'<b class="es-side-k">'+(k==='etu'?'Étudiant':'Salarié')+'</b>'+NAV.map(function(x,i){ return x[0]==='eva'?'<a class="es-nv" href="eva.html">'+I(x[1],17)+'<span>'+x[2]+'</span></a>':'<button type="button" class="es-nv'+(i===0?' on':'')+'" data-cj="'+x[0]+'">'+I(x[1],17)+'<span>'+x[2]+'</span></button>'; }).join('')+'</aside>'
       +'<div class="es-main"><div class="es-top"><div><h2>Mon espace '+(k==='etu'?'étudiant':'salarié')+'</h2><p>Bienvenue'+(n?' '+esc(n):'')+' ! Voici ta journée d\'aujourd\'hui</p></div><span class="es-date">'+I(P.cal,14)+esc(date)+'</span></div>'
@@ -22124,7 +22256,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     var nt=Object.assign({},old||{ sujet:'', objectif:'', atteint:'', cree:new Date().toISOString() },{ id:id, titre:ti, description:$('es-qt-d').value.trim(), date:$('es-qt-da').value||today(), heure:$('es-qt-h').value, fait:o.fait }); var gsel=$('es-qt-g'); if(gsel){ nt.goal=gsel.value||''; var gg0=allGoals().filter(function(g){ return g.id===nt.goal; })[0]; nt.objectif=gg0?gg0.label:''; }
     if(old && old.goal && !!old.fait!==!!nt.fait){ var g=allGoals().filter(function(z){ return z.id===old.goal; })[0]; if(g) g.fait=Math.max(0,(g.fait||0)+(nt.fait?1:-1)); }
     if(old) c.tasks=c.tasks.map(function(z){ return z.id===id?nt:z; }); else c.tasks.push(nt); save(); msg(old?'Tâche mise à jour ✓':'Tâche ajoutée ✓'); o.close(); refreshAll(); }
-  function refreshAll(){ if(EDO&&document.body.contains(EDO.sh)) EDO.render(); if(OBJ&&document.body.contains(OBJ.sh)) OBJ.render(); if(GO&&document.body.contains(GO.sh)) GO.render(); redraw(); }
+  function refreshAll(){ plRefresh(); if(EDO&&document.body.contains(EDO.sh)) EDO.render(); if(OBJ&&document.body.contains(OBJ.sh)) OBJ.render(); if(GO&&document.body.contains(GO.sh)) GO.render(); redraw(); }
 
   /* ══ Pages simples, sur le modèle Emploi · Reconversion : Lisa, conseil du jour, 3 chiffres, l'essentiel ══ */
   function dayN(){ return Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/864e5); }
@@ -22137,7 +22269,8 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function aBtn(a,ic,t,gh){ return '<button type="button" class="cj-btn'+(gh?' ghost':'')+'" '+a+'>'+(ic?I(ic,15):'')+t+'</button>'; }
 
   /* ══ 1. Ma semaine : Aujourd'hui / Semaine / Calendrier ══ */
-  function openWeek(tab){ var k=pf(), o=cpStream.sheet('Mon calendrier','Mon planning, mes rappels et mon suivi avec Lisa',''); EDO=o; o.sh.classList.add('ec-wide'); PG=o; o.tab=({ memo:'sem', plan:'edt', cal:'edt' })[tab]||tab||'auj'; o.pv=tab==='cal'?'mois':'jour'; o.j=dIdx(); o.form=null; o.wo=0; var m0=new Date(); o.mo=new Date(m0.getFullYear(),m0.getMonth(),1); o.cd=today(); o.ph=['d',1]; edtAttach(o);
+  function openWeek(tab){ if(tab==='edt'||tab==='cal'||tab==='plan') return openPlan(); return openOrga();
+    var k=pf(), o=cpStream.sheet('Mon calendrier','Mon planning, mes rappels et mon suivi avec Lisa',''); EDO=o; o.sh.classList.add('ec-wide'); PG=o; o.tab=({ memo:'sem', plan:'edt', cal:'edt' })[tab]||tab||'auj'; o.pv=tab==='cal'?'mois':'jour'; o.j=dIdx(); o.form=null; o.wo=0; var m0=new Date(); o.mo=new Date(m0.getFullYear(),m0.getMonth(),1); o.cd=today(); o.ph=['d',1]; edtAttach(o);
     o.body.classList.add('es-simp'); o.body.classList.add('ec-k-'+k);
     o.render=function(){ if(ecOn(o)) return; var td=today(), TD=dayT(td), dn=actv(TD).filter(isF).length, ws=wScore(0), nw=new Date(), ms=mScore(nw.getFullYear(),nw.getMonth()), PT=pastTodo().length;
       var lt=PT?'Bilan d\'hier : <b>'+PT+' '+pl(PT,'tâche','tâches')+'</b> à vérifier avec moi.':actv(TD).length?'Aujourd\'hui : <b>'+dn+'/'+actv(TD).length+'</b> '+pl(actv(TD).length,'tâche faite','tâches faites')+' · semaine <b>'+(ws==null?'—':ws+' %')+'</b>.':'Ta journée est vide : écris ce que tu dois faire, je te suis jour après jour.';
@@ -22408,7 +22541,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
           +'<div class="es-ap-ft">'+(f.id?'<button type="button" class="es-ap-del" data-cj="es-edtd">'+I(P.trash,15)+'Supprimer le créneau</button>':'')+'<button type="button" class="es-ap-cancel" data-cj="es-edtx">Annuler</button></div></div>'; }
       else h+=(k==='sal'&&!edt().length?'<button type="button" class="cj-main alt" data-cj="es-edtq">'+I(P.cal,18)+'Semaine type : 9h – 17h du lundi au vendredi</button>':'');
       return h; }; }
-  function openEdt(){ openWeek('sem'); }
+  function openEdt(){ openPlan(); }
   /* Grille horaire façon agenda pro : heures à gauche, créneaux et tâches placés à leur heure, ligne « maintenant » */
   function tChip(x){ return '<div class="es-cg-chip'+(x.fait?' done':'')+'"><button type="button" class="es-cg-ck" data-cj="es-done" data-id="'+x.id+'" aria-label="Fait">'+(x.fait?I(P.check,11):'')+'</button><button type="button" class="es-cg-tt" data-cj="es-qt" data-id="'+x.id+'">'+esc(x.t)+'</button></div>'; }
   function tgrid(o,cols){ var mon=new Date(wk()+'T12:00:00'), now=new Date(), nm=now.getHours()*60+now.getMinutes(), PX=cols.length>1?46:56;
@@ -23225,6 +23358,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function ecTiles(v){ return '<div class="es-ap-r"><div class="ec-tys">'+(ECTY[pf()]||ECTY.etu).map(function(x){ return '<button type="button" class="'+((v.type||'tache')===x[0]?'on':'')+'" data-cj="es-nty" data-t="'+x[0]+'" style="--c:'+x[2]+'"><span>'+I(ECIC[x[0]],16)+'</span>'+x[1]+'</button>'; }).join('')+'</div></div>'; }
   function ecPrios(v){ return '<div class="es-ap-r"><div class="ec-prs">'+ECPR.map(function(p){ return '<button type="button" class="'+(v.prio===p[0]||(v.prio===true&&p[0]==='u')?'on':'')+'" data-cj="es-npr" data-p="'+p[0]+'" style="--p:'+p[2]+'"><i></i>'+p[1]+'</button>'; }).join('')+'</div></div>'; }
   function ecHandle(a,b){
+    if(plHandle(a,b)) return true;
     if(a==='es-nty' && NO){ noteKeep(); NO.v.type=b.getAttribute('data-t'); NO.render(); return true; }
     if(a==='es-npr' && NO){ noteKeep(); var pv=b.getAttribute('data-p'); NO.v.prio=NO.v.prio===pv?'':pv; NO.render(); return true; }
     if(a==='es-nrq' && NO){ noteKeep(); NO.remT=true; NO.rem=true; NO.rd=addD(NO.v.date,-(+b.getAttribute('data-n'))); NO.rh=NO.rh||'09:00'; ecRemFix(NO); NO.render(); return true; }
@@ -23241,6 +23375,186 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     else if(a==='es-ec-up'){ o.allUp=!o.allUp; }
     o.render(); if(o.sc) o.sc.scrollTop=keep; return true; }
   document.addEventListener('change',function(e){ var t=e.target; if(!t || t.id!=='es-n-d' || !NO || NO.id || NO.kind==='p' || NO.remT) return; noteKeep(); ecRemDef(NO); NO.render(); });
+  /* ══ Étudiant / Salarié : Mon planning (façon Outlook) · Mon organisation (calendrier + chat de Lisa) ══ */
+  var PLO=null, ORO=null, CHO=null, PLH=44;
+  function plRefresh(){ [PLO,ORO].forEach(function(o){ if(o && document.body.contains(o.sh)) o.render(); }); if(CHO && !document.body.contains(CHO.sh)) CHO=null; }
+  function lisaAv(sm){ return '<span class="pl-av'+(sm?' sm':'')+'">'+(lisa()?'<img src="'+lisa()+'" alt="Lisa">':'')+'</span>'; }
+  function coach(t,extra){ return '<div class="pl-coach">'+lisaAv()+'<div class="pl-coach-t"><b>Lisa · ta coach</b><p>'+t+'</p></div>'+(extra||'')+'</div>'; }
+  function hm(m){ return ('0'+Math.floor(m/60)).slice(-2)+':'+('0'+(m%60)).slice(-2); }
+  function dLong(ds){ return new Date(ds+'T12:00:00').toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long' }).replace(/^./,function(x){ return x.toUpperCase(); }); }
+  function dShort(ds){ return new Date(ds+'T12:00:00').toLocaleDateString('fr-FR',{ weekday:'short', day:'numeric', month:'short' }).replace(/\./g,''); }
+  function slotCol(x){ return EDTC[Math.max(0,EDTT[pf()].indexOf(x.type))]; }
+  function hidOn(ds,id){ var dm=(cur().dm||{})[ds]; return !!(dm && dm.hide.indexOf(id)>-1); }
+  function plName(){ return pf()==='etu'?'Mon emploi du temps':'Mon planning'; }
+  /* ── Le message de Lisa sur le planning ── */
+  function plCoachMsg(){ var td=today(), L=slots(dIdx()).filter(function(x){ return !hidOn(td,x.id); }), now=new Date(), nm=now.getHours()*60+now.getMinutes(), live=L.filter(function(x){ return mins(x.d)<=nm && mins(x.f)>nm; })[0], nx=L.filter(function(x){ return mins(x.d)>nm; })[0], du=L.reduce(function(a,x){ return a+Math.max(0,mins(x.f)-mins(x.d)); },0);
+    if(!edt().length) return 'Ton '+(pf()==='etu'?'emploi du temps':'planning')+' est vide. Touche une heure dans la grille ou « Nouveau créneau » : je m\'occupe du reste.';
+    if(!L.length) return 'Aujourd\'hui, aucun créneau. Profite-en pour avancer dans <b>Mon organisation</b>.';
+    return 'Aujourd\'hui : <b>'+L.length+' '+pl(L.length,'créneau','créneaux')+'</b> ('+hrs(du)+'). '+(live?'En ce moment : <b>'+esc(live.t||live.type)+'</b> jusqu\'à '+esc(live.f)+'.':nx?'Prochain : <b>'+esc(nx.t||nx.type)+'</b> à '+esc(nx.d)+'.':'Ta journée est terminée, bravo 👏'); }
+  /* ── Carte du haut de l'accueil ── */
+  function plHero(){ var td=today(), L=slots(dIdx()).filter(function(x){ return !hidOn(td,x.id); }), now=new Date(), nm=now.getHours()*60+now.getMinutes();
+    var rows=L.map(function(x){ var live=mins(x.d)<=nm&&mins(x.f)>nm, past=mins(x.f)<=nm; return '<button type="button" class="plh-r'+(live?' live':'')+(past?' past':'')+'" data-cj="es-pl-ev" data-id="'+x.id+'" data-d="'+td+'" style="--c:'+slotCol(x)+'"><span class="plh-h"><b>'+esc(x.d)+'</b><small>'+esc(x.f)+'</small></span><i></i><span class="plh-t"><b>'+esc(x.t||x.type)+'</b><small>'+esc([x.type,x.lieu].filter(Boolean).join(' · '))+'</small></span>'+(live?'<em>En cours</em>':'')+'</button>'; }).join('');
+    return '<div class="plh"><div class="plh-hd">'+lisaAv(true)+'<div><b>'+plName()+'</b><small>'+esc(dLong(td))+'</small></div><button type="button" class="plh-btn" data-cj="es-pl-open">'+I(P.cal,15)+'<span>Ouvrir</span></button></div>'
+      +(L.length?'<div class="plh-l">'+rows+'</div>':'<button type="button" class="plh-e" data-cj="es-pl-open">'+I(P.plus,16)+(edt().length?'Aucun créneau aujourd\'hui · ajouter':'Remplir mon '+(pf()==='etu'?'emploi du temps':'planning'))+'</button>')
+      +'<p class="plh-lisa">'+plCoachMsg()+'</p></div>'; }
+  /* ── Mon planning : la semaine, façon Outlook ── */
+  function openPlan(j,ev){ var k=pf(), o=cpStream.sheet(plName(),'Mes horaires de la semaine, avec Lisa',''); PLO=o; o.wo=0; o.j=j!=null?j:dIdx(); o.sh.classList.add('pl-wide'); o.body.classList.add('pl-pg','pl-k-'+k);
+    o.render=function(){ o.body.innerHTML=plHtml(o); }; o.render();
+    setTimeout(function(){ var n=o.body.querySelector('.pl-now')||o.body.querySelector('.pl-col.sel .pl-ev'); if(n && o.sc){ var r=n.getBoundingClientRect(), s=o.sc.getBoundingClientRect(); if(r.top>s.bottom-60) o.sc.scrollTop+=r.top-s.top-180; } },60);
+    if(ev) plForm(ev.id,ev.d); return o; }
+  function plHtml(o){ var mon=addD(wk(),7*o.wo), td=today(), now=new Date(), nm=now.getHours()*60+now.getMinutes(), S=edt(), h0=8, h1=19;
+    S.forEach(function(x){ h0=Math.min(h0,Math.floor(mins(x.d)/60)); h1=Math.max(h1,Math.ceil(mins(x.f)/60)); }); h0=Math.max(0,h0); h1=Math.min(24,Math.max(h1,h0+6));
+    var za=new Date(mon+'T12:00:00'), zz=new Date(addD(mon,6)+'T12:00:00'), wl='Du '+za.getDate()+(za.getMonth()!==zz.getMonth()?' '+MOISN[za.getMonth()].toLowerCase():'')+' au '+zz.getDate()+' '+MOISN[zz.getMonth()].toLowerCase();
+    var wmin=S.reduce(function(a,x){ return a+Math.max(0,mins(x.f)-mins(x.d)); },0);
+    var h=coach(plCoachMsg()+(wmin?' Cette semaine : <b>'+hrs(wmin)+'</b> planifiées.':''))
+      +'<div class="pl-bar"><div class="pl-nav"><button type="button" data-cj="es-pl-nav" data-n="-1" aria-label="Semaine précédente">'+I(P.back,15)+'</button><b>'+wl+'</b><button type="button" data-cj="es-pl-nav" data-n="1" aria-label="Semaine suivante">'+I(P.chev,15)+'</button></div>'
+      +(o.wo?'<button type="button" class="pl-td" data-cj="es-pl-today">Aujourd\'hui</button>':'')+'<button type="button" class="pl-new" data-cj="es-pl-new">'+I(P.plus,15)+'Nouveau créneau</button></div>';
+    var heads='', cols='', hrsH='';
+    for(var hh=h0;hh<h1;hh++) hrsH+='<span style="top:'+((hh-h0)*PLH)+'px">'+('0'+hh).slice(-2)+':00</span>';
+    for(var i=0;i<7;i++){ var ds=addD(mon,i), d=new Date(ds+'T12:00:00'), L=slots(i), cells='';
+      heads+='<button type="button" class="pl-dh'+(i===o.j?' sel':'')+(ds===td?' td':'')+'" data-cj="es-pl-day" data-j="'+i+'"><small>'+JOURS[i].slice(0,3)+'</small><b>'+d.getDate()+'</b><i>'+(L.length||'')+'</i></button>';
+      for(var c=h0;c<h1;c++) cells+='<button type="button" class="pl-cell" data-cj="es-pl-at" data-j="'+i+'" data-h="'+c+'" style="top:'+((c-h0)*PLH)+'px" aria-label="Ajouter à '+c+' h"></button>';
+      var evs=L.map(function(x){ var a=mins(x.d)-h0*60, b=Math.max(mins(x.f),mins(x.d)+20)-h0*60, off=hidOn(ds,x.id); return '<button type="button" class="pl-ev'+(off?' off':'')+'" data-cj="es-pl-ev" data-id="'+x.id+'" data-d="'+ds+'" style="top:'+(a*PLH/60)+'px;height:'+Math.max(24,(b-a)*PLH/60-3)+'px;--c:'+slotCol(x)+'"><b>'+esc(x.t||x.type)+'</b><small>'+esc(x.d)+' – '+esc(x.f)+(off?' · annulé ce jour':x.lieu?' · '+esc(x.lieu):'')+'</small></button>'; }).join('');
+      var nl=(ds===td && nm>=h0*60 && nm<h1*60)?'<span class="pl-now" style="top:'+((nm-h0*60)*PLH/60)+'px"><i></i></span>':'';
+      cols+='<div class="pl-col'+(i===o.j?' sel':'')+(ds===td?' td':'')+'">'+cells+evs+nl+'</div>'; }
+    h+='<div class="pl-cal"><div class="pl-days"><span></span>'+heads+'</div><div class="pl-body" style="height:'+((h1-h0)*PLH)+'px"><div class="pl-hrs">'+hrsH+'</div><div class="pl-cols">'+cols+'</div></div></div>'
+      +'<p class="pl-tip">'+I(P.bulb,14)+'<span>Touche une heure libre pour ajouter un créneau, ou un créneau pour le modifier ou l\'annuler.</span></p>';
+    return h; }
+  /* ── Fenêtre simple : ajouter, modifier, annuler un créneau ── */
+  function plForm(id,ds,j,hh){ var k=pf(), x=id?edt().filter(function(s){ return s.id===id; })[0]:null; if(id&&!x) return;
+    var f=x?{ t:x.t||'', type:x.type, js:[x.j], d:x.d, f:x.f, lieu:x.lieu||'' }:{ t:'', type:EDTT[k][0], js:[j!=null?j:dIdx()], d:hh!=null?('0'+hh).slice(-2)+':00':'09:00', f:hh!=null?('0'+Math.min(23,hh+1)).slice(-2)+':00':'10:00', lieu:'' };
+    var opt={ lisa:true, dismiss:false, buttons:[] }, M=cpModal(opt); M.el.classList.add('ci-pop','pl-pop');
+    function set(h,bt){ opt.buttons=bt; M.set(h+'<div class="cpm-btns">'+bt.map(function(b,i){ return '<button type="button" class="'+(b.cls||'')+'" data-mi="'+i+'">'+b.t+'</button>'; }).join('')+'</div>'); }
+    function keep(){ var g=function(i){ var e=document.getElementById(i); return e?e.value:null; }; if(g('pl-t')!=null){ f.t=g('pl-t').trim(); f.type=g('pl-ty'); f.d=g('pl-d'); f.f=g('pl-f'); f.lieu=g('pl-l').trim(); } }
+    function err(m){ var e=document.getElementById('pl-e'); if(e) e.textContent=m; }
+    function form(){ var off=x&&ds&&hidOn(ds,x.id);
+      var h='<b class="cpm-t">'+(x?'Modifier le créneau':'Nouveau créneau')+'</b><p class="cpm-p">'+(x?'Change ce que tu veux, ou annule-le pour un jour.':'Dis-moi quand : je l\'ajoute à ton '+(k==='etu'?'emploi du temps':'planning')+'.')+'</p>'
+        +'<div class="ci-fm"><label>Intitulé<input id="pl-t" maxlength="60" value="'+esc(f.t)+'" placeholder="'+(k==='etu'?'Ex : Marketing, TD de droit':'Ex : Réunion d\'équipe, Travail')+'"></label>'
+        +'<label>Type<select id="pl-ty">'+EDTT[k].map(function(t){ return '<option'+(t===f.type?' selected':'')+'>'+esc(t)+'</option>'; }).join('')+'</select></label>'
+        +'<div class="pl-lb">'+(x?'Jour':'Jours')+'</div><div class="pl-js">'+JOURS.map(function(J,i){ return '<button type="button" class="'+(f.js.indexOf(i)>-1?'on':'')+'" data-pj="'+i+'">'+J.slice(0,3)+'</button>'; }).join('')+'</div>'
+        +'<div class="ci-fm-2"><label>Début<input id="pl-d" type="time" value="'+esc(f.d)+'"></label><label>Fin<input id="pl-f" type="time" value="'+esc(f.f)+'"></label></div>'
+        +'<label>Lieu <em>(facultatif)</em><input id="pl-l" maxlength="50" value="'+esc(f.lieu)+'" placeholder="Ex : salle B204, visio"></label></div><p class="ci-fm-e" id="pl-e"></p>';
+      var bt=[{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } }];
+      if(x && ds) bt.push({ t:off?'Rétablir le '+dShort(ds):'Annuler le '+dShort(ds), cls:'gh', fn:function(){ var dm=dayMark(ds); if(off) dm.hide=dm.hide.filter(function(z){ return z!==x.id; }); else if(dm.hide.indexOf(x.id)<0) dm.hide.push(x.id); save(); M.close(); msg(off?'Créneau rétabli ✓':'Annulé pour le '+dShort(ds)+' · les autres semaines ne changent pas'); refreshAll(); redraw(); } });
+      if(x) bt.push({ t:'Supprimer', cls:'gh red', fn:function(){ keep(); set('<b class="cpm-t">Supprimer ce créneau ?</b><p class="cpm-p">« '+esc(x.t||x.type)+' » sera retiré de toutes les semaines.</p>',[{ t:'Non', cls:'gh', fn:form },{ t:'Oui, supprimer', cls:'pri red', fn:function(){ cur().edt=edt().filter(function(z){ return z.id!==x.id; }); save(); M.close(); msg('Créneau supprimé'); refreshAll(); redraw(); } }]); } });
+      bt.push({ t:'Enregistrer', cls:'pri', fn:function(){ keep(); if(!f.js.length) return err('Choisis au moins un jour.'); if(!f.d||!f.f) return err('Indique l\'heure de début et de fin.'); if(mins(f.f)<=mins(f.d)) return err('La fin doit être après le début.');
+        if(x){ Object.assign(x,{ t:f.t, type:f.type, j:f.js[0], d:f.d, f:f.f, lieu:f.lieu }); }
+        else f.js.forEach(function(jj,n){ edt().push({ id:'e'+Date.now().toString(36)+n, j:jj, d:f.d, f:f.f, type:f.type, t:f.t, lieu:f.lieu, who:'' }); });
+        save(); M.close(); msg(x?'Créneau modifié ✓':'C\'est dans ton '+(k==='etu'?'emploi du temps':'planning')+' ✓'); if(PLO && f.js.length) PLO.j=f.js[0]; refreshAll(); redraw(); } });
+      set(h,bt);
+      M.body.querySelectorAll('[data-pj]').forEach(function(b){ b.onclick=function(){ keep(); var v=+b.getAttribute('data-pj'); if(x) f.js=[v]; else { var p=f.js.indexOf(v); if(p>-1) f.js.splice(p,1); else f.js.push(v); } form(); }; }); }
+    form(); }
+  /* ── Mon organisation : un vrai calendrier ── */
+  function dayTasks(ds){ return cur().tasks.filter(function(t){ return (t.scope||'d')==='d' && t.date===ds; }).sort(byH); }
+  function openOrga(ds){ var o=cpStream.sheet('Mon organisation','Mon calendrier et mes tâches, suivis par Lisa',''); ORO=o; o.cd=ds||today(); var d=new Date(o.cd+'T12:00:00'); o.mo=new Date(d.getFullYear(),d.getMonth(),1); o.sh.classList.add('pl-wide'); o.body.classList.add('pl-pg','pl-k-'+pf());
+    o.render=function(){ var a=document.activeElement, keepQ=a&&a.id==='or-q'?a.value:null; o.body.innerHTML=orHtml(o); if(keepQ!=null){ var q=$('or-q'); if(q){ q.value=keepQ; try{ q.focus({ preventScroll:true }); }catch(e){} } } }; o.render(); return o; }
+  function orCoachMsg(){ var c=cur(), n=(c.prof||{}).prenom||'', td=today(), T=actv(dayTasks(td)), dn=T.filter(isF).length, PT=pastTodo(), up=cur().tasks.filter(function(t){ return (t.scope||'d')==='d' && tSt(t)==='todo' && t.date>td && t.date<=addD(td,3); }).sort(function(a,b){ return a.date.localeCompare(b.date); });
+    var m=(new Date().getHours()<18?'Bonjour':'Bonsoir')+(n?' '+esc(n):'')+' ! ';
+    m+=T.length?'Aujourd\'hui : <b>'+T.length+' '+pl(T.length,'tâche','tâches')+'</b>, '+dn+' '+pl(dn,'faite','faites')+'.':'Rien de prévu aujourd\'hui : touche une date pour ajouter tes tâches.';
+    if(PT.length) m+=' <b>'+PT.length+'</b> '+pl(PT.length,'tâche des jours d\'avant attend','tâches des jours d\'avant attendent')+' ton point.';
+    if(up.length) m+=' On se rapproche : <b>'+esc(up[0].titre)+'</b> '+esc(lblD(up[0].date).replace(/\.$/,''))+'.';
+    return m; }
+  function orRow(t){ var st=tSt(t); return '<div class="or-t s-'+st+'"><button type="button" class="or-t-b" data-cj="es-or-ed" data-id="'+t.id+'"><span class="or-t-h">'+(t.heure?esc(t.heure):'—')+'</span><span class="or-t-x"><b>'+esc(t.titre||'Tâche')+'</b>'+((st==='pasfait'||st==='annule')&&t.raison?'<small>Raison : '+esc(t.raison)+'</small>':t.rappel&&t.rappel.on&&!t.rappel.sent?'<small>'+I(BELL,10)+' Rappel le '+esc(fmtD(t.rappel.date))+'</small>':'')+'</span></button>'+ecAct(t)+'</div>'; }
+  function orHtml(o){ var td=today(), M=o.mo, sel=o.cd, first=(M.getDay()+6)%7, nd=new Date(M.getFullYear(),M.getMonth()+1,0).getDate(), cells='';
+    for(var i=0;i<first;i++) cells+='<span></span>';
+    for(var q=1;q<=nd;q++){ var ds=ymd(new Date(M.getFullYear(),M.getMonth(),q)), T=actv(dayTasks(ds)), todo=T.filter(function(t){ return tSt(t)==='todo'; }).length, all=T.length&&!todo&&T.every(isF);
+      cells+='<button type="button" class="'+(ds===sel?'sel ':'')+(ds===td?'td ':'')+(ds<td?'past':'')+'" data-cj="es-or-day" data-d="'+ds+'"><b>'+q+'</b>'+(todo?'<i>'+todo+'</i>':all?'<i class="ok">✓</i>':'<i class="z"></i>')+'</button>'; }
+    var DT=dayTasks(sel), A=actv(DT), dn=A.filter(isF).length;
+    return coach(orCoachMsg(),'<button type="button" class="pl-chat" data-cj="es-or-chat">'+I(P.chat,16)+'<span>Parler à Lisa</span></button>')
+      +'<div class="or-grid"><div class="or-cal"><div class="or-cal-h"><button type="button" data-cj="es-or-nav" data-n="-1" aria-label="Mois précédent">'+I(P.back,15)+'</button><b>'+MOISN[M.getMonth()]+' '+M.getFullYear()+'</b><button type="button" data-cj="es-or-nav" data-n="1" aria-label="Mois suivant">'+I(P.chev,15)+'</button></div>'
+      +(sel!==td?'<button type="button" class="pl-td or-tdb" data-cj="es-or-today">Revenir à aujourd\'hui</button>':'')
+      +'<div class="or-wd">'+JOURS.map(function(J){ return '<span>'+J.slice(0,1)+'</span>'; }).join('')+'</div><div class="or-g">'+cells+'</div></div>'
+      +'<div class="or-day"><div class="or-day-h"><b>'+esc(dLong(sel))+'</b><small>'+(A.length?A.length+' '+pl(A.length,'tâche','tâches')+' · '+dn+' '+pl(dn,'faite','faites'):'Aucune tâche')+'</small></div>'
+      +(DT.length?'<div class="or-l">'+DT.map(orRow).join('')+'</div>':'<p class="or-e">'+(sel<td?'Rien de noté ce jour-là.':'Ajoute ce que tu dois faire ce jour-là : Lisa le suit avec toi.')+'</p>')
+      +(sel>=td?'<div class="or-add"><input id="or-q" maxlength="90" placeholder="Ajouter une tâche…" aria-label="Nouvelle tâche"><input id="or-h" type="time" aria-label="Heure (facultatif)"><button type="button" data-cj="es-or-add" data-d="'+sel+'" aria-label="Ajouter">'+I(P.plus,18)+'</button></div>'+(sel>=addD(td,2)?'<p class="or-hint">'+I(BELL,11)+' Lisa te le rappelle 2 jours avant.</p>':''):'')
+      +'</div></div>'; }
+  function remDef(ds){ if(ds<addD(today(),2)) return null; return { on:true, date:addD(ds,-2), heure:'09:00', sent:false }; }
+  function orAdd(titre,ds,heure){ var t={ id:'t'+Date.now().toString(36)+Math.floor(Math.random()*99), titre:titre, date:ds, scope:'d', heure:heure||'', theme:themes()[0][0], etat:'todo', fait:false, sujet:'', description:'', goal:'', cree:new Date().toISOString(), rappel:remDef(ds) }; cur().tasks.push(t); save(); return t; }
+  function orEdit(id){ var t=cur().tasks.filter(function(x){ return x.id===id; })[0]; if(!t) return; var opt={ lisa:true, dismiss:false, buttons:[] }, M=cpModal(opt); M.el.classList.add('ci-pop','pl-pop');
+    function set(h,bt){ opt.buttons=bt; M.set(h+'<div class="cpm-btns">'+bt.map(function(b,i){ return '<button type="button" class="'+(b.cls||'')+'" data-mi="'+i+'">'+b.t+'</button>'; }).join('')+'</div>'); }
+    function form(){ set('<b class="cpm-t">Ma tâche</b><p class="cpm-p">Change ce que tu veux : je mets ton calendrier à jour.</p><div class="ci-fm"><label>Ce que je dois faire<input id="or-et" maxlength="90" value="'+esc(t.titre||'')+'"></label><div class="ci-fm-2"><label>Date<input id="or-ed" type="date" max="2050-12-31" value="'+esc(t.date)+'"></label><label>Heure <em>(facultatif)</em><input id="or-eh" type="time" value="'+esc(t.heure||'')+'"></label></div></div><p class="ci-fm-e" id="or-ee"></p>',
+      [{ t:'Fermer', cls:'gh', fn:function(){ M.close(); } },{ t:'Supprimer', cls:'gh red', fn:function(){ set('<b class="cpm-t">Supprimer cette tâche ?</b><p class="cpm-p">« '+esc(t.titre)+' » sera retirée de ton calendrier.</p>',[{ t:'Non', cls:'gh', fn:form },{ t:'Oui, supprimer', cls:'pri red', fn:function(){ cur().tasks=cur().tasks.filter(function(z){ return z.id!==t.id; }); save(); M.close(); msg('Tâche supprimée'); refreshAll(); redraw(); } }]); } },
+       { t:'Enregistrer', cls:'pri', fn:function(){ var ti=document.getElementById('or-et').value.trim(), d=document.getElementById('or-ed').value, h=document.getElementById('or-eh').value; if(!ti){ document.getElementById('or-ee').textContent='Écris ta tâche.'; return; } if(!d){ document.getElementById('or-ee').textContent='Choisis une date.'; return; }
+         var moved=d!==t.date; t.titre=ti; t.heure=h||''; if(moved){ t.date=d; t.rappel=remDef(d); } save(); M.close(); msg('C\'est à jour ✓'); if(moved && ORO){ ORO.cd=d; var dd=new Date(d+'T12:00:00'); ORO.mo=new Date(dd.getFullYear(),dd.getMonth(),1); } refreshAll(); redraw(); } }]); }
+    form(); }
+  /* ── Le chat de Lisa : elle reprend ton calendrier, suit tes tâches et en ajoute avec toi ── */
+  function chat(){ var c=cur(); return c.chat||(c.chat=[]); }
+  function chPush(w,h){ var L=chat(); L.push({ w:w, h:h, at:Date.now() }); if(L.length>150) L.splice(0,L.length-150); }
+  function tLine(t,wd){ return '<li><b>'+esc(t.titre)+'</b>'+(wd?' · '+esc(dShort(t.date)):'')+(t.heure?' · '+esc(t.heure):'')+'</li>'; }
+  function weekT(){ var a=wk(), z=addD(a,6); return cur().tasks.filter(function(t){ return (t.scope||'d')==='d' && t.date>=a && t.date<=z && tSt(t)==='todo'; }).sort(function(x,y){ return (x.date+(x.heure||'99')).localeCompare(y.date+(y.heure||'99')); }); }
+  function summary(){ var c=cur(), n=(c.prof||{}).prenom||'', td=today(), T=actv(dayTasks(td)), PT=pastTodo(), UP=cur().tasks.filter(function(t){ return (t.scope||'d')==='d' && tSt(t)==='todo' && t.date>td; }).sort(function(a,b){ return (a.date+(a.heure||'')).localeCompare(b.date+(b.heure||'')); }).slice(0,4);
+    var h=(new Date().getHours()<18?'Bonjour':'Bonsoir')+(n?' '+esc(n):'')+' 👋 J\'ai repris ton calendrier.';
+    h+=T.length?'<br><b>Aujourd\'hui</b><ul>'+T.map(function(t){ return tLine(t); }).join('')+'</ul>':'<br>Aujourd\'hui, rien de prévu.';
+    if(PT.length) h+='<b>À vérifier</b><ul>'+PT.slice(0,5).map(function(t){ return tLine(t,1); }).join('')+'</ul>';
+    if(UP.length) h+='<b>À venir</b><ul>'+UP.map(function(t){ return tLine(t,1); }).join('')+'</ul>';
+    return h+'Écris-moi une tâche (ex : « réunion jeudi 14h »), je l\'ajoute à ton calendrier.'; }
+  function nextCheck(){ var td=today(), now=new Date(), nm=now.getHours()*60+now.getMinutes(), L=pastTodo().concat(dayTasks(td).filter(function(t){ return tSt(t)==='todo' && (now.getHours()>=17 || (t.heure && mins(t.heure)+60<=nm)); })); var sk=(CHO&&CHO.skip)||[]; return L.filter(function(t){ return sk.indexOf(t.id)<0; })[0]||null; }
+  var QR=['Mon programme du jour','En retard','Cette semaine','Faire le point'];
+  function openOrChat(){ var o=cpStream.sheet('Lisa · mon organisation','Ta coach suit ton calendrier avec toi',''); CHO=o; o.skip=[]; o.body.classList.add('pl-k-'+pf(),'orc');
+    o.body.innerHTML='<div class="orc-log"></div><div class="orc-qr">'+QR.map(function(q,i){ return '<button type="button" data-cj="es-orc-q" data-i="'+i+'">'+q+'</button>'; }).join('')+'</div><form class="orc-in" data-orc="1"><input id="orc-i" maxlength="120" autocomplete="off" placeholder="Ex : réviser le chapitre 3 demain 18h"><button type="submit" aria-label="Envoyer">'+I('<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',17)+'</button></form>';
+    o.log=o.body.querySelector('.orc-log'); var H=chat().slice(-40);
+    if(H.length) o.log.innerHTML=H.map(bub).join('')+'<p class="orc-sep">Aujourd\'hui</p>';
+    var c=cur(); if(c.chatDay!==today()){ c.chatDay=today(); lisaSay(summary()); } else lisaSay('Re ! '+(window.cpVoice?cpVoice.ack().replace(/\.$/,''):'Je suis là')+'. Que veux-tu ajouter ou vérifier ?');
+    setTimeout(ask,700); return o; }
+  function bub(m){ return m.w==='l'?'<div class="orc-m l">'+lisaAv(true)+'<div>'+m.h+'</div></div>':'<div class="orc-m m"><div>'+m.h+'</div></div>'; }
+  function down(){ if(CHO&&CHO.sc) setTimeout(function(){ CHO.sc.scrollTo({ top:CHO.sc.scrollHeight, behavior:'smooth' }); },40); }
+  function lisaSay(h,live){ if(!CHO) return; if(!live){ chPush('l',h); save(); } CHO.log.insertAdjacentHTML('beforeend',bub({ w:'l', h:h })); down(); }
+  function meSay(t){ if(!CHO) return; chPush('m',esc(t)); save(); CHO.log.insertAdjacentHTML('beforeend',bub({ w:'m', h:esc(t) })); down(); }
+  function chips(L){ return '<div class="orc-ch">'+L.map(function(x){ return '<button type="button" data-cj="es-orc-a" data-v="'+x[0]+'"'+(x[1]?' data-id="'+x[1]+'"':'')+'>'+x[2]+'</button>'; }).join('')+'</div>'; }
+  function clearCh(){ if(CHO) CHO.log.querySelectorAll('.orc-ch').forEach(function(x){ x.remove(); }); }
+  function ask(){ if(!CHO) return; var t=nextCheck(); if(!t) return; CHO.cur=t.id; lisaSay('Faisons le point : <b>'+esc(t.titre)+'</b>'+(t.date!==today()?' ('+esc(lblD(t.date).replace(/\.$/,''))+')':'')+', c\'est fait ?'+chips([['ok',t.id,'✓ C\'est fait'],['no',t.id,'✗ Pas fait'],['later',t.id,'Plus tard']]),true); }
+  var WHY=['Pas eu le temps','Oublié(e)','Trop difficile','Plus prioritaire'];
+  function parseT(s,base){ var t=' '+s+' ', td=today(), d=null, h='', m;
+    if((m=t.match(/\b(\d{1,2})\s*(?:h|:)\s*(\d{2})?\b/i)) && +m[1]<24 && +(m[2]||0)<60){ h=('0'+m[1]).slice(-2)+':'+('0'+(m[2]||0)).slice(-2); t=t.replace(m[0],' '); }
+    if(/apr[eè]s[- ]demain/i.test(t)){ d=addD(td,2); t=t.replace(/apr[eè]s[- ]demain/i,' '); }
+    else if(/\bdemain\b/i.test(t)){ d=addD(td,1); t=t.replace(/\bdemain\b/i,' '); }
+    else if(/aujourd'?hui|ce soir|ce matin|cet apr[eè]s-midi/i.test(t)){ d=td; t=t.replace(/aujourd'?hui/i,' '); }
+    if(!d) JOURS.forEach(function(J,i){ if(d) return; var r=new RegExp('\\b'+J+'( prochain)?\\b','i'); if(r.test(t)){ d=addD(td,((i-dIdx()+7)%7)||7); t=t.replace(r,' '); } });
+    if(!d && (m=t.match(/\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/))){ var y=m[3]?(+m[3]<100?2000+(+m[3]):+m[3]):new Date().getFullYear(), x=new Date(y,+m[2]-1,+m[1],12); if(!m[3] && ymd(x)<td) x.setFullYear(y+1); if(!isNaN(x)){ d=ymd(x); t=t.replace(m[0],' '); } }
+    if(!d){ var MO=MOISN.map(function(z){ return z.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }), tn=t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); if((m=tn.match(new RegExp('\\b(\\d{1,2})\\s+('+MO.join('|')+')\\b')))){ var x2=new Date(new Date().getFullYear(),MO.indexOf(m[2]),+m[1],12); if(ymd(x2)<td) x2.setFullYear(x2.getFullYear()+1); d=ymd(x2); var at=tn.indexOf(m[0]); t=t.slice(0,at)+' '+t.slice(at+m[0].length); } }
+    if(!d && (m=t.match(/\ble (\d{1,2})\b/i))){ var n2=new Date(); n2.setHours(12,0,0,0); n2.setDate(+m[1]); if(ymd(n2)<td) n2.setMonth(n2.getMonth()+1); d=ymd(n2); t=t.replace(m[0],' '); }
+    t=t.replace(/\s+/g,' ').replace(/\s(le|à|a|pour|ce|cet|cette|vers|de)\s*$/i,' ').replace(/^\s*(je dois|il faut|ajoute|ajouter|note|rappelle-moi de|rappelle moi de)\s+/i,' ').trim();
+    return { titre:t.charAt(0).toUpperCase()+t.slice(1), date:d||base||td, heure:h }; }
+  function onText(v){ meSay(v); clearCh(); var lo=v.toLowerCase().trim();
+    if(/^(merci|ok|okay|d'accord|super|top|bonjour|salut|coucou|bonsoir)\b/.test(lo) && lo.length<20){ lisaSay((window.cpVoice?cpVoice.ack():'Avec plaisir.')+' Dis-moi une tâche et sa date, je l\'ajoute à ton calendrier.'); return; }
+    var p=parseT(v,ORO&&document.body.contains(ORO.sh)&&ORO.cd>=today()?ORO.cd:today()); if(!p.titre || p.titre.length<2){ lisaSay('Je n\'ai pas bien compris la tâche. Écris par exemple : « appeler le tuteur vendredi 10h ».'); return; }
+    CHO.pend=p; lisaSay('Je l\'ajoute : <b>'+esc(p.titre)+'</b>, '+esc(lblD(p.date).replace(/\.$/,''))+(p.heure?' à '+esc(p.heure):'')+'. C\'est bon ?'+chips([['add','','Oui, ajoute'],['cancel','','Non']]),true); }
+  function chAnswer(v,id){ if(!CHO) return; clearCh(); var t=id?cur().tasks.filter(function(x){ return x.id===id; })[0]:null, ad=coachAd();
+    if(v==='add' && CHO.pend){ var p=CHO.pend; CHO.pend=null; meSay('Oui, ajoute'); var nt=orAdd(p.titre,p.date,p.heure); lisaSay('C\'est noté dans ton calendrier ✓ <b>'+esc(nt.titre)+'</b>, '+esc(lblD(nt.date).replace(/\.$/,''))+(nt.heure?' à '+esc(nt.heure):'')+'.'+(nt.rappel?' OK, là on planifie : je te le rappelle le '+esc(fmtD(nt.rappel.date))+' à 9 h.':'')); refreshAll(); redraw(); setTimeout(ask,700); return; }
+    if(v==='cancel'){ CHO.pend=null; meSay('Non'); lisaSay('Pas de souci, je n\'ajoute rien. Réécris-la comme tu veux.'); setTimeout(ask,700); return; }
+    if(!t) return;
+    if(v==='ok'){ meSay('C\'est fait'); cpCoach.setSt(ad,t,'fait'); save(); lisaSay((window.cpVoice?cpVoice.ack():'Bravo !')+' <b>'+esc(t.titre)+'</b> est cochée ✓'); refreshAll(); redraw(); setTimeout(ask,600); return; }
+    if(v==='later'){ meSay('Plus tard'); CHO.skip.push(t.id); lisaSay('D\'accord, on en reparle plus tard.'); setTimeout(ask,600); return; }
+    if(v==='no'){ meSay('Pas fait'); lisaSay('Ça arrive. Qu\'est-ce qui t\'a empêché(e) ?'+chips(WHY.map(function(w,i){ return ['why'+i,t.id,w]; })),true); return; }
+    if(/^why/.test(v)){ var r=WHY[+v.slice(3)]; meSay(r); cpCoach.setSt(ad,t,'pasfait',r); save(); lisaSay('C\'est noté dans ton suivi. '+(window.cpVoice?cpVoice.refAt(dayN()):'')+' On la replanifie ?'+chips([['tom',t.id,'Oui, demain'],['nott',t.id,'Non, merci']]),true); refreshAll(); redraw(); return; }
+    if(v==='tom'){ meSay('Oui, demain'); var n3=orAdd(t.titre,addD(today(),1),t.heure); lisaSay('C\'est replanifié pour demain ✓ <b>'+esc(n3.titre)+'</b>.'); refreshAll(); redraw(); setTimeout(ask,600); return; }
+    if(v==='nott'){ meSay('Non, merci'); lisaSay('Très bien. '+(window.cpVoice?cpVoice.close((cur().prof||{}).prenom||''):'')); setTimeout(ask,600); } }
+  function chQuick(i){ if(!CHO) return; clearCh(); meSay(QR[i]); var td=today();
+    if(i===0){ var T=dayTasks(td); lisaSay(T.length?'Ton programme d\'aujourd\'hui :<ul>'+T.map(function(t){ return '<li>'+(isF(t)?'✓ ':tSt(t)==='annule'?'⊘ ':tSt(t)==='pasfait'?'✗ ':'')+'<b>'+esc(t.titre)+'</b>'+(t.heure?' · '+esc(t.heure):'')+'</li>'; }).join('')+'</ul>':'Rien de prévu aujourd\'hui. Écris-moi une tâche et je l\'ajoute.'); return; }
+    if(i===1){ var PT=pastTodo(); lisaSay(PT.length?'Ces tâches attendent ton point :<ul>'+PT.map(function(t){ return tLine(t,1); }).join('')+'</ul>':'Rien en retard, bravo 👏'); if(PT.length) setTimeout(ask,500); return; }
+    if(i===2){ var W=weekT(); lisaSay(W.length?'Ce qu\'il reste cette semaine :<ul>'+W.map(function(t){ return tLine(t,1); }).join('')+'</ul>':'Ta semaine est à jour ✓'); return; }
+    CHO.skip=[]; if(nextCheck()) ask(); else lisaSay('Tout est à jour, rien à vérifier pour l\'instant ✓'); }
+  function plHandle(a,b){
+    if(a==='es-pl-open'){ openPlan(); return true; }
+    if(a==='es-pl-ev'||a==='es-edte'){ var id=b.getAttribute('data-id'), se=edt().filter(function(x){ return x.id===id; })[0]; if(!se) return true; var ds=b.getAttribute('data-d')||addD(wk(),se.j); if(!PLO||!document.body.contains(PLO.sh)) openPlan(se.j); plForm(id,ds); return true; }
+    if(a==='es-pl-new'){ plForm(null,null,PLO?PLO.j:dIdx()); return true; }
+    if(a==='es-pl-at'){ var jj=+b.getAttribute('data-j'); if(PLO){ PLO.j=jj; } plForm(null,null,jj,+b.getAttribute('data-h')); return true; }
+    if(a==='es-pl-day' && PLO){ PLO.j=+b.getAttribute('data-j'); PLO.render(); return true; }
+    if(a==='es-pl-nav' && PLO){ PLO.wo+=+b.getAttribute('data-n'); PLO.render(); return true; }
+    if(a==='es-pl-today' && PLO){ PLO.wo=0; PLO.j=dIdx(); PLO.render(); return true; }
+    if(a==='es-or-day' && ORO){ ORO.cd=b.getAttribute('data-d'); ORO.render(); var dy=ORO.body.querySelector('.or-day'); if(dy && window.innerWidth<1000) setTimeout(function(){ dy.scrollIntoView({ behavior:'smooth', block:'start' }); },30); return true; }
+    if(a==='es-or-nav' && ORO){ ORO.mo=new Date(ORO.mo.getFullYear(),ORO.mo.getMonth()+(+b.getAttribute('data-n')),1); var td=today(); ORO.cd=td.slice(0,7)===ymd(ORO.mo).slice(0,7)?td:ymd(ORO.mo); ORO.render(); return true; }
+    if(a==='es-or-today' && ORO){ ORO.cd=today(); var t0=new Date(); ORO.mo=new Date(t0.getFullYear(),t0.getMonth(),1); ORO.render(); return true; }
+    if(a==='es-or-add'){ var q=$('or-q'), hh=$('or-h'), v=q?q.value.trim():''; if(!v){ msg('Écris ta tâche'); if(q) q.focus(); return true; } var nt=orAdd(v,b.getAttribute('data-d'),hh?hh.value:'');
+      chPush('l','J\'ai noté <b>'+esc(nt.titre)+'</b> pour '+esc(lblD(nt.date).replace(/\.$/,''))+(nt.heure?' à '+esc(nt.heure):'')+'.'); save();
+      msg(nt.rappel?'OK, là on planifie 🗓️ Je te le rappelle le '+fmtD(nt.rappel.date):'Ajoutée ✓'); refreshAll(); redraw(); setTimeout(function(){ var f=$('or-q'); if(f) try{ f.focus({ preventScroll:true }); }catch(e){} },60); return true; }
+    if(a==='es-or-ed'){ orEdit(b.getAttribute('data-id')); return true; }
+    if(a==='es-or-chat'){ openOrChat(); return true; }
+    if(a==='es-orc-q'){ chQuick(+b.getAttribute('data-i')); return true; }
+    if(a==='es-orc-a'){ chAnswer(b.getAttribute('data-v'),b.getAttribute('data-id')); return true; }
+    return false; }
+  document.addEventListener('submit',function(e){ var f=e.target.closest('[data-orc]'); if(!f) return; e.preventDefault(); var i=$('orc-i'), v=i?i.value.trim():''; if(!v) return; i.value=''; onText(v); },true);
+  document.addEventListener('keydown',function(e){ if(e.key==='Enter' && e.target && e.target.id==='or-q'){ e.preventDefault(); var bt=document.querySelector('[data-cj="es-or-add"]'); if(bt) bt.click(); } });
   window.cpES={ home:home, hero:hero, go:function(a){ if(a==='es-edt') openEdt(); }, coachAd:function(){ return coachAd(); } };
 })();
 </script>
