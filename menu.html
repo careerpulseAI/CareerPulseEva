@@ -1689,13 +1689,23 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   <div id="cp-menu-membre" style="display:none;">
    <button onclick="cpMenuShow('list')" style="background:none;border:none;color:#059669;font-size:.68rem;font-weight:700;cursor:pointer;margin-bottom:14px;font-family:inherit;padding:0;">← Retour</button>
 
-   <div style="background:linear-gradient(135deg,#1e3a5f,#059669);border-radius:16px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden;">
+   <div class="cp-wl" style="background:linear-gradient(135deg,#1e3a5f,#059669);border-radius:18px;padding:18px;margin-bottom:16px;position:relative;overflow:hidden;">
     <div style="position:absolute;top:-22px;right:-22px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.08);"></div>
     <div style="position:absolute;bottom:-30px;right:30px;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,.06);"></div>
-    <div style="width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);border:1.5px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-size:1.1rem;">👋</div>
-    <div style="font-size:.94rem;font-weight:800;color:#fff;margin-bottom:5px;position:relative;">Bienvenue sur CareerPulse</div>
-    <div style="font-size:.68rem;color:rgba(255,255,255,.88);line-height:1.6;position:relative;">CareerPulse t'oriente vers les sites officiels et les meilleures plateformes, sélectionnés selon ton profil : créer ton CV, rechercher un poste, éditer ton profil et classer tes documents.<br><span style="display:block;margin-top:6px">Le <strong>Quiz Pro</strong> consolide tes connaissances de façon ludique et concrète : questions construites à partir des textes officiels, 15 ou 25 questions au choix, à ton rythme et sans pression.</span><span style="display:block;margin-top:6px;opacity:.85">🎁 Offre exceptionnelle : EVA gratuit pour essai, en illimité.</span></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;position:relative;">
+     <span style="flex:none;width:52px;height:52px;border-radius:50%;overflow:hidden;background:rgba(255,255,255,.15);box-shadow:0 0 0 3px rgba(255,255,255,.25),0 10px 22px -10px rgba(0,0,0,.5);"><img id="cp-wl-lisa" alt="Lisa" style="width:100%;height:100%;object-fit:cover;display:none"></span>
+     <div><div style="font-size:.94rem;font-weight:800;color:#fff;">Bienvenue sur CareerPulse</div><div style="font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-top:2px;">Avec Lisa, ta coach au quotidien</div></div>
+    </div>
+    <div style="font-size:.7rem;color:rgba(255,255,255,.92);line-height:1.6;position:relative;">
+     <span style="display:block">Je suis <strong>Lisa</strong>, la coach de CareerPulse. Chaque jour, je suis tes tâches, je te conseille, je te guide et je t'épaule dans tes missions : tu n'avances plus seul(e).</span>
+     <span style="display:block;margin-top:7px">Je travaille main dans la main avec <strong>EVA</strong> pour compléter ton suivi : CV, lettre, simulation d'entretien, droits et orientation.</span>
+     <span style="display:block;margin-top:7px">Sur CareerPulse, tu progresses à ton rythme : ton organisation, ton bilan, ton profil pro. Et les <strong>espaces pros</strong> (employeurs, centres de formation) peuvent échanger avec toi, uniquement si tu le permets.</span>
+     <span style="display:block;margin-top:7px">Le <strong>Quiz Pro</strong> fait grandir tes connaissances, en droit du travail et bien plus : questions tirées des textes officiels, 15 ou 25 questions, sans pression.</span>
+     <span style="display:block;margin-top:7px;opacity:.88">🎁 Offre exceptionnelle : EVA gratuit pour essai, en illimité.</span>
+     <span style="display:block;margin-top:9px;font-weight:800;color:#fff">Ta carrière mérite une coach. Bienvenue chez toi 💚</span>
+    </div>
    </div>
+   <script>(function(){ function set(){ try{ var s=(window.parent&&window.parent.CP_LISA_IMG)||window.CP_LISA_IMG||''; var i=document.getElementById('cp-wl-lisa'); if(i&&s){ i.src=s; i.style.display='block'; return true; } }catch(e){} return false; } if(!set()){ var n=0, t=setInterval(function(){ if(set()||++n>20) clearInterval(t); },500); } })();</script>
 
    <div id="cp-membre-logged-out">
     <div style="display:flex;gap:10px;align-items:flex-start;background:#ecfdf5;border:1px solid #bbf7d0;border-radius:12px;padding:10px 12px;margin-bottom:14px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 3 4.5 6v5.5c0 4.6 3.2 8.4 7.5 9.5 4.3-1.1 7.5-4.9 7.5-9.5V6z" fill="rgba(5,150,105,.1)"/><path d="m9 12 2 2 4-4"/></svg><div style="font-size:.64rem;color:#065f46;line-height:1.5;"><b>🔒 Pour ta sécurité et celle de ton compte</b>, tu seras déconnecté(e) automatiquement en quittant le site.</div></div>
