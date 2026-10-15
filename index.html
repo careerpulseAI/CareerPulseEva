@@ -8835,6 +8835,7 @@ function evadToggle(header){
 }
 
 function go(id){
+  if(id!=='profil' && window.cpInPf && cpInPf()){ if(window.cpOutMsg) cpOutMsg(); return; }
   // Garde Eva — bloquer toute navigation si diagnostic en cours
   var evaScreen=document.getElementById('s-eva-coach');
   if(window._evaInSession && evaScreen && evaScreen.classList.contains('active') && id!=='eva-coach'){
@@ -19073,6 +19074,7 @@ window.cpSheetArrows=function(sc,host){
   /* ── À chaque arrivée dans Mon espace : Lisa présente les 4 profils en stream ── */
   var INTRO=true, ITMR=null, ISKIP=false;
   function introOn(){ return INTRO || !chosen(); }
+  window.cpInPf=function(){ var sp=$('s-profil'); return !!(sp && sp.classList.contains('active') && !introOn() && user()); };
   var PCARD=[['dem','Demandeur d\'emploi · Reconversion','Tu cherches un emploi ou tu changes de métier : profil, CV, candidatures et défis de la semaine.'],['etu','Étudiant(e)','Tes cours, tes devoirs, ton école, ton stage ou ton alternance.'],['sal','Salarié(e)','Ton quotidien au travail, ton entretien annuel, ta formation et ton évolution.'],['frl','Freelance','Ton activité, tes clients, tes missions et ton chiffre d\'affaires.']];
   var PSAY={ dem:'Le premier, c\'est <b>Demandeur d\'emploi · Reconversion</b> : pour trouver un emploi ou changer de métier.', etu:'Ensuite, <b>Étudiant</b> : pour organiser tes cours, tes devoirs et trouver ton stage ou ton alternance.', sal:'Puis <b>Salarié</b> : pour ton quotidien au travail, ton entretien annuel et ton évolution.', frl:'Et enfin <b>Freelance</b> : pour gérer ton activité, tes clients et tes missions.' };
   function pcardHtml(c){ var cur=chosen()&&(S.st.profil==='rec'?'dem':S.st.profil)===c[0];
@@ -19147,8 +19149,8 @@ window.cpSheetArrows=function(sc,host){
   }
   /* Sortie : quitter le profil (le compte reste connecté) ou se déconnecter du site */
   window.cpExitAsk=function(){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); });
-    var o=sheet('Quitter mon espace','Choisis comment tu veux sortir','<div class="es-rows cpx-rows"><button type="button" class="es-row" id="cpx-pf"><span class="es-row-i v">'+I(P.users||P.user,19)+'</span><span><b>Quitter ce profil</b><small>Ton compte reste connecté : tu reviens au choix des profils</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" id="cpx-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter du site</b><small>Ta session CareerPulse se ferme complètement</small></span>'+I(P.chev,16)+'</button></div>');
-    o.body.querySelector('#cpx-pf').onclick=function(){ o.sh.remove(); document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); INTRO=true; var hb=$('cj-home'); if(hb) hb.innerHTML=''; drawAll(); try{ window.scrollTo(0,0); }catch(x){} };
+    var o=sheet('Quitter mon espace','Pour sortir de ton espace, déconnecte-toi','<div class="es-rows cpx-rows"><button type="button" class="es-row" id="cpx-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter du site</b><small>Ta session CareerPulse se ferme complètement</small></span>'+I(P.chev,16)+'</button></div>');
+    var opf=o.body.querySelector('#cpx-pf'); if(opf) opf.onclick=function(){ o.sh.remove(); document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); INTRO=true; var hb=$('cj-home'); if(hb) hb.innerHTML=''; drawAll(); try{ window.scrollTo(0,0); }catch(x){} };
     o.body.querySelector('#cpx-out').onclick=function(){ if(window.fbLogout) fbLogout(); }; };
   function say2(html){ return '<div class="cj-say">'+av('sm')+'<div>'+html+'</div></div>'; }
   /* Page « écrire » : ouverte par chaque bouton Autre */
@@ -25751,6 +25753,203 @@ html.cpab-lock{ overflow:hidden; }
 .cpab-lt{ margin:22px 2px 8px; font-size:.95rem; font-weight:800; color:#0f172a; }
 .cpab-law{ margin-bottom:6px; border-radius:12px; background:#fff; border:1px solid #e2e8f0; } .cpab-law summary{ padding:12px 14px; cursor:pointer; font-size:.84rem; font-weight:700; color:#1e293b; } .cpab-law p{ margin:0; padding:0 14px 13px; font-size:.8rem; line-height:1.55; color:#475569; }
 .cpab-ft{ margin:16px 0 0; text-align:center; font-size:.8rem; color:#64748b; } .cpab-ft a{ color:#1d4ed8; font-weight:700; }
+</style>
+<script>
+/* ═══ Sortie d'un profil : uniquement par le bouton Déconnexion ═══ */
+window.cpOutMsg=function(){ var o=document.getElementById('cpout-ov'); if(o) o.remove();
+  o=document.createElement('div'); o.id='cpout-ov';
+  o.innerHTML='<div class="cpout-box" role="alertdialog"><div class="cpout-i"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/></svg></div><b>Tu es dans ton espace</b><p>Appuie sur le bouton <strong>Déconnexion</strong> pour te déconnecter.</p><button type="button">J\'ai compris</button></div>';
+  document.body.appendChild(o); function c(){ o.remove(); } o.querySelector('button').onclick=c; o.addEventListener('click',function(e){ if(e.target===o) c(); }); };
+</script>
+<style id="cpout-css">
+#cpout-ov{ position:fixed; inset:0; z-index:100001; background:rgba(8,15,35,.55); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; font-family:'DM Sans',sans-serif; }
+.cpout-box{ width:100%; max-width:340px; background:#fff; border-radius:20px; padding:24px 20px 18px; text-align:center; box-shadow:0 24px 60px -20px rgba(0,0,0,.5); }
+.cpout-i{ width:52px; height:52px; margin:0 auto 12px; border-radius:16px; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#1e3a8a,#059669); } .cpout-i svg{ width:24px; height:24px; }
+.cpout-box b{ display:block; font-size:1rem; color:#0f172a; } .cpout-box p{ margin:8px 0 16px; font-size:.86rem; line-height:1.5; color:#475569; } .cpout-box strong{ color:#b91c1c; }
+.cpout-box button{ width:100%; padding:12px; border:none; border-radius:12px; background:#0f172a; color:#fff; font:700 .86rem/1.2 inherit; cursor:pointer; }
+</style>
+<script>
+/* ═══ Impôts : date de déclaration + guide complet par profil (sources officielles) ═══ */
+(function(){
+  var LOGO='<svg viewBox="0 0 48 44" fill="none" aria-hidden="true"><defs><linearGradient id="cpTxL" gradientUnits="userSpaceOnUse" x1="2" y1="42" x2="46" y2="2"><stop offset="0" stop-color="#1d4ed8"/><stop offset=".5" stop-color="#0891b2"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs><g fill="url(#cpTxL)"><rect x="3" y="34" width="6" height="8" rx="1.3"/><rect x="12" y="30" width="6" height="12" rx="1.3"/><rect x="21" y="25" width="6" height="17" rx="1.3"/><rect x="30" y="19" width="6" height="23" rx="1.3"/><rect x="39" y="13" width="6" height="29" rx="1.3"/></g><path d="M3 24Q22 18 39.5 6" stroke="url(#cpTxL)" stroke-width="2.8" stroke-linecap="round"/><path d="M43.8 3 41.3 8.6 37.7 3.4z" fill="url(#cpTxL)" stroke="url(#cpTxL)" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+  var L={ igouv:['impots.gouv.fr','Le site officiel des impôts','https://www.impots.gouv.fr'],
+    esp:['Mon espace particulier','Déclarer, payer, télécharger tes avis','https://www.impots.gouv.fr/particulier'],
+    cont:['Contacts et rendez-vous','Messagerie, téléphone, rendez-vous au guichet','https://www.impots.gouv.fr/contacts'],
+    delai:['Demander un délai de paiement','Procédure officielle en cas de difficultés','https://www.impots.gouv.fr/particulier/delai-de-paiement'],
+    remise:['Demander une remise gracieuse','Réduire ou annuler une dette d\'impôt','https://www.impots.gouv.fr/particulier/questions/comment-faire-une-demande-de-remise-gracieuse'],
+    diff:['Difficultés pour payer ses impôts','Toutes les solutions (economie.gouv.fr)','https://www.economie.gouv.fr/particuliers/gerer-mon-argent/beneficier-daides-et-de-reductions-dimpots/que-faire-si-vous-avez-des'],
+    sanc:['Retard de paiement : les sanctions','Fiche officielle service-public.gouv.fr','https://www.service-public.gouv.fr/particuliers/vosdroits/F34200'],
+    asdir:['L\'ASDIR, ton justificatif de revenus','Disponible dès la fin de ta déclaration','https://www.economie.gouv.fr/particuliers/impot-revenu-asdir'],
+    etu:['Étudiant : tes revenus sont-ils imposables ?','La réponse officielle d\'impots.gouv.fr','https://www.impots.gouv.fr/particulier/questions/mon-enfant-est-etudiant-les-revenus-quil-percus-sont-ils-imposables'],
+    job:['Job d\'été, stage, alternance','Ce qu\'il faut déclarer (economie.gouv.fr)','https://www.economie.gouv.fr/particuliers/job-ete-etudiant-stage-declaration-revenus'],
+    urssaf:['Urssaf auto-entrepreneur','Déclarer ton chiffre d\'affaires','https://www.autoentrepreneur.urssaf.fr'],
+    pro:['Espace professionnel impots.gouv','CFE, TVA, avis professionnels','https://www.impots.gouv.fr/professionnel'],
+    regimes:['Les régimes des petites entreprises','Dépliant officiel (PDF)','https://www.impots.gouv.fr/sites/default/files/media/3_Documentation/depliants/pro_fiche_les_regimes_reserves_aux_petites_entreprises.pdf'] };
+  var F={ f2042:['Formulaire 2042','La déclaration principale des revenus','https://www.impots.gouv.fr/recherche/formulaire%202042'],
+    f2042c:['Formulaire 2042-C','Déclaration complémentaire (revenus particuliers)','https://www.impots.gouv.fr/recherche/formulaire%202042%20c'],
+    f2042cpro:['Formulaire 2042-C-PRO','Revenus des indépendants et micro-entrepreneurs','https://www.impots.gouv.fr/recherche/2042-C-PRO'],
+    f4805:['Formulaire 4805-AP-SD','Demande de remise gracieuse','https://www.impots.gouv.fr/recherche/4805'] };
+  var NOM={ dem:'Demandeur d\'emploi · Reconversion', etu:'Étudiant(e)', sal:'Salarié(e)', frl:'Freelance' };
+  var LINKS={ dem:['igouv','esp','cont','delai','remise','diff','sanc','asdir'], etu:['igouv','esp','etu','job','cont','delai','remise','asdir'], sal:['igouv','esp','cont','delai','remise','diff','sanc','asdir'], frl:['igouv','esp','urssaf','pro','regimes','cont','delai','remise'] };
+  var FORMS={ dem:['f2042','f2042c','f4805'], etu:['f2042','f2042c','f4805'], sal:['f2042','f2042c','f4805'], frl:['f2042','f2042cpro','f4805'] };
+  function dates(){ var d=new Date(), y=d.getFullYear(), m=d.getMonth();
+    if(m<3) return { t:'Déclaration des revenus '+(y-1)+' : ouverture en avril '+y, s:'Les dates exactes selon ton département sont annoncées au printemps sur impots.gouv.fr.' };
+    if(m<6) return { t:'Déclaration en cours : revenus '+(y-1), s:'Vérifie vite la date limite de ton département sur impots.gouv.fr.' };
+    return { t:'Prochaine déclaration : printemps '+(y+1)+' (revenus '+y+')', s:'En 2026, elle était ouverte du 9 avril au 21 mai, 28 mai ou 4 juin selon ton département (papier : 19 mai).'+(m>=7&&m<=10?' Jusqu\'à fin novembre, tu peux encore corriger ta déclaration en ligne.':'') };
+  }
+  function card(k){ var d=dates();
+    return '<div class="cptx-card"><span class="cptx-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10h18L12 4z"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/></svg></span>'
+      +'<div class="cptx-tx"><span class="cptx-k">Impôts · à ne pas oublier</span><b>'+d.t+'</b><small>'+d.s+(k==='frl'?' Micro-entreprise : la CFE se paie avant le 15 décembre.':'')+'</small>'
+      +'<div class="cptx-bts"><button type="button" class="cptx-go" data-cptx="'+k+'">Tout comprendre sur mes impôts</button><a href="https://www.impots.gouv.fr" target="_blank" rel="noopener">impots.gouv.fr ↗</a></div></div></div>';
+  }
+  function sec(t,ic,h){ return '<section class="cptx-sec"><h3><i>'+ic+'</i>'+t+'</h3>'+h+'</section>'; }
+  function ul(a){ return '<ul>'+a.map(function(x){ return '<li>'+x+'</li>'; }).join('')+'</ul>'; }
+  function lk(x){ return '<a class="cptx-l" href="'+x[2]+'" target="_blank" rel="noopener"><b>'+x[0]+'</b><span>'+x[1]+'</span><i>↗</i></a>'; }
+  var SPEC={
+    dem:['Chômage, aides et reconversion : ce qui est imposable', ul([
+      '<b>Allocations chômage (ARE)</b> : elles sont <b>imposables</b>. France Travail les transmet aux impôts : le montant est prérempli (case <b>1AP</b>). Vérifie-le avec ton attestation fiscale France Travail.',
+      '<b>ASS (allocation de solidarité spécifique)</b> : elle est également <b>imposable</b>.',
+      '<b>RSA, prime d\'activité, APL, AAH</b> : elles sont <b>exonérées</b>, tu n\'as rien à déclarer.',
+      '<b>Indemnités de rupture conventionnelle ou de licenciement</b> : l\'indemnité légale ou conventionnelle est exonérée ; au-delà, une partie peut être imposable selon des plafonds. Regarde ton solde de tout compte et la fiche officielle sur impots.gouv.fr.',
+      '<b>Reconversion</b> : la rémunération perçue pendant une formation (allocation chômage, rémunération d\'un projet de transition professionnelle) est imposable, comme un salaire ou une allocation. Le financement de ta formation par le CPF n\'est pas un revenu.',
+      '<b>Frais de formation</b> : dans certains cas, les frais d\'une formation de reconversion peuvent être déduits au titre des <b>frais réels</b> (case 1AK). Garde toutes tes factures et vérifie ton cas auprès de ton centre des impôts.',
+      '<b>Tes revenus baissent ?</b> Mets à jour ton <b>taux de prélèvement à la source</b> dans ton espace particulier (« Gérer mon prélèvement à la source ») pour ne pas payer trop chaque mois.'])],
+    etu:['Étudiant : ce que dit la loi', ul([
+      '<b>Rattachement</b> : tu peux rester rattaché(e) au foyer fiscal de tes parents si tu as moins de 21 ans, ou moins de 25 ans si tu fais des études (âge au 1er janvier). À 25 ans ou plus, tu fais ta propre déclaration.',
+      '<b>Jobs étudiants</b> : si tu as 25 ans au plus au 1er janvier, tes salaires sont <b>exonérés jusqu\'à 3 SMIC mensuels</b> (5 405 € pour les revenus 2025). Seule la part au-dessus se déclare.',
+      '<b>Apprentissage</b> : ton salaire d\'apprenti est exonéré jusqu\'au <b>SMIC annuel</b> (21 622 € pour les revenus 2025).',
+      '<b>Gratification de stage</b> : exonérée jusqu\'au <b>SMIC annuel</b> (21 622 € pour les revenus 2025).',
+      '<b>Bourses sur critères sociaux</b> (Crous, région) et <b>aides au logement</b> : exonérées, rien à déclarer.',
+      '<b>Micro-entreprise étudiante</b> : ces revenus sont imposables et se déclarent en plus (formulaire 2042-C-PRO).',
+      '<b>Rattaché(e) ou seul(e) ?</b> Utilise le simulateur officiel d\'impots.gouv.fr pour comparer : selon les revenus, l\'un ou l\'autre peut coûter moins cher à ta famille.',
+      '<b>Première déclaration</b> : si tu étais rattaché(e) à tes parents l\'année d\'avant et que tu as entre 20 et 26 ans, les impôts t\'envoient par courrier ton numéro fiscal et ton numéro d\'accès en ligne. Pas reçu ? Appelle le 0809 401 401.'])],
+    sal:['Salarié : ce que tu dois savoir', ul([
+      '<b>Ton salaire est prérempli</b> (case <b>1AJ</b>) grâce à ton employeur : vérifie-le avec ton dernier bulletin de paie de décembre (« net imposable »).',
+      '<b>10 % ou frais réels</b> : une déduction de 10 % est appliquée automatiquement. Si tes frais professionnels sont plus élevés (trajets, repas, formation…), tu peux déclarer tes <b>frais réels</b> (case 1AK) avec justificatifs.',
+      '<b>Heures supplémentaires</b> : elles sont exonérées d\'impôt dans une certaine limite ; le montant exonéré est indiqué sur ton bulletin et prérempli.',
+      '<b>Prélèvement à la source</b> : ton impôt est payé chaque mois sur ton salaire. En cas de changement (naissance, mariage, baisse de salaire), mets à jour ton taux dans ton espace particulier.',
+      '<b>Activité en plus</b> (freelance le soir, micro-entreprise) : ces revenus se déclarent en plus, sur le formulaire 2042-C-PRO.'])],
+    frl:['Freelance et micro-entreprise : ce que dit la loi', ul([
+      '<b>Deux déclarations différentes</b> : 1) ton <b>chiffre d\'affaires</b> à l\'Urssaf, chaque mois ou chaque trimestre ; 2) une fois par an, ton chiffre d\'affaires dans ta <b>déclaration de revenus</b> (formulaire <b>2042-C-PRO</b>).',
+      '<b>Les cases de la 2042-C-PRO</b> : ventes de marchandises <b>5KO</b>, prestations commerciales ou artisanales <b>5KP</b>, activités libérales <b>5HQ</b>. Avec le versement libératoire : <b>5TA</b>, <b>5TB</b> ou <b>5TE</b>.',
+      '<b>Abattement automatique</b> : les impôts retirent un pourcentage pour tes frais : <b>71 %</b> (ventes), <b>50 %</b> (services commerciaux ou artisanaux), <b>34 %</b> (activités libérales). Tu déclares donc le chiffre d\'affaires brut, pas le bénéfice.',
+      '<b>Versement libératoire</b> : tu peux payer ton impôt en même temps que tes cotisations Urssaf (1 %, 1,7 % ou 2,2 % du chiffre d\'affaires), sous condition de revenus. La demande se fait auprès de l\'Urssaf avant le 30 septembre pour l\'année suivante.',
+      '<b>CFE (cotisation foncière des entreprises)</b> : exonérée la première année, réduite de moitié la deuxième. L\'avis est dans ton espace professionnel ; paiement avant le <b>15 décembre</b>.',
+      '<b>TVA</b> : en franchise, tu ne factures pas de TVA tant que tu restes sous les seuils. Ils ont évolué récemment : vérifie les seuils en vigueur sur impots.gouv.fr avant de les dépasser.',
+      '<b>Tiens tes registres</b> : livre des recettes (et registre des achats si tu vends des marchandises). Ils te protègent en cas de contrôle.'])] };
+  function page(k){ var old=document.querySelector('.cptx-page'); if(old) old.remove();
+    var x=document.createElement('div'); x.className='cptx-page'; var d=dates();
+    x.innerHTML='<div class="cptx-hd"><span class="cptx-brand"><span class="cptx-lg">'+LOGO+'</span><span><b>Tes impôts</b><small>'+NOM[k]+'</small></span></span><button type="button" class="cptx-x" aria-label="Fermer">✕</button></div>'
+      +'<div class="cptx-sc"><div class="cptx-in">'
+      +'<div class="cptx-hero"><span>Guide officiel · mis à jour octobre 2026</span><h2>Déclarer ses impôts sans stress, sans erreur et sans retard.</h2><p>'+d.t+'. '+d.s+'</p></div>'
+      +sec('Liens officiels','🔗','<div class="cptx-ls">'+LINKS[k].map(function(i){ return lk(L[i]); }).join('')+'</div>')
+      +sec('Les formulaires','📄','<div class="cptx-ls">'+FORMS[k].map(function(i){ return lk(F[i]); }).join('')+'</div><p class="cptx-n">Tu n\'as presque jamais besoin du papier : en ligne, les formulaires s\'ouvrent automatiquement selon ce que tu coches. Le papier reste possible si tu n\'as pas accès à internet chez toi.</p>')
+      +sec('Les dates à retenir','📅',ul([
+        '<b>Ouverture en ligne</b> : en avril (en 2026 : le jeudi 9 avril).',
+        '<b>Date limite en ligne</b>, selon ton département (dates 2026) : départements 01 à 19 → 21 mai ; 20 à 54 → 28 mai ; 55 à 976 → 4 juin, à 23 h 59.',
+        '<b>Déclaration papier</b> : en 2026, avant le mardi 19 mai (cachet de la poste).',
+        '<b>Avis d\'impôt</b> : disponible en ligne fin juillet ou en août.',
+        '<b>Correction après l\'avis</b> : de début août à fin novembre (2026), directement en ligne.'
+      ].concat(k==='frl'?['<b>CFE</b> : paiement avant le 15 décembre.','<b>Urssaf</b> : déclaration du chiffre d\'affaires chaque mois ou chaque trimestre, même à 0 €.']:[])))
+      +sec(SPEC[k][0],'⚖️',SPEC[k][1])
+      +sec('Comment déclarer, pas à pas','🧭','<ol>'
+        +'<li><b>Connecte-toi</b> à ton espace particulier sur impots.gouv.fr (numéro fiscal + mot de passe, ou FranceConnect). Première fois : crée ton espace avec ton numéro fiscal, ton numéro d\'accès en ligne et ton revenu fiscal de référence.</li>'
+        +'<li><b>Foyer fiscal</b> : vérifie ton adresse au 1er janvier, ta situation de famille et tes personnes à charge.</li>'
+        +'<li><b>Revenus</b> : contrôle chaque montant prérempli (salaires, chômage…) et ajoute ce qui manque.'+(k==='frl'?' Coche « revenus des professions non salariées » pour ouvrir la 2042-C-PRO.':'')+'</li>'
+        +'<li><b>Charges et réductions</b> : dons, frais de garde, emploi à domicile… ce qui peut réduire ton impôt.</li>'
+        +'<li><b>Signe</b> ta déclaration et télécharge ton <b>ASDIR</b>. Tu peux la modifier en ligne jusqu\'à la date limite.</li></ol>'
+        +'<p class="cptx-n"><b>Déclaration automatique</b> : si tous tes revenus sont préremplis et que rien n\'a changé (adresse, famille), tu n\'as rien à faire. Mais si un montant est faux ou manque, c\'est à toi de corriger : tu restes responsable de ta déclaration.</p>')
+      +sec('Le formulaire 2042 expliqué','🗂️',ul([
+        '<b>Page 1 · État civil et adresse</b> : ton identité et ton adresse au 1er janvier.',
+        '<b>Situation de famille</b> : marié(e) <b>M</b>, pacsé(e) <b>O</b>, célibataire <b>C</b>, divorcé(e) ou séparé(e) <b>D</b>, veuf ou veuve <b>V</b>.',
+        '<b>Personnes à charge</b> : enfants mineurs, enfants majeurs rattachés, personnes invalides vivant avec toi.',
+        '<b>Salaires</b> : case <b>1AJ</b> (déclarant 1) et <b>1BJ</b> (déclarant 2).',
+        '<b>Chômage et préretraite</b> : case <b>1AP</b> (et 1BP).',
+        '<b>Frais réels</b> : case <b>1AK</b> (et 1BK), à la place de la déduction de 10 %.',
+        '<b>Pensions et retraites</b> : case <b>1AS</b> (et 1BS).',
+        '<b>Signature</b> : en ligne, la validation vaut signature ; sur papier, signe et date la dernière page.'
+      ].concat(k==='frl'?['<b>2042-C-PRO</b> : le formulaire complémentaire où tu reportes ton chiffre d\'affaires de micro-entrepreneur (cases 5KO, 5KP, 5HQ ou 5TA, 5TB, 5TE).']:['<b>2042-C</b> : le formulaire complémentaire pour les revenus moins courants (il s\'ouvre en ligne si tu en as besoin).'])))
+      +sec('Pas de feuille d\'impôt ? Les documents qui la remplacent','🧾',ul([
+        '<b>Avis d\'impôt</b> : c\'est la « feuille d\'impôt ». Il est dans ton espace particulier, rubrique « Mes documents », avec les avis des années précédentes.',
+        '<b>ASDIR (avis de situation déclarative)</b> : il reprend les mêmes informations que l\'avis d\'impôt et il est disponible <b>dès la fin de ta déclaration en ligne</b>, bien avant l\'avis. Banques, bailleurs et administrations l\'acceptent.',
+        '<b>Avis de non-imposition</b> : même si tu ne paies pas d\'impôt, déclarer te donne un avis. Il sert pour les bourses, les aides, un logement social ou un logement étudiant.',
+        '<b>Tu n\'as jamais déclaré ?</b> Tu n\'as donc pas d\'avis à ton nom : fais ta déclaration (même avec de petits revenus) pour en obtenir un.'+(k==='etu'?' Si tu es rattaché(e), c\'est l\'avis de tes parents qui sert de justificatif.':''),
+        '<b>Un document perdu ?</b> Télécharge-le à nouveau dans « Mes documents », ou demande-le par la messagerie sécurisée ou au guichet de ton centre des impôts.',
+        '<b>Vérification</b> : le destinataire peut vérifier l\'authenticité grâce au code 2D-Doc ou au service « vérifier un avis d\'impôt ».']))
+      +sec('En retard pour déclarer : ce que tu risques','⏰',ul([
+        '<b>Déclare quand même, et le plus vite possible</b> : plus tu attends, plus ça coûte cher.',
+        '<b>10 %</b> de majoration de l\'impôt dû si tu déclares en retard sans avoir reçu de mise en demeure.',
+        '<b>20 %</b> si tu déclares dans les 30 jours après une mise en demeure.',
+        '<b>40 %</b> si tu ne déclares pas dans les 30 jours après la mise en demeure.',
+        '<b>80 %</b> en cas d\'activité cachée (revenus non déclarés découverts par l\'administration).',
+        '<b>Intérêts de retard</b> : 0,20 % de l\'impôt dû par mois de retard, en plus de la majoration.',
+        '<b>Paiement en retard</b> : une majoration de 10 % s\'applique automatiquement après la date limite de paiement indiquée sur ton avis.',
+        '<b>Sans déclaration</b>, tu n\'as pas d\'avis d\'impôt : cela peut bloquer des aides, une bourse ou un dossier de location.'].concat(k==='frl'?['<b>Côté Urssaf</b> : une déclaration de chiffre d\'affaires oubliée entraîne aussi des pénalités. Déclare même à 0 €.']:[])))
+      +sec('Une dette d\'impôt ? S\'en sortir de façon honnête','🤝','<ol>'
+        +'<li><b>N\'ignore jamais un courrier des impôts</b> : sinon l\'administration peut saisir directement ton compte bancaire ou ton salaire (saisie administrative à tiers détenteur).</li>'
+        +'<li><b>Agis dès que tu reçois l\'avis</b>, avant la date limite : c\'est toujours mieux accueilli.</li>'
+        +'<li><b>Demande un délai de paiement</b> : messagerie sécurisée → « Écrire à l\'administration » → « J\'ai un problème concernant le paiement de mon impôt » → « J\'ai des difficultés pour payer ». Joins le questionnaire « difficultés de paiement », ton avis d\'impôt, un RIB et tes justificatifs (bulletins, loyer, factures). Si c\'est accepté, tu reçois un échéancier.</li>'
+        +'<li><b>Si tu ne peux pas payer, même avec du temps</b> : demande une <b>remise gracieuse</b> (formulaire 4805-AP-SD). Elle est examinée au cas par cas : perte d\'emploi, séparation, décès, dette trop lourde par rapport à tes revenus…</li>'
+        +'<li><b>Sois transparent</b> : explique ta situation réelle, avec des preuves, et propose un montant mensuel que tu peux vraiment tenir. Continue à payer ce que tu peux pendant l\'examen : une demande ne suspend pas le paiement.</li>'
+        +'<li><b>Délai de réponse</b> : 2 mois (4 si le dossier est complexe). Sans réponse au bout de 2 mois, la demande est considérée comme refusée.</li>'
+        +'<li><b>Refus injuste ?</b> Tu peux saisir le <b>conciliateur fiscal départemental</b>, puis faire un recours dans les 2 mois.</li></ol>'
+        +'<p class="cptx-n">L\'honnêteté paie : déclarer tous ses revenus, prévenir avant l\'échéance et respecter l\'échéancier accordé sont les meilleurs moyens d\'obtenir un délai ou une remise.</p>')
+      +sec('Les contacts','☎️',ul([
+        '<b>Téléphone</b> : <a href="tel:0809401401">0809 401 401</a>, du lundi au vendredi de 8 h 30 à 19 h (service gratuit + prix de l\'appel).',
+        '<b>Messagerie sécurisée</b> : dans ton espace particulier sur impots.gouv.fr (réponse en quelques jours).',
+        '<b>Rendez-vous</b> : au guichet de ton centre des finances publiques, à réserver sur impots.gouv.fr/contacts ou dans l\'application Impots.gouv.',
+        '<b>France services</b> : un conseiller près de chez toi peut t\'aider à faire ta déclaration.'].concat(k==='frl'?['<b>Ton SIE</b> (service des impôts des entreprises) : par la messagerie de ton espace professionnel.','<b>Urssaf</b> : par la messagerie de ton espace sur autoentrepreneur.urssaf.fr.']:[])))
+      +sec('Attention aux arnaques','🛡️',ul([
+        'Les impôts ne te demandent <b>jamais</b> tes coordonnées bancaires par e-mail ou par SMS.',
+        'Un remboursement se fait automatiquement sur ton compte : aucun lien à cliquer.',
+        'En cas de doute, ne clique pas : connecte-toi toi-même sur <b>impots.gouv.fr</b>.']))
+      +'<p class="cptx-ft">Informations générales issues d\'impots.gouv.fr, service-public.gouv.fr et economie.gouv.fr (octobre 2026). Les montants et dates changent chaque année : vérifie toujours sur impots.gouv.fr. Ce guide ne remplace pas un conseil personnalisé ; en cas de doute, contacte ton centre des impôts.</p>'
+      +'</div></div>';
+    document.body.appendChild(x); document.documentElement.classList.add('cptx-lock');
+    function close(){ x.remove(); document.documentElement.classList.remove('cptx-lock'); }
+    x.querySelector('.cptx-x').onclick=close;
+  }
+  function kind(h){ if(h.querySelector('.cc-card.cc-frl')) return 'frl'; if(h.querySelector('.cc-card.cc-dem,.cc-card.cc-rec')) return 'dem';
+    if(h.querySelector('.es-home.es-k-etu')) return 'etu'; if(h.querySelector('.es-home.es-k-sal')) return 'sal'; return ''; }
+  function place(){ var h=document.getElementById('cj-home'); if(!h) return; var k=kind(h); if(!k){ return; }
+    var c=h.querySelector('.cptx-card'); if(c && c.getAttribute('data-k')===k) return; if(c) c.remove();
+    var at=h.querySelector('.es-main .es-cards')||h.querySelector(':scope > .cj-tiles'); if(!at) return;
+    var w=document.createElement('div'); w.innerHTML=card(k); w=w.firstChild; w.setAttribute('data-k',k); at.parentNode.insertBefore(w,at.nextSibling); }
+  var q=0; function soon(){ if(q) return; q=1; setTimeout(function(){ q=0; place(); },80); }
+  function init(){ var h=document.getElementById('cj-home'); if(h){ try{ new MutationObserver(soon).observe(h,{ childList:true, subtree:true }); }catch(e){} } place(); }
+  document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-cptx]'); if(b){ e.preventDefault(); e.stopPropagation(); page(b.getAttribute('data-cptx')); } },true);
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+  window.cpTaxOpen=page;
+})();
+</script>
+<style id="cptx-css">
+.cptx-card{ display:flex; gap:14px; align-items:flex-start; margin:14px 0; padding:16px; border-radius:20px; color:#fff; font-family:'DM Sans',sans-serif;
+  background:radial-gradient(120% 140% at 100% 0%,rgba(16,185,129,.35),transparent 55%),linear-gradient(125deg,#0b1e3f,#1e3a8a 60%,#065f46 135%); box-shadow:0 18px 40px -24px rgba(15,23,42,.8); }
+.cptx-ic{ flex-shrink:0; width:46px; height:46px; border-radius:14px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.25); } .cptx-ic svg{ width:24px; height:24px; }
+.cptx-tx{ flex:1; min-width:0; } .cptx-k{ display:inline-block; font-size:.64rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#fde68a; }
+.cptx-tx b{ display:block; margin-top:4px; font-size:.98rem; line-height:1.3; } .cptx-tx small{ display:block; margin-top:5px; font-size:.78rem; line-height:1.5; opacity:.88; }
+.cptx-bts{ display:flex; flex-wrap:wrap; align-items:center; gap:8px 14px; margin-top:12px; }
+.cptx-go{ padding:10px 14px; border:none; border-radius:12px; background:#fff; color:#1e3a8a; font:800 .82rem/1.2 'DM Sans',sans-serif; cursor:pointer; box-shadow:0 8px 18px -10px rgba(0,0,0,.5); }
+.cptx-bts a{ color:#a7f3d0; font-size:.8rem; font-weight:700; text-decoration:none; }
+html.cptx-lock{ overflow:hidden; }
+.cptx-page{ position:fixed; inset:0; z-index:100000; display:flex; flex-direction:column; background:#f4f6fb; font-family:'DM Sans',sans-serif; color:#0f172a; }
+.cptx-hd{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:12px 16px; background:#fff; border-bottom:1px solid #e2e8f0; }
+.cptx-brand{ display:flex; align-items:center; gap:10px; min-width:0; } .cptx-lg svg{ width:34px; height:31px; display:block; } .cptx-brand b{ display:block; font-size:1rem; font-weight:800; color:#1e3a8a; } .cptx-brand small{ display:block; font-size:.74rem; color:#64748b; }
+.cptx-x{ flex-shrink:0; width:38px; height:38px; border-radius:50%; border:1px solid #e2e8f0; background:#fff; font-size:.95rem; color:#334155; cursor:pointer; }
+.cptx-sc{ flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; } .cptx-in{ max-width:880px; margin:0 auto; padding:16px 16px 40px; }
+.cptx-hero{ padding:22px 20px; border-radius:22px; color:#fff; background:radial-gradient(120% 140% at 100% 0%,rgba(16,185,129,.4),transparent 55%),linear-gradient(130deg,#0b1e3f,#1e3a8a 55%,#065f46 135%); }
+.cptx-hero span{ font-size:.68rem; font-weight:800; letter-spacing:.05em; text-transform:uppercase; color:#fde68a; } .cptx-hero h2{ margin:10px 0 8px; font-size:1.35rem; line-height:1.25; font-weight:800; letter-spacing:-.02em; } .cptx-hero p{ margin:0; font-size:.88rem; line-height:1.55; opacity:.9; }
+.cptx-sec{ margin-top:14px; padding:18px; border-radius:18px; background:#fff; border:1px solid #e2e8f0; }
+.cptx-sec h3{ display:flex; align-items:center; gap:10px; margin:0 0 12px; font-size:1.02rem; font-weight:800; } .cptx-sec h3 i{ font-style:normal; width:34px; height:34px; border-radius:11px; display:flex; align-items:center; justify-content:center; background:#eef2ff; font-size:1rem; }
+.cptx-sec ul, .cptx-sec ol{ margin:0; padding-left:20px; display:flex; flex-direction:column; gap:9px; } .cptx-sec li{ font-size:.88rem; line-height:1.6; color:#1e293b; } .cptx-sec li b{ color:#0f172a; }
+.cptx-sec a{ color:#1d4ed8; font-weight:700; }
+.cptx-n{ margin:12px 0 0; padding:11px 13px; border-radius:12px; background:#f0fdf4; border:1px solid #bbf7d0; font-size:.82rem; line-height:1.55; color:#14532d; }
+.cptx-ls{ display:grid; grid-template-columns:1fr; gap:8px; } @media (min-width:700px){ .cptx-ls{ grid-template-columns:1fr 1fr; } }
+a.cptx-l{ position:relative; display:block; padding:12px 34px 12px 14px; border-radius:14px; border:1px solid #e2e8f0; background:#f8fafc; text-decoration:none; color:#0f172a; transition:border-color .2s, background .2s; }
+a.cptx-l:hover{ border-color:#93c5fd; background:#eff6ff; } a.cptx-l b{ display:block; font-size:.86rem; color:#1e3a8a; } a.cptx-l span{ display:block; margin-top:2px; font-size:.76rem; font-weight:500; color:#64748b; } a.cptx-l i{ position:absolute; right:12px; top:50%; transform:translateY(-50%); font-style:normal; color:#2563eb; font-weight:800; }
+.cptx-page section.cptx-sec{ padding-top:18px !important; min-height:0 !important; } .cptx-page .cptx-sec h3{ margin-top:0 !important; padding:0 !important; }
+.cptx-ft{ margin:18px 4px 0; font-size:.74rem; line-height:1.55; color:#64748b; text-align:center; }
+@media (min-width:900px){ .cptx-hero{ padding:30px 30px; } .cptx-hero h2{ font-size:1.7rem; } .cptx-sec{ padding:22px 24px; } }
 </style>
 </body>
 </html>
