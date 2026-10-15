@@ -19005,9 +19005,9 @@ window.cpSheetArrows=function(sc,host){
   }
   function drawCheck(){ var b=$('cj-pcheck'); if(!b) return; var p=profPct();
     var dm=docMiss();
-    b.innerHTML=say2((p<100?'Ton profil est à <b>'+p+' %</b>. Touche une étape : je te pose les questions, une à une.':'Ton profil est <b>complet</b> 👏 Pense à le rendre visible pour les recruteurs.')+(dm.length?'<br>Il te manque '+dm.map(function(x){ return '<b>'+x[1]+'</b>'; }).join(' et ')+' : touche la ligne pour l\'ajouter.':''))
+    b.innerHTML=say2((p<100?'Ton profil est à <b>'+p+' %</b>. Touche une étape : je te pose les questions, une à une.':'Ton profil est <b>complet</b> 👏 Pense à le rendre visible pour les recruteurs.')+(dm.length?'<br>Il te manque '+dm.map(function(x){ return '<b>'+x[1]+'</b>'; }).join(' et ')+' : ajoute-les dans « Mes documents de candidature », plus bas.':''))
       +'<div class="cj-box cj-comp">'+ring(p)+'<span class="cj-box-t"><b>Complétude du profil</b><small>Infos perso, expériences, compétences, lettre et documents.</small></span></div>'
-      +'<div class="cj-rows">'+rows().map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+(/^(lm|cv|docs)$/.test(r[0])?'<span class="cj-up'+(r[3]?' on':'')+'">'+(r[3]?(r[0]==='docs'?'Ajouter':'Remplacer'):'Ajouter')+'</span>':'')+I(P.chev,15)+'</button>'; }).join('')+'</div>'; }
+      +'<div class="cj-rows">'+rows().filter(function(r){ return !/^(lm|cv|docs)$/.test(r[0]); }).map(function(r){ return '<button type="button" data-cj="sec" data-s="'+r[0]+'"><span class="cj-ck'+(r[3]?' on':'')+'">'+(r[3]?I(P.check,13):'')+'</span><span class="cj-ri">'+I(r[2],17)+'</span><span class="cj-rt">'+r[1]+'</span><em class="'+(r[3]?'ok':'')+'">'+(r[3]?r[4]:r[5])+'</em>'+(/^(lm|cv|docs)$/.test(r[0])?'<span class="cj-up'+(r[3]?' on':'')+'">'+(r[3]?(r[0]==='docs'?'Ajouter':'Remplacer'):'Ajouter')+'</span>':'')+I(P.chev,15)+'</button>'; }).join('')+'</div>'; }
 
 
   /* ── Profils Étudiant et Salarié : les mêmes 4 cartes, titres et contenus adaptés ── */
@@ -19183,15 +19183,15 @@ window.cpSheetArrows=function(sc,host){
     function render(){
       var L=filtered(o.f), tabs=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses'],['week','Cette semaine']], RL=filtered('rel');
       var msg={ all:'Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.', cours:'Tes candidatures en attente de réponse. Sans nouvelles après 7 jours, une relance montre ta motivation.', itw:'Tes entretiens : prépare-les avec les quiz d\'EVA, c\'est là que tout se joue.', rep:'Les réponses reçues. Une réponse négative n\'est pas un échec : demande un retour, ça aide pour la suite.', week:'Tes candidatures de cette semaine : elles comptent pour ton défi.', rel:'Ces candidatures attendent depuis 7 jours ou plus : un court message poli suffit pour relancer.' }[o.f];
-      o.body.innerHTML=say2(msg)+(o.f==='itw'?'<div class="cj-evas">'+ev('quiz')+'</div>':'')+'<div class="cj-2b"><button type="button" class="cj-main" data-cj="ltog">'+I(P.plus,18)+'Ajouter '+(o.open?'▴':'▾')+'</button><button type="button" class="cj-main alt" data-cj="cpoffres">'+I(P.search,18)+'Trouver des offres</button></div>'
-        +(!o.open?'':'<div class="cjd"><button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Nouvelle candidature</button>'
+      o.body.innerHTML=say2('Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.')+'<div class="cj-2b"><button type="button" class="cj-main" data-cj="ltog">'+I(P.brief,18)+'Candidatures '+(o.open?'▴':'▾')+'</button><button type="button" class="cj-main alt" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
+        +(!o.open?'':'<div class="cjd'+(o.anim?' in':'')+'"><div class="cjd-pick"><button type="button" data-cj="addm" data-m="cap"><span class="cj-ic b sm">'+I(P.cam,20)+'</span><b>J\'ai une preuve</b><small>Capture, photo ou PDF de ta candidature</small></button><button type="button" data-cj="addm" data-m="man"><span class="cj-ic g sm">'+I(P.pen,20)+'</span><b>Je remplis à la main</b><small>Courrier ou sur place, puis ta preuve en PDF ou photo</small></button></div>'
         +'<div class="esx">'+cpXMenu(tabs.map(function(t){ return ['data-cj="lf" data-f="'+t[0]+'"',t[1],t[0],filtered(t[0]).length,t[0]===o.f]; }))+cpXList(tabs.filter(function(t){ return t[0]===o.f; })[0][1],L.length+' candidature'+(L.length>1?'s':''),L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
           return '<div class="cj-it esx-row esx-cj"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb'+(x.preuveType==='pdf'?' pdf':'')+'" data-cj="proof" data-id="'+x.id+'">'+(x.preuveType==='pdf'?I(P.doc,22)+'<small>PDF</small>':'<img src="'+x.preuve+'" alt="Preuve">')+'</button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
             +'<div class="cj-it-t"><b>'+esc(x.poste||x.entreprise)+(x.type?' <em class="cj-ty">'+esc(x.type)+'</em>':'')+'</b><span>'+esc(x.poste?x.entreprise:'')+(x.plateforme?(x.poste?' · ':'')+esc(x.plateforme):'')+'</span><small>'+I(P.cal,12)+'Le '+new Date(x.date).toLocaleDateString('fr-FR')+(x.mode?' · '+esc(x.mode):'')+(x.adresse?' · '+esc(x.adresse):'')+'</small>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+(x.lien?'<a class="cj-offer" href="'+esc(x.lien)+'" target="_blank" rel="noopener noreferrer">'+I(P.ext,13)+'Voir l\'offre</a>':'')+'</div></div>'
             +'<div class="cj-it-ft"><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select>'+(x.preuve?'<span class="cj-pr ok">'+I(P.check,13)+'Preuve ✓</span>':'<button type="button" class="cj-pr" data-cj="addproof" data-id="'+x.id+'">'+I(P.plus,13)+'Ajouter la preuve</button>')+'<button type="button" class="cps-del" data-cj="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div></div>'; }).join(''),'Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies, avec sa preuve : le compteur se met à jour tout seul.')+'</div>'
         +'<div class="cjd-h" id="cj-relh">'+I(P.clock,15)+'Relances à envoyer · '+RL.length+'</div>'
         +cpXList('À relancer',RL.length+' candidature'+(RL.length>1?'s':'')+' sans réponse depuis 7 jours',RL.map(function(x){ return '<div class="esx-row"><div class="esx-rm"><b>'+esc(x.poste||x.entreprise)+'</b><span>'+esc(x.poste?x.entreprise:'')+'</span><small>Envoyée le '+new Date(x.date).toLocaleDateString('fr-FR')+'</small></div><div class="esx-rs"><button type="button" class="cj-rl" data-cj="relok" data-id="'+x.id+'">'+I(P.send||P.chev,13)+'Relancer</button></div></div>'; }).join(''),'Aucune relance à faire : bravo, tu es à jour 👏')+'</div>')
-        +'<div class="cj-evas">'+(o.f==='itw'?ev('itw'):'')+evPf('taches','Noter mes relances dans mon Portfolio','Tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))+(o.f!=='itw'?ev('itw'):'')+'</div>';
+        +'<div class="cj-evas">'+(o.f==='itw'?ev('quiz')+ev('itw'):'')+evPf('taches','Noter mes relances dans mon Portfolio','Tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))+(o.f!=='itw'?ev('itw'):'')+'</div>';
     }
     o.render=render; render(); o.body.classList.add('esx-pg'); if(o.goRel){ o.goRel=0; setTimeout(function(){ var h=$('cj-relh'); if(h) h.scrollIntoView({ behavior:'smooth', block:'start' }); },250); }
   }
@@ -19249,7 +19249,7 @@ window.cpSheetArrows=function(sc,host){
       +'</div>');
   }
   function openCpOffres(){
-    var o=sheet('Offres CareerPulse','Entreprises vérifiées · présentées par Lisa',say2('Ici, tu trouves <b>uniquement les offres publiées sur CareerPulse</b> par des entreprises dont nous avons vérifié le SIRET.<br>Pour être honnête avec toi : CareerPulse est jeune. Les offres apparaissent ici <b>au fur et à mesure que les employeurs s\'inscrivent</b> sur le site. En attendant, les autres sites de référence t\'attendent juste à côté.')
+    var o=sheet('Offres CareerPulse','Entreprises vérifiées · présentées par Lisa','<div class="cpox-hero">'+(CJ_IMG?'<img src="'+CJ_IMG+'" alt="Lisa">':'')+'<p><b>Pour être honnête avec toi :</b> CareerPulse est jeune. Les offres s\'ajouteront <b>au fur et à mesure que les employeurs s\'inscriront</b> sur le site. Toutes viennent d\'entreprises au SIRET vérifié.</p></div>'
       +'<div id="cpo-cp-list"></div><button type="button" class="cj-main alt" data-cj="plats2">'+I(P.ext,18)+'Voir aussi les offres sur d\'autres sites</button>');
     if(window.cpOffresInto) cpOffresInto(o.body.querySelector('#cpo-cp-list'));
   }
@@ -19561,7 +19561,8 @@ window.cpSheetArrows=function(sc,host){
     if(a==='paste'){ var li=$('cj-li'); if(!li) return; if(navigator.clipboard && navigator.clipboard.readText){ navigator.clipboard.readText().then(function(t){ li.value=String(t||'').trim(); if(!li.value) li.focus(); }).catch(function(){ li.focus(); say('Appuie longuement dans le champ, puis « Coller »'); }); } else li.focus(); return; }
     if(a==='vis'){ toggleVis(); return; } if(a==='inv-rec'){ share(true); return; } if(a==='inv-ami'){ share(false); return; }
     if(a==='photo'){ var fi=$('fp-photo'); if(fi){ fi.click(); if(!fi._cps){ fi._cps=1; fi.addEventListener('change',function(){ setTimeout(drawProfTop,400); setTimeout(drawProfTop,1200); }); } } return; }
-    if(a==='ltog' && LISTO){ LISTO.open=!LISTO.open; LISTO.render(); return; }
+    if(a==='ltog' && LISTO){ LISTO.open=!LISTO.open; LISTO.anim=LISTO.open; LISTO.render(); LISTO.anim=false; return; }
+    if(a==='addm'){ openAdd(); if(ADDO){ ADDO.mode=b.getAttribute('data-m'); ADDO.render(); } return; }
     if(a==='relok'){ var rid=b.getAttribute('data-id'), rc=col(); if(rc) rc.doc(rid).set({ statut:'Relancée', relanceAt:new Date().toISOString() },{ merge:true }).then(function(){ S.list.forEach(function(x){ if(x.id===rid){ x.statut='Relancée'; x.date=new Date().toISOString(); } }); say('Relance notée ✅ Pense à envoyer ton message à l\'entreprise.'); if(LISTO) LISTO.render(); drawAll(); }).catch(function(){ say('Mise à jour impossible pour le moment'); }); return; }
     if(a==='addproof'){ var pid=b.getAttribute('data-id'), inp=document.createElement('input'); inp.type='file'; inp.accept='image/*,application/pdf';
       inp.onchange=function(){ var fl=inp.files&&inp.files[0], pc=col(); if(!fl||!pc) return; var put=function(u,pdf){ var o2={ preuve:u, preuveType:pdf?'pdf':'' }; if(pdf) o2.preuveNom=String(fl.name).slice(0,80); pc.doc(pid).set(o2,{ merge:true }).then(function(){ S.list.forEach(function(x){ if(x.id===pid) Object.assign(x,o2); }); say('Preuve ajoutée ✅'); if(LISTO) LISTO.render(); }).catch(function(){ say('Enregistrement impossible pour le moment'); }); };
@@ -21216,9 +21217,10 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
             return k==='all'||(k==='nouv'&&String(f.publieeAt||f.updatedAt||'')>=wk)||(k==='app'&&ap.indexOf(f.id)>-1)||(k==='cdi'&&/cdi/i.test(ct))||(k==='cdd'&&/cdd|intérim|interim/i.test(ct))||(k==='alt'&&/altern|stage|apprenti/i.test(ct))||(k==='tele'&&tl&&!/^non|aucun|pas de/i.test(tl))||(k==='pres'&&vil&&String(f.ville||'').toLowerCase().indexOf(vil)>-1); }); }
           var M=[['all','Toutes les offres','all'],['nouv','Nouvelles (7 jours)','nouv'],['cdi','CDI','done'],['cdd','CDD · Intérim','wait'],['alt','Alternance · Stage','itw'],['tele','Télétravail','inbox'],['pres','Près de chez moi','pros'],['app','Déjà postulées','cand']], L=fl(it._xf);
           var qv=it.querySelector('#cpox-q'), hadF=qv&&document.activeElement===qv;
-          it.innerHTML='<label class="cpox-q">'+S(IC.search||'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>')+'<input id="cpox-q" value="'+esc(it._xq||'')+'" placeholder="Rechercher un poste, une entreprise, une ville…"></label><div class="esx esx-off">'+cpXMenu(M.map(function(m){ return ['data-cpox="'+m[0]+'"',m[1],m[2],fl(m[0]).length,it._xf===m[0]]; }))+cpXList(M.filter(function(m){ return m[0]===it._xf; })[0][1],L.length+' offre'+(L.length>1?'s':'')+' publiée'+(L.length>1?'s':'')+' sur CareerPulse',L.map(drawer).join(''),'Aucune offre dans ce dossier.')+'</div>';
+          var cur=M.filter(function(m){ return m[0]===it._xf; })[0];
+          it.innerHTML='<label class="cpox-q">'+S(IC.search||'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>')+'<input id="cpox-q" value="'+esc(it._xq||'')+'" placeholder="Rechercher un poste, une entreprise, une ville…"></label><div class="esx esx-off"><div class="cpox-dr'+(it._mo?' open':'')+'"><button type="button" class="cpox-dh" data-cpox-t>'+cpXSvg(cur[2])+'<span><small>Trier les offres</small><b>'+cur[1]+'</b></span><em>'+fl(cur[0]).length+'</em><svg class="cpox-cv" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>'+(it._mo?cpXMenu(M.map(function(m){ return ['data-cpox="'+m[0]+'"',m[1],m[2],fl(m[0]).length,it._xf===m[0]]; })):'')+'</div>'+cpXList(cur[1],L.length+' offre'+(L.length>1?'s':''),L.map(drawer).join(''),'Aucune offre dans ce dossier.')+'</div>';
           var qi=it.querySelector('#cpox-q'); if(qi){ qi.oninput=function(){ it._xq=qi.value; var pos=qi.selectionStart; draw(); var q2=it.querySelector('#cpox-q'); if(q2){ q2.focus(); try{ q2.setSelectionRange(pos,pos); }catch(x){} } }; if(hadF) qi.focus(); } };
-          draw(); if(!it._xb){ it._xb=1; it.addEventListener('click',function(e){ var x=e.target.closest('[data-cpox]'); if(!x) return; it._xf=x.getAttribute('data-cpox'); draw(); }); } return; }
+          draw(); if(!it._xb){ it._xb=1; it.addEventListener('click',function(e){ if(e.target.closest('[data-cpox-t]')){ it._mo=!it._mo; draw(); return; } var x=e.target.closest('[data-cpox]'); if(!x) return; it._xf=x.getAttribute('data-cpox'); it._mo=false; draw(); }); } return; }
       it.innerHTML=CACHE.length?''
         :'<div class="cpo-empty">Pas encore d\'offre publiée par les entreprises CareerPulse. Elles apparaîtront ici au fur et à mesure de leur inscription. Pense à rendre ton profil visible : elles peuvent aussi te contacter.</div>';
     }).catch(function(){ it.innerHTML='<div class="cpo-empty">Les offres ne peuvent pas être chargées pour le moment.</div>'; });
@@ -25477,6 +25479,29 @@ html body .emx-body.emx-3 .emx-r.un{ box-shadow:inset 3px 0 0 #1e3a8a; }
 .cj-main[disabled]{ opacity:.45; cursor:not-allowed; }
 .cpox-q svg{ width:18px !important; height:18px !important; flex-shrink:0; color:#64748b; }
 .cpox-q{ display:flex; align-items:center; gap:8px; margin:0 0 10px; padding:10px 12px; border-radius:12px; border:1px solid #e2e8f0; background:#fff; } .cpox-q input{ flex:1; border:none; outline:none; font:500 .86rem 'DM Sans',sans-serif; background:none; }
+</style>
+<style>#cps-sec-cv, #cps-sec-cv + .cps-acc, #cps-sec-docs, #cps-sec-docs + .cps-acc{ display:none !important; }
+.cjd{ animation:none !important; } .cjd.in{ animation:esxIn .25s ease-out both !important; }
+.cjd .esx-menu button{ transition:none !important; }
+.cjd-pick{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 14px; }
+.cjd-pick button{ position:static !important; display:flex; flex-direction:column; align-items:flex-start; gap:4px; padding:14px; border-radius:14px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; color:#0f172a; }
+.cjd-pick button:hover{ border-color:#1e3a8a; } .cjd-pick b{ font-size:.86rem; } .cjd-pick small{ font-size:.72rem; color:#64748b; line-height:1.35; }
+.cjd-pick .cj-ic{ margin-bottom:4px; }
+</style>
+<style>
+.cpox-hero{ display:flex; align-items:center; gap:12px; margin:0 0 14px; padding:12px 14px; border-radius:14px; background:#f8fafc; border:1px solid #e2e8f0; }
+.cpox-hero img{ width:40px; height:40px; border-radius:50%; object-fit:cover; flex-shrink:0; box-shadow:0 0 0 2px #fff, 0 0 0 3px #e2e8f0; }
+.cpox-hero p{ margin:0; font:500 .8rem/1.5 'DM Sans',sans-serif; color:#334155; } .cpox-hero b{ color:#0f172a; }
+.esx-off{ grid-template-columns:1fr !important; }
+.cpox-dr{ border-radius:14px; background:#fff; border:1px solid #e2e8f0; overflow:hidden; }
+.cpox-dh{ position:static !important; display:flex; align-items:center; gap:10px; width:100%; padding:12px 14px; border:none; background:#fff; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; color:#1e3a8a; }
+.cpox-dh span{ flex:1; min-width:0; } .cpox-dh small{ display:block; font-size:.66rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:#64748b; } .cpox-dh b{ display:block; font-size:.9rem; color:#0f172a; }
+.cpox-dh em{ font-style:normal; min-width:24px; padding:2px 8px; border-radius:999px; background:#eef2ff; color:#1e3a8a; font-size:.74rem; font-weight:800; text-align:center; }
+.cpox-cv{ flex-shrink:0; color:#64748b; transition:transform .2s; } .cpox-dr.open .cpox-cv{ transform:rotate(180deg); }
+.cpox-dr .esx-menu{ border:0; border-top:1px solid #eef2f7; border-radius:0; }
+.esx-off .cpo-dr, .esx-off .cpo-dr-hd{ transform:none !important; transition:none !important; }
+.esx-off .cpo-dr-b{ animation:none !important; }
+.esx-off .esx-list{ min-height:120px; }
 </style>
 </body>
 </html>
