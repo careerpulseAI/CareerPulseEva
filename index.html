@@ -15237,7 +15237,7 @@ go=function(page){
 
  <!-- ═══ CareerPulse Stream : hero ═══ -->
  <div class="cps-hero">
-  <div class="cps-hero-top"><span class="cps-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><div><b>CareerPulse Stream</b><span>Ton espace emploi</span></div><em class="cps-live"><i></i>En direct</em><button type="button" class="cps-out" id="cps-out" title="Me déconnecter" aria-label="Me déconnecter" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg><span>Déconnexion</span></button></div>
+  <div class="cps-hero-top"><span class="cps-logo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2-5 4 10 2-5h6"/></svg></span><div><b>CareerPulse Stream</b><span>Ton espace emploi</span></div><em class="cps-live"><i></i>En direct</em><button type="button" class="cps-pal" id="cps-pal" title="Les couleurs de mon espace" aria-label="Les couleurs de mon espace" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-1.6a1.9 1.9 0 0 0-1.4 3.2c.6.7.3 2.8-3 2.8z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15.5" cy="7.5" r="1.2" fill="currentColor"/></svg><span>Couleurs</span></button><button type="button" class="cps-out" id="cps-out" title="Me déconnecter" aria-label="Me déconnecter" style="display:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg><span>Déconnexion</span></button></div>
   <h2 class="cps-h">Bonjour <span id="cps-name"></span></h2>
   <p class="cps-sub" id="cps-sub">Ton profil, tes candidatures et les recruteurs CareerPulse, au même endroit.</p>
   <div class="cps-gauge"><div class="cps-gauge-hd"><span>Profil complété</span><b id="cps-pct">0 %</b></div><div class="cps-bar"><i id="cps-bar"></i></div></div>
@@ -18831,7 +18831,7 @@ window.cpSheetArrows=function(sc,host){
   /* ── Hero ── */
   function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Envoyer ma candidature','add'])); }
   function hClock(){ var d=new Date(); return d.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long', year:'numeric' }).replace(/^./,function(x){ return x.toUpperCase(); })+' · '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
-  function heroX(){ var ob=$('cps-out'); if(ob){ ob.style.display=(user()&&chosen())?'':'none'; if(!ob._b){ ob._b=1; ob.onclick=function(){ if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); }; } }
+  function heroX(){ var pb=$('cps-pal'); if(pb) pb.style.display=chosen()?'':'none'; var ob=$('cps-out'); if(ob){ ob.style.display=(user()&&chosen())?'':'none'; if(!ob._b){ ob._b=1; ob.onclick=function(){ if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); }; } }
     var f=$('cps-fri'); if(introOn()){ if(f) f.style.display='none'; return; } var sb=$('cps-sub'); if(sb){ sb.textContent=hClock(); sb.setAttribute('data-hclock','1'); } var gl=document.querySelector('#s-profil .cps-gauge-hd span'); if(gl) gl.textContent='Profil complété';
     var g=document.querySelector('#s-profil .cps-gauge'), rp=$('cps-rap'); if(!rp && g){ rp=document.createElement('button'); rp.type='button'; rp.id='cps-rap'; rp.className='cps-rap'; g.parentNode.insertBefore(rp,g.nextSibling); }
     if(rp){ var R=window.cpInfo&&cpInfo.rappel?cpInfo.rappel(S.st.profil):null; rp.style.display=R?'':'none'; if(R){ rp.setAttribute('data-ci-go',R.dr); rp.setAttribute('data-k',R.k); rp.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span><b>Rappel · '+R.t+'</b><small>'+R.s+'</small><em>Voir : Infos diverses › '+R.lab+'</em></span>'+(R.chip||''); } }
@@ -19030,7 +19030,7 @@ window.cpSheetArrows=function(sc,host){
       +ETUF.map(function(g){ return '<div class="cps-sec"><span class="cps-si">'+I(P.ext)+'</span>'+esc(g[0])+'</div>'+g[1].map(function(x){ return '<a class="cj-box cj-olink" href="'+x[1]+'" target="_blank" rel="noopener"><span class="cj-ic b sm">'+I(P.ext,18)+'</span><span class="cj-box-t"><b>'+esc(x[0])+'</b><small>'+esc(x[2])+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></a>'; }).join(''); }).join('')
       +'<button type="button" class="cj-main" data-cj="tch">'+I(P.list,18)+'Noter mes démarches dans mes tâches</button>');
   }
-  function theme(){ var t=chosen()&&/^(etu|sal|frl)$/.test(S.st.profil)?S.st.profil:''; ['etu','sal','frl'].forEach(function(k){ document.documentElement.classList.toggle('pf-'+k,k===t); }); }
+  function theme(){ var t=chosen()&&/^(etu|sal|frl)$/.test(S.st.profil)?S.st.profil:''; ['etu','sal','frl'].forEach(function(k){ document.documentElement.classList.toggle('pf-'+k,k===t); }); if(window.cpPal) cpPal.apply(); }
   function drawAll(){ theme(); drawHero(); drawHome(); drawProfTop(); drawCheck(); }
   window.cpStream={ convList:function(){ return S.convs; }, reloadConvs:function(){ return loadConvs().then(function(){ drawAll(); }); }, openConv:function(id){ openConv(id); }, convs:function(){ return S.convs.length; }, pres:function(p,items){ return presHtml(p,items); }, st:function(){ return S.st; }, save:function(){ return saveSt(); }, draw:function(){ drawAll(); }, sheet:function(t,sub,html,onClose){ return sheet(t,sub,html,onClose); }, coachCtx:function(){ var d=curDefi(); return { week:S.list.filter(function(x){ return inWeek(x.date,wk()); }).length, rel:relN(), itw:cnt('itw'), defi:d?{ lab:dlab(d), f:done(d), c:d.cible }:null }; } };
 
@@ -19787,9 +19787,11 @@ window.cpSheetArrows=function(sc,host){
     var b=db().collection('emploi_conversations').where('empUid','==',u.uid).get().then(function(q){ ST.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(x,y){ return String(y.lastAt||'').localeCompare(String(x.lastAt||'')); }); }).catch(function(){ ST.convs=[]; });
     var c=db().collection('profils').where('visible','==',true).limit(300).get().then(function(q){ ST.cands=q.docs.map(function(d){ var x=d.data(); x.uid=d.id; return x; }).filter(function(p){ return p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ ST.cands=[]; });
     var e2=db().collection('profils').where('esVisible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.esFiche||{}; return Object.assign({},f,{ uid:d.id, esPf:x.esPf, cvDispo:x.cvDispo, lmDispo:x.lmDispo, shareCv:x.shareCv, shareLm:x.shareLm, updatedAt:x.esAt||f.updatedAt, visible:true }); }).filter(function(p){ return p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ return []; });
+    var g1=db().collection('fiches_freelance').where('visible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(); return x.visible===true&&x.fiche?Object.assign({},x.fiche,{ uid:d.id, frl:true, visible:true, updatedAt:x.at||x.fiche.updatedAt }):null; }).filter(function(p){ return p && p.uid!==u.uid && p.titre; }); }).catch(function(){ return []; });
+    var g2=db().collection('fiches_candidat').where('visible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.fiche||{}; return x.visible===true?Object.assign({},f,{ uid:d.id, esPf:x.pf, cvDispo:x.cvDispo, lmDispo:x.lmDispo, shareCv:x.shareCv, shareLm:x.shareLm, updatedAt:x.at||f.updatedAt, visible:true }):null; }).filter(function(p){ return p && p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ return []; });
     var f3=db().collection('profils').where('frlVisible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.frlFiche||{}; return x.frlVisible===true?Object.assign({},f,{ uid:d.id, frl:true, visible:true, updatedAt:x.frlAt||f.updatedAt }):null; }).filter(function(p){ return p && p.uid!==u.uid && p.titre; }); }).catch(function(){ return []; });
-    return Promise.all([a,b,c,e2,f3]).then(function(r){ (r[3]||[]).forEach(function(p){ if(!ST.cands.some(function(x){ return x.uid===p.uid; })) ST.cands.push(p); });
-      (r[4]||[]).forEach(function(p){ ST.cands=ST.cands.filter(function(x){ return x.uid!==p.uid; }); p.avis=[]; p.avisNb=0; p.siretOk=p.siret?'wait':false; ST.cands.push(p); }); /* freelances : proposer une mission */
+    return Promise.all([a,b,c,e2,f3,g1,g2]).then(function(r){ (r[6]||[]).concat(r[3]||[]).forEach(function(p){ if(!ST.cands.some(function(x){ return x.uid===p.uid; })) ST.cands.push(p); });
+      (r[5]||[]).concat(r[4]||[]).filter(function(p,i,A){ return A.findIndex(function(y){ return y.uid===p.uid; })===i; }).forEach(function(p){ ST.cands=ST.cands.filter(function(x){ return x.uid!==p.uid; }); p.avis=[]; p.avisNb=0; p.siretOk=p.siret?'wait':false; ST.cands.push(p); }); /* freelances : proposer une mission */
       frlVerif(); });
   }
   /* Badge « Freelance vérifié » : SIRET contrôlé ici, dans l'annuaire officiel, et avis lus dans avis_freelance */
@@ -22471,7 +22473,7 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
       cCol().where('candUid','==',u.uid).get().then(function(q){ var a=[]; q.forEach(function(d){ var x=d.data(); x.id=d.id; if(x.type==='mission' && x.candUid===u.uid) a.push(x); }); return a.sort(function(x,y){ return String(y.lastAt||'').localeCompare(String(x.lastAt||'')); }); }).catch(function(){ return []; }),
       cpAvis(u.uid)
     ]).then(function(v){ PRO.port=v[0]; PRO.vis=!!v[1].frlVisible; PRO.showTjm=v[1].frlTjm!==false; PRO.convs=v[2]; PRO.avis=v[3]; PRO.loaded=true; PRO.loading=null;
-      if(PRO.vis && (v[1].frlFiche||{}).siret!==(String((D.prof||{}).siret||'')||'')) publish(true,true); /* SIRET modifié : la fiche publiée suit */
+      if(PRO.vis) (D.loading||Promise.resolve()).then(function(){ publish(true,true); }); /* fiche visible : republiée à jour (SIRET, avis, nouvelle collection) */
       (D.loading||Promise.resolve()).then(sirCheck);
       redraw(); if(PROF&&document.body.contains(PROF.sh)) PROF.render(); if(MSGS&&document.body.contains(MSGS.sh)) MSGS.render(); });
     return PRO.loading;
@@ -22494,7 +22496,8 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
   function publish(on,quiet){ PRO.vis=!!on; var u=user(), B=db();
     if(!u||!B){ loc('vis',{ on:PRO.vis, tjm:PRO.showTjm }); return Promise.resolve(); }
     var o={ frlVisible:!!on, frlTjm:PRO.showTjm, frlAt:nowI() }; if(on) o.frlFiche=fiche();
-    return pRef().set(o,{ merge:true }).catch(function(){ if(!quiet) toastMsg('Enregistrement impossible pour le moment'); }); }
+    var f2=db().collection('fiches_freelance').doc(u.uid).set(on?{ visible:true, fiche:o.frlFiche, at:o.frlAt }:{ visible:false, at:o.frlAt });
+    return Promise.all([pRef().set(o,{ merge:true }),f2]).catch(function(){ if(!quiet) toastMsg('Enregistrement impossible pour le moment'); }); }
   function savePort(){ var r=ref(); if(!r){ loc('port',PRO.port); return Promise.resolve(); } return r.collection('freelance').doc('portfolio').set({ list:PRO.port, at:nowI() }).then(function(){ if(PRO.vis) return publish(true,true); }).catch(function(){ toastMsg('Enregistrement impossible pour le moment'); }); }
   function stars(n){ var h=''; for(var i=1;i<=5;i++) h+='<i class="'+(i<=Math.round(n)?'on':'')+'">★</i>'; return '<span class="frl-stars">'+h+'</span>'; }
   function ago(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return ''; } }
@@ -22857,7 +22860,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(D.uid!==u.uid){ D.uid=u.uid; D.loaded={}; D.loading={}; D.data={}; }
     if(D.loaded[k]||D.loading[k]) return; var r=ref(k); if(!r){ D.loaded[k]=1; return; }
     D.loading[k]=1; r.get().then(function(d){ D.data[k]=Object.assign(blank(),d.exists?d.data():{}); D.loaded[k]=1; D.loading[k]=0; redraw();
-      db().collection('profils').doc(u.uid).get().then(function(pd){ var x=pd.exists?pd.data():{}, v=!!(x.esVisible && x.esPf===k); if(!!D.data[k].vis!==v){ D.data[k].vis=v; if(v && !D.data[k].visAt) D.data[k].visAt=x.esAt||new Date().toISOString(); redraw(); candRefresh(); } }).catch(function(){}); }).catch(function(){ D.loaded[k]=1; D.loading[k]=0; }); }
+      db().collection('profils').doc(u.uid).get().then(function(pd){ var x=pd.exists?pd.data():{}, v=!!(x.esVisible && x.esPf===k); if(v && !D.data[k]._pub){ D.data[k]._pub=1; setTimeout(function(){ pubFiche(true,k); },400); } if(!!D.data[k].vis!==v){ D.data[k].vis=v; if(v && !D.data[k].visAt) D.data[k].visAt=x.esAt||new Date().toISOString(); redraw(); candRefresh(); } }).catch(function(){}); }).catch(function(){ D.loaded[k]=1; D.loading[k]=0; }); }
   function save(){ var k=pf(), r=ref(k), x=cur(); try{ localStorage.setItem('cpes_'+k,JSON.stringify(x)); }catch(e){} if(D.loading[k]) return Promise.resolve(); /* on n'écrase jamais les données pendant leur chargement */
     var clean; try{ clean=JSON.parse(JSON.stringify(x)); }catch(e){ clean=x; } if(r){ try{ return r.set(clean).catch(function(){ msg('Enregistrement impossible pour le moment'); }); }catch(e){ msg('Enregistrement impossible pour le moment'); } } return Promise.resolve(); }
   function redraw(){ if(window.cpStream) cpStream.draw(); }
@@ -22886,7 +22889,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     var nm2=k==='etu'?'Mon emploi du temps du jour':'Mon planning du jour';
     var hero=plHero();
     var TD0=dayT(today()), mD=TD0.filter(isF).length, WS0=wScore(0), WG0=goals('w'), sc0=pScore('w'), rl0=relances(), DS0=dossier(), cpc=Math.round(((ready(k)?1:0)+(DS0.t?DS0.n/DS0.t:0))/2*100);
-    var MET={ 'es-wk':[TD0.length?'Aujourd\'hui '+mD+'/'+TD0.length+' · semaine '+(WS0==null?'—':WS0+' %'):'Mon calendrier et mes tâches',WS0||0], 'es-evastat':['Score de la semaine '+(WS0==null?'—':WS0+' %'),WS0||0], 'es-obj':[WG0.length?'Score '+sc0+' % · '+WG0.filter(gDone).length+'/'+WG0.length:'Fixe ton objectif',sc0], 'es-etud':[favs().length+' favori'+(favs().length>1?'s':'')+' · '+(c.rech||[]).length+' recherche'+((c.rech||[]).length>1?'s':''),null], 'es-evo':['Profil '+pct()+' %',pct()], 'es-cand':[c.cands.length+' candidature'+(c.cands.length>1?'s':'')+(rl0?' · '+rl0+' à relancer':''),cpc] };
+    var MET={ 'es-wk':[TD0.length?'Aujourd\'hui '+mD+'/'+TD0.length+' · semaine '+(WS0==null?'—':WS0+' %'):'Mon calendrier et mes tâches',WS0||0], 'es-evastat':['Score de la semaine '+(WS0==null?'—':WS0+' %'),WS0||0], 'es-obj':[WG0.length?'Score '+sc0+' % · '+WG0.filter(gDone).length+'/'+WG0.length:'Fixe ton objectif',sc0], 'es-etud':[favs().length+' favori'+(favs().length>1?'s':'')+' · '+(c.rech||[]).length+' recherche'+((c.rech||[]).length>1?'s':''),null], 'es-evo':['Profil '+pct()+' %',pct()], 'es-cand':[(function(){ var nu=myConvs().filter(function(x){ return x.unreadCand && x.statut!=='close'; }).length; return nu?'✉ '+nu+' message'+(nu>1?'s':'')+' d\'employeur · à lire':''; })()||(c.cands.length+' candidature'+(c.cands.length>1?'s':'')+(rl0?' · '+rl0+' à relancer':'')),cpc] };
     var C=k==='etu'?[['es-wk',P.cal,'Mon organisation','Mon calendrier et mes tâches','b'],['es-evastat',P.chart,'Mon bilan','Mes actions, analysées par Lisa','g'],['es-etud',P.school,'Mes études','Choisir et trouver ma formation','r'],['es-cand',P.doc,'Candidater','Postuler étape par étape','v']]
       :[['es-wk',P.cal,'Mon organisation','Mon calendrier et mes tâches','b'],['es-evastat',P.chart,'Mon bilan','Mes actions, analysées par Lisa','g'],['es-evo',P.chart,'Mon évolution','Progresser dans ma carrière','o'],['es-cand',P.doc,'Candidater','Changer de poste','v']];
     var NAV=[['es-nav-home',P.home,'Accueil'],['es-nav-lisa',P.chat,'Lisa'],['eva',P.star,'EVA'],['es-nav-prof',P.user,'Mon profil'],['es-nav-set',P.pen,'Paramètres'],['es-nav-out',P.ext,'Déconnexion']];
@@ -23435,7 +23438,11 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   function publish(on){ var k=pf(), u=user(), B=db(), c=cur(); c.vis=!!on; if(on && !c.visAt) c.visAt=new Date().toISOString(); save();
     if(!u||!B) return; var o={ esVisible:!!on, esPf:k, esAt:new Date().toISOString() }; if(on) o.esFiche=pub(k);
     B.collection('profils').doc(u.uid).set(o,{ merge:true }).catch(function(){ msg('Enregistrement impossible pour le moment'); });
+    pubFiche(on,k);
     var other=k==='etu'?'sal':'etu'; if(on){ if(D.data[other]) D.data[other].vis=false; var ro=ref(other); if(ro) ro.set({ vis:false },{ merge:true }).catch(function(){}); } }
+  /* Fiche vue par les employeurs : document à part, sans aucune autre donnée du membre */
+  function pubFiche(on,k){ var u=user(), B=db(); if(!u||!B) return; var f=on?pub(k):null;
+    B.collection('fiches_candidat').doc(u.uid).set(on?{ visible:true, pf:k, fiche:f, cvDispo:!!f.cvDispo, lmDispo:!!f.lmDispo, shareCv:!!f.cvDispo, shareLm:!!f.lmDispo, at:new Date().toISOString() }:{ visible:false, at:new Date().toISOString() }).catch(function(){}); }
   function setVis(on){ var k=pf();
     publish(on); msg(!on?'🔒 Ta fiche est privée':ready(k)?'✅ Ta fiche est visible par les employeurs CareerPulse':'✅ Ta fiche est visible. Ajoute ton prénom et '+(k==='etu'?'ta formation':'le poste visé')+' pour apparaître chez les employeurs'); candRefresh(); }
   function ficheHtml(){ var k=pf(), c=cur(), p=c.prof||{}, has=!!(p.prenom||p.vise||p.formation), on=!!c.vis;
@@ -23555,7 +23562,8 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(window.cpOffresInto) cpOffresInto(o.body.querySelector('#es-cpo-list')); }
   /* Contexte pour « Postuler » : prénom, CV et lettre de cet espace, suivi automatique */
   window.cpESApply=function(){ if(!ESAP) return null; var k=ESAP, c=D.data[k]||blank(), p=c.prof||{}, d=c.docs||{};
-    return { label:p.prenom||'', st:{ cv:!!d.cv, cvName:d.cv?d.cv.name:'', lm:!!d.lm, lmName:d.lm?d.lm.name:'' },
+    var nn=String(p.prenom||'').trim().split(/\s+/), lab=(nn[0]||'')+(nn[1]?' '+nn[1].charAt(0).toUpperCase()+'.':''); /* prénom + initiale, comme partout côté employeur */
+    return { label:lab, st:{ cv:!!d.cv, cvName:d.cv?d.cv.name:'', lm:!!d.lm, lmName:d.lm?d.lm.name:'' },
       src:function(x){ var u=user(), B=db(); if(!u||!B) return Promise.resolve(null); return B.collection('users').doc(u.uid).collection('espace_docs').doc(k+'_'+x).get().then(function(y){ return y.exists?y.data():null; }); },
       done:function(f,id){ var cc=D.data[k]||c; cc.apps=cc.apps||[]; if(cc.apps.indexOf(id)<0) cc.apps.push(id); cc.cands=cc.cands||[]; if(!cc.cands.some(function(z){ return z.offreId===f.id; })) cc.cands.push({ id:'c'+Date.now(), entreprise:f.empNom||'Entreprise', poste:f.titre||'', statut:'Envoyée', date:new Date().toISOString(), via:'CareerPulse', offreId:f.id });
         var r=ref(k), x=cc; try{ localStorage.setItem('cpes_'+k,JSON.stringify(x)); }catch(e){} if(r) r.set(x).catch(function(){}); candRefresh(); redraw(); if(window.cpStream&&cpStream.reloadConvs) cpStream.reloadConvs(); } }; };
@@ -24851,5 +24859,110 @@ html.pf-sal #s-profil .es-pro .cj-tile > b{ letter-spacing:-.01em; }
 .cj-sheet .cj-dots{ display:inline-flex; gap:4px; padding:3px 0; } .cj-sheet .cj-dots i{ width:7px; height:7px; border-radius:50%; background:#94a3b8; animation:cjDot 1s infinite; } .cj-sheet .cj-dots i:nth-child(2){ animation-delay:.15s; } .cj-sheet .cj-dots i:nth-child(3){ animation-delay:.3s; }
 .es-pq button{ border-style:solid !important; }
 </style>
+<style id="cp-pal-css">
+/* ═══ Palettes de couleurs de Mon espace (4 profils) + mode sobre ═══ */
+.cps-pal{ display:inline-flex; align-items:center; gap:6px; flex-shrink:0; padding:6px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.32); background:rgba(255,255,255,.12); color:#fff; font:800 .66rem 'DM Sans',sans-serif; cursor:pointer; transition:background .2s; }
+.cps-pal:hover{ background:rgba(255,255,255,.24); } .cps-pal svg{ width:14px; height:14px; }
+@media (max-width:420px){ .cps-pal span{ display:none; } .cps-pal{ padding:6px 8px; } }
+.pal-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:9px; margin:14px 0 6px; text-align:left; }
+.pal-o{ display:flex; align-items:center; gap:10px; padding:10px 11px; border-radius:15px; border:1.5px solid #e8edf4; background:#fff; cursor:pointer; font:700 .8rem 'DM Sans',sans-serif; color:#0f172a; transition:border-color .2s, box-shadow .2s, transform .15s; }
+.pal-o:hover{ transform:translateY(-1px); box-shadow:0 12px 22px -18px rgba(15,23,42,.6); }
+.pal-o.on{ border-color:#0f172a; box-shadow:0 0 0 3px rgba(15,23,42,.08); }
+.pal-sw{ display:flex; flex-shrink:0; } .pal-sw i{ width:15px; height:30px; } .pal-sw i:first-child{ border-radius:9px 0 0 9px; } .pal-sw i:last-child{ border-radius:0 9px 9px 0; }
+.pal-o small{ display:block; font-size:.64rem; font-weight:600; color:#94a3b8; margin-top:1px; }
+.pal-o > span:last-child{ text-align:left; line-height:1.25; }
+@media (max-width:360px){ .pal-grid{ grid-template-columns:1fr; } }
+
+/* Variables de la palette choisie (posées par le script sur <html>) → reprises par les profils Étudiant et Salarié */
+html.cp-pal.cp-pal{ --es0:var(--cq0); --es1:var(--cq1); --es2:var(--cq2); --ess:var(--cqs); --esb:var(--cqb); --esd:var(--cqd); }
+html.cp-pal #s-profil .cps-hero{ background:radial-gradient(120% 140% at 100% 0%,rgba(255,255,255,.22),transparent 55%),linear-gradient(130deg,var(--cq0) 0%,var(--cq1) 48%,var(--cq2) 115%) !important; }
+html.cp-pal #s-profil .cps-next, html.cp-pal #s-profil .cj-tm strong, html.cp-pal .frl-kpi b, html.cp-pal #s-profil .cj-score{ color:var(--cq1) !important; }
+html.cp-pal #s-profil .cps-logo{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; color:#fff !important; }
+html.cp-pal #s-profil .cj-tile::before, html.cp-pal .frl-kpi::before, html.cp-pal .cpw-sheet .cj-tile::before{ background:linear-gradient(90deg,var(--cq1),var(--cq2)) !important; }
+html.cp-pal #s-profil .cj-ic.b, html.cp-pal .cj-sheet .cj-ic.b{ background:linear-gradient(135deg,var(--cq0),var(--cq1)) !important; color:#fff !important; }
+html.cp-pal #s-profil .cj-ic.g, html.cp-pal .cj-sheet .cj-ic.g{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; color:#fff !important; }
+html.cp-pal #s-profil .cj-bar > i, html.cp-pal .cj-sheet .cj-bar > i, html.cp-pal .cpw-sheet .cpw-pg i{ background:linear-gradient(90deg,var(--cq1),var(--cq2)) !important; }
+html.cp-pal #s-profil .cj-bar, html.cp-pal .cj-sheet .cj-bar, html.cp-pal .cpw-sheet .cpw-pg{ background:var(--cqs) !important; }
+html.cp-pal #s-profil .cj-btn, html.cp-pal .cj-sheet .cj-btn, html.cp-pal .cj-sheet .cj-main:not(.alt), html.cp-pal .cpw-sheet .cpw-btn:not(.ghost), html.cp-pal .cpw-sheet .cpw-send, html.cp-pal .fa-save .cj-main{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; box-shadow:0 12px 24px -14px var(--cq1) !important; color:#fff !important; }
+html.cp-pal .cj-sheet .cj-main.alt{ color:var(--cq1) !important; border-color:var(--cq1) !important; } html.cp-pal .cj-sheet .cj-main.alt svg{ stroke:var(--cq1) !important; }
+html.cp-pal #s-profil .cj-coach{ background:linear-gradient(135deg,var(--cqs),#fff) !important; border-color:var(--cqb) !important; }
+html.cp-pal #s-profil .cj-coach p b, html.cp-pal #s-profil .cj-coach-n span, html.cp-pal .cpw-sheet .cj-coach-n span{ color:var(--cqd) !important; }
+html.cp-pal #s-profil .cj-pf{ color:var(--cq1) !important; border-color:var(--cqb) !important; }
+html.cp-pal #s-profil .cj-pfbar button.on{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; box-shadow:0 10px 20px -14px var(--cq1) !important; }
+html.cp-pal .cj-sheet .cpw-hd, html.cp-pal .cpw-sheet .cpw-hd{ background:radial-gradient(120% 160% at 100% 0%,rgba(255,255,255,.2),transparent 55%),linear-gradient(120deg,var(--cq0),var(--cq1) 50%,var(--cq2) 120%) !important; }
+html.cp-pal .cj-sheet .cj-tabs button.on, html.cp-pal .frl-steps button.on, html.cp-pal .frl-chips button.on{ background:var(--cq1) !important; border-color:var(--cq1) !important; color:#fff !important; }
+html.cp-pal .frl-steps button b, html.cp-pal .cj-sheet .cps-si{ color:var(--cq1) !important; }
+html.cp-pal .cj-tsug button{ border-color:var(--cqb) !important; color:var(--cqd) !important; background:var(--cqs) !important; }
+html.cp-pal .cj-pres-n, html.cp-pal .fa-n{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; }
+html.cp-pal .cpm-btns .pri:not(.red){ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; }
+html.cp-pal .ci-hd-i, html.cp-pal .ci-kw button.on, html.cp-pal .ci-f-kw, html.cp-pal .ci-f button{ background:linear-gradient(135deg,var(--cq0),var(--cq1)) !important; border-color:transparent !important; }
+html.cp-pal .cps-sw.on, html.cp-pal .frl-vis .cps-sw.on{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; }
+html.cp-pal .cpw-sheet .cpw-chip.on{ border-color:var(--cq1) !important; background:var(--cqs) !important; color:var(--cqd) !important; }
+html.cp-pal .cpw-sheet .cpw-m.me, html.cp-pal .cpw-sheet .cpw-me{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; color:#fff !important; }
+html.cp-pal .fa-hero{ background:radial-gradient(100% 140% at 100% 0%,rgba(255,255,255,.18),transparent 60%),linear-gradient(140deg,var(--cq0),var(--cq1) 70%,var(--cq2)) !important; }
+html.cp-pal .fa-ring{ background:conic-gradient(var(--cq2) calc(var(--p)*1%),rgba(255,255,255,.14) 0) !important; } html.cp-pal .fa-ring::before{ background:var(--cq0) !important; }
+html.cp-pal .fa-f em{ background:var(--cqs) !important; border-color:var(--cqb) !important; color:var(--cqd) !important; }
+html.cp-pal .fa-sec input:focus, html.cp-pal .fa-sec select:focus, html.cp-pal .fa-sec textarea:focus{ border-color:var(--cq1) !important; box-shadow:0 0 0 4px color-mix(in srgb,var(--cq1) 16%,transparent) !important; }
+/* Planning, organisation, Infos diverses : leurs propres variables suivent la palette */
+html.cp-pal .pl-k-etu, html.cp-pal .es-k-etu, html.cp-pal .pl-k-sal, html.cp-pal .es-k-sal, html.cp-pal .pl-k-dem, html.cp-pal .pl-k-frl{ --pa:var(--cq1) !important; --pa2:var(--cq2) !important; --pl:var(--cqs) !important; --pt:var(--cqd) !important; }
+html.cp-pal .ci-st{ background:var(--cqs) !important; color:var(--cqd) !important; }
+html.cp-pal .ci-mod{ border-color:var(--cqb) !important; color:var(--cqd) !important; background:#fff !important; } html.cp-pal .ci-mod svg{ color:var(--cqd) !important; }
+html.cp-pal .cc-acts .pri, html.cp-pal .cc-add{ background:linear-gradient(135deg,var(--cq1),var(--cq2)) !important; box-shadow:0 12px 22px -14px var(--cq1) !important; }
+html.cp-pal .cj-dmb{ color:var(--cqd) !important; border-color:var(--cqb) !important; }
+html.cp-sobre .es-qgo, html.cp-sobre .es-row-i{ background:var(--cq1) !important; box-shadow:none !important; }
+html.cp-pal .es-nv.on{ background:var(--cqs) !important; color:var(--cqd) !important; }
+
+/* Mode sobre : couleurs neutres, aplats, ombres légères */
+html.cp-sobre #s-profil .cps-hero{ background:var(--cq0) !important; box-shadow:0 14px 30px -26px rgba(0,0,0,.6) !important; }
+html.cp-sobre .cj-sheet .cpw-hd, html.cp-sobre .cpw-sheet .cpw-hd{ background:var(--cq0) !important; }
+html.cp-sobre #s-profil .cj-btn, html.cp-sobre .cj-sheet .cj-btn, html.cp-sobre .cj-sheet .cj-main:not(.alt), html.cp-sobre .cpw-sheet .cpw-btn:not(.ghost), html.cp-sobre .cpw-sheet .cpw-send, html.cp-sobre .fa-save .cj-main, html.cp-sobre .cpm-btns .pri:not(.red){ background:var(--cq0) !important; box-shadow:none !important; }
+html.cp-sobre #s-profil .cj-ic.b, html.cp-sobre #s-profil .cj-ic.g, html.cp-sobre .cj-sheet .cj-ic.b, html.cp-sobre .cj-sheet .cj-ic.g, html.cp-sobre .ci-hd-i{ background:var(--cq1) !important; }
+html.cp-sobre #s-profil .cj-tile, html.cp-sobre #s-profil .cj-coach, html.cp-sobre #s-profil .cps-card, html.cp-sobre .fa-sec{ box-shadow:none !important; }
+html.cp-sobre #s-profil .cj-tile::before, html.cp-sobre .frl-kpi::before{ background:var(--cq1) !important; }
+html.cp-sobre #s-profil .cj-coach{ background:#fff !important; border-color:var(--cqb) !important; }
+html.cp-sobre .fa-hero{ background:var(--cq0) !important; }
+html.cp-sobre .es-cd{ background:#fff !important; border:1px solid #e5e7eb !important; box-shadow:none !important; }
+html.cp-sobre .es-cd .es-cd-i{ background:var(--cq1) !important; box-shadow:none !important; }
+html.cp-sobre .es-cd b{ color:#111827 !important; } html.cp-sobre .es-cd .es-cd-bar > i{ background:var(--cq1) !important; }
+</style>
+<script>
+/* ═══ Palettes de Mon espace : un choix par profil, gardé sur l'appareil et dans le compte ═══ */
+(function(){
+  if(window.cpPal) return;
+  var PAL={
+    def:['Couleurs du profil','Par défaut',null],
+    emeraude:['Émeraude','Frais et naturel',['#064e3b','#059669','#34d399','#ecfdf5','#a7f3d0','#065f46']],
+    ocean:['Océan','Calme et confiance',['#0c4a6e','#0284c7','#38bdf8','#f0f9ff','#bae6fd','#075985']],
+    amethyste:['Améthyste','Élégant et créatif',['#3b0764','#7e22ce','#c084fc','#faf5ff','#e9d5ff','#581c87']],
+    rose:['Rose poudré','Doux et raffiné',['#831843','#db2777','#f9a8d4','#fdf2f8','#fbcfe8','#9d174d']],
+    or:['Or & nuit','Luxe et prestige',['#1c1917','#a16207','#eab308','#fefce8','#fde68a','#713f12']],
+    bordeaux:['Bordeaux','Chic et affirmé',['#4c0519','#be123c','#fb7185','#fff1f2','#fecdd3','#881337']],
+    sobre:['Mode sobre','Neutre, sans dégradés',['#1f2937','#4b5563','#9ca3af','#f3f4f6','#e5e7eb','#1f2937']]
+  };
+  var V=['--cq0','--cq1','--cq2','--cqs','--cqb','--cqd'];
+  function prof(){ try{ var s=window.cpStream&&cpStream.st?cpStream.st():{}; return s&&s.pfv===2&&s.profil?s.profil:''; }catch(e){ return ''; } }
+  function all(){ var s=window.cpStream&&cpStream.st?cpStream.st():null, o=null; try{ o=JSON.parse(localStorage.getItem('cp_pal')||'null'); }catch(e){}
+    return Object.assign({},o||{},(s&&s.pal)||{}); }
+  function get(k){ var a=all(); return PAL[a[k]]?a[k]:'def'; }
+  function apply(){ var k=prof(), id=k?get(k):'def', h=document.documentElement, c=PAL[id][2];
+    h.classList.toggle('cp-pal',!!c); h.classList.toggle('cp-sobre',id==='sobre');
+    V.forEach(function(v,i){ if(c) h.style.setProperty(v,c[i]); else h.style.removeProperty(v); }); }
+  function set(k,id){ var a=all(); a[k]=id; try{ localStorage.setItem('cp_pal',JSON.stringify(a)); }catch(e){}
+    var s=window.cpStream&&cpStream.st?cpStream.st():null; if(s){ s.pal=a; if(cpStream.save) cpStream.save(); } apply(); }
+  function open(){ var k=prof(); if(!k||!window.cpModal) return; var cur=get(k), NM={ dem:'Demandeur d\'emploi', etu:'Étudiant', sal:'Salarié', frl:'Freelance' }[k]||'';
+    var M=cpModal({ lisa:true, dismiss:true, buttons:[] }); M.el.classList.add('ci-pop');
+    function draw(){ cur=get(k); M.set('<b class="cpm-t">Les couleurs de ton espace</b><p class="cpm-p">Choisis la palette de ton profil <b>'+NM+'</b>. Tu peux en changer quand tu veux.</p><div class="pal-grid">'
+      +Object.keys(PAL).map(function(id){ var p=PAL[id], c=p[2]||defCols(k); return '<button type="button" class="pal-o'+(id===cur?' on':'')+(id==='sobre'?' sob':'')+'" data-pal="'+id+'"><span class="pal-sw"><i style="background:'+c[0]+'"></i><i style="background:'+c[1]+'"></i><i style="background:'+c[2]+'"></i></span><span>'+p[0]+'<small>'+p[1]+'</small></span></button>'; }).join('')
+      +'</div><div class="cpm-btns"><button type="button" class="pri" data-pal-ok>C\'est parfait</button></div>');
+      M.el.querySelectorAll('[data-pal]').forEach(function(b){ b.onclick=function(){ set(k,b.getAttribute('data-pal')); draw(); }; });
+      var ok=M.el.querySelector('[data-pal-ok]'); if(ok) ok.onclick=function(){ M.close(true); }; }
+    draw(); }
+  function defCols(k){ return { etu:['#3b0764','#6d28d9','#a855f7'], sal:['#1e3a8a','#2563eb','#7c3aed'], frl:['#7c2d12','#c2410c','#f59e0b'] }[k]||['#1e40af','#0891b2','#059669']; }
+  window.cpPal={ apply:apply, open:open, get:get, list:function(){ return Object.keys(PAL); } };
+  document.addEventListener('click',function(e){ if(e.target.closest('#cps-pal')) open(); });
+  setInterval(function(){ var k=prof(), id=k?get(k):'def', on=document.documentElement.classList.contains('cp-pal'); if(!!PAL[id][2]!==on) apply(); },1500);
+})();
+</script>
+
 </body>
 </html>
