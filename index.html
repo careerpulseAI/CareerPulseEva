@@ -1606,6 +1606,7 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 .cj-stats button{ text-align:left; padding:11px 10px; border-radius:16px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; display:flex; flex-direction:column; gap:2px; }
 .cj-stats span{ width:30px; height:30px; border-radius:10px; background:#eff6ff; color:#1e40af; display:flex !important; align-items:center; justify-content:center; margin-bottom:4px; }
 .cj-stats b{ font-size:1.35rem; font-weight:900; color:#0f172a; line-height:1; } .cj-stats small{ font-size:.7rem; color:#64748b; line-height:1.3; }
+.cj-comp{ margin-bottom:14px !important; } .cj-comp + .cj-rows{ margin-top:0 !important; position:relative; z-index:0; }
 .cj-comp{ background:linear-gradient(135deg,#f0fdf4,#ecfdf5); border-color:#bbf7d0; flex-wrap:nowrap; }
 .cj-ring{ flex-shrink:0; } .cj-ring text{ font:900 15px 'DM Sans',sans-serif; fill:#1e3a8a; }
 .cj-rows{ display:flex; flex-direction:column; border:1px solid #e2e8f0; border-radius:18px; overflow:hidden; }
@@ -18573,7 +18574,7 @@ window.cpSheetArrows=function(sc,host){
     if(!L.length) return '<div class="emx-none">'+S(I.inbox)+(C.length?'Aucun message dans ce filtre.':'Quand un candidat sera intéressé par l\'une de vos formations, sa demande apparaîtra ici. C\'est toujours le candidat qui écrit le premier message.')+'</div>';
     return L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}, cat=ccCat(c), lab=c.candLabel||'Candidat', ini=String(lab).split(/\s+/).map(function(w){ return w.charAt(0); }).join('').slice(0,2).toUpperCase(), op=c.statut==='ouverte';
       return '<button type="button" class="emx-r'+(c.unreadOrg?' un':'')+(ST.copen===c.id?' on':'')+'" data-conv="'+esc(c.id)+'"><span class="emx-av a-'+cat+'">'+esc(ini)+'</span><span class="emx-t">'
-        +'<span class="emx-l1"><b>'+esc(lab)+'</b><em class="emp-ref">'+(window.cpRef?cpRef(c.candUid):'')+'</em><time>'+ccDate(c.lastAt)+'</time></span>'
+        +'<span class="emx-l1"><b>'+esc(cpAt(lab))+'</b><em class="emp-ref">'+(window.cpRef?cpRef(c.candUid):'')+'</em><time>'+ccDate(c.lastAt)+'</time></span>'
         +'<span class="emx-l2"><em class="emp-esb '+cat+'">'+(window.cpCatLab?cpCatLab[cat]:'')+'</em><i class="emx-k k-cand">Formation</i><span>'+esc(c.formationTitre||'')+'</span>'+(!op?'<i class="emx-st">Clôturée</i>':c.lastFrom==='cand'?'<i class="emx-st w">À répondre</i>':'')+'</span>'
         +'<span class="emx-l3">'+(last.from==='org'?'Vous : ':'')+esc(String(last.text||'').slice(0,120))+'</span></span>'+(c.unreadOrg?'<i class="emx-dot"></i>':'')+'</button>'; }).join(''); }
   function inboxC(){ var C=ST.convs||[], f=ST.cmf||'all', k=ST.cmc||'all', nu=C.filter(function(c){ return c.unreadOrg&&!c.archOrg; }).length, FO=C.map(function(c){ return c.formationTitre; }).filter(function(t,i,A){ return t&&A.indexOf(t)===i; });
@@ -18704,7 +18705,7 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function render(x){
-      var ct=ccCat(x); sh.querySelector('.ofcm-who').innerHTML=esc(x.candLabel||'Candidat')+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
+      var ct=ccCat(x); sh.querySelector('.ofcm-who').innerHTML=esc(cpAt(x.candLabel))+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · le candidat a écrit en premier</div>'+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
         +(x.statut!=='ouverte'?'<div class="ofcm-note">Le candidat a clôturé cette conversation.</div>':'')
@@ -18861,7 +18862,7 @@ window.cpSheetArrows=function(sc,host){
   function dmAsk(q,n){ var Q={ mode:['Bonjour'+(n?' '+esc(n):'')+' 👋 Pour adapter ton espace, dis-moi : <b>tu cherches un emploi, ou tu veux changer de métier ?</b>',[['emploi','Je cherche un emploi'],['reconv','Je veux changer de métier']],'dmode'],
       ft:['Es-tu <b>inscrit(e) à France Travail</b> ? Je te rappellerai ton actualisation si c\'est le cas.',[['oui','Oui'],['non','Non']],'ft'],
       poste:['Es-tu <b>en poste</b> aujourd\'hui ? Les aides pour te former ne sont pas les mêmes.',[['oui','Oui, je suis salarié(e)'],['non','Non, je suis sans emploi']],'enposte'] }[q];
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS.dem)+' · changer</button></div><p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><span class="cj-pf">'+esc(PROFS.dem)+'</span></div><p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
       +'<p>'+Q[0]+'</p><div class="cj-dmq">'+Q[1].map(function(o){ return '<button type="button" class="cj-btn" data-cj="dmset" data-k="'+Q[2]+'" data-v="'+o[0]+'">'+esc(o[1])+'</button>'; }).join('')+'</div>'
       +(q==='poste'?'<p class="cj-mini">💡 Tu es encore en poste ? Tu peux aussi utiliser l\'espace <b>Salarié</b> : il t\'aide à évoluer ou à te reconvertir depuis ton emploi.</p>':'')+'</div></div>'; }
   function coach(){
@@ -18885,15 +18886,15 @@ window.cpSheetArrows=function(sc,host){
     else { var f=done(d), r=Math.max(0,d.cible-f), lab=dlab(d).toLowerCase();
       if(f>=d.cible){ m.push('Bravo '+esc(hi)+'ton défi est <b>réussi</b> 🎉 Tu peux faire ton bilan dès maintenant.'); act=['Faire mon bilan','bilan']; }
       else if(dow()>=4){ m.push(esc(hi)+'la semaine se termine : il te reste <b>'+r+'</b> pour ton défi « '+esc(lab)+' ». Un dernier effort, ou faisons le bilan.'); act=['Faire mon bilan','bilan']; }
-      else if(dow()>=2 && dpct(d)<50){ m.push('On est '+['lundi','mardi','mercredi','jeudi'][dow()]+' et ton défi est à <b>'+dpct(d)+' %</b>. Il te reste '+r+' : on s\'y met aujourd\'hui ?'); act=d.type==='cand'?['Envoyer ma candidature','add']:['Envoyer ma candidature','add']; }
-      else { m.push('Ton défi avance : <b>'+f+' / '+d.cible+'</b>. Continue comme ça, la régularité paie toujours.'); act=d.type==='cand'?['Envoyer ma candidature','add']:['Envoyer ma candidature','add']; } }
+      else if(dow()>=2 && dpct(d)<50){ m.push('On est '+['lundi','mardi','mercredi','jeudi'][dow()]+' et ton défi est à <b>'+dpct(d)+' %</b>. Il te reste '+r+' : on s\'y met aujourd\'hui ?'); act=d.type==='cand'?['Réaliser ton profil avec Lisa','wiz']:['Réaliser ton profil avec Lisa','wiz']; }
+      else { m.push('Ton défi avance : <b>'+f+' / '+d.cible+'</b>. Continue comme ça, la régularité paie toujours.'); act=d.type==='cand'?['Réaliser ton profil avec Lisa','wiz']:['Réaliser ton profil avec Lisa','wiz']; } }
     if(p<100) m.push('Ton profil est à <b>'+p+' %</b>. '+PUB[0]);
     var dm=docMiss(); if(dm.length) m.push('Il te manque encore '+dm.map(function(x){ return '<b>'+x[1]+'</b>'; }).join(' et ')+' : sans '+(dm.length>1?'eux':(dm[0][0]==='cv'?'lui':'elle'))+', les recruteurs ne peuvent pas te découvrir en entier.<span class="cj-dm">'+dm.map(function(x){ return '<button type="button" class="cj-dmb" data-cj="sec" data-s="'+x[0]+'">'+I(P.plus,14)+(x[0]==='cv'?'Ajouter mon CV':'Ajouter ma lettre')+'</button>'; }).join('')+'</span>');
     else if(!visOn()) m.push('Ton profil est complet 👏 Rends-le <b>visible</b> : les recruteurs CareerPulse pourront te trouver et te contacter.');
     else m.push(PUB[(new Date().getDate())%PUB.length]);
     if(!isT() && dow()===0) extra=evaLink(EV.quiz[0],'Lundi : on s\'échauffe avec EVA','Quiz et mises en situation pour bien démarrer ta semaine');
     else if(!isT() && dow()===4) extra=evaLink(EV.itw[0],'Vendredi : simulation d\'entretien','Entraîne-toi avec EVA pour tes prochains rendez-vous');
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS[S.st.profil])+' · changer</button>':'')+(S.st.profil==='dem'&&S.st.dmode?'<button type="button" class="cj-pf cj-dmv" data-cj="dmedit">'+(reconv()?'Ma version : Reconversion':'Ma version : Recherche d\'emploi')+' · modifier</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<span class="cj-pf">'+esc(PROFS[S.st.profil])+'</span>':'')+(S.st.profil==='dem'&&S.st.dmode?'<button type="button" class="cj-pf cj-dmv" data-cj="dmedit">'+(reconv()?'Ma version : Reconversion':'Ma version : Recherche d\'emploi')+' · modifier</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
       +(act?'<button type="button" class="cj-btn" data-cj="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+(extra?(isT()?extra:'<div class="cj-coach-eva">'+extra+'</div>'):'')+'</div></div>';
   }
 
@@ -19092,7 +19093,7 @@ window.cpSheetArrows=function(sc,host){
  /* pfv 2 = choix fait parmi les 4 profils actuels */
   function isT(){ return chosen() && (S.st.profil==='etu' || S.st.profil==='sal'); }
   var PFI={ dem:'<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/>', etu:'<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4V11"/>', sal:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>', frl:'<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/>' };
-  function pfBar(){ if(!chosen()||INTRO) return ''; return '<button type="button" class="cj-menu" data-cj="pfch">'+I(P.back,16)+'<span>Menu principal</span><em>Mes 4 profils</em></button>'; /* chaque profil a sa page */ var cur=S.st.profil==='rec'?'dem':S.st.profil;
+  function pfBar(){ return ''; /* on ne sort d'un profil qu'en se déconnectant */ /* chaque profil a sa page */ var cur=S.st.profil==='rec'?'dem':S.st.profil;
     return '<div class="cj-pfbar" role="tablist" aria-label="Mon profil">'+['dem','etu','sal','frl'].map(function(k){ return '<button type="button" role="tab" aria-selected="'+(k===cur)+'" class="'+(k===cur?'on':'')+'" data-cj="pf" data-p="'+k+'"><i>'+I(PFI[k],16)+'</i><span>'+(k==='dem'?'Emploi · Reconversion':k==='etu'?'Étudiant':k==='sal'?'Salarié':'Freelance')+'</span></button>'; }).join('')+'</div>'; }
   function tasks(){ var k='tasks_'+S.st.profil; return (S.st[k]=S.st[k]||[]); }
   function candSub(){ return !chosen()?'Postuler et suivre':S.st.profil==='sal'?'Tu penses à changer de secteur, de métier ou de poste ? Pose ta candidature ici':S.st.profil==='etu'?'Tu as terminé tes études ou tu cherches un job saisonnier ? Postule ici':'Postuler et suivre'; }
@@ -19264,7 +19265,7 @@ window.cpSheetArrows=function(sc,host){
       +'<div class="cps-card"><label class="cps-search">'+I(P.search,17)+'<input placeholder="Rechercher un recruteur, un secteur, une ville…" disabled></label><div class="cps-empty">Dès qu\'ils seront là, tu pourras les rechercher ici, consulter leurs offres et leur écrire.</div></div>'
       +'<div class="cps-card cps-inv"><span class="cps-ic b">'+I(P.brief)+'</span><div><b>Ton entreprise recrute ?</b><p>Un recruteur ou un manager de ton réseau cherche des profils ? Fais-lui découvrir CareerPulse : c\'est simple et sans engagement.</p></div><button type="button" class="cps-btn" data-cj="inv-rec">Partager</button></div>'
       +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs'+(S.convs.length?' <em>'+S.convs.length+'</em>':'')+'</div>'
-      +'<div class="cps-card">'+(S.convs.length?S.convs.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-conv="'+c.id+'"><span class="cps-dot'+(c.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(c.empNom||'Recruteur')+(c.poste?' · '+esc(c.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I(P.chev,16)+'</button>'; }).join(''):'<div class="cps-empty">Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée : tu choisis toujours ce que tu partages.</div>')+'</div>'
+      +'<div class="cps-card">'+(S.convs.length?S.convs.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-conv="'+c.id+'"><span class="cps-dot'+(c.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(cpAtO(c.empNom)||'Recruteur')+(c.poste?' · '+esc(c.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I(P.chev,16)+'</button>'; }).join(''):'<div class="cps-empty">Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée : tu choisis toujours ce que tu partages.</div>')+'</div>'
       +'<div class="cps-card cps-msg"><span class="cps-ic g">'+I(P.chat)+'</span><div><b>Tes échanges avec les centres de formation</b><p>Ils se trouvent dans EVA, rubrique « Contacter des formations ».</p></div><a class="cps-btn" href="eva.html#eva-of">Ouvrir</a></div>'+'<div class="cj-evas">'+ev('droits')+'</div>');
   }
 
@@ -19392,7 +19393,7 @@ window.cpSheetArrows=function(sc,host){
   function openConv(id){
     var c=S.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
     var sh=document.createElement('div'); sh.className='cpw-sheet'; sh.setAttribute('data-rep','emploi:'+c.id);
-    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button><span class="cpw-logo">'+I(P.pulse,20)+'</span><div class="cpw-ht"><b>'+esc(c.empNom||'Recruteur')+'</b><span>'+esc(c.poste||'Messagerie protégée')+'</span></div></div><div class="cpw-scroll"><div class="cpw-log cps-thread"></div></div><div class="cpw-ft"><textarea class="cpw-in" maxlength="1500" placeholder="Écris ton message…"></textarea><button type="button" class="cpw-send" aria-label="Envoyer">'+I(P.send,20)+'</button></div></div>';
+    sh.innerHTML='<div class="cpw-box"><div class="cpw-hd"><button type="button" class="cpw-x" aria-label="Fermer">'+I(P.back)+'</button><span class="cpw-logo">'+I(P.pulse,20)+'</span><div class="cpw-ht"><b>'+esc(cpAtO(c.empNom)||'Recruteur')+'</b><span>'+esc(c.poste||'Messagerie protégée')+'</span></div></div><div class="cpw-scroll"><div class="cpw-log cps-thread"></div></div><div class="cpw-ft"><textarea class="cpw-in" maxlength="1500" placeholder="Écris ton message…"></textarea><button type="button" class="cpw-send" aria-label="Envoyer">'+I(P.send,20)+'</button></div></div>';
     document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
     var log=sh.querySelector('.cpw-log'), ref=convCol().doc(id);
     function render(x){ log.innerHTML='<div class="cpw-note">Messagerie protégée : tu choisis ce que tu partages.</div>'+(x.messages||[]).map(function(m){ return '<div class="cpw-m '+(m.from==='cand'?'me':'them')+'"><p>'+esc(m.text)+'</p></div>'; }).join(''); var sc=sh.querySelector('.cpw-scroll'); sc.scrollTop=sc.scrollHeight; if(x.unreadCand) ref.update({ unreadCand:false }).catch(function(){}); sh.querySelector('.cpw-ft').style.display=x.statut==='close'?'none':''; }
@@ -19799,7 +19800,7 @@ window.cpSheetArrows=function(sc,host){
   }
 
   /* Profils anonymisés : prénom + initiale, jamais de coordonnées */
-  function label(p){ var n=String(p.name||'').trim().split(/\s+/); return (n[0]||'Candidat')+(n[1]?' '+n[1][0].toUpperCase()+'.':''); }
+  function label(p){ var n=String(p.name||'').trim().split(/\s+/); return n[0]||'Candidat'; }
   function comps(p){ var c=p.competences; if(Array.isArray(c)) return c; return String(c||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean); }
   function norm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
   function score(p,words){ if(!words.length) return 1; var h=norm([p.titre,p.secteur,p.ville,p.accroche,comps(p).join(' '),(p.portfolio||[]).map(function(x){ return x.titre+' '+x.desc; }).join(' ')].join(' ')); return words.filter(function(w){ return h.indexOf(w)>-1; }).length; }
@@ -19813,7 +19814,7 @@ window.cpSheetArrows=function(sc,host){
     return L.map(function(x){ var p=x.p, done=ST.convs.some(function(c){ return c.candUid===p.uid; }), cs=comps(p).slice(0,6);
       var op=!!(ST.openC&&ST.openC[p.uid]);
       return '<div class="ofc-item emp-cand'+(op?' open':'')+'" data-cand="'+esc(p.uid)+'"><button type="button" class="emp-tog" data-ea="tog" data-c="'+esc(p.uid)+'" aria-expanded="'+op+'"><span class="ofc-item-ico">'+S(I.users)+'</span><span class="emp-tog-t">'
-        +'<span class="ofc-item-t">'+esc(label(p))+'<em class="emp-ref">'+cpRef(p.uid)+'</em></span>'
+        +'<span class="ofc-item-t">'+esc(cpAt(label(p)))+'<em class="emp-ref">'+cpRef(p.uid)+'</em></span>'
         +'<span class="ofc-item-s"><em class="emp-esb '+cpCat(p)+'">'+cpCatLab[cpCat(p)]+'</em>'+esc(p.titre||[p.secteur,p.ville].filter(Boolean).join(' · '))+'</span>'+(done?'<span class="emp-done">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'')+(alsoOf(p.uid,cpCat(p)).length?'<span class="emp-also">'+S(I.users,13)+'Aussi visible en '+esc(alsoOf(p.uid,cpCat(p)).join(', '))+' · même membre</span>':'')+(ST.blk&&ST.blk[p.uid]?'<span class="emp-blk">⛔ Bloqué</span>':'')+'</span><span class="emp-chev">'+S(I.chev,18)+'</span></button><div class="ofc-item-b emp-more">'
         +(p.frl&&window.cpFrlCard?cpFrlCard(Object.assign({ label:label(p) },p),{ emp:true }):window.cpCandCard?cpCandCard(Object.assign({ label:label(p) },p),{ emp:true, offres:ST.offres, docs:window.cpEmpDocBtns?cpEmpDocBtns(p,label(p)):'' })
           :((p.accroche?'<p class="emp-acc">'+esc(String(p.accroche).slice(0,260))+'</p>':'')
@@ -19897,7 +19898,7 @@ window.cpSheetArrows=function(sc,host){
     return L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}, cat=cvCat(c), kd=cvKind(c), lab=c.candLabel||'Candidat', ini=String(lab).split(/\s+/).map(function(w){ return w.charAt(0); }).join('').slice(0,2).toUpperCase();
       var st=c.bloque?'Bloqué':c.statut==='close'?'Close':kd==='mis'?(c.missionStatut==='acceptee'?'Acceptée':c.missionStatut==='declinee'?'Déclinée':''):'';
       return '<button type="button" class="emx-r'+(c.unreadEmp?' un':'')+(ST.openId===c.id?' on':'')+'" data-econv="'+esc(c.id)+'"><span class="emx-av a-'+cat+'">'+esc(ini)+'</span><span class="emx-t">'
-        +'<span class="emx-l1"><b>'+esc(lab)+'</b><em class="emp-ref">'+(window.cpRef?cpRef(c.candUid):'')+'</em><time>'+cvDate(c.lastAt)+'</time></span>'
+        +'<span class="emx-l1"><b>'+esc(cpAt(lab))+'</b><em class="emp-ref">'+(window.cpRef?cpRef(c.candUid):'')+'</em><time>'+cvDate(c.lastAt)+'</time></span>'
         +'<span class="emx-l2"><em class="emp-esb '+cat+'">'+(window.cpCatLab?cpCatLab[cat]:'')+'</em><i class="emx-k k-'+kd+'">'+KL[kd]+'</i><span>'+esc(c.poste||'')+'</span>'+(st?'<i class="emx-st">'+st+'</i>':'')+'</span>'
         +'<span class="emx-l3">'+(last.from==='emp'?'Vous : ':'')+esc(String(last.text||'').slice(0,120))+'</span></span>'+(c.unreadEmp?'<i class="emx-dot"></i>':'')+'</button>'; }).join(''); }
   function msgBox(){ var f=ST.mf||'all', k=ST.mc||'all', nu=ST.convs.filter(function(c){ return c.unreadEmp&&!c.archEmp; }).length;
@@ -20031,11 +20032,11 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function rend(x){
-      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').innerHTML=esc(x.candLabel||'Candidat')+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
+      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').innerHTML=esc(cpAt(x.candLabel))+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       var closed=x.statut==='close';
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">'+(x.type==='mission'?'Conversation protégée · mission proposée par '+esc(x.empNom||'votre entreprise'):x.type==='candidature'?'Conversation protégée · candidature reçue pour « '+esc(x.poste||'')+' »':'Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise'))+'</div>'
-        +(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='emp'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='emp'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
+        +(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='emp'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='emp'?'Vous':esc(cpAt(x.candLabel)))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
         +'<div class="emx-acts">'+(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button>')+'<button type="button" class="ofc-btn" data-arch-conv>'+S(I.inbox,15)+(x.archEmp?'Remettre dans la boîte':'Archiver')+'</button>'+(ST.blk&&ST.blk[x.candUid]?'<button type="button" class="ofc-btn" data-blk-conv="0">Débloquer ce candidat</button>':'<button type="button" class="ofc-btn emx-blk" data-blk-conv="1">⛔ Bloquer ce candidat</button>')+'</div>';
       list.scrollTop=list.scrollHeight;
       sh.querySelector('.ofcm-ft').style.display=closed?'none':'';
@@ -21130,7 +21131,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
   document.addEventListener('click',function(e){ var b=e.target.closest('[data-cpo-sh]'); if(!b) return; e.preventDefault(); e.stopPropagation(); var f=window.cpEmpOffre&&cpEmpOffre(b.getAttribute('data-cpo-sh')); if(f) share(f); },true);
 
   /* ════════ Postuler (côté candidat) ════════ */
-  function candLabel(){ var e=$('fp-name'), n=String((e&&e.value)||(user()&&user().displayName)||'').trim().split(/\s+/); return (n[0]||'Candidat')+(n[1]?' '+n[1][0].toUpperCase()+'.':''); }
+  function candLabel(){ var e=$('fp-name'), n=String((e&&e.value)||(user()&&user().displayName)||'').trim().split(/\s+/); return n[0]||'Candidat'; }
   function apply(f,ok){
     var go=function(){ form2(f,ok); };
     if(window.cpMemberGuard) cpMemberGuard('emploi-postuler',go); else go();
@@ -21536,9 +21537,13 @@ document.addEventListener('click',function(e){ var b=e.target.closest('[data-fco
   var A=window.fbAuth, u=A&&A.currentUser, D=window.fbDb; if(u&&D){ D.collection('profils').doc(u.uid).set({ fcol:c },{ merge:true }).catch(function(){});
     ['fiches_candidat','fiches_freelance'].forEach(function(n){ D.collection(n).doc(u.uid).update({ fcol:c }).catch(function(){}); }); }
   if(window.ecShowToast) ecShowToast('Couleur de ta fiche enregistrée'); });
+/* Identifiant public : @Prénom (jamais le nom de famille) · numéro CP ; les pros : @Nom */
+window.cpAt=function(n){ var f=String(n||'').trim().split(/\s+/)[0]||'Candidat'; return '@'+f; };
+window.cpAtO=function(n){ n=String(n||'').trim(); return n?'@'+n:''; };
+window.cpHandle=function(n,uid){ return cpAt(n)+(uid&&window.cpRef?' · '+cpRef(uid):''); };
 window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salarié(e)', etu:'Étudiant(e)', frl:'Freelance' };
   window.cpCandCard=function(p,o){
-    o=o||{}; var name=o.emp?(p.label||p.name):(p.name||'Ton nom'), cs=comps(p), top=cs.slice(0,3), rest=cs.slice(3);
+    o=o||{}; var name=String(o.emp?(p.label||p.name):(p.name||'Ton prénom')).trim().split(/\s+/)[0], hdl=window.cpHandle?cpHandle(name,o.self?((window.fbAuth&&fbAuth.currentUser)||{}).uid:p.uid):'', cs=comps(p), top=cs.slice(0,3), rest=cs.slice(3);
     var badges=[];
     if(p.disponibilite) badges.push('<span class="o">'+S(IC.bolt)+esc(p.disponibilite)+'</span>');
     badges.push('<span class="g">'+S(IC.shield)+'Membre vérifié CareerPulse</span>');
@@ -21549,7 +21554,7 @@ window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salari�
     var m=o.emp?match(p,o.offres):null;
     if(pro){ kv=kv.filter(function(x){ return !st4.some(function(y){ return y[1]===x[1]; }); }); if(p.taille) kv.push(['Entreprise idéale',p.taille]); if(p.horaires) kv.push(['Horaires',p.horaires]); if(p.preavis) kv.push(['Préavis',p.preavis]); if(p.style) kv.push(['Façon de travailler',p.style]); if(p.poste2) kv.push(['Autre poste possible',p.poste2]); if(p.ecole) kv.push(['École',p.ecole]); }
     var h=(o.self?cpFcolBar(cpFcol(p,o)):'')+'<div class="cpc cpc-sb'+(pro?' cpc-pro'+(etu?' etu':''):'')+'" style="--fc:'+cpFcol(p,o)+'">'+'<div class="cpc-hd">'+(o.self?'<div class="cpc-self">'+S(IC.eye)+'<span>Voici ce que voient les recruteurs'+(p.visible?'':' quand ton profil est visible')+' (sans tes coordonnées).</span></div>':'')
-      +'<div class="cpc-top">'+(o.avatar?'<span class="cpc-av-w">'+o.avatar+'</span>':'<span class="cpc-av">'+esc(ini(name))+'</span>')+'<div class="cpc-id"><b>'+esc(name)+'</b><span>'+esc(p.titre||'Poste visé à compléter')+'</span>'+(pro&&p.expertise?'<em class="cpc-spec">'+esc(p.expertise)+'</em>':'')+'</div></div>'
+      +'<div class="cpc-top">'+(o.avatar?'<span class="cpc-av-w">'+o.avatar+'</span>':'<span class="cpc-av">'+esc(ini(name))+'</span>')+'<div class="cpc-id"><b>'+esc(name)+'</b><span>'+esc(p.titre||'Poste visé à compléter')+'</span>'+(pro&&p.expertise?'<em class="cpc-spec">'+esc(p.expertise)+'</em>':'')+(hdl?'<em class="cpc-hdl">'+esc(hdl)+'</em>':'')+'</div></div>'
       +'<div class="cpc-badges">'+badges.join('')+'</div>'
       +(o.self?'<div class="cpc-tip">💡 <span><b>Conseil de Lisa :</b> ton prénom suffit, et pas de photo, ni sur ton profil ni sur ton CV. Les recruteurs CareerPulse ne voient que ton prénom et une initiale : c\'est plus juste pour tout le monde.</span></div>':'')
       +(m&&m.s>0?'<div class="cpc-match"><span class="cpc-ring" style="--m:'+m.s+'"><b>'+m.s+' %</b></span><span><small>Correspondance avec votre offre</small>'+esc(m.f.titre)+'</span></div>':'')+'</div>';
@@ -21573,7 +21578,7 @@ window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salari�
     if(o.emp && o.docs) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.doc)+'Documents</div>'+o.docs+'</div>';
     if(o.self){ var d=[]; if(p.cvDispo) d.push('CV'); if(p.lmDispo) d.push('lettre de motivation'); h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.doc)+'Documents</div><div class="cpc-ct">'+S(IC.doc)+'<span>'+(d.length?'Ton '+d.join(' et ta ')+' '+(d.length>1?'sont prêts':'est prêt')+' pour les recruteurs.':'Ajoute ton CV et ta lettre plus haut pour les partager.')+'</span></div></div>';
       if(o.contact) h+='<div class="cpc-sec"><div class="cpc-st">'+S(IC.lock)+'Mes coordonnées (privées)</div><div class="cpc-ct">'+S(IC.chat)+'<span>'+o.contact+'</span></div>'
-        +(/(?:\d[\s.\-]?){9,}/.test(o.contact)?'<div class="cpc-tip">💡 <span><b>Conseil de Lisa :</b> évite de laisser ton numéro de téléphone. Échange d\'abord dans la messagerie protégée de CareerPulse, puis donne ton numéro quand tu le décides. Tu peux le retirer avec « Modifier mon profil avec Lisa ».</span></div>':'')+'</div>'; }
+        +(/(?:\d[\s.\-]?){9,}/.test(o.contact)?'<div class="cpc-tip">💡 <span><b>Conseil de Lisa :</b> évite de laisser ton numéro de téléphone. Échange d\'abord dans la messagerie protégée de CareerPulse, puis donne ton numéro quand tu le décides. Tu peux le retirer avec « Modifier mon profil avec Lisa ».</span></div>':'')+'<div class="cpc-tip cpc-tip2">🔒 <span><b>Ton identifiant CareerPulse :</b> '+esc(hdl)+'. C\'est lui que voient les recruteurs, jamais ton nom de famille ni tes coordonnées, sauf si tu décides de les partager.</span></div><button type="button" class="cpc-lisa" data-cj="wiz">Modifier avec Lisa →</button>'+'</div>'; }
     if(o.emp) h+='<p class="cpc-note">🔒 Profil anonymisé : prénom et initiale seulement. Les coordonnées ne sont visibles que si le candidat les partage, après sa réponse.</p>';
     return h+'</div></div>';
   };
@@ -22449,7 +22454,7 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
     else if(at){ m.push('Tu as <b>'+at+' mission'+(at>1?'s':'')+' terminée'+(at>1?'s':'')+'</b> pas encore payée'+(at>1?'s':'')+'. Pense à vérifier que ton client a bien tout reçu.'); act=['Voir mes missions','frl-miss']; }
     else if(!objs().some(function(o){ return oState(o)!=='past'; })){ m.push('Fixe-toi un <b>objectif simple</b> : augmenter ton chiffre d\'affaires de 2 %, trouver de nouveaux clients, décrocher un partenariat… Je le suis avec toi.'); act=['Fixer mon objectif','frl-defi']; }
     else { var oc=objs().filter(function(o){ return oState(o)==='cur'; })[0]; m.push(oc?'Ton objectif '+oLine(oc):'Ton prochain objectif est prêt : '+oLine(objs().filter(function(o){ return oState(o)==='next'; })[0])); act=['Voir mes objectifs','frl-defi']; }
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">Freelance · changer</button></div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><span class="cj-pf">Freelance</span></div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
       +m.map(function(x){ return '<p>'+x+'</p>'; }).join('')+(act?'<button type="button" class="cj-btn" data-frl="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')
       +(window.cpStream&&cpStream.pres?cpStream.pres('frl',['<b>Mon activité & mes objectifs</b> : ce que tu proposes, ton tarif et tes objectifs (chiffre d\'affaires, clients, partenariats).','<b>Profil & portfolio</b> : ton profil freelance, tes réalisations et les avis de tes clients.','<b>Missions & clients</b> : chaque mission, du premier contact jusqu\'au paiement.','<b>Clients & messages</b> : les entreprises qui te proposent une mission.']):'')+'</div></div>';
   }
@@ -22529,12 +22534,14 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
     b.disabled=true; D.prof=p; saveDoc('profil',p).then(function(){ toastMsg('Ton activité est enregistrée ✓'); ACT.close(); ACT=null; PRO.sir=null; sirCheck(); if(PRO.vis) publish(true,true); if(PROF&&document.body.contains(PROF.sh)) PROF.render(); });
   }
 
+  var FRMI={'all': '<path d="M4 6h16M4 12h16M4 18h10"/>', 'prospect': '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', 'devis': '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', 'cours': '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', 'terminee': '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', 'payee': '<path d="M17 7a6 6 0 1 0 0 10M5 10h8M5 14h8"/>'};
+  function frmI(k){ return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(FRMI[k]||'')+'</svg>'; }
   function openMiss(tab,f){
-    var o=sheet('Clients & missions','Du premier contact au paiement',''); o.tab=tab||'m'; o.f=f||'all'; MISS=o;
+    var o=sheet('Clients & missions','Du premier contact au paiement',''); o.tab=tab||'m'; o.f=f||'all'; MISS=o; o.body.classList.add('frm');
     o.render=function(){
       var h='<div class="cj-tabs"><button type="button" class="'+(o.tab==='m'?'on':'')+'" data-frl="frl-tab" data-t="m">Missions <em>'+D.missions.length+'</em></button><button type="button" class="'+(o.tab==='c'?'on':'')+'" data-frl="frl-tab" data-t="c">Clients <em>'+D.clients.length+'</em></button></div>';
       if(o.tab==='m'){
-        h+='<div class="frl-steps"><button type="button" class="'+(o.f==='all'?'on':'')+'" data-frl="frl-f" data-f="all"><b>'+D.missions.length+'</b>Toutes</button>'+STEPS.map(function(s){ return '<button type="button" class="'+(o.f===s[0]?'on':'')+'" data-frl="frl-f" data-f="'+s[0]+'"><b>'+nb(s[0])+'</b>'+s[1]+'</button>'; }).join('')+'</div>'
+        h+='<div class="frl-steps"><button type="button" class="'+(o.f==='all'?'on':'')+'" data-frl="frl-f" data-f="all">'+frmI('all')+'<span>Toutes</span><b>'+D.missions.length+'</b></button>'+STEPS.map(function(s){ return '<button type="button" class="'+(o.f===s[0]?'on':'')+'" data-frl="frl-f" data-f="'+s[0]+'">'+frmI(s[0])+'<span>'+s[1]+'</span><b>'+nb(s[0])+'</b></button>'; }).join('')+'</div>'
           +'<button type="button" class="cj-main" data-frl="frl-madd">'+I(P.plus,18)+'Ajouter une mission</button>';
         var L=D.missions.filter(function(m){ return o.f==='all'||m.statut===o.f; }).sort(function(a,b){ return String(b.createdAt||'').localeCompare(String(a.createdAt||'')); });
         h+=L.length?L.map(function(m){ var c=client(m.clientId), i=STEPS.map(function(s){ return s[0]; }).indexOf(m.statut);
@@ -22757,13 +22764,14 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
   function ago(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return ''; } }
   /* Fiche freelance, même présentation que la fiche candidat (classes .cpc) — vue par le membre et par l'entreprise */
   window.cpFrlCard=function(p,o){ o=o||{}; var S=function(x){ return I(x,16); }, name=o.emp?(p.label||p.name):(p.name||'Ton nom'), cs=p.competences||[], A=p.avis||[], PF=p.portfolio||[];
+    name=String(name||'').trim().split(/\s+/)[0]||name; var hdl=window.cpHandle?cpHandle(name,o.self?((window.fbAuth&&fbAuth.currentUser)||{}).uid:p.uid):'';
     var ini=String(name||'?').trim().split(/\s+/).slice(0,2).map(function(w){ return w.charAt(0); }).join('').toUpperCase()||'?';
     var b=[]; if(p.disponibilite) b.push('<span class="o">'+S(P.clock)+esc(p.disponibilite)+'</span>'); b.push(p.siretOk===true?'<span class="g frl-vb">'+S('<path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>')+'Freelance vérifié · SIRET actif</span>':p.siretOk==='wait'?'<span>'+S(P.clock)+'Vérification du SIRET…</span>':'<span>'+S(P.users)+'Membre CareerPulse</span>'); if(p.avisNb) b.push('<span>★ '+String(p.avisMoy).replace('.',',')+' · '+p.avisNb+' avis</span>');
     var st4=[['Tarif journalier',p.tjm?eur(p.tjm)+' HT':''],['Expérience',p.xp],['Démarrage',p.delai],['Avis clients',p.avisNb?'★ '+String(p.avisMoy).replace('.',',')+' / 5':'']].filter(function(x){ return x[1]; }).slice(0,4);
     var kv=[['Façon de travailler',p.mode],['Ville',p.ville],['Zone',p.zone],['Clients',p.ctype],['Statut',p.statutJ],['Langues',p.langues]].filter(function(x){ return x[1]; });
     var gar=[]; if(p.siretOk===true) gar.push('SIRET vérifié dans l\'annuaire officiel'); if(p.rc) gar.push('Assurance RC Pro'); gar.push('Échanges dans la messagerie protégée CareerPulse');
     var h=(o.self&&window.cpFcolBar?cpFcolBar(cpFcol(p,o)):'')+'<div class="cpc cpc-sb frl-cpc cpc-pro frl" style="--fc:'+(window.cpFcol?cpFcol(p,o):'#1e3a8a')+'"><div class="cpc-hd">'+(o.self?'<div class="cpc-self">'+S('<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>')+'<span>Voici ce que voient les entreprises'+(o.vis?'':' quand ton profil est visible')+' (sans tes coordonnées).</span></div>':'')
-      +'<div class="cpc-top"><span class="cpc-av">'+esc(ini)+'</span><div class="cpc-id"><b>'+esc(name)+'</b><span>'+esc(p.titre||'Ton métier à compléter')+'</span>'+(p.specialite?'<em class="cpc-spec">'+esc(p.specialite)+'</em>':'')+'</div></div><div class="cpc-badges">'+b.join('')+'</div></div>'
+      +'<div class="cpc-top"><span class="cpc-av">'+esc(ini)+'</span><div class="cpc-id"><b>'+esc(name)+'</b><span>'+esc(p.titre||'Ton métier à compléter')+'</span>'+(p.specialite?'<em class="cpc-spec">'+esc(p.specialite)+'</em>':'')+(hdl?'<em class="cpc-hdl">'+esc(hdl)+'</em>':'')+'</div></div><div class="cpc-badges">'+b.join('')+'</div></div>'
       +(st4.length?'<div class="cpc-stats">'+st4.map(function(x){ return '<div><small>'+x[0]+'</small><b>'+esc(x[1])+'</b></div>'; }).join('')+'</div>':'')
       +'<div class="cpc-bd">'+(p.accroche?'<p class="cpc-acc">'+esc(p.accroche)+'</p>':'')
       +(p.reussite?'<div class="cpc-sec"><div class="cpc-st">'+S(P.trophy)+'Réussite client</div><div class="cpc-hl"><div class="big"><p>« '+esc(p.reussite)+' »</p></div></div></div>':'');
@@ -23114,7 +23122,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(D.uid!==u.uid){ D.uid=u.uid; D.loaded={}; D.loading={}; D.data={}; }
     if(D.loaded[k]||D.loading[k]) return; var r=ref(k); if(!r){ D.loaded[k]=1; return; }
     D.loading[k]=1; r.get().then(function(d){ D.data[k]=Object.assign(blank(),d.exists?d.data():{}); D.loaded[k]=1; D.loading[k]=0; redraw();
-      db().collection('profils').doc(u.uid).get().then(function(pd){ var x=pd.exists?pd.data():{}, v=!!(x.esVisible && x.esPf===k); if(v && !D.data[k]._pub){ D.data[k]._pub=1; setTimeout(function(){ pubFiche(true,k); },400); } if(!!D.data[k].vis!==v){ D.data[k].vis=v; if(v && !D.data[k].visAt) D.data[k].visAt=x.esAt||new Date().toISOString(); redraw(); candRefresh(); } }).catch(function(){}); }).catch(function(){ D.loaded[k]=1; D.loading[k]=0; }); }
+      db().collection('profils').doc(u.uid).get().then(function(pd){ var x=pd.exists?pd.data():{}, v=!!(x.esVisible && x.esPf===k); if(!v && D.data[k].vis && !(x.esVisible && x.esPf && x.esPf!==k)){ v=true; setTimeout(function(){ if(pf()===k) publish(true); else { var o3={ esVisible:true, esPf:k, esAt:new Date().toISOString(), esFiche:pub(k) }; db().collection('profils').doc(u.uid).set(o3,{ merge:true }).catch(function(){}); pubFiche(true,k); } },500); } if(v && !D.data[k]._pub){ D.data[k]._pub=1; setTimeout(function(){ pubFiche(true,k); },400); } if(!!D.data[k].vis!==v){ D.data[k].vis=v; if(v && !D.data[k].visAt) D.data[k].visAt=x.esAt||new Date().toISOString(); redraw(); candRefresh(); } }).catch(function(){}); }).catch(function(){ D.loaded[k]=1; D.loading[k]=0; }); }
   function save(){ var k=pf(), r=ref(k), x=cur(); try{ localStorage.setItem('cpes_'+k,JSON.stringify(x)); }catch(e){} if(D.loading[k]) return Promise.resolve(); /* on n'écrase jamais les données pendant leur chargement */
     var clean; try{ clean=JSON.parse(JSON.stringify(x)); }catch(e){ clean=x; } if(r){ try{ return r.set(clean).catch(function(){ msg('Enregistrement impossible pour le moment'); }); }catch(e){ msg('Enregistrement impossible pour le moment'); } } return Promise.resolve(); }
   function redraw(){ if(window.cpStream) cpStream.draw(); }
@@ -23573,10 +23581,9 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
       var lt=!rd?'Commence par <b>ta fiche</b> : c\'est ce que voient les employeurs.':(!D0.ok?'Ta fiche est prête. Ajoute ton <b>CV</b> et ta <b>lettre</b> pour compléter ton dossier.':(rl?'Tu as <b>'+rl+' '+pl(rl,'candidature','candidatures')+' à relancer</b> : une semaine sans réponse, c\'est le bon moment.':'Ton dossier est prêt ✓ Ajoute chaque candidature dès que tu l\'envoies.'));
       var pc=Math.round(((rd?1:0)+(D0.t?D0.n/D0.t:0))/2*100);
       o.body.innerHTML=simpTop(lt,3,[['data-cj="es-cf" data-f="all"',P.doc,c.cands.length,pl(c.cands.length,'candidature','candidatures')],['data-cj="es-cf" data-f="'+(rl?'rel':'cours')+'"',P.clock,rl,pl(rl,'relance à faire','relances à faire')],['data-cj="es-cf" data-f="itw"',P.users,nI,pl(nI,'entretien','entretiens')]])
-        +nowCard(P.user,'Mon dossier',(rd?(c.vis?'Fiche visible ✓':'Fiche prête'):'Fiche à faire')+' · '+D0.n+'/'+D0.t+' documents',pc+' %',pc,aBtn('data-cj="es-cp" data-p="fiche"',P.user,'Ma fiche')+aBtn('data-cj="es-cp" data-p="docs"',P.doc,'Mes documents',1)+aBtn('data-cj="es-cp" data-p="suivi"',P.chat,'Messages'+(mc?' ('+mc+')':''),1))
+        +nowCard(P.user,'Mon dossier',(rd?(c.vis?'Fiche visible ✓':'Fiche prête'):'Fiche à faire')+' · '+D0.n+'/'+D0.t+' documents',pc+' %',pc,aBtn('data-cj="es-cp" data-p="fiche"',P.user,'Ma fiche')+aBtn('data-cj="es-cp" data-p="docs"',P.doc,'Mes documents',1)+aBtn('data-cj="es-x-msgs"',P.chat,'Messages'+(mc?' ('+mc+')':''),1))
         +'<div class="cj-2b"><button type="button" class="cj-main" data-cj="es-gosuivi">'+I(P.plus,18)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="es-cp" data-p="find">'+I(P.search||P.brief,18)+'Trouver des offres</button></div>'
-        +cfTabs(o)
-        +(L.length?'<div class="es-day">'+L.slice(0,5).map(candRow).join('')+'</div>'+(L.length>5?'<button type="button" class="es-back" data-cj="es-cp" data-p="suivi">Voir mes '+L.length+' candidatures</button>':''):'<div class="cps-empty">Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : je calcule tes relances tout seul.</div>')
+        +esxEntries(false)
         +'<div class="cj-evas">'+eva('eva.html#eva-entretien','Simulation d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J')+'</div>'; };
     o.render(); }
   function openCandPage(x){ var k=pf(), c=cur(), g=CPG[x]; var o=cpStream.sheet(g[1],g[2],''); CP_.push(o); if(x==='find') o.onFind=1;
@@ -23590,12 +23597,40 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
       if(x==='suivi'){ o.f=o.f||'all'; var L=candF(o.f).slice().reverse(), rl=relances();
         h=say(rl?'Tu as <b>'+rl+' candidature'+(rl>1?'s':'')+' à relancer</b> : une semaine sans réponse, c\'est le bon moment.':'Ajoute chaque candidature dès que tu l\'envoies. Les candidatures faites sur CareerPulse s\'ajoutent toutes seules.')
           +'<div class="cj-form"><div class="cj-2"><label>Entreprise<input id="es-c-co" maxlength="80" placeholder="Ex : Boulangerie Martin"></label><label>Poste<input id="es-c-po" maxlength="80" placeholder="Ex : Assistant(e) RH"></label></div><button type="button" class="cj-main" data-cj="es-cadd">'+I(P.plus,18)+'Ajouter à mon suivi</button></div>'
-          +cfTabs(o)+(L.length?'<div class="es-day">'+L.map(candRow).join('')+'</div>':'<div class="frl-empty">Aucune candidature ici pour l\'instant.</div>'); }
-      if(x==='suivi'){ var MC=myConvs(); h+='<p class="es-h">Mes messages</p>'+(MC.length?'<div class="cps-card">'+MC.map(function(cv){ var last=(cv.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-cj="es-conv" data-id="'+esc(cv.id)+'"><span class="cps-dot'+(cv.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(cv.empNom||'Employeur')+(cv.poste?' · '+esc(cv.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I(P.chev,16)+'</button>'; }).join('')+'</div>':'<div class="frl-empty">Aucun message pour l\'instant. Les employeurs t\'écriront ici.</div>')
-        +'<p class="es-h">Préparer mes entretiens</p>'+eva('eva.html#eva-entretien','Simulateur d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J'); }
+          +esxEntries(true); }
+      if(x==='suivi'){ h+='<p class="es-h">Préparer mes entretiens</p>'+eva('eva.html#eva-entretien','Simulateur d\'entretien avec EVA','Entraîne-toi face à un recruteur avant le jour J'); }
       o.body.innerHTML=h+ltip(x);
       var st=o.body.querySelector('[data-es-stream]'); if(st){ var d0=say('Range ici ton <b>CV</b>, ta <b>lettre de motivation</b> et tes <b>documents importants</b>. Tu choisis ce que les employeurs peuvent voir 👇');
         if(o.sd) st.innerHTML=d0+docsHtml(); else { o.sd=1; st.innerHTML='<div class="cj-say">'+av(true)+'<div><span class="cj-dots"><i></i><i></i><i></i></span></div></div>'; setTimeout(function(){ if(document.body.contains(st)) st.innerHTML=d0+'<div style="animation:cjPres .4s ease-out both">'+docsHtml()+'</div>'; },1100); } } };
+    o.render(); return o; }
+  /* Deux entrées élégantes : « Mes candidatures » et « Mes messages », chacune ouvre une page plein écran avec un menu */
+  function esxEntries(withMsg){ var L=cur().cands, n=L.length, ci=candF('itw').length, cr=candF('rep').length, M=myConvs(), nu=M.filter(function(x){ return x.unreadCand; }).length;
+    return '<div class="esx-ent">'
+      +'<button type="button" class="esx-tile" data-cj="es-x-cands"><span class="esx-ti">'+ESXI.brief+'</span><span class="esx-tt"><b>Mes candidatures</b><small>'+n+' '+pl(n,'candidature','candidatures')+' · '+ci+' '+pl(ci,'entretien','entretiens')+' · '+cr+' '+pl(cr,'réponse','réponses')+'</small></span><em class="esx-n">'+n+'</em>'+ESXI.chev+'</button>'
+      +(withMsg?'<button type="button" class="esx-tile" data-cj="es-x-msgs"><span class="esx-ti">'+ESXI.mail+'</span><span class="esx-tt"><b>Mes messages</b><small>'+(M.length?M.length+' '+pl(M.length,'conversation','conversations')+(nu?' · <b>'+nu+' non lu'+(nu>1?'s':'')+'</b>':''):'Les employeurs t\'écriront ici')+'</small></span>'+(nu?'<em class="esx-n on">'+nu+'</em>':'')+ESXI.chev+'</button>':'')
+      +'</div>'; }
+  var ESXI={ brief:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M3 13h18"/></svg>',
+    mail:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m4 7 8 6 8-6"/></svg>',
+    chev:'<svg class="esx-cv" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>',
+    all:'<path d="M4 6h16M4 12h16M4 18h10"/>', cours:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', itw:'<path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>', rep:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', rel:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>', inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/>', dot:'<circle cx="12" cy="12" r="4"/>', cand:'<path d="m22 2-7 20-4-9-9-4z"/>', prop:'<path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6z"/>' };
+  function esxI(p){ return '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>'; }
+  var ESXST={ 'Envoyée':'b', 'Relancée':'b', 'Entretien':'v', 'Acceptée':'g', 'Refusée':'r' };
+  function openCandList(f){ var o=cpStream.sheet('Mes candidatures','Classées par étape, comme sur un vrai tableau de bord',''); CP_.push(o); o.f=f||'all'; o.body.classList.add('esx-pg');
+    o.render=function(){ var M=[['all','Toutes'],['cours','En cours'],['itw','Entretiens'],['rep','Réponses'],['rel','À relancer']], L=candF(o.f).slice().reverse();
+      o.body.innerHTML='<div class="esx"><nav class="esx-menu" aria-label="Étapes">'+M.map(function(m){ var n=candF(m[0]).length; return '<button type="button" class="'+(o.f===m[0]?'on':'')+'" data-cj="es-x-cf" data-f="'+m[0]+'">'+esxI(ESXI[m[0]])+'<span>'+m[1]+'</span><em>'+n+'</em></button>'; }).join('')+'</nav>'
+        +'<section class="esx-list"><header class="esx-lh"><b>'+M.filter(function(m){ return m[0]===o.f; })[0][1]+'</b><span>'+L.length+' '+pl(L.length,'candidature','candidatures')+'</span></header>'
+        +(L.length?L.map(function(y){ var r=isRel(y); return '<div class="esx-row"><div class="esx-rm"><b>'+esc(y.poste||y.entreprise)+'</b><span>'+esc(y.poste?y.entreprise:'')+(y.via?' · <em class="esx-via">CareerPulse</em>':'')+'</span><small>Postulé le '+new Date(y.date).toLocaleDateString('fr-FR')+(r?' · <b class="esx-rel">À relancer</b>':'')+'</small></div><div class="esx-rs"><i class="esx-pill '+(ESXST[y.statut]||'b')+'">'+esc(y.statut)+'</i><select data-es-cst="'+y.id+'" aria-label="Changer l\'étape">'+['Envoyée','Relancée','Entretien','Acceptée','Refusée'].map(function(st){ return '<option'+(st===y.statut?' selected':'')+'>'+st+'</option>'; }).join('')+'</select></div></div>'; }).join('')
+          :'<div class="esx-none">Aucune candidature à cette étape.</div>')+'</section></div>'; };
+    o.render(); return o; }
+  function openMsgList(f){ var o=cpStream.sheet('Mes messages','Ta boîte de réception CareerPulse',''); CP_.push(o); o.f=f||'all'; o.body.classList.add('esx-pg');
+    o.render=function(){ var A=myConvs().slice().sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+      function fl(k){ return A.filter(function(x){ return k==='all'||(k==='un'&&x.unreadCand)||(k==='cand'&&x.type==='candidature')||(k==='prop'&&x.type!=='candidature'); }); }
+      var M=[['all','Boîte de réception',ESXI.inbox],['un','Non lus',ESXI.dot],['cand','Mes candidatures',ESXI.cand],['prop','Propositions reçues',ESXI.prop]], L=fl(o.f);
+      o.body.innerHTML='<div class="esx"><nav class="esx-menu" aria-label="Dossiers">'+M.map(function(m){ return '<button type="button" class="'+(o.f===m[0]?'on':'')+'" data-cj="es-x-mf" data-f="'+m[0]+'">'+esxI(m[2])+'<span>'+m[1]+'</span><em>'+fl(m[0]).length+'</em></button>'; }).join('')+'</nav>'
+        +'<section class="esx-list"><header class="esx-lh"><b>'+M.filter(function(m){ return m[0]===o.f; })[0][1]+'</b><span>'+L.length+' '+pl(L.length,'message','messages')+'</span></header>'
+        +(L.length?L.map(function(cv){ var last=(cv.messages||[]).slice(-1)[0]||{}, nm=cv.empNom||'Employeur', d=cv.lastAt?new Date(cv.lastAt):null;
+          return '<button type="button" class="esx-mrow'+(cv.unreadCand?' un':'')+'" data-cj="es-conv" data-id="'+esc(cv.id)+'"><span class="esx-av">'+esc(String(nm).charAt(0).toUpperCase())+'</span><span class="esx-mt"><span class="esx-m1"><b>@'+esc(nm)+'</b><time>'+(d?d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' }):'')+'</time></span><span class="esx-m2">'+(cv.type==='candidature'?'Candidature · ':'Proposition · ')+esc(cv.poste||'')+'</span><span class="esx-m3">'+(last.from==='cand'?'Toi : ':'')+esc(String(last.text||'').slice(0,110))+'</span></span>'+(cv.unreadCand?'<i class="esx-dot"></i>':'')+'</button>'; }).join('')
+          :'<div class="esx-none">'+(A.length?'Aucun message dans ce dossier.':'Aucun message pour l\'instant. Les employeurs vérifiés t\'écriront ici.')+'</div>')+'</section></div>'; };
     o.render(); return o; }
   var CANDO=null;
   function addCand(){ var co=$('es-c-co').value.trim(), po=$('es-c-po').value.trim(); if(!co){ msg('Indique l\'entreprise'); $('es-c-co').focus(); return; } cur().cands.push({ id:'c'+Date.now(), entreprise:co, poste:po, statut:'Envoyée', date:new Date().toISOString() }); save(); msg('Candidature ajoutée ✓'); candRefresh(); }
@@ -23817,7 +23852,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   /* Contexte pour « Postuler » : prénom, CV et lettre de cet espace, suivi automatique */
   window.cpESDocs=function(k){ var c=D.data[k]; return (c&&c.docs)||{}; };
   window.cpESApply=function(){ if(!ESAP) return null; var k=ESAP, c=D.data[k]||blank(), p=c.prof||{}, d=c.docs||{};
-    var nn=String(p.prenom||'').trim().split(/\s+/), lab=(nn[0]||'')+(nn[1]?' '+nn[1].charAt(0).toUpperCase()+'.':''); /* prénom + initiale, comme partout côté employeur */
+    var nn=String(p.prenom||'').trim().split(/\s+/), lab=nn[0]||''; /* prénom + initiale, comme partout côté employeur */
     return { label:lab, pf:k, st:{ cv:!!d.cv, cvName:d.cv?d.cv.name:'', lm:!!d.lm, lmName:d.lm?d.lm.name:'' },
       src:function(x){ var u=user(), B=db(); if(!u||!B) return Promise.resolve(null); return B.collection('users').doc(u.uid).collection('espace_docs').doc(k+'_'+x).get().then(function(y){ return y.exists?y.data():null; }); },
       done:function(f,id){ var cc=D.data[k]||c; cc.apps=cc.apps||[]; if(cc.apps.indexOf(id)<0) cc.apps.push(id); cc.cands=cc.cands||[]; if(!cc.cands.some(function(z){ return z.offreId===f.id; })) cc.cands.push({ id:'c'+Date.now(), entreprise:f.empNom||'Entreprise', poste:f.titre||'', statut:'Envoyée', date:new Date().toISOString(), via:'CareerPulse', offreId:f.id });
@@ -24160,8 +24195,8 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-nav-home'){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); window.scrollTo({ top:0, behavior:'smooth' }); return; }
     if(a==='es-nav-lisa'){ openPoint(); return; } if(a==='es-nav-prof'){ if(pf()==='sal') openProf(); else { openCand(); openCandPage('fiche'); } return; }
     if(a==='es-nav-out'){ if(window.cpExitAsk) cpExitAsk(); else if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); return; }
-    if(a==='es-nav-set'){ var cv0=cur(); cpStream.sheet('Paramètres','Ton espace',cBox(0,'Tu peux changer de profil à tout moment : tes données restent rangées dans chaque espace.')+'<div class="es-rows"><button type="button" class="es-row" data-cj="es-setpf"><span class="es-row-i">'+I(P.users||P.user,19)+'</span><span><b>Changer de profil</b><small>Revenir au choix des 4 profils</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" data-cj="es-setvis"><span class="es-row-i v">'+I(P.eye,19)+'</span><span><b>Visibilité de ma fiche</b><small>'+(cv0.vis?'Visible par les employeurs':'Privée')+'</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" data-cj="es-nav-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter</b><small>Quitter mon espace</small></span>'+I(P.chev,16)+'</button></div>'); return; }
-    if(a==='es-setpf'){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); var mp=document.querySelector('#cj-home .cj-menu'); if(mp) mp.click(); return; }
+    if(a==='es-nav-set'){ var cv0=cur(); cpStream.sheet('Paramètres','Ton espace',cBox(0,'Pour sortir de ce profil, déconnecte-toi du profil : tes données restent rangées dans chaque espace.')+'<div class="es-rows"><button type="button" class="es-row" data-cj="es-setpf"><span class="es-row-i">'+I(P.users||P.user,19)+'</span><span><b>Quitter ce profil</b><small>Déconnexion du profil : ton compte reste connecté</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" data-cj="es-setvis"><span class="es-row-i v">'+I(P.eye,19)+'</span><span><b>Visibilité de ma fiche</b><small>'+(cv0.vis?'Visible par les employeurs':'Privée')+'</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" data-cj="es-nav-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter</b><small>Quitter mon espace</small></span>'+I(P.chev,16)+'</button></div>'); return; }
+    if(a==='es-setpf'){ if(window.cpExitAsk) cpExitAsk(); return; }
     if(a==='es-setvis'){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); openCand(); openCandPage('fiche'); return; } if(a==='es-prof'){ openProf(); return; } if(a==='es-ecol'){ openEcol(); return; } if(a==='es-cand'){ openCand(); return; } if(a==='es-msg'){ openMsg(); return; }
     if(a==='es-tf' && TK){ TK.f=b.getAttribute('data-f'); TK.render(); return; }
     if(a==='es-new'){ openNew(); return; }
@@ -24225,7 +24260,9 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-nrem' && NO){ noteKeep(); NO.rem=!NO.rem; if(NO.rem){ NO.rd=NO.v.date||today(); if(NO.v.heure) NO.rh=NO.v.heure; try{ if(window.Notification && Notification.permission==='default') Notification.requestPermission(); }catch(e){} } NO.render(); return; }
     if(a==='es-nsave'){ noteSave(); return; }
     if(a==='es-ndel' && NO){ if(!confirm('Supprimer ?')) return; var Ln=noteList(NO.kind), nid=NO.id; if(NO.kind==='p') cur().projets=Ln.filter(function(z){ return z.id!==nid; }); else cur().memo=Ln.filter(function(z){ return z.id!==nid; }); save(); msg('Supprimé'); NO.close(); refreshAll(); return; }
-    if(a==='es-cf'){ var sh1=b.closest('.cpw-sheet'), co=CP_.filter(function(x){ return x.sh===sh1; })[0]; if(co){ co.f=b.getAttribute('data-f'); co.render(); var tb=co.body.querySelector('.es-ctabs'); if(tb && b.closest('.es-kpi')) tb.scrollIntoView({ behavior:'smooth', block:'center' }); } return; }
+    if(a==='es-x-cands'){ openCandList('all'); return; } if(a==='es-x-msgs'){ openMsgList('all'); return; }
+    if(a==='es-x-cf'||a==='es-x-mf'){ var sh2=b.closest('.cpw-sheet'), cx=CP_.filter(function(x){ return x.sh===sh2; })[0]; if(cx){ cx.f=b.getAttribute('data-f'); cx.render(); var ls=cx.body.querySelector('.esx-list'); if(ls){ ls.classList.add('esx-in'); if(window.innerWidth<900) ls.scrollIntoView({ behavior:'smooth', block:'start' }); } } return; }
+    if(a==='es-cf'){ var sh1=b.closest('.cpw-sheet'), co=CP_.filter(function(x){ return x.sh===sh1; })[0]; if(co&&co.hub){ openCandList(b.getAttribute('data-f')); return; } if(co){ co.f=b.getAttribute('data-f'); co.render(); var tb=co.body.querySelector('.es-ctabs'); if(tb && b.closest('.es-kpi')) tb.scrollIntoView({ behavior:'smooth', block:'center' }); } return; }
     if(a==='es-tip'){ var ck=b.getAttribute('data-k'), cc=cur(); cc.tipSel=cc.tipSel===ck?'':ck; TIPAN=(pf()==='etu'&&cc.tipSel)?cc.tipSel:''; save(); drawTips(); return; }
     if(a==='es-tk'){ var c3=cur(), sk=c3.tipSel; if(!sk) return; c3.tipDone=c3.tipDone||{}; var Ld=c3.tipDone[sk]=c3.tipDone[sk]||[], ii=+b.getAttribute('data-i'), px=Ld.indexOf(ii); if(px>-1) Ld.splice(px,1); else Ld.push(ii); save(); b.classList.toggle('on',px<0); var tp=b.closest('.es-tp'); if(tp){ var tot=tp.querySelectorAll('.es-tk').length, nn=tp.querySelectorAll('.es-tk.on').length, rg=tp.querySelector('.es-ring'); rg.style.setProperty('--p',Math.round(nn/tot*100)); rg.querySelector('b').textContent=nn+'/'+tot; if(nn===tot && px<0) setTimeout(drawTips,350); else if(nn<tot && tp.querySelector('.es-tp-ok')) tp.querySelector('.es-tp-ok').remove(); } return; }
     if(a==='es-point'){ openPoint(); return; }
@@ -24756,7 +24793,11 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
 .es-mini{ margin:2px 2px 6px; font-size:.76rem; color:#94a3b8; }
 .es-qtf .es-yn{ display:flex; gap:8px; } .es-qtf .es-yn button{ flex:1; padding:11px; border-radius:12px; border:1px solid #e2e8f0; background:#fff; font:800 .82rem 'DM Sans',sans-serif; color:#334155; cursor:pointer; } .es-qtf .es-yn button.on{ background:var(--es1); border-color:var(--es1); color:#fff; } .es-qtf .es-yn button[data-v="1"].on{ background:#16a34a; border-color:#16a34a; }
 .es-miss{ display:flex; gap:10px; margin:0 0 14px; padding:13px 14px; border-radius:18px; background:linear-gradient(135deg,#fffbeb,#fff); border:1px solid #fde68a; } .es-miss .cj-av{ width:36px !important; height:36px !important; flex:none; }
-.es-miss b{ display:block; font-size:.82rem; color:#92400e; } .es-miss span{ display:block; font-size:.8rem; line-height:1.45; color:#334155; } .es-miss button{ display:inline-flex; align-items:center; gap:6px; margin-top:8px; padding:8px 13px; border-radius:999px; border:0; background:linear-gradient(135deg,#d97706,#f59e0b); color:#fff; font:800 .76rem 'DM Sans',sans-serif; cursor:pointer; }
+.es-miss b{ display:block; font-size:.82rem; color:#92400e; } .es-miss span{ display:block; font-size:.8rem; line-height:1.45; color:#334155; } html body .es-miss span, html body .es-miss span b{ display:inline !important; font-size:.82rem !important; line-height:1.5 !important; color:#334155 !important; }
+html body .es-miss span b{ font-weight:800 !important; color:#0f172a !important; }
+html body .es-miss > div > b{ display:block !important; margin-bottom:2px; }
+html body .es-miss > div > span{ display:block !important; }
+.es-miss button{ display:inline-flex; align-items:center; gap:6px; margin-top:8px; padding:8px 13px; border-radius:999px; border:0; background:linear-gradient(135deg,#d97706,#f59e0b); color:#fff; font:800 .76rem 'DM Sans',sans-serif; cursor:pointer; }
 .es-wfile{ display:inline-flex !important; align-items:center; gap:6px; cursor:pointer; } .es-wfile.on{ border-color:var(--es1) !important; background:var(--ess) !important; color:var(--esd) !important; }
 /* Salarié : formulaire de créneau ultra premium */
 html.pf-sal .es-edf.pro{ position:relative; overflow:hidden; padding:20px 18px 18px; border-radius:26px; border:1.5px solid transparent; background:linear-gradient(#fff,#fff) padding-box,linear-gradient(140deg,#1e3a8a,#2563eb 45%,#7c3aed) border-box; box-shadow:0 30px 60px -38px rgba(30,58,138,.75),0 2px 8px -6px rgba(15,23,42,.25); }
@@ -25291,6 +25332,68 @@ html.cp-sobre .es-cd b{ color:#111827 !important; } html.cp-sobre .es-cd .es-cd-
 .cpd-b.alt{ background:#fff; color:#1e3a8a; }
 .cpd-n{ margin:10px 0 0; font-size:.7rem; line-height:1.5; color:#94a3b8; }
 @media (max-width:420px){ .cpd{ padding:14px 12px; } .cpd-r{ flex-wrap:wrap; } .cpd-b{ margin-left:42px; } }
+</style>
+<style>
+/* ══ Candidatures (style Indeed) et messages (style Outlook) : 2 entrées + pages plein écran avec menu ══ */
+.esx-ent{ display:grid; gap:10px; margin:14px 0; }
+@media (min-width:700px){ .esx-ent{ grid-template-columns:1fr 1fr; } }
+.esx-tile{ position:static !important; display:flex; align-items:center; gap:12px; width:100%; padding:14px 16px; border-radius:14px; border:1px solid #e2e8f0; background:#fff; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; color:#0f172a; box-shadow:0 1px 2px rgba(15,23,42,.05); transition:border-color .2s, box-shadow .2s, transform .2s; }
+.esx-tile:hover{ border-color:#c7d2fe; box-shadow:0 14px 28px -22px rgba(30,58,138,.55); transform:translateY(-1px); }
+.esx-ti{ width:42px; height:42px; flex-shrink:0; border-radius:11px; display:grid; place-items:center; background:#eef2ff; color:#1e3a8a; }
+.esx-tt{ flex:1; min-width:0; } .esx-tt b{ display:block; font-size:.92rem; font-weight:800; } .esx-tt small{ display:block; margin-top:2px; font-size:.74rem; color:#64748b; line-height:1.4; } .esx-tt small b{ display:inline; font-size:inherit; color:#1e3a8a; }
+.esx-n{ min-width:26px; height:26px; padding:0 7px; border-radius:999px; display:grid; place-items:center; font-style:normal; font-size:.74rem; font-weight:800; color:#1e3a8a; background:#eef2ff; } .esx-n.on{ color:#fff; background:#1e3a8a; }
+.esx-cv{ flex-shrink:0; color:#94a3b8; }
+.esx-pg{ animation:esxIn .32s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes esxIn{ from{ opacity:0; transform:translateY(10px); } }
+.esx{ display:grid; gap:14px; font-family:'DM Sans',sans-serif; color:#0f172a; }
+@media (min-width:900px){ .esx{ grid-template-columns:240px minmax(0,1fr); align-items:start; } .esx-menu{ position:sticky; top:8px; } }
+.esx-menu{ display:flex; flex-direction:column; padding:6px; border-radius:14px; background:#fff; border:1px solid #e2e8f0; }
+.esx-menu button{ position:static !important; display:flex; align-items:center; gap:10px; width:100%; padding:11px 12px; border:none; border-radius:10px; background:none; cursor:pointer; text-align:left; font:600 .86rem 'DM Sans',sans-serif; color:#334155; }
+.esx-menu button + button{ margin-top:2px; }
+.esx-menu button svg{ flex-shrink:0; color:#64748b; } .esx-menu button span{ flex:1; }
+.esx-menu button em{ font-style:normal; font-size:.74rem; font-weight:700; color:#64748b; }
+.esx-menu button:hover{ background:#f8fafc; }
+.esx-menu button.on{ background:#eef2ff; color:#1e3a8a; font-weight:800; box-shadow:inset 3px 0 0 #1e3a8a; } .esx-menu button.on svg, .esx-menu button.on em{ color:#1e3a8a; }
+.esx-list{ padding:0 !important; margin:0 !important; border-radius:14px; background:#fff; border:1px solid #e2e8f0; overflow:hidden; }
+.esx-list.esx-in{ animation:esxIn .25s ease-out both; }
+.esx-lh{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding:14px 16px; border-bottom:1px solid #e2e8f0; background:#f8fafc; } .esx-lh b{ font-size:.95rem; } .esx-lh span{ font-size:.74rem; color:#64748b; }
+.esx-row{ display:flex; align-items:center; gap:12px; padding:14px 16px; border-bottom:1px solid #eef2f7; } .esx-row:last-child{ border-bottom:none; }
+.esx-rm{ flex:1; min-width:0; } .esx-rm b{ display:block; font-size:.9rem; font-weight:800; color:#0f172a; } .esx-rm span{ display:block; margin-top:2px; font-size:.8rem; color:#334155; } .esx-rm small{ display:block; margin-top:3px; font-size:.72rem; color:#64748b; }
+.esx-via{ font-style:normal; font-weight:700; color:#1e3a8a; } .esx-rel{ color:#b45309; }
+.esx-rs{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0; }
+.esx-pill{ font-style:normal; padding:4px 10px; border-radius:6px; font-size:.7rem; font-weight:800; } .esx-pill.b{ background:#eef2ff; color:#1e3a8a; } .esx-pill.v{ background:#f5f3ff; color:#5b21b6; } .esx-pill.g{ background:#ecfdf5; color:#047857; } .esx-pill.r{ background:#fef2f2; color:#b91c1c; }
+.esx-rs select{ padding:5px 8px; border-radius:8px; border:1px solid #dbe4ef; background:#fff; font:600 .72rem 'DM Sans',sans-serif; color:#334155; }
+.esx-none{ padding:28px 16px; text-align:center; font-size:.84rem; color:#64748b; }
+.esx-mrow{ position:static !important; display:flex; align-items:flex-start; gap:12px; width:100%; padding:13px 16px; border:none; border-bottom:1px solid #eef2f7; background:#fff; cursor:pointer; text-align:left; font-family:'DM Sans',sans-serif; color:#0f172a; transition:background .15s; }
+.esx-mrow:last-child{ border-bottom:none; } .esx-mrow:hover{ background:#f8fafc; }
+.esx-av{ width:38px; height:38px; flex-shrink:0; border-radius:10px; display:grid; place-items:center; background:#1e3a8a; color:#fff; font-weight:800; font-size:.9rem; }
+.esx-mt{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.esx-m1{ display:flex; align-items:baseline; gap:8px; } .esx-m1 b{ flex:1; min-width:0; font-size:.86rem; font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; } .esx-m1 time{ font-size:.72rem; color:#64748b; flex-shrink:0; }
+.esx-m2{ font-size:.8rem; font-weight:600; color:#1e3a8a; } .esx-m3{ font-size:.78rem; color:#64748b; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.esx-mrow.un .esx-m1 b{ font-weight:800; } .esx-mrow.un .esx-m3{ color:#0f172a; font-weight:600; } .esx-mrow.un{ box-shadow:inset 3px 0 0 #1e3a8a; }
+.esx-dot{ width:9px; height:9px; margin-top:6px; flex-shrink:0; border-radius:50%; background:#1e3a8a; }
+</style>
+<style>
+/* ══ Freelance · Clients & missions : même structure, design simple et pro ══ */
+html body .cpw-sheet .cj-pg.frm.frm .cj-tabs{ display:grid !important; grid-template-columns:1fr 1fr; gap:4px; padding:4px; margin:0 0 12px; border-radius:12px; background:#f1f5f9; border:1px solid #e2e8f0; overflow:visible; }
+html body .cpw-sheet .cj-pg.frm.frm .cj-tabs button{ display:flex; align-items:center; justify-content:center; gap:6px; padding:10px 12px !important; border:none !important; border-radius:9px !important; background:transparent !important; color:#475569 !important; font:700 .84rem 'DM Sans',sans-serif !important; box-shadow:none !important; }
+html body .cpw-sheet .cj-pg.frm.frm .cj-tabs button.on{ background:#fff !important; color:#9a3412 !important; box-shadow:0 1px 3px rgba(15,23,42,.12) !important; }
+html body .cpw-sheet .cj-pg.frm.frm .cj-tabs em{ font-style:normal; padding:1px 7px; border-radius:999px; background:#e2e8f0; color:#334155; font-size:.7rem; opacity:1; }
+html body .cpw-sheet .cj-pg.frm.frm .cj-tabs button.on em{ background:#ffedd5; color:#9a3412; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps{ display:grid !important; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; overflow:visible !important; margin:0 0 12px; }
+@media (min-width:700px){ html body .cpw-sheet .cj-pg.frm.frm .frl-steps{ grid-template-columns:repeat(6,minmax(0,1fr)); } }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps button{ display:flex !important; flex-direction:row !important; align-items:center; gap:8px; min-width:0 !important; padding:10px 11px !important; border-radius:10px !important; border:1px solid #e2e8f0 !important; background:#fff !important; color:#334155 !important; font:600 .76rem 'DM Sans',sans-serif !important; text-align:left; box-shadow:none !important; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps button svg{ flex-shrink:0; color:#c2410c; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps button span{ flex:1; min-width:0; line-height:1.2; white-space:normal; overflow-wrap:anywhere; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps button b{ font-size:.86rem !important; font-weight:800 !important; color:#0f172a !important; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps button.on{ border-color:#c2410c !important; background:#fff7ed !important; color:#9a3412 !important; box-shadow:inset 0 0 0 1px #c2410c !important; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-steps button.on b{ color:#9a3412 !important; }
+html body .cpw-sheet .cj-pg.frm.frm .cj-main{ background:#c2410c !important; border-radius:10px !important; box-shadow:0 8px 18px -14px rgba(154,52,18,.9) !important; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-it{ border-radius:12px !important; border:1px solid #e2e8f0 !important; background:#fff !important; box-shadow:none !important; }
+html body .cpw-sheet .cj-pg.frm.frm .frl-empty{ border-radius:12px !important; border:1px dashed #cbd5e1 !important; background:#fff !important; }
+.cpc-hdl{ display:block; margin-top:4px; font-style:normal; font-size:.74rem; font-weight:700; color:#475569; letter-spacing:.01em; }
+.cpc-tip2{ margin-top:8px !important; }
+.cpc-lisa{ position:static !important; display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:9px 14px; border-radius:8px; border:1px solid var(--fc,#1e3a8a); background:#fff; color:var(--fc,#1e3a8a); font:700 .8rem 'DM Sans',sans-serif; cursor:pointer; }
 </style>
 </body>
 </html>
