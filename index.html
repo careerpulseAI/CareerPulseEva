@@ -18580,10 +18580,10 @@ window.cpSheetArrows=function(sc,host){
   function inboxC(){ var C=ST.convs||[], f=ST.cmf||'all', k=ST.cmc||'all', nu=C.filter(function(c){ return c.unreadOrg&&!c.archOrg; }).length, FO=C.map(function(c){ return c.formationTitre; }).filter(function(t,i,A){ return t&&A.indexOf(t)===i; });
     return '<div class="ofc-card emx"><div class="emx-hd"><div><h3>Demandes reçues</h3><p>'+(nu?'<b>'+nu+' non lu'+(nu>1?'s':'')+'</b> · ':'')+'Les candidats qui vous ont écrit. Répondez-leur dans la messagerie protégée.</p></div></div>'
       +'<label class="emp-search emx-q">'+S(I.search||'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>')+'<input id="ofx-q" value="'+esc(ST.cmq||'')+'" placeholder="Rechercher un nom, un numéro CP-…, une formation…"></label>'
-      +'<div class="emp-cats emx-f">'+CMF.map(function(x){ var n=C.filter(function(c){ return ccMatch(c,x[0]); }).length; return '<button type="button" class="emp-cat'+(f===x[0]?' on':'')+'" data-cmf="'+x[0]+'">'+x[1]+'<em>'+n+'</em></button>'; }).join('')+'</div>'
+
       +'<div class="emx-c">'+CMC.map(function(x){ return '<button type="button" class="emx-cc'+(k===x[0]?' on':'')+'" data-cmc="'+x[0]+'">'+x[1]+'</button>'; }).join('')
         +(FO.length>1?'<select class="emx-fo" id="ofx-fo"><option value="">Toutes les formations</option>'+FO.map(function(t){ return '<option'+(ST.cmfo===t?' selected':'')+'>'+esc(t)+'</option>'; }).join('')+'</select>':'')+'</div>'
-      +'<div class="emx-body"><div class="emx-list" id="ofx-list">'+inboxRows()+'</div><div class="emx-pane" id="ofx-pane"><div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une demande</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div></div></div></div>'; }
+      +'<div class="emx-body emx-3">'+cpXMenu(CMF.map(function(x){ return ['data-cmf="'+x[0]+'"',x[1],x[0]==='unread'?'unread':x[0],C.filter(function(c){ return ccMatch(c,x[0]); }).length,f===x[0]]; }))+'<div class="emx-list" id="ofx-list">'+inboxRows()+'</div><div class="emx-pane" id="ofx-pane"><div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une demande</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div></div></div></div>'; }
   function inboxRefresh(){ var l=$('ofx-list'); if(l) l.innerHTML=inboxRows(); }
   function wideC(){ return window.matchMedia && window.matchMedia('(min-width:900px)').matches; }
   function tabHtml(){
@@ -19183,16 +19183,14 @@ window.cpSheetArrows=function(sc,host){
     function render(){
       var L=filtered(o.f), tabs=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses'],['week','Cette semaine'],['rel','À relancer']];
       var msg={ all:'Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.', cours:'Tes candidatures en attente de réponse. Sans nouvelles après 7 jours, une relance montre ta motivation.', itw:'Tes entretiens : prépare-les avec les quiz d\'EVA, c\'est là que tout se joue.', rep:'Les réponses reçues. Une réponse négative n\'est pas un échec : demande un retour, ça aide pour la suite.', week:'Tes candidatures de cette semaine : elles comptent pour ton défi.', rel:'Ces candidatures attendent depuis 7 jours ou plus : un court message poli suffit pour relancer.' }[o.f];
-      o.body.innerHTML=say2(msg)+(o.f==='itw'?'<div class="cj-evas">'+ev('quiz')+'</div>':'')+'<div class="cj-tabs">'+tabs.map(function(t){ return '<button type="button" class="'+(t[0]===o.f?'on':'')+'" data-cj="lf" data-f="'+t[0]+'">'+t[1]+' <em>'+filtered(t[0]).length+'</em></button>'; }).join('')+'</div>'
-        +'<div class="cj-2b"><button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
-        +(L.length?'<div class="cj-list">'+L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
-          return '<div class="cj-it"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb'+(x.preuveType==='pdf'?' pdf':'')+'" data-cj="proof" data-id="'+x.id+'">'+(x.preuveType==='pdf'?I(P.doc,22)+'<small>PDF</small>':'<img src="'+x.preuve+'" alt="Preuve">')+'</button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
+      o.body.innerHTML=say2(msg)+(o.f==='itw'?'<div class="cj-evas">'+ev('quiz')+'</div>':'')+'<div class="cj-2b"><button type="button" class="cj-main" data-cj="add">'+I(P.plus,18)+'Ajouter</button><button type="button" class="cj-main alt" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
+        +'<div class="esx">'+cpXMenu(tabs.map(function(t){ return ['data-cj="lf" data-f="'+t[0]+'"',t[1],t[0],filtered(t[0]).length,t[0]===o.f]; }))+cpXList(tabs.filter(function(t){ return t[0]===o.f; })[0][1],L.length+' candidature'+(L.length>1?'s':''),L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
+          return '<div class="cj-it esx-row esx-cj"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb'+(x.preuveType==='pdf'?' pdf':'')+'" data-cj="proof" data-id="'+x.id+'">'+(x.preuveType==='pdf'?I(P.doc,22)+'<small>PDF</small>':'<img src="'+x.preuve+'" alt="Preuve">')+'</button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
             +'<div class="cj-it-t"><b>'+esc(x.poste||x.entreprise)+(x.type?' <em class="cj-ty">'+esc(x.type)+'</em>':'')+'</b><span>'+esc(x.poste?x.entreprise:'')+(x.plateforme?(x.poste?' · ':'')+esc(x.plateforme):'')+'</span><small>'+I(P.cal,12)+'Le '+new Date(x.date).toLocaleDateString('fr-FR')+(x.mode?' · '+esc(x.mode):'')+(x.adresse?' · '+esc(x.adresse):'')+'</small>'+(r?'<em class="cps-rel">Relance conseillée</em>':'')+(x.lien?'<a class="cj-offer" href="'+esc(x.lien)+'" target="_blank" rel="noopener noreferrer">'+I(P.ext,13)+'Voir l\'offre</a>':'')+'</div></div>'
-            +'<div class="cj-it-ft"><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cj="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div></div>'; }).join('')+'</div>'
-          :'<div class="cps-empty">Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : le compteur se met à jour tout seul.</div>')
+            +'<div class="cj-it-ft"><select class="cps-st st-'+STATUTS.indexOf(x.statut)+'" data-id="'+x.id+'">'+STATUTS.map(function(s){ return '<option'+(s===x.statut?' selected':'')+'>'+s+'</option>'; }).join('')+'</select><button type="button" class="cps-del" data-cj="del" data-id="'+x.id+'" aria-label="Supprimer">'+I(P.trash,15)+'</button></div></div>'; }).join(''),'Rien ici pour l\'instant. Ajoute ta candidature dès que tu l\'envoies : le compteur se met à jour tout seul.')+'</div>'
         +'<div class="cj-evas">'+(o.f==='itw'?ev('itw'):'')+evPf('taches','Noter mes relances dans mon Portfolio','Tâches, agenda, contacts… · Portfolio '+esc(PROFS[S.st.profil||'dem']))+(o.f!=='itw'?ev('itw'):'')+'</div>';
     }
-    o.render=render; render();
+    o.render=render; render(); o.body.classList.add('esx-pg');
   }
 
   /* Ajouter une candidature : capture d'écran ou saisie */
@@ -19264,10 +19262,20 @@ window.cpSheetArrows=function(sc,host){
       +'<div class="cps-sec"><span class="cps-si">'+I(P.search)+'</span>Annuaire des recruteurs</div>'
       +'<div class="cps-card"><label class="cps-search">'+I(P.search,17)+'<input placeholder="Rechercher un recruteur, un secteur, une ville…" disabled></label><div class="cps-empty">Dès qu\'ils seront là, tu pourras les rechercher ici, consulter leurs offres et leur écrire.</div></div>'
       +'<div class="cps-card cps-inv"><span class="cps-ic b">'+I(P.brief)+'</span><div><b>Ton entreprise recrute ?</b><p>Un recruteur ou un manager de ton réseau cherche des profils ? Fais-lui découvrir CareerPulse : c\'est simple et sans engagement.</p></div><button type="button" class="cps-btn" data-cj="inv-rec">Partager</button></div>'
-      +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs'+(S.convs.length?' <em>'+S.convs.length+'</em>':'')+'</div>'
-      +'<div class="cps-card">'+(S.convs.length?S.convs.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}; return '<button type="button" class="cps-conv" data-conv="'+c.id+'"><span class="cps-dot'+(c.unreadCand?' on':'')+'"></span><span class="cps-conv-t"><b>'+esc(cpAtO(c.empNom)||'Recruteur')+(c.poste?' · '+esc(c.poste):'')+'</b><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+I(P.chev,16)+'</button>'; }).join(''):'<div class="cps-empty">Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée : tu choisis toujours ce que tu partages.</div>')+'</div>'
+      +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs</div>'
+      +'<div class="esx-ent">'+(function(){ var nu=S.convs.filter(function(c){ return c.unreadCand; }).length; return cpXTile('data-cj="recmsg"','inbox','Mes messages',S.convs.length?S.convs.length+' conversation'+(S.convs.length>1?'s':'')+(nu?' · <b>'+nu+' non lu'+(nu>1?'s':'')+'</b>':''):'Les recruteurs t\'écriront ici',nu||'',!!nu); })()+'</div>'
       +'<div class="cps-card cps-msg"><span class="cps-ic g">'+I(P.chat)+'</span><div><b>Tes échanges avec les centres de formation</b><p>Ils se trouvent dans EVA, rubrique « Contacter des formations ».</p></div><a class="cps-btn" href="eva.html#eva-of">Ouvrir</a></div>'+'<div class="cj-evas">'+ev('droits')+'</div>');
   }
+
+  var RECM=null;
+  function openRecMsg(f){ var o=RECM&&document.body.contains(RECM.sh)?RECM:sheet('Mes messages','Ta boîte de réception CareerPulse','',function(){ RECM=null; }); RECM=o; o.f=f||o.f||'all'; o.body.classList.add('esx-pg');
+    o.render=function(){ var A=S.convs.slice().sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+      function fl(k){ return A.filter(function(x){ return k==='all'||(k==='un'&&x.unreadCand)||(k==='cand'&&x.type==='candidature')||(k==='prop'&&x.type!=='candidature'); }); }
+      var M=[['all','Boîte de réception','inbox'],['un','Non lus','unread'],['cand','Mes candidatures','cand'],['prop','Propositions reçues','prop']], L=fl(o.f);
+      o.body.innerHTML='<div class="esx">'+cpXMenu(M.map(function(m){ return ['data-cj="rmf" data-f="'+m[0]+'"',m[1],m[2],fl(m[0]).length,o.f===m[0]]; }))
+        +cpXList(M.filter(function(m){ return m[0]===o.f; })[0][1],L.length+' message'+(L.length>1?'s':''),L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}, nm=c.empNom||'Recruteur';
+          return cpXMsg({ a:'data-conv="'+esc(c.id)+'"', ini:esc(String(nm).charAt(0).toUpperCase()), who:esc(cpAtO(nm)), date:cpXDate(c.lastAt), l2:(c.type==='candidature'?'Candidature · ':'Proposition · ')+esc(c.poste||''), l3:(last.from==='cand'?'Toi : ':'')+esc(String(last.text||'').slice(0,110)), un:!!c.unreadCand }); }).join(''),A.length?'Aucun message dans ce dossier.':'Aucun échange pour l\'instant. Les messages des recruteurs arriveront ici, dans une messagerie protégée.')+'</div>'; };
+    o.render(); }
 
   /* ── Mon Stream : défi de la semaine ── */
   document.addEventListener('change',function(e){ var t=e.target; if(!t || t.id!=='cj-bpf' || !DEFO || !DEFO.A || !window.cpReadProof) return; var A=DEFO.A, was=['repv','hum','frein','preuve'].every(function(k){ return A[k]; }); cpReadProof(t.files[0],function(p){ A.preuve=p; var y=DEFO.sc?DEFO.sc.scrollTop:0; DEFO.render(); if(DEFO.sc) DEFO.sc.scrollTop=y; if(!was && ['repv','hum','frein','preuve'].every(function(k){ return A[k]; })){ var r=document.getElementById('cj-bres'); if(r) setTimeout(function(){ r.scrollIntoView({ behavior:'smooth', block:'start' }); },80); } }); });
@@ -19550,7 +19558,7 @@ window.cpSheetArrows=function(sc,host){
     if(a==='paste'){ var li=$('cj-li'); if(!li) return; if(navigator.clipboard && navigator.clipboard.readText){ navigator.clipboard.readText().then(function(t){ li.value=String(t||'').trim(); if(!li.value) li.focus(); }).catch(function(){ li.focus(); say('Appuie longuement dans le champ, puis « Coller »'); }); } else li.focus(); return; }
     if(a==='vis'){ toggleVis(); return; } if(a==='inv-rec'){ share(true); return; } if(a==='inv-ami'){ share(false); return; }
     if(a==='photo'){ var fi=$('fp-photo'); if(fi){ fi.click(); if(!fi._cps){ fi._cps=1; fi.addEventListener('change',function(){ setTimeout(drawProfTop,400); setTimeout(drawProfTop,1200); }); } } return; }
-    if(a==='lf' && LISTO){ LISTO.f=b.getAttribute('data-f'); LISTO.render(); return; }
+    if(a==='recmsg'){ openRecMsg('all'); return; } if(a==='rmf' && RECM){ RECM.f=b.getAttribute('data-f'); RECM.render(); return; } if(a==='lf' && LISTO){ LISTO.f=b.getAttribute('data-f'); LISTO.render(); return; }
     if(a==='proof'){ var x=S.list.filter(function(y){ return y.id===b.getAttribute('data-id'); })[0]; if(x&&x.preuve){ if(x.preuveType==='pdf'){ try{ var bs=atob(x.preuve.split(',')[1]), u8=new Uint8Array(bs.length); for(var q=0;q<bs.length;q++) u8[q]=bs.charCodeAt(q); window.open(URL.createObjectURL(new Blob([u8],{ type:'application/pdf' })),'_blank'); }catch(er){ say('Ouverture impossible'); } }
       else sheet('Preuve de candidature',esc(x.entreprise),'<img class="cj-proof" src="'+x.preuve+'" alt="Capture">'); } return; }
     if(a==='del'){ if(!confirm('Supprimer cette candidature de ton suivi ?')) return; var id=b.getAttribute('data-id'), c4=col(); if(!c4) return;
@@ -19904,9 +19912,9 @@ window.cpSheetArrows=function(sc,host){
   function msgBox(){ var f=ST.mf||'all', k=ST.mc||'all', nu=ST.convs.filter(function(c){ return c.unreadEmp&&!c.archEmp; }).length;
     return '<div class="ofc-card emx"><div class="emx-hd"><div><h3>Messages</h3><p>'+(nu?'<b>'+nu+' non lu'+(nu>1?'s':'')+'</b> · ':'')+'Vos échanges avec les membres, dans la messagerie protégée.</p></div></div>'
       +'<label class="emp-search emx-q">'+S(I.search,18)+'<input id="emx-q" value="'+esc(ST.mq||'')+'" placeholder="Rechercher un nom, un numéro CP-…, un poste…"></label>'
-      +'<div class="emp-cats emx-f">'+MF.map(function(x){ var n=ST.convs.filter(function(c){ return cvMatch(c,x[0]); }).length; return '<button type="button" class="emp-cat'+(f===x[0]?' on':'')+'" data-emf="'+x[0]+'">'+x[1]+'<em>'+n+'</em></button>'; }).join('')+'</div>'
+
       +'<div class="emx-c">'+MC.map(function(x){ return '<button type="button" class="emx-cc c-'+x[0]+(k===x[0]?' on':'')+'" data-emc="'+x[0]+'">'+x[1]+'</button>'; }).join('')+'</div>'
-      +'<div class="emx-body"><div class="emx-list" id="emx-list">'+msgRows()+'</div><div class="emx-pane" id="emx-pane"><div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une conversation</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div></div></div></div>'; }
+      +'<div class="emx-body emx-3">'+cpXMenu(MF.map(function(x){ return ['data-emf="'+x[0]+'"',x[1],x[0],ST.convs.filter(function(c){ return cvMatch(c,x[0]); }).length,f===x[0]]; }))+'<div class="emx-list" id="emx-list">'+msgRows()+'</div><div class="emx-pane" id="emx-pane"><div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une conversation</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div></div></div></div>'; }
   function msgRefresh(){ var l=$('emx-list'); if(l) l.innerHTML=msgRows(); }
   function wide(){ return window.matchMedia && window.matchMedia('(min-width:900px)').matches; }
   function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
@@ -21191,7 +21199,12 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
     B.collection('offres_emploi').where('statut','==','publiee').limit(60).get().then(function(q){
       CACHE=(q.docs||[]).map(function(d){ var x=d.data(); x.id=d.id; return x; }).filter(function(f){ return !f.dateLimite || f.dateLimite>=new Date().toISOString().slice(0,10); })
         .sort(function(a,b){ return String(b.publieeAt||b.updatedAt||'').localeCompare(String(a.publieeAt||a.updatedAt||'')); });
-      it.innerHTML=CACHE.length?'<div class="cpo-count">'+CACHE.length+' offre'+(CACHE.length>1?'s':'')+' publiée'+(CACHE.length>1?'s':'')+' sur CareerPulse</div>'+CACHE.map(drawer).join('')
+      if(CACHE.length){ it._xf=it._xf||'all'; var draw=function(){ var ap=((window.cpStream&&cpStream.convList)?cpStream.convList():[]).filter(function(c){ return c.type==='candidature'; }).map(function(c){ return c.offreId; }), wk=new Date(Date.now()-7*864e5).toISOString();
+          function fl(k){ return CACHE.filter(function(f){ return k==='all'||(k==='nouv'&&String(f.publieeAt||f.updatedAt||'')>=wk)||(k==='app'&&ap.indexOf(f.id)>-1); }); }
+          var M=[['all','Toutes les offres','all'],['nouv','Nouvelles (7 jours)','nouv'],['app','Déjà postulées','cand']], L=fl(it._xf);
+          it.innerHTML='<div class="esx esx-off">'+cpXMenu(M.map(function(m){ return ['data-cpox="'+m[0]+'"',m[1],m[2],fl(m[0]).length,it._xf===m[0]]; }))+cpXList(M.filter(function(m){ return m[0]===it._xf; })[0][1],L.length+' offre'+(L.length>1?'s':'')+' publiée'+(L.length>1?'s':'')+' sur CareerPulse',L.map(drawer).join(''),'Aucune offre dans ce dossier.')+'</div>'; };
+          draw(); if(!it._xb){ it._xb=1; it.addEventListener('click',function(e){ var x=e.target.closest('[data-cpox]'); if(!x) return; it._xf=x.getAttribute('data-cpox'); draw(); }); } return; }
+      it.innerHTML=CACHE.length?''
         :'<div class="cpo-empty">Pas encore d\'offre publiée par les entreprises CareerPulse. Elles apparaîtront ici au fur et à mesure de leur inscription. Pense à rendre ton profil visible : elles peuvent aussi te contacter.</div>';
     }).catch(function(){ it.innerHTML='<div class="cpo-empty">Les offres ne peuvent pas être chargées pour le moment.</div>'; });
   }
@@ -21541,6 +21554,15 @@ document.addEventListener('click',function(e){ var b=e.target.closest('[data-fco
 window.cpAt=function(n){ var f=String(n||'').trim().split(/\s+/)[0]||'Candidat'; return '@'+f; };
 window.cpAtO=function(n){ n=String(n||'').trim(); return n?'@'+n:''; };
 window.cpHandle=function(n,uid){ return cpAt(n)+(uid&&window.cpRef?' · '+cpRef(uid):''); };
+/* Modèle unique « messages et suivis » : carte blanche → page plein écran, menu de dossiers + liste à traits */
+window.cpXI={ all:'<path d="M4 6h16M4 12h16M4 18h10"/>', inbox:'<path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5h13l3.5 7v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6z"/>', unread:'<circle cx="12" cy="12" r="4"/>', cand:'<path d="m22 2-7 20-4-9-9-4z"/>', ech:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', mis:'<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7"/>', arch:'<rect x="3" y="4" width="18" height="5" rx="1.5"/><path d="M5 9v9a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V9M10 13h4"/>', wait:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', done:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', closed:'<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>', cours:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>', itw:'<path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>', rep:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>', week:'<rect x="3" y="5" width="18" height="16" rx="2.5"/><path d="M16 3v4M8 3v4M3 10h18"/>', rel:'<path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/>', nouv:'<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>', prop:'<path d="M12 3 4 6v6c0 5 3.4 8.5 8 9 4.6-.5 8-4 8-9V6z"/>', ok:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', no:'<circle cx="12" cy="12" r="9"/><path d="m15 9-6 6M9 9l6 6"/>', cli:'<path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/>', pros:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  prospect:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>', devis:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>', terminee:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>', payee:'<path d="M17 7a6 6 0 1 0 0 10M5 10h8M5 14h8"/>', chev:'<path d="m9 18 6-6-6-6"/>' };
+window.cpXSvg=function(k,z){ return '<svg viewBox="0 0 24 24" width="'+(z||17)+'" height="'+(z||17)+'" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(cpXI[k]||cpXI.all)+'</svg>'; };
+window.cpXMenu=function(L){ return '<nav class="esx-menu">'+L.map(function(i){ return '<button type="button" class="'+(i[4]?'on':'')+'" '+i[0]+'>'+cpXSvg(i[2])+'<span>'+i[1]+'</span><em>'+i[3]+'</em></button>'; }).join('')+'</nav>'; };
+window.cpXList=function(t,cnt,rows,empty){ return '<section class="esx-list"><header class="esx-lh"><b>'+t+'</b><span>'+cnt+'</span></header>'+(rows||'<div class="esx-none">'+empty+'</div>')+'</section>'; };
+window.cpXMsg=function(o){ return '<button type="button" class="esx-mrow'+(o.un?' un':'')+'" '+o.a+'><span class="esx-av">'+o.ini+'</span><span class="esx-mt"><span class="esx-m1"><b>'+o.who+'</b><time>'+(o.date||'')+'</time></span><span class="esx-m2">'+(o.l2||'')+'</span><span class="esx-m3">'+(o.l3||'')+'</span></span>'+(o.un?'<i class="esx-dot"></i>':'')+'</button>'; };
+window.cpXTile=function(a,ic,t,sub,n,hot){ return '<button type="button" class="esx-tile" '+a+'><span class="esx-ti">'+cpXSvg(ic,20)+'</span><span class="esx-tt"><b>'+t+'</b><small>'+sub+'</small></span>'+(n!=null&&n!==''?'<em class="esx-n'+(hot?' on':'')+'">'+n+'</em>':'')+'<svg class="esx-cv" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+cpXI.chev+'</svg></button>'; };
+window.cpXDate=function(iso){ try{ return iso?new Date(iso).toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' }):''; }catch(e){ return ''; } };
 window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salarié(e)', etu:'Étudiant(e)', frl:'Freelance' };
   window.cpCandCard=function(p,o){
     o=o||{}; var name=String(o.emp?(p.label||p.name):(p.name||'Ton prénom')).trim().split(/\s+/)[0], hdl=window.cpHandle?cpHandle(name,o.self?((window.fbAuth&&fbAuth.currentUser)||{}).uid:p.uid):'', cs=comps(p), top=cs.slice(0,3), rest=cs.slice(3);
@@ -22538,28 +22560,35 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
   function frmI(k){ return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+(FRMI[k]||'')+'</svg>'; }
   function openMiss(tab,f){
     var o=sheet('Clients & missions','Du premier contact au paiement',''); o.tab=tab||'m'; o.f=f||'all'; MISS=o; o.body.classList.add('frm');
-    o.render=function(){
-      var h='<div class="cj-tabs"><button type="button" class="'+(o.tab==='m'?'on':'')+'" data-frl="frl-tab" data-t="m">Missions <em>'+D.missions.length+'</em></button><button type="button" class="'+(o.tab==='c'?'on':'')+'" data-frl="frl-tab" data-t="c">Clients <em>'+D.clients.length+'</em></button></div>';
+    var HUB=o; window.__frlHub=o; o.render=function(){ var nc=D.missions.filter(function(m){ return m.statut==='cours'; }).length, np=D.clients.filter(function(c){ return !D.missions.some(function(m){ return m.clientId===c.id; }); }).length;
+      o.body.innerHTML=say('Fais avancer chaque mission d\'une étape à l\'autre, du <b>prospect</b> jusqu\'au <b>paiement</b>. Tes clients et prospects restent <b>privés</b>.')
+        +'<div class="esx-ent">'+cpXTile('data-frl="frl-xm"','mis','Missions',D.missions.length+' mission'+(D.missions.length>1?'s':'')+' · '+nc+' en cours · '+nb('payee')+' payée'+(nb('payee')>1?'s':''),D.missions.length)
+        +cpXTile('data-frl="frl-xc"','cli','Clients',D.clients.length+' client'+(D.clients.length>1?'s':'')+' · '+np+' prospect'+(np>1?'s':''),D.clients.length)+'</div>'; };
+    o.render(); MISS=null; o.sub=function(t,f0){ var x=cpStream.sheet(t==='m'?'Missions':'Clients',t==='m'?'Du premier contact au paiement':'Ton carnet de clients et de prospects','',function(){ MISS=null; if(document.body.contains(HUB.sh)) HUB.render(); }); x.tab=t; x.f=f0||'all'; x.cf='all'; x.body.classList.add('esx-pg','frx','frm'); MISS=x; x.render=sub; x.render(); return x; };
+    if(f && f!=='all') o.sub('m',f); else if(tab==='c') o.sub('c');
+    function sub(){ var o=this&&this.body?this:MISS;
+      var h='';
       if(o.tab==='m'){
-        h+='<div class="frl-steps"><button type="button" class="'+(o.f==='all'?'on':'')+'" data-frl="frl-f" data-f="all">'+frmI('all')+'<span>Toutes</span><b>'+D.missions.length+'</b></button>'+STEPS.map(function(s){ return '<button type="button" class="'+(o.f===s[0]?'on':'')+'" data-frl="frl-f" data-f="'+s[0]+'">'+frmI(s[0])+'<span>'+s[1]+'</span><b>'+nb(s[0])+'</b></button>'; }).join('')+'</div>'
-          +'<button type="button" class="cj-main" data-frl="frl-madd">'+I(P.plus,18)+'Ajouter une mission</button>';
+        h+='<button type="button" class="cj-main" data-frl="frl-madd">'+I(P.plus,18)+'Ajouter une mission</button>';
         var L=D.missions.filter(function(m){ return o.f==='all'||m.statut===o.f; }).sort(function(a,b){ return String(b.createdAt||'').localeCompare(String(a.createdAt||'')); });
-        h+=L.length?L.map(function(m){ var c=client(m.clientId), i=STEPS.map(function(s){ return s[0]; }).indexOf(m.statut);
+        var ML=[['all','Toutes','all']].concat(STEPS.map(function(s){ return [s[0],s[1],s[0]]; }));
+        h+='<div class="esx">'+cpXMenu(ML.map(function(m){ return ['data-frl="frl-f" data-f="'+m[0]+'"',m[1],m[2],m[0]==='all'?D.missions.length:nb(m[0]),o.f===m[0]]; }))+cpXList(ML.filter(function(m){ return m[0]===o.f; })[0][1],L.length+' mission'+(L.length>1?'s':''),L.map(function(m){ var c=client(m.clientId), i=STEPS.map(function(s){ return s[0]; }).indexOf(m.statut);
           return '<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(m.titre)+'</b><small>'+(c?esc(c.nom):'Client non précisé')+(m.debut?' · du '+new Date(m.debut).toLocaleDateString('fr-FR')+(m.fin?' au '+new Date(m.fin).toLocaleDateString('fr-FR'):''):'')+'</small></div>'+(amt(m)?'<span class="frl-amt">'+eur(amt(m))+'</span>':'')+'</div>'
             +(m.notes?'<small style="font-size:.76rem;color:#475569;line-height:1.45">'+esc(m.notes)+'</small>':'')
             +'<div class="frl-it-ft"><span class="frl-badge frl-s'+i+'">'+(STEPS[i]?STEPS[i][1]:'')+'</span><select data-frl-st="'+m.id+'" aria-label="Étape">'+STEPS.map(function(s){ return '<option value="'+s[0]+'"'+(s[0]===m.statut?' selected':'')+'>'+s[1]+'</option>'; }).join('')+'</select>'
-            +'<button type="button" class="frl-ib" data-frl="frl-medit" data-id="'+m.id+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-mdel" data-id="'+m.id+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; }).join('')
-          :'<div class="frl-empty">'+(o.f==='all'?'Aucune mission pour l\'instant.<br>Ajoute ta première mission, même au stade de prospect.':'Aucune mission à cette étape.')+'</div>';
+            +'<button type="button" class="frl-ib" data-frl="frl-medit" data-id="'+m.id+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-mdel" data-id="'+m.id+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; })
+          .join(''),o.f==='all'?'Aucune mission pour l\'instant. Ajoute ta première mission, même au stade de prospect.':'Aucune mission à cette étape.')+'</div>';
       } else {
         h+='<button type="button" class="cj-main" data-frl="frl-cadd">'+I(P.plus,18)+'Ajouter un client</button>';
-        h+=D.clients.length?D.clients.slice().sort(function(a,b){ return String(a.nom).localeCompare(String(b.nom)); }).map(function(c){ var ms=D.missions.filter(function(m){ return m.clientId===c.id; }), tot=ms.filter(function(m){ return m.statut==='payee'; }).reduce(function(s,m){ return s+amt(m); },0);
+        var hasM=function(c){ return D.missions.some(function(m){ return m.clientId===c.id; }); }, CL=[['all','Tous les clients','cli'],['act','Avec une mission','mis'],['pros','Prospects','pros']], CC=function(k){ return D.clients.filter(function(c){ return k==='all'||(k==='act'&&hasM(c))||(k==='pros'&&!hasM(c)); }); }, LC=CC(o.cf||'all');
+        h+='<div class="esx">'+cpXMenu(CL.map(function(m){ return ['data-frl="frl-cf" data-f="'+m[0]+'"',m[1],m[2],CC(m[0]).length,(o.cf||'all')===m[0]]; }))+cpXList(CL.filter(function(m){ return m[0]===(o.cf||'all'); })[0][1],LC.length+' client'+(LC.length>1?'s':''),LC.slice().sort(function(a,b){ return String(a.nom).localeCompare(String(b.nom)); }).map(function(c){ var ms=D.missions.filter(function(m){ return m.clientId===c.id; }), tot=ms.filter(function(m){ return m.statut==='payee'; }).reduce(function(s,m){ return s+amt(m); },0);
           return '<div class="frl-it"><div class="frl-it-hd"><div><b>'+esc(c.nom)+'</b><small>'+[c.contact,c.email,c.tel,c.ville].filter(Boolean).map(esc).join(' · ')+'</small></div><span class="frl-amt">'+eur(tot)+'</span></div>'
             +'<div class="frl-it-ft"><span class="frl-badge frl-s1">'+ms.length+' mission'+(ms.length>1?'s':'')+'</span><span style="flex:1"></span>'+(c.email?'<a class="frl-ib" href="mailto:'+esc(c.email)+'">'+I(P.mail)+'Écrire</a>':'')
-            +'<button type="button" class="frl-ib" data-frl="frl-cedit" data-id="'+c.id+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-cdel" data-id="'+c.id+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; }).join('')
-          :'<div class="frl-empty">Aucun client pour l\'instant.<br>Ajoute tes clients et tes prospects pour les retrouver facilement.</div>';
+            +'<button type="button" class="frl-ib" data-frl="frl-cedit" data-id="'+c.id+'">'+I(P.pen)+'Modifier</button><button type="button" class="frl-ib del" data-frl="frl-cdel" data-id="'+c.id+'" aria-label="Supprimer">'+I(P.trash)+'</button></div></div>'; })
+          .join(''),'Aucun client ici pour l\'instant. Ajoute tes clients et tes prospects pour les retrouver facilement.')+'</div>';
       }
-      o.body.innerHTML=say(o.tab==='m'?'Fais avancer chaque mission d\'une étape à l\'autre, du <b>prospect</b> jusqu\'au <b>paiement</b>. Quand tu passes une mission en « Payée », elle compte dans ton chiffre d\'affaires.':'Ton carnet de clients et de prospects. Les coordonnées restent <b>privées</b>.')+h;
-    };
+      o.body.innerHTML=h;
+    }
     o.render();
   }
   function openMEdit(id,pre){
@@ -22837,14 +22866,15 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
 
   /* ── Clients & messages : les propositions de mission des entreprises ── */
   function mst(c){ return c.statut==='close'?['Conversation close','frl-s0']:(MST[c.missionStatut||'attente']||MST.attente); }
-  function openMsgs(){ var o=sheet('Clients & messages','Les entreprises qui te proposent une mission',''); MSGS=o; proLoad(true);
+  function openMsgs(){ var o=sheet('Clients & messages','Les entreprises qui te proposent une mission',''); MSGS=o; o.body.classList.add('esx-pg'); proLoad(true);
     o.render=function(){ var L=PRO.convs, has=!!(D.prof||{}).metier;
       o.body.innerHTML=say('Les entreprises vérifiées par CareerPulse qui voient ton profil peuvent te proposer une <b>mission</b>. Tu réponds ici, dans la messagerie protégée : tu choisis ce que tu partages.')
         +(PRO.vis&&has?'':'<button type="button" class="cj-box" data-frl="frl-prof"><span class="cj-ic g sm">'+I(P.id,20)+'</span><span class="cj-box-t"><b>Ton profil n\'est pas encore visible</b><small>Rends-le visible dans « Profil & portfolio » pour recevoir des propositions.</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>')
-        +(!PRO.loaded?'<div class="frl-empty">Chargement de tes messages…</div>':L.length?L.map(function(c){ var m=c.mission||{}, s=mst(c), last=(c.messages||[]).slice(-1)[0]||{};
-          return '<button type="button" class="frl-it frl-cv" data-frl="frl-conv" data-id="'+esc(c.id)+'"><div class="frl-it-hd"><div><b>'+(c.unreadCand?'<i class="frl-dot"></i>':'')+esc(c.empNom||'Entreprise')+'</b><small>'+esc(m.titre||c.poste||'Mission')+'</small></div>'+(m.budget?'<span class="frl-amt">'+eur(m.budget)+'</span>':'')+'</div>'
-            +'<small class="frl-last">'+esc(String(last.text||'').slice(0,110))+'</small><div class="frl-it-ft"><span class="frl-badge '+s[1]+'">'+s[0]+'</span>'+(c.unreadCand?'<span class="frl-badge frl-s2">Nouveau message</span>':'')+'<span style="flex:1"></span>'+I(P.chev,16)+'</div></button>'; }).join('')
-          :'<div class="frl-empty">'+I(P.mail,22)+'<br>Aucune proposition pour l\'instant.<br>Un profil complet, avec 2 ou 3 réalisations, attire plus d\'entreprises.</div>');
+        +(!PRO.loaded?'<div class="frl-empty">Chargement de tes messages…</div>':(function(){ o.f=o.f||'all'; var A=L.slice().sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+          function fl(k){ return A.filter(function(c){ var st=c.missionStatut||'attente'; return k==='all'||(k==='un'&&c.unreadCand)||(k===st&&c.statut!=='close'); }); }
+          var M=[['all','Boîte de réception','inbox'],['un','Non lus','unread'],['attente','En attente','wait'],['acceptee','Acceptées','ok'],['declinee','Déclinées','no']], LL=fl(o.f);
+          return '<div class="esx">'+cpXMenu(M.map(function(m){ return ['data-frl="frl-mf" data-f="'+m[0]+'"',m[1],m[2],fl(m[0]).length,o.f===m[0]]; }))+cpXList(M.filter(function(m){ return m[0]===o.f; })[0][1],LL.length+' message'+(LL.length>1?'s':''),LL.map(function(c){ var m=c.mission||{}, s=mst(c), last=(c.messages||[]).slice(-1)[0]||{}, nm=c.empNom||'Entreprise';
+            return cpXMsg({ a:'data-frl="frl-conv" data-id="'+esc(c.id)+'"', ini:esc(String(nm).charAt(0).toUpperCase()), who:esc(cpAtO(nm)), date:cpXDate(c.lastAt), l2:esc(s[0])+' · '+esc(m.titre||c.poste||'Mission')+(m.budget?' · '+eur(m.budget):''), l3:(last.from==='cand'?'Toi : ':'')+esc(String(last.text||'').slice(0,110)), un:!!c.unreadCand }); }).join(''),A.length?'Aucun message dans ce dossier.':'Aucune proposition pour l\'instant. Un profil complet, avec 2 ou 3 réalisations, attire plus d\'entreprises.')+'</div>'; })());
     };
     o.render();
   }
@@ -22915,6 +22945,9 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
     if(a==='frl-tadd'){ addTag(); return; }
     if(a==='frl-tdel' && ACT){ ACT.tags.splice(+b.getAttribute('data-i'),1); $('frl-tags').innerHTML=ACT.tagsHtml(); return; }
     if(a==='frl-asave' && ACT){ saveAct(b); return; }
+    if(a==='frl-xm' || a==='frl-xc'){ var hs=b.closest('.cpw-sheet'); [].forEach.call(document.querySelectorAll('.cpw-sheet'),function(){}); var H=window.__frlHub; if(H&&H.sub) H.sub(a==='frl-xm'?'m':'c'); return; }
+    if(a==='frl-mf' && MSGS){ MSGS.f=b.getAttribute('data-f'); MSGS.render(); return; }
+    if(a==='frl-cf' && MISS){ MISS.cf=b.getAttribute('data-f'); MISS.render(); return; }
     if(a==='frl-tab' && MISS){ MISS.tab=b.getAttribute('data-t'); MISS.render(); return; }
     if(a==='frl-f' && MISS){ MISS.f=b.getAttribute('data-f'); MISS.render(); return; }
     if(a==='frl-medit'){ openMEdit(b.getAttribute('data-id')); return; }
@@ -25394,6 +25427,28 @@ html body .cpw-sheet .cj-pg.frm.frm .frl-empty{ border-radius:12px !important; b
 .cpc-hdl{ display:block; margin-top:4px; font-style:normal; font-size:.74rem; font-weight:700; color:#475569; letter-spacing:.01em; }
 .cpc-tip2{ margin-top:8px !important; }
 .cpc-lisa{ position:static !important; display:inline-flex; align-items:center; gap:6px; margin-top:10px; padding:9px 14px; border-radius:8px; border:1px solid var(--fc,#1e3a8a); background:#fff; color:var(--fc,#1e3a8a); font:700 .8rem 'DM Sans',sans-serif; cursor:pointer; }
+</style>
+<style>
+/* ══ Modèle unique (images 1 et 2) appliqué partout ══ */
+.esx-cj{ display:block !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; margin:0 !important; background:#fff !important; border-bottom:1px solid #eef2f7 !important; }
+.esx-cj:last-child{ border-bottom:0 !important; }
+.esx-off .cpo-dr{ margin:0 !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; border-bottom:1px solid #eef2f7 !important; }
+.esx-off .cpo-dr:last-child{ border-bottom:0 !important; }
+.frx .frl-it{ margin:0 !important; border:0 !important; border-radius:0 !important; box-shadow:none !important; border-bottom:1px solid #eef2f7 !important; padding:14px 16px !important; background:#fff !important; }
+.frx .frl-it:last-child{ border-bottom:0 !important; }
+.frx .cj-main{ margin-bottom:14px; }
+html body .emx-body.emx-3{ display:flex; flex-direction:column; height:auto; border:0; background:none; overflow:visible; gap:12px; }
+html body .emx-body.emx-3 .emx-list{ border:1px solid #e2e8f0; border-radius:14px; background:#fff; overflow:hidden; }
+html body .emx-body.emx-3 .emx-pane{ display:none; }
+@media (min-width:900px){
+  html body .emx-body.emx-3{ display:grid; grid-template-columns:220px minmax(280px,360px) minmax(0,1fr); align-items:start; height:min(74vh,700px); }
+  html body .emx-body.emx-3 > .esx-menu{ align-self:start; }
+  html body .emx-body.emx-3 .emx-list{ height:100%; overflow-y:auto; }
+  html body .emx-body.emx-3 .emx-pane{ display:block; height:100%; border:1px solid #e2e8f0; border-radius:14px; background:#fff; overflow:hidden; }
+}
+html body .emx-body.emx-3 .emx-av{ background:#1e3a8a !important; border-radius:10px; }
+html body .emx-body.emx-3 .emx-r.on{ background:#eef2ff; box-shadow:inset 3px 0 0 #1e3a8a; }
+html body .emx-body.emx-3 .emx-r.un{ box-shadow:inset 3px 0 0 #1e3a8a; }
 </style>
 </body>
 </html>
