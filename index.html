@@ -19183,7 +19183,7 @@ window.cpSheetArrows=function(sc,host){
     function render(){
       var L=filtered(o.f), tabs=[['all','Toutes'],['cours','En cours'],['itw','Entretien'],['rep','Réponses'],['week','Cette semaine']], RL=filtered('rel');
       var msg={ all:'Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.', cours:'Tes candidatures en attente de réponse. Sans nouvelles après 7 jours, une relance montre ta motivation.', itw:'Tes entretiens : prépare-les avec les quiz d\'EVA, c\'est là que tout se joue.', rep:'Les réponses reçues. Une réponse négative n\'est pas un échec : demande un retour, ça aide pour la suite.', week:'Tes candidatures de cette semaine : elles comptent pour ton défi.', rel:'Ces candidatures attendent depuis 7 jours ou plus : un court message poli suffit pour relancer.' }[o.f];
-      o.body.innerHTML=say2('Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.')+'<div class="cj-2b"><button type="button" class="cj-main" data-cj="ltog">'+I(P.brief,18)+'Candidatures '+(o.open?'▴':'▾')+'</button><button type="button" class="cj-main alt" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
+      o.body.innerHTML=say2('Voici toutes tes candidatures. Change le statut dès que ça bouge : je calcule tes relances tout seul.')+'<div class="cj-2b"><button type="button" class="cj-main alt cj-full" data-cj="plats">'+I(P.search,18)+'Trouver des offres</button></div>'
         +(!o.open?'':'<div class="cjd'+(o.anim?' in':'')+'"><div class="cjd-pick"><button type="button" data-cj="addm" data-m="cap"><span class="cj-ic b sm">'+I(P.cam,20)+'</span><b>J\'ai une preuve</b><small>Capture, photo ou PDF de ta candidature</small></button><button type="button" data-cj="addm" data-m="man"><span class="cj-ic g sm">'+I(P.pen,20)+'</span><b>Je remplis à la main</b><small>Courrier ou sur place, puis ta preuve en PDF ou photo</small></button></div>'
         +'<div class="esx">'+cpXMenu(tabs.map(function(t){ return ['data-cj="lf" data-f="'+t[0]+'"',t[1],t[0],filtered(t[0]).length,t[0]===o.f]; }))+cpXList(tabs.filter(function(t){ return t[0]===o.f; })[0][1],L.length+' candidature'+(L.length>1?'s':''),L.map(function(x){ var r=x.statut==='Envoyée'&&days(x.date)>=7;
           return '<div class="cj-it esx-row esx-cj"><div class="cj-it-hd">'+(x.preuve?'<button type="button" class="cj-thumb'+(x.preuveType==='pdf'?' pdf':'')+'" data-cj="proof" data-id="'+x.id+'">'+(x.preuveType==='pdf'?I(P.doc,22)+'<small>PDF</small>':'<img src="'+x.preuve+'" alt="Preuve">')+'</button>':'<span class="cj-ri lg">'+I(P.brief,19)+'</span>')
@@ -19249,7 +19249,7 @@ window.cpSheetArrows=function(sc,host){
       +'</div>');
   }
   function openCpOffres(){
-    var o=sheet('Offres CareerPulse','Entreprises vérifiées · présentées par Lisa','<div class="cpox-hero">'+(CJ_IMG?'<img src="'+CJ_IMG+'" alt="Lisa">':'')+'<p><b>Pour être honnête avec toi :</b> CareerPulse est jeune. Les offres s\'ajouteront <b>au fur et à mesure que les employeurs s\'inscriront</b> sur le site. Toutes viennent d\'entreprises au SIRET vérifié.</p></div>'
+    var o=sheet('Offres CareerPulse','Entreprises vérifiées · présentées par Lisa','<div class="cpox-hero">'+(CJ_IMG?'<img src="'+CJ_IMG+'" alt="Lisa">':'')+'<p>Les offres s\'ajouteront <b>au fur et à mesure que les employeurs s\'inscriront</b> sur le site. Toutes viennent d\'entreprises au SIRET vérifié.</p></div>'
       +'<div id="cpo-cp-list"></div><button type="button" class="cj-main alt" data-cj="plats2">'+I(P.ext,18)+'Voir aussi les offres sur d\'autres sites</button>');
     if(window.cpOffresInto) cpOffresInto(o.body.querySelector('#cpo-cp-list'));
   }
@@ -19267,7 +19267,7 @@ window.cpSheetArrows=function(sc,host){
       +'<div class="cps-card cps-inv"><span class="cps-ic b">'+I(P.brief)+'</span><div><b>Ton entreprise recrute ?</b><p>Un recruteur ou un manager de ton réseau cherche des profils ? Fais-lui découvrir CareerPulse : c\'est simple et sans engagement.</p></div><button type="button" class="cps-btn" data-cj="inv-rec">Partager</button></div>'
       +'<div class="cps-sec"><span class="cps-si">'+I(P.chat)+'</span>Messages avec les recruteurs</div>'
       +'<div class="esx-ent">'+(function(){ var nu=S.convs.filter(function(c){ return c.unreadCand; }).length; return cpXTile('data-cj="recmsg"','inbox','Mes messages',S.convs.length?S.convs.length+' conversation'+(S.convs.length>1?'s':'')+(nu?' · <b>'+nu+' non lu'+(nu>1?'s':'')+'</b>':''):'Les recruteurs t\'écriront ici',nu||'',!!nu); })()+'</div>'
-      +'<div class="cps-card cps-msg"><span class="cps-ic g">'+I(P.chat)+'</span><div><b>Tes échanges avec les centres de formation</b><p>Ils se trouvent dans EVA, rubrique « Contacter des formations ».</p></div><a class="cps-btn" href="eva.html#eva-of">Ouvrir</a></div>'+'<div class="cj-evas">'+ev('droits')+'</div>');
+      +'<div class="cj-evas">'+evaLink('eva.html#eva-of','Tes échanges avec les centres de formation','Dans EVA, rubrique « Contacter des formations »')+ev('droits')+'</div>');
   }
 
   var RECM=null;
@@ -22578,7 +22578,8 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
   function openMiss(tab,f){
     var o=sheet('Clients & missions','Du premier contact au paiement',''); o.tab=tab||'m'; o.f=f||'all'; MISS=o; o.body.classList.add('frm');
     var HUB=o; window.__frlHub=o; o.render=function(){ var nc=D.missions.filter(function(m){ return m.statut==='cours'; }).length, np=D.clients.filter(function(c){ return !D.missions.some(function(m){ return m.clientId===c.id; }); }).length;
-      o.body.innerHTML=say('Fais avancer chaque mission d\'une étape à l\'autre, du <b>prospect</b> jusqu\'au <b>paiement</b>. Tes clients et prospects restent <b>privés</b>.')
+      var oi=function(p){ return '<i class="frx-oi"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg></i>'; };
+      o.body.innerHTML=say('Ici, tu pilotes toute ton activité, simplement '+oi('<path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8L3.5 9.2l5.9-.9z"/>')+'<br>'+oi('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>')+'<b>Missions</b> : fais avancer chacune, du <b>prospect</b> au <b>devis</b>, puis jusqu\'au <b>paiement</b>.<br>'+oi('<path d="M17 7a6 6 0 1 0 0 10M5 10h8M5 14h8"/>')+'Une mission « Payée » compte tout de suite dans ton <b>chiffre d\'affaires</b>.<br>'+oi('<path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/>')+'<b>Clients</b> : ton carnet de clients et de prospects, toujours sous la main.<br>'+oi('<rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>')+'Tout reste <b>privé</b> : personne d\'autre que toi ne le voit.')
         +'<div class="esx-ent">'+cpXTile('data-frl="frl-xm"','mis','Missions',D.missions.length+' mission'+(D.missions.length>1?'s':'')+' · '+nc+' en cours · '+nb('payee')+' payée'+(nb('payee')>1?'s':''),D.missions.length)
         +cpXTile('data-frl="frl-xc"','cli','Clients',D.clients.length+' client'+(D.clients.length>1?'s':'')+' · '+np+' prospect'+(np>1?'s':''),D.clients.length)+'</div>'; };
     o.render(); MISS=null; o.sub=function(t,f0){ var x=cpStream.sheet(t==='m'?'Missions':'Clients',t==='m'?'Du premier contact au paiement':'Ton carnet de clients et de prospects','',function(){ MISS=null; if(document.body.contains(HUB.sh)) HUB.render(); }); x.tab=t; x.f=f0||'all'; x.cf='all'; x.body.classList.add('esx-pg','frx','frm'); MISS=x; x.render=sub; x.render(); return x; };
@@ -22733,7 +22734,7 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
     form(); }
   function saveDefi(d){ D.defi=d; return saveDoc('defi',d); }
   function openObj(){ var p=pct(), d=curDefi();
-    sheet('Mon activité & mes objectifs','Ce que tu proposes et ton cap de la semaine',say('Ton activité décrite, et un objectif clair chaque semaine : c\'est la base d\'une activité freelance qui dure.')
+    sheet('Mon activité & mes objectifs','Ce que tu proposes et ton cap de la semaine',say('Hello 👋 Ici, on fixe ensemble <b>ton cap</b>. Un objectif, c\'est simple : un <b>chiffre d\'affaires</b> à atteindre 💶, un nombre de <b>nouveaux clients</b> à décrocher 🤝, ou un <b>partenariat</b> à lancer 🚀.<br>Chaque semaine, je regarde avec toi où tu en es 📈 : on célèbre ce qui avance 🎉, et on ajuste le reste, sans pression. Prêt(e) ? Touche « Mes objectifs » 👇')
 
       +'<button type="button" class="cj-box" data-frl="frl-defi"><span class="cj-ic g sm">'+I(P.target,20)+'</span><span class="cj-box-t"><b>Mes objectifs</b><small>'+(function(){ var oc=objs().filter(function(o){ return oState(o)==='cur'; }); return oc.length?esc(oc[0].titre)+' · '+oPc(oc[0])+' %'+(oc.length>1?' · +'+(oc.length-1):''):'Chiffre d\'affaires, clients, partenariats…'; })()+'</small></span><span class="cj-go">'+I(P.chev,16)+'</span></button>'); }
 
@@ -25502,6 +25503,9 @@ html body .emx-body.emx-3 .emx-r.un{ box-shadow:inset 3px 0 0 #1e3a8a; }
 .esx-off .cpo-dr, .esx-off .cpo-dr-hd{ transform:none !important; transition:none !important; }
 .esx-off .cpo-dr-b{ animation:none !important; }
 .esx-off .esx-list{ min-height:120px; }
+</style>
+<style>.frx-oi{ display:inline-flex; vertical-align:-2px; margin-right:6px; color:#ea580c; } .frx-oi svg{ display:block; }
+.cj-full{ grid-column:1/-1; }
 </style>
 </body>
 </html>
