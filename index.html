@@ -18485,7 +18485,7 @@ window.cpSheetArrows=function(sc,host){
 
   var NIVEAUX=['Niveau 2 — savoirs de base','Niveau 3 — CAP, BEP','Niveau 4 — Bac, Bac pro, BP','Niveau 5 — Bac+2 (BTS, DEUST…)','Niveau 6 — Bac+3/4 (Licence, BUT…)','Niveau 7 — Bac+5 (Master, titre d\'ingénieur…)','Niveau 8 — Doctorat','Certification sans niveau (CQP, habilitation…)'];
   function fmtDate(iso){ try{ return new Date(iso+'T12:00:00').toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return iso; } }
-  function sec(n,t,s,body){ return '<div class="ofc-sec"><div class="ofc-sec-hd"><span class="ofc-sec-n">'+n+'</span><div><b>'+t+'</b>'+(s?'<span>'+s+'</span>':'')+'</div></div><div class="ofc-f">'+body+'</div></div>'; }
+  function sec(n,t,s,body){ return '<div class="ofc-sec ofc-drw'+(n==1?' open':'')+'"><div class="ofc-sec-hd"><span class="ofc-sec-n">'+n+'</span><div><b>'+t+'</b>'+(s?'<span>'+s+'</span>':'')+'</div><i class="ofc-dck">✓</i><svg class="ofc-dcv" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div><div class="ofc-f">'+body+'</div></div>'; }
   function opt(list,v){ return list.map(function(o){ return '<option'+(o===v?' selected':'')+'>'+esc(o)+'</option>'; }).join(''); }
   function formHtml(f){
     f=f||{}; var o=ST.org||{}; ST.logo=(f.orgLogo!==undefined?f.orgLogo:o.logo)||''; if(!f.id){ try{ var dl=localStorage.getItem('cp_draft_org_logo'); if(dl) ST.logo=dl; }catch(x){} } ST.theme=f.theme||ST.theme||'emeraude';
@@ -25506,6 +25506,36 @@ html body .emx-body.emx-3 .emx-r.un{ box-shadow:inset 3px 0 0 #1e3a8a; }
 </style>
 <style>.frx-oi{ display:inline-flex; vertical-align:-2px; margin-right:6px; color:#ea580c; } .frx-oi svg{ display:block; }
 .cj-full{ grid-column:1/-1; }
+</style>
+
+<script>
+/* Fiche formation des centres : chaque partie en tiroir cliquable sur mobile (ordinateur inchangé) */
+(function(){
+  function mob(){ return !(window.matchMedia && window.matchMedia('(min-width:900px)').matches); }
+  function req(sec){ return [].filter.call(sec.querySelectorAll('label'),function(l){ return /\*/.test((l.childNodes[0]&&l.childNodes[0].textContent)||l.textContent.split('\n')[0]); }).map(function(l){ return l.querySelector('input,select,textarea'); }).filter(Boolean); }
+  function mark(){ [].forEach.call(document.querySelectorAll('.ofc-drw'),function(sec){ var R=req(sec); sec.classList.toggle('ok', R.length>0 && R.every(function(e){ return String(e.value||'').trim(); })); }); }
+  document.addEventListener('click',function(e){ var h=e.target.closest('.ofc-drw > .ofc-sec-hd'); if(h && mob()){ h.parentNode.classList.toggle('open'); return; }
+    var sv=e.target.closest('[data-a="save"]'); if(sv && mob()){ [].forEach.call(document.querySelectorAll('.ofc-drw'),function(sec){ if(req(sec).some(function(x){ return !String(x.value||'').trim(); })) sec.classList.add('open'); }); } },true);
+  document.addEventListener('input',function(e){ if(e.target.closest('.ofc-drw')) mark(); },true);
+  document.addEventListener('change',function(e){ if(e.target.closest('.ofc-drw')) mark(); },true);
+  try{ new MutationObserver(function(){ if(document.querySelector('.ofc-drw:not([data-mk])')){ [].forEach.call(document.querySelectorAll('.ofc-drw'),function(x){ x.setAttribute('data-mk','1'); }); mark(); } }).observe(document.body,{ childList:true, subtree:true }); }catch(e){}
+})();
+</script>
+<style>
+/* 1. Messageries et candidats : rangée de profils en menu horizontal sans défilement (mobile + ordinateur) */
+html body .emx-c{ flex-wrap:wrap !important; overflow:visible !important; row-gap:6px; }
+html body .emx-c .emx-cc{ flex-shrink:1; }
+html body .emp-cats{ flex-wrap:wrap !important; overflow:visible !important; row-gap:7px; }
+/* 2. tiroirs du formulaire centre : mobile seulement */
+.ofc-dck, .ofc-dcv{ display:none; }
+@media (max-width:899px){
+  .ofc-drw > .ofc-sec-hd{ cursor:pointer; position:relative; padding-right:48px !important; }
+  .ofc-drw > .ofc-sec-hd .ofc-dcv{ display:block; position:absolute; right:16px; top:50%; margin-top:-9px; color:#fff; transition:transform .2s; }
+  .ofc-drw.open > .ofc-sec-hd .ofc-dcv{ transform:rotate(180deg); }
+  .ofc-drw.ok > .ofc-sec-hd .ofc-dck{ display:grid; place-items:center; position:absolute; right:44px; top:50%; margin-top:-11px; width:22px; height:22px; border-radius:50%; background:#22c55e; color:#fff; font-style:normal; font-size:.7rem; font-weight:900; }
+  .ofc-drw:not(.open) > .ofc-f{ display:none !important; }
+  .ofc-drw:not(.open){ padding-bottom:0 !important; }
+}
 </style>
 </body>
 </html>
