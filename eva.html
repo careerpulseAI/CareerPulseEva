@@ -8013,77 +8013,99 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
 })();
 </script>
 <script>
-/* ═══ Satisfaction : un encadré en fin de page (5 étoiles + qualité, efficacité, utilité) ═══
-   1 vote par membre et par page (modifiable) → collection « satisfaction ». Résultats : menu › Donne ton avis. */
+/* ═══ Satisfaction : badge « Donne ton avis » dans le hero de chaque page + mini questionnaire en pop-up ═══
+   5 étoiles + qualité, efficacité, utilité. 1 vote par membre et par page (modifiable) → collection « satisfaction ».
+   Résultats : menu › Donne ton avis (EVA · Lisa · CareerPulse). */
 (function(){
   var EVA={ 's-eva':'Accueil EVA','s-eva-workspace':'Mon Portfolio','s-eva-entretien':'Quiz et mises en situation','s-eva-bienetre':'Motivation & Équilibre','s-eva-tracker':'Suivi de ma motivation','s-eva-of':'Organismes de formation','s-eva-identity':'À propos d\'EVA','s-eva-methodes':'Méthodes','s-eva-outils':'Outils' };
   var PF={ dem:'Demandeur d\'emploi · Reconversion', etu:'Étudiant(e)', sal:'Salarié(e)', frl:'Freelance' };
-  var Q=[['qualite','Qualité'],['efficacite','Efficacité'],['utilite','Utilité']];
-  var MINE={};
+  var Q=[['qualite','Qualité'],['efficacite','Efficacité'],['utilite','Utilité']], MINE={};
+  var STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="currentColor"/></svg>';
   function uid(){ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return u&&u.uid||''; }
   function db(){ return window.fbDb||null; }
+  function vis(e){ return !!(e && e.getClientRects().length); }
   function slug(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)||'page'; }
   function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function vis(e){ return !!(e && e.getClientRects().length); }
-  function scroller(sc){ var best=null, h=0; [].forEach.call(sc.querySelectorAll('*'),function(e){ if(e.closest('.cpsat')) return; var o=getComputedStyle(e).overflowY; if((o==='auto'||o==='scroll') && e.clientHeight>200 && vis(e) && e.clientHeight>h){ best=e; h=e.clientHeight; } }); return best||sc; }
+  function rightRef(H){ var hr=H.getBoundingClientRect(), k=[].filter.call(H.children,function(c){ return vis(c) && !c.classList.contains('cpav'); });
+    for(var i=1;i<k.length;i++){ if(k[i].getBoundingClientRect().left>hr.left+hr.width*.45) return k[i]; } return null; }
   function targets(){ var T=[];
     var sp=document.getElementById('s-profil');
     if(sp && sp.classList.contains('active')){ var h=document.getElementById('cj-home'), k='';
       if(h){ k=h.querySelector('.cc-card.cc-frl')?'frl':h.querySelector('.cc-card.cc-dem,.cc-card.cc-rec')?'dem':h.querySelector('.es-home.es-k-etu')?'etu':h.querySelector('.es-home.es-k-sal')?'sal':''; }
-      if(k){ T.push({ box:h.querySelector('.es-main')||h, cible:'lisa', page:'lisa-'+k, label:'Profil '+PF[k] });
-        [].forEach.call(document.querySelectorAll('.cpw-sheet'),function(s){ var t=(s.querySelector('.cpw-ht b')||{}).textContent||'', pg=s.querySelector('.cj-pg');
-          if(pg && t && t!=='Quitter mon espace' && !pg.querySelector('.cj-write')) T.push({ box:pg, cible:'lisa', page:'lisa-'+k+'-'+slug(t), label:PF[k]+' · '+t }); }); } }
+      var pal=document.getElementById('cps-pal'), row=pal&&pal.parentNode;
+      if(k && row && vis(row)) T.push({ host:row, before:pal, cible:'lisa', page:'lisa-'+k, label:'Profil '+PF[k] });
+      if(k) [].forEach.call(document.querySelectorAll('.cpw-sheet'),function(s){ var t=(s.querySelector('.cpw-ht b')||{}).textContent||'', hd=s.querySelector('.cpw-hd'), pg=s.querySelector('.cj-pg');
+        if(hd && t && t!=='Quitter mon espace' && !(pg && pg.querySelector('.cj-write'))) T.push({ host:hd, before:null, cible:'lisa', page:'lisa-'+k+'-'+slug(t), label:PF[k]+' · '+t, end:1 }); }); }
     [['s-pro-employeur','emp-root','[data-etab].on','Employeur','emp'],['s-pro-centre','of-root','[data-tab].on','Centre de formation','centre']].forEach(function(p){
-      var sc=document.getElementById(p[0]), r=document.getElementById(p[1]); if(!sc||!sc.classList.contains('active')||!r) return; var tb=r.querySelector('.ofc-tabs '+p[2]), box=r.querySelector('.ofc'); if(!tb||!box) return;
-      var t=(tb.querySelector('.et-l')||tb).textContent.replace(/\d+$/,'').trim(); T.push({ box:box, cible:'careerpulse', page:'cp-'+p[4]+'-'+slug(t), label:p[3]+' · '+t }); });
+      var sc=document.getElementById(p[0]), r=document.getElementById(p[1]); if(!sc||!sc.classList.contains('active')||!r) return; var tb=r.querySelector('.ofc-tabs '+p[2]), hero=r.querySelector('.ofc-hero'); if(!tb||!hero) return;
+      var t=(tb.querySelector('.et-l')||tb).textContent.replace(/\d+$/,'').trim(); T.push({ host:hero, abs:1, cible:'careerpulse', page:'cp-'+p[4]+'-'+slug(t), label:p[3]+' · '+t }); });
     var act=[].filter.call(document.querySelectorAll('.screen.active'),function(s){ return /^s-eva/.test(s.id) && vis(s); }).pop();
-    if(act && EVA[act.id]){ if(!act._cpsatBox || !act._cpsatBox.isConnected || !vis(act._cpsatBox)) act._cpsatBox=scroller(act); } if(act && EVA[act.id]) T.push({ box:act._cpsatBox, cible:'eva', page:'eva-'+act.id.replace(/^s-/,''), label:EVA[act.id] });
+    if(act && EVA[act.id]){ var H=[].filter.call(act.querySelectorAll('.ew-hdr,.eva-sub-header,.eb-hdr,.jnl-hdr,.evad-hd,.evh-top'),vis)[0];
+      if(H) T.push({ host:H, before:rightRef(H), cible:'eva', page:'eva-'+act.id.replace(/^s-/,''), label:EVA[act.id] }); }
     return T; }
+  function light(el){ var m=/rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(getComputedStyle(el).color||''); return m ? (+m[1]*.299+ +m[2]*.587+ +m[3]*.114)>160 : false; }
+  function paint(b){ var v=MINE[b.getAttribute('data-k')]; b.classList.toggle('done',!!v); b.innerHTML=STAR+'<span class="cpav-t">'+(v?v.note+'/5 · Merci':'Donne ton avis')+'</span>'+(v?'<span class="cpav-m">'+v.note+'/5</span>':''); b.title=v?'Modifier mon avis sur cette page':'Donne ton avis sur cette page'; }
+  function make(t){ var b=document.createElement('button'); b.type='button'; b.className='cpav'+(t.abs?' abs':'')+(t.end?' end':''); b.setAttribute('data-k',t.page); b._t=t; paint(b);
+    var u=uid(); if(u && db() && !(t.page in MINE)){ MINE[t.page]=null; db().collection('satisfaction').doc(u+'__'+t.page).get().then(function(d){ if(d.exists){ MINE[t.page]=d.data(); [].forEach.call(document.querySelectorAll('.cpav[data-k="'+t.page+'"]'),paint); } }).catch(function(){}); }
+    return b; }
+  function place(){ targets().forEach(function(t){ var H=t.host, b=H.querySelector(':scope > .cpav');
+    if(b && b.getAttribute('data-k')!==t.page){ b.remove(); b=null; }
+    if(!b){ b=make(t); b.classList.toggle('lt',!light(H)); if(t.before && t.before.parentNode===H) H.insertBefore(b,t.before); else H.appendChild(b); if(t.abs && getComputedStyle(H).position==='static') H.style.position='relative'; }
+    else b._t=t; }); }
+  /* Pop-up */
   function stars(n,cls,data){ var h=''; for(var i=1;i<=5;i++) h+='<button type="button" class="'+cls+(i<=n?' on':'')+'" data-'+data+'="'+i+'" aria-label="'+i+' sur 5">★</button>'; return h; }
-  function render(w){ var k=w.getAttribute('data-k'), v=MINE[k], st=w._st||{};
-    var head='<div class="cpsat-hd"><b>Ton avis sur cette page</b><span>'+esc(w._label)+'</span></div>';
-    if(v && !w._edit){ w.innerHTML=head+'<div class="cpsat-ok"><span class="cpsat-big">'+stars(v.note,'cpsat-s','x')+'</span><p>Merci ! Tu as noté cette page <b>'+v.note+'/5</b>.</p><button type="button" class="cpsat-mod">Modifier mon avis</button></div>'; return; }
-    var n=st.note||0;
-    w.innerHTML=head+'<div class="cpsat-big">'+stars(n,'cpsat-s','n')+'</div>'
-      +(n?'<div class="cpsat-qs">'+Q.map(function(q){ return '<div class="cpsat-q"><span>'+q[1]+'</span><span class="cpsat-qst" data-q="'+q[0]+'">'+stars(st[q[0]]||n,'cpsat-m','v')+'</span></div>'; }).join('')+'<button type="button" class="cpsat-go">Envoyer mon avis</button></div>':'<p class="cpsat-hint">Touche une étoile pour noter la page.</p>')
-      +'<p class="cpsat-msg" hidden></p>'; }
-  function make(t){ var w=document.createElement('div'); w.className='cpsat'; w.setAttribute('data-k',t.page); w._label=t.label; w._cible=t.cible; render(w);
-    var u=uid(); if(u && db() && !(t.page in MINE)){ MINE[t.page]=null; db().collection('satisfaction').doc(u+'__'+t.page).get().then(function(d){ if(d.exists){ MINE[t.page]=d.data(); [].forEach.call(document.querySelectorAll('.cpsat[data-k="'+t.page+'"]'),render); } }).catch(function(){}); }
-    return w; }
-  function place(){ targets().forEach(function(t){ if(!t.box) return; var last=t.box.lastElementChild;
-    if(last && last.classList && last.classList.contains('cpsat') && last.getAttribute('data-k')===t.page) return;
-    var w=null; [].forEach.call(t.box.querySelectorAll(':scope > .cpsat'),function(x){ if(x.getAttribute('data-k')===t.page && !w) w=x; else x.remove(); });
-    t.box.appendChild(w||make(t)); }); }
-  document.addEventListener('click',function(e){ var w=e.target.closest&&e.target.closest('.cpsat'); if(!w) return; var b=e.target.closest('button'); if(!b) return;
-    var k=w.getAttribute('data-k'), m=function(t){ var p=w.querySelector('.cpsat-msg'); if(p){ p.hidden=false; p.textContent=t; } };
-    if(b.classList.contains('cpsat-mod')){ var v=MINE[k]||{}; w._edit=1; w._st={ note:v.note, qualite:v.qualite, efficacite:v.efficacite, utilite:v.utilite }; render(w); return; }
-    if(b.hasAttribute('data-n')){ if(!uid()){ render(w); m('Connecte-toi pour noter cette page.'); return; } var n=+b.getAttribute('data-n'); w._st=w._st||{}; w._st.note=n; render(w); return; }
-    if(b.hasAttribute('data-v')){ var q=b.parentNode.getAttribute('data-q'); w._st[q]=+b.getAttribute('data-v'); render(w); return; }
-    if(b.classList.contains('cpsat-go')){ var u=uid(), st=w._st||{}; if(!u||!db()){ m('Connecte-toi pour noter cette page.'); return; }
-      var d={ cible:w._cible, page:k, label:String(w._label).slice(0,120), note:st.note, qualite:st.qualite||st.note, efficacite:st.efficacite||st.note, utilite:st.utilite||st.note, at:new Date().toISOString() };
-      b.disabled=true; b.textContent='Envoi…';
-      db().collection('satisfaction').doc(u+'__'+k).set(d).then(function(){ MINE[k]=d; w._edit=0; w._st={}; [].forEach.call(document.querySelectorAll('.cpsat[data-k="'+k+'"]'),render); })
-        .catch(function(){ b.disabled=false; b.textContent='Envoyer mon avis'; m('Envoi impossible pour le moment. Réessaie dans un instant.'); }); } });
+  function open(b){ var t=b._t, k=t.page, v=MINE[k]||null, st=v?{ note:v.note, qualite:v.qualite, efficacite:v.efficacite, utilite:v.utilite }:{};
+    var old=document.getElementById('cpav-pop'); if(old) old.remove();
+    var o=document.createElement('div'); o.id='cpav-pop'; document.body.appendChild(o);
+    function close(){ o.remove(); }
+    function draw(msg,ok){ var n=st.note||0;
+      o.innerHTML='<div class="cpav-box" role="dialog" aria-label="Ton avis sur cette page"><button type="button" class="cpav-x" aria-label="Fermer">✕</button>'
+        +'<div class="cpav-hd"><b>Ton avis sur cette page</b><span>'+esc(t.label)+'</span></div>'
+        +(ok?'<div class="cpav-ok"><div class="cpav-big">'+stars(n,'cpav-s','cpx')+'</div><p>Merci ! Tu as noté cette page <b>'+n+'/5</b>.</p></div>'
+          :'<div class="cpav-big">'+stars(n,'cpav-s','cpn')+'</div>'
+          +(n?'<div class="cpav-qs">'+Q.map(function(q){ return '<div class="cpav-q"><span>'+q[1]+'</span><span data-cpq="'+q[0]+'">'+stars(st[q[0]]||n,'cpav-m','cpv')+'</span></div>'; }).join('')+'<button type="button" class="cpav-go">'+(v?'Modifier mon avis':'Envoyer mon avis')+'</button></div>'
+             :'<p class="cpav-hint">Touche une étoile pour noter la page.</p>'))
+        +(msg?'<p class="cpav-msg">'+esc(msg)+'</p>':'')+'</div>';
+      o.querySelector('.cpav-x').onclick=close; }
+    draw();
+    o.addEventListener('click',function(e){ if(e.target===o){ close(); return; } var x=e.target.closest('button'); if(!x) return;
+      if(x.hasAttribute('data-cpn')){ if(!uid()){ draw('Connecte-toi pour noter cette page.'); return; } st.note=+x.getAttribute('data-cpn'); draw(); return; }
+      if(x.hasAttribute('data-cpv')){ st[x.parentNode.getAttribute('data-cpq')]=+x.getAttribute('data-cpv'); draw(); return; }
+      if(x.classList.contains('cpav-go')){ var u=uid(); if(!u||!db()){ draw('Connecte-toi pour noter cette page.'); return; }
+        var d={ cible:t.cible, page:k, label:String(t.label).slice(0,120), note:st.note, qualite:st.qualite||st.note, efficacite:st.efficacite||st.note, utilite:st.utilite||st.note, at:new Date().toISOString() };
+        x.disabled=true; x.textContent='Envoi…';
+        db().collection('satisfaction').doc(u+'__'+k).set(d).then(function(){ MINE[k]=d; [].forEach.call(document.querySelectorAll('.cpav[data-k="'+k+'"]'),paint); draw('',1); setTimeout(function(){ if(o.isConnected) close(); },1600); })
+          .catch(function(){ draw('Envoi impossible pour le moment. Réessaie dans un instant.'); }); } });
+    document.addEventListener('keydown',function esc(e){ if(e.key==='Escape'){ close(); document.removeEventListener('keydown',esc); } }); }
+  document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('.cpav'); if(!b) return; e.preventDefault(); e.stopPropagation(); open(b); },true);
   var q=0; function soon(){ if(q) return; q=1; setTimeout(function(){ q=0; try{ place(); }catch(e){} },200); }
   function init(){ try{ new MutationObserver(soon).observe(document.body,{ childList:true, subtree:true, attributes:true, attributeFilter:['class'] }); }catch(e){} soon(); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
-<style id="cpsat-css">
-.cpsat{ box-sizing:border-box; width:100%; max-width:560px; margin:22px auto 10px; padding:14px 16px; border:2px solid #facc15; border-radius:16px; background:#fffdf3; font-family:'DM Sans',system-ui,sans-serif; color:#0f172a; text-align:center; clear:both; }
-#eb-body > .cpsat, .cj-pg > .cpsat, .es-main > .cpsat{ width:auto !important; max-width:560px !important; margin:22px auto 10px !important; }
-.cpsat-hd b{ display:block; font-size:.9rem; font-weight:800; } .cpsat-hd span{ display:block; margin-top:2px; font-size:.72rem; color:#64748b; }
-.cpsat-big{ display:flex; justify-content:center; gap:4px; margin:8px 0 2px; }
-.cpsat button.cpsat-s, .cpsat button.cpsat-m{ border:none; background:none; padding:0 2px; cursor:pointer; line-height:1; color:#e2e8f0; transition:transform .12s, color .12s; }
-.cpsat button.cpsat-s{ font-size:1.7rem; } .cpsat button.cpsat-m{ font-size:1.15rem; }
-.cpsat button.on{ color:#f59e0b; } .cpsat button.cpsat-s:hover, .cpsat button.cpsat-m:hover{ transform:scale(1.15); }
-.cpsat-ok .cpsat-big button{ cursor:default; transform:none !important; }
-.cpsat-hint{ margin:4px 0 0; font-size:.74rem; color:#94a3b8; }
-.cpsat-qs{ margin-top:8px; padding-top:10px; border-top:1px dashed #fde68a; }
-.cpsat-q{ display:flex; align-items:center; justify-content:space-between; gap:10px; max-width:300px; margin:0 auto 6px; font-size:.8rem; font-weight:700; color:#334155; }
-.cpsat-go, .cpsat-mod{ margin-top:8px; padding:10px 18px; border:none; border-radius:11px; background:#0f172a; color:#fff; font:700 .8rem/1.2 'DM Sans',system-ui,sans-serif; cursor:pointer; }
-.cpsat-mod{ background:#fff; color:#92400e; border:1.5px solid #fcd34d; padding:8px 14px; }
-.cpsat-ok p{ margin:6px 0 0; font-size:.82rem; color:#334155; } .cpsat-msg{ margin:8px 0 0; font-size:.76rem; color:#b45309; font-weight:600; }
+<style id="cpav-css">
+.cpav{ flex-shrink:0; display:inline-flex; align-items:center; gap:6px; height:30px; padding:0 12px; margin:0 8px; border-radius:999px; border:1px solid rgba(255,255,255,.38); background:rgba(255,255,255,.14); color:#fff; font:700 .74rem/1 'DM Sans',system-ui,sans-serif; white-space:nowrap; cursor:pointer; align-self:center; transition:background .2s, transform .2s; }
+.cpav:hover{ background:rgba(255,255,255,.24); } .cpav:active{ transform:scale(.96); }
+.cpav svg{ width:15px; height:15px; color:#facc15; flex-shrink:0; }
+.cpav.lt{ border-color:#facc15; background:#fffbeb; color:#92400e; } .cpav.lt:hover{ background:#fef3c7; } .cpav.lt svg{ color:#f59e0b; }
+.cpav.done svg{ color:#facc15; } .cpav-m{ display:none; }
+.cpav.abs{ position:absolute !important; top:16px !important; right:16px !important; left:auto !important; margin:0 !important; z-index:2; }
+.cpav.end{ margin-left:auto; }
+@media (max-width:599px){ .cpav{ padding:0 9px; margin:0 4px; gap:4px; } .cpav .cpav-t{ display:none; } .cpav.done .cpav-m{ display:inline; font-size:.68rem; } .cpav.abs{ top:12px !important; right:12px !important; } }
+#cpav-pop{ position:fixed; inset:0; z-index:100002; background:rgba(8,15,35,.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:16px; font-family:'DM Sans',system-ui,sans-serif; }
+.cpav-box{ position:relative; width:100%; max-width:360px; padding:18px 18px 16px; border:2px solid #facc15; border-radius:18px; background:#fffdf3; color:#0f172a; text-align:center; box-shadow:0 24px 60px -20px rgba(0,0,0,.45); animation:cpavIn .22s ease both; }
+@keyframes cpavIn{ from{ opacity:0; transform:translateY(10px) scale(.98); } }
+.cpav-x{ position:absolute !important; top:10px !important; right:10px !important; left:auto !important; width:30px; height:30px; border-radius:50%; border:1px solid #fde68a; background:#fff; color:#92400e; font-size:.8rem; cursor:pointer; }
+.cpav-hd b{ display:block; font-size:.95rem; font-weight:800; } .cpav-hd span{ display:block; margin-top:3px; font-size:.74rem; color:#64748b; padding:0 26px; }
+.cpav-big{ display:flex; justify-content:center; gap:4px; margin:12px 0 2px; }
+#cpav-pop button.cpav-s, #cpav-pop button.cpav-m{ display:inline-block !important; position:static !important; border:none; background:none; padding:0 2px; cursor:pointer; line-height:1; color:#e2e8f0; transition:transform .12s, color .12s; }
+#cpav-pop button.cpav-s{ font-size:1.9rem; } #cpav-pop button.cpav-m{ font-size:1.1rem; } #cpav-pop button.on{ color:#f59e0b; }
+#cpav-pop button.cpav-s:hover, #cpav-pop button.cpav-m:hover{ transform:scale(1.15); } .cpav-ok .cpav-big button{ cursor:default; transform:none !important; }
+.cpav-hint{ margin:6px 0 0; font-size:.76rem; color:#94a3b8; }
+.cpav-qs{ margin-top:10px; padding-top:12px; border-top:1px dashed #fde68a; }
+.cpav-q{ display:flex; align-items:center; justify-content:space-between; gap:10px; max-width:270px; margin:0 auto 7px; font-size:.82rem; font-weight:700; color:#334155; }
+.cpav-go{ margin-top:10px; width:100%; padding:12px; border:none; border-radius:12px; background:#0f172a; color:#fff; font:700 .84rem/1.2 'DM Sans',system-ui,sans-serif; cursor:pointer; }
+.cpav-ok p{ margin:8px 0 2px; font-size:.86rem; color:#334155; } .cpav-msg{ margin:10px 0 0; font-size:.78rem; color:#b45309; font-weight:600; }
 </style>
 </body>
 </html>
