@@ -1749,6 +1749,8 @@ button.cj-own{ cursor:pointer; background:#fff; font-family:'DM Sans',sans-serif
 .cps-live{ display:flex; align-items:center; gap:6px; font-style:normal; font-size:.64rem; font-weight:800; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); white-space:nowrap; }
 /* Déconnexion dans le hero de Mon espace (4 profils) */
 .cps-out{ display:inline-flex; align-items:center; gap:6px; flex-shrink:0; padding:6px 11px; border-radius:999px; border:1px solid rgba(255,255,255,.32); background:rgba(255,255,255,.12); color:#fff; font:800 .66rem 'DM Sans',sans-serif; cursor:pointer; transition:background .2s; }
+.cj-dmq{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 0 4px; } .cj-dmq .cj-btn{ margin:0 !important; }
+.cj-dmv{ margin-top:4px; }
 .cps-out:hover{ background:rgba(255,255,255,.24); } .cps-out svg{ width:14px; height:14px; }
 @media (max-width:420px){ .cps-out span{ display:none; } .cps-out{ padding:6px 8px; } }
 /* Étudiant / Salarié sur ordinateur : déjà dans le menu de gauche */
@@ -2931,7 +2933,9 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
     step1(); }
   function done(m){ if(typeof window.toast==='function') window.toast(m); else if(window.ecShowToast) ecShowToast(m); redraw(); reSheet(); }
   function rappel(k){ k=kk(k); var L=datesAll(k), f=function(re){ return L.filter(function(x){ return re.test(String(x[0])); })[0]; }, clean=function(t){ return String(t||'').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim(); }, x;
-    if(k==='dem') x=f(/Actualisation France Travail/);
+    if(k==='dem'){ var sd=window.cpStream&&cpStream.st?cpStream.st():{};
+      if(sd.ft==='non' || (sd.dmode==='reconv' && sd.ft!=='oui')) return { k:k, dr:'dates', lab:'Dates à retenir', t:sd.dmode==='reconv'?'Ta formation : vérifie tes droits CPF':'Tes droits à la formation (CPF)', s:sd.dmode==='reconv'?(sd.enposte==='oui'?'Bilan de compétences, VAE, Projet de transition professionnelle (Transitions Pro) : regarde ce qui est possible sur moncompteformation.gouv.fr':'Bilan de compétences, VAE, aides de France Travail : regarde ce qui est possible sur moncompteformation.gouv.fr'):'Regarde tes droits sur moncompteformation.gouv.fr', chip:'' };
+      x=f(/Actualisation France Travail/); }
     else if(k==='frl') x=f(/chiffre d'affaires/);
     else if(k==='etu'){ var b=f(/Bourse/), u=f(/Parcoursup/); if(b) return { k:k, dr:'dates', lab:'Dates à retenir', t:'Bourse Crous et inscriptions', s:esc(clean(b[1]).split('(')[0].trim())+' · Université ou autre établissement : Parcoursup, Mon Master et tes écoles ajoutées', chip:b[2]||'' }; x=u; }
     else x=L[0];
@@ -18535,16 +18539,35 @@ window.cpSheetArrows=function(sc,host){
           +'<button type="button" class="ofc-btn dan" data-a="del" data-id="'+f.id+'">'+ic('trash')+'Supprimer</button></div></div></div>';
       }).join('')+'</div>';
   }
+  /* ═══ Messagerie du centre, façon Outlook (même présentation que l'espace employeur) ═══ */
+  function nrm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+  function ccCat(c){ var t=nrm((c.profil||{}).situation||''); return /etudiant|lyceen|eleve/.test(t)?'etu':/reconver/.test(t)?'reconv':/salari|en poste|cdi|cdd/.test(t)?'sal':/freelance|independant|auto-entrepreneur/.test(t)?'frl':'dem'; }
+  var CMF=[['all','Tous'],['unread','Non lus'],['wait','À répondre'],['done','Répondu'],['closed','Clôturées'],['arch','Archivés']];
+  var CMC=[['all','Tous les profils'],['dem','Demandeur d\'emploi'],['reconv','Reconversion'],['sal','Salarié'],['etu','Étudiant'],['frl','Freelance']];
+  function ccMatch(c,f){ var op=c.statut==='ouverte'; return f==='arch'?!!c.archOrg:c.archOrg?false:f==='all'?true:f==='unread'?!!c.unreadOrg:f==='wait'?(op&&c.lastFrom==='cand'):f==='done'?(op&&c.lastFrom==='org'):f==='closed'?!op:true; }
+  function ccDate(iso){ try{ var d=new Date(iso), t=new Date(); return d.toDateString()===t.toDateString()?d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }):d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' }); }catch(e){ return ''; } }
+  function inboxRows(){ var f=ST.cmf||'all', k=ST.cmc||'all', fo=ST.cmfo||'', q=nrm(ST.cmq||''), C=ST.convs||[];
+    var L=C.filter(function(c){ return ccMatch(c,f) && (k==='all'||ccCat(c)===k) && (!fo||c.formationTitre===fo) && (!q||nrm([c.candLabel,c.formationTitre,window.cpRef?cpRef(c.candUid):'',(c.messages||[]).map(function(m){ return m.text; }).join(' ')].join(' ')).indexOf(q)>-1); })
+      .sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+    if(!L.length) return '<div class="emx-none">'+S(I.inbox)+(C.length?'Aucun message dans ce filtre.':'Quand un candidat sera intéressé par l\'une de vos formations, sa demande apparaîtra ici. C\'est toujours le candidat qui écrit le premier message.')+'</div>';
+    return L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}, cat=ccCat(c), lab=c.candLabel||'Candidat', ini=String(lab).split(/\s+/).map(function(w){ return w.charAt(0); }).join('').slice(0,2).toUpperCase(), op=c.statut==='ouverte';
+      return '<button type="button" class="emx-r'+(c.unreadOrg?' un':'')+(ST.copen===c.id?' on':'')+'" data-conv="'+esc(c.id)+'"><span class="emx-av a-'+cat+'">'+esc(ini)+'</span><span class="emx-t">'
+        +'<span class="emx-l1"><b>'+esc(lab)+'</b><em class="emp-ref">'+(window.cpRef?cpRef(c.candUid):'')+'</em><time>'+ccDate(c.lastAt)+'</time></span>'
+        +'<span class="emx-l2"><em class="emp-esb '+cat+'">'+(window.cpCatLab?cpCatLab[cat]:'')+'</em><i class="emx-k k-cand">Formation</i><span>'+esc(c.formationTitre||'')+'</span>'+(!op?'<i class="emx-st">Clôturée</i>':c.lastFrom==='cand'?'<i class="emx-st w">À répondre</i>':'')+'</span>'
+        +'<span class="emx-l3">'+(last.from==='org'?'Vous : ':'')+esc(String(last.text||'').slice(0,120))+'</span></span>'+(c.unreadOrg?'<i class="emx-dot"></i>':'')+'</button>'; }).join(''); }
+  function inboxC(){ var C=ST.convs||[], f=ST.cmf||'all', k=ST.cmc||'all', nu=C.filter(function(c){ return c.unreadOrg&&!c.archOrg; }).length, FO=C.map(function(c){ return c.formationTitre; }).filter(function(t,i,A){ return t&&A.indexOf(t)===i; });
+    return '<div class="ofc-card emx"><div class="emx-hd"><div><h3>Demandes reçues</h3><p>'+(nu?'<b>'+nu+' non lu'+(nu>1?'s':'')+'</b> · ':'')+'Les candidats qui vous ont écrit. Répondez-leur dans la messagerie protégée.</p></div></div>'
+      +'<label class="emp-search emx-q">'+S(I.search||'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>')+'<input id="ofx-q" value="'+esc(ST.cmq||'')+'" placeholder="Rechercher un nom, un numéro CP-…, une formation…"></label>'
+      +'<div class="emp-cats emx-f">'+CMF.map(function(x){ var n=C.filter(function(c){ return ccMatch(c,x[0]); }).length; return '<button type="button" class="emp-cat'+(f===x[0]?' on':'')+'" data-cmf="'+x[0]+'">'+x[1]+'<em>'+n+'</em></button>'; }).join('')+'</div>'
+      +'<div class="emx-c">'+CMC.map(function(x){ return '<button type="button" class="emx-cc'+(k===x[0]?' on':'')+'" data-cmc="'+x[0]+'">'+x[1]+'</button>'; }).join('')
+        +(FO.length>1?'<select class="emx-fo" id="ofx-fo"><option value="">Toutes les formations</option>'+FO.map(function(t){ return '<option'+(ST.cmfo===t?' selected':'')+'>'+esc(t)+'</option>'; }).join('')+'</select>':'')+'</div>'
+      +'<div class="emx-body"><div class="emx-list" id="ofx-list">'+inboxRows()+'</div><div class="emx-pane" id="ofx-pane"><div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une demande</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div></div></div></div>'; }
+  function inboxRefresh(){ var l=$('ofx-list'); if(l) l.innerHTML=inboxRows(); }
+  function wideC(){ return window.matchMedia && window.matchMedia('(min-width:900px)').matches; }
   function tabHtml(){
     var o=ST.org||{};
     if(ST.tab==='form') return formHtml(ST.edit)+listHtml();
-    if(ST.tab==='dem'){
-      var C=ST.convs||[];
-      if(!C.length) return '<div class="ofc-card"><h3>Demandes reçues</h3><div class="ofc-empty">'+S(I.inbox)+'Quand un candidat sera intéressé par l\'une de vos formations, sa demande et votre conversation apparaîtront ici.<br>C\'est toujours le candidat qui écrit le premier message.</div></div>';
-      return '<div class="ofc-card"><h3>Demandes reçues</h3><p>Les candidats qui vous ont écrit. Répondez-leur dans la messagerie protégée.</p>'
-        +C.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
-          return '<button type="button" class="ofc-conv" data-conv="'+esc(c.id)+'"><span class="ofc-dot'+(c.unreadOrg?' on':'')+'"></span><span class="ofc-conv-t"><b>'+esc(c.candLabel||'Candidat')+' · '+esc(c.formationTitre)+'</b><span>'+(c.statut!=='ouverte'?'Clôturée par le candidat':c.lastFrom==='cand'?'Message du candidat':'Vous avez répondu')+'</span><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+S('<path d="m9 18 6-6-6-6"/>').replace('<svg','<svg width="16" height="16"')+'</button>'; }).join('')+'</div>';
-    }
+    if(ST.tab==='dem') return inboxC();
     if(ST.tab==='stat') return '<div class="ofc-card"><h3>Statistiques</h3><p>Vous verrez ici, pour chaque formation publiée, le nombre de profils de membres qui y correspondent et les critères qui ressortent le plus. Ces chiffres sont toujours anonymes et ne s\'affichent qu\'à partir de 5 profils.</p><div class="ofc-empty">'+S(I.chart)+'Les statistiques s\'activent dès votre première formation publiée.</div></div>';
     return '<div class="ofc-card"><h3>Mon organisme</h3><p>Ces coordonnées sont partagées avec un candidat <b>uniquement</b> dans une conversation qu\'il a lui-même ouverte.</p>'
       +'<div class="ofc-f"><label>Nom de l\'organisme *<input id="ofc-onom" value="'+esc(o.nom)+'"></label><label>Ville<input id="ofc-oville" value="'+esc(o.ville)+'"></label>'
@@ -18562,6 +18585,9 @@ window.cpSheetArrows=function(sc,host){
     }
     root.innerHTML='<div class="ofc">'+hero(o)+(window.cpEvaProCard?cpEvaProCard():'')+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
+    var oq=$('ofx-q'); if(oq) oq.oninput=function(){ ST.cmq=oq.value; inboxRefresh(); };
+    var ofo=$('ofx-fo'); if(ofo) ofo.onchange=function(){ ST.cmfo=ofo.value; inboxRefresh(); };
+    if(ST.tab==='dem' && ST.copen && wideC() && $('ofx-pane')){ var oid=ST.copen; ST.copen=null; openConv(oid,1); }
     root.onchange=function(e){
       if(e.target.id==='ofc-logo'){ readLogo(e.target.files[0]).then(function(d){ ST.logo=d; $('ofc-logo-pv').innerHTML='<img src="'+d+'" alt="">'; }).catch(function(){ formErr('Ce fichier n\'est pas une image valide (PNG, JPG ou WebP).'); }); }
       if(e.target.id==='ofc-niv'){ var a=$('ofc-niv-autre'); if(a){ a.style.display=e.target.value==='Autre'?'':'none'; if(e.target.value==='Autre') a.focus(); } }
@@ -18595,6 +18621,8 @@ window.cpSheetArrows=function(sc,host){
     var nl=e.target.closest('[data-a="nologo"]'); if(nl){ ST.logo=''; $('ofc-logo-pv').innerHTML='Logo'; nl.remove(); return; }
     var vw=e.target.closest('[data-a="view"]'); if(vw){ var fv=ST.list.filter(function(x){ return x.id===vw.getAttribute('data-id'); })[0]; if(fv) previewSheet(fv); return; }
     var cv=e.target.closest('[data-conv]'); if(cv){ openConv(cv.getAttribute('data-conv')); return; }
+    var cmf=e.target.closest('[data-cmf]'); if(cmf){ ST.cmf=cmf.getAttribute('data-cmf'); [].forEach.call(document.querySelectorAll('[data-cmf]'),function(x){ x.classList.toggle('on',x===cmf); }); inboxRefresh(); return; }
+    var cmc=e.target.closest('[data-cmc]'); if(cmc){ ST.cmc=cmc.getAttribute('data-cmc'); [].forEach.call(document.querySelectorAll('[data-cmc]'),function(x){ x.classList.toggle('on',x===cmc); }); inboxRefresh(); return; }
     var au=e.target.closest('input[data-autre]'); if(au){ var f0=$(au.getAttribute('data-autre')+'-autre'); if(f0){ f0.style.display=au.checked?'':'none'; if(au.checked) f0.focus(); } return; }
     var tb=e.target.closest('[data-tab]'); if(tb){ ST.tab=tb.getAttribute('data-tab'); draw(); return; }
     var b=e.target.closest('[data-a]'); if(!b) return; var a=b.getAttribute('data-a'), u=me(); if(!u) return;
@@ -18631,14 +18659,16 @@ window.cpSheetArrows=function(sc,host){
   }
   function fmtAt(iso){ try{ var d=new Date(iso); return d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' })+' · '+d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
   var UNSUB=null;
-  function closeConv(){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet'); if(x) x.remove(); document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(draw); }
+  function closeConv(keep){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet.of-sheet'), emb=x&&x.classList.contains('emx-embed'); if(x) x.remove(); if(keep) return; ST.copen=null; document.documentElement.classList.remove('ofcm-lock');
+    if(emb){ var pn=$('ofx-pane'); if(pn) pn.innerHTML='<div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une demande</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div>'; loadConvs().then(inboxRefresh); } else loadConvs().then(draw); }
   function openConv(id){
-    var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv();
-    var sh=document.createElement('div'); sh.className='ofcm-sheet'; sh.setAttribute('data-rep','formation:'+c.id);
+    var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv(1);
+    var pane=wideC()?$('ofx-pane'):null; ST.copen=id; if(pane) [].forEach.call(document.querySelectorAll('#ofx-list .emx-r'),function(r){ r.classList.toggle('on',r.getAttribute('data-conv')===id); });
+    var sh=document.createElement('div'); sh.className='ofcm-sheet of-sheet'+(pane?' emx-embed':''); sh.setAttribute('data-rep','formation:'+c.id);
     sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b class="ofcm-who"></b><span>'+esc(c.formationTitre||'')+'</span></div><em>🔒 Protégé</em></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div></div></div>';
     sh.querySelector('.ofcm-box').classList.add('ofcm-pro');
-    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    if(pane){ pane.innerHTML=''; pane.appendChild(sh); } else { document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock'); }
     var list=sh.querySelector('.ofcm-list'), ref=db().collection('conversations').doc(c.id);
     function info(x){
       var p=x.profil, sh2=x.shared||{}, h='';
@@ -18650,20 +18680,22 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function render(x){
-      sh.querySelector('.ofcm-who').textContent=x.candLabel||'Candidat';
+      var ct=ccCat(x); sh.querySelector('.ofcm-who').innerHTML=esc(x.candLabel||'Candidat')+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · le candidat a écrit en premier</div>'+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
-        +(x.statut!=='ouverte'?'<div class="ofcm-note">Le candidat a clôturé cette conversation.</div>':'');
+        +(x.statut!=='ouverte'?'<div class="ofcm-note">Le candidat a clôturé cette conversation.</div>':'')
+        +'<div class="emx-acts"><button type="button" class="ofc-btn" data-arch-oc>'+S(I.inbox)+(x.archOrg?'Remettre dans la boîte':'Archiver')+'</button></div>';
       list.scrollTop=list.scrollHeight;
       sh.querySelector('.ofcm-ft').style.display=x.statut==='ouverte'?'':'none';
-      if(x.unreadOrg) ref.update({ unreadOrg:false }).catch(function(){});
+      if(x.unreadOrg){ ref.update({ unreadOrg:false }).catch(function(){}); ST.convs=(ST.convs||[]).map(function(z){ return z.id===c.id?Object.assign(z,{ unreadOrg:false }):z; }); setTimeout(inboxRefresh,0); }
       c=Object.assign({ id:c.id },x);
+      var ab=list.querySelector('[data-arch-oc]'); if(ab) ab.onclick=function(){ var na=!c.archOrg; ref.update({ archOrg:na, updatedAt:new Date().toISOString() }).then(function(){ ST.convs=(ST.convs||[]).map(function(z){ return z.id===c.id?Object.assign(z,{ archOrg:na }):z; }); toast(na?'Demande archivée':'Demande remise dans la boîte'); closeConv(); }).catch(function(){ toast('Modification impossible pour le moment'); }); };
     }
     render(c);
     UNSUB=ref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
     cpSheetArrows(list,sh.querySelector('.ofcm-chat'));
-    sh.querySelector('.ofcm-x').onclick=closeConv;
-    sh.addEventListener('click',function(e){ if(e.target===sh) closeConv(); });
+    sh.querySelector('.ofcm-x').onclick=function(){ closeConv(); };
+    sh.addEventListener('click',function(e){ if(e.target===sh && !pane) closeConv(); });
     sh.querySelector('.ofcm-send').onclick=function(){
       var ta=sh.querySelector('.ofcm-in'), t=String(ta.value||'').trim(); if(!t) return;
       if((c.messages||[]).length>=60){ toast('Conversation complète'); return; }
@@ -18736,7 +18768,11 @@ window.cpSheetArrows=function(sc,host){
   var STATUTS=['Envoyée','Relancée','Entretien','Acceptée','Refusée'];
   var FILTRES={ all:['Postulées',null], cours:['En cours',['Envoyée','Relancée']], itw:['Entretien',['Entretien']], rep:['Réponses',['Acceptée','Refusée']] };
   var MODES=['Sur une plateforme','Par e-mail','Par courrier','En main propre','Autre'];
-  var DEFIS={ cand:['Envoyer des CV','CV envoyés',P.send,1], rel:['Relancer des entreprises','relances faites',P.bell,0], res:['Contacter mon réseau','personnes contactées',P.users,0], prep:['Préparer des entretiens','entretiens préparés',P.star,0], autre:['Autre défi','actions faites',P.pen,0] };
+  var DEFIS={ cand:['Envoyer des CV','CV envoyés',P.send,1], rel:['Relancer des entreprises','relances faites',P.bell,0], res:['Contacter mon réseau','personnes contactées',P.users,0], prep:['Préparer des entretiens','entretiens préparés',P.star,0],
+    met:['Découvrir un métier','métiers explorés',P.star,0], pro:['Rencontrer des professionnels','échanges faits',P.users,0], imm:['Préparer une immersion','démarches faites',P.target,0], form:['Trouver ma formation','formations comparées',P.chart,0], autre:['Autre défi','actions faites',P.pen,0] };
+  /* Demandeur d'emploi / Reconversion : même base, deux versions */
+  function reconv(){ return S.st.profil==='dem' && S.st.dmode==='reconv'; }
+  function defiKeys(){ return reconv()?['met','pro','imm','form','cand','autre']:['cand','rel','res','prep','autre']; }
   function dlab(d){ return (d&&d.label)||DEFIS[(d&&d.type)||'cand'][0]; }
   var NBS=[1,2,3,5,10];
   var TIPS=['Adapte le titre de ton profil au poste visé : c\'est la première ligne que lit un recruteur.','Relance une candidature 7 jours après l\'envoi : un message court et poli suffit.','Une accroche réussie tient en 3 phrases : qui tu es, ce que tu sais faire, ce que tu cherches.','Prépare 3 exemples concrets de réussites : ils serviront dans toutes tes réponses en entretien.','Cible 3 à 5 entreprises chaque semaine plutôt que 50 candidatures au hasard.','Relis ta candidature à voix haute avant l\'envoi : on repère mieux les erreurs.','Note chaque candidature dès l\'envoi : tu sauras toujours qui relancer et quand.','Renseigne ta ville et ta mobilité : les recruteurs filtrent d\'abord par lieu.','Avant un entretien, lis les dernières actualités de l\'entreprise : ça fait la différence.','Personnalise la première phrase de ta lettre pour chaque entreprise.','Après un entretien, envoie un message de remerciement dans les 24 heures.','Mets en avant des résultats chiffrés quand c\'est possible : ils marquent les esprits.','Fixe-toi un créneau régulier pour ta recherche, comme un rendez-vous de travail.'];
@@ -18798,6 +18834,12 @@ window.cpSheetArrows=function(sc,host){
   /* ── Lisa ── */
   function av(sz){ return '<span class="cj-av'+(sz?' '+sz:'')+'">'+(CJ_IMG?'<img src="'+CJ_IMG+'" alt="Lisa">':I(P.pulse,sz==='lg'?24:18))+'</span>'; }
   function first(){ return val('fp-name').split(/\s+/)[0]||''; }
+  function dmAsk(q,n){ var Q={ mode:['Bonjour'+(n?' '+esc(n):'')+' 👋 Pour adapter ton espace, dis-moi : <b>tu cherches un emploi, ou tu veux changer de métier ?</b>',[['emploi','Je cherche un emploi'],['reconv','Je veux changer de métier']],'dmode'],
+      ft:['Es-tu <b>inscrit(e) à France Travail</b> ? Je te rappellerai ton actualisation si c\'est le cas.',[['oui','Oui'],['non','Non']],'ft'],
+      poste:['Es-tu <b>en poste</b> aujourd\'hui ? Les aides pour te former ne sont pas les mêmes.',[['oui','Oui, je suis salarié(e)'],['non','Non, je suis sans emploi']],'enposte'] }[q];
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS.dem)+' · changer</button></div><p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
+      +'<p>'+Q[0]+'</p><div class="cj-dmq">'+Q[1].map(function(o){ return '<button type="button" class="cj-btn" data-cj="dmset" data-k="'+Q[2]+'" data-v="'+o[0]+'">'+esc(o[1])+'</button>'; }).join('')+'</div>'
+      +(q==='poste'?'<p class="cj-mini">💡 Tu es encore en poste ? Tu peux aussi utiliser l\'espace <b>Salarié</b> : il t\'aide à évoluer ou à te reconvertir depuis ton emploi.</p>':'')+'</div></div>'; }
   function coach(){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
     if(!chosen()){
@@ -18811,6 +18853,9 @@ window.cpSheetArrows=function(sc,host){
       else if(left){ m.push('Bonjour'+(n?' '+esc(n):'')+' 👋 Il te reste <b>'+left+' tâche'+(left>1?'s':'')+'</b> à faire. On en coche une aujourd\'hui ?'); act=['Voir mes tâches','tch']; }
       else { m.push('Bravo'+(n?' '+esc(n):'')+' 🎉 Toutes tes tâches sont faites. Ajoutes-en une nouvelle quand tu veux.'); act=['Voir mes tâches','tch']; }
       extra=presHtml(S.st.profil,PRO[S.st.profil].pres); }
+    else if(S.st.profil==='dem' && !S.st.dmode){ return dmAsk('mode',n); }
+    else if(S.st.profil==='dem' && !S.st.ft){ return dmAsk('ft',n); }
+    else if(reconv() && !S.st.enposte){ return dmAsk('poste',n); }
     else if(pb){ m.push('Bonjour '+esc(n)+' 👋 Ta '+wkLabel(pb.week)+' est terminée : faisons son <b>bilan</b> ensemble, ça prend 2 minutes. Ensuite, tu choisis ton défi de cette semaine.'); act=['Faire mon bilan','bilan']; }
     else if(!d){ m.push((dow()===0?'Nouvelle semaine ! ':'Bonjour '+esc(n)+' 👋 ')+'Choisis ton <b>défi de la semaine</b> : je t\'aide à le tenir jusqu\'au bout.'); act=['Choisir mon défi','defi']; }
     else { var f=done(d), r=Math.max(0,d.cible-f), lab=dlab(d).toLowerCase();
@@ -18824,14 +18869,14 @@ window.cpSheetArrows=function(sc,host){
     else m.push(PUB[(new Date().getDate())%PUB.length]);
     if(!isT() && dow()===0) extra=evaLink(EV.quiz[0],'Lundi : on s\'échauffe avec EVA','Quiz et mises en situation pour bien démarrer ta semaine');
     else if(!isT() && dow()===4) extra=evaLink(EV.itw[0],'Vendredi : simulation d\'entretien','Entraîne-toi avec EVA pour tes prochains rendez-vous');
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS[S.st.profil])+' · changer</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<button type="button" class="cj-pf" data-cj="pfch">'+esc(PROFS[S.st.profil])+' · changer</button>':'')+(S.st.profil==='dem'&&S.st.dmode?'<button type="button" class="cj-pf cj-dmv" data-cj="dmedit">'+(reconv()?'Ma version : Reconversion':'Ma version : Recherche d\'emploi')+' · modifier</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
       +(act?'<button type="button" class="cj-btn" data-cj="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+(extra?(isT()?extra:'<div class="cj-coach-eva">'+extra+'</div>'):'')+'</div></div>';
   }
 
   /* ── Hero ── */
   function next(){ var p=profPct(); if(isT() && p>=100){ var lf=tasks().filter(function(x){ return !x.done; }).length; if(!tasks().length||lf) return ['Voir mes tâches','tch']; } return p<100?['Compléter mon profil','wiz']:(!curDefi()&&!pendingBilan()?['Choisir mon défi de la semaine','defi']:(!visOn()?['Rendre mon profil visible aux recruteurs','vis']:['Envoyer ma candidature','add'])); }
   function hClock(){ var d=new Date(); return d.toLocaleDateString('fr-FR',{ weekday:'long', day:'numeric', month:'long', year:'numeric' }).replace(/^./,function(x){ return x.toUpperCase(); })+' · '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2); }
-  function heroX(){ var pb=$('cps-pal'); if(pb) pb.style.display=chosen()?'':'none'; var ob=$('cps-out'); if(ob){ ob.style.display=(user()&&chosen())?'':'none'; if(!ob._b){ ob._b=1; ob.onclick=function(){ if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); }; } }
+  function heroX(){ var pb=$('cps-pal'); if(pb) pb.style.display=chosen()?'':'none'; var ob=$('cps-out'); if(ob){ ob.style.display=(user()&&chosen())?'':'none'; if(!ob._b){ ob._b=1; ob.onclick=function(){ if(window.cpExitAsk) cpExitAsk(); else if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); }; } }
     var f=$('cps-fri'); if(introOn()){ if(f) f.style.display='none'; return; } var sb=$('cps-sub'); if(sb){ sb.textContent=hClock(); sb.setAttribute('data-hclock','1'); } var gl=document.querySelector('#s-profil .cps-gauge-hd span'); if(gl) gl.textContent='Profil complété';
     var g=document.querySelector('#s-profil .cps-gauge'), rp=$('cps-rap'); if(!rp && g){ rp=document.createElement('button'); rp.type='button'; rp.id='cps-rap'; rp.className='cps-rap'; g.parentNode.insertBefore(rp,g.nextSibling); }
     if(rp){ var R=window.cpInfo&&cpInfo.rappel?cpInfo.rappel(S.st.profil):null; rp.style.display=R?'':'none'; if(R){ rp.setAttribute('data-ci-go',R.dr); rp.setAttribute('data-k',R.k); rp.innerHTML='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span><b>Rappel · '+R.t+'</b><small>'+R.s+'</small><em>Voir : Infos diverses › '+R.lab+'</em></span>'+(R.chip||''); } }
@@ -18842,7 +18887,7 @@ window.cpSheetArrows=function(sc,host){
   function toHero(){ [60,350].forEach(function(t){ setTimeout(function(){ var h=document.querySelector('#s-profil .cps-hero'); if(!h) return; var hd=document.querySelector('header, .topbar, #topbar, .cp-hd'), off=hd?Math.min(120,hd.getBoundingClientRect().height):70; window.scrollTo({ top:Math.max(0,h.getBoundingClientRect().top+window.pageYOffset-off-12), behavior:'auto' }); },t); }); }
   function drawHero0(){
     var gl=document.querySelector('#s-profil .cps-gauge-hd span'), ht=document.querySelector('#s-profil .cps-hero-top div span');
-    if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=!chosen()?ht._t0:({ frl:'Ton espace freelance', etu:'Ton espace étudiant', sal:'Ton espace salarié' })[S.st.profil]||ht._t0; }
+    if(ht){ if(!ht._t0) ht._t0=ht.textContent; ht.textContent=!chosen()?ht._t0:({ frl:'Ton espace freelance', etu:'Ton espace étudiant', sal:'Ton espace salarié', dem:reconv()?'Ton espace reconversion':'' })[S.st.profil]||ht._t0; }
     if(introOn()){ if(gl) gl.textContent='Choisis ton profil'; if($('cps-pct')) $('cps-pct').textContent=''; if($('cps-bar')) $('cps-bar').style.width='0%'; if($('cps-sub')) $('cps-sub').textContent='Lisa te présente les 4 profils de ton espace.'; if($('cps-next-t')) $('cps-next-t').textContent='Voir les 4 profils'; if($('cps-next')) $('cps-next').setAttribute('data-go','es-intro'); if(ht&&ht._t0) ht.textContent=ht._t0; return; }
     var esh=(isT()&&window.cpES)?cpES.hero():null;
     if(esh){ if(gl) gl.textContent=esh.label; if($('cps-pct')) $('cps-pct').textContent=esh.pct+' %'; if($('cps-bar')) $('cps-bar').style.width=esh.pct+'%'; if($('cps-name')) $('cps-name').textContent=esh.name||first(); if($('cps-sub')) $('cps-sub').textContent=esh.sub; if($('cps-next-t')) $('cps-next-t').textContent=esh.next[0]; if($('cps-next')) $('cps-next').setAttribute('data-go',esh.next[1]); return; }
@@ -19045,6 +19090,11 @@ window.cpSheetArrows=function(sc,host){
     if(window.cpSheetArrows) cpSheetArrows(o.sc,sh.querySelector('.cpw-box'));
     return o;
   }
+  /* Sortie : quitter le profil (le compte reste connecté) ou se déconnecter du site */
+  window.cpExitAsk=function(){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); });
+    var o=sheet('Quitter mon espace','Choisis comment tu veux sortir','<div class="es-rows cpx-rows"><button type="button" class="es-row" id="cpx-pf"><span class="es-row-i v">'+I(P.users||P.user,19)+'</span><span><b>Quitter ce profil</b><small>Ton compte reste connecté : tu reviens au choix des profils</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" id="cpx-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter du site</b><small>Ta session CareerPulse se ferme complètement</small></span>'+I(P.chev,16)+'</button></div>');
+    o.body.querySelector('#cpx-pf').onclick=function(){ o.sh.remove(); document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); INTRO=true; var hb=$('cj-home'); if(hb) hb.innerHTML=''; drawAll(); try{ window.scrollTo(0,0); }catch(x){} };
+    o.body.querySelector('#cpx-out').onclick=function(){ if(window.fbLogout) fbLogout(); }; };
   function say2(html){ return '<div class="cj-say">'+av('sm')+'<div>'+html+'</div></div>'; }
   /* Page « écrire » : ouverte par chaque bouton Autre */
   function writePage(t,q,o,cb){ o=o||{};
@@ -19211,7 +19261,7 @@ window.cpSheetArrows=function(sc,host){
     }
     function chooser(){
       var p=o.pick, custom=NBS.indexOf(p.cible)<0;
-      return '<div class="cps-sec"><span class="cps-si">'+I(P.target)+'</span>1. Choisis ton défi</div><div class="cj-types">'+Object.keys(DEFIS).map(function(k){ return '<button type="button" class="'+(p.type===k?'on':'')+'" data-cj="dt" data-t="'+k+'"><span class="cj-ri lg">'+I(DEFIS[k][2],19)+'</span><b>'+(k==='autre'&&p.type==='autre'&&p.label?esc(p.label):DEFIS[k][0])+'</b>'+(k==='autre'?'<small>'+(p.type==='autre'&&p.label?'Touche pour modifier':'Tu l\'écris toi-même')+'</small>':DEFIS[k][3]?'<small>Compté automatiquement</small>':'<small>Tu le notes toi-même</small>')+'</button>'; }).join('')+'</div>'
+      return '<div class="cps-sec"><span class="cps-si">'+I(P.target)+'</span>1. Choisis ton défi</div><div class="cj-types">'+defiKeys().map(function(k){ return '<button type="button" class="'+(p.type===k?'on':'')+'" data-cj="dt" data-t="'+k+'"><span class="cj-ri lg">'+I(DEFIS[k][2],19)+'</span><b>'+(k==='autre'&&p.type==='autre'&&p.label?esc(p.label):DEFIS[k][0])+'</b>'+(k==='autre'?'<small>'+(p.type==='autre'&&p.label?'Touche pour modifier':'Tu l\'écris toi-même')+'</small>':DEFIS[k][3]?'<small>Compté automatiquement</small>':'<small>Tu le notes toi-même</small>')+'</button>'; }).join('')+'</div>'
         +'<div class="cps-sec"><span class="cps-si">'+I(P.chart)+'</span>2. Ton objectif pour la semaine</div><div class="cj-nbs">'+NBS.map(function(n){ return '<button type="button" class="'+(p.cible===n?'on':'')+'" data-cj="dn" data-n="'+n+'">'+n+'</button>'; }).join('')
         +'<button type="button" class="cj-own'+(custom?' on':'')+'" data-cj="downn">'+(custom?'Autre : <b>'+p.cible+'</b>':'Autre…')+'</button></div>'
         +'<button type="button" class="cj-main" data-cj="dgo">'+I(P.check,18)+'Je relève ce défi</button>';
@@ -19436,6 +19486,9 @@ window.cpSheetArrows=function(sc,host){
     if(a==='sec'){ var s=b.getAttribute('data-s'); if(s==='lm'||s==='cv'||s==='docs') openProf(s); else wizard(s); return; }
     if(a==='tip'){ var t=b.querySelector('small'), i=TIPS.indexOf(t.textContent); t.textContent=TIPS[(i+1)%TIPS.length]; return; }
     if(a==='pf'){ INTRO=false; S.st.profil=b.getAttribute('data-p'); S.st.pfv=2; saveSt(); if(S.st.profil==='frl') say('Bienvenue dans ton espace Freelance 💼'); else say('C\'est noté : '+PROFS[S.st.profil]+' ✓'); drawAll(); toHero(); return; }
+    if(a==='dmset'){ var dk=b.getAttribute('data-k'), dv=b.getAttribute('data-v'); S.st[dk]=dv; if(dk==='dmode'){ if(dv==='emploi') S.st.enposte=S.st.enposte||''; var u0=user(); if(u0&&db()) db().collection('profils').doc(u0.uid).set({ dmode:dv },{ merge:true }).catch(function(){}); }
+      saveSt(); say(dk==='dmode'?(dv==='reconv'?'C\'est noté : ton espace passe en version Reconversion ✓':'C\'est noté : ton espace est en version Recherche d\'emploi ✓'):'C\'est noté ✓'); drawAll(); return; }
+    if(a==='dmedit'){ S.st.dmode=''; S.st.ft=''; S.st.enposte=''; saveSt(); drawAll(); return; }
     if(a==='pfch'){ INTRO=true; var hb=$('cj-home'); if(hb) hb.innerHTML=''; drawAll(); return; }
     if(a==='iskip'){ ISKIP=true; var ib=b.closest('.cj-intro'); if(ib){ ib._skip=true; clearTimeout(ITMR); ITMR=null; runIntro(ib); } return; }
     if(a==='tch'){ document.querySelectorAll('.cj-sheet').forEach(function(x){ if(x.querySelector('.cj-olink')) x.remove(); }); openTasks(); return; }
@@ -19693,6 +19746,8 @@ window.cpSheetArrows=function(sc,host){
     root.innerHTML='<div class="ofc">'+hero()+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+tabs()+'<div id="emp-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
     var q=$('emp-q'); if(q) q.oninput=function(){ ST.q=q.value; var l=$('emp-clist'); if(l) l.innerHTML=candList(); };
+    var mq=$('emx-q'); if(mq) mq.oninput=function(){ ST.mq=mq.value; msgRefresh(); };
+    if(ST.tab==='msg' && ST.openId && wide() && $('emx-pane')){ var oid=ST.openId; ST.openId=null; openConv(oid); }
   }
 
   /* Profils anonymisés : prénom + initiale, jamais de coordonnées */
@@ -19700,22 +19755,27 @@ window.cpSheetArrows=function(sc,host){
   function comps(p){ var c=p.competences; if(Array.isArray(c)) return c; return String(c||'').split(',').map(function(x){ return x.trim(); }).filter(Boolean); }
   function norm(t){ return String(t||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,''); }
   function score(p,words){ if(!words.length) return 1; var h=norm([p.titre,p.secteur,p.ville,p.accroche,comps(p).join(' '),(p.portfolio||[]).map(function(x){ return x.titre+' '+x.desc; }).join(' ')].join(' ')); return words.filter(function(w){ return h.indexOf(w)>-1; }).length; }
+  var CATS=[['all','Tous'],['dem','Demandeur d\'emploi'],['reconv','Reconversion'],['sal','Salarié'],['etu','Étudiant'],['frl','Freelance']];
+  function catTabs(){ var cat=ST.cat||'all'; return CATS.map(function(c){ var n=c[0]==='all'?ST.cands.length:ST.cands.filter(function(p){ return cpCat(p)===c[0]; }).length;
+    return '<button type="button" class="emp-cat c-'+c[0]+(cat===c[0]?' on':'')+'" data-ecat="'+c[0]+'">'+c[1]+'<em>'+n+'</em></button>'; }).join(''); }
   function candList(){
-    var words=norm(ST.q).split(/[\s,]+/).filter(function(w){ return w.length>2; });
-    var L=ST.cands.map(function(p){ return { p:p, s:score(p,words) }; }).filter(function(x){ return x.s>0; }).sort(function(a,b){ return b.s-a.s; });
-    if(!L.length) return '<div class="ofc-empty">'+S(I.users)+(ST.cands.length?'Aucun profil ne correspond à votre recherche.':'Aucun profil visible pour le moment.<br>Les membres qui rendent leur profil visible apparaîtront ici.')+'</div>';
+    var words=norm(ST.q).split(/[\s,]+/).filter(function(w){ return w.length>2; }), cat=ST.cat||'all';
+    var L=ST.cands.filter(function(p){ return cat==='all'||cpCat(p)===cat; }).map(function(p){ return { p:p, s:score(p,words) }; }).filter(function(x){ return x.s>0; }).sort(function(a,b){ return b.s-a.s; });
+    if(!L.length) return '<div class="ofc-empty">'+S(I.users)+(ST.cands.length?(cat!=='all'&&!ST.q?'Aucun profil visible dans cette catégorie pour le moment.':'Aucun profil ne correspond à votre recherche.'):'Aucun profil visible pour le moment.<br>Les membres qui rendent leur profil visible apparaîtront ici.')+'</div>';
     return L.map(function(x){ var p=x.p, done=ST.convs.some(function(c){ return c.candUid===p.uid; }), cs=comps(p).slice(0,6);
       var op=!!(ST.openC&&ST.openC[p.uid]);
       return '<div class="ofc-item emp-cand'+(op?' open':'')+'" data-cand="'+esc(p.uid)+'"><button type="button" class="emp-tog" data-ea="tog" data-c="'+esc(p.uid)+'" aria-expanded="'+op+'"><span class="ofc-item-ico">'+S(I.users)+'</span><span class="emp-tog-t">'
-        +'<span class="ofc-item-t">'+esc(label(p))+'</span>'
-        +'<span class="ofc-item-s">'+(p.frl?'<em class="emp-esb frl">Freelance</em>':'')+(p.esPf?'<em class="emp-esb '+p.esPf+'">'+(p.esPf==='etu'?'Étudiant(e)':'Salarié(e)')+'</em>':'')+esc(p.titre||[p.secteur,p.ville].filter(Boolean).join(' · '))+'</span>'+(done?'<span class="emp-done">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'')+'</span><span class="emp-chev">'+S(I.chev,18)+'</span></button><div class="ofc-item-b emp-more">'
+        +'<span class="ofc-item-t">'+esc(label(p))+'<em class="emp-ref">'+cpRef(p.uid)+'</em></span>'
+        +'<span class="ofc-item-s"><em class="emp-esb '+cpCat(p)+'">'+cpCatLab[cpCat(p)]+'</em>'+esc(p.titre||[p.secteur,p.ville].filter(Boolean).join(' · '))+'</span>'+(done?'<span class="emp-done">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'')+(alsoOf(p.uid,cpCat(p)).length?'<span class="emp-also">'+S(I.users,13)+'Aussi visible en '+esc(alsoOf(p.uid,cpCat(p)).join(', '))+' · même membre</span>':'')+(ST.blk&&ST.blk[p.uid]?'<span class="emp-blk">⛔ Bloqué</span>':'')+'</span><span class="emp-chev">'+S(I.chev,18)+'</span></button><div class="ofc-item-b emp-more">'
         +(p.frl&&window.cpFrlCard?cpFrlCard(Object.assign({ label:label(p) },p),{ emp:true }):window.cpCandCard?cpCandCard(Object.assign({ label:label(p) },p),{ emp:true, offres:ST.offres, docs:window.cpEmpDocBtns?cpEmpDocBtns(p,label(p)):'' })
           :((p.accroche?'<p class="emp-acc">'+esc(String(p.accroche).slice(0,260))+'</p>':'')
         +(cs.length?'<div class="emp-tags">'+cs.map(function(c){ return '<span>'+esc(c)+'</span>'; }).join('')+'</div>':'')
         +(window.cpEmpDocBtns?cpEmpDocBtns(p,label(p)):'')))
-        +'<div class="ofc-btns">'+(done?'<span class="ofc-tag pub">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'<button type="button" class="ofc-btn pri" data-ea="prop" data-c="'+esc(p.uid)+'">'+S(I.send,16)+(p.frl?'Proposer une mission':'Proposer un échange')+'</button>')+'</div>'
+        +'<div class="ofc-btns">'+(ST.blk&&ST.blk[p.uid]?'<span class="emp-blk">⛔ Vous avez bloqué ce membre</span><button type="button" class="ofc-btn" data-ea="unblk" data-c="'+esc(p.uid)+'">Débloquer</button>':done?'<span class="ofc-tag pub">● '+(p.frl?'Mission proposée':'Échange proposé')+'</span>':'<button type="button" class="ofc-btn pri" data-ea="prop" data-c="'+esc(p.uid)+'">'+S(I.send,16)+(p.frl?'Proposer une mission':'Proposer un échange')+'</button>')+'</div>'
         +'<div class="emp-prop" id="emp-prop-'+esc(p.uid)+'"></div></div></div>'; }).join('');
   }
+  /* Même membre, autres profils rendus visibles (même numéro CP) */
+  function alsoOf(uid,cur){ var A=(ST.also||{})[uid]||{}; return Object.keys(A).filter(function(k){ return k!==cur; }).map(function(k){ return cpCatLab[k]; }); }
   function propForm(uid){
     var fp=ST.cands.filter(function(x){ return x.uid===uid; })[0];
     if(fp && fp.frl) return '<div class="ofc-f">'
@@ -19761,15 +19821,10 @@ window.cpSheetArrows=function(sc,host){
   function tabHtml(){
     var o=ST.emp||{};
     if(ST.tab==='cands') return '<div class="ofc-card"><h3>Candidats visibles</h3><p>Profils anonymisés des membres qui ont choisi d\'être visibles par les recruteurs.</p>'
+      +'<div class="emp-cats" id="emp-cats">'+catTabs()+'</div>'
       +'<label class="emp-search">'+S(I.search,18)+'<input id="emp-q" value="'+esc(ST.q)+'" placeholder="Ex : commercial, Caen, anglais…"></label><div id="emp-clist">'+candList()+'</div></div>';
     if(ST.tab==='offres') return offreForm(ST.edit)+offreList();
-    if(ST.tab==='msg'){
-      var C=ST.convs;
-      if(!C.length) return '<div class="ofc-card"><h3>Messages</h3><div class="ofc-empty">'+S(I.inbox)+'Quand vous proposerez un échange à un candidat, la conversation apparaîtra ici avec sa réponse.</div></div>';
-      return '<div class="ofc-card"><h3>Messages</h3><p>Vos échanges avec les candidats, dans la messagerie protégée.</p>'
-        +C.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{};
-          return '<button type="button" class="ofc-conv" data-econv="'+esc(c.id)+'"><span class="ofc-dot'+(c.unreadEmp?' on':'')+'"></span><span class="ofc-conv-t"><b>'+esc(c.candLabel||'Candidat')+' · '+esc(c.poste||'')+'</b><span>'+(c.statut==='close'?'Conversation close':c.type==='mission'?(c.missionStatut==='acceptee'?'Mission acceptée':c.missionStatut==='declinee'?'Mission déclinée':c.lastFrom==='cand'?'Réponse du freelance':'Mission proposée · en attente'):(c.type==='candidature'&&!(c.messages||[]).some(function(m){ return m.from==='emp'; }))?'Nouvelle candidature':c.lastFrom==='cand'?'Réponse du candidat':'En attente de réponse')+'</span><i>'+esc(String(last.text||'').slice(0,90))+'</i></span>'+S(I.chev,16)+'</button>'; }).join('')+'</div>';
-    }
+    if(ST.tab==='msg') return msgBox();
     return '<div class="ofc-card"><h3>Mon entreprise</h3><p>Ces informations sont visibles par un candidat <b>uniquement</b> dans un échange que vous lui proposez.</p>'
       +'<div class="ofc-f"><label>Nom de l\'entreprise *<input id="emp-enom" value="'+esc(o.nom)+'"></label><label>Ville<input id="emp-eville" value="'+esc(o.ville)+'"></label>'
       +'<label>Secteur<select id="emp-esect">'+opt(SECTEURS,o.secteur)+'</select></label><label>Téléphone<input id="emp-etel" value="'+esc(o.tel)+'"></label>'
@@ -19778,6 +19833,32 @@ window.cpSheetArrows=function(sc,host){
       +(o.siret?'<label>SIRET<input value="'+esc(o.siret)+'" disabled></label>':'')
       +'</div><div class="ofc-btns"><button type="button" class="ofc-btn pri" data-ea="esave">Enregistrer</button></div></div>';
   }
+  /* ═══ Messagerie façon Outlook : une ligne par conversation, filtres, recherche, lecture à droite (ordinateur) ═══ */
+  var MF=[['all','Tous'],['unread','Non lus'],['cand','Candidatures'],['ech','Échanges proposés'],['mis','Missions'],['arch','Archivés']];
+  var MC=[['all','Tous les profils'],['dem','Demandeur d\'emploi'],['reconv','Reconversion'],['sal','Salarié'],['etu','Étudiant'],['frl','Freelance']];
+  function cvCat(c){ if(c.type==='mission') return 'frl'; if(c.candPf) return c.candPf; var p=ST.cands.filter(function(z){ return z.uid===c.candUid; })[0]; return p&&window.cpCat?cpCat(p):'dem'; }
+  function cvKind(c){ return c.type==='mission'?'mis':c.type==='candidature'?'cand':'ech'; }
+  function cvMatch(c,f){ return f==='all'?!c.archEmp:f==='arch'?!!c.archEmp:f==='unread'?(c.unreadEmp&&!c.archEmp):(cvKind(c)===f&&!c.archEmp); }
+  function cvDate(iso){ try{ var d=new Date(iso), t=new Date(); return d.toDateString()===t.toDateString()?d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }):d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' }); }catch(e){ return ''; } }
+  function msgRows(){ var f=ST.mf||'all', k=ST.mc||'all', q=norm(ST.mq||'');
+    var L=ST.convs.filter(function(c){ return cvMatch(c,f) && (k==='all'||cvCat(c)===k) && (!q || norm([c.candLabel,c.poste,window.cpRef?cpRef(c.candUid):'',(c.messages||[]).map(function(m){ return m.text; }).join(' ')].join(' ')).indexOf(q)>-1); })
+      .sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
+    if(!L.length) return '<div class="emx-none">'+S(I.inbox)+(ST.convs.length?'Aucun message dans ce filtre.':'Quand vous proposerez un échange ou recevrez une candidature, la conversation apparaîtra ici.')+'</div>';
+    var KL={ cand:'Candidature', ech:'Échange', mis:'Mission' };
+    return L.map(function(c){ var last=(c.messages||[]).slice(-1)[0]||{}, cat=cvCat(c), kd=cvKind(c), lab=c.candLabel||'Candidat', ini=String(lab).split(/\s+/).map(function(w){ return w.charAt(0); }).join('').slice(0,2).toUpperCase();
+      var st=c.bloque?'Bloqué':c.statut==='close'?'Close':kd==='mis'?(c.missionStatut==='acceptee'?'Acceptée':c.missionStatut==='declinee'?'Déclinée':''):'';
+      return '<button type="button" class="emx-r'+(c.unreadEmp?' un':'')+(ST.openId===c.id?' on':'')+'" data-econv="'+esc(c.id)+'"><span class="emx-av a-'+cat+'">'+esc(ini)+'</span><span class="emx-t">'
+        +'<span class="emx-l1"><b>'+esc(lab)+'</b><em class="emp-ref">'+(window.cpRef?cpRef(c.candUid):'')+'</em><time>'+cvDate(c.lastAt)+'</time></span>'
+        +'<span class="emx-l2"><em class="emp-esb '+cat+'">'+(window.cpCatLab?cpCatLab[cat]:'')+'</em><i class="emx-k k-'+kd+'">'+KL[kd]+'</i><span>'+esc(c.poste||'')+'</span>'+(st?'<i class="emx-st">'+st+'</i>':'')+'</span>'
+        +'<span class="emx-l3">'+(last.from==='emp'?'Vous : ':'')+esc(String(last.text||'').slice(0,120))+'</span></span>'+(c.unreadEmp?'<i class="emx-dot"></i>':'')+'</button>'; }).join(''); }
+  function msgBox(){ var f=ST.mf||'all', k=ST.mc||'all', nu=ST.convs.filter(function(c){ return c.unreadEmp&&!c.archEmp; }).length;
+    return '<div class="ofc-card emx"><div class="emx-hd"><div><h3>Messages</h3><p>'+(nu?'<b>'+nu+' non lu'+(nu>1?'s':'')+'</b> · ':'')+'Vos échanges avec les membres, dans la messagerie protégée.</p></div></div>'
+      +'<label class="emp-search emx-q">'+S(I.search,18)+'<input id="emx-q" value="'+esc(ST.mq||'')+'" placeholder="Rechercher un nom, un numéro CP-…, un poste…"></label>'
+      +'<div class="emp-cats emx-f">'+MF.map(function(x){ var n=ST.convs.filter(function(c){ return cvMatch(c,x[0]); }).length; return '<button type="button" class="emp-cat'+(f===x[0]?' on':'')+'" data-emf="'+x[0]+'">'+x[1]+'<em>'+n+'</em></button>'; }).join('')+'</div>'
+      +'<div class="emx-c">'+MC.map(function(x){ return '<button type="button" class="emx-cc c-'+x[0]+(k===x[0]?' on':'')+'" data-emc="'+x[0]+'">'+x[1]+'</button>'; }).join('')+'</div>'
+      +'<div class="emx-body"><div class="emx-list" id="emx-list">'+msgRows()+'</div><div class="emx-pane" id="emx-pane"><div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une conversation</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div></div></div></div>'; }
+  function msgRefresh(){ var l=$('emx-list'); if(l) l.innerHTML=msgRows(); }
+  function wide(){ return window.matchMedia && window.matchMedia('(min-width:900px)').matches; }
   function val(id){ var e=$(id); return e?String(e.value||'').trim():''; }
   function oerr(m){ var e=$('emp-oerr'); if(!e) return; e.textContent=m; e.style.display=m?'':'none'; e.classList.toggle('on',!!m); }
 
@@ -19790,7 +19871,8 @@ window.cpSheetArrows=function(sc,host){
     var g1=db().collection('fiches_freelance').where('visible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(); return x.visible===true&&x.fiche?Object.assign({},x.fiche,{ uid:d.id, frl:true, visible:true, updatedAt:x.at||x.fiche.updatedAt }):null; }).filter(function(p){ return p && p.uid!==u.uid && p.titre; }); }).catch(function(){ return []; });
     var g2=db().collection('fiches_candidat').where('visible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.fiche||{}; return x.visible===true?Object.assign({},f,{ uid:d.id, esPf:x.pf, cvDispo:x.cvDispo, lmDispo:x.lmDispo, shareCv:x.shareCv, shareLm:x.shareLm, updatedAt:x.at||f.updatedAt, visible:true }):null; }).filter(function(p){ return p && p.uid!==u.uid && (p.titre||p.secteur); }); }).catch(function(){ return []; });
     var f3=db().collection('profils').where('frlVisible','==',true).limit(300).get().then(function(q){ return q.docs.map(function(d){ var x=d.data(), f=x.frlFiche||{}; return x.frlVisible===true?Object.assign({},f,{ uid:d.id, frl:true, visible:true, updatedAt:x.frlAt||f.updatedAt }):null; }).filter(function(p){ return p && p.uid!==u.uid && p.titre; }); }).catch(function(){ return []; });
-    return Promise.all([a,b,c,e2,f3,g1,g2]).then(function(r){ (r[6]||[]).concat(r[3]||[]).forEach(function(p){ if(!ST.cands.some(function(x){ return x.uid===p.uid; })) ST.cands.push(p); });
+    var bk=db().collection('blocages').where('empUid','==',u.uid).get().then(function(q){ ST.blk={}; q.docs.forEach(function(d){ var x=d.data(); if(x.candUid) ST.blk[x.candUid]=true; }); }).catch(function(){ ST.blk={}; });
+    return Promise.all([a,b,c,e2,f3,g1,g2,bk]).then(function(r){ var AL={}; function ad(p){ if(p&&p.uid) (AL[p.uid]=AL[p.uid]||{})[cpCat(p)]=1; } ST.cands.forEach(ad); (r[3]||[]).concat(r[6]||[],r[4]||[],r[5]||[]).forEach(ad); ST.also=AL; (r[6]||[]).concat(r[3]||[]).forEach(function(p){ if(!ST.cands.some(function(x){ return x.uid===p.uid; })) ST.cands.push(p); });
       (r[5]||[]).concat(r[4]||[]).filter(function(p,i,A){ return A.findIndex(function(y){ return y.uid===p.uid; })===i; }).forEach(function(p){ ST.cands=ST.cands.filter(function(x){ return x.uid!==p.uid; }); p.avis=[]; p.avisNb=0; p.siretOk=p.siret?'wait':false; ST.cands.push(p); }); /* freelances : proposer une mission */
       frlVerif(); });
   }
@@ -19809,9 +19891,13 @@ window.cpSheetArrows=function(sc,host){
 
   function onClick(e){
     var t=e.target.closest('[data-etab]'); if(t){ ST.tab=t.getAttribute('data-etab'); ST.edit=null; draw(); return; }
+    var ct=e.target.closest('[data-ecat]'); if(ct){ ST.cat=ct.getAttribute('data-ecat'); var cl=$('emp-clist'), cb=$('emp-cats'); if(cl) cl.innerHTML=candList(); if(cb) cb.innerHTML=catTabs(); return; }
     var cv=e.target.closest('[data-econv]'); if(cv){ openConv(cv.getAttribute('data-econv')); return; }
+    var mf=e.target.closest('[data-emf]'); if(mf){ ST.mf=mf.getAttribute('data-emf'); [].forEach.call(document.querySelectorAll('[data-emf]'),function(x){ x.classList.toggle('on',x===mf); }); msgRefresh(); return; }
+    var mc=e.target.closest('[data-emc]'); if(mc){ ST.mc=mc.getAttribute('data-emc'); [].forEach.call(document.querySelectorAll('[data-emc]'),function(x){ x.classList.toggle('on',x===mc); }); msgRefresh(); return; }
     var b=e.target.closest('[data-ea]'); if(!b) return; var a=b.getAttribute('data-ea'), u=me(); if(!u) return;
     if(a==='logout'){ if(window.cpEmpUnlock) cpEmpUnlock(); try{ history.replaceState(null,'','#pro-employeur'); }catch(x){} if(window.fbLogout) fbLogout(); else auth().signOut().then(function(){ location.reload(); }); return; }
+    if(a==='unblk'){ var ub=b.getAttribute('data-c'); if(!confirm('Débloquer ce membre ? Il pourra de nouveau postuler à vos offres.')) return; db().collection('blocages').doc(u.uid+'_'+ub).delete().then(function(){ delete ST.blk[ub]; toast('Membre débloqué'); var cl=$('emp-clist'); if(cl) cl.innerHTML=candList(); }).catch(function(){ toast('Modification impossible pour le moment'); }); return; }
     if(a==='tog'){ var cid=b.getAttribute('data-c'), card=b.closest('.emp-cand'); ST.openC=ST.openC||{}; ST.openC[cid]=!ST.openC[cid]; if(card){ card.classList.toggle('open',ST.openC[cid]); b.setAttribute('aria-expanded',ST.openC[cid]); } return; }
     if(a==='prop'){ var box=$('emp-prop-'+b.getAttribute('data-c')); if(!box) return; box.innerHTML=propForm(b.getAttribute('data-c')); b.style.display='none';
       var s=box.querySelector('[data-psel]'); if(s) s.onchange=function(){ box.querySelector('[data-pautre]').style.display=s.value==='_autre'?'':'none'; }; if(s&&s.value==='_autre') box.querySelector('[data-pautre]').style.display=''; return; }
@@ -19821,7 +19907,7 @@ window.cpSheetArrows=function(sc,host){
       if(p.frl){ var q=function(k){ var e=bx2.querySelector('[data-'+k+']'); return e?String(e.value||'').trim():''; }, mt=q('mt'), md=q('mdesc'), mm=q('pmsg');
         if(!mt){ toast('Indiquez le titre de la mission'); return; } if(!md){ toast('Décrivez la mission'); return; } if(!mm){ toast('Écrivez un message au freelance'); return; }
         if(ST.convs.some(function(c){ return c.candUid===cu && c.poste===mt; })){ toast('Cette mission a déjà été proposée à ce freelance'); return; }
-        var tm=now(), om=ST.emp||{}, dm={ type:'mission', empUid:u.uid, empNom:om.nom||'', empVille:om.ville||'', empSecteur:om.secteur||'', candUid:cu, candLabel:label(p), poste:mt,
+        var tm=now(), om=ST.emp||{}, dm={ type:'mission', empUid:u.uid, empNom:om.nom||'', empVille:om.ville||'', empSecteur:om.secteur||'', candUid:cu, candLabel:label(p), candPf:'frl', poste:mt,
           mission:{ titre:mt, budget:q('mb')?Math.max(0,Math.round(+q('mb'))):'', duree:q('md'), debut:q('mdeb'), lieu:q('ml'), desc:md.slice(0,1500) }, missionStatut:'attente',
           messages:[{ from:'emp', text:mm.slice(0,1000), at:tm }], statut:'ouverte', lastAt:tm, lastFrom:'emp', unreadCand:true, unreadEmp:false, createdAt:tm, updatedAt:tm };
         b.disabled=true;
@@ -19832,7 +19918,7 @@ window.cpSheetArrows=function(sc,host){
       var poste=f?f.titre:String(bx2.querySelector('[data-ptitre]').value||'').trim(), msg=String(bx2.querySelector('[data-pmsg]').value||'').trim();
       if(!poste){ toast('Indiquez le poste proposé'); return; } if(!msg){ toast('Écrivez un message au candidat'); return; }
       if(ST.convs.some(function(c){ return c.candUid===cu && c.poste===poste; })){ toast('Ce poste a déjà été proposé à ce candidat'); return; }
-      var t0=now(), o=ST.emp||{}, d={ empUid:u.uid, empNom:o.nom||'', empVille:o.ville||'', empSecteur:o.secteur||'', candUid:cu, candLabel:label(p), poste:poste, offreId:f?f.id:'',
+      var t0=now(), o=ST.emp||{}, d={ empUid:u.uid, empNom:o.nom||'', empVille:o.ville||'', empSecteur:o.secteur||'', candUid:cu, candLabel:label(p), candPf:window.cpCat?cpCat(p):'', poste:poste, offreId:f?f.id:'',
         offre:f?{ titre:f.titre, contrat:f.contrat||'', ville:f.ville||'', teletravail:f.teletravail||'', salaire:f.salaire||'', description:String(f.description||'').slice(0,1500) }:null,
         messages:[{ from:'emp', text:msg.slice(0,1000), at:t0 }], statut:'ouverte', lastAt:t0, lastFrom:'emp', unreadCand:true, unreadEmp:false, createdAt:t0, updatedAt:t0 };
       b.disabled=true;
@@ -19872,43 +19958,52 @@ window.cpSheetArrows=function(sc,host){
 
   /* ── Messagerie protégée (même présentation que l'espace centre) ── */
   var UNSUB=null;
-  function closeConv(){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet.emp-sheet'); if(x) x.remove(); if(!document.querySelector('.ofcm-sheet,.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); draw(); }
+  function closeConv(){ if(UNSUB){ UNSUB(); UNSUB=null; } var x=document.querySelector('.ofcm-sheet.emp-sheet'), emb=x&&x.classList.contains('emx-embed'); ST.openId=null; if(x) x.remove(); if(!document.querySelector('.ofcm-sheet,.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); if(emb){ var pn=$('emx-pane'); if(pn) pn.innerHTML='<div class="emx-ph">'+S(I.inbox)+'<b>Sélectionnez une conversation</b><span>Elle s\'ouvre ici, à côté de la liste.</span></div>'; msgRefresh(); } else draw(); }
   function fmtAt(iso){ try{ var d=new Date(iso); return d.toLocaleDateString('fr-FR',{ day:'2-digit', month:'2-digit' })+' '+d.toLocaleTimeString('fr-FR',{ hour:'2-digit', minute:'2-digit' }); }catch(e){ return ''; } }
   function openConv(id){
     var c=ST.convs.filter(function(x){ return x.id===id; })[0]; if(!c) return;
-    var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet'; sh.setAttribute('data-rep','emploi:'+c.id);
+    var pane=wide()?$('emx-pane'):null; if(UNSUB){ UNSUB(); UNSUB=null; } var old=document.querySelector('.ofcm-sheet.emp-sheet'); if(old) old.remove();
+    ST.openId=id; if(pane) [].forEach.call(document.querySelectorAll('.emx-r'),function(r){ r.classList.toggle('on',r.getAttribute('data-econv')===id); });
+    var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet'+(pane?' emx-embed':''); sh.setAttribute('data-rep','emploi:'+c.id);
     sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><div><b class="ofcm-who"></b><span>'+esc(c.poste||'')+'</span></div><em>🔒 Protégé</em></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre message…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S(I.send)+'</button></div></div></div></div>';
-    document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock');
+    if(pane){ pane.innerHTML=''; pane.appendChild(sh); } else { document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock'); }
     var list=sh.querySelector('.ofcm-list'), ref=db().collection('emploi_conversations').doc(c.id);
     function info(x){
       var p=ST.cands.filter(function(z){ return z.uid===x.candUid; })[0], h=window.cpConvExtra?cpConvExtra(Object.assign({ id:c.id },x)):'';
       if(p) h+='<div class="ofcm-card"><b>Profil du candidat</b><div class="ofcm-g">'
         +[['Poste visé',p.titre],['Secteur',p.secteur],['Ville',p.ville],['Expérience',p.exp]].filter(function(r){ return r[1]; }).map(function(r){ return '<div><span>'+r[0]+'</span><i>'+esc(r[1])+'</i></div>'; }).join('')+'</div>'
         +(p.accroche?'<p>'+esc(String(p.accroche).slice(0,400))+'</p>':'')+'</div>';
+      var al=alsoOf(x.candUid,cvCat(Object.assign({ id:c.id },x))); if(al.length) h+='<div class="ofcm-card emp-also-c"><b>Autres profils de ce membre</b><p>Même compte, même numéro '+(window.cpRef?cpRef(x.candUid):'')+' : ce membre est aussi visible en <i>'+esc(al.join(', '))+'</i>.</p></div>';
       var rep=(x.messages||[]).some(function(m){ return m.from==='cand'; }), sh2=[];
       if(p && rep){ if(p.shareEmail && p.emailPublic) sh2.push('E-mail : <i>'+esc(p.emailPublic)+'</i>'); if(p.shareTel && p.telPublic) sh2.push('Téléphone : <i>'+esc(p.telPublic)+'</i>'); }
       h+='<div class="ofcm-card"><b>Coordonnées partagées</b><p>'+(sh2.length?sh2.join('<br>'):'Le candidat n\'a pas partagé ses coordonnées : échangez ici, dans la messagerie protégée.')+'</p></div>';
       return h;
     }
     function rend(x){
-      sh.querySelector('.ofcm-who').textContent=x.candLabel||'Candidat';
+      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').innerHTML=esc(x.candLabel||'Candidat')+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       var closed=x.statut==='close';
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">'+(x.type==='mission'?'Conversation protégée · mission proposée par '+esc(x.empNom||'votre entreprise'):x.type==='candidature'?'Conversation protégée · candidature reçue pour « '+esc(x.poste||'')+' »':'Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise'))+'</div>'
         +(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='emp'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='emp'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
-        +(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<div style="text-align:center;margin:8px 0"><button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button></div>');
+        +'<div class="emx-acts">'+(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button>')+'<button type="button" class="ofc-btn" data-arch-conv>'+S(I.inbox,15)+(x.archEmp?'Remettre dans la boîte':'Archiver')+'</button>'+(ST.blk&&ST.blk[x.candUid]?'<button type="button" class="ofc-btn" data-blk-conv="0">Débloquer ce candidat</button>':'<button type="button" class="ofc-btn emx-blk" data-blk-conv="1">⛔ Bloquer ce candidat</button>')+'</div>';
       list.scrollTop=list.scrollHeight;
       sh.querySelector('.ofcm-ft').style.display=closed?'none':'';
       if(x.unreadEmp) ref.update({ unreadEmp:false }).catch(function(){});
       c=Object.assign({ id:c.id },x); ST.convs=ST.convs.map(function(z){ return z.id===c.id?c:z; });
+      var ab=list.querySelector('[data-arch-conv]'); if(ab) ab.onclick=function(){ var na=!c.archEmp; ref.update({ archEmp:na, updatedAt:now() }).then(function(){ c.archEmp=na; ST.convs=ST.convs.map(function(z){ return z.id===c.id?Object.assign(z,{ archEmp:na }):z; }); toast(na?'Conversation archivée':'Conversation remise dans la boîte'); closeConv(); }).catch(function(){ toast('Modification impossible pour le moment'); }); };
+      if(x.unreadEmp){ ST.convs=ST.convs.map(function(z){ return z.id===c.id?Object.assign(z,{ unreadEmp:false }):z; }); setTimeout(msgRefresh,0); }
+      var bb=list.querySelector('[data-blk-conv]'); if(bb) bb.onclick=function(){ var on=bb.getAttribute('data-blk-conv')==='1', bref=db().collection('blocages').doc(me().uid+'_'+c.candUid);
+        if(on){ if(!confirm('Bloquer ce candidat ? Il ne pourra plus vous écrire ni postuler à vos offres, et la conversation sera close. Vous pourrez le débloquer à tout moment.')) return;
+          bref.set({ empUid:me().uid, candUid:c.candUid, convId:c.id, at:now() }).then(function(){ ST.blk=ST.blk||{}; ST.blk[c.candUid]=true; return ref.update({ statut:'close', bloque:true, updatedAt:now() }); }).then(function(){ toast('Candidat bloqué'); c.statut='close'; c.bloque=true; rend(c); msgRefresh(); var cl=$('emp-clist'); if(cl) cl.innerHTML=candList(); }).catch(function(){ toast('Blocage impossible pour le moment'); }); }
+        else bref.delete().then(function(){ delete ST.blk[c.candUid]; return ref.update({ bloque:false, updatedAt:now() }); }).then(function(){ toast('Candidat débloqué'); c.bloque=false; rend(c); msgRefresh(); var cl=$('emp-clist'); if(cl) cl.innerHTML=candList(); }).catch(function(){ toast('Modification impossible pour le moment'); }); };
       var cb=list.querySelector('[data-close-conv]'); if(cb) cb.onclick=function(){ if(!confirm('Clore cette conversation ?')) return; ref.update({ statut:'close', updatedAt:now() }).catch(function(){ toast('Modification impossible pour le moment'); }); };
     }
     rend(c);
     UNSUB=ref.onSnapshot(function(d){ if(d.exists) rend(d.data()); },function(){});
     if(window.cpSheetArrows) cpSheetArrows(list,sh.querySelector('.ofcm-chat'));
     sh.querySelector('.ofcm-x').onclick=closeConv;
-    sh.addEventListener('click',function(e){ if(e.target===sh) closeConv(); });
+    sh.addEventListener('click',function(e){ if(e.target===sh && !pane) closeConv(); });
     sh.querySelector('.ofcm-send').onclick=function(){
       var ta=sh.querySelector('.ofcm-in'), t=String(ta.value||'').trim(); if(!t) return;
       if((c.messages||[]).length>=60){ toast('Conversation complète'); return; }
@@ -20022,6 +20117,10 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
 .emp-chev{ flex-shrink:0; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#eef2ff; color:#1e3a8a; transition:transform .25s ease; }
 .emp-cand.open .emp-chev{ transform:rotate(90deg); }
 .emp-more{ display:none !important; padding:0 14px 14px !important; }
+.emp-also{ display:inline-flex; align-items:center; gap:5px; margin-top:4px; font-size:.72rem; font-weight:700; color:#6d28d9; } .emp-also svg{ width:13px; height:13px; flex-shrink:0; }
+.emp-blk{ display:inline-flex; align-items:center; margin-top:4px; padding:3px 9px; border-radius:999px; background:#fff1f2; color:#be123c; font-size:.72rem; font-weight:800; }
+.ofc-btn.emx-blk{ color:#be123c !important; border-color:#fecdd3 !important; } .ofc-btn.emx-blk:hover{ background:#fff1f2 !important; }
+.emp-also-c{ border-color:#ddd6fe !important; background:#faf5ff !important; }
 .emp-cand.open .emp-more{ display:block !important; animation:empOpen .25s ease both; }
 @keyframes empOpen{ from{ opacity:0; transform:translateY(-4px); } }
 </style>
@@ -21008,7 +21107,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
       var wcv=$('cpo-ap-cv').checked, wlm=$('cpo-ap-lm').checked, B=db(); if(!B){ er.textContent='Connexion impossible pour le moment.'; er.classList.add('on'); return; }
       b.disabled=true; b.textContent='Envoi…';
       var id='cand_'+f.id+'_'+u.uid, t=now(), conv=B.collection('emploi_conversations').doc(id);
-      var d={ type:'candidature', offreId:f.id, empUid:f.empUid, empNom:f.empNom||'', empVille:f.ville||'', candUid:u.uid, candLabel:(es&&es.label)?es.label:candLabel(), poste:f.titre,
+      var d={ type:'candidature', offreId:f.id, empUid:f.empUid, empNom:f.empNom||'', empVille:f.ville||'', candUid:u.uid, candLabel:(es&&es.label)?es.label:candLabel(), candPf:(es&&es.pf)?es.pf:((window.cpStream&&cpStream.st&&cpStream.st().dmode==='reconv')?'reconv':'dem'), poste:f.titre,
         offre:{ titre:f.titre, contrat:contratTxt(f), ville:f.ville||'', teletravail:f.teletravail||'', salaire:salTxt(f), description:String(f.missions||f.description||'').slice(0,1500) },
         reponses:rep, pieces:{ cv:false, lm:false }, messages:[{ from:'cand', text:msg.slice(0,1500), at:t }], statut:'ouverte', lastAt:t, lastFrom:'cand', unreadEmp:true, unreadCand:false, createdAt:t, updatedAt:t };
       function src(k){ if(es) return es.src(k).catch(function(){ return null; }); var me=B.collection('profils').doc(u.uid).collection('partage').doc(k); return me.get().then(function(x){ if(x.exists && (x.data()||{}).data || (x.exists && (x.data()||{}).text)) return x.data(); return B.collection('users').doc(u.uid).collection('docs').doc(k).get().then(function(y){ return y.exists?y.data():null; }); }).catch(function(){ return null; }); }
@@ -21019,7 +21118,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
       }).then(function(){
         sh.querySelector('.cpo-apb').innerHTML='<div class="cpo-ok"><i>'+S(IC.check)+'</i><h3>Candidature envoyée</h3><p style="margin:0 auto 16px;max-width:380px;font-size:.88rem;line-height:1.55;color:#475569">'+esc(f.empNom||'L\'employeur')+' a bien reçu ta candidature. Sa réponse arrivera dans « Mon espace », rubrique '+(es?'Messages':'Recruteurs & messages')+'.</p><div class="cpo-nav" style="justify-content:center"><button type="button" class="pri" data-x>Fermer</button></div></div>';
         sh.querySelector('[data-x]').onclick=close; if(es&&es.done) es.done(f,id); if(ok) ok();
-      }).catch(function(x){ b.disabled=false; b.textContent='Envoyer ma candidature'; er.textContent=(x&&x.code)==='permission-denied'?'Envoi refusé : l\'offre n\'est plus en ligne, ou tu as déjà postulé.':'Envoi impossible pour le moment. Réessaie.'; er.classList.add('on'); });
+      }).catch(function(x){ b.disabled=false; b.textContent='Envoyer ma candidature'; er.textContent=(x&&x.code)==='permission-denied'?'Envoi refusé : l\'offre n\'est plus en ligne, tu as déjà postulé, ou cet employeur ne reçoit plus tes candidatures.':'Envoi impossible pour le moment. Réessaie.'; er.classList.add('on'); });
     };
   }
 
@@ -21331,6 +21430,10 @@ html body #emp-root .ofc-tabs button.on{ border:2px solid transparent !important
       var v=!f.ville||f.teletravail==='Télétravail complet'?1:(cv&&(cv.indexOf(norm(f.ville))>-1||norm(f.ville).indexOf(cv)>-1)?1:(/teletravail|toute la france/.test(cv)?.6:0));
       var sc=Math.round((t*.45+k*.35+v*.2)*100); if(!best||sc>best.s) best={ s:sc, f:f }; });
     return best; }
+  window.cpRef=function(uid){ uid=String(uid||''); if(!uid) return ''; var h=2166136261; for(var i=0;i<uid.length;i++){ h^=uid.charCodeAt(i); h=Math.imul(h,16777619)>>>0; }
+    var A='23456789ABCDEFGHJKLMNPQRSTUVWXYZ', o=''; for(var j=0;j<6;j++){ o+=A.charAt(h%A.length); h=Math.imul(h^(h>>>13)^(j+1)*40503,2246822519)>>>0; } return 'CP-'+o; };
+  window.cpCat=function(p){ p=p||{}; return p.frl?'frl':p.esPf==='etu'||p.pf==='etu'?'etu':p.esPf==='sal'||p.pf==='sal'?'sal':p.dmode==='reconv'?'reconv':'dem'; };
+  window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salarié(e)', etu:'Étudiant(e)', frl:'Freelance' };
   window.cpCandCard=function(p,o){
     o=o||{}; var name=o.emp?(p.label||p.name):(p.name||'Ton nom'), cs=comps(p), top=cs.slice(0,3), rest=cs.slice(3);
     var badges=[];
@@ -22104,6 +22207,54 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
 .frl-mc-st{ display:flex; align-items:center; gap:6px; margin:13px 0 8px; padding:10px 12px; border-radius:13px; background:#f1f5f9; color:#475569; font-size:.8rem; font-weight:800; } .frl-mc-st.ok{ background:#ecfdf5; color:#047857; }
 .frl-conv .cpw-m .frl-mt{ display:block; margin-top:3px; font-size:.62rem; opacity:.65; }
 .emp-esb.frl{ background:#ffedd5; color:#c2410c; }
+.emp-esb.dem{ background:#dcfce7; color:#15803d; } .emp-esb.reconv{ background:#ccfbf1; color:#0f766e; }
+.emp-ref{ display:inline-block; margin-left:7px; padding:1px 7px; border-radius:6px; background:#f1f5f9; color:#64748b; font:700 .62rem/1.6 ui-monospace,SFMono-Regular,Menlo,monospace; letter-spacing:.04em; font-style:normal; vertical-align:1px; }
+/* Messagerie employeur façon Outlook */
+.emx-hd p b{ color:#1e40af; }
+.emx-q{ margin:10px 0 8px; }
+.emx-c{ display:flex; gap:6px; overflow-x:auto; padding:0 0 12px; scrollbar-width:none; } .emx-c::-webkit-scrollbar{ display:none; }
+.emx-cc{ flex-shrink:0; padding:5px 10px; border-radius:8px; border:1px solid #e2e8f0; background:#f8fafc; color:#475569; font:700 .7rem 'DM Sans',sans-serif; cursor:pointer; }
+.emx-cc.on{ background:#0f172a; border-color:#0f172a; color:#fff; }
+.emx-body{ border:1px solid #e3eaf2; border-radius:18px; overflow:hidden; background:#fff; }
+.emx-list{ display:flex; flex-direction:column; }
+.emx-r{ position:relative; display:flex; align-items:flex-start; gap:11px; width:100%; padding:12px 14px; border:0; border-bottom:1px solid #eef2f7; background:#fff; text-align:left; cursor:pointer; font-family:'DM Sans',sans-serif; transition:background .15s; }
+.emx-r:hover{ background:#f8fafc; } .emx-r.on{ background:#eff6ff; box-shadow:inset 3px 0 0 #1e40af; } .emx-r:last-child{ border-bottom:0; }
+.emx-av{ width:38px; height:38px; flex-shrink:0; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; font:800 .78rem 'DM Sans',sans-serif; background:linear-gradient(135deg,#1e40af,#047857); }
+.emx-av.a-dem{ background:linear-gradient(135deg,#15803d,#22c55e); } .emx-av.a-reconv{ background:linear-gradient(135deg,#0f766e,#14b8a6); } .emx-av.a-sal{ background:linear-gradient(135deg,#1e3a8a,#2563eb); } .emx-av.a-etu{ background:linear-gradient(135deg,#6d28d9,#a855f7); } .emx-av.a-frl{ background:linear-gradient(135deg,#c2410c,#f59e0b); }
+.emx-t{ flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+.emx-l1{ display:flex; align-items:center; gap:6px; min-width:0; } .emx-l1 b{ font-size:.86rem; font-weight:700; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .emx-l1 .emp-ref{ margin-left:0; flex-shrink:0; }
+.emx-l1 time{ margin-left:auto; flex-shrink:0; font-size:.68rem; color:#94a3b8; font-weight:600; }
+.emx-l2{ display:flex; align-items:center; gap:6px; min-width:0; font-size:.74rem; color:#334155; } .emx-l2 > span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; } .emx-l2 .emp-esb{ margin:0; flex-shrink:0; }
+.emx-k{ flex-shrink:0; font-style:normal; font-size:.6rem; font-weight:800; padding:1px 6px; border-radius:5px; background:#f1f5f9; color:#475569; text-transform:uppercase; letter-spacing:.04em; }
+.emx-k.k-cand{ background:#eff6ff; color:#1d4ed8; } .emx-k.k-ech{ background:#ecfdf5; color:#047857; } .emx-k.k-mis{ background:#fff7ed; color:#c2410c; }
+.emx-st{ flex-shrink:0; font-style:normal; font-size:.62rem; font-weight:800; color:#64748b; } .emx-st.w{ color:#c2410c; }
+.emx-fo{ flex-shrink:0; padding:5px 8px; border-radius:8px; border:1px solid #e2e8f0; background:#fff; font:700 .7rem 'DM Sans',sans-serif; color:#334155; max-width:220px; }
+.emx-l3{ font-size:.74rem; color:#64748b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.emx-r.un .emx-l1 b, .emx-r.un .emx-l3{ font-weight:800; color:#0f172a; } .emx-r.un .emx-l1 time{ color:#1e40af; font-weight:800; }
+.emx-dot{ position:absolute; left:5px; top:50%; width:6px; height:6px; margin-top:-3px; border-radius:50%; background:#1e40af; }
+.emx-none{ padding:34px 16px; text-align:center; font-size:.82rem; color:#64748b; } .emx-none svg{ display:block; width:26px; height:26px; margin:0 auto 8px; color:#94a3b8; }
+.emx-pane{ display:none; } .emx-ph{ height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:#94a3b8; font-family:'DM Sans',sans-serif; } .emx-ph svg{ width:34px; height:34px; } .emx-ph b{ color:#475569; font-size:.9rem; } .emx-ph span{ font-size:.76rem; }
+.emx-acts{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin:8px 0; } .emx-acts .ofcm-note{ width:100%; }
+.ofcm-who .emp-ref{ margin-left:8px; background:rgba(255,255,255,.16); color:#e0e7ff; } .ofcm-who .emp-esb{ margin-left:6px; }
+.emx-q > svg{ width:18px !important; height:18px !important; flex-shrink:0; } .emx-acts .ofc-btn svg{ width:15px !important; height:15px !important; flex-shrink:0; }
+.emx-q input{ border:0 !important; box-shadow:none !important; outline:none !important; background:transparent !important; }
+@media (min-width:1100px){ .ofc-card.emx{ width:min(1180px, calc(100vw - 80px)); position:relative; left:50%; transform:translateX(-50%); box-sizing:border-box; } }
+@media (min-width:900px){
+  .emx-body{ display:grid; grid-template-columns:minmax(300px,38%) 1fr; height:min(72vh,680px); }
+  .emx-list{ overflow-y:auto; border-right:1px solid #e3eaf2; }
+  .emx-pane{ display:block; min-width:0; background:#f8fafc; }
+  .emx-embed{ position:relative !important; inset:auto !important; z-index:auto !important; background:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; display:block !important; height:100%; }
+  .emx-embed .ofcm-box{ max-width:none !important; width:100% !important; height:100% !important; border-radius:0 !important; box-shadow:none !important; }
+  .emx-embed .ofcm-x{ display:none; }
+  .emx-embed .ofcm-pro .ofcm-aside{ width:250px; padding:14px; }
+}
+.emp-cats{ display:flex; gap:7px; overflow-x:auto; padding:2px 0 10px; margin:4px 0 2px; scrollbar-width:none; } .emp-cats::-webkit-scrollbar{ display:none; }
+.emp-cat{ flex-shrink:0; display:inline-flex; align-items:center; gap:7px; padding:8px 12px; border-radius:999px; border:1.5px solid #e2e8f0; background:#fff; color:#334155; font:800 .76rem 'DM Sans',sans-serif; cursor:pointer; transition:all .2s; }
+.emp-cat em{ font-style:normal; min-width:20px; padding:1px 6px; border-radius:999px; background:#f1f5f9; color:#64748b; font-size:.66rem; text-align:center; }
+.emp-cat.on{ color:#fff; border-color:transparent; background:linear-gradient(135deg,#1e40af,#047857); box-shadow:0 10px 20px -14px rgba(30,64,175,.9); } .emp-cat.on em{ background:rgba(255,255,255,.22); color:#fff; }
+.emp-cat.c-dem.on{ background:linear-gradient(135deg,#15803d,#22c55e); } .emp-cat.c-reconv.on{ background:linear-gradient(135deg,#0f766e,#14b8a6); } .emp-cat.c-sal.on{ background:linear-gradient(135deg,#1e3a8a,#2563eb); }
+.emp-cat.c-etu.on{ background:linear-gradient(135deg,#6d28d9,#a855f7); } .emp-cat.c-frl.on{ background:linear-gradient(135deg,#c2410c,#f59e0b); }
+@media (min-width:900px){ .emp-cats{ flex-wrap:wrap; overflow:visible; } }
 .frl-sir{ margin:12px 0; } .frl-sir .cps-ic{ background:#fff7ed; color:#c2410c; } .frl-sir.g .cps-ic{ background:#ecfdf5; color:#047857; } .frl-sir.r .cps-ic{ background:#fef2f2; color:#b91c1c; }
 .frl-sir.g{ border-color:#a7f3d0; } .frl-sir.r{ border-color:#fecaca; } .frl-sir .frl-ib{ margin-top:10px; }
 .cpc-badges .frl-vb{ background:#ecfdf5 !important; color:#047857 !important; border-color:#a7f3d0 !important; font-weight:800; }
@@ -23563,7 +23714,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
   /* Contexte pour « Postuler » : prénom, CV et lettre de cet espace, suivi automatique */
   window.cpESApply=function(){ if(!ESAP) return null; var k=ESAP, c=D.data[k]||blank(), p=c.prof||{}, d=c.docs||{};
     var nn=String(p.prenom||'').trim().split(/\s+/), lab=(nn[0]||'')+(nn[1]?' '+nn[1].charAt(0).toUpperCase()+'.':''); /* prénom + initiale, comme partout côté employeur */
-    return { label:lab, st:{ cv:!!d.cv, cvName:d.cv?d.cv.name:'', lm:!!d.lm, lmName:d.lm?d.lm.name:'' },
+    return { label:lab, pf:k, st:{ cv:!!d.cv, cvName:d.cv?d.cv.name:'', lm:!!d.lm, lmName:d.lm?d.lm.name:'' },
       src:function(x){ var u=user(), B=db(); if(!u||!B) return Promise.resolve(null); return B.collection('users').doc(u.uid).collection('espace_docs').doc(k+'_'+x).get().then(function(y){ return y.exists?y.data():null; }); },
       done:function(f,id){ var cc=D.data[k]||c; cc.apps=cc.apps||[]; if(cc.apps.indexOf(id)<0) cc.apps.push(id); cc.cands=cc.cands||[]; if(!cc.cands.some(function(z){ return z.offreId===f.id; })) cc.cands.push({ id:'c'+Date.now(), entreprise:f.empNom||'Entreprise', poste:f.titre||'', statut:'Envoyée', date:new Date().toISOString(), via:'CareerPulse', offreId:f.id });
         var r=ref(k), x=cc; try{ localStorage.setItem('cpes_'+k,JSON.stringify(x)); }catch(e){} if(r) r.set(x).catch(function(){}); candRefresh(); redraw(); if(window.cpStream&&cpStream.reloadConvs) cpStream.reloadConvs(); } }; };
@@ -23904,7 +24055,7 @@ html.pf-etu{ --es0:#3b0764; --es1:#6d28d9; --es2:#a855f7; --ess:#f5f3ff; --esb:#
     if(a==='es-fav'){ var u=b.getAttribute('data-u'), F=favs(), ix=-1; F.forEach(function(f,i){ if(f.u===u) ix=i; }); if(ix>-1) F.splice(ix,1); else F.push({ u:u, n:b.getAttribute('data-n'), s:b.getAttribute('data-s') }); save(); msg(ix>-1?'Retiré de tes favoris':'Ajouté à tes favoris ⭐'); if(PG) PG.render(); return; }
     if(a==='es-nav-home'){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); window.scrollTo({ top:0, behavior:'smooth' }); return; }
     if(a==='es-nav-lisa'){ openPoint(); return; } if(a==='es-nav-prof'){ if(pf()==='sal') openProf(); else { openCand(); openCandPage('fiche'); } return; }
-    if(a==='es-nav-out'){ if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); return; }
+    if(a==='es-nav-out'){ if(window.cpExitAsk) cpExitAsk(); else if(confirm('Te déconnecter ?') && window.fbLogout) fbLogout(); return; }
     if(a==='es-nav-set'){ var cv0=cur(); cpStream.sheet('Paramètres','Ton espace',cBox(0,'Tu peux changer de profil à tout moment : tes données restent rangées dans chaque espace.')+'<div class="es-rows"><button type="button" class="es-row" data-cj="es-setpf"><span class="es-row-i">'+I(P.users||P.user,19)+'</span><span><b>Changer de profil</b><small>Revenir au choix des 4 profils</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" data-cj="es-setvis"><span class="es-row-i v">'+I(P.eye,19)+'</span><span><b>Visibilité de ma fiche</b><small>'+(cv0.vis?'Visible par les employeurs':'Privée')+'</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" data-cj="es-nav-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter</b><small>Quitter mon espace</small></span>'+I(P.chev,16)+'</button></div>'); return; }
     if(a==='es-setpf'){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); var mp=document.querySelector('#cj-home .cj-menu'); if(mp) mp.click(); return; }
     if(a==='es-setvis'){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); openCand(); openCandPage('fiche'); return; } if(a==='es-prof'){ openProf(); return; } if(a==='es-ecol'){ openEcol(); return; } if(a==='es-cand'){ openCand(); return; } if(a==='es-msg'){ openMsg(); return; }
