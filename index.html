@@ -18619,6 +18619,7 @@ window.cpSheetArrows=function(sc,host){
   }
   function loadConvs(){
     var u=me(); if(!u||!db()) return Promise.resolve();
+    db().collection('blocages').where('orgUid','==',u.uid).get().then(function(q){ ST.cblk={}; q.docs.forEach(function(d){ var x=d.data(); if(x.candUid) ST.cblk[x.candUid]=true; }); }).catch(function(){ ST.cblk=ST.cblk||{}; });
     return db().collection('conversations').where('orgUid','==',u.uid).get().then(function(q){
       ST.convs=q.docs.map(function(d){ var x=d.data(); x.id=d.id; return x; }).sort(function(a,b){ return String(b.lastAt||'').localeCompare(String(a.lastAt||'')); });
     }).catch(function(){ ST.convs=[]; });
@@ -18690,7 +18691,7 @@ window.cpSheetArrows=function(sc,host){
     var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv(1);
     var pane=wideC()?$('ofx-pane'):null; ST.copen=id; if(pane) [].forEach.call(document.querySelectorAll('#ofx-list .emx-r'),function(r){ r.classList.toggle('on',r.getAttribute('data-conv')===id); });
     var sh=document.createElement('div'); sh.className='ofcm-sheet of-sheet'+(pane?' emx-embed':''); sh.setAttribute('data-rep','formation:'+c.id);
-    sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><div><b class="ofcm-who"></b><span>'+esc(c.formationTitre||'')+'</span></div><em>🔒 Protégé</em></div>'
+    sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><i class="ofcm-av"></i><div><b class="ofcm-who"></b><span class="ofcm-sub"></span></div><em>🔒 Protégé</em></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div></div></div>';
     sh.querySelector('.ofcm-box').classList.add('ofcm-pro');
     if(pane){ pane.innerHTML=''; pane.appendChild(sh); } else { document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock'); }
@@ -18705,16 +18706,22 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function render(x){
-      var ct=ccCat(x); sh.querySelector('.ofcm-who').innerHTML=esc(cpAt(x.candLabel))+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
+      var ct=ccCat(x); sh.querySelector('.ofcm-who').textContent=cpAt(x.candLabel); sh.querySelector('.ofcm-av').textContent=String(x.candLabel||'?').trim().charAt(0).toUpperCase(); sh.querySelector('.ofcm-sub').innerHTML='<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em><i>'+esc(x.formationTitre||c.formationTitre||'')+'</i>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
-      list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · le candidat a écrit en premier</div>'+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(x.candLabel||'Candidat'))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
-        +(x.statut!=='ouverte'?'<div class="ofcm-note">Le candidat a clôturé cette conversation.</div>':'')
-        +'<div class="emx-acts"><button type="button" class="ofc-btn" data-arch-oc>'+S(I.inbox)+(x.archOrg?'Remettre dans la boîte':'Archiver')+'</button></div>';
+      list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · le candidat a écrit en premier</div>'+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(cpAt(x.candLabel||'Candidat')))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
+        +(x.statut!=='ouverte'?'<div class="ofcm-note">'+(x.bloque?'Vous avez bloqué ce candidat : il ne peut plus vous écrire.':x.closedBy==='org'?'Vous avez clos cette conversation.':'Le candidat a clôturé cette conversation.')+'</div>':'')
+        +'<div class="emx-acts">'+(x.statut==='ouverte'?'<button type="button" class="ofc-btn" data-close-oc>'+S('<path d="M18 6 6 18M6 6l12 12"/>',15)+'Clore la conversation</button>':'')+'<button type="button" class="ofc-btn" data-arch-oc>'+S(I.inbox)+(x.archOrg?'Remettre dans la boîte':'Archiver')+'</button>'
+        +(ST.cblk&&ST.cblk[x.candUid]?'<button type="button" class="ofc-btn" data-blk-oc="0">'+S('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',15)+'Débloquer ce candidat</button>':'<button type="button" class="ofc-btn emx-blk" data-blk-oc="1">'+S('<circle cx="12" cy="12" r="9"/><path d="m5.7 5.7 12.6 12.6"/>',15)+'Bloquer ce candidat</button>')+'</div>';
       list.scrollTop=list.scrollHeight;
       sh.querySelector('.ofcm-ft').style.display=x.statut==='ouverte'?'':'none';
       if(x.unreadOrg){ ref.update({ unreadOrg:false }).catch(function(){}); ST.convs=(ST.convs||[]).map(function(z){ return z.id===c.id?Object.assign(z,{ unreadOrg:false }):z; }); setTimeout(inboxRefresh,0); }
       c=Object.assign({ id:c.id },x);
       var ab=list.querySelector('[data-arch-oc]'); if(ab) ab.onclick=function(){ var na=!c.archOrg; ref.update({ archOrg:na, updatedAt:new Date().toISOString() }).then(function(){ ST.convs=(ST.convs||[]).map(function(z){ return z.id===c.id?Object.assign(z,{ archOrg:na }):z; }); toast(na?'Demande archivée':'Demande remise dans la boîte'); closeConv(); }).catch(function(){ toast('Modification impossible pour le moment'); }); };
+      var cb=list.querySelector('[data-close-oc]'); if(cb) cb.onclick=function(){ if(!confirm('Clore cette conversation ?')) return; ref.update({ statut:'close', closedBy:'org', updatedAt:new Date().toISOString() }).then(function(){ render(Object.assign({},c,{ statut:'close', closedBy:'org' })); }).catch(function(){ toast('Modification impossible pour le moment'); }); };
+      var bb=list.querySelector('[data-blk-oc]'); if(bb) bb.onclick=function(){ var on=bb.getAttribute('data-blk-oc')==='1', u=me(), bref=db().collection('blocages').doc(u.uid+'_'+c.candUid), t=new Date().toISOString();
+        if(on){ if(!confirm('Bloquer ce candidat ? Il ne pourra plus vous écrire et la conversation sera close. Vous pourrez le débloquer à tout moment.')) return;
+          bref.set({ orgUid:u.uid, candUid:c.candUid, convId:c.id, at:t }).then(function(){ ST.cblk=ST.cblk||{}; ST.cblk[c.candUid]=true; return ref.update({ statut:'close', closedBy:'org', bloque:true, updatedAt:t }); }).then(function(){ toast('Candidat bloqué'); render(Object.assign({},c,{ statut:'close', closedBy:'org', bloque:true })); }).catch(function(){ toast('Blocage impossible pour le moment'); }); }
+        else bref.delete().then(function(){ delete ST.cblk[c.candUid]; return ref.update({ bloque:false, updatedAt:t }); }).then(function(){ toast('Candidat débloqué'); render(Object.assign({},c,{ bloque:false })); }).catch(function(){ toast('Modification impossible pour le moment'); }); };
     }
     render(c);
     UNSUB=ref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
@@ -20035,7 +20042,7 @@ window.cpSheetArrows=function(sc,host){
     var pane=wide()?$('emx-pane'):null; if(UNSUB){ UNSUB(); UNSUB=null; } var old=document.querySelector('.ofcm-sheet.emp-sheet'); if(old) old.remove();
     ST.openId=id; if(pane) [].forEach.call(document.querySelectorAll('.emx-r'),function(r){ r.classList.toggle('on',r.getAttribute('data-econv')===id); });
     var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet'+(pane?' emx-embed':''); sh.setAttribute('data-rep','emploi:'+c.id);
-    sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><div><b class="ofcm-who"></b><span>'+esc(c.poste||'')+'</span></div><em>🔒 Protégé</em></div>'
+    sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><i class="ofcm-av"></i><div><b class="ofcm-who"></b><span class="ofcm-sub"></span></div><em>🔒 Protégé</em></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre message…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S(I.send)+'</button></div></div></div></div>';
     if(pane){ pane.innerHTML=''; pane.appendChild(sh); } else { document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock'); }
     var list=sh.querySelector('.ofcm-list'), ref=db().collection('emploi_conversations').doc(c.id);
@@ -20051,12 +20058,12 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function rend(x){
-      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').innerHTML=esc(cpAt(x.candLabel))+'<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em>';
+      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').textContent=cpAt(x.candLabel); sh.querySelector('.ofcm-av').textContent=String(x.candLabel||'?').trim().charAt(0).toUpperCase(); sh.querySelector('.ofcm-sub').innerHTML='<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em><i>'+esc(x.poste||c.poste||'')+'</i>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       var closed=x.statut==='close';
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">'+(x.type==='mission'?'Conversation protégée · mission proposée par '+esc(x.empNom||'votre entreprise'):x.type==='candidature'?'Conversation protégée · candidature reçue pour « '+esc(x.poste||'')+' »':'Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise'))+'</div>'
         +(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='emp'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='emp'?'Vous':esc(cpAt(x.candLabel)))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
-        +'<div class="emx-acts">'+(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button>')+'<button type="button" class="ofc-btn" data-arch-conv>'+S(I.inbox,15)+(x.archEmp?'Remettre dans la boîte':'Archiver')+'</button>'+(ST.blk&&ST.blk[x.candUid]?'<button type="button" class="ofc-btn" data-blk-conv="0">Débloquer ce candidat</button>':'<button type="button" class="ofc-btn emx-blk" data-blk-conv="1">⛔ Bloquer ce candidat</button>')+'</div>';
+        +'<div class="emx-acts">'+(closed?'<div class="ofcm-note">Cette conversation est close.</div>':'<button type="button" class="ofc-btn" data-close-conv>'+S(I.x,15)+'Clore la conversation</button>')+'<button type="button" class="ofc-btn" data-arch-conv>'+S(I.inbox,15)+(x.archEmp?'Remettre dans la boîte':'Archiver')+'</button>'+(ST.blk&&ST.blk[x.candUid]?'<button type="button" class="ofc-btn" data-blk-conv="0">'+S('<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',15)+'Débloquer ce candidat</button>':'<button type="button" class="ofc-btn emx-blk" data-blk-conv="1">'+S('<circle cx="12" cy="12" r="9"/><path d="m5.7 5.7 12.6 12.6"/>',15)+'Bloquer ce candidat</button>')+'</div>';
       list.scrollTop=list.scrollHeight;
       sh.querySelector('.ofcm-ft').style.display=closed?'none':'';
       if(x.unreadEmp) ref.update({ unreadEmp:false }).catch(function(){});
@@ -20214,6 +20221,7 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
     +'.cprep-menu{ position:absolute; top:44px; right:0; z-index:5; min-width:220px; background:#fff; color:#0f172a; border-radius:14px; box-shadow:0 18px 40px -16px rgba(15,23,42,.45); border:1px solid #e2e8f0; padding:6px; }'
     +'.cprep-menu button{ display:flex; align-items:center; gap:9px; width:100%; padding:11px 12px; border:none; background:none; border-radius:10px; font:700 .86rem/1.2 inherit; color:#b91c1c; cursor:pointer; text-align:left; }'
     +'.cprep-menu button:hover{ background:#fef2f2; } .cprep-menu svg{ width:17px; height:17px; flex-shrink:0; }'
+    +'.cprep-menu .cprep-act{ color:#0f172a; } .cprep-menu .cprep-act:hover{ background:#f1f5f9; } .cprep-menu .cprep-act.red{ color:#b91c1c; } .cprep-menu .cprep-act.red:hover{ background:#fef2f2; } .cprep-menu hr{ border:none; border-top:1px solid #e2e8f0; margin:5px 6px; }'
     +'.cprep-sheet{ position:fixed; inset:0; z-index:9800; background:rgba(15,23,42,.5); display:flex; align-items:flex-end; justify-content:center; }'
     +'@media (min-width:700px){ .cprep-sheet{ align-items:stretch; } }'
     +'.cprep-box{ width:100%; max-width:520px; max-height:92vh; overflow:auto; background:#fff; color:#0f172a; border-radius:22px 22px 0 0; padding:20px 18px calc(18px + env(safe-area-inset-bottom)); font-family:\'DM Sans\',-apple-system,BlinkMacSystemFont,\'Segoe UI\',Arial,sans-serif; }'
@@ -20264,13 +20272,17 @@ html.cp-emp-lock .cp-lock-hide, html.cp-emp-lock #s-pro-employeur .ptop, html.cp
     b.innerHTML=S('<circle cx="5" cy="12" r="1.6" fill="currentColor"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/><circle cx="19" cy="12" r="1.6" fill="currentColor"/>');
     hd.appendChild(b);
     b.onclick=function(e){ e.stopPropagation(); var m=b.querySelector('.cprep-menu'); if(m){ m.remove(); return; }
-      m=document.createElement('div'); m.className='cprep-menu'; m.innerHTML='<button type="button">'+S('<path d="M4 22V4a1 1 0 0 1 1-1h12l-2 4 2 4H5"/>')+'Signaler un abus</button>';
-      m.querySelector('button').onclick=function(ev){ ev.stopPropagation(); m.remove(); openForm(sh.getAttribute('data-rep')); };
+      m=document.createElement('div'); m.className='cprep-menu';
+      [].forEach.call(sh.querySelectorAll('.emx-acts button'),function(src){ var it=document.createElement('button'); it.type='button'; it.className='cprep-act'+(src.classList.contains('emx-blk')?' red':''); it.innerHTML=src.innerHTML; it.onclick=function(ev){ ev.stopPropagation(); m.remove(); src.click(); }; m.appendChild(it); });
+      if(m.children.length) m.appendChild(document.createElement('hr'));
+      var rp=document.createElement('button'); rp.type='button'; rp.innerHTML=S('<path d="M4 22V4a1 1 0 0 1 1-1h12l-2 4 2 4H5"/>')+'Signaler un abus'; m.appendChild(rp);
+      rp.onclick=function(ev){ ev.stopPropagation(); m.remove(); openForm(sh.getAttribute('data-rep')); };
       b.appendChild(m); };
   }
   document.addEventListener('click',function(){ var m=document.querySelector('.cprep-menu'); if(m) m.remove(); });
   function scan(){ [].forEach.call(document.querySelectorAll('[data-rep]'),addDots); }
-  function init(){ try{ new MutationObserver(scan).observe(document.body,{ childList:true }); }catch(e){} scan(); }
+  var scQ=0; function scanSoon(){ if(scQ) return; scQ=1; setTimeout(function(){ scQ=0; scan(); },60); }
+  function init(){ try{ new MutationObserver(scanSoon).observe(document.body,{ childList:true, subtree:true }); }catch(e){} scan(); }
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
 })();
 
@@ -25536,6 +25548,29 @@ html body .emp-cats{ flex-wrap:wrap !important; overflow:visible !important; row
   .ofc-drw:not(.open) > .ofc-f{ display:none !important; }
   .ofc-drw:not(.open){ padding-bottom:0 !important; }
 }
+</style>
+<style id="ofcm-v71-css">
+/* Conversations employeur / centre : en-tête net, bulles pro, actions dans le menu ⋯ */
+.ofcm-sheet .emx-acts .ofc-btn{ display:none !important; }
+.ofcm-sheet .emx-acts{ margin:4px 0; } .ofcm-sheet .emx-acts:empty{ display:none; }
+.ofcm-pro .ofcm-hd{ gap:12px; padding:12px 16px; }
+.ofcm-pro .ofcm-hd .ofcm-x{ flex-shrink:0; }
+.ofcm-av{ flex-shrink:0; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font:800 1rem/1 inherit; font-style:normal; color:#1e3a8a; background:#fff; box-shadow:0 0 0 2px rgba(255,255,255,.35); }
+.ofcm-pro .ofcm-who{ display:block; font-size:1rem; font-weight:800; letter-spacing:-.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ofcm-pro .ofcm-hd .ofcm-sub{ display:flex !important; align-items:center; gap:6px; margin-top:3px; min-width:0; opacity:1; }
+.ofcm-sub .emp-ref{ margin:0 !important; flex-shrink:0; background:rgba(255,255,255,.16) !important; color:#e0e7ff !important; border:none !important; padding:1px 7px !important; font-size:.62rem !important; }
+.ofcm-sub .emp-esb{ margin:0 !important; flex-shrink:0; }
+.ofcm-sub i{ font-style:normal; font-size:.74rem; opacity:.88; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; min-width:0; }
+.ofcm-pro .ofcm-list{ background:#f4f6fb; gap:6px; }
+.ofcm-pro .ofcm-m{ max-width:78%; padding:10px 14px 8px; border-radius:18px; font-size:.88rem; line-height:1.5; box-shadow:0 1px 2px rgba(15,23,42,.06); }
+.ofcm-pro .ofcm-m.me{ color:#fff; background:#1e3a8a; border:none; border-bottom-right-radius:6px; }
+.ofcm-pro .ofcm-m.them{ color:#0f172a; background:#fff; border:1px solid #e2e8f0; border-bottom-left-radius:6px; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.ofcm-pro .ofcm-m span{ margin-top:5px; font-size:.64rem; font-weight:600; opacity:.7; text-align:right; }
+.ofcm-pro .ofcm-m.them span{ color:#64748b; opacity:1; }
+.ofcm-pro .ofcm-day{ margin:4px 0 8px; font-size:.62rem; letter-spacing:.04em; color:#64748b; background:#fff; border:1px solid #e2e8f0; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.ofcm-pro .ofcm-note{ align-self:center; text-align:center; font-size:.76rem; color:#475569; background:#fff; border:1px dashed #cbd5e1; border-radius:12px; padding:8px 12px; }
+@media (max-width:899px){ .ofcm-pro .ofcm-hd > em{ display:none; } .ofcm-av{ width:34px; height:34px; font-size:.9rem; } .ofcm-pro .ofcm-hd{ padding:10px 12px; gap:9px; } .ofcm-pro .ofcm-m{ max-width:84%; } }
+@media (min-width:900px){ .ofcm-pro .ofcm-m{ max-width:66%; } }
 </style>
 </body>
 </html>
