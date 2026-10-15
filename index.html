@@ -18603,10 +18603,10 @@ window.cpSheetArrows=function(sc,host){
     var root=$('of-root'); if(!root) return;
     var o=ST.org||{};
     if(!(o.verifie && o.proActif)){
-      root.innerHTML='<div class="ofc">'+hero(o)+(window.cpEvaProCard?cpEvaProCard():'')+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET, déclaration d\'activité, Qualiopi). Dès sa validation, vous pourrez publier vos formations.</span></div></div></div>';
+      root.innerHTML='<div class="ofc">'+hero(o)+(window.cpAboBtn?cpAboBtn('centre',o):'')+(window.cpEvaProCard?cpEvaProCard():'')+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET, déclaration d\'activité, Qualiopi). Dès sa validation, vous pourrez publier vos formations.</span></div></div></div>';
       root.onclick=onClick; return;
     }
-    root.innerHTML='<div class="ofc">'+hero(o)+(window.cpEvaProCard?cpEvaProCard():'')+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
+    root.innerHTML='<div class="ofc">'+hero(o)+(window.cpAboBtn?cpAboBtn('centre',o):'')+(window.cpEvaProCard?cpEvaProCard():'')+tabs()+'<div id="ofc-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
     var oq=$('ofx-q'); if(oq) oq.oninput=function(){ ST.cmq=oq.value; inboxRefresh(); };
     var ofo=$('ofx-fo'); if(ofo) ofo.onchange=function(){ ST.cmfo=ofo.value; inboxRefresh(); };
@@ -19814,10 +19814,10 @@ window.cpSheetArrows=function(sc,host){
   function draw(){
     var root=$('emp-root'); if(!root) return; var o=ST.emp||{};
     if(!(o.verifie && o.proActif)){
-      root.innerHTML='<div class="ofc">'+hero()+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET et coordonnées). Dès sa validation, vous pourrez publier vos offres et découvrir les profils.</span></div></div></div>';
+      root.innerHTML='<div class="ofc">'+hero()+(window.cpAboBtn?cpAboBtn('emp',o):'')+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+'<div class="ofc-card"><div class="ofc-wait">'+S(I.lock)+'<span>Votre compte est en cours de vérification (SIRET et coordonnées). Dès sa validation, vous pourrez publier vos offres et découvrir les profils.</span></div></div></div>';
       root.onclick=onClick; return;
     }
-    root.innerHTML='<div class="ofc">'+hero()+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+tabs()+'<div id="emp-tab">'+tabHtml()+'</div></div>';
+    root.innerHTML='<div class="ofc">'+hero()+(window.cpAboBtn?cpAboBtn('emp',o):'')+(window.cpEvaProEmpCard?cpEvaProEmpCard():'')+tabs()+'<div id="emp-tab">'+tabHtml()+'</div></div>';
     root.onclick=onClick;
     root.onchange=function(e){ if(e.target.id!=='emp-elogo') return; var fl=e.target.files&&e.target.files[0]; if(!fl||!window.cpReadLogo) return; cpReadLogo(fl).then(function(d){ ST.elogo=d; var pv=$('emp-elogo-pv'); if(pv) pv.innerHTML='<img src="'+d+'" alt="">'; toast('Logo prêt : cliquez sur « Enregistrer »'); }).catch(function(){ toast('Ce fichier n\'est pas une image valide (PNG, JPG ou WebP).'); }); };
     var q=$('emp-q'); if(q) q.oninput=function(){ ST.q=q.value; var l=$('emp-clist'); if(l) l.innerHTML=candList(); };
@@ -25610,6 +25610,147 @@ document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.
   .ofcm-pro.v2-pro .ofcm-mobinfo{ display:flex !important; flex-direction:column; gap:12px; }
   .ofcm-pro.v2-pro .ofcm-ft{ display:none !important; }
 }
+</style>
+<script>
+/* ═══ Abonnement Pro (employeurs et centres) ═══
+   Paiement : collez ici vos liens de paiement Stripe (Payment Links) quand votre compte Stripe est prêt.
+   Tant qu'un lien est vide, le bouton affiche une information honnête au lieu de payer. */
+window.CP_PAY = window.CP_PAY || {
+  emp:    { mois:'', an:'' },
+  centre: { mois:'', an:'' },
+  portail:''   /* lien du portail client Stripe (factures, résiliation) */
+};
+(function(){
+  var LOGO='<svg viewBox="0 0 48 44" fill="none" aria-hidden="true"><defs><linearGradient id="cpAbL" gradientUnits="userSpaceOnUse" x1="2" y1="42" x2="46" y2="2"><stop offset="0" stop-color="#1d4ed8"/><stop offset=".5" stop-color="#0891b2"/><stop offset="1" stop-color="#10b981"/></linearGradient></defs><g fill="url(#cpAbL)"><rect x="3" y="34" width="6" height="8" rx="1.3"/><rect x="12" y="30" width="6" height="12" rx="1.3"/><rect x="21" y="25" width="6" height="17" rx="1.3"/><rect x="30" y="19" width="6" height="23" rx="1.3"/><rect x="39" y="13" width="6" height="29" rx="1.3"/></g><path d="M3 24Q22 18 39.5 6" stroke="url(#cpAbL)" stroke-width="2.8" stroke-linecap="round"/><path d="M43.8 3 41.3 8.6 37.7 3.4z" fill="url(#cpAbL)" stroke="url(#cpAbL)" stroke-width="1.2" stroke-linejoin="round"/></svg>';
+  var P={
+    emp:{ nom:'Employeur', essai:14, mois:50, an:500, pmois:'119,90', pan:'899,90',
+      h:'Recrutez les talents que les autres n\'ont pas encore vus.',
+      p:'Des candidats préparés avec Lisa : CV, lettre et projet clair. Vous ne cherchez plus, vous choisissez.',
+      f:['Offres d\'emploi publiées en illimité','Accès aux profils de tous les membres visibles','Proposez un échange : le candidat répond en un clic','Messagerie protégée, blocage et signalement','Missions freelance et avis clients','Tarif de lancement garanti à vie'] },
+    centre:{ nom:'Centre de formation', essai:7, mois:15, an:150, pmois:'29,90', pan:'199,90',
+      h:'Remplissez vos sessions avec des candidats qui viennent à vous.',
+      p:'CareerPulse recommande vos formations aux membres dont le projet correspond. Ils vous écrivent, vous répondez.',
+      f:['Formations publiées en illimité','Recommandées aux membres dont le profil correspond','Demandes reçues dans une messagerie protégée','Statistiques de vos formations','Conforme à l\'interdiction du démarchage CPF','Tarif de lancement garanti à vie'] }
+  };
+  var DOC={};
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function eur(n){ return String(n).replace('.',','); }
+  function fdate(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return ''; } }
+  function etat(k){ var o=DOC[k]||{}, a=o.abo||{}, now=Date.now(), fin=a.fin?new Date(a.fin).getTime():0;
+    if(!o.verifie) return { c:'wait', t:'Compte en vérification', d:'Votre essai gratuit de '+P[k].essai+' jours démarrera dès la validation de votre compte.' };
+    if(a.statut==='actif') return { c:'ok', t:'Pro actif', d:'Formule '+(a.plan==='an'?'annuelle':'mensuelle')+(fin?' · renouvellement le '+fdate(a.fin):'')+'.' };
+    if(a.statut==='essai' && fin>now){ var j=Math.ceil((fin-now)/864e5); return { c:'trial', t:'Essai gratuit · J-'+j, d:'Votre essai se termine le '+fdate(a.fin)+'. Abonnez-vous pour garder votre tarif de lancement.' }; }
+    if(a.statut==='expire' || (a.statut==='essai' && fin && fin<=now)) return { c:'off', t:'Abonnement expiré', d:'Vos messages et vos publications restent consultables. Réactivez votre abonnement pour écrire et publier.' };
+    if(o.proActif) return { c:'ok', t:'Accès Pro ouvert', d:'Accès offert pendant la phase de lancement de CareerPulse.' };
+    return { c:'off', t:'Non abonné', d:'Choisissez votre formule pour activer votre espace Pro.' };
+  }
+  window.cpAboBtn=function(k,o){ DOC[k]=o||{}; var e=etat(k);
+    return '<button type="button" class="cpab-btn" data-cpabo="'+k+'"><span class="cpab-lg">'+LOGO+'</span><span class="cpab-tx"><b>Abonnement Pro</b><small>Dès '+P[k].mois+' € HT/mois · tarif de lancement</small></span><em class="cpab-st '+e.c+'">'+esc(e.t)+'</em><i class="cpab-go">›</i></button>';
+  };
+  function chk(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>'; }
+  function lois(k){ var x=P[k];
+    return [
+      ['Prix','Prix indiqués hors taxes (HT). La TVA est appliquée selon le régime fiscal de CareerPulse au moment de la facturation et figure sur chaque facture.'],
+      ['Essai gratuit',x.essai+' jours offerts à la validation de votre compte, sans carte bancaire et sans engagement. Aucun prélèvement n\'a lieu à la fin de l\'essai si vous ne souscrivez pas.'],
+      ['Durée et renouvellement','Abonnement mensuel ou annuel, reconduit automatiquement à chaque échéance. Pour la formule annuelle, un e-mail vous rappelle la date de renouvellement avant chaque échéance.'],
+      ['Résiliation','Résiliable à tout moment depuis « Mon abonnement », en quelques clics, aussi simplement que la souscription. La résiliation prend effet à la fin de la période déjà payée ; la période en cours n\'est pas remboursée au prorata.'],
+      ['Tarif de lancement','Le tarif de lancement est garanti à vie tant que votre abonnement reste actif sans interruption. Après une résiliation, une nouvelle souscription se fait au prix public en vigueur.'],
+      ['Paiement sécurisé','Paiement par carte bancaire via Stripe, prestataire certifié PCI-DSS. Authentification forte 3-D Secure (directive européenne DSP2). CareerPulse ne voit et ne conserve jamais votre numéro de carte.'],
+      ['Facture','Une facture est émise à chaque paiement et reste téléchargeable dans votre espace (mentions de l\'article L441-9 du Code de commerce). En cas de retard de paiement : pénalités et indemnité forfaitaire de 40 € pour frais de recouvrement (art. L441-10 du Code de commerce).'],
+      ['Offre réservée aux professionnels','Contrat conclu entre professionnels : le droit de rétractation de 14 jours du Code de la consommation ne s\'applique pas, sauf dans les cas prévus par l\'article L221-3 de ce code.'],
+      ['Fin d\'abonnement','À l\'expiration, votre espace reste consultable en lecture : vos messages, offres et formations ne sont jamais supprimés sans votre demande.'],
+      ['Données personnelles','Vos données sont traitées conformément au RGPD. Les données de paiement sont traitées directement par Stripe. Pour toute question : careerpulse-pro@outlook.com.']
+    ].map(function(r){ return '<details class="cpab-law"><summary>'+r[0]+'</summary><p>'+r[1]+'</p></details>'; }).join('');
+  }
+  function open(k){ var x=P[k], e=etat(k), plan='mois', old=document.querySelector('.cpab-sheet'); if(old) old.remove();
+    var sh=document.createElement('div'); sh.className='cpab-sheet';
+    sh.innerHTML='<div class="cpab-box" role="dialog" aria-label="Abonnement Pro"><div class="cpab-hd"><span class="cpab-brand"><span class="cpab-lg">'+LOGO+'</span><b>Career<span>Pulse</span></b><em>PRO</em></span><button type="button" class="cpab-x" aria-label="Fermer">✕</button></div>'
+      +'<div class="cpab-sc"><div class="cpab-hero"><span class="cpab-k">✦ Tarif de lancement · garanti à vie</span><h2>'+x.h+'</h2><p>'+x.p+'</p></div>'
+      +'<div class="cpab-me '+e.c+'"><span>Mon abonnement · '+x.nom+'</span><b>'+esc(e.t)+'</b><small>'+esc(e.d)+'</small>'+((DOC[k].abo||{}).statut==='actif'?'<button type="button" class="cpab-mg">Gérer mon abonnement et mes factures</button>':'')+'</div>'
+      +'<div class="cpab-tg" role="tablist"><button type="button" class="on" data-pl="mois">Mensuel</button><button type="button" data-pl="an">Annuel<i>2 mois offerts</i></button></div>'
+      +'<div class="cpab-card"><div class="cpab-pr"></div><ul>'+x.f.map(function(t){ return '<li>'+chk()+t+'</li>'; }).join('')+'</ul>'
+      +'<button type="button" class="cpab-cta"></button><div class="cpab-msg" hidden></div>'
+      +'<div class="cpab-tr"><span>🔒 Paiement sécurisé Stripe</span><span>Sans engagement</span><span>Résiliable à tout moment</span></div></div>'
+      +'<h3 class="cpab-lt">Conditions d\'abonnement</h3>'+lois(k)
+      +'<p class="cpab-ft">Une question avant de vous abonner ? <a href="mailto:careerpulse-pro@outlook.com">careerpulse-pro@outlook.com</a></p></div></div>';
+    document.body.appendChild(sh); document.documentElement.classList.add('cpab-lock');
+    function close(){ sh.remove(); document.documentElement.classList.remove('cpab-lock'); }
+    function paint(){ var an=plan==='an';
+      sh.querySelector('.cpab-pr').innerHTML='<div class="cpab-big"><b>'+(an?x.an:x.mois)+' €</b><span>HT / '+(an?'an':'mois')+'</span></div>'
+        +(an?'<div class="cpab-eq">soit '+eur((x.an/12).toFixed(2))+' € HT par mois · '+(x.mois*12-x.an)+' € économisés</div>':'')
+        +'<div class="cpab-pub">Prix public prévu : '+(an?x.pan:x.pmois)+' € HT / '+(an?'an':'mois')+'</div>';
+      var ac=(DOC[k].abo||{}).statut==='actif';
+      sh.querySelector('.cpab-cta').textContent=ac?'Vous êtes abonné ✓':(e.c==='trial'||e.c==='ok'?'Je m\'abonne · '+(an?'formule annuelle':'formule mensuelle'):'Je démarre mes '+x.essai+' jours gratuits');
+      sh.querySelector('.cpab-cta').disabled=ac;
+      [].forEach.call(sh.querySelectorAll('.cpab-tg button'),function(b){ b.classList.toggle('on',b.getAttribute('data-pl')===plan); });
+    }
+    paint();
+    sh.querySelector('.cpab-tg').onclick=function(ev){ var b=ev.target.closest('button'); if(!b) return; plan=b.getAttribute('data-pl'); sh.querySelector('.cpab-msg').hidden=true; paint(); };
+    sh.querySelector('.cpab-x').onclick=close;
+    sh.addEventListener('click',function(ev){ if(ev.target===sh) close(); });
+    var mg=sh.querySelector('.cpab-mg'); if(mg) mg.onclick=function(){ if(CP_PAY.portail) window.open(CP_PAY.portail,'_blank','noopener'); else location.href='mailto:careerpulse-pro@outlook.com?subject='+encodeURIComponent('Mon abonnement CareerPulse Pro'); };
+    sh.querySelector('.cpab-cta').onclick=function(){
+      var url=((CP_PAY[k]||{})[plan])||'', u=window._fbUser||(window.fbAuth&&fbAuth.currentUser), m=sh.querySelector('.cpab-msg');
+      if(url){ location.href=url+(url.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(u?u.uid:''); return; }
+      m.hidden=false; m.innerHTML=e.c==='wait'?'<b>Votre compte est en cours de vérification.</b> Votre essai gratuit de '+x.essai+' jours démarrera automatiquement dès sa validation : rien à payer d\'ici là.'
+        :'<b>Le paiement en ligne ouvre très bientôt.</b> Votre tarif de lancement vous est réservé. Pour souscrire dès maintenant, écrivez-nous : <a href="mailto:careerpulse-pro@outlook.com?subject='+encodeURIComponent('Abonnement CareerPulse Pro · '+x.nom+' · '+(plan==='an'?'annuel':'mensuel'))+'">careerpulse-pro@outlook.com</a>';
+    };
+  }
+  /* Abonnement expiré : la lecture reste possible, écrire et publier ouvre l'abonnement */
+  var GATE='.ofcm-send, [data-ea="prop"], [data-ea="send"], [data-ea="osave"], [data-a="save"], [data-a="addf"], [data-a="propose"]';
+  document.addEventListener('click',function(ev){
+    var t=ev.target.closest&&ev.target.closest('[data-cpabo]'); if(t){ open(t.getAttribute('data-cpabo')); return; }
+    var g=ev.target.closest&&ev.target.closest(GATE); if(!g) return;
+    var k=g.closest('#emp-root, .emp-sheet')?'emp':g.closest('#of-root, .of-sheet')?'centre':''; if(!k||!DOC[k]) return;
+    if(etat(k).c!=='off' || !DOC[k].verifie) return;
+    ev.preventDefault(); ev.stopPropagation(); open(k);
+  },true);
+  window.cpAboOpen=open;
+})();
+</script>
+<style id="cpab-css">
+.cpab-btn{ display:flex; align-items:center; gap:12px; width:100%; margin:14px 0; padding:14px 16px; border:1px solid rgba(255,255,255,.18); border-radius:20px; cursor:pointer; text-align:left; color:#fff; font-family:'DM Sans',sans-serif;
+  background:radial-gradient(120% 140% at 100% 0%,rgba(16,185,129,.35),transparent 55%),linear-gradient(120deg,#0b1e3f,#1e3a8a 55%,#065f46 130%); box-shadow:0 18px 40px -22px rgba(15,23,42,.8); transition:transform .2s, box-shadow .2s; }
+.cpab-btn:hover{ transform:translateY(-1px); box-shadow:0 22px 46px -22px rgba(15,23,42,.9); }
+.cpab-lg{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:14px; background:#fff; flex-shrink:0; }
+.cpab-lg svg{ width:30px; height:28px; }
+.cpab-tx{ flex:1; min-width:0; } .cpab-tx b{ display:block; font-size:1rem; font-weight:800; letter-spacing:-.01em; } .cpab-tx small{ display:block; margin-top:2px; font-size:.76rem; opacity:.85; }
+.cpab-st{ flex-shrink:0; font-style:normal; font-size:.68rem; font-weight:800; padding:5px 10px; border-radius:999px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.3); white-space:nowrap; }
+.cpab-st.ok{ background:#d1fae5; color:#065f46; border-color:#d1fae5; } .cpab-st.trial{ background:#fef3c7; color:#92400e; border-color:#fef3c7; } .cpab-st.off{ background:#fee2e2; color:#991b1b; border-color:#fee2e2; }
+.cpab-go{ font-style:normal; font-size:1.5rem; line-height:1; opacity:.8; }
+@media (max-width:520px){ .cpab-btn{ flex-wrap:wrap; row-gap:10px; } .cpab-tx{ flex:1 1 calc(100% - 60px); } .cpab-st{ order:5; margin-left:56px; } .cpab-go{ display:none; } }
+html.cpab-lock{ overflow:hidden; }
+.cpab-sheet{ position:fixed; inset:0; z-index:100000; background:rgba(8,15,35,.62); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:flex-end; justify-content:center; font-family:'DM Sans',sans-serif; }
+.cpab-box{ width:100%; max-width:560px; max-height:94vh; display:flex; flex-direction:column; background:#f6f8fc; border-radius:24px 24px 0 0; overflow:hidden; box-shadow:0 -24px 60px -20px rgba(0,0,0,.5); }
+@media (min-width:900px){ .cpab-sheet{ align-items:center; } .cpab-box{ border-radius:24px; max-height:90vh; } }
+.cpab-hd{ display:flex; align-items:center; justify-content:space-between; padding:14px 18px; background:#fff; border-bottom:1px solid #e2e8f0; }
+.cpab-brand{ display:flex; align-items:center; gap:9px; } .cpab-brand .cpab-lg{ width:34px; height:34px; background:none; } .cpab-brand b{ font-size:1.08rem; font-weight:800; color:#1e40af; letter-spacing:-.02em; } .cpab-brand b span{ color:#059669; }
+.cpab-brand em{ font-style:normal; font-size:.62rem; font-weight:800; letter-spacing:.12em; color:#fff; padding:3px 8px; border-radius:6px; background:linear-gradient(120deg,#1e3a8a,#059669); }
+.cpab-x{ width:36px; height:36px; border-radius:50%; border:1px solid #e2e8f0; background:#fff; color:#334155; font-size:.95rem; cursor:pointer; }
+.cpab-sc{ overflow-y:auto; padding:0 16px 22px; }
+.cpab-hero{ margin:0 -16px; padding:24px 22px 26px; color:#fff; background:radial-gradient(120% 140% at 100% 0%,rgba(16,185,129,.4),transparent 55%),linear-gradient(130deg,#0b1e3f,#1e3a8a 55%,#065f46 135%); }
+.cpab-k{ display:inline-block; font-size:.7rem; font-weight:800; letter-spacing:.04em; padding:5px 11px; border-radius:999px; color:#fde68a; background:rgba(253,230,138,.12); border:1px solid rgba(253,230,138,.35); }
+.cpab-hero h2{ margin:14px 0 8px; font-size:1.45rem; line-height:1.22; font-weight:800; letter-spacing:-.02em; } .cpab-hero p{ margin:0; font-size:.9rem; line-height:1.55; opacity:.9; }
+.cpab-me{ margin:16px 0 14px; padding:14px 16px; border-radius:16px; background:#fff; border:1px solid #e2e8f0; border-left:4px solid #94a3b8; }
+.cpab-me.ok{ border-left-color:#10b981; } .cpab-me.trial{ border-left-color:#f59e0b; } .cpab-me.off{ border-left-color:#ef4444; } .cpab-me.wait{ border-left-color:#3b82f6; }
+.cpab-me span{ display:block; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#64748b; } .cpab-me b{ display:block; margin-top:4px; font-size:1rem; color:#0f172a; } .cpab-me small{ display:block; margin-top:3px; font-size:.8rem; line-height:1.45; color:#475569; }
+.cpab-mg{ margin-top:10px; padding:9px 12px; border-radius:10px; border:1px solid #cbd5e1; background:#f8fafc; color:#1e3a8a; font:700 .8rem/1.2 inherit; cursor:pointer; }
+.cpab-tg{ display:flex; gap:6px; padding:5px; border-radius:14px; background:#e8edf5; }
+.cpab-tg button{ flex:1; display:flex; align-items:center; justify-content:center; gap:7px; padding:11px 8px; border:none; border-radius:10px; background:none; color:#475569; font:800 .88rem/1.2 inherit; cursor:pointer; }
+.cpab-tg button i{ font-style:normal; font-size:.62rem; font-weight:800; padding:3px 7px; border-radius:999px; background:#d1fae5; color:#065f46; }
+.cpab-tg button.on{ background:#fff; color:#0f172a; box-shadow:0 4px 12px -6px rgba(15,23,42,.35); }
+.cpab-card{ margin-top:12px; padding:20px 18px; border-radius:20px; background:#fff; border:1px solid #e2e8f0; box-shadow:0 18px 40px -28px rgba(15,23,42,.45); }
+.cpab-big{ display:flex; align-items:baseline; gap:8px; } .cpab-big b{ font-size:2.4rem; font-weight:800; letter-spacing:-.03em; color:#0f172a; line-height:1; } .cpab-big span{ font-size:.9rem; font-weight:700; color:#475569; }
+.cpab-eq{ margin-top:6px; font-size:.82rem; font-weight:700; color:#059669; } .cpab-pub{ margin-top:6px; font-size:.78rem; color:#64748b; }
+.cpab-card ul{ list-style:none; margin:16px 0 0; padding:16px 0 0; border-top:1px solid #eef2f7; display:flex; flex-direction:column; gap:10px; }
+.cpab-card li{ display:flex; align-items:flex-start; gap:10px; font-size:.88rem; line-height:1.4; color:#1e293b; } .cpab-card li svg{ width:18px; height:18px; flex-shrink:0; padding:3px; border-radius:50%; background:#d1fae5; color:#047857; box-sizing:content-box; }
+.cpab-cta{ width:100%; margin-top:18px; padding:15px 16px; border:none; border-radius:14px; cursor:pointer; color:#fff; font:800 .98rem/1.2 'DM Sans',sans-serif; background:linear-gradient(120deg,#1e3a8a,#1d4ed8 45%,#059669); box-shadow:0 14px 28px -14px rgba(30,64,175,.8); }
+.cpab-cta:disabled{ opacity:.6; cursor:default; }
+.cpab-msg{ margin-top:12px; padding:12px 14px; border-radius:12px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:.82rem; line-height:1.5; } .cpab-msg a{ color:#1d4ed8; font-weight:700; }
+.cpab-tr{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px 14px; margin-top:12px; font-size:.72rem; font-weight:700; color:#64748b; }
+.cpab-lt{ margin:22px 2px 8px; font-size:.95rem; font-weight:800; color:#0f172a; }
+.cpab-law{ margin-bottom:6px; border-radius:12px; background:#fff; border:1px solid #e2e8f0; } .cpab-law summary{ padding:12px 14px; cursor:pointer; font-size:.84rem; font-weight:700; color:#1e293b; } .cpab-law p{ margin:0; padding:0 14px 13px; font-size:.8rem; line-height:1.55; color:#475569; }
+.cpab-ft{ margin:16px 0 0; text-align:center; font-size:.8rem; color:#64748b; } .cpab-ft a{ color:#1d4ed8; font-weight:700; }
 </style>
 </body>
 </html>
