@@ -19149,7 +19149,7 @@ window.cpSheetArrows=function(sc,host){
   }
   /* Sortie : quitter le profil (le compte reste connecté) ou se déconnecter du site */
   window.cpExitAsk=function(){ document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); });
-    var o=sheet('Quitter mon espace','Pour sortir de ton espace, déconnecte-toi','<div class="es-rows cpx-rows"><button type="button" class="es-row" id="cpx-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter du site</b><small>Ta session CareerPulse se ferme complètement</small></span>'+I(P.chev,16)+'</button></div>');
+    var o=sheet('Quitter mon espace','Choisis comment tu veux sortir','<div class="es-rows cpx-rows"><button type="button" class="es-row" id="cpx-pf"><span class="es-row-i v">'+I(P.users||P.user,19)+'</span><span><b>Quitter ce profil</b><small>Ton compte reste connecté : tu reviens au choix des profils</small></span>'+I(P.chev,16)+'</button><button type="button" class="es-row" id="cpx-out"><span class="es-row-i r">'+I(P.ext,19)+'</span><span><b>Me déconnecter du site</b><small>Ta session CareerPulse se ferme complètement</small></span>'+I(P.chev,16)+'</button></div>');
     var opf=o.body.querySelector('#cpx-pf'); if(opf) opf.onclick=function(){ o.sh.remove(); document.querySelectorAll('.cpw-sheet').forEach(function(x){ x.remove(); }); document.documentElement.classList.remove('ofcm-lock'); INTRO=true; var hb=$('cj-home'); if(hb) hb.innerHTML=''; drawAll(); try{ window.scrollTo(0,0); }catch(x){} };
     o.body.querySelector('#cpx-out').onclick=function(){ if(window.fbLogout) fbLogout(); }; };
   function say2(html){ return '<div class="cj-say">'+av('sm')+'<div>'+html+'</div></div>'; }
