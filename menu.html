@@ -1808,6 +1808,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
    <button onclick="cpMenuShow('list')" style="background:none;border:none;color:#059669;font-size:.68rem;font-weight:700;cursor:pointer;margin-bottom:14px;font-family:inherit;padding:0;">← Retour</button>
 
    <div style="font-size:.84rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Donne ton avis</div>
+   <div id="cp-sat-res"></div>
+   <div style="font-size:.78rem;font-weight:800;color:#0f172a;margin:18px 0 4px;">Ton message à l'équipe</div>
    <div style="font-size:.66rem;color:#64748b;line-height:1.5;margin-bottom:16px;">3 questions rapides pour nous aider à améliorer CareerPulse.</div>
 
    <div style="border:1.5px solid #e2e8f0;border-radius:13px;padding:14px;">
@@ -9408,6 +9410,7 @@ function toggleGridMenu(){
 
 // ── Menu hamburger : navigation entre Liste / Espace membre / Abonnement (même page) ──
 function cpMenuShow(which){
+  if(which==='avis' && window.cpSatRender) setTimeout(cpSatRender,0);
   ['list','membre','abo','contact','avis'].forEach(function(k){
     var el=document.getElementById('cp-menu-'+k);
     if(el) el.style.display = (k===which) ? 'block' : 'none';
@@ -12626,5 +12629,40 @@ go=function(page){
 #tnav .logo .cp-lg-mark{ display:flex; align-items:center; justify-content:center; width:34px; height:31px; flex-shrink:0; }
 #tnav .logo .cp-lg-mark svg{ width:34px; height:31px; display:block; filter:drop-shadow(0 2px 4px rgba(8,145,178,.25)); }
 </style>
+<script>
+/* ═══ Satisfaction : résultats calculés à partir des votes en fin de page (EVA · Lisa · CareerPulse) ═══ */
+(function(){
+  var PARTS=[['eva','EVA','Les pages d\'EVA'],['lisa','Lisa','Les pages des profils membres'],['careerpulse','CareerPulse','Les espaces pros']], MIN=3, TAB='eva', DATA=null;
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function avg(a,k){ return a.length?a.reduce(function(s,x){ return s+(+x[k]||0); },0)/a.length:0; }
+  function f1(n){ return n.toFixed(1).replace('.',','); }
+  function stars(n){ var h=''; for(var i=1;i<=5;i++) h+='<span style="color:'+(n>=i-.25?'#f59e0b':'#e2e8f0')+'">★</span>'; return h; }
+  function draw(){ var box=document.getElementById('cp-sat-res'); if(!box) return;
+    var tabs='<div style="display:flex;gap:6px;margin-bottom:12px;">'+PARTS.map(function(p){ var on=p[0]===TAB; return '<button type="button" data-sat-tab="'+p[0]+'" style="flex:1;padding:9px 6px;border-radius:10px;border:1.5px solid '+(on?'#facc15':'#e2e8f0')+';background:'+(on?'#fffbeb':'#fff')+';font:800 .68rem/1.2 inherit;color:'+(on?'#92400e':'#475569')+';cursor:pointer;">'+p[1]+'</button>'; }).join('')+'</div>';
+    var head='<div style="font-size:.84rem;font-weight:800;color:#0f172a;margin-bottom:4px;">Satisfaction des pages</div><div style="font-size:.64rem;color:#64748b;line-height:1.5;margin-bottom:12px;">Les notes laissées par les membres en bas de chaque page. Résultats anonymes.</div>';
+    if(DATA===null){ box.innerHTML=head+tabs+'<div style="font-size:.66rem;color:#94a3b8;padding:14px;text-align:center;">Chargement des résultats…</div>'; return; }
+    if(DATA==='login'){ box.innerHTML=head+'<div style="font-size:.66rem;color:#64748b;padding:14px;border:1.5px dashed #e2e8f0;border-radius:12px;text-align:center;">Connecte-toi pour voir les résultats.</div>'; return; }
+    if(DATA==='err'){ box.innerHTML=head+'<div style="font-size:.66rem;color:#b45309;padding:14px;text-align:center;">Résultats indisponibles pour le moment.</div>'; return; }
+    var part=PARTS.filter(function(p){ return p[0]===TAB; })[0], all=DATA.filter(function(v){ return v.cible===TAB; }), pages={};
+    all.forEach(function(v){ (pages[v.page]=pages[v.page]||{ label:v.label, v:[] }).v.push(v); });
+    var L=Object.keys(pages).map(function(k){ var p=pages[k]; return { label:p.label, n:p.v.length, note:avg(p.v,'note') }; }).sort(function(a,b){ return (b.n>=MIN)-(a.n>=MIN) || b.note-a.note || b.n-a.n; });
+    var g=all.length>=MIN;
+    var card='<div style="border:2px solid #facc15;border-radius:14px;background:#fffdf3;padding:14px;text-align:center;margin-bottom:10px;">'
+      +'<div style="font-size:.6rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#92400e;">'+esc(part[1])+' · '+esc(part[2])+'</div>'
+      +(g?'<div style="font-size:1.9rem;font-weight:900;color:#0f172a;margin-top:4px;">'+f1(avg(all,'note'))+'<span style="font-size:.8rem;color:#64748b;font-weight:700;">/5</span></div><div style="font-size:1.1rem;letter-spacing:2px;">'+stars(avg(all,'note'))+'</div><div style="font-size:.6rem;color:#64748b;margin-top:2px;">'+all.length+' avis</div>'
+        +'<div style="display:flex;gap:6px;margin-top:10px;">'+[['qualite','Qualité'],['efficacite','Efficacité'],['utilite','Utilité']].map(function(q){ return '<div style="flex:1;background:#fff;border:1px solid #fde68a;border-radius:10px;padding:7px 4px;"><b style="display:block;font-size:.82rem;color:#0f172a;">'+f1(avg(all,q[0]))+'</b><span style="font-size:.56rem;color:#64748b;">'+q[1]+'</span></div>'; }).join('')+'</div>'
+       :'<div style="font-size:.7rem;color:#64748b;margin-top:8px;">Pas encore assez d\'avis ('+all.length+'/'+MIN+')</div>')+'</div>';
+    var list=L.length?L.map(function(p){ return '<div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid #e2e8f0;border-radius:11px;margin-bottom:6px;background:#fff;"><div style="flex:1;min-width:0;"><div style="font-size:.68rem;font-weight:700;color:#0f172a;">'+esc(p.label)+'</div><div style="font-size:.58rem;color:#94a3b8;">'+p.n+' avis</div></div>'
+      +(p.n>=MIN?'<div style="text-align:right;flex-shrink:0;"><b style="font-size:.8rem;color:#0f172a;">'+f1(p.note)+'</b><div style="font-size:.66rem;">'+stars(p.note)+'</div></div>':'<span style="font-size:.56rem;color:#94a3b8;flex-shrink:0;">Pas encore assez d\'avis</span>')+'</div>'; }).join('')
+      :'<div style="font-size:.66rem;color:#94a3b8;padding:12px;text-align:center;">Aucune page notée pour l\'instant.</div>';
+    box.innerHTML=head+tabs+card+'<div style="font-size:.64rem;font-weight:800;color:#475569;margin:12px 0 6px;">Note par page</div>'+list;
+    [].forEach.call(box.querySelectorAll('[data-sat-tab]'),function(b){ b.onclick=function(){ TAB=b.getAttribute('data-sat-tab'); draw(); }; });
+  }
+  window.cpSatRender=function(){ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser), db=window.fbDb; DATA=null; draw();
+    if(!u||!db){ DATA='login'; draw(); return; }
+    db.collection('satisfaction').get().then(function(q){ DATA=[]; q.forEach(function(d){ var x=d.data(); if(x && x.cible && x.note) DATA.push(x); }); draw(); }).catch(function(){ DATA='err'; draw(); });
+  };
+})();
+</script>
 </body>
 </html>
