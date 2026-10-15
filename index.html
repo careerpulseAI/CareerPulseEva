@@ -18691,7 +18691,7 @@ window.cpSheetArrows=function(sc,host){
     var c=(ST.convs||[]).filter(function(x){ return x.id===id; })[0]; if(!c) return; closeConv(1);
     var pane=wideC()?$('ofx-pane'):null; ST.copen=id; if(pane) [].forEach.call(document.querySelectorAll('#ofx-list .emx-r'),function(r){ r.classList.toggle('on',r.getAttribute('data-conv')===id); });
     var sh=document.createElement('div'); sh.className='ofcm-sheet of-sheet'+(pane?' emx-embed':''); sh.setAttribute('data-rep','formation:'+c.id);
-    sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><i class="ofcm-av"></i><div><b class="ofcm-who"></b><span class="ofcm-sub"></span></div><em>🔒 Protégé</em></div>'
+    sh.innerHTML='<div class="ofcm-box"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S('<path d="M15 18l-6-6 6-6"/>')+'</button><i class="ofcm-av"></i><div><b class="ofcm-who"></b><span class="ofcm-sub"></span></div><em>🔒 Protégé</em></div><div class="ofcm-tabs2"><button type="button" class="on" data-v2="msg">'+S('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',16)+'Messages</button><button type="button" data-v2="pro">'+S('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',16)+'Profil et coordonnées</button></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre réponse…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S('<path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/>')+'</button></div></div></div></div>';
     sh.querySelector('.ofcm-box').classList.add('ofcm-pro');
     if(pane){ pane.innerHTML=''; pane.appendChild(sh); } else { document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock'); }
@@ -18706,7 +18706,7 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function render(x){
-      var ct=ccCat(x); sh.querySelector('.ofcm-who').textContent=cpAt(x.candLabel); sh.querySelector('.ofcm-av').textContent=String(x.candLabel||'?').trim().charAt(0).toUpperCase(); sh.querySelector('.ofcm-sub').innerHTML='<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em><i>'+esc(x.formationTitre||c.formationTitre||'')+'</i>';
+      var ct=ccCat(x); sh.querySelector('.ofcm-who').textContent=cpAt(x.candLabel); sh.querySelector('.ofcm-av').textContent=String(x.candLabel||'?').trim().charAt(0).toUpperCase(); sh.querySelector('.ofcm-sub').innerHTML='<span class="ofcm-tags"><em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em></span><i>'+esc(x.formationTitre||c.formationTitre||'')+'</i>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">Conversation protégée · le candidat a écrit en premier</div>'+(x.messages||[]).map(function(m){ return '<div class="ofcm-m '+(m.from==='org'?'me':'them')+'"><p>'+esc(m.text)+'</p><span>'+(m.from==='org'?'Vous':esc(cpAt(x.candLabel||'Candidat')))+' · '+fmtAt(m.at)+'</span></div>'; }).join('')
         +(x.statut!=='ouverte'?'<div class="ofcm-note">'+(x.bloque?'Vous avez bloqué ce candidat : il ne peut plus vous écrire.':x.closedBy==='org'?'Vous avez clos cette conversation.':'Le candidat a clôturé cette conversation.')+'</div>':'')
@@ -20042,7 +20042,7 @@ window.cpSheetArrows=function(sc,host){
     var pane=wide()?$('emx-pane'):null; if(UNSUB){ UNSUB(); UNSUB=null; } var old=document.querySelector('.ofcm-sheet.emp-sheet'); if(old) old.remove();
     ST.openId=id; if(pane) [].forEach.call(document.querySelectorAll('.emx-r'),function(r){ r.classList.toggle('on',r.getAttribute('data-econv')===id); });
     var sh=document.createElement('div'); sh.className='ofcm-sheet emp-sheet'+(pane?' emx-embed':''); sh.setAttribute('data-rep','emploi:'+c.id);
-    sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><i class="ofcm-av"></i><div><b class="ofcm-who"></b><span class="ofcm-sub"></span></div><em>🔒 Protégé</em></div>'
+    sh.innerHTML='<div class="ofcm-box ofcm-pro"><div class="ofcm-hd"><button type="button" class="ofcm-x" aria-label="Fermer">'+S(I.back)+'</button><i class="ofcm-av"></i><div><b class="ofcm-who"></b><span class="ofcm-sub"></span></div><em>🔒 Protégé</em></div><div class="ofcm-tabs2"><button type="button" class="on" data-v2="msg">'+S('<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',16)+'Messages</button><button type="button" data-v2="pro">'+S('<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',16)+'Profil et coordonnées</button></div>'
       +'<div class="ofcm-main"><aside class="ofcm-aside"></aside><div class="ofcm-chat"><div class="ofcm-list"></div><div class="ofcm-ft"><textarea class="ofcm-in" maxlength="1500" placeholder="Votre message…"></textarea><button type="button" class="ofcm-send" aria-label="Envoyer">'+S(I.send)+'</button></div></div></div></div>';
     if(pane){ pane.innerHTML=''; pane.appendChild(sh); } else { document.body.appendChild(sh); document.documentElement.classList.add('ofcm-lock'); }
     var list=sh.querySelector('.ofcm-list'), ref=db().collection('emploi_conversations').doc(c.id);
@@ -20058,7 +20058,7 @@ window.cpSheetArrows=function(sc,host){
       return h;
     }
     function rend(x){
-      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').textContent=cpAt(x.candLabel); sh.querySelector('.ofcm-av').textContent=String(x.candLabel||'?').trim().charAt(0).toUpperCase(); sh.querySelector('.ofcm-sub').innerHTML='<em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em><i>'+esc(x.poste||c.poste||'')+'</i>';
+      var ct=cvCat(Object.assign({ id:c.id },x)); sh.querySelector('.ofcm-who').textContent=cpAt(x.candLabel); sh.querySelector('.ofcm-av').textContent=String(x.candLabel||'?').trim().charAt(0).toUpperCase(); sh.querySelector('.ofcm-sub').innerHTML='<span class="ofcm-tags"><em class="emp-ref">'+(window.cpRef?cpRef(x.candUid):'')+'</em><em class="emp-esb '+ct+'">'+(window.cpCatLab?cpCatLab[ct]:'')+'</em></span><i>'+esc(x.poste||c.poste||'')+'</i>';
       sh.querySelector('.ofcm-aside').innerHTML=info(x);
       var closed=x.statut==='close';
       list.innerHTML='<div class="ofcm-mobinfo">'+info(x)+'</div><div class="ofcm-day">'+(x.type==='mission'?'Conversation protégée · mission proposée par '+esc(x.empNom||'votre entreprise'):x.type==='candidature'?'Conversation protégée · candidature reçue pour « '+esc(x.poste||'')+' »':'Conversation protégée · proposition envoyée par '+esc(x.empNom||'votre entreprise'))+'</div>'
@@ -25571,6 +25571,44 @@ html body .emp-cats{ flex-wrap:wrap !important; overflow:visible !important; row
 .ofcm-pro .ofcm-note{ align-self:center; text-align:center; font-size:.76rem; color:#475569; background:#fff; border:1px dashed #cbd5e1; border-radius:12px; padding:8px 12px; }
 @media (max-width:899px){ .ofcm-pro .ofcm-hd > em{ display:none; } .ofcm-av{ width:34px; height:34px; font-size:.9rem; } .ofcm-pro .ofcm-hd{ padding:10px 12px; gap:9px; } .ofcm-pro .ofcm-m{ max-width:84%; } }
 @media (min-width:900px){ .ofcm-pro .ofcm-m{ max-width:66%; } }
+</style>
+<script>
+/* Conversations employeur / centre : onglets Messages | Profil (mobile) */
+document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('.ofcm-tabs2 button'); if(!b) return; var bx=b.closest('.ofcm-box'); if(!bx) return;
+  [].forEach.call(bx.querySelectorAll('.ofcm-tabs2 button'),function(x){ x.classList.toggle('on',x===b); }); bx.classList.toggle('v2-pro',b.getAttribute('data-v2')==='pro');
+  var l=bx.querySelector('.ofcm-list'); if(l) l.scrollTop=b.getAttribute('data-v2')==='pro'?0:l.scrollHeight; });
+</script>
+<style id="ofcm-v72-css">
+/* En-tête plus grand et organisé */
+.ofcm-pro .ofcm-hd{ align-items:flex-start; gap:14px; padding:18px 20px; }
+.ofcm-pro .ofcm-hd .ofcm-x, .ofcm-pro .ofcm-hd .cprep-dots{ margin-top:4px; }
+.ofcm-pro .ofcm-av{ width:52px; height:52px; font-size:1.25rem; }
+.ofcm-pro .ofcm-who{ font-size:1.2rem; line-height:1.25; }
+.ofcm-pro .ofcm-hd .ofcm-sub{ display:flex !important; flex-direction:column; align-items:flex-start; gap:6px; margin-top:6px; white-space:normal !important; overflow:visible !important; }
+.ofcm-tags{ display:flex; flex-wrap:wrap; align-items:center; gap:6px; }
+.ofcm-tags .emp-ref{ font-size:.7rem !important; padding:3px 9px !important; border-radius:8px !important; }
+.ofcm-tags .emp-esb{ font-size:.72rem !important; padding:3px 10px !important; white-space:nowrap; }
+.ofcm-sub > i{ font-size:.84rem !important; font-weight:600; opacity:.95 !important; white-space:normal !important; overflow:visible !important; line-height:1.35; }
+.ofcm-pro .ofcm-hd > em{ margin-top:8px; }
+/* Messages bien séparés */
+.ofcm-pro .ofcm-list{ gap:14px !important; padding:18px 16px !important; }
+.ofcm-pro .ofcm-day{ margin:2px 0 6px; text-transform:none; letter-spacing:0; font-size:.72rem; font-weight:700; text-align:center; line-height:1.4; border-radius:14px; }
+@media (min-width:900px){ .ofcm-pro .ofcm-m{ max-width:86% !important; } }
+/* Onglets (mobile uniquement : sur ordinateur le profil est déjà à gauche) */
+.ofcm-tabs2{ display:none; }
+@media (max-width:899px){
+  .ofcm-pro .ofcm-hd{ padding:16px 14px 18px; gap:11px; }
+  .ofcm-pro .ofcm-av{ width:46px; height:46px; font-size:1.1rem; }
+  .ofcm-pro .ofcm-who{ font-size:1.15rem; }
+  .ofcm-tabs2{ display:flex; gap:6px; padding:8px 12px; background:#fff; border-bottom:1px solid #e2e8f0; }
+  .ofcm-tabs2 button{ flex:1; display:flex; align-items:center; justify-content:center; gap:7px; padding:10px 8px; border:1px solid #e2e8f0; border-radius:12px; background:#f8fafc; color:#475569; font:700 .82rem/1.2 inherit; cursor:pointer; }
+  .ofcm-tabs2 button svg{ width:16px; height:16px; flex-shrink:0; }
+  .ofcm-tabs2 button.on{ background:#1e3a8a; border-color:#1e3a8a; color:#fff; }
+  .ofcm-pro:not(.v2-pro) .ofcm-mobinfo{ display:none !important; }
+  .ofcm-pro.v2-pro .ofcm-list > :not(.ofcm-mobinfo){ display:none !important; }
+  .ofcm-pro.v2-pro .ofcm-mobinfo{ display:flex !important; flex-direction:column; gap:12px; }
+  .ofcm-pro.v2-pro .ofcm-ft{ display:none !important; }
+}
 </style>
 </body>
 </html>
