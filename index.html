@@ -25918,6 +25918,7 @@ window.cpOutMsg=function(){ var o=document.getElementById('cpout-ov'); if(o) o.r
       +'<p class="cptx-ft">Informations générales issues d\'impots.gouv.fr, service-public.gouv.fr et economie.gouv.fr (octobre 2026). Les montants et dates changent chaque année : vérifie toujours sur impots.gouv.fr. Ce guide ne remplace pas un conseil personnalisé ; en cas de doute, contacte ton centre des impôts.</p>'
       +'</div></div>';
     document.body.appendChild(x); document.documentElement.classList.add('cptx-lock');
+    if(window.cpSheetArrows) cpSheetArrows(x.querySelector('.cptx-sc'),x);
     function close(){ x.remove(); document.documentElement.classList.remove('cptx-lock'); }
     x.querySelector('.cptx-x').onclick=close;
   }
@@ -25927,7 +25928,7 @@ window.cpOutMsg=function(){ var o=document.getElementById('cpout-ov'); if(o) o.r
     var c=h.querySelector('.cptx-card'); if(c && c.getAttribute('data-k')===k) return; if(c) c.remove();
     var at=h.querySelector('.es-main .es-cards')||h.querySelector(':scope > .cj-tiles'); if(!at) return;
     var w=document.createElement('div'); w.innerHTML=card(k); w=w.firstChild; w.setAttribute('data-k',k); at.parentNode.insertBefore(w,at.nextSibling); }
-  var q=0; function soon(){ if(q) return; q=1; setTimeout(function(){ q=0; place(); },80); }
+  var q=0; function soon(){ if(q) return; q=1; Promise.resolve().then(function(){ q=0; try{ place(); }catch(e){} }); }
   function init(){ var h=document.getElementById('cj-home'); if(h){ try{ new MutationObserver(soon).observe(h,{ childList:true, subtree:true }); }catch(e){} } place(); }
   document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('[data-cptx]'); if(b){ e.preventDefault(); e.stopPropagation(); page(b.getAttribute('data-cptx')); } },true);
   if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
@@ -26092,6 +26093,34 @@ a.cptx-l:hover{ border-color:#93c5fd; background:#eff6ff; } a.cptx-l b{ display:
 .cpav-q{ display:flex; align-items:center; justify-content:space-between; gap:10px; max-width:270px; margin:0 auto 7px; font-size:.82rem; font-weight:700; color:#334155; }
 .cpav-go{ margin-top:10px; width:100%; padding:12px; border:none; border-radius:12px; background:#0f172a; color:#fff; font:700 .84rem/1.2 'DM Sans',system-ui,sans-serif; cursor:pointer; }
 .cpav-ok p{ margin:8px 0 2px; font-size:.86rem; color:#334155; } .cpav-msg{ margin:10px 0 0; font-size:.78rem; color:#b45309; font-weight:600; }
+</style>
+<script>
+/* ═══ Messagerie employeur / centre (ordinateur) : flèches au-dessus de la partie gauche et du chat ═══ */
+(function(){
+  var UP='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>', DN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  function bar(sc,label){ var w=document.createElement('div'); w.className='cpta'; w.innerHTML='<span>'+label+'</span><button type="button" data-d="-1" aria-label="Monter">'+UP+'</button><button type="button" data-d="1" aria-label="Descendre">'+DN+'</button>';
+    w.onclick=function(e){ var b=e.target.closest('[data-d]'); if(b) sc.scrollBy({ top:(+b.getAttribute('data-d'))*sc.clientHeight*.8, behavior:'smooth' }); };
+    function upd(){ var m=sc.scrollHeight-sc.clientHeight; w.children[1].disabled=m<20||sc.scrollTop<10; w.children[2].disabled=m<20||sc.scrollTop>m-10; }
+    sc.addEventListener('scroll',upd,{ passive:true }); try{ new ResizeObserver(upd).observe(sc); new MutationObserver(upd).observe(sc,{ childList:true, subtree:true }); }catch(e){} setTimeout(upd,60); return w; }
+  function fit(sh){ if(sh._cpta) return; var a=sh.querySelector('.ofcm-aside'), c=sh.querySelector('.ofcm-chat'), l=sh.querySelector('.ofcm-list'); if(!a||!c||!l) return; sh._cpta=1;
+    a.insertBefore(bar(a,'Profil'),a.firstChild); c.insertBefore(bar(l,'Conversation'),l); }
+  function scan(){ [].forEach.call(document.querySelectorAll('.ofcm-sheet.ofcm-sheet'),function(sh){ if(sh.querySelector('.ofcm-pro')) fit(sh); }); }
+  var q=0; function soon(){ if(q) return; q=1; Promise.resolve().then(function(){ q=0; try{ scan(); }catch(e){} }); }
+  function init(){ try{ new MutationObserver(soon).observe(document.body,{ childList:true, subtree:true }); }catch(e){} soon(); }
+  if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<style id="cpta-css">
+.cpta{ display:none; }
+@media (min-width:900px){
+  .ofcm-pro .cpsa{ display:none !important; }
+  .cpta{ display:flex; align-items:center; gap:6px; flex-shrink:0; padding:6px 8px; }
+  .ofcm-aside > .cpta{ position:sticky; top:0; z-index:3; margin:-6px -6px 8px; background:rgba(255,255,255,.92); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border-radius:10px; }
+  .ofcm-chat > .cpta{ border-bottom:1px solid #e2e8f0; background:#fff; padding:6px 12px; }
+  .cpta span{ flex:1; font:800 .62rem/1 'DM Sans',system-ui,sans-serif; letter-spacing:.06em; text-transform:uppercase; color:#94a3b8; }
+  .cpta button{ width:28px; height:28px; border-radius:50%; border:1px solid #e2e8f0; background:#fff; color:#1e3a8a; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; transition:background .15s, opacity .15s; }
+  .cpta button:hover{ background:#eef2ff; } .cpta button:disabled{ opacity:.35; cursor:default; } .cpta svg{ width:14px; height:14px; }
+}
 </style>
 </body>
 </html>
