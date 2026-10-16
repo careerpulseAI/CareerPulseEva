@@ -8017,10 +8017,12 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
    5 étoiles + qualité, efficacité, utilité. 1 vote par membre et par page (modifiable) → collection « satisfaction ».
    Résultats : menu › Donne ton avis (EVA · Lisa · CareerPulse). */
 (function(){
-  var EVA={ 's-eva':'Accueil EVA','s-eva-workspace':'Mon Portfolio','s-eva-entretien':'Quiz et mises en situation','s-eva-bienetre':'Motivation & Équilibre','s-eva-tracker':'Suivi de ma motivation','s-eva-of':'Organismes de formation','s-eva-identity':'À propos d\'EVA','s-eva-methodes':'Méthodes','s-eva-outils':'Outils' };
+  var EVA={ 's-eva':'Accueil EVA','s-eva-droits':'Droits & aides','s-eva-droits-list':'Droits · Encyclopédie','s-eva-droits-article':'Droits · Article','s-eva-workspace':'Mon Portfolio','s-eva-entretien':'Quiz et mises en situation','s-eva-bienetre':'Motivation & Équilibre','s-eva-tracker':'Suivi de ma motivation','s-eva-of':'Organismes de formation','s-eva-identity':'À propos d\'EVA','s-eva-methodes':'Méthodes','s-eva-outils':'Outils' };
   var PF={ dem:'Demandeur d\'emploi · Reconversion', etu:'Étudiant(e)', sal:'Salarié(e)', frl:'Freelance' };
-  var Q=[['qualite','Qualité'],['efficacite','Efficacité'],['utilite','Utilité']], MINE={};
-  var STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 16.8l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z" fill="currentColor"/></svg>';
+  var Q=[['qualite','Qualité'],['efficacite','Efficacité'],['utilite','Utilité']], MINE={}, LAST_U='';
+  var STAR='<svg viewBox="0 0 24 24" aria-hidden="true"><path class="cpav-st" d="M12 3.4l2.5 5.2 5.7.8-4.1 4 1 5.6L12 16.3l-5.1 2.7 1-5.6-4.1-4 5.7-.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M19.5 2.5v3M18 4h3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" opacity=".7"/></svg>';
+  var SS='cpsatv'; try{ MINE=JSON.parse(sessionStorage.getItem(SS)||'{}')||{}; }catch(e){}
+  function keep(){ try{ var o={}; Object.keys(MINE).forEach(function(k){ if(MINE[k]) o[k]=MINE[k]; }); sessionStorage.setItem(SS,JSON.stringify(o)); }catch(e){} }
   function uid(){ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return u&&u.uid||''; }
   function db(){ return window.fbDb||null; }
   function vis(e){ return !!(e && e.getClientRects().length); }
@@ -8033,25 +8035,27 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
     if(sp && sp.classList.contains('active')){ var h=document.getElementById('cj-home'), k='';
       if(h){ k=h.querySelector('.cc-card.cc-frl')?'frl':h.querySelector('.cc-card.cc-dem,.cc-card.cc-rec')?'dem':h.querySelector('.es-home.es-k-etu')?'etu':h.querySelector('.es-home.es-k-sal')?'sal':''; }
       var pal=document.getElementById('cps-pal'), row=pal&&pal.parentNode;
-      if(k && row && vis(row)) T.push({ host:row, before:pal, cible:'lisa', page:'lisa-'+k, label:'Profil '+PF[k] });
+      if(k && row && vis(row)) T.push({ host:row, before:null, cible:'lisa', page:'lisa-'+k, label:'Profil '+PF[k], cls:'in-row' });
       if(k) [].forEach.call(document.querySelectorAll('.cpw-sheet'),function(s){ var t=(s.querySelector('.cpw-ht b')||{}).textContent||'', hd=s.querySelector('.cpw-hd'), pg=s.querySelector('.cj-pg');
-        if(hd && t && t!=='Quitter mon espace' && !(pg && pg.querySelector('.cj-write'))) T.push({ host:hd, before:null, cible:'lisa', page:'lisa-'+k+'-'+slug(t), label:PF[k]+' · '+t, end:1 }); }); }
+        if(hd && t && t!=='Quitter mon espace' && !(pg && pg.querySelector('.cj-write'))) T.push({ host:hd, before:null, cible:'lisa', page:'lisa-'+k+'-'+slug(t), label:PF[k]+' · '+t, cls:'in-hd' }); }); }
     [['s-pro-employeur','emp-root','[data-etab].on','Employeur','emp'],['s-pro-centre','of-root','[data-tab].on','Centre de formation','centre']].forEach(function(p){
       var sc=document.getElementById(p[0]), r=document.getElementById(p[1]); if(!sc||!sc.classList.contains('active')||!r) return; var tb=r.querySelector('.ofc-tabs '+p[2]), hero=r.querySelector('.ofc-hero'); if(!tb||!hero) return;
-      var t=(tb.querySelector('.et-l')||tb).textContent.replace(/\d+$/,'').trim(); T.push({ host:hero, abs:1, cible:'careerpulse', page:'cp-'+p[4]+'-'+slug(t), label:p[3]+' · '+t }); });
-    var act=[].filter.call(document.querySelectorAll('.screen.active'),function(s){ return /^s-eva/.test(s.id) && vis(s); }).pop();
+      var t=(tb.querySelector('.et-l')||tb).textContent.replace(/\d+$/,'').trim(); T.push({ host:hero, cible:'careerpulse', page:'cp-'+p[4]+'-'+slug(t), label:p[3]+' · '+t, cls:'abs' }); });
+    var act=[].filter.call(document.querySelectorAll('.screen.active,.evad-screen.active'),function(s){ return /^s-eva/.test(s.id) && vis(s); }).pop();
     if(act && EVA[act.id]){ var H=[].filter.call(act.querySelectorAll('.ew-hdr,.eva-sub-header,.eb-hdr,.jnl-hdr,.evad-hd,.evh-top'),vis)[0];
-      if(H) T.push({ host:H, before:rightRef(H), cible:'eva', page:'eva-'+act.id.replace(/^s-/,''), label:EVA[act.id] }); }
+      if(H){ var C=(H.classList.contains('evh-top') && window.innerWidth<600)?(H.querySelector(':scope > .evh-ctrl')||H):H; T.push({ host:C, before:null, cible:'eva', page:'eva-'+act.id.replace(/^s-/,''), label:EVA[act.id], cls:C===H?'in-hd':'in-ctrl' }); } }
     return T; }
-  function light(el){ var m=/rgba?\((\d+),\s*(\d+),\s*(\d+)/.exec(getComputedStyle(el).color||''); return m ? (+m[1]*.299+ +m[2]*.587+ +m[3]*.114)>160 : false; }
-  function paint(b){ var v=MINE[b.getAttribute('data-k')]; b.classList.toggle('done',!!v); b.innerHTML=STAR+'<span class="cpav-t">'+(v?v.note+'/5 · Merci':'Donne ton avis')+'</span>'+(v?'<span class="cpav-m">'+v.note+'/5</span>':''); b.title=v?'Modifier mon avis sur cette page':'Donne ton avis sur cette page'; }
-  function make(t){ var b=document.createElement('button'); b.type='button'; b.className='cpav'+(t.abs?' abs':'')+(t.end?' end':''); b.setAttribute('data-k',t.page); b._t=t; paint(b);
-    var u=uid(); if(u && db() && !(t.page in MINE)){ MINE[t.page]=null; db().collection('satisfaction').doc(u+'__'+t.page).get().then(function(d){ if(d.exists){ MINE[t.page]=d.data(); [].forEach.call(document.querySelectorAll('.cpav[data-k="'+t.page+'"]'),paint); } }).catch(function(){}); }
+  /* fond clair (en-tête blanc) ou coloré : on remonte jusqu'au premier fond visible */
+  function lightBg(el){ for(var e=el;e&&e.nodeType===1;e=e.parentElement){ var cs=getComputedStyle(e); if(cs.backgroundImage && cs.backgroundImage!=='none' && /gradient/.test(cs.backgroundImage)) return false; var m=/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?/.exec(cs.backgroundColor||''); if(m && (m[4]===undefined || +m[4]>.4)) return (+m[1]*.299+ +m[2]*.587+ +m[3]*.114)>190; } return true; }
+  function paint(b){ var v=MINE[b.getAttribute('data-k')]; b.classList.toggle('done',!!v); b.innerHTML=STAR+'<span class="cpav-t">'+(v?'Merci · '+v.note+'/5':'Ton avis compte')+'</span>'; b.title=v?'Modifier mon avis sur cette page':'Ton avis compte : note cette page'; b.setAttribute('aria-label',b.title); }
+  function make(t){ var b=document.createElement('button'); b.type='button'; b.className='cpav '+(t.cls||''); b.setAttribute('data-k',t.page); b._t=t; paint(b);
+    var u=uid(); if(u && db() && !(t.page in MINE)){ MINE[t.page]=null; db().collection('satisfaction').doc(u+'__'+t.page).get().then(function(d){ if(d.exists){ MINE[t.page]=d.data(); keep(); [].forEach.call(document.querySelectorAll('.cpav[data-k="'+t.page+'"]'),paint); } }).catch(function(){}); }
     return b; }
-  function place(){ targets().forEach(function(t){ var H=t.host, b=H.querySelector(':scope > .cpav');
+  function place(){ targets().forEach(function(t){ var H=t.host; [].forEach.call(document.querySelectorAll('.cpav[data-k="'+t.page+'"]'),function(x){ if(x.parentNode!==H) x.remove(); }); var b=H.querySelector(':scope > .cpav');
     if(b && b.getAttribute('data-k')!==t.page){ b.remove(); b=null; }
-    if(!b){ b=make(t); b.classList.toggle('lt',!light(H)); if(t.before && t.before.parentNode===H) H.insertBefore(b,t.before); else H.appendChild(b); if(t.abs && getComputedStyle(H).position==='static') H.style.position='relative'; }
-    else b._t=t; }); }
+    if(!b){ b=make(t); H.appendChild(b); b.classList.toggle('lt',lightBg(H)); if(t.cls==='abs' && getComputedStyle(H).position==='static') H.style.position='relative'; }
+    else { b._t=t; if(t.cls!=='abs' && H.lastElementChild!==b) H.appendChild(b); }
+    var L=lightBg(H); if(b.classList.contains('lt')!==L) b.classList.toggle('lt',L); }); }
   /* Pop-up */
   function stars(n,cls,data){ var h=''; for(var i=1;i<=5;i++) h+='<button type="button" class="'+cls+(i<=n?' on':'')+'" data-'+data+'="'+i+'" aria-label="'+i+' sur 5">★</button>'; return h; }
   function open(b){ var t=b._t, k=t.page, v=MINE[k]||null, st=v?{ note:v.note, qualite:v.qualite, efficacite:v.efficacite, utilite:v.utilite }:{};
@@ -8074,24 +8078,26 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
       if(x.classList.contains('cpav-go')){ var u=uid(); if(!u||!db()){ draw('Connecte-toi pour noter cette page.'); return; }
         var d={ cible:t.cible, page:k, label:String(t.label).slice(0,120), note:st.note, qualite:st.qualite||st.note, efficacite:st.efficacite||st.note, utilite:st.utilite||st.note, at:new Date().toISOString() };
         x.disabled=true; x.textContent='Envoi…';
-        db().collection('satisfaction').doc(u+'__'+k).set(d).then(function(){ MINE[k]=d; [].forEach.call(document.querySelectorAll('.cpav[data-k="'+k+'"]'),paint); draw('',1); setTimeout(function(){ if(o.isConnected) close(); },1600); })
+        db().collection('satisfaction').doc(u+'__'+k).set(d).then(function(){ MINE[k]=d; keep(); [].forEach.call(document.querySelectorAll('.cpav[data-k="'+k+'"]'),paint); draw('',1); setTimeout(function(){ if(o.isConnected) close(); },1600); })
           .catch(function(){ draw('Envoi impossible pour le moment. Réessaie dans un instant.'); }); } });
     document.addEventListener('keydown',function esc(e){ if(e.key==='Escape'){ close(); document.removeEventListener('keydown',esc); } }); }
   document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('.cpav'); if(!b) return; e.preventDefault(); e.stopPropagation(); open(b); },true);
-  var q=0; function soon(){ if(q) return; q=1; setTimeout(function(){ q=0; try{ place(); }catch(e){} },200); }
+  var q=0; function soon(){ if(q) return; q=1; Promise.resolve().then(function(){ q=0; try{ var u=uid(); if(u!==LAST_U){ LAST_U=u; if(!u) MINE={}; } place(); }catch(e){} }); }
   function init(){ try{ new MutationObserver(soon).observe(document.body,{ childList:true, subtree:true, attributes:true, attributeFilter:['class'] }); }catch(e){} soon(); }
   if(document.readyState!=='loading') init(); else document.addEventListener('DOMContentLoaded',init);
 })();
 </script>
 <style id="cpav-css">
-.cpav{ flex-shrink:0; display:inline-flex; align-items:center; gap:6px; height:30px; padding:0 12px; margin:0 8px; border-radius:999px; border:1px solid rgba(255,255,255,.38); background:rgba(255,255,255,.14); color:#fff; font:700 .74rem/1 'DM Sans',system-ui,sans-serif; white-space:nowrap; cursor:pointer; align-self:center; transition:background .2s, transform .2s; }
-.cpav:hover{ background:rgba(255,255,255,.24); } .cpav:active{ transform:scale(.96); }
-.cpav svg{ width:15px; height:15px; color:#facc15; flex-shrink:0; }
-.cpav.lt{ border-color:#facc15; background:#fffbeb; color:#92400e; } .cpav.lt:hover{ background:#fef3c7; } .cpav.lt svg{ color:#f59e0b; }
-.cpav.done svg{ color:#facc15; } .cpav-m{ display:none; }
+.cpav{ flex-shrink:0 !important; display:inline-flex !important; align-items:center !important; gap:6px !important; height:28px !important; padding:0 11px 0 9px !important; margin:0 0 0 10px !important; border-radius:999px !important; border:1px solid rgba(255,255,255,.34) !important; background:rgba(255,255,255,.13) !important; -webkit-backdrop-filter:blur(10px) saturate(1.4); backdrop-filter:blur(10px) saturate(1.4); box-shadow:inset 0 1px 0 rgba(255,255,255,.22), 0 4px 14px -8px rgba(0,0,0,.35) !important; color:#fff !important; font:600 .72rem/1 'DM Sans',system-ui,sans-serif !important; letter-spacing:.01em !important; text-transform:none !important; white-space:nowrap !important; cursor:pointer; align-self:center !important; opacity:.92; transition:opacity .2s, background .2s, transform .15s; width:auto !important; min-width:0 !important; }
+.cpav:hover{ opacity:1; background:rgba(255,255,255,.22) !important; } .cpav:active{ transform:scale(.96); }
+.cpav svg{ width:14px !important; height:14px !important; flex-shrink:0; color:currentColor; }
+.cpav.done .cpav-st{ fill:#fcd34d; stroke:#fcd34d; }
+.cpav.lt{ border-color:rgba(15,23,42,.13) !important; background:rgba(255,255,255,.7) !important; color:#334155 !important; box-shadow:0 4px 14px -10px rgba(15,23,42,.4) !important; } .cpav.lt:hover{ background:#fff !important; }
+.cpav.lt.done .cpav-st{ fill:#f59e0b; stroke:#f59e0b; }
+.cpav span.cpav-t{ display:inline !important; text-transform:none !important; letter-spacing:.01em !important; font:inherit !important; opacity:1 !important; margin:0 !important; padding:0 !important; color:inherit !important; }
+.cpav.in-row{ margin:0 0 0 8px !important; } .cpav.in-ctrl{ margin-left:8px !important; } .cpav.in-hd{ margin-left:auto !important; } .ew-hdr > .cpav.in-hd, .eva-sub-header > .cpav.in-hd, .eb-hdr > .cpav.in-hd, .jnl-hdr > .cpav.in-hd, .evad-hd > .cpav.in-hd{ margin-left:12px !important; }
 .cpav.abs{ position:absolute !important; top:16px !important; right:16px !important; left:auto !important; margin:0 !important; z-index:2; }
-.cpav.end{ margin-left:auto; }
-@media (max-width:599px){ .cpav{ padding:0 9px; margin:0 4px; gap:4px; } .cpav .cpav-t{ display:none; } .cpav.done .cpav-m{ display:inline; font-size:.68rem; } .cpav.abs{ top:12px !important; right:12px !important; } }
+@media (max-width:599px){ .cpav{ width:30px !important; height:30px !important; padding:0 !important; margin-left:6px !important; justify-content:center !important; } .cpav span.cpav-t{ display:none !important; } .cpav svg{ width:15px !important; height:15px !important; } .cpav.in-row{ margin:0 0 0 6px !important; } .cpav.abs{ top:12px !important; right:12px !important; } }
 #cpav-pop{ position:fixed; inset:0; z-index:100002; background:rgba(8,15,35,.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:16px; font-family:'DM Sans',system-ui,sans-serif; }
 .cpav-box{ position:relative; width:100%; max-width:360px; padding:18px 18px 16px; border:2px solid #facc15; border-radius:18px; background:#fffdf3; color:#0f172a; text-align:center; box-shadow:0 24px 60px -20px rgba(0,0,0,.45); animation:cpavIn .22s ease both; }
 @keyframes cpavIn{ from{ opacity:0; transform:translateY(10px) scale(.98); } }
