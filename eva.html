@@ -8113,5 +8113,40 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
 .cpav-go{ margin-top:10px; width:100%; padding:12px; border:none; border-radius:12px; background:#0f172a; color:#fff; font:700 .84rem/1.2 'DM Sans',system-ui,sans-serif; cursor:pointer; }
 .cpav-ok p{ margin:8px 0 2px; font-size:.86rem; color:#334155; } .cpav-msg{ margin:10px 0 0; font-size:.78rem; color:#b45309; font-weight:600; }
 </style>
+<script>
+/* ═══ Mon Portfolio d'EVA : réservé aux membres (menu, profils, conseils) ═══ */
+(function(){
+  function wrap(){ if(!window.cpMemberGuard) return false;
+    var g0=window.go; if(typeof g0==='function' && !g0._cpPf){ var g1=function(id){ var a=arguments, self=this; if(String(id)==='eva-workspace') return cpMemberGuard('portfolio',function(){ return g0.apply(self,a); }); return g0.apply(self,a); }; g1._cpPf=true; g1._cpGate=g0._cpGate; window.go=g1; try{ go=g1; }catch(e){} }
+    var f=window.ewOpen; if(typeof f==='function' && !f._cpPf){ var h=function(){ var a=arguments, self=this; return cpMemberGuard('portfolio',function(){ return f.apply(self,a); }); }; h._cpPf=true; window.ewOpen=h; try{ ewOpen=h; }catch(e){} }
+    return true; }
+  function kick(){ var sc=document.getElementById('s-eva-workspace'); if(!sc || !sc.classList.contains('active') || !window.cpMemberGuard) return;
+    var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser);
+    if(u && u.emailVerified) return;
+    if(!u && !window._cpAuthInitialized){ setTimeout(kick,200); return; }
+    sc.classList.remove('active'); var e=document.getElementById('s-eva'); if(e) e.classList.add('active'); try{ history.replaceState(null,'',location.pathname); }catch(x){}
+    cpMemberGuard('portfolio',function(){}); }
+  wrap(); document.addEventListener('DOMContentLoaded',wrap); window.addEventListener('load',function(){ setTimeout(function(){ wrap(); kick(); },0); });
+  var n=0, t=setInterval(function(){ wrap(); if(++n>20) clearInterval(t); },250);
+  try{ new MutationObserver(function(){ var sc=document.getElementById('s-eva-workspace'); if(sc && sc.classList.contains('active')) kick(); }).observe(document.getElementById('s-eva-workspace')||document.body,{ attributes:true, attributeFilter:['class'] }); }catch(e){}
+})();
+</script>
+<script>
+/* Mobile : effet LED au toucher */
+(function(){ var cur=null, t=0;
+  function on(e){ var b=e.target.closest&&e.target.closest('.evs-nav .evs-item, #eva-tab button'); if(!b) return; if(cur&&cur!==b) cur.classList.remove('cp-led'); cur=b; b.classList.add('cp-led'); clearTimeout(t); }
+  function off(){ var b=cur; clearTimeout(t); t=setTimeout(function(){ if(b) b.classList.remove('cp-led'); },280); }
+  document.addEventListener('touchstart',on,{ passive:true }); document.addEventListener('touchend',off,{ passive:true }); document.addEventListener('touchcancel',off,{ passive:true });
+})();
+</script>
+<style id="eva-nav-led">
+/* Menus d'EVA : survol bleu clair, léger effet LED (ordinateur et mobile) */
+#eva-side .evs-item, #eva-sheet .evs-item, .evs-nav .evs-item, #eva-tab button{ transition:background .22s ease, box-shadow .22s ease, color .22s ease, transform .22s ease !important; }
+@media (hover:hover){
+  .evs-nav .evs-item:hover, #eva-tab button:hover{ background:linear-gradient(135deg,rgba(224,242,254,.95),rgba(240,249,255,.95)) !important; color:#0369a1 !important; box-shadow:0 0 0 1px rgba(56,189,248,.55), 0 0 16px -2px rgba(56,189,248,.55), inset 0 0 12px rgba(186,230,253,.55) !important; }
+}
+.evs-nav .evs-item.cp-led, #eva-tab button.cp-led, .evs-nav .evs-item:active, #eva-tab button:active, .evs-nav .evs-item:focus-visible, #eva-tab button:focus-visible{ background:linear-gradient(135deg,rgba(224,242,254,.95),rgba(240,249,255,.95)) !important; color:#0369a1 !important; box-shadow:0 0 0 1px rgba(56,189,248,.55), 0 0 16px -2px rgba(56,189,248,.55), inset 0 0 12px rgba(186,230,253,.55) !important; outline:none !important; }
+.evs-nav .evs-item:hover svg, #eva-tab button:hover svg, .evs-nav .evs-item:active svg, #eva-tab button:active svg{ color:#0284c7 !important; stroke:currentColor; filter:drop-shadow(0 0 4px rgba(56,189,248,.6)); }
+</style>
 </body>
 </html>
