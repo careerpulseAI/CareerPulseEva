@@ -68,7 +68,8 @@ async function donnees() {
       col, uid: d.id, type: col === 'organismes' ? 'Centre' : 'Employeur',
       nom: o.nom || '', siret: o.siret || '', nda: o.nda || '', ville: o.ville || '', email: o.email || '',
       tel: o.tel || '', secteur: o.secteur || '', contact: o.contactNom || '', site: o.site || '',
-      verifie: !!o.verifie, statutDemande: o.statutDemande || '', demandeAt: o.demandeAt || '',
+      verifie: !!o.verifie, statutDemande: o.statutDemande || '', demandeAt: o.demandeAt || '', valideAt: o.valideAt || '',
+      aboMaj: o.aboMaj && o.aboMaj.toDate ? o.aboMaj.toDate().toISOString() : '',
       abo: { statut: statutAbo, plan: a.plan || '', fin: a.fin || '', resiliation: !!a.resiliation }
     });
   });
@@ -77,7 +78,7 @@ async function donnees() {
   /* Membres = tous les comptes, sauf les espaces Pro */
   const semaine = Date.now() - 7 * JOUR, mois = Date.now() - 30 * JOUR;
   let membres = 0, nouveaux7 = 0, nouveaux30 = 0, verifies = 0, actifs7 = 0;
-  const derniers = [];
+  const liste = [];
   comptes.forEach((u) => {
     if (uidsPro.has(u.uid)) return;
     membres++;
@@ -87,14 +88,15 @@ async function donnees() {
     if (cree >= mois) nouveaux30++;
     if (u.emailVerified) verifies++;
     if (vu >= semaine) actifs7++;
-    derniers.push({ nom: u.displayName || '', email: u.email || '', cree: u.metadata.creationTime });
+    liste.push({ nom: u.displayName || '', email: u.email || '', cree: new Date(cree).toISOString(), vu: vu ? new Date(vu).toISOString() : '', verifie: !!u.emailVerified });
   });
-  derniers.sort((a, b) => new Date(b.cree) - new Date(a.cree));
+  liste.sort((a, b) => new Date(b.cree) - new Date(a.cree));
 
   /* Avis */
-  const avis = {};
+  const avis = {}, avisListe = [];
   sat.forEach((d) => {
     const o = d.data() || {}, k = o.cible || 'autre';
+    avisListe.push({ cible: k, label: o.label || o.page || '', note: Number(o.note) || 0, at: o.at || '' });
     if (!avis[k]) avis[k] = { n: 0, note: 0, qualite: 0, efficacite: 0, utilite: 0 };
     const a = avis[k]; a.n++;
     ['note', 'qualite', 'efficacite', 'utilite'].forEach((c) => { a[c] += Number(o[c]) || 0; });
@@ -108,11 +110,19 @@ async function donnees() {
   const docs = await _db.getAll(...refs);
   const visites = jours.map((j, i) => ({ jour: j, n: (docs[i].exists && Number(docs[i].data().n)) || 0 }));
 
+  /* Revenu : une photo par jour (l'historique se construit à partir d'aujourd'hui) */
+  const mrr = Math.round(revenu * 100) / 100;
+  const nActifs = pros.filter((p) => p.abo.statut === 'actif').length, nEssais = pros.filter((p) => p.abo.statut === 'essai').length;
+  await _db.collection('stats_revenu').doc(jours[jours.length - 1]).set({ mrr, actifs: nActifs, essais: nEssais }, { merge: true });
+  const rdocs = await _db.getAll(...jours.map((j) => _db.collection('stats_revenu').doc(j)));
+  const revenus = jours.map((j, i) => (rdocs[i].exists ? { jour: j, mrr: Number(rdocs[i].data().mrr) || 0 } : { jour: j, mrr: null }));
+  avisListe.sort((a, b) => String(b.at).localeCompare(String(a.at)));
+
   return {
     maj: new Date().toISOString(),
-    pros, revenuMensuel: Math.round(revenu * 100) / 100,
-    membres: { total: membres, nouveaux7, nouveaux30, verifies, actifs7, derniers: derniers.slice(0, 8) },
-    avis, visites
+    pros, revenuMensuel: mrr, revenus,
+    membres: { total: membres, nouveaux7, nouveaux30, verifies, actifs7, liste: liste.slice(0, 3000) },
+    avis, avisListe: avisListe.slice(0, 300), visites
   };
 }
 
