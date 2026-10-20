@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>CareerPulse · Administration</title>
+<style>
+:root{ --bg:#f3f6fb; --card:#fff; --ink:#0f172a; --mut:#64748b; --line:#e2e8f0; --navy:#1e3a8a; --em:#059669; --em2:#d1fae5; --am:#b45309; --am2:#fef3c7; --rd:#b91c1c; --rd2:#fee2e2; --bl:#1d4ed8; --bl2:#dbeafe; }
+*{ box-sizing:border-box; }
+html,body{ margin:0; background:var(--bg); color:var(--ink); font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif; -webkit-font-smoothing:antialiased; }
+button{ font:inherit; cursor:pointer; }
+.top{ position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:12px; padding:14px 18px; background:linear-gradient(120deg,#0f172a,#1e3a8a 60%,#0e7490); color:#fff; box-shadow:0 8px 24px -14px rgba(15,23,42,.6); }
+.top svg{ width:30px; height:28px; flex:none; }
+.top b{ font-size:1.05rem; letter-spacing:.2px; }
+.top .tag{ font-size:.66rem; font-weight:800; letter-spacing:1px; padding:4px 8px; border-radius:999px; background:rgba(255,255,255,.16); }
+.top .sp{ flex:1; }
+.top button{ border:1px solid rgba(255,255,255,.35); background:rgba(255,255,255,.1); color:#fff; padding:8px 12px; border-radius:10px; font-size:.82rem; font-weight:700; }
+.wrap{ max-width:1180px; margin:0 auto; padding:18px 16px 60px; }
+.h{ display:flex; align-items:baseline; justify-content:space-between; gap:10px; margin:26px 2px 12px; }
+.h h2{ margin:0; font-size:1.08rem; }
+.h small{ color:var(--mut); }
+.kpis{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:12px; }
+.k{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; box-shadow:0 10px 26px -22px rgba(15,23,42,.5); }
+.k span{ display:block; color:var(--mut); font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.5px; }
+.k b{ display:block; font-size:1.75rem; margin-top:6px; letter-spacing:-.5px; }
+.k small{ color:var(--mut); font-size:.8rem; }
+.k.alert{ border-color:#fcd34d; background:linear-gradient(180deg,#fffbeb,#fff); }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:18px; padding:16px; box-shadow:0 10px 26px -22px rgba(15,23,42,.5); }
+.grid2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:12px; }
+.pend{ display:grid; gap:12px; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); }
+.p h3{ margin:0 0 2px; font-size:1rem; }
+.p .ty{ display:inline-block; font-size:.7rem; font-weight:800; padding:3px 8px; border-radius:999px; background:var(--bl2); color:var(--bl); margin-bottom:8px; }
+.p .ty.c{ background:var(--em2); color:#065f46; }
+.p dl{ display:grid; grid-template-columns:auto 1fr; gap:4px 12px; margin:8px 0 12px; font-size:.86rem; }
+.p dt{ color:var(--mut); }
+.p dd{ margin:0; word-break:break-word; }
+.p a{ color:var(--bl); }
+.acts{ display:flex; gap:8px; }
+.ok,.no{ flex:1; border:none; border-radius:12px; padding:11px; font-weight:800; }
+.ok{ background:linear-gradient(135deg,#059669,#0d9488); color:#fff; }
+.no{ background:#fff; color:var(--rd); border:1px solid #fecaca; }
+.ok:disabled,.no:disabled{ opacity:.5; }
+.empty{ color:var(--mut); padding:6px 2px; }
+.flt{ display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+.flt button{ border:1px solid var(--line); background:#fff; border-radius:999px; padding:7px 12px; font-size:.82rem; font-weight:700; color:#334155; }
+.flt button.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+.tbl{ width:100%; border-collapse:collapse; font-size:.86rem; }
+.tbl th{ text-align:left; color:var(--mut); font-weight:700; font-size:.74rem; text-transform:uppercase; letter-spacing:.4px; padding:8px; border-bottom:1px solid var(--line); }
+.tbl td{ padding:10px 8px; border-bottom:1px solid #f1f5f9; vertical-align:top; }
+.tbl td small{ color:var(--mut); display:block; }
+.scroll{ overflow-x:auto; }
+.st{ display:inline-block; font-size:.72rem; font-weight:800; padding:3px 9px; border-radius:999px; white-space:nowrap; }
+.st.actif{ background:var(--em2); color:#065f46; } .st.essai{ background:var(--bl2); color:var(--bl); }
+.st.expire{ background:var(--rd2); color:var(--rd); } .st.offert{ background:#ede9fe; color:#5b21b6; }
+.st.aucun,.st.attente{ background:#f1f5f9; color:#475569; } .st.refusee{ background:var(--rd2); color:var(--rd); }
+.bars{ display:flex; align-items:flex-end; gap:3px; height:120px; margin-top:8px; }
+.bars i{ flex:1; background:linear-gradient(180deg,#38bdf8,#1d4ed8); border-radius:4px 4px 0 0; min-height:2px; position:relative; }
+.bars i:hover::after{ content:attr(data-t); position:absolute; bottom:100%; left:50%; transform:translateX(-50%); margin-bottom:4px; background:var(--ink); color:#fff; font-size:.72rem; padding:3px 6px; border-radius:6px; white-space:nowrap; font-style:normal; }
+.axis{ display:flex; justify-content:space-between; color:var(--mut); font-size:.74rem; margin-top:6px; }
+.av{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; }
+.av .card b{ font-size:1.6rem; }
+.av .stars{ color:#f59e0b; letter-spacing:2px; }
+.av ul{ list-style:none; padding:0; margin:8px 0 0; font-size:.84rem; color:#334155; }
+.av li{ display:flex; justify-content:space-between; padding:2px 0; }
+.av .card ul b{ font-size:.92rem; }
+.list{ list-style:none; margin:0; padding:0; font-size:.86rem; }
+.list li{ display:flex; justify-content:space-between; gap:10px; padding:8px 0; border-bottom:1px solid #f1f5f9; }
+.list li small{ color:var(--mut); white-space:nowrap; }
+.login{ max-width:400px; margin:9vh auto; padding:0 16px; }
+.login .card{ padding:26px 22px; }
+.login h1{ font-size:1.25rem; margin:0 0 4px; }
+.login p{ color:var(--mut); margin:0 0 18px; font-size:.9rem; }
+.login input{ width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:12px; font:inherit; margin-bottom:10px; background:#f8fafc; }
+.login input:focus{ outline:none; border-color:#60a5fa; box-shadow:0 0 0 4px #dbeafe; }
+.login .go{ width:100%; border:none; border-radius:12px; padding:13px; font-weight:800; color:#fff; background:linear-gradient(135deg,#1e3a8a,#0e7490); }
+.login .gg{ width:100%; margin-top:10px; border:1px solid var(--line); border-radius:12px; padding:12px; font-weight:700; background:#fff; }
+.err{ color:var(--rd); font-size:.86rem; min-height:1.2em; margin-top:10px; }
+.note{ background:var(--am2); border:1px solid #fcd34d; color:#78350f; border-radius:14px; padding:14px; font-size:.9rem; }
+.note code{ background:#fff; padding:2px 6px; border-radius:6px; font-size:.86rem; word-break:break-all; user-select:all; }
+.toast{ position:fixed; left:50%; bottom:22px; transform:translateX(-50%); background:var(--ink); color:#fff; padding:10px 16px; border-radius:12px; font-size:.88rem; box-shadow:0 12px 30px -10px rgba(0,0,0,.4); }
+.load{ color:var(--mut); padding:40px 0; text-align:center; }
+@media(max-width:600px){ .k b{ font-size:1.45rem; } .hide-s{ display:none; } .top .tag{ display:none; } }
+</style>
+</head>
+<body>
+<div id="app"><div class="load">Chargement…</div></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script>
+(function(){
+  firebase.initializeApp({
+    apiKey: "AIzaSyAObLN7mMZ4PHiwOEkVZ301a1GR3ZpJuW4",
+    authDomain: "careerpulseeva.firebaseapp.com",
+    projectId: "careerpulseeva",
+    storageBucket: "careerpulseeva.firebasestorage.app",
+    messagingSenderId: "692255216052",
+    appId: "1:692255216052:web:3810690c41e9c1810862e1"
+  });
+  var A=firebase.auth(); try{ A.setPersistence(firebase.auth.Auth.Persistence.SESSION); }catch(e){}
+  var app=document.getElementById('app'), D=null, filtre='tous';
+  var LOGO='<svg viewBox="0 0 48 44" fill="none" aria-hidden="true"><g fill="#fff"><rect x="3" y="34" width="6" height="8" rx="1.3"/><rect x="12" y="30" width="6" height="12" rx="1.3"/><rect x="21" y="25" width="6" height="17" rx="1.3"/><rect x="30" y="19" width="6" height="23" rx="1.3"/><rect x="39" y="13" width="6" height="29" rx="1.3"/></g><path d="M3 24Q22 18 39.5 6" stroke="#6ee7b7" stroke-width="2.8" stroke-linecap="round"/><path d="M43.8 3 41.3 8.6 37.7 3.4z" fill="#6ee7b7"/></svg>';
+  function esc(t){ return String(t==null?'':t).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fd(iso){ if(!iso) return '—'; try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'short', year:'numeric' }); }catch(e){ return '—'; } }
+  function eur(n){ return Number(n||0).toLocaleString('fr-FR',{ style:'currency', currency:'EUR', maximumFractionDigits:2 }); }
+  function toast(t){ var e=document.createElement('div'); e.className='toast'; e.textContent=t; document.body.appendChild(e); setTimeout(function(){ e.remove(); },2600); }
+  var LIB={ actif:'Actif', essai:'Essai', expire:'Expiré', offert:'Accès offert', aucun:'Non abonné' };
+
+  function top(){ return '<div class="top">'+LOGO+'<b>CareerPulse</b><span class="tag">ADMIN</span><span class="sp"></span><button id="rf" type="button">Actualiser</button><button id="lo" type="button">Déconnexion</button></div>'; }
+
+  function loginView(msg){
+    app.innerHTML='<div class="login"><div class="card"><h1>Administration</h1><p>Espace réservé au directeur du site.</p>'
+      +'<form id="lf"><input id="em" type="email" autocomplete="username" placeholder="Adresse e-mail" required><input id="pw" type="password" autocomplete="current-password" placeholder="Mot de passe" required><button class="go" type="submit">Se connecter</button></form>'
+      +'<button class="gg" id="gg" type="button">Continuer avec Google</button><div class="err" id="er">'+esc(msg||'')+'</div></div></div>';
+    var er=document.getElementById('er');
+    document.getElementById('lf').onsubmit=function(ev){ ev.preventDefault(); er.textContent='';
+      A.signInWithEmailAndPassword(document.getElementById('em').value.trim(), document.getElementById('pw').value).catch(function(){ er.textContent='E-mail ou mot de passe incorrect.'; }); };
+    document.getElementById('gg').onclick=function(){ er.textContent=''; A.signInWithPopup(new firebase.auth.GoogleAuthProvider()).catch(function(e){ if(e&&e.code!=='auth/popup-closed-by-user') er.textContent='Connexion Google impossible.'; }); };
+  }
+
+  function api(method, body){
+    return A.currentUser.getIdToken().then(function(t){
+      return fetch('/api/admin',{ method:method, headers:Object.assign({ 'Authorization':'Bearer '+t }, body?{ 'Content-Type':'application/json' }:{}), body:body?JSON.stringify(body):undefined })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ j._code=r.status; return j; }); });
+    });
+  }
+
+  function charger(){
+    app.innerHTML=top()+'<div class="wrap"><div class="load">Chargement des données…</div></div>'; bindTop();
+    api('GET').then(function(j){
+      if(j._code===200){ D=j; render(); return; }
+      var w=app.querySelector('.wrap');
+      if(j._code===403 && j.uid) w.innerHTML='<div class="note"><b>Dernière étape.</b> Copie ton identifiant ci-dessous et colle-le dans Vercel (Settings → Environment Variables) sous le nom <b>ADMIN_UID</b>, puis fais <b>Redeploy</b>.<br><br><code>'+esc(j.uid)+'</code></div>';
+      else if(j._code===403) w.innerHTML='<div class="note"><b>Accès refusé.</b> Ce compte n\'est pas le compte administrateur.</div>';
+      else w.innerHTML='<div class="note">'+esc(j.erreur||'Impossible de charger les données.')+'</div>';
+    }).catch(function(){ app.querySelector('.wrap').innerHTML='<div class="note">Connexion au serveur impossible. Réessaie dans un instant.</div>'; });
+  }
+  function bindTop(){ var rf=document.getElementById('rf'), lo=document.getElementById('lo'); if(rf) rf.onclick=charger; if(lo) lo.onclick=function(){ A.signOut(); }; }
+
+  function render(){
+    var P=D.pros||[], att=P.filter(function(p){ return !p.verifie && p.statutDemande!=='refusee'; });
+    var c={ actif:0, essai:0, expire:0 }; P.forEach(function(p){ if(c[p.abo.statut]!=null) c[p.abo.statut]++; });
+    var V=D.visites||[], auj=V.length?V[V.length-1].n:0, s7=V.slice(-7).reduce(function(s,v){ return s+v.n; },0), s30=V.reduce(function(s,v){ return s+v.n; },0), mx=Math.max.apply(null,V.map(function(v){ return v.n; }).concat([1]));
+    var M=D.membres||{};
+    var h=top()+'<div class="wrap">';
+    h+='<div class="kpis">'
+      +'<div class="k"><span>Visiteurs aujourd\'hui</span><b>'+auj+'</b><small>'+s7+' sur 7 jours</small></div>'
+      +'<div class="k"><span>Membres</span><b>'+(M.total||0)+'</b><small>+'+(M.nouveaux7||0)+' cette semaine</small></div>'
+      +'<div class="k'+(att.length?' alert':'')+'"><span>Pros à valider</span><b>'+att.length+'</b><small>'+P.length+' espaces Pro au total</small></div>'
+      +'<div class="k"><span>Pros abonnés</span><b>'+c.actif+'</b><small>'+c.essai+' en essai · '+c.expire+' expiré'+(c.expire>1?'s':'')+'</small></div>'
+      +'<div class="k"><span>Revenu mensuel</span><b>'+eur(D.revenuMensuel)+'</b><small>HT, abonnés actifs</small></div>'
+      +'</div>';
+
+    h+='<div class="h"><h2>✅ À valider</h2><small>'+att.length+' en attente</small></div>';
+    h+=att.length?'<div class="pend">'+att.map(function(p){
+      var rows=[['SIRET',p.siret?'<a href="https://annuaire-entreprises.data.gouv.fr/etablissement/'+encodeURIComponent(p.siret)+'" target="_blank" rel="noopener">'+esc(p.siret)+' ↗</a>':'—']];
+      if(p.nda) rows.push(['N° NDA',esc(p.nda)]);
+      if(p.secteur) rows.push(['Secteur',esc(p.secteur)]);
+      rows.push(['Ville',esc(p.ville||'—')]);
+      if(p.contact) rows.push(['Contact',esc(p.contact)]);
+      rows.push(['E-mail',p.email?'<a href="mailto:'+esc(p.email)+'">'+esc(p.email)+'</a>':'—']);
+      if(p.tel) rows.push(['Téléphone',esc(p.tel)]);
+      if(p.site) rows.push(['Site',esc(p.site)]);
+      rows.push(['Demande',fd(p.demandeAt)]);
+      return '<div class="card p"><span class="ty'+(p.col==='organismes'?' c':'')+'">'+p.type+'</span><h3>'+esc(p.nom||'Sans nom')+'</h3><dl>'+rows.map(function(r){ return '<dt>'+r[0]+'</dt><dd>'+r[1]+'</dd>'; }).join('')+'</dl>'
+        +'<div class="acts"><button class="ok" data-v="valider" data-c="'+p.col+'" data-u="'+esc(p.uid)+'">Valider</button><button class="no" data-v="refuser" data-c="'+p.col+'" data-u="'+esc(p.uid)+'">Refuser</button></div></div>';
+    }).join('')+'</div>':'<div class="card empty">Aucune demande en attente. Tout est à jour 👌</div>';
+
+    var F=[['tous','Tous'],['actif','Actifs'],['essai','Essais'],['expire','Expirés'],['offert','Accès offert']];
+    var L=P.filter(function(p){ return p.verifie && (filtre==='tous'||p.abo.statut===filtre); }).sort(function(a,b){ return (a.nom||'').localeCompare(b.nom||''); });
+    h+='<div class="h"><h2>💼 Espaces Pro</h2><small>'+P.filter(function(p){ return p.verifie; }).length+' validés</small></div><div class="card">';
+    h+='<div class="flt">'+F.map(function(f){ return '<button type="button" data-f="'+f[0]+'"'+(filtre===f[0]?' class="on"':'')+'>'+f[1]+'</button>'; }).join('')+'</div>';
+    h+=L.length?'<div class="scroll"><table class="tbl"><thead><tr><th>Nom</th><th>Type</th><th>Abonnement</th><th class="hide-s">Fin / renouvellement</th></tr></thead><tbody>'+L.map(function(p){
+      var a=p.abo, pl=a.plan==='an'?'Annuel':a.plan==='mois'?'Mensuel':'';
+      return '<tr><td><b>'+esc(p.nom||'Sans nom')+'</b><small>'+esc(p.email)+'</small></td><td>'+p.type+'</td><td><span class="st '+a.statut+'">'+(LIB[a.statut]||a.statut)+'</span>'+(pl?'<small>'+pl+(a.resiliation?' · résiliation demandée':'')+'</small>':'')+'</td><td class="hide-s">'+fd(a.fin)+'</td></tr>';
+    }).join('')+'</tbody></table></div>':'<div class="empty">Aucun espace Pro dans ce filtre.</div>';
+    h+='</div>';
+
+    h+='<div class="grid2"><div><div class="h"><h2>📈 Visiteurs</h2><small>'+s30+' sur 30 jours</small></div><div class="card"><div class="bars">'+V.map(function(v){ return '<i style="height:'+Math.max(2,Math.round(v.n/mx*100))+'%" data-t="'+fd(v.jour)+' · '+v.n+'"></i>'; }).join('')+'</div><div class="axis"><span>'+(V[0]?fd(V[0].jour):'')+'</span><span>Aujourd\'hui</span></div></div></div>';
+    h+='<div><div class="h"><h2>👥 Membres</h2><small>'+(M.nouveaux30||0)+' nouveaux sur 30 jours</small></div><div class="card"><div class="flt" style="margin:0 0 6px"><span class="st actif">'+(M.verifies||0)+' e-mails vérifiés</span><span class="st essai">'+(M.actifs7||0)+' connectés cette semaine</span></div><ul class="list">'
+      +((M.derniers||[]).map(function(m){ return '<li><span>'+esc(m.nom||m.email||'Membre')+'</span><small>'+fd(m.cree)+'</small></li>'; }).join('')||'<li class="empty">Aucun membre pour l\'instant.</li>')+'</ul></div></div></div>';
+
+    var AV=D.avis||{}, NOMS=[['eva','EVA'],['lisa','Lisa'],['careerpulse','CareerPulse']];
+    h+='<div class="h"><h2>⭐ Avis des utilisateurs</h2></div><div class="av">'+NOMS.map(function(n){ var a=AV[n[0]];
+      if(!a||!a.n) return '<div class="card"><span class="st aucun">'+n[1]+'</span><div class="empty" style="margin-top:8px">Pas encore d\'avis.</div></div>';
+      return '<div class="card"><span class="st essai">'+n[1]+'</span><div style="margin-top:8px"><b>'+String(a.note).replace('.',',')+'</b> / 5 <span class="stars">'+'★★★★★'.slice(0,Math.round(a.note))+'</span></div><small style="color:var(--mut)">'+a.n+' avis</small><ul><li><span>Qualité</span><b>'+String(a.qualite).replace('.',',')+'</b></li><li><span>Efficacité</span><b>'+String(a.efficacite).replace('.',',')+'</b></li><li><span>Utilité</span><b>'+String(a.utilite).replace('.',',')+'</b></li></ul></div>';
+    }).join('')+'</div>';
+
+    h+='<p style="color:var(--mut);font-size:.78rem;text-align:center;margin-top:28px">Données mises à jour le '+new Date(D.maj).toLocaleString('fr-FR')+'</p></div>';
+    app.innerHTML=h; bindTop();
+    [].forEach.call(app.querySelectorAll('[data-f]'),function(b){ b.onclick=function(){ filtre=b.getAttribute('data-f'); render(); }; });
+    [].forEach.call(app.querySelectorAll('[data-v]'),function(b){ b.onclick=function(){
+      var v=b.getAttribute('data-v'), nom=b.closest('.p').querySelector('h3').textContent;
+      if(!confirm((v==='valider'?'Valider ':'Refuser ')+nom+' ?')) return;
+      [].forEach.call(b.parentNode.querySelectorAll('button'),function(x){ x.disabled=true; });
+      api('POST',{ action:v, col:b.getAttribute('data-c'), uid:b.getAttribute('data-u') }).then(function(j){
+        if(j._code===200){ toast(v==='valider'?'Compte validé ✅':'Demande refusée'); charger(); }
+        else { toast(j.erreur||'Action impossible'); [].forEach.call(b.parentNode.querySelectorAll('button'),function(x){ x.disabled=false; }); }
+      });
+    }; });
+  }
+
+  A.onAuthStateChanged(function(u){ if(u) charger(); else loginView(); });
+})();
+</script>
+</body>
+</html>
