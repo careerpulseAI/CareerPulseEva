@@ -2,6 +2,17 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<script>
+/* DIAGNOSTIC TEMPORAIRE : actif uniquement avec ?debug=1 dans l'adresse. Aucun effet sinon. */
+(function(){ var q=location.search; try{ if(window.parent!==window) q+=window.parent.location.search; }catch(e){}
+ if(q.indexOf('debug=1')<0) return;
+ var L=[]; function show(m){ L.push(m); var b=document.getElementById('cp-dbg'); if(!b&&document.body){ b=document.createElement('div'); b.id='cp-dbg'; b.style.cssText='position:fixed;left:6px;right:6px;bottom:6px;z-index:2147483647;max-height:45vh;overflow:auto;background:#111;color:#ff6b6b;font:12px/1.4 monospace;padding:8px;border-radius:8px;white-space:pre-wrap;word-break:break-all'; document.body.appendChild(b); } if(b) b.textContent='['+(window.parent!==window?'MENU':'PAGE')+' '+location.host+']\n'+L.join('\n'); }
+ window.addEventListener('error',function(e){ show('ERREUR: '+(e.message||e)+' @ '+(e.filename||'')+':'+(e.lineno||'')); },true);
+ window.addEventListener('unhandledrejection',function(e){ var r=e.reason; show('PROMESSE: '+(r&&(r.code||r.message)||r)); });
+ window.addEventListener('load',function(){ setTimeout(function(){ show('firebase='+typeof window.firebase+' togglePwd='+typeof window.togglePwd+' https='+(location.protocol==='https:')); },1500); });
+})();
+</script>
+
 <!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
 <link rel="expect" href="#cp-end" blocking="render">
 <style id="cp-transitions">
