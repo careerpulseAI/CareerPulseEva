@@ -9450,7 +9450,7 @@ function cpSendSupport(){
   if(!subj||!msg){ ecShowToast('Renseigne le sujet et le message'); return; }
   var mailSubject=encodeURIComponent('[Support CareerPulse] '+subj);
   var mailBody=encodeURIComponent(msg);
-  window.location.href='mailto:careerpulse-pro@outlook.com?subject='+mailSubject+'&body='+mailBody;
+  window.location.href='mailto:contact@careerpulse.fr?subject='+mailSubject+'&body='+mailBody;
 }
 
 // Donne ton avis : questionnaire 3 questions envoyé par email (pas d'IA, pas de backend pour l'instant)
@@ -9464,7 +9464,7 @@ function cpSendAvis(){
     '2. CareerPulse t\'a aidé dans ta recherche ? '+q2+'\n'+
     '3. Amélioration suggérée : '+(q3||'(non renseigné)')
   );
-  window.location.href='mailto:careerpulse-pro@outlook.com?subject='+mailSubject+'&body='+mailBody;
+  window.location.href='mailto:contact@careerpulse.fr?subject='+mailSubject+'&body='+mailBody;
   ecShowToast('Merci pour ton avis 🙏');
 }
 
