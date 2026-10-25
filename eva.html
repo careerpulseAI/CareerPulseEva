@@ -8148,5 +8148,466 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
 .evs-nav .evs-item.cp-led, #eva-tab button.cp-led, .evs-nav .evs-item:active, #eva-tab button:active, .evs-nav .evs-item:focus-visible, #eva-tab button:focus-visible{ background:linear-gradient(135deg,rgba(224,242,254,.95),rgba(240,249,255,.95)) !important; color:#0369a1 !important; box-shadow:0 0 0 1px rgba(56,189,248,.55), 0 0 16px -2px rgba(56,189,248,.55), inset 0 0 12px rgba(186,230,253,.55) !important; outline:none !important; }
 .evs-nav .evs-item:hover svg, #eva-tab button:hover svg, .evs-nav .evs-item:active svg, #eva-tab button:active svg{ color:#0284c7 !important; stroke:currentColor; filter:drop-shadow(0 0 4px rgba(56,189,248,.6)); }
 </style>
+<style id="evof-css">
+/* ═══ Badge « Article officiel » ═══ */
+.evof{ display:inline-flex; align-items:center; gap:6px; width:max-content; max-width:100%; padding:4px 11px 4px 4px; border-radius:999px; font:800 .6rem/1 'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif; letter-spacing:.07em; text-transform:uppercase; white-space:nowrap; vertical-align:middle; }
+.evof svg{ width:17px; height:17px; flex-shrink:0; filter:drop-shadow(0 1px 2px rgba(146,64,14,.45)); }
+.evof-hd{ display:flex; margin-top:7px; color:#fef3c7; background:linear-gradient(135deg,rgba(15,23,42,.34),rgba(30,58,138,.28)); border:1px solid rgba(253,230,138,.7); box-shadow:inset 0 1px 0 rgba(255,255,255,.2), 0 6px 16px -8px rgba(2,6,23,.6); text-shadow:0 1px 6px rgba(2,6,23,.35); }
+.evof-lt{ color:#92400e; background:linear-gradient(135deg,#fffbeb,#fef3c7 60%,#fde68a); border:1px solid rgba(217,119,6,.35); box-shadow:inset 0 1px 0 #fff, 0 6px 14px -10px rgba(180,83,9,.7); }
+.pfs-in > .evof-lt{ display:flex; margin:7px 0 2px; }
+.evof-sm{ display:flex; margin:5px 0 3px; padding:3px 9px 3px 3px; font-size:.52rem; gap:5px; }
+.evof-sm svg{ width:14px; height:14px; }
+
+/* ═══ Header des articles Droits & aides : titre sur 2 lignes maximum ═══ */
+#evad-art-hdtitle .evht{ display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-clamp:2; overflow:hidden; white-space:normal; text-overflow:ellipsis; }
+#s-eva-droits-article .evhk{ display:none; }
+@media (max-width:899px){
+  #s-eva-droits-article .evad-hd{ flex-wrap:wrap !important; align-items:center !important; column-gap:8px !important; row-gap:9px !important; padding:10px 14px 13px !important; height:auto !important; min-height:0 !important; }
+  #s-eva-droits-article .evad-hd > .evad-hd-back{ order:1; }
+  #s-eva-droits-article .evad-hd > .evt-ico{ order:2; }
+  #s-eva-droits-article .evad-hd > .evhk{ order:3; display:inline-flex; align-items:center; flex:none; min-width:0; }
+  #s-eva-droits-article .evad-hd > .evad-hd-eva{ order:4; }
+  #s-eva-droits-article .evad-hd > .cpav.in-hd{ order:5; margin-left:0 !important; }
+  #s-eva-droits-article .evad-hd > .evr{ order:6; position:static !important; transform:none !important; margin:0 !important; flex-shrink:0; }
+  #s-eva-droits-article .evad-hd > #evad-art-hdtitle{ order:10; flex:1 0 100% !important; width:100% !important; max-width:100% !important; margin:0 !important; overflow:visible !important; }
+  #s-eva-droits-article #evad-art-hdtitle::before{ display:none !important; }
+  #evad-art-hdtitle .evht{ font-size:1.14rem; line-height:1.24; letter-spacing:-.01em; }
+  #s-eva-droits-article .evhk > span, #s-eva-droits-article .evhk{ font:800 .52rem/1.15 'DM Sans',sans-serif; letter-spacing:.13em; text-transform:uppercase; color:#fff; }
+  #s-eva-droits-article .evhk{ width:auto; max-width:46vw; margin-right:auto; padding:4px 10px 4px 9px; border-radius:99px; background:rgba(255,255,255,.14); border:1px solid rgba(255,255,255,.28); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  #evad-art-hdtitle .evsv{ margin-top:7px; }
+}
+</style>
+<script id="evof-lot">
+/* ═══ Droits & aides · Articles officiels (modèle 1) + header d'article + badge « Article officiel » ═══ */
+(function(){
+  var OFF = window.EVOF_IDS = window.EVOF_IDS || {};
+  var _n = 0;
+  function seal(){
+    var g = 'evofg' + (++_n);
+    return '<svg viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="'+g+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fef3c7"/><stop offset=".45" stop-color="#fbbf24"/><stop offset="1" stop-color="#b45309"/></linearGradient></defs>'+
+      '<path d="M12 1.6l2.2 1.6 2.7-.1 1 2.5 2.3 1.4-.5 2.7 1.1 2.5-1.9 1.9.1 2.7-2.6.7-1.5 2.3-2.6-.8-2.6.8-1.5-2.3-2.6-.7.1-2.7-1.9-1.9 1.1-2.5-.5-2.7 2.3-1.4 1-2.5 2.7.1z" fill="url(#'+g+')"/>'+
+      '<circle cx="12" cy="12" r="6.2" fill="#1e3a8a"/><circle cx="12" cy="12" r="6.2" fill="none" stroke="#fde68a" stroke-width=".7" opacity=".8"/>'+
+      '<path d="m9.3 12.1 1.8 1.8 3.7-3.9" fill="none" stroke="#fde68a" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+  function badge(cls){ var b = document.createElement('span'); b.className = 'evof ' + cls; b.innerHTML = seal() + '<span>Article officiel</span>'; b.title = 'Article officiel · contenu vérifié sur les sources publiques'; return b; }
+  window.evofBadge = badge;
+
+  /* ── Constructeur du modèle 1 (structure identique à « Congés payés ») ── */
+  function src(x){
+    var u = x[1].replace(/^https?:\/\/(www\.)?/, '').replace(/\?.*$/, '');
+    return '<div class="art-src-row" onclick="window.open(\'' + x[1] + '\',\'_blank\')"><div class="art-src-ico">' + (x[3] || '🇫🇷') + '</div><div class="art-src-info"><div class="art-src-name">' + x[0] + '</div><div class="art-src-url">' + u + (x[2] ? ' · <b class="art-src-date">' + x[2] + '</b>' : '') + '</div></div></div>';
+  }
+  function html(o){
+    var t = o.table;
+    return '<div class="art-lead">' + o.lead + '</div>' +
+      '<div class="art-h2">' + o.regle[0] + '</div><div class="art-p">' + o.regle[1] + '</div>' +
+      '<div class="art-table-wrap"><table class="art-table"><thead><tr><th>' + t[0][0] + '</th><th>' + t[0][1] + '</th></tr></thead><tbody>' +
+        t.slice(1).map(function(r){ return '<tr><td>' + r[0] + '</td><td>' + r[1] + '</td></tr>'; }).join('') + '</tbody></table></div>' +
+      '<div class="art-hl art-hl-amber"><div class="art-hl-h">' + o.hl[0] + '</div><div class="art-hl-p">' + o.hl[1] + '</div></div>' +
+      '<div class="art-h2">' + o.steps[0] + '</div><ul class="art-steps">' +
+        o.steps[1].map(function(s, i){ return '<li class="art-step"><div class="art-step-n">' + (i + 1) + '</div><div><div class="art-step-t">' + s[0] + '</div><div class="art-step-d">' + s[1] + '</div></div></li>'; }).join('') + '</ul>' +
+      '<div class="art-eva"><div class="art-eva-av">EVA</div><div><div class="art-eva-label">💡 Le conseil d\'Eva</div><div class="art-eva-text">' + o.eva + '</div></div></div>' +
+      '<div class="art-sources"><div class="art-src-label">📚 Sources officielles</div>' + o.src.map(src).join('') + '</div>';
+  }
+  function put(profile, o){
+    var L = EVAD_ARTICLES[profile]; if(!L) return;
+    var old = L.filter(function(a){ return a.id === o.id; })[0] || {};
+    var art = { id:o.id, aud:o.aud || old.aud || 'sal', off:true, title:o.title || old.title, sub:o.sub || old.sub, ico:old.ico || o.ico,
+      content:function(){ return html(o); } };
+    evadPut(profile, art);
+    EVAD_ENGAGE[o.id] = { fact:o.fact, checklist:{ title:o.check[0], items:o.check[1] }, estimator:o.est, related:o.rel };
+    QUIZ_BANK[o.id] = o.quiz.map(function(x){ return { q:x[0], r:x[1] }; });
+    OFF[o.id] = 1;
+  }
+  window.evofPut = put;
+
+  var SP = 'https://www.service-public.gouv.fr/particuliers/vosdroits/', CT = 'https://code.travail.gouv.fr/code-du-travail/';
+  var eur = function(n){ return Math.round(n).toLocaleString('fr-FR') + ' €'; };
+  var eur2 = function(n){ return n.toLocaleString('fr-FR', { minimumFractionDigits:2, maximumFractionDigits:2 }) + ' €'; };
+
+  var A = [
+
+  /* 1 · CONGÉS PAYÉS */
+  { id:'conges', title:'Congés payés — Calcul & droits', sub:'Acquisition · Calcul · Arrêt maladie · Report',
+    lead:'Tout salarié a droit à des <strong>congés payés</strong>, quel que soit son contrat (CDI, CDD, temps partiel). Depuis la <strong>loi du 22 avril 2024</strong>, entrée en vigueur le <strong>24 avril 2024</strong> à la suite des arrêts de la Cour de cassation du <strong>13 septembre 2023</strong>, les arrêts maladie ouvrent eux aussi droit à des congés.',
+    regle:['📐 Règle d\'acquisition', 'Chaque salarié acquiert <strong>2,5 jours ouvrables</strong> par mois de travail effectif chez le même employeur, soit <strong>30 jours ouvrables</strong> (5 semaines) pour une année complète. La période de référence va du <strong>1er juin N-1 au 31 mai N</strong>, sauf accord collectif.'],
+    table:[['Situation','Droits à congés'],
+      ['Mois de travail effectif','<strong>2,5 jours ouvrables</strong> (30 jours max par an)'],
+      ['Arrêt maladie non professionnel','<strong>2 jours ouvrables</strong> par mois, dans la limite de 24 jours par période de référence'],
+      ['Accident du travail, maladie professionnelle','Assimilé à du travail effectif : <strong>2,5 jours</strong> par mois, sans limite de durée'],
+      ['Congé principal','Au moins <strong>12 jours ouvrables continus</strong> entre le 1er mai et le 31 octobre, 24 jours consécutifs au plus'],
+      ['Indemnité de congés','Règle du 1/10e ou maintien du salaire : <strong>la plus favorable</strong> pour vous']],
+    hl:['⚡ Après un arrêt maladie : l\'employeur doit vous informer', 'Dans le <strong>mois qui suit votre reprise</strong>, l\'employeur vous indique, par tout moyen (par exemple sur le bulletin de paie), le <strong>nombre de jours acquis</strong> et la <strong>date limite</strong> pour les prendre. Si vous n\'avez pas pu les poser à cause de la maladie, vous bénéficiez d\'une <strong>période de report de 15 mois</strong> à partir de cette information.'],
+    steps:['✅ Comment faire valoir ses droits à congés', [
+      ['Vérifier son compteur','Comparez le solde indiqué sur votre bulletin de paie avec le calcul : <strong>2,5 jours</strong> par mois travaillé, plus <strong>2 jours</strong> par mois d\'arrêt maladie.'],
+      ['Demander l\'information après un arrêt','Si rien ne vous a été communiqué dans le mois suivant votre reprise, demandez par écrit (e-mail ou courrier) le nombre de jours acquis et la date limite pour les prendre.'],
+      ['Poser ses congés dans les règles','Les dates sont fixées par l\'employeur selon l\'accord collectif ou, à défaut, après avis du CSE. L\'ordre des départs vous est communiqué <strong>au moins 1 mois</strong> avant votre départ.'],
+      ['Vérifier à la fin du contrat','Les jours acquis et non pris sont payés sous forme d\'<strong>indemnité compensatrice de congés payés</strong>, qui doit apparaître dans le solde de tout compte.']]],
+    eva:'Gardez tous vos bulletins de paie : ils indiquent les jours acquis et pris. En cas d\'erreur, une réclamation de salaire, indemnité de congés comprise, est possible pendant <strong>3 ans</strong> (art. L3245-1 du Code du travail).',
+    src:[['Service-Public — Congés payés du salarié', SP + 'F2258', 'vérifié le 30/04/2026'],
+      ['Service-Public — Congés payés et arrêt maladie', SP + 'F37482', ''],
+      ['Code du travail — Art. L3141-3 (2,5 jours par mois)', CT + 'l3141-3', '', '⚖️'],
+      ['Code du travail — Art. L3141-24 (calcul de l\'indemnité)', CT + 'l3141-24', '', '⚖️']],
+    est:{ title:'Eva calcule votre indemnité de congés', subtitle:'Méthode la plus favorable — Art. L3141-24',
+      fields:[{ id:'salaire', label:'Salaire brut mensuel', min:1400, max:6000, step:50, unit:'€', default:2500 },{ id:'jours', label:'Jours de congés (ouvrables)', min:1, max:30, step:1, unit:'j', default:10 }],
+      calc:function(v){ var s = v[0], j = v[1], dix = s * 12 * 0.1 / 30 * j, mai = s / 26 * j, best = Math.max(dix, mai);
+        return { val:eur(best), detail:'1/10e : ' + eur(dix) + ' · Maintien ≈ ' + eur(mai) + ' (≈ 26 jours ouvrables par mois) · La méthode la plus favorable s\'applique' }; } },
+    fact:{ stat:'30 jours', text:'ouvrables de congés par an pour un temps plein, soit <strong>5 semaines</strong>. Depuis le 24 avril 2024, jusqu\'à <strong>24 jours</strong> peuvent aussi être acquis pendant un arrêt maladie non professionnel.', source:'Service-Public F2258 · Loi n° 2024-364 du 22 avril 2024' },
+    rel:['solde','arret-maladie','bulletin-paie'],
+    check:['Connaissez-vous vos droits à congés ?', ['Je sais que j\'acquiers 2,5 jours ouvrables par mois travaillé','Je sais qu\'un arrêt maladie ouvre droit à 2 jours par mois depuis le 24 avril 2024','Je sais que l\'employeur doit m\'informer de mes jours dans le mois qui suit ma reprise','J\'ai vérifié mon compteur de congés sur mon bulletin de paie','Je sais que les congés non pris sont payés à la fin du contrat']],
+    quiz:[
+      ['Combien de jours de congés payés acquiert-on par mois de travail ?','On acquiert <strong>2,5 jours ouvrables</strong> par mois de travail effectif chez le même employeur, soit <strong>30 jours ouvrables</strong> (5 semaines) pour une année complète. C\'est l\'article L3141-3 du Code du travail.'],
+      ['Un arrêt maladie ouvre-t-il droit à des congés payés ?','Oui, depuis le <strong>24 avril 2024</strong>. Un arrêt maladie non professionnel donne <strong>2 jours ouvrables par mois</strong>, dans la limite de 24 jours par période de référence. Un accident du travail ou une maladie professionnelle compte comme du travail effectif : <strong>2,5 jours par mois</strong>, sans limite de durée.'],
+      ['Comment est calculée l\'indemnité de congés payés ?','Deux méthodes sont comparées : la <strong>règle du 1/10e</strong> (un dixième de la rémunération brute de la période de référence) et le <strong>maintien du salaire</strong>. L\'employeur doit appliquer <strong>la plus favorable</strong> pour vous (art. L3141-24).'],
+      ['Quelle est la période de référence pour acquérir ses congés ?','Sauf accord collectif, elle va du <strong>1er juin de l\'année précédente au 31 mai</strong> de l\'année en cours.'],
+      ['Combien de jours doit compter le congé principal ?','Le congé principal compte au moins <strong>12 jours ouvrables continus</strong>, pris entre le <strong>1er mai et le 31 octobre</strong>, et ne peut pas dépasser <strong>24 jours consécutifs</strong>, sauf exceptions.'],
+      ['Que deviennent les congés non pris quand le contrat se termine ?','Ils sont payés sous forme d\'<strong>indemnité compensatrice de congés payés</strong>, versée avec le solde de tout compte.']] },
+
+  /* 2 · SMIC */
+  { id:'salaire', title:'Salaire minimum — SMIC 2026', sub:'Montants au 1er juin 2026 · Jeunes · Mayotte · Vérification',
+    lead:'Le <strong>SMIC</strong> est le salaire horaire minimum en dessous duquel aucun salarié majeur ne peut être payé. En 2026, il a été revalorisé deux fois : <strong>+1,18 % au 1er janvier</strong>, puis <strong>+2,41 % au 1er juin 2026</strong>, une hausse automatique déclenchée par l\'inflation.',
+    regle:['📐 Montants en vigueur depuis le 1er juin 2026', 'Montants fixés par l\'<strong>arrêté du 22 mai 2026</strong>, pour une durée de travail de <strong>35 heures par semaine</strong> (151,67 heures par mois).'],
+    table:[['Situation','Montant'],
+      ['SMIC horaire brut','<strong>12,31 €</strong>'],
+      ['SMIC mensuel brut (35 h)','<strong>1 867,02 €</strong>'],
+      ['SMIC mensuel net (indicatif)','≈ <strong>1 477,93 €</strong>'],
+      ['Mayotte','<strong>9,56 €</strong> brut de l\'heure, soit 1 449,93 € par mois'],
+      ['Salarié de 17 ans (moins de 6 mois de pratique dans la branche)','<strong>11,08 €</strong> brut de l\'heure'],
+      ['Salarié de moins de 17 ans (moins de 6 mois de pratique)','<strong>9,85 €</strong> brut de l\'heure']],
+    hl:['⚡ Une revalorisation automatique', 'Le SMIC est revalorisé chaque <strong>1er janvier</strong>. Il l\'est aussi en cours d\'année dès que les prix augmentent d\'<strong>au moins 2 %</strong> depuis la dernière revalorisation : c\'est ce qui a entraîné la hausse du <strong>1er juin 2026</strong>.'],
+    steps:['✅ Comment vérifier que vous êtes payé au moins au SMIC', [
+      ['Repérer votre taux horaire','Sur votre bulletin de paie, divisez le salaire de base brut par le nombre d\'heures payées (<strong>151,67 h</strong> pour 35 h par semaine).'],
+      ['Comparer au SMIC en vigueur','Depuis le 1er juin 2026, votre taux ne peut pas être inférieur à <strong>12,31 € brut de l\'heure</strong>, sauf règles propres aux jeunes salariés et aux contrats d\'apprentissage ou de professionnalisation.'],
+      ['Regarder votre convention collective','Les minima de votre branche peuvent être <strong>plus élevés</strong> que le SMIC. Si un minimum conventionnel est plus bas, c\'est le SMIC qui s\'applique.'],
+      ['Réclamer par écrit','Demandez la régularisation à votre employeur. Sans réponse, contactez l\'inspection du travail ou saisissez le conseil de prud\'hommes : un rappel de salaire peut être réclamé pendant <strong>3 ans</strong>.']]],
+    eva:'Vous êtes apprenti ou en contrat de professionnalisation ? Votre rémunération est calculée en <strong>pourcentage du SMIC</strong> selon votre âge et votre année de contrat : chaque hausse du SMIC augmente donc aussi votre salaire.',
+    src:[['info.gouv.fr — Le SMIC revalorisé au 1er juin 2026', 'https://www.info.gouv.fr/actualite/le-smic-revalorise-le-1er-juin-2026', '', '🏛️'],
+      ['Service-Public — Montant du SMIC', SP + 'F2300', 'vérifié le 01/06/2026'],
+      ['Ministère du Travail — Revalorisation au 1er janvier 2026', 'https://travail-emploi.gouv.fr/revalorisation-annuelle-du-smic-au-1er-janvier-2026', '', '🏛️']],
+    est:{ title:'Eva calcule votre salaire au SMIC', subtitle:'Base : 12,31 € brut de l\'heure (1er juin 2026)',
+      fields:[{ id:'h', label:'Heures par semaine', min:4, max:35, step:1, unit:'h', default:35 }],
+      calc:function(v){ var b = 12.31 * v[0] * 52 / 12, n = b * 1477.93 / 1867.02;
+        return { val:eur2(b) + '<span> brut / mois</span>', detail:'Net indicatif ≈ ' + eur(n) + ' · ' + v[0] + ' h × 52 semaines ÷ 12 mois' }; } },
+    fact:{ stat:'12,31 €', text:'brut de l\'heure : c\'est le SMIC depuis le <strong>1er juin 2026</strong>, soit <strong>1 867,02 €</strong> brut par mois pour 35 heures. C\'est la deuxième hausse de l\'année, après celle du 1er janvier.', source:'info.gouv.fr · Service-Public F2300' },
+    rel:['bulletin-paie','heures-sup','temps-partiel'],
+    check:['Votre salaire respecte-t-il le SMIC ?', ['Je connais mon taux horaire brut','Mon taux horaire est d\'au moins 12,31 € depuis le 1er juin 2026','J\'ai vérifié le minimum prévu par ma convention collective','Je sais que le SMIC est revalorisé chaque 1er janvier','Je sais que je peux réclamer un rappel de salaire pendant 3 ans']],
+    quiz:[
+      ['Quel est le montant du SMIC horaire brut depuis le 1er juin 2026 ?','Le SMIC horaire brut est de <strong>12,31 €</strong> depuis le 1er juin 2026, soit <strong>1 867,02 € brut</strong> par mois pour 35 heures par semaine.'],
+      ['Pourquoi le SMIC a-t-il augmenté au 1er juin 2026 ?','Le SMIC est revalorisé automatiquement en cours d\'année quand les prix augmentent d\'<strong>au moins 2 %</strong> depuis la dernière revalorisation. Ce seuil a été franchi en mai 2026, d\'où une hausse de <strong>2,41 %</strong> au 1er juin.'],
+      ['Le SMIC est-il le même à Mayotte ?','Non. À Mayotte, le SMIC horaire brut est de <strong>9,56 €</strong>, soit 1 449,93 € brut par mois pour 35 heures.'],
+      ['Un salarié de 17 ans peut-il être payé moins que le SMIC ?','Oui, s\'il a <strong>moins de 6 mois de pratique</strong> dans sa branche : <strong>11,08 €</strong> brut de l\'heure à 17 ans et <strong>9,85 €</strong> avant 17 ans. Ces abattements disparaissent ensuite.'],
+      ['Ma convention collective peut-elle prévoir moins que le SMIC ?','Non. Un minimum conventionnel peut être plus élevé que le SMIC, mais s\'il est plus bas, c\'est <strong>le SMIC qui s\'applique</strong>.'],
+      ['Combien de temps a-t-on pour réclamer un rappel de salaire ?','La réclamation d\'un salaire impayé se prescrit par <strong>3 ans</strong> (art. L3245-1 du Code du travail).']] },
+
+  /* 3 · SOLDE DE TOUT COMPTE */
+  { id:'solde', title:'Solde de tout compte — Ce qu\'il doit contenir', sub:'Contenu · Signature · Dénonciation · Délais',
+    lead:'À la fin de votre contrat, quel que soit le motif (démission, licenciement, rupture conventionnelle, fin de CDD), l\'employeur établit un <strong>reçu pour solde de tout compte</strong>. Il fait l\'inventaire de toutes les sommes qui vous sont versées. <strong>Le signer n\'est pas obligatoire.</strong>',
+    regle:['📐 Ce que doit contenir le reçu', 'Le reçu liste <strong>toutes les sommes</strong> versées lors de la rupture du contrat. Il est établi en <strong>2 exemplaires</strong>, dont un vous est remis. Il est fourni avec les autres documents de fin de contrat : <strong>certificat de travail</strong> et <strong>attestation France Travail</strong>.'],
+    table:[['Somme','Ce que vous devez vérifier'],
+      ['Dernier salaire','Payé jusqu\'au <strong>dernier jour</strong> du contrat, heures supplémentaires et primes comprises'],
+      ['Indemnité compensatrice de congés payés','Tous les jours <strong>acquis et non pris</strong>, calculés selon la méthode la plus favorable'],
+      ['Indemnité de préavis','Due si l\'employeur vous a <strong>dispensé</strong> d\'effectuer votre préavis'],
+      ['Indemnité de rupture','Licenciement, rupture conventionnelle ou fin de CDD (indemnité de fin de contrat), selon votre situation'],
+      ['Exemplaires','<strong>2 exemplaires</strong>, dont un pour vous']],
+    hl:['⚠️ Signer ou non : ce que ça change', 'Si vous <strong>signez</strong>, vous avez <strong>6 mois</strong> pour dénoncer le reçu par lettre recommandée. Passé ce délai, les sommes qui y figurent ne peuvent plus être contestées. Si vous <strong>ne signez pas</strong>, vous gardez les délais habituels : <strong>1 an</strong> pour contester la rupture, <strong>2 ans</strong> pour l\'exécution du contrat, <strong>3 ans</strong> pour les salaires.'],
+    steps:['✅ Comment vérifier et contester son solde', [
+      ['Récupérer le reçu et les documents','À la fin du contrat, l\'employeur vous remet ou tient à votre disposition le reçu, le <strong>certificat de travail</strong> et l\'<strong>attestation France Travail</strong>.'],
+      ['Vérifier chaque ligne','Comparez avec vos bulletins de paie, votre compteur de congés, votre préavis et le montant de l\'indemnité de rupture prévu.'],
+      ['Signer seulement si tout est juste','Vous pouvez refuser de signer. Si vous signez, gardez votre exemplaire.'],
+      ['Dénoncer dans les 6 mois','En cas d\'erreur après signature, envoyez une <strong>lettre recommandée avec accusé de réception</strong> dans les 6 mois. Le Code du travail numérique propose un modèle gratuit.']]],
+    eva:'Le Code du travail numérique met à votre disposition un <strong>modèle de lettre</strong> pour dénoncer un reçu pour solde de tout compte. Gardez la preuve d\'envoi et l\'accusé de réception.',
+    src:[['Service-Public — Reçu pour solde de tout compte', SP + 'F86', 'vérifié le 30/01/2026'],
+      ['Code du travail numérique — Modèle : dénoncer un reçu pour solde de tout compte', 'https://code.travail.gouv.fr/modeles-de-courriers/comment-denoncer-un-recu-pour-solde-de-tout-compte', '', '📝'],
+      ['Code du travail — Art. L1234-20', CT + 'l1234-20', '', '⚖️']],
+    est:{ title:'Eva vérifie vos congés dans le solde', subtitle:'Indemnité compensatrice — 2 méthodes légales',
+      fields:[{ id:'salaire', label:'Salaire brut mensuel', min:1400, max:6000, step:50, unit:'€', default:2500 },{ id:'jours', label:'Jours de congés non pris', min:1, max:30, step:1, unit:'j', default:12 }],
+      calc:function(v){ var s = v[0], j = v[1], dix = s * 12 * 0.1 / 30 * j, mai = s / 26 * j;
+        return { val:eur(Math.max(dix, mai)), detail:'1/10e : ' + eur(dix) + ' · Maintien ≈ ' + eur(mai) + ' · Le montant le plus favorable doit figurer dans le reçu' }; } },
+    fact:{ stat:'6 mois', text:'pour dénoncer un reçu pour solde de tout compte <strong>signé</strong>, par lettre recommandée. Passé ce délai, les sommes qui y figurent deviennent <strong>libératoires</strong> pour l\'employeur.', source:'Code du travail, art. L1234-20 · Service-Public F86' },
+    rel:['conges','licenciement','rupture'],
+    check:['Avez-vous tout vérifié avant de signer ?', ['J\'ai reçu le reçu pour solde de tout compte en 2 exemplaires','J\'ai reçu mon certificat de travail et mon attestation France Travail','J\'ai recalculé mes congés payés non pris','J\'ai vérifié mon dernier salaire et mon indemnité de rupture','Je sais que j\'ai 6 mois pour dénoncer le reçu si je le signe']],
+    quiz:[
+      ['Est-on obligé de signer le reçu pour solde de tout compte ?','Non. La signature n\'est <strong>pas obligatoire</strong>. Si vous ne signez pas, le reçu n\'a pas d\'effet libératoire et vous gardez les délais habituels pour réclamer.'],
+      ['Combien de temps a-t-on pour contester un reçu signé ?','Vous avez <strong>6 mois</strong> après la signature pour le dénoncer par <strong>lettre recommandée</strong> (art. L1234-20). Au-delà, les sommes mentionnées ne peuvent plus être contestées.'],
+      ['Que doit contenir le reçu ?','Il fait l\'inventaire de <strong>toutes les sommes versées</strong> à la fin du contrat : dernier salaire, indemnité de congés payés, indemnité de préavis, indemnité de rupture…'],
+      ['En combien d\'exemplaires le reçu est-il établi ?','En <strong>2 exemplaires</strong>, dont un est remis au salarié.'],
+      ['Quels délais s\'appliquent si on ne signe pas ?','<strong>1 an</strong> pour contester la rupture du contrat, <strong>2 ans</strong> pour une action sur l\'exécution du contrat et <strong>3 ans</strong> pour réclamer des salaires.'],
+      ['Quels autres documents reçoit-on à la fin du contrat ?','Le <strong>certificat de travail</strong> et l\'<strong>attestation France Travail</strong>, en plus du reçu pour solde de tout compte.']] },
+
+  /* 4 · TÉLÉTRAVAIL */
+  { id:'teletravail', title:'Télétravail — Droits & obligations', sub:'Mise en place · Refus · Frais · Accident',
+    lead:'Le <strong>télétravail</strong> est encadré par les articles <strong>L1222-9 à L1222-11</strong> du Code du travail. Le télétravailleur a <strong>les mêmes droits</strong> que les salariés qui travaillent sur site : formation, santé et sécurité, vie privée, avantages sociaux.',
+    regle:['📐 Comment le télétravail est mis en place', 'Par un <strong>accord collectif</strong> ou une <strong>charte</strong> de l\'employeur (après avis du CSE s\'il existe). À défaut, par un simple <strong>accord entre vous et l\'employeur</strong>, formalisé par tout moyen. Un écrit est recommandé.'],
+    table:[['Question','Ce que prévoit la loi'],
+      ['Refus de l\'employeur','Il doit être <strong>motivé</strong> si votre poste est éligible selon l\'accord ou la charte, ou si vous êtes travailleur handicapé ou proche aidant'],
+      ['Refus du salarié','Possible : refuser le télétravail <strong>n\'est pas un motif de licenciement</strong>'],
+      ['Équipement','À domicile, l\'employeur <strong>fournit, installe et entretient</strong> le matériel nécessaire'],
+      ['Accident','Un accident sur le lieu de télétravail pendant l\'activité est <strong>présumé accident du travail</strong>'],
+      ['Circonstances exceptionnelles','En cas d\'épidémie ou de force majeure, le télétravail peut être <strong>imposé</strong>']],
+    hl:['💶 Frais de télétravail : les barèmes URSSAF 2026', 'L\'employeur prend en charge les frais, au réel sur justificatifs ou par une <strong>allocation forfaitaire</strong>. Il n\'existe pas de montant minimum légal : les barèmes fixent la limite <strong>exonérée de cotisations</strong>. Sans accord collectif : <strong>2,70 € par jour</strong>, 59,40 € par mois au plus. Avec accord collectif : <strong>3,30 € par jour</strong>, 72,60 € par mois au plus.'],
+    steps:['✅ Comment demander le télétravail', [
+      ['Lire l\'accord ou la charte','Ils précisent les postes éligibles, la façon de faire votre demande, les plages où l\'employeur peut vous joindre et la prise en charge des frais.'],
+      ['Faire votre demande par écrit','Par e-mail ou par courrier, pour garder une trace. Une fois d\'accord, formalisez les modalités par écrit.'],
+      ['Obtenir une réponse','Si votre poste est éligible selon l\'accord ou la charte, un refus doit être <strong>motivé</strong>.'],
+      ['Vérifier frais, matériel et charge de travail','Allocation ou remboursement, équipement fourni, et un <strong>entretien annuel</strong> sur vos conditions d\'activité et votre charge de travail.']]],
+    eva:'Un accident chez vous pendant vos heures de télétravail est présumé d\'origine professionnelle : prévenez votre employeur comme si vous étiez sur site, <strong>dans les 24 heures</strong>.',
+    src:[['Service-Public — Télétravail dans le secteur privé', SP + 'F13851', 'vérifié le 14/08/2026'],
+      ['Service-Public — Frais de télétravail : barème 2026', 'https://entreprendre.service-public.gouv.fr/actualites/A18043', '07/01/2026'],
+      ['Code du travail — Art. L1222-9', CT + 'l1222-9', '', '⚖️']],
+    est:{ title:'Eva calcule votre allocation télétravail', subtitle:'Limite exonérée de cotisations — barème URSSAF 2026',
+      fields:[{ id:'jours', label:'Jours télétravaillés par mois', min:1, max:22, step:1, unit:'j', default:8 }],
+      calc:function(v){ var a = Math.min(2.70 * v[0], 59.40), b = Math.min(3.30 * v[0], 72.60);
+        return { val:eur2(a) + '<span>/mois</span>', detail:'Sans accord collectif : 2,70 €/jour · Avec accord collectif : ' + eur2(b) + ' (3,30 €/jour) · Ce n\'est pas un minimum légal' }; } },
+    fact:{ stat:'2,70 €', text:'par jour de télétravail : c\'est la limite <strong>exonérée de cotisations</strong> en 2026 sans accord collectif (<strong>3,30 €</strong> avec accord). Ce n\'est pas un minimum obligatoire : c\'est un plafond d\'exonération.', source:'Service-Public · actualité du 7 janvier 2026' },
+    rel:['frais-pro','deconnexion','accident-travail'],
+    check:['Votre télétravail est-il bien encadré ?', ['J\'ai lu l\'accord ou la charte télétravail de mon entreprise','Mon accord de télétravail est formalisé par écrit','Mon employeur me fournit le matériel nécessaire','Mes frais sont remboursés ou couverts par une allocation','Je sais qu\'un accident en télétravail est présumé accident du travail']],
+    quiz:[
+      ['Comment le télétravail peut-il être mis en place ?','Par un <strong>accord collectif</strong>, par une <strong>charte</strong> de l\'employeur, ou à défaut par un <strong>accord entre le salarié et l\'employeur</strong> formalisé par tout moyen (art. L1222-9).'],
+      ['L\'employeur doit-il justifier un refus de télétravail ?','Oui si votre poste est éligible selon l\'accord ou la charte, et si la demande vient d\'un <strong>travailleur handicapé</strong> ou d\'un <strong>proche aidant</strong>. Sans accord ni charte, il n\'a pas à motiver son refus dans les autres cas.'],
+      ['Existe-t-il une indemnité minimale de télétravail ?','Non. La loi ne fixe <strong>aucun minimum</strong>. Les barèmes URSSAF 2026 indiquent la limite exonérée de cotisations : <strong>2,70 € par jour</strong> sans accord collectif, <strong>3,30 €</strong> avec accord.'],
+      ['Un accident chez soi en télétravail est-il un accident du travail ?','S\'il survient sur le lieu de télétravail <strong>pendant l\'activité professionnelle</strong>, il est <strong>présumé</strong> être un accident du travail.'],
+      ['Peut-on refuser le télétravail proposé par l\'employeur ?','Oui. Le refus du salarié <strong>n\'est pas un motif de licenciement</strong>. En revanche, en cas de circonstances exceptionnelles (épidémie, force majeure), le télétravail peut être imposé.'],
+      ['Qui fournit le matériel en télétravail à domicile ?','L\'employeur doit <strong>fournir, installer et entretenir</strong> les équipements nécessaires. Si vous utilisez votre propre matériel, il en assure l\'adaptation et l\'entretien.']] },
+
+  /* 5 · PÉRIODE D'ESSAI */
+  { id:'periode-essai', title:'Période d\'essai — Durées et rupture', sub:'Durées · Renouvellement · Délai de prévenance',
+    lead:'La <strong>période d\'essai</strong> permet à l\'employeur d\'évaluer vos compétences, et à vous de vérifier que le poste vous convient. Elle n\'est <strong>pas automatique</strong> : elle doit être prévue dans votre contrat de travail ou votre lettre d\'engagement.',
+    regle:['📐 Durées maximales', 'En CDI, la durée dépend de votre catégorie. Un renouvellement est possible <strong>une seule fois</strong>. Si vous avez déjà travaillé en CDD dans l\'entreprise sur le même emploi, cette durée est <strong>déduite</strong> de la période d\'essai.'],
+    table:[['Contrat ou catégorie','Durée maximale'],
+      ['CDI — Ouvriers et employés','<strong>2 mois</strong> (4 mois si renouvelée)'],
+      ['CDI — Agents de maîtrise et techniciens','<strong>3 mois</strong> (6 mois si renouvelée)'],
+      ['CDI — Cadres','<strong>4 mois</strong> (8 mois si renouvelée)'],
+      ['CDD','1 jour par semaine, au plus <strong>2 semaines</strong> (contrat de 6 mois maximum) ou <strong>1 mois</strong> (au-delà), sans renouvellement'],
+      ['Intérim','<strong>2 jours</strong> (mission d\'1 mois max), <strong>3 jours</strong> (1 à 2 mois), <strong>5 jours</strong> (plus de 2 mois)']],
+    hl:['⚠️ Renouvellement : 3 conditions obligatoires', 'Le renouvellement n\'est valable que si : un <strong>accord de branche étendu</strong> le prévoit, votre <strong>contrat le mentionne</strong>, et vous l\'acceptez <strong>par écrit</strong> pendant la période initiale. Sinon, la période d\'essai prend fin à sa date initiale.'],
+    steps:['✅ Comment réagir en cas de rupture de l\'essai', [
+      ['Vérifier que l\'essai est valable','Est-il écrit dans le contrat ? La durée respecte-t-elle les maximums ? Le renouvellement remplit-il les 3 conditions ?'],
+      ['Contrôler le délai de prévenance','L\'employeur doit vous prévenir <strong>24 h</strong> avant (moins de 8 jours de présence), <strong>48 h</strong> (8 jours à 1 mois), <strong>2 semaines</strong> (après 1 mois) ou <strong>1 mois</strong> (après 3 mois).'],
+      ['Réclamer l\'indemnité si le délai n\'est pas respecté','Si le délai n\'est pas respecté, l\'employeur vous verse une <strong>indemnité compensatrice</strong> égale aux salaires que vous auriez perçus pendant le délai restant (sauf faute grave).'],
+      ['Si c\'est vous qui partez','Prévenez l\'employeur <strong>48 h</strong> avant, ou <strong>24 h</strong> si vous êtes présent depuis moins de 8 jours.']]],
+    eva:'La rupture de l\'essai n\'a pas à être motivée, mais elle peut être contestée devant le conseil de prud\'hommes si elle est <strong>discriminatoire</strong> ou <strong>sans lien avec vos compétences</strong>. Gardez une trace écrite de la date de rupture.',
+    src:[['Service-Public — Période d\'essai du salarié', SP + 'F1643', 'vérifié le 12/08/2026'],
+      ['Code du travail — Art. L1221-19 (durées)', CT + 'l1221-19', '', '⚖️'],
+      ['Code du travail — Art. L1221-25 (délai de prévenance)', CT + 'l1221-25', '', '⚖️']],
+    est:{ title:'Eva calcule votre délai de prévenance', subtitle:'Rupture par l\'employeur — Art. L1221-25',
+      fields:[{ id:'j', label:'Jours de présence dans l\'entreprise', min:1, max:240, step:1, unit:'j', default:20 }],
+      calc:function(v){ var j = v[0], d = j < 8 ? '24 heures' : j <= 30 ? '48 heures' : j <= 90 ? '2 semaines' : '1 mois';
+        return { val:d, detail:'Si vous partez vous-même : ' + (j < 8 ? '24 heures' : '48 heures') + ' · Délai non respecté = indemnité compensatrice' }; } },
+    fact:{ stat:'8 mois', text:'c\'est la durée maximale d\'une période d\'essai de <strong>cadre en CDI</strong>, renouvellement compris (4 mois + 4 mois), et seulement si un accord de branche étendu le prévoit.', source:'Code du travail, art. L1221-19 et L1221-21' },
+    rel:['promesse-embauche','temps-partiel','solde'],
+    check:['Sécuriser votre période d\'essai', ['Ma période d\'essai est écrite dans mon contrat','Sa durée respecte le maximum de ma catégorie','Je sais qu\'un renouvellement exige mon accord écrit','Je connais le délai de prévenance qui s\'applique à moi','Je sais qu\'un CDD précédent sur le même emploi est déduit de l\'essai']],
+    quiz:[
+      ['Quelle est la durée maximale de la période d\'essai d\'un employé en CDI ?','<strong>2 mois</strong>, renouvelable une fois, soit <strong>4 mois</strong> au maximum. Pour les agents de maîtrise et techniciens : 3 mois (6 mois), pour les cadres : 4 mois (8 mois).'],
+      ['La période d\'essai peut-elle être renouvelée sans mon accord ?','Non. Le renouvellement exige un <strong>accord de branche étendu</strong>, une <strong>clause dans le contrat</strong> et votre <strong>accord écrit</strong> pendant la période initiale.'],
+      ['Quel délai l\'employeur doit-il respecter pour rompre l\'essai après 2 mois de présence ?','<strong>2 semaines</strong>. Le délai est de 24 h avant 8 jours de présence, 48 h entre 8 jours et 1 mois, 2 semaines après 1 mois et 1 mois après 3 mois.'],
+      ['Combien de temps le salarié doit-il prévenir pour quitter l\'essai ?','<strong>48 heures</strong>, ou <strong>24 heures</strong> s\'il est présent depuis moins de 8 jours.'],
+      ['Quelle est la période d\'essai d\'un CDD de 4 mois ?','1 jour par semaine de contrat, dans la limite de <strong>2 semaines</strong> pour un CDD de 6 mois maximum. Un CDD de 4 mois (environ 17 semaines) a donc un essai de <strong>2 semaines</strong> au plus.'],
+      ['Un CDD précédent compte-t-il dans la période d\'essai ?','Oui. Si vous êtes embauché à l\'issue d\'un CDD dans la même entreprise, la durée de ce CDD est <strong>déduite</strong> de la période d\'essai du nouveau contrat.']] },
+
+  /* 6 · PROMESSE D'EMBAUCHE */
+  { id:'promesse-embauche', title:'Promesse d\'embauche — Ce qui vous engage', sub:'Offre · Promesse unilatérale · Rétractation',
+    lead:'Depuis deux arrêts de la Cour de cassation du <strong>21 septembre 2017</strong>, on distingue l\'<strong>offre de contrat de travail</strong> et la <strong>promesse unilatérale de contrat de travail</strong>. Leurs effets ne sont pas les mêmes si l\'employeur revient sur sa parole.',
+    regle:['📐 Offre ou promesse : la différence', 'Les deux précisent l\'<strong>emploi</strong>, la <strong>rémunération</strong> et la <strong>date d\'entrée en fonction</strong>. Dans une <strong>promesse unilatérale</strong>, l\'employeur s\'engage déjà : il ne vous reste qu\'à accepter dans le délai fixé.'],
+    table:[['Situation','Effet'],
+      ['Offre de contrat retirée pendant le délai d\'acceptation','Pas de contrat, mais l\'employeur peut être condamné à des <strong>dommages-intérêts</strong>'],
+      ['Offre acceptée dans le délai','Le <strong>contrat de travail est formé</strong>'],
+      ['Promesse unilatérale non respectée par l\'employeur','Équivaut à un <strong>licenciement sans cause réelle et sérieuse</strong>'],
+      ['Candidat qui revient sur son acceptation','Il peut être condamné à verser des <strong>dommages-intérêts</strong> à l\'employeur'],
+      ['Forme','Écrite : <strong>lettre ou e-mail</strong>']],
+    hl:['⚠️ Une promesse vaut contrat de travail', 'Si l\'employeur ne respecte pas une promesse unilatérale d\'embauche, la rupture s\'analyse comme un <strong>licenciement sans cause réelle et sérieuse</strong>. Vous pouvez la contester devant le <strong>conseil de prud\'hommes</strong>.'],
+    steps:['✅ Comment sécuriser une promesse d\'embauche', [
+      ['Obtenir un écrit','Demandez une lettre ou un e-mail. Une proposition orale est très difficile à prouver.'],
+      ['Vérifier les mentions','Fonction et qualification, lieu et durée du travail, rémunération, date d\'entrée, période d\'essai, préavis.'],
+      ['Accepter par écrit dans le délai','Répondez avant la date limite fixée et gardez une copie de votre acceptation.'],
+      ['En cas de rétractation','Demandez une confirmation écrite, conservez tous les échanges et rapprochez-vous du conseil de prud\'hommes pour faire valoir vos droits.']]],
+    eva:'Attendez d\'avoir une <strong>promesse écrite</strong> avant de démissionner de votre poste actuel. Le Code du travail numérique propose un modèle de promesse d\'embauche qui montre les mentions à vérifier.',
+    src:[['Service-Public — Offre de contrat et promesse d\'embauche', SP + 'F10403', 'mis à jour le 11/08/2023'],
+      ['Code du travail numérique — Modèle de promesse d\'embauche', 'https://code.travail.gouv.fr/modeles-de-courriers/promesse-dembauche', '', '📝'],
+      ['Code du travail — Art. L1235-3 (indemnité de licenciement sans cause)', CT + 'l1235-3', '', '⚖️']],
+    est:{ title:'Eva estime l\'indemnité en cas de promesse rompue', subtitle:'Barème des prud\'hommes — moins d\'1 an d\'ancienneté (Art. L1235-3)',
+      fields:[{ id:'s', label:'Salaire brut mensuel promis', min:1400, max:8000, step:50, unit:'€', default:2200 }],
+      calc:function(v){ return { val:'jusqu\'à ' + eur(v[0]), detail:'Maximum du barème : 1 mois de salaire brut pour moins d\'1 an d\'ancienneté · Montant fixé par le juge' }; } },
+    fact:{ stat:'21 sept. 2017', text:'date des deux arrêts de la Cour de cassation qui distinguent l\'<strong>offre</strong> de la <strong>promesse unilatérale</strong> de contrat de travail. Une promesse rompue équivaut à un licenciement sans cause réelle et sérieuse.', source:'Cour de cassation, chambre sociale · Service-Public F10403' },
+    rel:['periode-essai','non-concurrence','bulletin-paie'],
+    check:['Sécuriser une promesse d\'embauche', ['J\'ai une proposition écrite (lettre ou e-mail)','Le poste, le salaire et la date d\'entrée sont précisés','J\'ai noté le délai pour accepter','J\'ai accepté par écrit et gardé une copie','J\'attends l\'écrit avant de démissionner de mon poste actuel']],
+    quiz:[
+      ['Quelle est la différence entre une offre et une promesse d\'embauche ?','Dans l\'<strong>offre</strong>, l\'employeur propose un emploi et peut se rétracter pendant le délai (avec un risque de dommages-intérêts). Dans la <strong>promesse unilatérale</strong>, il s\'engage déjà : son non-respect équivaut à un <strong>licenciement sans cause réelle et sérieuse</strong>.'],
+      ['Que se passe-t-il si l\'employeur ne respecte pas sa promesse ?','La rupture s\'analyse comme un <strong>licenciement sans cause réelle et sérieuse</strong>, que vous pouvez contester devant le conseil de prud\'hommes.'],
+      ['Que doit préciser une promesse d\'embauche ?','Au minimum l\'<strong>emploi</strong>, la <strong>rémunération</strong> et la <strong>date d\'entrée en fonction</strong>. Elle précise souvent aussi le lieu, la durée du travail, la période d\'essai et le préavis.'],
+      ['Une promesse d\'embauche peut-elle être envoyée par e-mail ?','Oui. Elle peut prendre la forme d\'une <strong>lettre ou d\'un courrier électronique</strong>.'],
+      ['Le candidat peut-il revenir sur son acceptation ?','Il le peut, mais il risque d\'être condamné à verser des <strong>dommages-intérêts</strong> à l\'employeur pour le préjudice subi.'],
+      ['Faut-il démissionner dès qu\'on reçoit une proposition orale ?','Non. Attendez une <strong>proposition écrite</strong> : une promesse orale est très difficile à prouver.']] },
+
+  /* 7 · TEMPS PARTIEL */
+  { id:'temps-partiel', title:'Temps partiel — Vos droits', sub:'24 heures · Heures complémentaires · Priorité',
+    lead:'Vous êtes à <strong>temps partiel</strong> si votre durée de travail est inférieure à <strong>35 heures</strong> par semaine (ou à la durée prévue par votre convention). Votre contrat doit être <strong>écrit</strong> et préciser votre durée de travail et sa répartition.',
+    regle:['📐 La durée minimale : 24 heures', 'Sauf convention ou accord de branche étendu, la durée minimale est de <strong>24 heures par semaine</strong>, en CDI comme en CDD. Des dérogations existent, notamment à votre demande écrite et motivée.'],
+    table:[['Règle','Ce que prévoit la loi'],
+      ['Durée minimale','<strong>24 h par semaine</strong>, sauf accord de branche'],
+      ['Moins de 24 h possible','CDD de 7 jours maximum, remplacement d\'un salarié absent, demande écrite et motivée du salarié (contraintes personnelles, cumul d\'emplois, études avant 26 ans)'],
+      ['Heures complémentaires','Au plus <strong>1/10e</strong> de la durée prévue au contrat (jusqu\'à 1/3 par accord)'],
+      ['Majoration','<strong>+10 %</strong> jusqu\'au 1/10e, <strong>+25 %</strong> au-delà'],
+      ['Changement d\'horaires','Prévenu au moins <strong>7 jours ouvrés</strong> à l\'avance (3 jours au minimum par accord)']],
+    hl:['⚠️ Vous pouvez refuser certaines heures complémentaires', 'Vous pouvez refuser des heures complémentaires demandées au-delà des limites du contrat, ou si vous êtes prévenu <strong>moins de 3 jours</strong> avant. Ce refus n\'est <strong>ni une faute ni un motif de licenciement</strong>. Les heures complémentaires ne peuvent jamais porter votre durée au niveau d\'un temps plein.'],
+    steps:['✅ Comment faire respecter votre temps partiel', [
+      ['Relire votre contrat','Il doit indiquer la durée de travail, sa répartition entre les jours de la semaine ou les semaines du mois, et les limites des heures complémentaires.'],
+      ['Compter vos heures','Notez vos heures réelles : chaque heure au-delà du contrat est une heure complémentaire, majorée d\'au moins 10 %.'],
+      ['Vérifier le bulletin de paie','Les heures complémentaires et leur majoration doivent apparaître sur une ligne distincte.'],
+      ['Demander un poste à temps plein','Vous êtes <strong>prioritaire</strong> pour un emploi à temps complet de votre catégorie : l\'employeur doit vous informer des postes disponibles.']]],
+    eva:'Vous voulez travailler moins de 24 heures ? Faites une <strong>demande écrite et motivée</strong>. Le Code du travail numérique propose un modèle gratuit. L\'employeur n\'est pas obligé d\'accepter.',
+    src:[['Service-Public — Temps partiel d\'un salarié du privé', SP + 'F32428', ''],
+      ['Code du travail numérique — Durée minimale du temps partiel', 'https://code.travail.gouv.fr/fiche-service-public/salarie-a-temps-partiel-quelle-est-la-duree-hebdomadaire-minimale-de-travail', 'mis à jour le 03/10/2023', '📘'],
+      ['Code du travail — Art. L3123-27 (24 heures)', CT + 'l3123-27', '', '⚖️'],
+      ['Modèle — Demande de dérogation à la durée minimale', 'https://code.travail.gouv.fr/modeles-de-courriers/demande-de-derogation-a-la-duree-minimale-de-travail-pour-un-temps-partiel', '', '📝']],
+    est:{ title:'Eva calcule vos heures complémentaires', subtitle:'Majorations légales : +10 % puis +25 %',
+      fields:[{ id:'c', label:'Heures prévues au contrat / semaine', min:4, max:34, step:1, unit:'h', default:24 },{ id:'h', label:'Heures complémentaires / semaine', min:1, max:11, step:1, unit:'h', default:3 },{ id:'t', label:'Taux horaire brut', min:12.31, max:30, step:0.01, unit:'€', default:12.31 }],
+      calc:function(v){ var c = v[0], h = Math.min(v[1], Math.max(0, 34.99 - c)), t = v[2], lim = c / 10, a = Math.min(h, lim), b = Math.max(0, h - lim), m = a * t * 1.10 + b * t * 1.25;
+        var f = function(x){ return (Math.round(x * 10) / 10).toLocaleString('fr-FR'); };
+        return { val:eur2(m) + '<span> brut / semaine</span>', detail:f(a) + ' h à +10 %' + (b > 0 ? ' · ' + f(b) + ' h à +25 % (au-delà du 1/10e, accord nécessaire)' : '') + ' · Plafond du 1/10e : ' + f(lim) + ' h' }; } },
+    fact:{ stat:'24 h', text:'par semaine : c\'est la <strong>durée minimale légale</strong> d\'un contrat à temps partiel, sauf accord de branche ou dérogation demandée par écrit par le salarié.', source:'Code du travail, art. L3123-27' },
+    rel:['heures-sup','bulletin-paie','salaire'],
+    check:['Faire respecter votre temps partiel', ['Mon contrat est écrit et indique ma durée de travail','Je connais la répartition de mes horaires','Mes heures complémentaires sont majorées d\'au moins 10 %','Je sais que je peux refuser si je suis prévenu moins de 3 jours avant','Je sais que je suis prioritaire pour un poste à temps plein']],
+    quiz:[
+      ['Quelle est la durée minimale d\'un contrat à temps partiel ?','<strong>24 heures par semaine</strong>, sauf convention ou accord de branche étendu qui prévoit une autre durée (art. L3123-27).'],
+      ['Peut-on travailler moins de 24 heures par semaine ?','Oui dans certains cas : CDD de 7 jours au plus, remplacement d\'un salarié absent, ou <strong>demande écrite et motivée</strong> du salarié (contraintes personnelles, cumul d\'emplois, étudiant de moins de 26 ans).'],
+      ['Combien d\'heures complémentaires peut-on faire ?','Au plus <strong>1/10e</strong> de la durée prévue au contrat, et jusqu\'à <strong>1/3</strong> si un accord le permet, sans jamais atteindre 35 heures.'],
+      ['Comment sont majorées les heures complémentaires ?','De <strong>10 %</strong> dans la limite du 1/10e de la durée du contrat, puis de <strong>25 %</strong> au-delà.'],
+      ['Peut-on refuser des heures complémentaires ?','Oui, si elles dépassent les limites du contrat ou si vous êtes prévenu <strong>moins de 3 jours</strong> avant. Ce refus n\'est ni une faute ni un motif de licenciement.'],
+      ['Un salarié à temps partiel est-il prioritaire pour passer à temps plein ?','Oui. Il bénéficie d\'une <strong>priorité</strong> pour un emploi à temps complet de sa catégorie, et l\'employeur doit lui faire connaître la liste des postes disponibles.']] },
+
+  /* 8 · HEURES SUPPLÉMENTAIRES */
+  { id:'heures-sup', title:'Heures supplémentaires — Majorations et contingent', sub:'Taux · Contingent · Repos · Impôt',
+    lead:'Toute heure travaillée au-delà de <strong>35 heures par semaine</strong> (ou de 1 607 heures par an) à la demande de l\'employeur, ou avec son accord, est une <strong>heure supplémentaire</strong>. Elle ouvre droit à une <strong>majoration de salaire</strong> ou à un <strong>repos</strong>.',
+    regle:['📐 Les taux de majoration', 'À défaut d\'accord collectif, chaque heure supplémentaire est majorée de <strong>25 %</strong> de la 36e à la 43e heure, puis de <strong>50 %</strong> à partir de la 44e. Un accord peut prévoir un autre taux, au minimum <strong>10 %</strong>.'],
+    table:[['Heures','Règle légale'],
+      ['De la 36e à la 43e heure','<strong>+25 %</strong>'],
+      ['À partir de la 44e heure','<strong>+50 %</strong>'],
+      ['Avec accord d\'entreprise ou de branche','Taux fixé par l\'accord, <strong>10 % minimum</strong>'],
+      ['Contingent annuel','<strong>220 heures</strong> par salarié, sauf accord'],
+      ['Au-delà du contingent','Repos obligatoire : <strong>50 %</strong> des heures (20 salariés au plus) ou <strong>100 %</strong> (plus de 20 salariés)']],
+    hl:['💶 Un avantage fiscal et social', 'Les heures supplémentaires sont <strong>exonérées d\'impôt sur le revenu</strong> dans la limite de <strong>7 500 € par an</strong>. Elles bénéficient aussi d\'une <strong>réduction de cotisations salariales</strong> d\'assurance vieillesse, jusqu\'à 11,31 %.'],
+    steps:['✅ Comment être payé pour vos heures sup', [
+      ['Noter vos heures','Tenez un relevé précis : dates, heures d\'arrivée et de départ, e-mails ou messages qui montrent la demande de l\'employeur.'],
+      ['Vérifier le bulletin de paie','Les heures supplémentaires doivent apparaître avec leur <strong>nombre</strong> et leur <strong>taux de majoration</strong>.'],
+      ['Réclamer par écrit','Envoyez un e-mail ou un courrier à votre employeur avec votre relevé d\'heures.'],
+      ['Saisir les prud\'hommes si besoin','Les heures non payées peuvent être réclamées pendant <strong>3 ans</strong>. Les éléments que vous apportez sont examinés avec ceux de l\'employeur.']]],
+    eva:'Le repos dû au-delà du contingent se prend par journée ou demi-journée (une journée = <strong>7 heures</strong>). Demandez-le <strong>au moins 1 semaine</strong> à l\'avance : l\'employeur vous répond sous 7 jours.',
+    src:[['Service-Public — Heures supplémentaires du salarié du privé', SP + 'F2391', 'vérifié le 08/06/2026'],
+      ['Code du travail — Art. L3121-36 (taux de majoration)', CT + 'l3121-36', '', '⚖️'],
+      ['Code du travail — Art. L3245-1 (délai de 3 ans)', CT + 'l3245-1', '', '⚖️']],
+    est:{ title:'Eva calcule vos heures sup', subtitle:'Taux légaux sans accord : +25 % puis +50 %',
+      fields:[{ id:'t', label:'Taux horaire brut', min:12.31, max:40, step:0.01, unit:'€', default:14 },{ id:'h', label:'Heures sup dans la semaine', min:1, max:13, step:1, unit:'h', default:4 }],
+      calc:function(v){ var t = v[0], h = v[1], a = Math.min(h, 8) * t * 1.25 + Math.max(0, h - 8) * t * 1.5;
+        return { val:eur2(a) + '<span> brut / semaine</span>', detail:Math.min(h, 8) + ' h à +25 %' + (h > 8 ? ' · ' + (h - 8) + ' h à +50 %' : '') + ' · Exonération d\'impôt jusqu\'à 7 500 € par an' }; } },
+    fact:{ stat:'7 500 €', text:'par an : c\'est le plafond d\'<strong>exonération d\'impôt sur le revenu</strong> des heures supplémentaires et complémentaires.', source:'Service-Public F2391' },
+    rel:['temps-partiel','bulletin-paie','salaire'],
+    check:['Être payé(e) pour vos heures supplémentaires', ['Je tiens un relevé de mes heures réelles','Je connais le taux de majoration de mon entreprise','Mes heures sup apparaissent sur mon bulletin de paie','Je sais qu\'elles sont exonérées d\'impôt jusqu\'à 7 500 € par an','Je sais que je peux réclamer les heures impayées pendant 3 ans']],
+    quiz:[
+      ['À partir de quand une heure est-elle une heure supplémentaire ?','Au-delà de <strong>35 heures par semaine</strong> (ou de 1 607 heures par an), si elle est faite à la demande de l\'employeur ou avec son accord.'],
+      ['Quels sont les taux de majoration sans accord collectif ?','<strong>+25 %</strong> de la 36e à la 43e heure, puis <strong>+50 %</strong> à partir de la 44e heure (art. L3121-36).'],
+      ['Un accord peut-il prévoir une majoration plus basse ?','Oui, un accord d\'entreprise ou de branche peut fixer un autre taux, mais jamais en dessous de <strong>10 %</strong>.'],
+      ['Qu\'est-ce que le contingent annuel d\'heures supplémentaires ?','C\'est le nombre maximum d\'heures sup sans repos obligatoire : <strong>220 heures</strong> par an, sauf accord. Au-delà, vous avez droit à un repos de 50 % (20 salariés au plus) ou 100 % (plus de 20 salariés).'],
+      ['Les heures supplémentaires sont-elles imposables ?','Elles sont <strong>exonérées d\'impôt sur le revenu</strong> dans la limite de <strong>7 500 € par an</strong>.'],
+      ['Combien de temps a-t-on pour réclamer des heures sup impayées ?','<strong>3 ans</strong> : c\'est le délai de prescription des salaires (art. L3245-1).']] },
+
+  /* 9 · BULLETIN DE PAIE */
+  { id:'bulletin-paie', title:'Bulletin de paie — Le lire et le conserver', sub:'Mentions · Format électronique · Conservation · Contestation',
+    lead:'Le <strong>bulletin de paie</strong> doit vous être remis à <strong>chaque versement du salaire</strong>. Depuis 2017, il peut être remis sous <strong>forme électronique</strong>, sauf si vous vous y opposez. Il détaille votre salaire brut, vos cotisations et votre net à payer.',
+    regle:['📐 Les mentions à vérifier', 'Le bulletin indique la période de travail, les heures payées, le salaire brut, les cotisations et le net. Depuis le <strong>1er juillet 2023</strong>, il affiche aussi le <strong>montant net social</strong>.'],
+    table:[['Mention','À vérifier'],
+      ['Période et heures','Période de paie, nombre d\'heures, heures sup ou complémentaires avec leur majoration'],
+      ['Salaire brut','Salaire de base, primes, majorations'],
+      ['Montant net social','À déclarer pour vos demandes de <strong>prime d\'activité</strong> ou de <strong>RSA</strong>'],
+      ['Net à payer','Montant versé, après le <strong>prélèvement à la source</strong> de l\'impôt'],
+      ['Congés payés','Dates de congés pris et montant de l\'indemnité correspondante']],
+    hl:['🗂️ Conservation : ce que dit la loi', 'L\'employeur conserve un double de vos bulletins pendant <strong>5 ans</strong>. En format électronique, il garantit leur disponibilité pendant <strong>50 ans</strong> ou jusqu\'à <strong>6 ans</strong> après l\'âge de mise à la retraite d\'office. De votre côté, gardez-les : ils prouvent vos droits, notamment pour la retraite.'],
+    steps:['✅ Comment contrôler son bulletin de paie', [
+      ['Vérifier le taux horaire','Salaire de base ÷ heures payées : le résultat doit être au moins égal au SMIC (<strong>12,31 €</strong> brut depuis le 1er juin 2026) ou au minimum de votre convention.'],
+      ['Contrôler heures et absences','Heures sup, heures complémentaires, congés payés, arrêts : chaque ligne doit correspondre à votre mois réel.'],
+      ['Choisir papier ou électronique','Le bulletin électronique est la règle. Vous pouvez demander un bulletin papier en informant votre employeur.'],
+      ['Contester une erreur','Demandez la correction par écrit. Vous pouvez contester le montant d\'un bulletin pendant <strong>3 ans</strong> après sa remise.']]],
+    eva:'Le <strong>montant net social</strong> est le chiffre à reporter quand vous demandez la prime d\'activité ou le RSA. Repérez-le en bas de votre bulletin, près du net à payer.',
+    src:[['Service-Public — Fiche de paie', SP + 'F559', 'vérifié le 01/06/2026'],
+      ['Code du travail — Art. L3243-2 (remise du bulletin)', CT + 'l3243-2', '', '⚖️'],
+      ['Code du travail — Art. D3243-8 (conservation électronique)', CT + 'd3243-8', '', '⚖️']],
+    est:{ title:'Eva vérifie votre taux horaire', subtitle:'Comparaison avec le SMIC du 1er juin 2026 (12,31 €)',
+      fields:[{ id:'b', label:'Salaire de base brut', min:400, max:6000, step:10, unit:'€', default:1900 },{ id:'h', label:'Heures payées dans le mois', min:20, max:151.67, step:0.01, unit:'h', default:151.67 }],
+      calc:function(v){ var t = v[0] / v[1], ok = t >= 12.31 - 0.005;
+        return { val:eur2(t) + '<span> / heure</span>', detail:(ok ? '✅ Au moins égal au SMIC (12,31 €)' : '⚠️ Inférieur au SMIC de ' + eur2(12.31 - t) + ' par heure : vérifiez votre situation') + ' · Comparez aussi au minimum de votre convention' }; } },
+    fact:{ stat:'50 ans', text:'c\'est la durée pendant laquelle l\'employeur doit garantir l\'accès à votre <strong>bulletin de paie électronique</strong> (ou jusqu\'à 6 ans après l\'âge de mise à la retraite d\'office).', source:'Code du travail, art. D3243-8 · Service-Public F559' },
+    rel:['salaire','heures-sup','conges'],
+    check:['Contrôler votre bulletin de paie', ['Je reçois un bulletin à chaque paie','Mon taux horaire est au moins égal au SMIC ou au minimum conventionnel','Mes heures sup et mes congés apparaissent correctement','Je sais où trouver le montant net social','Je conserve tous mes bulletins de paie']],
+    quiz:[
+      ['L\'employeur peut-il remettre le bulletin de paie uniquement par voie électronique ?','Oui, c\'est la règle depuis 2017, <strong>sauf si vous vous y opposez</strong> en informant votre employeur.'],
+      ['À quoi sert le montant net social ?','Affiché depuis le <strong>1er juillet 2023</strong>, c\'est le montant à déclarer pour demander la <strong>prime d\'activité</strong> ou le <strong>RSA</strong>.'],
+      ['Combien de temps l\'employeur conserve-t-il les bulletins ?','Il garde un double pendant <strong>5 ans</strong>. Pour un bulletin électronique, il garantit sa disponibilité <strong>50 ans</strong> ou jusqu\'à 6 ans après l\'âge de mise à la retraite d\'office.'],
+      ['Combien de temps a-t-on pour contester un bulletin de paie ?','Vous pouvez contester le montant ou l\'exactitude d\'un bulletin pendant <strong>3 ans</strong> après sa remise.'],
+      ['Faut-il garder ses bulletins de paie ?','Oui. Conservez-les : ils prouvent vos salaires et vos droits, notamment pour la <strong>retraite</strong>.'],
+      ['Comment vérifier que mon salaire respecte le SMIC ?','Divisez votre salaire de base brut par le nombre d\'heures payées. Le résultat doit être au moins égal à <strong>12,31 €</strong> depuis le 1er juin 2026.']] }
+  ];
+
+  try { A.forEach(function(o){ put('salarie', o); }); } catch(e) { console.warn('[evof]', e); }
+
+  /* ── Quiz : réponses propres à chaque article (banque de l'article) ── */
+  var _br = window.evadBuildResponse;
+  if(typeof _br === 'function'){
+    window.evadBuildResponse = function(i, id){
+      var b = window.QUIZ_BANK && QUIZ_BANK[id];
+      if(b && b[i] && b[i].r) return b[i].r;
+      return _br.apply(this, arguments);
+    };
+  }
+
+  /* ── Header d'article, badges (header, carte EVA, liste) ── */
+  var cur = null;
+  function hd(){ return document.querySelector('#s-eva-droits-article .evad-hd'); }
+  function fixHead(id){
+    var h = hd(), t = document.getElementById('evad-art-hdtitle'); if(!h || !t) return;
+    var txt = '';
+    [].slice.call(t.childNodes).forEach(function(n){ if(n.nodeType === 3){ txt += n.textContent; t.removeChild(n); } });
+    var sp = t.querySelector('.evht'); if(!sp){ sp = document.createElement('span'); sp.className = 'evht'; }
+    if(txt.trim()) sp.textContent = txt.trim();
+    if(sp.parentNode !== t || t.firstChild !== sp) t.insertBefore(sp, t.firstChild);
+    var k = h.querySelector('.evhk');
+    if(!k){ k = document.createElement('span'); k.className = 'evhk'; k.textContent = 'Droits · Article'; }
+    if(k.nextSibling !== t) h.insertBefore(k, t);
+    var ob = t.querySelector('.evof'), sv = t.querySelector('.evsv');
+    if(OFF[id]){ if(sv) sv.style.display = 'none'; if(!ob) t.appendChild(badge('evof-hd')); }
+    else { if(ob) ob.remove(); if(sv) sv.style.display = ''; }
+  }
+  function coverBadge(){
+    if(!cur || !OFF[cur]) return;
+    var c = document.querySelector('#evad-art-scroll .evx[data-key="dart-' + cur + '"] .pfs-card .pfs-hd');
+    if(c && !c.parentNode.querySelector('.evof')) c.parentNode.insertBefore(badge('evof-lt'), c.nextSibling);
+  }
+  function listBadges(){
+    [].forEach.call(document.querySelectorAll('#evad-list-body .az-item'), function(it){
+      var m = (it.getAttribute('onclick') || '').match(/evadShowArticle\('([^']+)'\)/);
+      var tt = it.querySelector('.az-item-title'), has = it.querySelector('.evof');
+      if(m && OFF[m[1]] && tt && !has) tt.parentNode.insertBefore(badge('evof-lt evof-sm'), tt.nextSibling);
+    });
+  }
+  window.evofRefresh = function(){ listBadges(); coverBadge(); };
+  function install(){
+    var _s = window.evadShowArticle;
+    if(typeof _s === 'function' && !_s._evof){
+      var w = function(id){ cur = id; var r = _s.apply(this, arguments); try{ fixHead(id); coverBadge(); }catch(e){} return r; };
+      w._evof = 1; window.evadShowArticle = w;
+    }
+    var _l = window.evadRenderList;
+    if(typeof _l === 'function' && !_l._evof){
+      var wl = function(){ var r = _l.apply(this, arguments); try{ listBadges(); }catch(e){} return r; };
+      wl._evof = 1; window.evadRenderList = wl;
+    }
+    var sc = document.getElementById('evad-art-scroll');
+    if(sc && window.MutationObserver) new MutationObserver(function(){ coverBadge(); }).observe(sc, { childList:true, subtree:true });
+    var lb = document.getElementById('evad-list-body');
+    if(lb && window.MutationObserver) new MutationObserver(function(){ listBadges(); }).observe(lb, { childList:true });
+    listBadges();
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(install, 0); });
+  else setTimeout(install, 0);
+})();
+</script>
 </body>
 </html>
