@@ -22203,7 +22203,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
       +'<button type="button" class="lsxg-btn" data-g="start">'+S('<path d="M8 5v14l11-7z" fill="currentColor"/>')+C.start+'</button>'; }
   function qView(k){ var C=CFG[k], s=ST[k], q=s.qs[s.i], n=s.qs.length;
     var h='<div class="lsxg-top"><span>'+C.tag+' '+(s.i+1)+' / '+n+'</span><em>Score : '+s.score+'</em></div><div class="lsxg-prog"><i style="width:'+(s.i/n*100)+'%"></i></div>'
-      +'<div class="lsxg-meta"><span class="lsxg-tag">'+(C.kind==='sit'?'Mise en situation':'QCM CV & candidature')+'</span><span class="lsxg-lv '+q.lv+'">'+(q.lv==='d'?'Difficile':'Moyen')+'</span><span class="lsxg-time'+(s.done?' off':'')+'" data-time>'+S('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>')+'<b>'+(s.done?0:s.left)+'</b> s</span></div><div class="lsxg-tbar"><i data-tbar style="width:'+(s.done?0:s.left/T*100)+'%"></i></div><p class="lsxg-q">'+esc(q.t)+'</p>'+(C.ask?'<p class="lsxg-ask">'+C.ask+'</p>':'');
+      +'<div class="lsxg-meta"><span class="lsxg-tag">'+(C.kind==='sit'?'Mise en situation':'QCM CV & candidature')+'</span><span class="lsxg-time'+(s.done?' off':'')+'" data-time>'+S('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9.5 2.5h5"/>')+'<b>'+(s.done?0:s.left)+'</b> s</span></div><div class="lsxg-tbar"><i data-tbar style="width:'+(s.done?0:s.left/T*100)+'%"></i></div><p class="lsxg-q">'+esc(q.t)+'</p>'+(C.ask?'<p class="lsxg-ask">'+C.ask+'</p>':'');
     h+=q.o.map(function(o,j){ var cls=''; if(s.done){ if(j===q.ok) cls=' ok'; else if(j===s.pick) cls=' ko'; }
       return '<button type="button" class="lsxg-op'+cls+'" data-g="pick" data-j="'+j+'"'+(s.done?' disabled':'')+'><i>'+'ABC'[j]+'</i>'+esc(o)+'</button>'; }).join('');
     if(s.done){ var good=s.pick===q.ok;
@@ -26136,6 +26136,14 @@ a.cptx-l:hover{ border-color:#93c5fd; background:#eff6ff; } a.cptx-l b{ display:
 .emx-ph > svg{ display:none !important; }
 .emx-ph::before{ content:''; width:132px; height:106px; margin-bottom:10px; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 96'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%231e40af'/%3E%3Cstop offset='1' stop-color='%23047857'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23e8eefb'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect x='14' y='8' width='76' height='54' rx='8' fill='%23dbe5f7'/%3E%3Cpath d='M22 16h60M22 26h44M22 36h52' stroke='%23b4c3e3' stroke-width='4' stroke-linecap='round'/%3E%3Crect x='6' y='34' width='108' height='58' rx='12' fill='url(%23a)'/%3E%3Cpath d='M6 46l54 30 54-30' fill='none' stroke='%23ffffff' stroke-opacity='.9' stroke-width='5' stroke-linejoin='round'/%3E%3Cpath d='M6 92l40-30M114 92l-40-30' stroke='%23ffffff' stroke-opacity='.35' stroke-width='4'/%3E%3Ccircle cx='100' cy='30' r='12' fill='%23f59e0b'/%3E%3Cpath d='M95 30l4 4 7-8' fill='none' stroke='%23fff' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat; filter:drop-shadow(0 14px 22px rgba(30,64,175,.25)); }
 .emx-ph b{ font-size:1rem !important; color:#0f172a !important; font-weight:800 !important; } .emx-ph span{ font-size:.82rem !important; color:#64748b !important; }
+</style>
+<style id="cp-lsx-tabs-stable">
+/* Boutons des 4 profils (CV & Lettre, Offres d'emploi) : changement de profil stable, sans tremblement */
+.lsx-reco{ overflow-anchor:none; }
+.lsx-tabs .lsx-tab, .lsx-tabs .lsx-tab .lsx-ti{ transition:none !important; transform:none !important; animation:none !important; }
+.lsx-tabs .lsx-tab{ -webkit-tap-highlight-color:transparent; touch-action:manipulation; -webkit-user-select:none; user-select:none; outline:none; backface-visibility:hidden; }
+.lsx-tabs .lsx-tab:focus-visible{ outline:2px solid #93c5fd; outline-offset:2px; }
+.lsx-pick-slot .lsx-pick{ animation:none !important; }
 </style>
 </body>
 </html>
