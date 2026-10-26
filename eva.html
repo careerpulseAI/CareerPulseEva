@@ -8190,6 +8190,43 @@ html body .evs-nav .evs-item.evs-lisa:hover, html body .evs-nav .evs-item.evs-li
 html body .evs-nav .evs-item:hover svg, html body #eva-tab button:hover svg, html body .evs-nav .evs-item:active svg, html body #eva-tab button:active svg,
 html body .evs-nav .evs-item.cp-led svg, html body #eva-tab button.cp-led svg{ color:#2563eb !important; filter:none !important; }
 html body .evs-nav .evs-item:not(.evs-lisa).on:hover{ background:var(--ev-soft) !important; }
+
+/* ═══ Mon Portfolio : en-tête premium, bouton « Mes enregistrements », transitions stables ═══ */
+#ec-pf-overlay > div:nth-child(2){ backdrop-filter:none !important; -webkit-backdrop-filter:none !important;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%) !important; border-bottom:1px solid #e6eaf2 !important;
+  box-shadow:0 10px 26px -22px rgba(15,23,42,.55) !important; padding:12px 18px !important; gap:12px !important; min-height:60px; box-sizing:border-box; }
+#ec-pf-overlay > div:nth-child(2) > button:first-child{ width:36px !important; height:36px !important; background:#fff !important; border:1px solid #e2e8f0 !important;
+  box-shadow:0 2px 6px -2px rgba(15,23,42,.18) !important; color:#1e293b !important; transition:none !important; }
+#ec-pf-overlay > div:nth-child(2) > button:first-child:hover{ background:#f1f5f9 !important; border-color:#cbd5e1 !important; }
+#ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div{ font-size:.98rem !important; font-weight:800 !important; letter-spacing:-.015em; color:#0f172a !important; gap:10px !important; }
+#ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div > span:first-child{ width:32px; height:32px; border-radius:10px; display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+  background:linear-gradient(135deg,#ede9fe 0%,#e0f2fe 100%); box-shadow:inset 0 0 0 1px rgba(124,58,237,.14); font-size:1rem; }
+#ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div > span:first-child svg{ vertical-align:0 !important; }
+#ec-pf-overlay #ev-arrows button{ width:32px !important; height:32px !important; background:#1e3a8a !important; box-shadow:0 4px 10px -4px rgba(30,58,138,.55) !important; }
+#ec-pf-overlay #ev-arrows button[disabled]{ background:#cbd5e1 !important; box-shadow:none !important; opacity:1 !important; }
+#ec-pf-overlay button.cp-pf-saved{ width:auto !important; height:36px !important; border-radius:999px !important; padding:0 14px 0 11px !important; gap:7px !important;
+  background:#eef2ff !important; border:1px solid #c7d2fe !important; color:#1e3a8a !important; font:700 .68rem/1 'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif !important;
+  white-space:nowrap; transition:none !important; }
+#ec-pf-overlay button.cp-pf-saved:hover{ background:#e0e7ff !important; border-color:#a5b4fc !important; }
+#ec-pf-overlay button.cp-pf-saved.on{ background:#1e3a8a !important; border-color:#1e3a8a !important; color:#fff !important; }
+#ec-pf-overlay button.cp-pf-saved svg{ width:15px; height:15px; flex-shrink:0; }
+#ec-pf-overlay button.cp-pf-saved .cps-s{ display:none; }
+@media (max-width:599px){
+  #ec-pf-overlay > div:nth-child(2){ padding:10px 12px !important; gap:8px !important; }
+  #ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div{ font-size:.86rem !important; }
+  #ec-pf-overlay button.cp-pf-saved{ padding:0 11px 0 9px !important; }
+  #ec-pf-overlay button.cp-pf-saved .cps-l{ display:none; }
+  #ec-pf-overlay button.cp-pf-saved .cps-s{ display:inline; }
+}
+/* Petit titre de rubrique (ex. « SUIVI ») : lisible, jamais coupé */
+#pf-content > div:first-child[style*="uppercase"]{ display:inline-block !important; font-size:.56rem !important; line-height:1.5 !important; letter-spacing:.16em !important;
+  padding:3px 10px !important; margin:2px 0 9px !important; border-radius:999px; background:rgba(15,23,42,.05); box-shadow:inset 0 0 0 1px rgba(15,23,42,.06); overflow:visible !important; }
+/* Transitions stables : pas d'effet de flou ni de déplacement pendant le changement de page */
+#ec-pf-overlay #pf-content *{ backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+#ec-pf-overlay button:active{ transform:none !important; }
+@keyframes pfIn{ from{ opacity:0; } to{ opacity:1; } }
+@keyframes tkIn{ from{ opacity:0; } to{ opacity:1; } }
+#pf-content.pf-in > *{ animation-duration:.16s !important; animation-timing-function:ease-out !important; }
 </style>
 <script id="evof-lot">
 /* ═══ Droits & aides · Articles officiels (modèle 1) + header d'article + badge « Article officiel » ═══ */
@@ -13979,6 +14016,25 @@ html body .evs-nav .evs-item:not(.evs-lisa).on:hover{ background:var(--ev-soft) 
       ['Faut-il déclarer un CA nul ?','<strong>Oui</strong>, toujours.']] }
   ];
   try { FL2.forEach(function(o){ put('freelance', o); }); } catch(e) { console.warn('[evof freelance 2]', e); }
+
+  /* ═══ Mon Portfolio : le bouton ☰ devient « Mes enregistrements » (même fonction) ═══ */
+  (function(){
+    var IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.5 3.5h11a1 1 0 0 1 1 1V21l-6.5-4-6.5 4V4.5a1 1 0 0 1 1-1z"/></svg>';
+    function fix(){
+      var ov=document.getElementById('ec-pf-overlay'); if(!ov) return;
+      [].forEach.call(ov.querySelectorAll('button[onclick^="pfOpenMenuList"]'),function(b){
+        if(!b.classList.contains('cp-pf-saved')){
+          b.classList.add('cp-pf-saved');
+          b.innerHTML=IC+'<span class="cps-l">Mes enregistrements</span><span class="cps-s">Enregistrés</span>';
+          b.title='Mes enregistrements : retrouve tout ce que tu as sauvegardé sur cette page';
+          b.setAttribute('aria-label','Mes enregistrements');
+        }
+        b.classList.toggle('on', !!window.PF_MENU_LIST_OPEN);
+      });
+    }
+    try{ new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
+    document.addEventListener('click',function(){ setTimeout(fix,0); },true);
+  })();
 
 
   /* ── Quiz : réponses propres à chaque article (banque de l'article) ── */
