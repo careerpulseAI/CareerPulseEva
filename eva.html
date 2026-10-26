@@ -8179,6 +8179,17 @@ html body .evh-av, html body .evx-av, html body .pfs-card .pfs-av b, html body .
 
 /* ═══ Quiz des articles : bouton « Autre formulation » retiré ═══ */
 .art-quiz-answer button[onclick^="evadRegenQuizAns"], button[onclick^="evadRegenQuizAns"]{ display:none !important; }
+
+/* ═══ Menu EVA : survol / appui en bleu transparent (sans effet LED) ═══ */
+html body .evs-nav .evs-item:not(.evs-lisa):hover, html body #eva-tab button:hover,
+html body .evs-nav .evs-item:not(.evs-lisa).cp-led, html body #eva-tab button.cp-led,
+html body .evs-nav .evs-item:not(.evs-lisa):active, html body #eva-tab button:active,
+html body .evs-nav .evs-item:not(.evs-lisa):focus-visible, html body #eva-tab button:focus-visible{
+  background:rgba(37,99,235,.08) !important; color:#1d4ed8 !important; box-shadow:none !important; outline:none !important; }
+html body .evs-nav .evs-item.evs-lisa:hover, html body .evs-nav .evs-item.evs-lisa.cp-led, html body .evs-nav .evs-item.evs-lisa:active{ box-shadow:inset 0 0 0 1px #bfdbfe !important; }
+html body .evs-nav .evs-item:hover svg, html body #eva-tab button:hover svg, html body .evs-nav .evs-item:active svg, html body #eva-tab button:active svg,
+html body .evs-nav .evs-item.cp-led svg, html body #eva-tab button.cp-led svg{ color:#2563eb !important; filter:none !important; }
+html body .evs-nav .evs-item:not(.evs-lisa).on:hover{ background:var(--ev-soft) !important; }
 </style>
 <script id="evof-lot">
 /* ═══ Droits & aides · Articles officiels (modèle 1) + header d'article + badge « Article officiel » ═══ */
