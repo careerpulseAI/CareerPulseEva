@@ -1991,6 +1991,8 @@ html body .evh-av{ overflow:visible; }
 
 #tl-act-sms .tl-act-ico { background:linear-gradient(135deg,rgba(148,163,184,.35),rgba(148,163,184,.10)); box-shadow:0 3px 12px rgba(148,163,184,.3),inset 0 1px 0 rgba(255,255,255,.18); }
 #tl-act-sms .tl-act-ico svg { stroke:#64748b; }
+/* Ordinateur : pas d'icône Message (SMS) */
+@media (min-width:900px){ #tl-act-sms{ display:none !important; } }
 
 
 /* Cœurs flottants */
