@@ -3736,6 +3736,8 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
 .cpro .psec{ margin-top:34px; }
 .cpro .psec h3{ font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:1.7rem; line-height:1.15; margin:0 0 14px; }
 .cpro .psteps{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; counter-reset:st; }
+.cpro .pst-k{ margin:18px 0 10px; font-size:.74rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--ink2); }
+.cpro .psec h3 + .pst-k{ margin-top:0; }
 .cpro .pstep{ background:var(--white); border:1px solid var(--line); border-radius:var(--r-md); padding:18px; }
 .cpro .pstep b{ display:flex; align-items:center; gap:10px; font-size:.92rem; margin-bottom:6px; }
 .cpro .pstep b::before{ counter-increment:st; content:counter(st); width:26px; height:26px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:.78rem; background:var(--ink); color:#fff; }
@@ -4084,8 +4086,8 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
         <h2>Je suis employeur</h2>
         <p>Publiez vos offres et trouvez des candidats prêts à postuler.</p>
         <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Compte vérifié par SIRET</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Publication d'offres et profils anonymisés</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Offres d'emploi complètes : poste, contrat, lieu, salaire</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Profils de candidats qui correspondent à vos offres</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>Réponses des candidats en un clic</li>
         </ul>
         <span class="pchoice-go">Accéder à l'espace employeur</span>
@@ -4094,14 +4096,21 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 
     <div class="psec">
       <h3>Comment ça fonctionne</h3>
+      <p class="pst-k">Centres de formation</p>
       <div class="psteps">
-        <div class="pstep"><b>Votre compte est vérifié</b><p>SIRET et, pour les centres, numéro de déclaration d'activité. Chaque compte est validé par l'équipe CareerPulse.</p></div>
+        <div class="pstep"><b>Votre compte est vérifié</b><p>SIRET et numéro de déclaration d'activité. Chaque compte est validé par l'équipe CareerPulse.</p></div>
         <div class="pstep"><b>Vous publiez vos formations</b><p>Des fiches complètes : certification, programme, dates, prix et financements possibles.</p></div>
         <div class="pstep"><b>Le candidat vous écrit</b><p>CareerPulse recommande votre formation aux membres dont le profil correspond. S'il est intéressé, c'est lui qui vous contacte.</p></div>
       </div>
       <div class="prule">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
         <span>Vous ne contactez jamais un candidat le premier : c'est lui qui vient vers vous. Ce fonctionnement respecte l'interdiction du démarchage lié au CPF (art. L6323-8-1 du Code du travail).</span>
+      </div>
+      <p class="pst-k">Employeurs</p>
+      <div class="psteps">
+        <div class="pstep"><b>Votre compte est vérifié</b><p>Par votre numéro SIRET. Chaque compte est validé par l'équipe CareerPulse.</p></div>
+        <div class="pstep"><b>Vous publiez vos offres</b><p>Des offres complètes : poste, missions, type de contrat, lieu et salaire.</p></div>
+        <div class="pstep"><b>Vous trouvez vos candidats</b><p>Vous découvrez les profils des candidats qui correspondent à vos offres. Le candidat vous répond en un clic.</p></div>
       </div>
     </div>
 
@@ -15801,7 +15810,7 @@ go=function(page){
     return best; }
   function target(){
     var ov=topOverlay();
-    if(ov){ box.style.zIndex=ov.classList.contains('cpm')?'2147483600':'99990'; /* au-dessus des fenêtres Lisa */
+    if(ov){ box.style.zIndex=ov.classList.contains('cpm')?'2147483600':(ov.classList.contains('cpab-sheet')?'100010':'99990'); /* au-dessus des fenêtres Lisa */
       var own=ov.querySelector('.cpsa'); if(own && getComputedStyle(own).display!=='none') return null; /* la fiche a déjà ses flèches */
       return bestIn(ov); }
     box.style.zIndex='';
@@ -22048,6 +22057,13 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
 @media (max-width:520px){ .lsxg-ov-in{ padding:0; justify-content:flex-start; } .lsxg.fs{ min-height:100vh; min-height:100dvh; border-radius:0; border:none; } }
 @media (min-width:700px){ .lsxg-ov-in{ max-width:880px; padding:32px 24px; } .lsxg.fs .lsxg-hd{ padding:18px 24px; } .lsxg.fs .lsxg-hd img{ width:56px; height:56px; } .lsxg.fs .lsxg-hd b{ font-size:1.15rem; } .lsxg.fs .lsxg-hd span{ font-size:.78rem; }
   .lsxg.fs .lsxg-bd{ padding:26px 32px 30px; min-height:420px; } .lsxg.fs .lsxg-q{ font-size:1.3rem; } .lsxg.fs .lsxg-op{ padding:16px 18px; font-size:.95rem; } .lsxg.fs .lsxg-ex{ font-size:.86rem; } .lsxg.fs .lsxg-say{ font-size:.9rem; } .lsxg.fs .lsxg-cd{ min-height:380px; } }
+/* Ordinateur : les 2 quiz (CV & candidature, Recherche d'emploi & entretien) en plein écran */
+@media (min-width:900px){
+  .lsxg-ov-in{ max-width:none; padding:0; justify-content:flex-start; }
+  .lsxg.fs{ min-height:100vh; min-height:100dvh; border-radius:0; border:none; box-shadow:none; display:flex; flex-direction:column; }
+  .lsxg.fs .lsxg-hd{ padding:20px max(40px, calc((100% - 1000px) / 2)); }
+  .lsxg.fs .lsxg-bd{ flex:1; width:100%; max-width:1000px; margin:0 auto; box-sizing:border-box; padding:36px 40px 48px; }
+}
 .lsxg-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin:0 0 7px; }
 .lsxg-meta .lsxg-tag{ margin:0; }
 .lsxg-lv{ padding:3px 8px; border-radius:7px; font-size:.6rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#1e40af; background:#eff6ff; }
@@ -25745,6 +25761,18 @@ html.cpab-lock{ overflow:hidden; }
 .cpab-hero{ margin:0 -16px; padding:24px 22px 26px; color:#fff; background:radial-gradient(120% 140% at 100% 0%,rgba(16,185,129,.4),transparent 55%),linear-gradient(130deg,#0b1e3f,#1e3a8a 55%,#065f46 135%); }
 .cpab-k{ display:inline-block; font-size:.7rem; font-weight:800; letter-spacing:.04em; padding:5px 11px; border-radius:999px; color:#fde68a; background:rgba(253,230,138,.12); border:1px solid rgba(253,230,138,.35); }
 .cpab-hero h2{ margin:14px 0 8px; font-size:1.45rem; line-height:1.22; font-weight:800; letter-spacing:-.02em; } .cpab-hero p{ margin:0; font-size:.9rem; line-height:1.55; opacity:.9; }
+/* Ordinateur : abonnement employeurs et centres en plein écran */
+@media (min-width:900px){
+  .cpab-sheet{ align-items:stretch; }
+  .cpab-box{ max-width:none; height:100vh; height:100dvh; max-height:none; border-radius:0; box-shadow:none; }
+  .cpab-hd{ padding:16px max(32px, calc((100% - 880px) / 2)); }
+  .cpab-sc{ flex:1; padding:0 32px 40px; }
+  .cpab-sc > .cpab-hero{ margin:0 -32px; padding:44px max(32px, calc((100vw - 880px) / 2)) 46px; }
+  .cpab-hero h2{ font-size:2rem; }
+  .cpab-hero p{ font-size:1rem; max-width:720px; }
+  .cpab-sc > :not(.cpab-hero){ max-width:880px; margin-left:auto; margin-right:auto; }
+  html.cpab-lock #cp-scroll-arrows{ display:flex !important; }
+}
 .cpab-me{ margin:16px 0 14px; padding:14px 16px; border-radius:16px; background:#fff; border:1px solid #e2e8f0; border-left:4px solid #94a3b8; }
 .cpab-me.ok{ border-left-color:#10b981; } .cpab-me.trial{ border-left-color:#f59e0b; } .cpab-me.off{ border-left-color:#ef4444; } .cpab-me.wait{ border-left-color:#3b82f6; }
 .cpab-me span{ display:block; font-size:.68rem; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:#64748b; } .cpab-me b{ display:block; margin-top:4px; font-size:1rem; color:#0f172a; } .cpab-me small{ display:block; margin-top:3px; font-size:.8rem; line-height:1.45; color:#475569; }
