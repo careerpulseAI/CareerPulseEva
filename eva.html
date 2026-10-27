@@ -8269,6 +8269,23 @@ html body #ec-pf-overlay #ev-arrows-m button[disabled]{ background:rgba(255,255,
 html body #ec-pf-overlay #ev-arrows button{ background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.55) !important; color:#fff !important; box-shadow:none !important; opacity:1 !important; }
 html body #ec-pf-overlay #ev-arrows button:hover{ background:rgba(255,255,255,.26) !important; border-color:rgba(255,255,255,.8) !important; }
 html body #ec-pf-overlay #ev-arrows button[disabled]{ background:rgba(255,255,255,.06) !important; border-color:rgba(255,255,255,.28) !important; opacity:.6 !important; }
+/* ═══ Mon Portfolio : en-tête bleu → violet + répartition sans chevauchement ═══ */
+html body #ec-pf-overlay > div:nth-child(2){
+  background:radial-gradient(120% 160% at 100% 0%,rgba(255,255,255,.18),rgba(255,255,255,0) 55%),linear-gradient(120deg,#1e3a8a 0%,#2563eb 48%,#7c3aed 100%) !important;
+  box-shadow:0 14px 30px -20px #4f46e5, inset 0 -1px 0 rgba(255,255,255,.12) !important; }
+html body #ec-pf-overlay button.cp-pf-saved.on{ color:#4338ca !important; }
+html body #ec-pf-overlay > div:nth-child(2) > *{ flex-shrink:0; }
+html body #ec-pf-overlay > div:nth-child(2) > div:nth-child(2){ flex:1 1 auto !important; min-width:0 !important; overflow:hidden; }
+html body #ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div{ min-width:0; }
+html body #ec-pf-overlay .cp-pf-t{ flex:1 1 auto; min-width:0; overflow:hidden; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; line-height:1.22; overflow-wrap:anywhere; text-overflow:ellipsis; }
+html body #ec-pf-overlay #ev-arrows, html body #ec-pf-overlay #ev-arrows-m{ flex-shrink:0 !important; }
+@media (max-width:520px){
+  html body #ec-pf-overlay > div:nth-child(2){ gap:8px !important; }
+  html body #ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div > span:first-child{ display:none !important; }
+  html body #ec-pf-overlay #ev-arrows-m{ margin:0 !important; gap:5px !important; }
+  html body #ec-pf-overlay button.cp-pf-saved{ padding-left:10px !important; padding-right:10px !important; }
+}
+@media (max-width:380px){ html body #ec-pf-overlay .cp-pf-t{ font-size:.8rem; } html body #ec-pf-overlay button.cp-pf-saved{ padding-left:8px !important; padding-right:8px !important; } }
 </style>
 <script id="evof-lot">
 /* ═══ Droits & aides · Articles officiels (modèle 1) + header d'article + badge « Article officiel » ═══ */
@@ -14073,6 +14090,9 @@ html body #ec-pf-overlay #ev-arrows button[disabled]{ background:rgba(255,255,25
         }
         b.classList.toggle('on', !!window.PF_MENU_LIST_OPEN);
       });
+      /* titre de l'en-tête : enveloppé pour qu'il ne passe jamais sous les flèches */
+      var t=ov.querySelector(':scope > div:nth-child(2) > div:nth-child(2) > div');
+      if(t){ [].slice.call(t.childNodes).forEach(function(n){ if(n.nodeType===3 && n.nodeValue.trim()){ var s=document.createElement('span'); s.className='cp-pf-t'; s.textContent=n.nodeValue.trim(); t.replaceChild(s,n); } }); }
     }
     try{ new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
     document.addEventListener('click',function(){ setTimeout(fix,0); },true);
