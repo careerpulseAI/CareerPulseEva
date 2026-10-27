@@ -8227,6 +8227,48 @@ html body .evs-nav .evs-item:not(.evs-lisa).on:hover{ background:var(--ev-soft) 
 @keyframes pfIn{ from{ opacity:0; } to{ opacity:1; } }
 @keyframes tkIn{ from{ opacity:0; } to{ opacity:1; } }
 #pf-content.pf-in > *{ animation-duration:.16s !important; animation-timing-function:ease-out !important; }
+
+/* ═══ Flèches haut/bas d'EVA : style transparent, ordinateur et mobile ═══ */
+#ev-arrows-m{ display:none; }
+@media (max-width:899px){
+  #ev-arrows-m{ display:none; align-items:center; gap:6px; flex-shrink:0; margin:0 6px 0 auto; }
+  #ev-arrows-m.on{ display:flex; }
+  #ev-arrows-m button{ width:28px; height:28px; border-radius:50%; cursor:pointer; padding:0; display:flex; align-items:center; justify-content:center; position:static !important;
+    touch-action:none; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent; }
+  #ev-arrows-m svg{ width:14px; height:14px; pointer-events:none; }
+}
+/* En-têtes colorés : verre transparent, flèche blanche */
+html body #ev-arrows button, html body #ev-arrows-m button{ background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.55) !important; color:#fff !important;
+  box-shadow:none !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; transform:none !important; transition:background .15s ease, border-color .15s ease !important; }
+html body #ev-arrows button:hover, html body #ev-arrows-m button:hover{ background:rgba(255,255,255,.26) !important; border-color:rgba(255,255,255,.8) !important; }
+html body #ev-arrows button:active, html body #ev-arrows-m button:active{ background:rgba(255,255,255,.32) !important; }
+html body #ev-arrows button[disabled], html body #ev-arrows-m button[disabled]{ background:rgba(255,255,255,.06) !important; border-color:rgba(255,255,255,.28) !important; opacity:.6 !important; }
+/* Fonds clairs (Portfolio, chat EVA) : verre bleuté, flèche bleu marine bien visible */
+html body #ev-arrows.ev-float button, html body #eva-tl-header #ev-arrows button, html body #ev-arrows-m.ev-light button{
+  background:rgba(30,58,138,.07) !important; border:1px solid rgba(30,58,138,.42) !important; color:#1e3a8a !important; }
+html body #ev-arrows.ev-float button:hover, html body #eva-tl-header #ev-arrows button:hover, html body #ev-arrows-m.ev-light button:hover{
+  background:rgba(30,58,138,.14) !important; border-color:rgba(30,58,138,.6) !important; }
+html body #ev-arrows.ev-float button[disabled], html body #eva-tl-header #ev-arrows button[disabled], html body #ev-arrows-m.ev-light button[disabled]{
+  background:rgba(30,58,138,.03) !important; border-color:rgba(30,58,138,.2) !important; color:#1e3a8a !important; opacity:.5 !important; }
+
+/* ═══ Mon Portfolio : en-tête en couleur, signature teal d'EVA ═══ */
+html body #ec-pf-overlay > div:nth-child(2){
+  background:radial-gradient(120% 160% at 100% 0%,rgba(255,255,255,.2),rgba(255,255,255,0) 55%),linear-gradient(120deg,#0b5453 0%,#0f766e 55%,#2dd4bf 130%) !important;
+  border-bottom:none !important; box-shadow:0 14px 30px -20px #0f766e, inset 0 -1px 0 rgba(255,255,255,.12) !important; }
+html body #ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div{ color:#fff !important; }
+html body #ec-pf-overlay > div:nth-child(2) > div:nth-child(2) > div > span:first-child{
+  background:rgba(255,255,255,.16) !important; box-shadow:inset 0 0 0 1px rgba(255,255,255,.4) !important; color:#fff !important; }
+html body #ec-pf-overlay > div:nth-child(2) > button:first-child{
+  background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.55) !important; color:#fff !important; box-shadow:none !important; }
+html body #ec-pf-overlay > div:nth-child(2) > button:first-child:hover{ background:rgba(255,255,255,.26) !important; border-color:rgba(255,255,255,.8) !important; }
+html body #ec-pf-overlay button.cp-pf-saved{ background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.55) !important; color:#fff !important; }
+html body #ec-pf-overlay button.cp-pf-saved:hover{ background:rgba(255,255,255,.26) !important; border-color:rgba(255,255,255,.8) !important; }
+html body #ec-pf-overlay button.cp-pf-saved.on{ background:#fff !important; border-color:#fff !important; color:#0f766e !important; }
+html body #ec-pf-overlay #ev-arrows-m button{ background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.55) !important; color:#fff !important; opacity:1 !important; }
+html body #ec-pf-overlay #ev-arrows-m button[disabled]{ background:rgba(255,255,255,.06) !important; border-color:rgba(255,255,255,.28) !important; opacity:.6 !important; }
+html body #ec-pf-overlay #ev-arrows button{ background:rgba(255,255,255,.14) !important; border:1px solid rgba(255,255,255,.55) !important; color:#fff !important; box-shadow:none !important; opacity:1 !important; }
+html body #ec-pf-overlay #ev-arrows button:hover{ background:rgba(255,255,255,.26) !important; border-color:rgba(255,255,255,.8) !important; }
+html body #ec-pf-overlay #ev-arrows button[disabled]{ background:rgba(255,255,255,.06) !important; border-color:rgba(255,255,255,.28) !important; opacity:.6 !important; }
 </style>
 <script id="evof-lot">
 /* ═══ Droits & aides · Articles officiels (modèle 1) + header d'article + badge « Article officiel » ═══ */
@@ -14034,6 +14076,79 @@ html body .evs-nav .evs-item:not(.evs-lisa).on:hover{ background:var(--ev-soft) 
     }
     try{ new MutationObserver(fix).observe(document.documentElement,{childList:true,subtree:true}); }catch(e){}
     document.addEventListener('click',function(){ setTimeout(fix,0); },true);
+  })();
+
+  /* ═══ Flèches haut/bas d'EVA sur mobile (même fonctionnement que sur ordinateur) ═══ */
+  (function(){
+    if(window.self!==window.top) return;
+    var STEP=150, SPEED=280;
+    var HDR='#eva-tl-header,.evad-hd,.eva-sub-header,.ew-hdr,.eb-hdr,.jnl-hdr,.nova-hd';
+    var BADGE='#eva-subscribe-btn,.evad-hd-eva,.eva-sub-badge,.eb-hdr-badge,.jnl-hdr-streak,.nova-hd-badge';
+    var box=document.createElement('div'); box.id='ev-arrows-m'; box.className='ev-arr-m';
+    box.innerHTML='<button type="button" aria-label="Remonter" data-d="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>'
+      +'<button type="button" aria-label="Descendre" data-d="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+    var up=box.children[0], down=box.children[1], cur=null, pressed=false, held=false, dir=0, holdT=null, last=0;
+    function scr(){ return document.querySelector('.evad-screen.active,.nova-screen.active,.eva-subpage.active,#s-eva.active,.screen.active'); }
+    function pfo(){ var o=document.getElementById('ec-pf-overlay'); return (o && o.offsetParent) ? o : null; }
+    function target(sc){
+      var ov=pfo(); if(ov){ if(ov.scrollHeight-ov.clientHeight>40) return ov; sc=ov; }
+      var best=null, gap=40;
+      sc.querySelectorAll('*').forEach(function(el){
+        if(el.clientHeight<120 || !el.offsetParent) return;
+        var g=el.scrollHeight-el.clientHeight; if(g<=gap) return;
+        var oy=getComputedStyle(el).overflowY; if(oy!=='auto'&&oy!=='scroll') return;
+        best=el; gap=g;
+      });
+      if(!best){ var se=document.scrollingElement; if(se && se.scrollHeight-se.clientHeight>40) best=se; }
+      return best;
+    }
+    /* Sur mobile : flèches dans l'en-tête du Portfolio et du chat EVA (là où l'en-tête a de la place) */
+    function place(sc){
+      var ov=pfo();
+      if(ov){ var oh=ov.children[1], mb=oh && oh.lastElementChild; box.classList.add('ev-light'); if(oh && (box.parentElement!==oh || box.nextSibling!==mb)) oh.insertBefore(box,mb); return true; }
+      var hd=document.querySelector('#eva-fullscreen.chat-mode #eva-tl-header');
+      if(hd && hd.offsetParent){
+        box.classList.add('ev-light');
+        var bd=hd.querySelector('#eva-subscribe-btn');
+        while(bd && bd.parentElement!==hd) bd=bd.parentElement;
+        if(bd){ if(box.nextSibling!==bd || box.parentElement!==hd) hd.insertBefore(box,bd); }
+        else if(box.parentElement!==hd) hd.appendChild(box);
+        return true;
+      }
+      if(box.parentElement) box.parentElement.removeChild(box);
+      return false;
+    }
+    function refresh(){
+      if(pressed) return;
+      if(window.innerWidth>=900){ if(box.parentElement) box.parentElement.removeChild(box); return; }
+      var sc=scr(); if(!sc) return;
+      var mf=document.getElementById('cp-menu-frame');
+      if(mf && mf.style.display==='block'){ box.classList.remove('on'); return; }
+      if(!place(sc)){ box.classList.remove('on'); return; }
+      cur=target(pfo()||document.getElementById('eva-fullscreen')||sc);
+      if(!cur){ box.classList.remove('on'); return; }
+      box.classList.add('on');
+      var max=cur.scrollHeight-cur.clientHeight;
+      up.disabled=cur.scrollTop<4; down.disabled=cur.scrollTop>max-4;
+    }
+    function loop(ts){ if(!pressed||!held||!cur) return; var dt=last?Math.min(50,ts-last):16; last=ts; cur.scrollTop+=dir*SPEED*dt/1000; requestAnimationFrame(loop); }
+    box.addEventListener('pointerdown',function(e){
+      var b=e.target.closest('button'); if(!b||b.disabled) return;
+      e.preventDefault(); e.stopPropagation(); cur=target(scr()); if(!cur) return;
+      pressed=true; held=false; dir=+b.getAttribute('data-d'); last=0;
+      try{ b.setPointerCapture(e.pointerId); }catch(_){}
+      holdT=setTimeout(function(){ held=true; requestAnimationFrame(loop); },280);
+    });
+    function release(){ if(!pressed) return; clearTimeout(holdT); if(!held && cur) cur.scrollBy({top:dir*STEP,behavior:'smooth'}); pressed=false; held=false; setTimeout(refresh,420); }
+    ['pointerup','pointercancel','lostpointercapture'].forEach(function(t){ box.addEventListener(t,release); });
+    box.addEventListener('click',function(e){ e.stopPropagation(); });
+    var t=null; function soon(){ clearTimeout(t); t=setTimeout(refresh,120); }
+    document.addEventListener('scroll',soon,true);
+    window.addEventListener('resize',soon);
+    document.addEventListener('click',function(){ setTimeout(refresh,450); },true);
+    try{ new MutationObserver(function(m){ for(var i=0;i<m.length;i++){ if(m[i].target===box||box.contains(m[i].target)) return; } soon(); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['class']}); }catch(e){}
+    setInterval(refresh,1500);
+    if(document.readyState!=='loading') setTimeout(refresh,500); else document.addEventListener('DOMContentLoaded',function(){ setTimeout(refresh,500); });
   })();
 
 
