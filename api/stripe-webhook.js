@@ -54,7 +54,7 @@ function versAbo(sub) {
   else statut = 'expire'; /* past_due, unpaid, canceled, incomplete_expired, paused */
   const fin = statut === 'essai' ? iso(sub.trial_end) : statut === 'actif' ? iso(finPeriode) : iso(sub.ended_at || finPeriode);
   return {
-    abo: { statut, fin, plan, resiliation: !!sub.cancel_at_period_end },
+    abo: { statut, fin, plan, resiliation: !!sub.cancel_at_period_end, stripeStatut: sub.status },
     col: ESPACE[price.unit_amount] || null
   };
 }
