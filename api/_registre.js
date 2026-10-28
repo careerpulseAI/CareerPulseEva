@@ -3,12 +3,12 @@
    Le fichier commence par « _ » : Vercel ne le publie pas comme adresse du site.
    Pour le mettre à jour : modifiez ce fichier et la date « maj ». */
 module.exports = {
-  maj: '2026-10-28',
+  maj: '2026-10-29',
   responsable: [
     ['Responsable', 'Prince Mickaël Moudilou EI (micro-entrepreneur), éditeur de CareerPulse'],
     ['Adresse', '18 Place Champlain, 14000 Caen'],
     ['SIREN / SIRET', '101 467 942 / 101 467 942 00013'],
-    ['Contact données personnelles', 'contact@careerpulse.fr · 06 89 54 41 05'],
+    ['Contact données personnelles', 'contact@careerpulse.fr · 06 33 35 02 06'],
     ['Délégué à la protection des données (DPO)', 'Non désigné (non obligatoire pour cette activité)'],
     ['Site', 'careerpulse.fr (pages index, menu, EVA)']
   ],
