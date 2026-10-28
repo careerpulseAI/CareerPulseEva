@@ -6821,6 +6821,7 @@ html body [data-evt] .evad-hd-eva *{ color:#fff !important; }
 #eb-body > .eb-q-card, #eb-body > .eb-q-wrap, #eb-body > .eb-profil-grid, #eb-body > .eb-theme-grid, #eb-body > .eb-result-card{ width:calc(100% - 42px) !important; max-width:818px !important; margin-left:max(42px, calc((100% - 860px) / 2 + 42px)) !important; }
 #s-eva-bienetre .eb-q-card{ border:1px solid #e3e9f4 !important; border-radius:22px !important; padding:18px 20px 16px !important; box-shadow:0 2px 4px rgba(15,23,42,.04), 0 22px 50px -20px rgba(15,23,42,.18) !important; }
 #s-eva-bienetre .eb-q-card .eb-eva-name{ color:#2563eb !important; font-size:.56rem !important; }
+.eb-eva-name::after{ content:'Assistante IA'; margin-left:6px; padding:1px 6px; border-radius:999px; background:rgba(37,99,235,.1); color:#1d4ed8; font-size:.85em; letter-spacing:.04em; }
 #s-eva-bienetre .eb-q-card .eb-bub-eva{ background:transparent !important; border:none !important; box-shadow:none !important; padding:2px 0 12px !important; font-size:.94rem !important; font-weight:700 !important; color:#0f172a !important; line-height:1.45 !important; }
 #s-eva-bienetre .eb-q-sep span{ color:#1e3a8a !important; background:#eff6ff !important; border-color:#dbeafe !important; }
 #s-eva-bienetre .eb-q-ans{ color:#1e3a8a; }
@@ -14233,6 +14234,22 @@ html body #ec-pf-overlay #ev-arrows, html body #ec-pf-overlay #ev-arrows-m{ flex
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function(){ setTimeout(install, 0); });
   else setTimeout(install, 0);
+})();
+</script>
+
+<script id="cp-ttl">
+/* ═══ Durées de conservation (politique de confidentialité) ═══
+   Champ « expireAt » lu par les règles TTL de Firestore (suppression automatique).
+   Écritures « au mieux » : si une règle les refuse, rien d'autre n'est bloqué. */
+(function(){
+  function ts(days){ try{ return firebase.firestore.Timestamp.fromDate(new Date(Date.now()+days*864e5)); }catch(e){ return null; } }
+  window.cpTTL=window.cpTTL||function(ref,days){ try{ var t=ts(days); if(ref && t) ref.update({ expireAt:t }).catch(function(){}); }catch(e){} };
+  /* Compte : 3 ans sans connexion → données du profil supprimées */
+  var done={};
+  function touch(u){ if(!u || done[u.uid] || !window.fbDb) return; done[u.uid]=1; var t=ts(1095); if(!t) return;
+    ['users','profils'].forEach(function(c){ try{ fbDb.collection(c).doc(u.uid).update({ expireAt:t }).catch(function(){}); }catch(e){} }); }
+  function init(){ if(!window.fbAuth || !window.fbDb){ setTimeout(init,400); return; } try{ fbAuth.onAuthStateChanged(touch); }catch(e){} }
+  init();
 })();
 </script>
 </body>
