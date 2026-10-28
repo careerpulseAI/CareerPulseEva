@@ -1577,6 +1577,27 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
       });
   };
 
+  /* Suppression du compte par le membre (RGPD art. 17) : tout est effacé côté serveur (/api/compte) */
+  window.cpDeleteAccount = function() {
+    var inp = document.getElementById('cp-del-confirm'), b = document.getElementById('cp-del-go');
+    if (!inp || String(inp.value||'').trim().toUpperCase() !== 'SUPPRIMER') { ecShowToast('Tape SUPPRIMER pour confirmer'); return; }
+    var u = fbAuth.currentUser; if (!u) { ecShowToast('Reconnecte-toi puis recommence'); return; }
+    b.disabled = true; b.textContent = 'Suppression en cours…'; cpBusy(true);
+    u.getIdToken(true).then(function(t){
+      return fetch('/api/compte', { method:'POST', headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer '+t }, body: JSON.stringify({ action:'supprimer', confirmation:'SUPPRIMER' }) })
+        .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ if(!r.ok) throw new Error(j.erreur||'Suppression impossible'); return j; }); });
+    }).then(function(){
+      cpClearLocalUserData();
+      try{ ['jnl_v2','eb_jnl_v1'].forEach(function(k){ localStorage.removeItem(k); }); sessionStorage.clear(); }catch(e){}
+      ecShowToast('Ton compte a été supprimé. Au revoir 👋');
+      var out=function(){ (window.cpLeaveHome||cpReloadAll)(); };
+      setTimeout(function(){ fbAuth.signOut().then(out).catch(out); }, 1200);
+    }).catch(function(e){
+      cpBusy(false); b.disabled = false; b.textContent = 'Supprimer mon compte';
+      ecShowToast((e && e.message) || 'Suppression impossible pour le moment');
+    });
+  };
+
   window.fbLogout = function() {
     cpBusy(true);
     cpClearLocalUserData();
@@ -1806,6 +1827,8 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
     </div>
     <div id="cp-membre-ok" style="display:none;font-size:.68rem;color:#64748b;line-height:1.5;margin-bottom:14px;">Tu es membre CareerPulse ✓ Ton compte est confirmé : tu as accès à ton Portfolio, Mon espace, tes Tâches et ton Suivi de motivation.</div>
     <button onclick="fbLogout()" style="width:100%;background:#fff;border:1.5px solid #e2e8f0;border-radius:9px;padding:11px;font-size:.74rem;font-weight:700;color:#dc2626;font-family:inherit;cursor:pointer;">Se déconnecter</button>
+    <button type="button" onclick="var p=document.getElementById('cp-del-panel');p.style.display=p.style.display==='block'?'none':'block';" style="width:100%;background:none;border:none;color:#94a3b8;font-size:.62rem;font-weight:600;text-decoration:underline;cursor:pointer;font-family:inherit;margin-top:10px;padding:4px;">Supprimer mon compte</button>
+    <div id="cp-del-panel" style="display:none;margin-top:8px;background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:12px;"><div style="font-size:.68rem;font-weight:800;color:#991b1b;margin-bottom:6px;">Supprimer définitivement mon compte</div><div style="font-size:.62rem;color:#7f1d1d;line-height:1.55;margin-bottom:10px;">Ton profil, tes documents (CV, lettres, diplômes), ton Portfolio, tes conversations avec les recruteurs et les centres, et ton compte de connexion seront effacés. Cette action est <b>définitive</b>.</div><label for="cp-del-confirm" style="font-size:.6rem;font-weight:700;color:#7f1d1d;display:block;margin-bottom:5px;">Pour confirmer, tape SUPPRIMER</label><input id="cp-del-confirm" type="text" autocomplete="off" placeholder="SUPPRIMER" style="width:100%;border:1.5px solid #fecaca;border-radius:9px;padding:9px 11px;font-size:.74rem;font-family:inherit;background:#fff;outline:none;margin-bottom:9px;box-sizing:border-box;"><button type="button" id="cp-del-go" onclick="cpDeleteAccount()" style="width:100%;background:#dc2626;border:none;border-radius:9px;padding:10px;font-size:.72rem;font-weight:700;color:#fff;font-family:inherit;cursor:pointer;">Supprimer mon compte</button></div>
    </div>
   </div>
 
