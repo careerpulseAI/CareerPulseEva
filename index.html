@@ -2,6 +2,30 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<script id="cp-ai-guard">
+/* ═══ Cadre juridique des assistantes IA (EVA, Lisa) ═══
+   Ajoute la même règle à toutes les consignes envoyées aux modèles d'IA :
+   information juridique générale + source officielle, jamais d'avis personnalisé (consultation juridique réservée aux avocats). */
+(function(){
+  if(window._cpAiGuard) return; window._cpAiGuard=true;
+  var GUARD='\n\nRÈGLE OBLIGATOIRE (cadre juridique) : tu donnes uniquement de l\'information juridique générale : la règle, ses conditions et la source officielle (Code du travail, service-public.fr, France Travail, URSSAF, Légifrance), avec son lien quand tu l\'as. Tu ne donnes jamais d\'avis personnalisé sur la situation précise de la personne : pas de « dans ton cas, tu dois… », pas de pronostic sur l\'issue d\'un litige, pas de stratégie contre un employeur. Pour une situation personnelle, un litige ou une décision importante, oriente vers un professionnel : avocat, point-justice ou Maison de justice et du droit (accès au droit gratuit), inspection du travail, conseiller France Travail. Ne demande jamais de données sensibles (santé, numéro de sécurité sociale, religion, opinions).';
+  var AI=/\/api\/eva|api\.groq\.com|openrouter\.ai/;
+  var of=window.fetch; if(typeof of!=='function') return;
+  window.fetch=function(input,init){
+    try{
+      var url=typeof input==='string'?input:(input&&input.url)||'';
+      if(AI.test(url) && init && typeof init.body==='string'){
+        var b=JSON.parse(init.body), done=false;
+        if(typeof b.system==='string' && b.system.indexOf('RÈGLE OBLIGATOIRE (cadre juridique)')<0){ b.system+=GUARD; done=true; }
+        if(Array.isArray(b.messages)){ b.messages.forEach(function(m){ if(m && m.role==='system' && typeof m.content==='string' && m.content.indexOf('RÈGLE OBLIGATOIRE (cadre juridique)')<0){ m.content+=GUARD; done=true; } }); }
+        if(done) init=Object.assign({},init,{ body:JSON.stringify(b) });
+      }
+    }catch(e){}
+    return of.call(this,input,init);
+  };
+})();
+</script>
+
 <!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
 <link rel="expect" href="#cp-end" blocking="render">
 <style id="cp-transitions">
@@ -35,7 +59,7 @@ html.cp-auth-wait #s-profil > *, html.cp-auth-wait #emp-root, html.cp-auth-wait 
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>CareerPulse — Coach Carrière IA</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/fonts/fonts.css">
 <style>
 <style>
 button,a{touch-action:manipulation;-webkit-tap-highlight-color:transparent;}
@@ -4725,7 +4749,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
    Police : Instrument Serif (display) + DM Sans
 ══════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700;800&display=swap');
+/* Polices hébergées sur le site : /fonts/fonts.css */
 
 :root {
   --eva-green: #059669;
