@@ -12751,6 +12751,7 @@ function qcmEngine(cfg){
 
   function finish(){
     _chronoStop();
+    window._cpQuizLive=null;
     document.getElementById(cfg.barId).style.width='100%';
     document.getElementById(cfg.stepId).textContent='Terminé !';
     document.getElementById(cfg.pctId).textContent='100%';
@@ -12785,6 +12786,7 @@ function qcmEngine(cfg){
     document.getElementById(cfg.pctId).textContent=pct+'%';
     // Exposer l'état actif pour les jokers
     window._qcmActiveState=state;
+    window._cpQuizLive={id:cfg.id,screen:cfg.screenId};
     _QJokerUsedThisQ=false;
     var zone=document.getElementById(cfg.zoneId);
     var optsHtml=q.opts.map(function(o,i){
@@ -12846,6 +12848,7 @@ function qcmEngine(cfg){
   window['qcmStop_'+cfg.id]=function(){
     var ov=document.getElementById('_qpOv'); if(ov) ov.remove();
     _chronoStop();
+    window._cpQuizLive=null;
     reset();
     if(typeof _jToast==='function') _jToast('Quiz arrêté — tu pourras le reprendre quand tu veux.');
     go('quiz-hub');
@@ -22456,6 +22459,29 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   .lsxg.fs .lsxg-hd{ padding:20px max(40px, calc((100% - 1000px) / 2)); }
   .lsxg.fs .lsxg-bd{ flex:1; width:100%; max-width:1000px; margin:0 auto; box-sizing:border-box; padding:36px 40px 48px; }
 }
+/* Ordinateur : chaque question des 2 mini-quiz tient sur un seul écran, sans défiler */
+@media (min-width:900px){
+  .lsxg.fs{ height:100vh; height:100dvh; min-height:0; }
+  .lsxg.fs .lsxg-hd{ padding-top:clamp(8px,1.6vh,18px); padding-bottom:clamp(8px,1.6vh,18px); }
+  .lsxg.fs .lsxg-hd img{ width:clamp(38px,5.5vh,56px); height:clamp(38px,5.5vh,56px); }
+  .lsxg.fs .lsxg-bd{ min-height:0; overflow-y:auto; display:flex; flex-direction:column; padding:clamp(12px,3vh,36px) 40px clamp(12px,3vh,40px); }
+  .lsxg.fs .lsxg-bd > *{ flex-shrink:0; }
+  .lsxg.fs .lsxg-bd > :first-child{ margin-top:auto; } .lsxg.fs .lsxg-bd > :last-child{ margin-bottom:auto; }
+  .lsxg.fs .lsxg-top{ margin-bottom:4px; }
+  .lsxg.fs .lsxg-prog{ margin-bottom:clamp(6px,1.4vh,13px); }
+  .lsxg.fs .lsxg-tbar{ margin-bottom:clamp(6px,1.4vh,12px); }
+  .lsxg.fs .lsxg-q{ font-size:clamp(1.02rem,2.6vh,1.3rem); margin-bottom:clamp(6px,1.3vh,12px); }
+  .lsxg.fs .lsxg-ask{ margin:-4px 0 clamp(6px,1.2vh,11px); }
+  .lsxg.fs .lsxg-op{ padding:clamp(8px,1.6vh,16px) 16px; margin-bottom:clamp(5px,1vh,8px); font-size:clamp(.86rem,1.9vh,.95rem); }
+  .lsxg.fs .lsxg-ex{ margin:2px 0 clamp(6px,1.3vh,12px); padding:clamp(7px,1.3vh,11px) 14px; font-size:clamp(.76rem,1.7vh,.86rem); line-height:1.45; }
+  .lsxg.fs .lsxg-src{ margin-top:5px; padding-top:5px; }
+  .lsxg.fs .lsxg-btn{ padding:clamp(10px,1.7vh,14px); }
+  .lsxg.fs .lsxg-say, .lsxg.fs .lsxg-trust{ margin-bottom:clamp(7px,1.4vh,13px); }
+  .lsxg.fs .lsxg-cd{ min-height:0; }
+  .lsxg.fs .lsxg-score{ margin-bottom:clamp(6px,1.2vh,12px); }
+  .lsxg.fs .lsxg-sh-t{ margin:clamp(6px,1.4vh,14px) 0 6px; }
+  .lsxg.fs .lsxg-join{ margin-top:clamp(6px,1.4vh,14px); padding:clamp(9px,1.5vh,13px); }
+}
 .lsxg-meta{ display:flex; align-items:center; flex-wrap:wrap; gap:6px; margin:0 0 7px; }
 .lsxg-meta .lsxg-tag{ margin:0; }
 .lsxg-lv{ padding:3px 8px; border-radius:7px; font-size:.6rem; font-weight:800; letter-spacing:.04em; text-transform:uppercase; color:#1e40af; background:#eff6ff; }
@@ -26586,5 +26612,66 @@ a.cptx-l:hover{ border-color:#93c5fd; background:#eff6ff; } a.cptx-l b{ display:
   init();
 })();
 </script>
+<script id="cp-quiz-guard">
+/* ═══ Quiz en cours : on ne le quitte pas par erreur ═══
+   Pendant un quiz (moteur QCM des profils), un clic sur l'accueil, le logo, le menu ou « Retour aux quiz »
+   ouvre une confirmation. Oui : le quiz est abandonné (réponses non conservées) et on revient au menu principal.
+   Non : on reste sur la question (le chrono continue). */
+(function(){
+  if(window._cpQuizGuard) return; window._cpQuizGuard=true;
+  function live(){ var L=window._cpQuizLive; if(!L) return null; var sc=document.getElementById('s-'+L.screen); return (sc && sc.classList.contains('active')) ? L : null; }
+  function close(){ var o=document.getElementById('cp-qx-ov'); if(o) o.remove(); document.removeEventListener('keydown',onKey,true); }
+  function onKey(e){ if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); close(); } }
+  function ask(dest){
+    if(document.getElementById('cp-qx-ov')) return;
+    var ov=document.createElement('div'); ov.id='cp-qx-ov'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true'); ov.setAttribute('aria-labelledby','cp-qx-t');
+    ov.innerHTML='<div class="cp-qx-box">'
+      +'<div class="cp-qx-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>'
+      +'<div class="cp-qx-t" id="cp-qx-t">Quitter le quiz ?</div>'
+      +'<p class="cp-qx-p">Ton quiz est en cours. Si tu le quittes maintenant, <b>tes réponses ne seront pas conservées</b> et il faudra le recommencer depuis le début.</p>'
+      +'<div class="cp-qx-btns"><button type="button" class="cp-qx-yes" data-qx="yes">Oui, quitter</button><button type="button" class="cp-qx-no" data-qx="no">Non, je continue</button></div>'
+      +'</div>';
+    ov.addEventListener('click',function(e){
+      var b=e.target.closest('[data-qx]');
+      if(!b){ if(e.target===ov) close(); return; }
+      if(b.getAttribute('data-qx')==='no'){ close(); return; }
+      close();
+      try{ if(typeof _chronoStop==='function') _chronoStop(); }catch(x){}
+      window._cpQuizLive=null;
+      go(dest);
+    });
+    document.body.appendChild(ov);
+    document.addEventListener('keydown',onKey,true);
+    var no=ov.querySelector('.cp-qx-no'); if(no) no.focus();
+  }
+  document.addEventListener('click',function(e){
+    var L=live(); if(!L || document.getElementById('cp-qx-ov')) return;
+    var t=e.target, dest=null;
+    if(t.closest('#tnav')){ if(t.closest('button,a,.logo,[onclick]')) dest='home'; }
+    else {
+      var b=t.closest('#s-'+L.screen+' button');
+      if(b && /go\(\s*'quiz-hub'\s*\)/.test(b.getAttribute('onclick')||'')) dest='home';
+    }
+    if(!dest) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    ask(dest);
+  },true);
+})();
+</script>
+<style id="cp-quiz-guard-css">
+#cp-qx-ov{ position:fixed; inset:0; z-index:99990; display:flex; align-items:center; justify-content:center; padding:16px; box-sizing:border-box; background:rgba(15,23,42,.55); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px); }
+#cp-qx-ov .cp-qx-box{ width:100%; max-width:400px; background:#fff; border-radius:22px; padding:26px 22px 20px; text-align:center; box-shadow:0 24px 70px rgba(15,23,42,.3); font-family:'DM Sans',sans-serif; animation:cpQiIn .3s cubic-bezier(.2,.8,.2,1) both; }
+#cp-qx-ov .cp-qx-ic{ width:52px; height:52px; margin:0 auto 14px; border-radius:16px; display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 10px 22px -10px rgba(30,64,175,.7); }
+#cp-qx-ov .cp-qx-t{ font-size:1.05rem; font-weight:800; color:#0f172a; margin-bottom:8px; }
+#cp-qx-ov .cp-qx-p{ margin:0 0 20px; font-size:.8rem; line-height:1.55; color:#475569; }
+#cp-qx-ov .cp-qx-p b{ color:#0f172a; }
+#cp-qx-ov .cp-qx-btns{ display:flex; gap:8px; }
+#cp-qx-ov button{ position:static !important; flex:1; margin:0; padding:13px 10px; border-radius:12px; font-family:inherit; font-size:.82rem; font-weight:800; cursor:pointer; transition:transform .15s, box-shadow .15s; }
+#cp-qx-ov .cp-qx-yes{ background:#fff; border:1.5px solid #fecaca; color:#b91c1c; }
+#cp-qx-ov .cp-qx-yes:hover{ background:#fef2f2; }
+#cp-qx-ov .cp-qx-no{ flex:1.3; border:none; color:#fff; background:linear-gradient(135deg,#1e40af,#059669); box-shadow:0 8px 18px -10px rgba(5,150,105,.9); }
+#cp-qx-ov .cp-qx-no:hover{ transform:translateY(-1px); }
+@media (prefers-reduced-motion: reduce){ #cp-qx-ov .cp-qx-box{ animation:none; } }
+</style>
 </body>
 </html>
