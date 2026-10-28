@@ -68,7 +68,7 @@ async function donnees(adminUid) {
   const lire = (snap, col) => snap.forEach((d) => {
     const o = d.data() || {}, a = o.abo || {}, m = MOD[d.id] || {};
     uidsPro.add(d.id);
-    let statutAbo = a.statut || (o.proActif ? 'offert' : 'aucun');
+    let statutAbo = a.statut || (o.accesOffert ? 'offert' : 'aucun');
     if (statutAbo === 'essai' && a.fin && new Date(a.fin).getTime() <= Date.now()) statutAbo = 'expire';
     if (statutAbo === 'actif' && !m.etat) revenu += a.plan === 'an' ? PRIX[col].an / 12 : PRIX[col].mois;
     pros.push({
