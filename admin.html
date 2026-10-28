@@ -396,7 +396,7 @@ svg.i{ width:20px; height:20px; flex:none; stroke:currentColor; fill:none; strok
   function aTraiter(){ return D?(D.signalements||[]).filter(function(s){ return !s.traite; }):[]; }
   var MENU=[['','Pilotage'],['home','Tableau de bord','home'],['visiteurs','Visiteurs','eye'],['membres','Membres','users'],['pro','Espace Pro','case','att'],
     ['','Modération'],['signalements','Signalements','flag','sig'],['conversations','Conversations','msg'],['suspendus','Comptes suspendus','lock','sus'],
-    ['','Activité'],['avis','Avis des utilisateurs','star'],['revenus','Revenus','wallet'],['stats','Statistiques','chart'],['params','Paramètres','gear']];
+    ['','Activité'],['avis','Avis des utilisateurs','star'],['revenus','Revenus','wallet'],['stats','Statistiques','chart'],['registre','Registre RGPD','shield'],['params','Paramètres','gear']];
   function shell(contenu){
     var na=attente().length, ns=aTraiter().length, nsu=(D.moderes||[]).length, th=document.documentElement.getAttribute('data-theme'), u=A.currentUser||{};
     var cpt={ att:na, sig:ns, sus:nsu }, vue=VUE==='fiche'?'pro':VUE;
@@ -683,6 +683,25 @@ svg.i{ width:20px; height:20px; flex:none; stroke:currentColor; fill:none; strok
       +courbe([{ nom:'Visites', couleur:'#5b7cfa', valeurs:V.map(function(v){ return v.n; }) },{ nom:'Inscriptions', couleur:'#14b8a6', valeurs:K.insc.map(function(x){ return x.n; }) },{ nom:'Avis', couleur:'#f59e0b', valeurs:K.avisJ.map(function(x){ return x.n; }) },{ nom:'Demandes Pro', couleur:'#d946ef', valeurs:K.proJ.map(function(x){ return x.n; }) },{ nom:'Signalements', couleur:'#f43f5e', valeurs:K.sigJ.map(function(x){ return x.n; }) }],{ labels:V.map(function(v){ return v.jour; }) })+'</div>'
       +'<div class="box" style="margin-top:20px"><div class="bh"><span class="ico">'+I('clock')+'</span><h2>Toutes les activités récentes</h2></div>'+activites(40)+'</div>';
   }
+  /* ── Registre des traitements (RGPD art. 30) : chargé depuis le serveur, visible par l'administrateur uniquement ── */
+  var REG=null, REGL=false;
+  function vRegistre(){
+    if(!REG){ if(!REGL){ REGL=true; api('GET',null,'?vue=registre').then(function(j){ REGL=false; REG=j._code===200?j:{ erreur:j.erreur||'Registre indisponible' }; if(VUE==='registre') rendre(); }).catch(function(){ REGL=false; }); }
+      return entete('Registre RGPD','Chargement…','shield','g6')+'<div class="load"><div class="spin"></div></div>'; }
+    if(REG.erreur) return entete('Registre RGPD','','shield','g6')+vide('⚠️',esc(REG.erreur));
+    var T=function(th,rows){ return '<div class="scroll"><table class="tbl"><thead><tr>'+th.map(function(x){ return '<th>'+x+'</th>'; }).join('')+'</tr></thead><tbody>'+rows.map(function(r){ return '<tr>'+r.map(function(c,i){ return '<td>'+(i===0?'<b>'+esc(c)+'</b>':esc(c))+'</td>'; }).join('')+'</tr>'; }).join('')+'</tbody></table></div>'; };
+    var titre=function(t){ return '<h2 style="margin:26px 0 12px;font-size:1.1rem">'+t+'</h2>'; };
+    return entete('Registre RGPD','Registre des traitements (RGPD art. 30) · mis à jour le '+esc(REG.maj)+' · document interne, à présenter à la CNIL sur demande','shield','g6')
+      +'<div class="box">'+T(['Élément','Information'],REG.responsable)+'</div>'
+      +titre('Les '+REG.traitements.length+' traitements')
+      +'<div class="box">'+T(['N°','Traitement','Finalité','Base légale','Personnes','Données','Destinataires','Hors UE','Conservation'],REG.traitements.map(function(t){ return [t.n,t.nom,t.fin,t.base,t.pers,t.don,t.dest,t.hors,t.duree]; }))+'<p class="sub" style="margin-top:12px">'+esc(REG.horsChamp)+'</p></div>'
+      +titre('Sous-traitants')
+      +'<div class="box">'+T(['Sous-traitant','Rôle','Localisation','Contrat'],REG.soustraitants)+'</div>'
+      +titre('Sécurité')
+      +'<div class="box"><ul style="margin:0;padding-left:18px;line-height:1.8">'+REG.securite.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul><p class="sub" style="margin-top:12px">'+esc(REG.fuite)+'</p></div>'
+      +titre('À faire')
+      +'<div class="box"><ul style="margin:0;padding-left:18px;line-height:1.8">'+REG.todo.map(function(x){ return '<li>'+esc(x)+'</li>'; }).join('')+'</ul></div>';
+  }
   function vParams(){ var th=document.documentElement.getAttribute('data-theme'), u=A.currentUser||{};
     var lien=function(t,s,href){ return '<div class="set"><div><b>'+t+'</b><div class="sub">'+s+'</div></div><a class="bt sm" href="'+href+'" target="_blank" rel="noopener" style="text-decoration:none">'+I('ext')+'Ouvrir</a></div>'; };
     return entete('Paramètres','','gear','g6')
@@ -693,7 +712,7 @@ svg.i{ width:20px; height:20px; flex:none; stroke:currentColor; fill:none; strok
   }
 
   function rendre(){
-    var V={ home:vHome, visiteurs:vVisiteurs, membres:vMembres, pro:vPro, fiche:vFiche, signalements:vSignalements, conversations:vConversations, suspendus:vSuspendus, avis:vAvis, revenus:vRevenus, stats:vStats, params:vParams };
+    var V={ home:vHome, visiteurs:vVisiteurs, membres:vMembres, pro:vPro, fiche:vFiche, signalements:vSignalements, conversations:vConversations, suspendus:vSuspendus, avis:vAvis, revenus:vRevenus, stats:vStats, registre:vRegistre, params:vParams };
     app.innerHTML=shell((V[VUE]||vHome)()); bindCommun();
   }
   function charger(silencieux){
