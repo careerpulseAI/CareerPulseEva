@@ -3474,6 +3474,11 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
    <button onclick="go('mentions-legales')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">Mentions légales</button>
    <button onclick="go('confidentialite')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">Confidentialité</button>
    <button onclick="go('cgu')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">CGU</button>
+   <button onclick="go('cookies')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">Cookies</button>
+   <button onclick="go('fonctionnement')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">Comment ça marche</button>
+   <button onclick="go('cgu-employeurs')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">CGU employeurs</button>
+   <button onclick="go('cgu-centres')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">CGU centres</button>
+   <button onclick="go('cgv-pro')" style="background:none;border:none;cursor:pointer;color:#94a3b8;font-size:.6rem;font-family:inherit;padding:0;text-decoration:underline">CGV Pro</button>
   </div>
   <p style="font-size:.55rem;color:#cbd5e1;margin:0">© 2026 CareerPulse · Prince Mickaël Moudilou · SIRET 101 467 942 00013</p>
  </div>
@@ -3507,7 +3512,7 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
  <div style="margin-bottom:6px">
  <div style="font-size:.52rem;font-weight:800;letter-spacing:.28em;text-transform:uppercase;color:#059669;margin-bottom:8px">✦ CV & Lettre de motivation</div>
  <div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:700;color:var(--g900);line-height:1.15;margin-bottom:8px">Crée et importe<br><em style="color:#059669">tes documents.</em></div>
- <div style="font-size:.74rem;color:var(--g500);line-height:1.6;max-width:300px;margin:0 auto 20px">CV et lettres de motivation de qualité, directement chez nos partenaires sélectionnés.</div>
+ <div style="font-size:.74rem;color:var(--g500);line-height:1.6;max-width:300px;margin:0 auto 20px">CV et lettres de motivation de qualité, directement sur les sites recommandés par Lisa.</div>
  </div>
 
  <!-- Partenaires CV & LM -->
@@ -3516,7 +3521,7 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
   <!-- Label discret partenaires -->
   <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px">
    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-   <span style="font-size:.56rem;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.08em">Partenaires sérieux · Outils recommandés</span>
+   <span style="font-size:.56rem;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.08em">Sites recommandés · Outils sérieux</span>
   </div>
 
   <!-- cv.fr -->
@@ -4114,7 +4119,7 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       </div>
     </div>
 
-    <p class="pfoot">© 2026 CareerPulse · SIRET 101 467 942 00013<br><a href="mailto:contact@careerpulse.fr">contact@careerpulse.fr</a></p>
+    <p class="pfoot">© 2026 CareerPulse · SIRET 101 467 942 00013<br><a href="mailto:contact@careerpulse.fr">contact@careerpulse.fr</a><br><a href="#" onclick="go('cgu-employeurs');return false">CGU employeurs</a> · <a href="#" onclick="go('cgu-centres');return false">CGU centres de formation</a> · <a href="#" onclick="go('cgv-pro');return false">CGV Pro</a></p>
   
 </div></div>
 <div class="screen" id="s-pro-centre"><div class="wrap cpro">
@@ -4134,37 +4139,43 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
 
 <h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Mentions légales</h1>
-<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Conformément à la loi n°2004-575 du 21 juin 2004 (LCEN)</p>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Conformément à la loi n° 2004-575 du 21 juin 2004 pour la confiance dans l'économie numérique (LCEN) — Mise à jour : 27 octobre 2026</p>
 
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
 <div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Éditeur du site</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.8"><strong>Prince Mickaël Moudilou</strong><br>18 Place Champlain<br>14000 Caen, France<br>SIREN : 101 467 942<br>SIRET : 101 467 942 00013<br>Date de création : 19 février 2026<br>Email : <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px"><b>Prince Mickaël Moudilou EI (entrepreneur individuel)</b><br>18 Place Champlain, 14000 Caen, France<br>SIREN : 101 467 942 — SIRET : 101 467 942 00013<br>Immatriculé au Registre national des entreprises (RNE) — micro-entrepreneur<br>TVA non applicable, art. 293 B du CGI<br>Date de création : 19 février 2026<br>Téléphone : 06 89 54 41 05<br>E-mail : <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Directeur de publication</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.8">Prince Mickaël Moudilou</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Directeur de la publication</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Prince Mickaël Moudilou</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
 <div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Hébergement</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.8"><strong>Vercel Inc.</strong><br>340 Pine Street, Suite 701<br>San Francisco, CA 94104, États-Unis<br>Site : <a href="https://vercel.com" target="_blank" style="color:#059669;text-decoration:none">vercel.com</a></p>
-<p style="font-size:.82rem;color:#334155;line-height:1.8;margin-top:10px"><strong>GitHub, Inc.</strong> (hébergement statique secondaire)<br>88 Colin P Kelly Jr Street<br>San Francisco, CA 94107, États-Unis<br>Site : <a href="https://github.com" target="_blank" style="color:#059669;text-decoration:none">github.com</a></p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px"><b>Site et fonctions serveur</b><br>Vercel Inc. — 440 N Barranca Avenue #4133, Covina, CA 91723, États-Unis — Tél. : +1 951 383 6898 — vercel.com</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px"><b>Comptes, base de données et fichiers des membres (Firebase)</b><br>Google Ireland Limited — Gordon House, Barrow Street, Dublin 4, Irlande — Tél. : +353 1 543 1000 — firebase.google.com</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75"><b>Hébergement statique secondaire</b><br>GitHub, Inc. — 88 Colin P Kelly Jr Street, San Francisco, CA 94107, États-Unis — github.com</p>
 </div>
-
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Nom de domaine et messagerie</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Le nom de domaine careerpulse.fr et l'adresse contact@careerpulse.fr sont fournis par Hostinger International Ltd — 61 Lordou Vironos Street, 6023 Larnaca, Chypre — hostinger.fr</p>
+</div>
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
 <div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Propriété intellectuelle</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">L'ensemble du contenu de ce site (textes, visuels, logo, interface, code) est la propriété exclusive de Prince Mickaël Moudilou. Toute reproduction, même partielle, est interdite sans autorisation écrite préalable.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">L'ensemble du site CareerPulse (textes, quiz, visuels, logo, interface, code) est la propriété exclusive de Prince Mickaël Moudilou EI. Toute reproduction ou réutilisation, même partielle, est interdite sans autorisation écrite préalable.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les contenus publiés par les membres et les professionnels (CV, documents, offres, fiches formation, avis) restent leur propriété. Les règles qui s'y appliquent figurent dans les conditions d'utilisation.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Intelligence artificielle</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse intègre un assistant IA nommé Eva Mentor, propulsé par des modèles de langage (LLM). Eva fournit des conseils informatifs à titre indicatif uniquement. Aucune décision automatique contraignante n'est prise à l'égard des utilisateurs. Conformément au Règlement (UE) 2024/1689 (AI Act), l'utilisateur est informé qu'il interagit avec un système d'intelligence artificielle.</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Assistantes virtuelles et intelligence artificielle</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Lisa (assistante CareerPulse) et EVA (espace de préparation) sont des <b>assistantes virtuelles</b> qui utilisent l'intelligence artificielle. Leurs visages sont des illustrations et ne représentent pas des personnes réelles. Conformément au règlement (UE) 2024/1689 sur l'intelligence artificielle, vous êtes informé que vous échangez avec un système d'IA.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Leurs réponses sont fournies à titre d'information générale. Elles ne constituent ni une consultation juridique, ni un conseil médical, financier ou professionnel personnalisé.</p>
 </div>
-
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Liens vers d'autres sites</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse renvoie vers des sites recommandés (services publics, sites d'emploi, outils de CV). Ces sites restent indépendants : CareerPulse n'est pas responsable de leur contenu ni de leurs conditions.</p>
+</div>
 <div style="border-top:1px solid #f1f5f9;padding-top:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Contact</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Pour toute question : <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Contact et signalement</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Pour toute question, ou pour signaler un contenu illicite : <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a>. La procédure de signalement est décrite sur la page <a href="#" onclick="go('fonctionnement');return false" style="color:#059669;text-decoration:underline">Comment fonctionne CareerPulse</a>.</p>
 </div>
 
 </div>
@@ -4180,75 +4191,70 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
 
 <h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Politique de confidentialité</h1>
-<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Conformément au Règlement (UE) 2016/679 (RGPD) — Dernière mise à jour : 19 février 2026</p>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Conformément au règlement (UE) 2016/679 (RGPD) et à la loi Informatique et Libertés — Version 2.0, mise à jour : 27 octobre 2026</p>
 
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">En bref</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Vos données servent à faire fonctionner CareerPulse. Elles ne sont <b>jamais vendues</b>.</li>
+<li>Votre profil n'est visible des recruteurs <b>que si vous l'activez</b>, et sans votre nom complet ni vos coordonnées.</li>
+<li>Un employeur ou un centre de formation ne reçoit vos documents ou coordonnées <b>que si vous choisissez de les partager</b>.</li>
+<li>Vous pouvez consulter, corriger, télécharger ou supprimer vos données à tout moment.</li>
+</ul>
+</div>
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
 <div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Responsable du traitement</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.8">Prince Mickaël Moudilou — 18 Place Champlain, 14000 Caen<br><a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Prince Mickaël Moudilou EI (entrepreneur individuel)<br>18 Place Champlain, 14000 Caen, France<br>Contact données personnelles : <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Données collectées</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">CareerPulse collecte uniquement les données que vous saisissez volontairement :</p>
-<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px">
-<li>Prénom / nom (lors de la création de votre fiche pro)</li>
-<li>Informations professionnelles (poste, compétences, expériences)</li>
-<li>Messages échangés avec Eva Mentor (traités en temps réel, non conservés sur nos serveurs)</li>
-<li>Données de navigation techniques (adresse IP, type de navigateur) via l'hébergeur Vercel</li>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Données traitées, pourquoi et combien de temps</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Nous ne collectons que les données utiles au service.</p>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;border:1px solid #e2e8f0;border-radius:12px"><table style="width:100%;min-width:560px;border-collapse:collapse;font-size:.74rem;color:#334155;line-height:1.55"><thead><tr><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Traitement</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Données</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Base légale</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Durée de conservation</th></tr></thead><tbody><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Compte et profil membre</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Prénom, nom, e-mail, profil choisi, ville, compétences, parcours</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Exécution du contrat (CGU)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Tant que le compte est actif. Les données du profil sont supprimées automatiquement après 3 ans sans connexion</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Profil visible des recruteurs</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Prénom + initiale, numéro CareerPulse, catégorie, compétences</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Votre consentement, retirable à tout moment</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Jusqu'au retrait de la visibilité</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Documents (CV, lettres, diplômes, attestations)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Fichiers que vous déposez</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Exécution du contrat</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Jusqu'à leur suppression par vous ou celle du compte</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Messagerie et candidatures</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Messages, poste visé, coordonnées que vous choisissez de partager</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Exécution du contrat</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Suppression automatique : 6 mois après le dernier message avec un centre de formation, 2 ans après le dernier message avec un employeur. Documents joints à une candidature : 2 ans après leur envoi</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Recommandations (pourcentage de correspondance)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Profil et critères des offres ou formations</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Intérêt légitime : vous proposer des opportunités adaptées</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Calculé à l'affichage, non conservé séparément</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">EVA et Lisa (assistantes IA)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Questions posées, profil choisi</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Exécution du contrat</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">L'historique n'est pas conservé par CareerPulse sur ses serveurs</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Bilan et journal bien-être (EVA)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Vos réponses sur votre motivation et votre équilibre</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Aucune transmission : ces réponses restent sur votre appareil</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Enregistrées uniquement dans votre navigateur. CareerPulse n'y a pas accès. Bouton « Supprimer mes infos » dans chaque espace</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Portfolio EVA (agenda, documents, contacts, tâches)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Ce que vous y saisissez</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Exécution du contrat</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Sur votre appareil et, si vous êtes connecté, dans votre compte. Supprimable à tout moment, onglet par onglet, avec « Supprimer mes infos »</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Comptes employeurs et centres de formation</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Nom et coordonnées du contact, SIRET, numéro de déclaration d'activité, certification Qualiopi</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Exécution du contrat</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Durée du compte + 5 ans</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Abonnements et factures</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Identité professionnelle, montants, dates (la carte bancaire reste chez Stripe)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Obligation légale</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">10 ans (pièces comptables)</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Avis, signalements, blocages</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Contenu de l'avis ou du signalement, auteur, motif</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Intérêt légitime : sécurité du service</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Avis : suppression automatique 2 ans après publication. Signalements et blocages : 2 ans, ou plus en cas de litige</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Preuves de consentement</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Type de choix, valeur, date</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Obligation légale (prouver le consentement)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Durée du consentement + 5 ans</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Données techniques</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Adresse IP, navigateur, journaux de connexion</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Intérêt légitime : sécurité</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">12 mois maximum</td></tr></tbody></table></div>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Qui peut voir vos données</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li><b>Vous</b> : l'ensemble de votre espace.</li>
+<li><b>Les employeurs et centres vérifiés</b> : uniquement votre profil anonymisé si vous l'avez rendu visible, puis ce que vous décidez de partager dans la messagerie.</li>
+<li><b>CareerPulse</b> : uniquement pour faire fonctionner le service, vérifier les comptes, traiter un signalement ou répondre à une demande.</li>
+<li><b>Nos prestataires techniques</b> (ci-dessous), dans la limite de leur mission.</li>
+<li><b>Les autorités</b>, sur demande légale.</li>
 </ul>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Dès qu'un employeur ou un centre reçoit vos documents ou coordonnées, il en devient lui-même responsable. Nos conditions lui imposent de les utiliser uniquement pour votre candidature ou votre demande, et de les supprimer au plus tard 2 ans après le dernier échange.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Finalités du traitement</div>
-<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px">
-<li>Fourniture du service (fiche pro, recherche d'emploi, coach Eva)</li>
-<li>Amélioration de l'expérience utilisateur</li>
-<li>Respect des obligations légales</li>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Prestataires et transferts hors de l'Union européenne</div>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;border:1px solid #e2e8f0;border-radius:12px"><table style="width:100%;min-width:560px;border-collapse:collapse;font-size:.74rem;color:#334155;line-height:1.55"><thead><tr><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Prestataire</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Rôle</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Localisation</th></tr></thead><tbody><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Google (Firebase)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Comptes, base de données, fichiers</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Union européenne et États-Unis</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Vercel</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Hébergement du site, fonctions serveur</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">États-Unis</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Stripe</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Paiement des abonnements professionnels</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Union européenne et États-Unis</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Groq, OpenRouter et les modèles d'IA appelés</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Réponses d'EVA et de Lisa</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">États-Unis</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Hostinger</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Nom de domaine et messagerie e-mail</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Union européenne</td></tr></tbody></table></div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les transferts vers les États-Unis sont encadrés par la décision d'adéquation de la Commission européenne « EU-US Data Privacy Framework » pour les prestataires certifiés, et à défaut par les clauses contractuelles types de la Commission européenne. Ne saisissez pas d'informations sensibles (santé, religion, numéro de sécurité sociale) dans vos échanges avec EVA ou Lisa.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Sécurité</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Connexion par compte personnel, échanges chiffrés (HTTPS), accès aux documents limité à leur propriétaire et aux personnes avec qui il les partage. En cas de violation de données présentant un risque, nous prévenons la CNIL dans les 72 heures et, si le risque est élevé, les personnes concernées.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Âge minimum</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse est réservé aux personnes de 16 ans et plus. Si vous avez moins de 18 ans, parlez-en à vos parents avant de rendre votre profil visible.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Cookies et stockage</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse n'utilise aucun cookie publicitaire ni outil de mesure d'audience. Le détail figure sur la page <a href="#" onclick="go('cookies');return false" style="color:#059669;text-decoration:underline">Cookies et stockage</a>.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Vos droits</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li><b>Accès</b> : obtenir une copie de vos données.</li>
+<li><b>Rectification</b> : corriger une donnée inexacte.</li>
+<li><b>Effacement</b> : supprimer votre compte et vos données.</li>
+<li><b>Opposition</b> : vous opposer aux recommandations ou à tout traitement fondé sur l'intérêt légitime.</li>
+<li><b>Retrait du consentement</b> : désactiver la visibilité de votre profil ou le bilan bien-être à tout moment.</li>
+<li><b>Portabilité</b> : récupérer vos données dans un format lisible.</li>
+<li><b>Limitation</b> et <b>directives post-mortem</b> sur le sort de vos données après votre décès.</li>
 </ul>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Écrivez à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a>. Nous répondons sous un mois. Si la réponse ne vous satisfait pas, vous pouvez saisir la CNIL : <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener" style="color:#059669;text-decoration:underline">cnil.fr/fr/plaintes</a>.</p>
 </div>
-
-<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Base légale</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Le traitement est fondé sur votre <strong>consentement</strong> (article 6.1.a RGPD) et sur l'exécution du service (article 6.1.b RGPD).</p>
-</div>
-
-<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Durée de conservation</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Les données de profil sont conservées tant que vous utilisez le service. Les données de navigation sont conservées 13 mois maximum. Vous pouvez demander la suppression à tout moment.</p>
-</div>
-
-<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Cookies et stockage local</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse utilise le <strong>stockage local (localStorage)</strong> de votre navigateur pour sauvegarder vos préférences et votre profil. Aucun cookie publicitaire ou de tracking tiers n'est utilisé. Ces données restent sur votre appareil.</p>
-</div>
-
-<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Partage des données</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Vos données ne sont jamais vendues ni cédées à des tiers. Les seuls sous-traitants sont :</p>
-<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px">
-<li><strong>Anthropic / Groq</strong> — traitement des messages Eva (IA)</li>
-<li><strong>France Travail, Indeed, Malt</strong> — consultation des offres d'emploi (sites externes)</li>
-<li><strong>Vercel / GitHub</strong> — hébergement technique</li>
-</ul>
-</div>
-
-<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Vos droits (RGPD)</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Vous disposez des droits suivants sur vos données :</p>
-<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px">
-<li><strong>Accès</strong> — obtenir une copie de vos données</li>
-<li><strong>Rectification</strong> — corriger des données inexactes</li>
-<li><strong>Suppression</strong> — effacement (droit à l'oubli)</li>
-<li><strong>Opposition</strong> — vous opposer à un traitement</li>
-<li><strong>Portabilité</strong> — récupérer vos données dans un format lisible</li>
-</ul>
-<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-top:10px">Pour exercer vos droits : <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
-<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-top:8px">Vous pouvez également introduire une réclamation auprès de la <strong>CNIL</strong> : <a href="https://cnil.fr" target="_blank" style="color:#059669;text-decoration:none">cnil.fr</a></p>
-</div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Contact DPO</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75"><a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Modifications</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de changement important, vous serez prévenu par e-mail ou dans votre espace avant son entrée en vigueur.</p>
 </div>
 
 </div>
@@ -4303,64 +4309,396 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 <div class="wrap" style="padding-top:10px;padding-bottom:40px">
 <div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
 
-<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Conditions Générales d'Utilisation</h1>
-<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Version 1.0 — En vigueur depuis le 19 février 2026</p>
+<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Conditions Générales d'Utilisation — Membres</h1>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Version 2.0 — En vigueur le 27 octobre 2026 (remplace la version 1.0 du 19 février 2026)</p>
 
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
 <div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">1. Objet</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Les présentes CGU définissent les conditions d'accès et d'utilisation de la plateforme CareerPulse, accessible à l'adresse careerpulseia.com, éditée par Prince Mickaël Moudilou (SIRET 101 467 942 00013).</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les présentes conditions encadrent l'utilisation de CareerPulse, accessible à l'adresse careerpulse.fr et éditée par Prince Mickaël Moudilou EI (entrepreneur individuel), SIRET 101 467 942 00013. Les employeurs et les centres de formation sont soumis à leurs propres conditions : <a href="#" onclick="go('cgu-employeurs');return false" style="color:#059669;text-decoration:underline">CGU employeurs</a> et <a href="#" onclick="go('cgu-centres');return false" style="color:#059669;text-decoration:underline">CGU centres de formation</a>.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">2. Description du service</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">CareerPulse est une plateforme d'aide à la recherche d'emploi proposant :</p>
-<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px">
-<li>Consultation d'offres d'emploi (via France Travail, Indeed et Malt — sites externes)</li>
-<li>Assistant IA Eva Mentor (conseils emploi et carrière)</li>
-<li>Création d'une fiche professionnelle publique</li>
-<li>Quiz et ressources sur le droit du travail</li>
-<li>Outils de rédaction de CV et lettre de motivation</li>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">2. Le service</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">CareerPulse aide les demandeurs d'emploi, étudiants, personnes en reconversion, salariés et freelances à préparer leur parcours. Le service comprend notamment :</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>un espace personnel pour ranger ses documents et suivre ses candidatures ;</li>
+<li>Lisa et EVA, assistantes virtuelles fondées sur l'intelligence artificielle ;</li>
+<li>des quiz, des mises en situation et des contenus sur le droit du travail et les aides ;</li>
+<li>des recommandations de sites et d'outils externes ;</li>
+<li>un annuaire de formations et d'offres publiées par des centres et des employeurs vérifiés, avec une messagerie protégée.</li>
+</ul>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">L'inscription est sans frais pour les membres. CareerPulse met en relation : il n'est ni employeur, ni agence d'intérim, ni organisme de formation, et ne garantit ni une embauche, ni une place en formation.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">3. Inscription et compte</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Il faut avoir au moins 16 ans.</li>
+<li>Un seul compte par personne, avec des informations exactes et à jour.</li>
+<li>Vous êtes responsable de la confidentialité de votre mot de passe et de l'usage de votre compte.</li>
+<li>Vous acceptez les présentes conditions en cochant la case prévue lors de l'inscription.</li>
 </ul>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">3. Accès au service</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">L'accès à CareerPulse est gratuit et sans inscription obligatoire pour les fonctionnalités de base. Certaines fonctionnalités avancées peuvent nécessiter la création d'un profil. L'utilisateur doit être âgé d'au moins 16 ans.</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">4. Visibilité du profil</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Votre profil est privé par défaut. Si vous activez la visibilité, les employeurs et centres vérifiés voient uniquement votre prénom suivi d'une initiale, votre numéro CareerPulse, votre catégorie et vos compétences. Vous choisissez ensuite, conversation par conversation, ce que vous partagez (CV, e-mail, téléphone). Vous pouvez désactiver la visibilité à tout moment.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">4. Eva Mentor — IA</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Eva Mentor est un assistant basé sur l'intelligence artificielle. Ses réponses sont fournies à titre <strong>informatif et indicatif uniquement</strong>. Elles ne constituent pas un conseil juridique, professionnel ou médical. L'utilisateur reste seul responsable de ses décisions. CareerPulse ne peut être tenu responsable des conséquences d'une décision prise sur la base des réponses d'Eva.</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">5. Vos documents</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Vous restez propriétaire de vos CV, lettres et documents. Vous accordez à CareerPulse le droit gratuit de les héberger et de les afficher aux personnes avec qui vous les partagez, uniquement pour faire fonctionner le service. Ce droit prend fin à leur suppression.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous garantissez que vos documents sont authentiques et vous appartiennent. Un faux diplôme ou un document falsifié entraîne la suppression du compte, sans préjudice des poursuites possibles.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">5. Obligations de l'utilisateur</div>
-<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px">
-<li>Ne pas utiliser le service à des fins illicites</li>
-<li>Ne pas tenter de contourner les mesures de sécurité</li>
-<li>Ne pas diffuser de contenu faux, trompeur ou offensant via la fiche pro</li>
-<li>Respecter les droits des tiers (propriété intellectuelle, vie privée)</li>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">6. Règles de conduite</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Il est interdit, sur CareerPulse ou au moyen de CareerPulse, de :</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>publier un contenu faux, trompeur, injurieux, discriminatoire ou illicite ;</li>
+<li>harceler un membre ou un professionnel, ou le contacter de façon répétée malgré son refus ;</li>
+<li>demander de l'argent, des frais de dossier, une pièce d'identité, un RIB ou des codes bancaires avant une embauche ;</li>
+<li>publier la photo ou les données d'une autre personne sans son accord ;</li>
+<li>utiliser le service à des fins commerciales, de prospection ou de collecte automatisée de données ;</li>
+<li>contourner les mesures de sécurité ou créer plusieurs comptes.</li>
 </ul>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">6. Responsabilité</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse ne garantit pas l'exactitude des offres d'emploi affichées (issues de France Travail, Indeed et Malt — sites externes). L'éditeur ne saurait être tenu responsable des interruptions de service, des erreurs de l'IA ou du contenu des offres tierces. Le service est fourni en version <strong>bêta / MVP</strong>, des interruptions ponctuelles sont possibles.</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">7. Avis sur les freelances</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Seule l'entreprise qui a confié la mission peut publier un avis. L'avis indique sa date de publication et la mission concernée. Les règles de contrôle, de durée et de contestation des avis sont décrites sur la page <a href="#" onclick="go('fonctionnement');return false" style="color:#059669;text-decoration:underline">Comment fonctionne CareerPulse</a>.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">7. Propriété intellectuelle</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Tous les éléments de CareerPulse (logo, nom, interface, code, contenus) sont protégés par le droit de la propriété intellectuelle. Toute reproduction sans autorisation est interdite.</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">8. Lisa, EVA et l'intelligence artificielle</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Lisa et EVA sont des assistantes virtuelles fondées sur l'intelligence artificielle. Leurs réponses sont des informations générales, appuyées autant que possible sur des sources officielles citées. Elles peuvent contenir des erreurs et ne remplacent ni un avocat, ni un conseiller France Travail, ni un médecin. Pour une situation personnelle, vérifiez la source citée et adressez-vous à un professionnel. Vous restez seul responsable de vos décisions.</p>
 </div>
-
 <div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">8. Modification des CGU</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse se réserve le droit de modifier les présentes CGU à tout moment. Les utilisateurs seront informés de toute modification substantielle. La poursuite de l'utilisation du service vaut acceptation des nouvelles CGU.</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">9. Signalement et modération</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Chaque contenu ou membre peut être signalé avec le bouton « Signaler » ou à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a>. Nous accusons réception, examinons le signalement et informons son auteur de la décision.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de manquement, CareerPulse peut, selon la gravité : avertir, masquer un contenu, suspendre ou supprimer un compte. Toute décision est motivée par écrit et peut être contestée en répondant au message reçu. Une menace pour la vie ou la sécurité d'une personne est transmise aux autorités.</p>
 </div>
-
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">10. Suppression du compte</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous pouvez supprimer votre compte à tout moment depuis votre espace ou en écrivant à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a>. Dans EVA, chaque espace (bilan, journal, agenda, documents, contacts, tâches) a aussi son bouton « Supprimer mes infos ». Vos données sont alors effacées dans les conditions prévues par la <a href="#" onclick="go('confidentialite');return false" style="color:#059669;text-decoration:underline">politique de confidentialité</a>.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">11. Responsabilité</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse fait ses meilleurs efforts pour assurer un service disponible et des contenus exacts, mais ne peut garantir l'absence d'interruption ou d'erreur. CareerPulse n'est pas partie aux échanges, contrats de travail ou contrats de formation conclus entre membres et professionnels. Les sites externes recommandés relèvent de la responsabilité de leurs éditeurs.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">12. Propriété intellectuelle</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les éléments de CareerPulse (nom, logo, interface, code, textes, quiz, visuels) sont protégés. Toute reproduction sans autorisation est interdite.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">13. Modification des conditions</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de modification importante, vous serez informé par e-mail ou dans votre espace au moins 15 jours avant son entrée en vigueur. Si vous refusez la nouvelle version, vous pouvez supprimer votre compte avant cette date.</p>
+</div>
 <div style="border-top:1px solid #f1f5f9;padding-top:18px">
-<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">9. Droit applicable</div>
-<p style="font-size:.82rem;color:#334155;line-height:1.75">Les présentes CGU sont soumises au droit français. En cas de litige, les tribunaux compétents sont ceux du ressort de Caen (14000).</p>
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">14. Droit applicable et litiges</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les présentes conditions sont soumises au droit français. En cas de difficulté, écrivez d'abord à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a> : nous cherchons une solution amiable. À défaut, vous pouvez saisir la juridiction compétente, notamment celle de votre domicile.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ═══ Pages juridiques ajoutées (oct. 2026) : CGU employeurs, CGU centres, CGV Pro, cookies, fonctionnement ═══ -->
+<div class="screen" id="s-cgu-employeurs">
+<div class="wrap" style="padding-top:10px;padding-bottom:40px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+
+<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Conditions Générales d'Utilisation — Employeurs</h1>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Version 1.0 — En vigueur le 27 octobre 2026</p>
+
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">1. Objet</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Ces conditions encadrent l'utilisation de l'espace employeur de CareerPulse, édité par Prince Mickaël Moudilou EI (entrepreneur individuel). L'abonnement est régi par les <a href="#" onclick="go('cgv-pro');return false" style="color:#059669;text-decoration:underline">Conditions générales de vente Pro</a>. Elles sont acceptées par case à cocher lors de l'inscription.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">2. Compte vérifié</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Le compte est réservé aux entreprises immatriculées. Il est vérifié par numéro SIRET et validé par l'équipe CareerPulse.</li>
+<li>Les informations fournies doivent être exactes. Vous informez CareerPulse de tout changement.</li>
+<li>La personne qui ouvre le compte déclare avoir le pouvoir d'engager l'entreprise.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">3. Règles des offres d'emploi</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Chaque offre doit respecter le Code du travail. Elle doit notamment :</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>être datée, rédigée en français pour un poste en France, et indiquer l'employeur (art. L5331-4, L5332-1 et L5332-2 du Code du travail) ;</li>
+<li>ne contenir aucune limite d'âge supérieure (art. L5331-2) ni aucun critère discriminatoire : origine, sexe, âge, situation de famille, état de santé, handicap, lieu de résidence, religion, etc. (art. L1132-1) ;</li>
+<li>ne contenir aucune allégation fausse ou trompeuse sur l'existence du poste, sa nature, la rémunération ou le lieu (art. L5331-3) ;</li>
+<li>indiquer une fourchette de salaire ;</li>
+<li>correspondre à un poste réellement à pourvoir.</li>
+</ul>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous êtes seul responsable du contenu de vos offres. CareerPulse peut refuser, suspendre ou retirer une offre non conforme, avec un motif écrit, et la republier une fois corrigée.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">4. Recrutement</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Les questions posées aux candidats servent uniquement à évaluer leurs compétences pour le poste (art. L1221-6 du Code du travail). Le salaire actuel ou passé du candidat ne lui est pas demandé.</li>
+<li>Le candidat est informé des méthodes d'évaluation utilisées (art. L1221-8).</li>
+<li>Aucune somme d'argent, aucuns frais de dossier, aucun RIB ni aucune pièce d'identité ne sont demandés avant l'embauche.</li>
+<li>Pour une mission freelance, la relation ne doit pas créer de lien de subordination, sous peine de requalification en contrat de travail.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">5. Contact avec les membres</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les profils visibles sont anonymisés. Vous contactez un membre uniquement par la messagerie CareerPulse, en proposant un échange sur un poste. Ses coordonnées ne vous sont transmises que s'il décide de les partager. Un membre qui refuse ou ne répond pas ne doit pas être relancé de façon insistante.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">6. Données des candidats</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Lorsqu'un candidat vous transmet son CV, ses documents ou ses coordonnées, vous devenez responsable de ces données au sens du RGPD. Vous vous engagez à :</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>les utiliser uniquement pour la candidature ou la demande concernée ;</li>
+<li>ne pas les exporter, les revendre, ni les intégrer à un fichier de prospection ;</li>
+<li>les supprimer au plus tard 2 ans après le dernier échange, sauf accord du candidat ;</li>
+<li>informer le candidat si vous conservez son dossier et répondre à ses demandes d'accès ou de suppression ;</li>
+<li>assurer leur sécurité et ne les communiquer qu'aux personnes chargées du recrutement ou de l'inscription.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">7. Avis sur les freelances</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous ne pouvez publier un avis que sur un freelance avec qui vous avez réalisé une mission. L'avis doit être sincère et porter sur la mission. Les avis faux ou obtenus contre une contrepartie sont interdits.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">8. Vos contenus</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous garantissez détenir les droits sur votre logo et vos textes. Vous accordez à CareerPulse le droit gratuit de les afficher sur le site pendant la durée de votre compte.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">9. Sanctions</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de manquement, CareerPulse peut, avec un motif écrit : avertir, retirer une offre, suspendre ou fermer le compte. En cas de faute grave (discrimination, fausse offre, demande d'argent, usage abusif des données), la fermeture est immédiate et la période d'abonnement en cours n'est pas remboursée.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">10. Responsabilité</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse met en relation employeurs et candidats. Il n'est ni employeur, ni agence d'intérim, ni partie au contrat de travail, et ne garantit aucun recrutement. Sa responsabilité est limitée au montant payé au cours des 12 derniers mois.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">11. Droit applicable</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Droit français. Tout litige entre professionnels relève du tribunal de commerce de Caen, après une tentative de solution amiable.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="screen" id="s-cgu-centres">
+<div class="wrap" style="padding-top:10px;padding-bottom:40px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+
+<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Conditions Générales d'Utilisation — Centres de formation</h1>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Version 1.0 — En vigueur le 27 octobre 2026</p>
+
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">1. Objet</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Ces conditions encadrent l'utilisation de l'espace centre de formation de CareerPulse, édité par Prince Mickaël Moudilou EI (entrepreneur individuel). L'abonnement est régi par les <a href="#" onclick="go('cgv-pro');return false" style="color:#059669;text-decoration:underline">Conditions générales de vente Pro</a>. Elles sont acceptées par case à cocher lors de l'inscription.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">2. Compte vérifié</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Le compte est réservé aux organismes de formation déclarés. Il est vérifié par numéro SIRET et numéro de déclaration d'activité (NDA), et validé par l'équipe CareerPulse.</li>
+<li>Le centre indique sa certification Qualiopi et sa date de fin de validité. Il informe CareerPulse sans délai de toute perte, suspension ou non-renouvellement.</li>
+<li>Le badge « Vérifié » atteste de ces vérifications administratives. Il ne constitue ni un label de qualité, ni un agrément de l'État.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">3. Fiches formation</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Le centre est seul responsable de ses fiches. Chaque fiche doit être exacte et complète : programme, durée, dates, lieu, prix, prérequis, certification visée (RNCP ou Répertoire spécifique) et financements réellement possibles. Il est notamment interdit :</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>de présenter la formation comme gratuite ou « prise en charge à 100 % » sans préciser les conditions ;</li>
+<li>d'annoncer une certification que la formation ne prépare pas ;</li>
+<li>de présenter le numéro de déclaration comme un agrément. La mention exigée est : « Cet enregistrement ne vaut pas agrément de l'État » (art. L6352-12 du Code du travail) ;</li>
+<li>toute publicité trompeuse sur le contenu, les résultats ou le financement (art. L6352-13).</li>
+</ul>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse peut refuser, suspendre ou retirer une fiche non conforme, avec un motif écrit.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">4. Interdiction du démarchage</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Le démarchage des titulaires du compte personnel de formation (CPF) par téléphone, SMS, courriel ou réseaux sociaux est interdit (art. L6323-8-1 du Code du travail). Sur CareerPulse, c'est toujours le membre qui contacte le centre en premier.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Le centre s'interdit de contacter un membre qui ne lui a pas écrit, sur CareerPulse ou en dehors, et d'utiliser les données reçues pour proposer d'autres formations. Toute violation entraîne la fermeture immédiate du compte, sans remboursement.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">5. Recommandations</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse recommande les formations aux membres selon des critères publics, décrits sur la page <a href="#" onclick="go('fonctionnement');return false" style="color:#059669;text-decoration:underline">Comment fonctionne CareerPulse</a>. Un centre ne peut pas payer pour être mieux classé.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">6. Données des candidats</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Lorsqu'un candidat vous transmet son CV, ses documents ou ses coordonnées, vous devenez responsable de ces données au sens du RGPD. Vous vous engagez à :</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>les utiliser uniquement pour la demande d'information ou d'inscription concernée ;</li>
+<li>ne pas les exporter, les revendre, ni les intégrer à un fichier de prospection ;</li>
+<li>les supprimer au plus tard 2 ans après le dernier échange, sauf accord du candidat ;</li>
+<li>informer le candidat si vous conservez son dossier et répondre à ses demandes d'accès ou de suppression ;</li>
+<li>assurer leur sécurité et ne les communiquer qu'aux personnes chargées du recrutement ou de l'inscription.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">7. Vos contenus</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous garantissez détenir les droits sur votre logo, vos textes et vos visuels. Vous accordez à CareerPulse le droit gratuit de les afficher sur le site pendant la durée de votre compte.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">8. Sanctions</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de manquement, CareerPulse peut, avec un motif écrit : avertir, retirer une fiche, suspendre ou fermer le compte. En cas de faute grave (démarchage, publicité trompeuse, perte de certification non signalée, usage abusif des données), la fermeture est immédiate et la période d'abonnement en cours n'est pas remboursée.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">9. Responsabilité</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse met en relation centres et candidats. Il n'est pas organisme de formation et n'intervient ni dans l'inscription, ni dans le financement, ni dans le contrat de formation. Sa responsabilité est limitée au montant payé au cours des 12 derniers mois.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">10. Droit applicable</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Droit français. Tout litige entre professionnels relève du tribunal de commerce de Caen, après une tentative de solution amiable.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="screen" id="s-cgv-pro">
+<div class="wrap" style="padding-top:10px;padding-bottom:40px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+
+<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Conditions Générales de Vente — Abonnements Pro</h1>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Version 1.0 — En vigueur le 27 octobre 2026 — Réservées aux professionnels</p>
+
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">1. Vendeur</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Prince Mickaël Moudilou EI (entrepreneur individuel) — micro-entrepreneur — 18 Place Champlain, 14000 Caen, France — SIREN 101 467 942 — Tél. : 06 89 54 41 05 — <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a></p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">2. Objet et acceptation</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Ces conditions régissent les abonnements « CareerPulse Pro » souscrits par les employeurs et les centres de formation. Elles complètent les <a href="#" onclick="go('cgu-employeurs');return false" style="color:#059669;text-decoration:underline">CGU employeurs</a> et les <a href="#" onclick="go('cgu-centres');return false" style="color:#059669;text-decoration:underline">CGU centres de formation</a>. Le client les accepte avant tout paiement. La version acceptée et sa date sont conservées.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">3. Offres et prix</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Les formules (mensuelle ou annuelle), leurs fonctions et leurs prix sont présentés dans la fenêtre « Abonnement Pro » de l'espace professionnel. Le vendeur est micro-entrepreneur : TVA non applicable, art. 293 B du CGI. Le prix affiché (HT) est donc le prix payé. Si le vendeur devient redevable de la TVA, les nouveaux prix TTC seront communiqués au client au moins 30 jours avant la prochaine échéance.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Le « tarif de lancement » est garanti tant que l'abonnement reste actif sans interruption, pour un service équivalent. Après une résiliation, une nouvelle souscription se fait au prix public en vigueur.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">4. Essai gratuit</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Un essai gratuit peut être proposé à la validation du compte, sans carte bancaire et sans engagement. Aucun prélèvement n'a lieu à la fin de l'essai si le client ne souscrit pas.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">5. Paiement</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Paiement par carte bancaire via Stripe, prestataire certifié PCI-DSS, avec authentification forte. CareerPulse n'a jamais accès au numéro de carte. L'abonnement est payable d'avance, à chaque échéance.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">6. Durée, reconduction et résiliation</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">L'abonnement est conclu pour un mois ou un an, puis reconduit automatiquement pour la même durée. Pour la formule annuelle, un e-mail rappelle la date d'échéance avant chaque renouvellement.</p>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Le client peut résilier à tout moment depuis « Mon abonnement » ou par e-mail. La résiliation prend effet à la fin de la période payée, qui n'est pas remboursée au prorata.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">7. Retard de paiement</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de retard, des pénalités sont dues au taux de trois fois le taux d'intérêt légal, ainsi qu'une indemnité forfaitaire de 40 € pour frais de recouvrement (art. L441-10 du Code de commerce). L'accès Pro peut être suspendu jusqu'au paiement.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">8. Factures</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Une facture est émise à chaque paiement et reste téléchargeable dans l'espace du client. Elle porte la mention « TVA non applicable, art. 293 B du CGI ».</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">9. Droit de rétractation</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Le contrat est conclu entre professionnels : le droit de rétractation du Code de la consommation ne s'applique pas, sauf dans les cas prévus par l'article L221-3 de ce code.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">10. Disponibilité du service</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse fait ses meilleurs efforts pour assurer un accès continu. Des interruptions pour maintenance ou incident sont possibles. Une interruption de plus de 72 heures consécutives, imputable à CareerPulse, donne droit sur demande à un avoir proportionnel.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">11. Suspension pour manquement</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">En cas de manquement grave aux CGU employeurs ou centres, le compte peut être fermé. La période en cours n'est alors pas remboursée.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">12. Responsabilité</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse ne garantit aucun recrutement ni aucune inscription. Sa responsabilité est limitée aux dommages directs et au montant payé par le client au cours des 12 derniers mois.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">13. Fin de l'abonnement</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">À l'expiration, l'espace reste consultable en lecture. Les messages, offres et formations ne sont pas supprimés sans demande du client, sous réserve des durées de la <a href="#" onclick="go('confidentialite');return false" style="color:#059669;text-decoration:underline">politique de confidentialité</a>.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">14. Données personnelles</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Les données du client sont traitées selon la <a href="#" onclick="go('confidentialite');return false" style="color:#059669;text-decoration:underline">politique de confidentialité</a>. Les données de paiement sont traitées par Stripe.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">15. Droit applicable et litiges</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Droit français. Après une tentative de solution amiable, tout litige relève du tribunal de commerce de Caen.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="screen" id="s-cookies">
+<div class="wrap" style="padding-top:10px;padding-bottom:40px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+
+<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Cookies et stockage</h1>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Mise à jour : 27 octobre 2026</p>
+
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">En bref</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">CareerPulse n'utilise <b>aucun cookie publicitaire</b>, aucun pixel de réseau social et aucun outil de mesure d'audience. Les seuls éléments enregistrés sur votre appareil sont nécessaires au fonctionnement du site. Ils sont dispensés de consentement par la loi (art. 82 de la loi Informatique et Libertés), c'est pourquoi aucune bannière ne vous est demandée.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Ce qui est enregistré sur votre appareil</div>
+<div style="overflow-x:auto;-webkit-overflow-scrolling:touch;margin-bottom:8px;border:1px solid #e2e8f0;border-radius:12px"><table style="width:100%;min-width:560px;border-collapse:collapse;font-size:.74rem;color:#334155;line-height:1.55"><thead><tr><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Élément</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">À quoi il sert</th><th style="text-align:left;padding:8px 10px;background:#f8fafc;border-bottom:1px solid #e2e8f0;font-weight:800;color:#0f172a;white-space:nowrap">Durée</th></tr></thead><tbody><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Session Firebase (Google)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Vous garder connecté à votre compte de façon sécurisée</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Jusqu'à la déconnexion</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Stockage local du navigateur (localStorage)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Retenir vos préférences : profil choisi, affichage, avancement dans les quiz</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Jusqu'à ce que vous effaciez les données du site</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Stockage de session (sessionStorage)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Éviter de rejouer une présentation déjà vue, suivre une étape d'inscription</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Fermeture de l'onglet</td></tr><tr><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Stripe (sur le site de Stripe)</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Paiement sécurisé et lutte contre la fraude, uniquement lors d'un abonnement Pro</td><td style="padding:8px 10px;border-bottom:1px solid #f1f5f9;vertical-align:top">Selon la politique de Stripe</td></tr></tbody></table></div>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Si cela change</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Si un outil de mesure d'audience ou un contenu tiers (vidéo, réseau social) devait être ajouté, il ne serait activé qu'après votre accord, avec un bouton « Refuser » aussi simple que « Accepter ».</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Supprimer ces données</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Vous pouvez à tout moment effacer ces données dans les réglages de votre navigateur (rubrique « Données de site » ou « Cookies »). Vous serez alors déconnecté.</p>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="screen" id="s-fonctionnement">
+<div class="wrap" style="padding-top:10px;padding-bottom:40px">
+<div style="background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:22px 18px;box-shadow:0 2px 10px rgba(0,0,0,.05)">
+
+<h1 style="font-family:'DM Sans',sans-serif;font-size:1.3rem;font-weight:800;color:#0f172a;margin-bottom:4px">Comment fonctionne CareerPulse</h1>
+<p style="font-size:.65rem;color:#94a3b8;margin-bottom:24px">Informations sur la mise en relation, les recommandations, les avis et la modération — Mise à jour : 27 octobre 2026</p>
+
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">La mise en relation</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Les centres de formation et les employeurs sont vérifiés (SIRET, et pour les centres numéro de déclaration d'activité et certification Qualiopi) avant de pouvoir publier.</li>
+<li><b>Formations</b> : c'est toujours le membre qui contacte le centre en premier. Les centres ne peuvent pas démarcher les membres.</li>
+<li><b>Emploi</b> : un employeur peut proposer un échange à un membre dont le profil est visible et anonymisé. Le membre est libre de répondre ou non, et choisit ce qu'il partage.</li>
+<li>L'inscription et la mise en relation sont sans frais pour les membres. Les professionnels paient un abonnement.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Le pourcentage de correspondance</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Le pourcentage est calculé par des règles fixes, sans intelligence artificielle. Chaque pourcentage est accompagné de son explication.</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li><b>Formations</b> : lien entre votre projet et le domaine de la formation (45 points), même ville ou formation à distance (25 points), statut correspondant au public visé (20 points), disponibilité (10 points).</li>
+<li><b>Offres d'emploi</b> : intitulé du poste proche de votre métier (45 %), compétences en commun (35 %), ville ou télétravail (20 %).</li>
+</ul>
+<p style="font-size:.82rem;color:#334155;line-height:1.75"><b>Aucun professionnel ne paie pour être mieux classé.</b> Le classement n'exclut personne : vous voyez les autres offres et formations, et c'est vous qui décidez de prendre contact. Vous pouvez vous opposer aux recommandations en écrivant à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a>.</p>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Les avis sur les freelances</div>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Seule l'entreprise qui a confié la mission peut publier un avis. Les comptes employeurs sont vérifiés par SIRET.</li>
+<li>L'avis affiche sa date de publication, la mission concernée, une note de 1 à 5 et un commentaire de 500 caractères maximum.</li>
+<li>Aucune contrepartie n'est accordée en échange d'un avis.</li>
+<li>Un avis est conservé 2 ans au plus. Une seule note par mission : l'entreprise peut la mettre à jour.</li>
+<li>Le freelance peut contester un avis en écrivant à contact@careerpulse.fr. Un avis faux, injurieux ou sans lien avec la mission est retiré, avec une explication écrite.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px;margin-bottom:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Signaler un contenu ou un comportement</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75;margin-bottom:8px">Utilisez le bouton « Signaler » dans la messagerie ou sur la fiche concernée, ou écrivez à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a> en indiquant : le contenu ou le compte visé, le lien ou la page, la raison du signalement et vos coordonnées.</p>
+<ul style="font-size:.82rem;color:#334155;line-height:1.8;padding-left:18px;margin-bottom:8px">
+<li>Nous accusons réception du signalement.</li>
+<li>Nous l'examinons dans les meilleurs délais, en général sous 72 heures.</li>
+<li>Mesures possibles : avertissement, masquage ou retrait du contenu, suspension ou fermeture du compte.</li>
+<li>La personne concernée reçoit une explication écrite de la décision et peut la contester en répondant au message.</li>
+<li>Une menace pour la vie ou la sécurité d'une personne est transmise sans délai aux autorités.</li>
+</ul>
+</div>
+<div style="border-top:1px solid #f1f5f9;padding-top:18px">
+<div style="font-size:.58rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:#059669;margin-bottom:10px">Points de contact</div>
+<p style="font-size:.82rem;color:#334155;line-height:1.75">Utilisateurs et autorités peuvent nous écrire à <a href="mailto:contact@careerpulse.fr" style="color:#059669;text-decoration:none">contact@careerpulse.fr</a>, en français ou en anglais.</p>
 </div>
 
 </div>
@@ -10331,7 +10669,7 @@ function evaOpen(uid){
     +'<div style="font-size:.92rem;font-weight:800;color:#fff;letter-spacing:-.01em;line-height:1.25">CareerPulse conseil</div>'
     +'<div style="display:flex;align-items:center;gap:6px;margin-top:4px">'
     +'<div style="width:7px;height:7px;background:#34d399;border-radius:50%;box-shadow:0 0 6px #34d399;animation:pulse 2s infinite;flex-shrink:0"></div>'
-    +'<span style="font-size:.62rem;color:rgba(255,255,255,.75);line-height:1.4">Avec Lisa · en ligne · '+ctx.dateStr+' à '+ctx.heureStr+'</span>'
+    +'<span style="font-size:.62rem;color:rgba(255,255,255,.75);line-height:1.4">Avec Lisa (IA) · en ligne · '+ctx.dateStr+' à '+ctx.heureStr+'</span>'
     +'</div>'
     +'</div>'
     +'</div>'
@@ -17801,7 +18139,7 @@ window.cpEvx = window.cpEvx || {
     if(!ndaOk(o.nda)){ er.textContent='Le numéro de déclaration d\'activité doit contenir 11 chiffres.'; return false; }
     return true;
   }
-  var ENG='<label style="display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.78rem;line-height:1.5;color:#334155;font-weight:600"><input type="checkbox" id="ps-eng" style="margin-top:3px;accent-color:#047857;width:16px;height:16px;flex-shrink:0">Je certifie l\'exactitude de ces informations et je m\'engage à ne jamais démarcher les candidats : ce sont eux qui prennent contact (art. L6323-8-1 du Code du travail).</label>';
+  var ENG='<label style="display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.78rem;line-height:1.5;color:#334155;font-weight:600"><input type="checkbox" id="ps-eng" style="margin-top:3px;accent-color:#047857;width:16px;height:16px;flex-shrink:0">Je certifie l\'exactitude de ces informations et je m\'engage à ne jamais démarcher les candidats : ce sont eux qui prennent contact (art. L6323-8-1 du Code du travail). J\'accepte les <a href="index.html#cgu-centres" target="_blank" rel="noopener" style="color:#047857">CGU centres de formation (v1.0)</a> et la <a href="index.html#confidentialite" target="_blank" rel="noopener" style="color:#047857">politique de confidentialité</a>.</label>';
   function signupHtml(){
     return '<div class="pcard"><div class="pcard-hd"><span class="pchoice-ico">'+SCHOOL+'</span><div><h2>Créer mon compte centre</h2><span>Votre compte est vérifié par CareerPulse avant activation</span></div></div>'
       +orgFields()
@@ -17826,6 +18164,7 @@ window.cpEvx = window.cpEvx || {
       A.createUserWithEmailAndPassword(em,pw).then(function(cred){
         var u=cred.user, now=new Date().toISOString();
         o.email=em; o.statutDemande='en_attente'; o.demandeAt=now; o.engagement=now;
+        try{ window.fbDb.collection('consentements').add({ uid:u.uid, type:'cgu_centres', valeur:true, texte:'CGU centres de formation v1.0 + engagement de non-démarchage', at:now }).catch(function(){}); }catch(x){}
         return window.fbDb.collection('organismes').doc(u.uid).set(o).then(function(){
           return u.sendEmailVerification({ url: location.origin + location.pathname + '#pro-centre' }).catch(function(){});
         });
@@ -18345,7 +18684,7 @@ window.cpSheetArrows=function(sc,host){
 };
 </script>
 <script>
-/* ═══ Assistante CareerPulse Pro : l'aide des centres de formation (questions en tiroirs, réponses vérifiées) ═══ */
+/* ═══ Assistante IA CareerPulse Pro : l'aide des centres de formation (questions en tiroirs, réponses vérifiées) ═══ */
 (function(){
   var MAIL='contact@careerpulse.fr';
   var T=[
@@ -18428,7 +18767,7 @@ window.cpSheetArrows=function(sc,host){
     if(document.querySelector('.evp-sheet')) return;
     var total=T.reduce(function(a,t){ return a+t[3].length; },0);
     var sh=document.createElement('div'); sh.className='evp-sheet';
-    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo cpp">'+LG+'<i></i></span><div class="evp-ht"><b>Assistante CareerPulse Pro</b><span>L\'aide des centres de formation ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
+    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo cpp">'+LG+'<i></i></span><div class="evp-ht"><b>Assistante IA CareerPulse Pro</b><span>L\'aide des centres de formation ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
       +'<div class="evp-scroll"><div class="evp-wrap">'
       +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total+' réponses vérifiées</div><h3>Bonjour 👋 Je suis l\'assistante CareerPulse Pro.</h3><p>Je réponds à vos questions sur CareerPulse, les règles du démarchage CPF, les certifications, les financements et la messagerie. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
       +'<label class="evp-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Rechercher une question… (ex : Qualiopi, OPCO, délai)"></label></div>'
@@ -18891,14 +19230,14 @@ window.cpSheetArrows=function(sc,host){
   function dmAsk(q,n){ var Q={ mode:['Bonjour'+(n?' '+esc(n):'')+' 👋 Pour adapter ton espace, dis-moi : <b>tu cherches un emploi, ou tu veux changer de métier ?</b>',[['emploi','Je cherche un emploi'],['reconv','Je veux changer de métier']],'dmode'],
       ft:['Es-tu <b>inscrit(e) à France Travail</b> ? Je te rappellerai ton actualisation si c\'est le cas.',[['oui','Oui'],['non','Non']],'ft'],
       poste:['Es-tu <b>en poste</b> aujourd\'hui ? Les aides pour te former ne sont pas les mêmes.',[['oui','Oui, je suis salarié(e)'],['non','Non, je suis sans emploi']],'enposte'] }[q];
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><span class="cj-pf">'+esc(PROFS.dem)+'</span></div><p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante IA CareerPulse</span><span class="cj-pf">'+esc(PROFS.dem)+'</span></div><p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
       +'<p>'+Q[0]+'</p><div class="cj-dmq">'+Q[1].map(function(o){ return '<button type="button" class="cj-btn" data-cj="dmset" data-k="'+Q[2]+'" data-v="'+o[0]+'">'+esc(o[1])+'</button>'; }).join('')+'</div>'
       +(q==='poste'?'<p class="cj-mini">💡 Tu es encore en poste ? Tu peux aussi utiliser l\'espace <b>Salarié</b> : il t\'aide à évoluer ou à te reconvertir depuis ton emploi.</p>':'')+'</div></div>'; }
   function coach(){
     var d=curDefi(), pb=pendingBilan(), p=profPct(), n=first(), hi=n?n+', ':'', m=[], act=null, extra='';
     if(!chosen()){
       var PC=[['dem','Demandeur d\'emploi · Reconversion','Tu cherches un emploi ou tu changes de métier : profil, CV, candidatures et défis de la semaine.',PFI.dem],['etu','Étudiant(e)','Tes cours, tes devoirs, ton école, ton stage ou ton alternance.',PFI.etu],['sal','Salarié(e)','Ton quotidien au travail, ton entretien annuel, ta formation et ton évolution.',PFI.sal],['frl','Freelance','Ton activité, tes clients, tes missions et ton chiffre d\'affaires.',PFI.frl]];
-      return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Je te présente les <b>4 profils</b> de ton espace :</p>'
+      return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante IA CareerPulse</span></div><p>Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante IA CareerPulse. Je te présente les <b>4 profils</b> de ton espace :</p>'
         +'<div class="cj-pcards">'+PC.map(function(c,i){ return '<button type="button" class="cj-pcard pc-'+c[0]+'" style="--d:'+(0.5+i*1.1)+'s" data-cj="pf" data-p="'+c[0]+'"><i>'+I(c[3],22)+'</i><span><b>'+c[1]+'</b><small>'+c[2]+'</small></span>'+I(P.chev,18)+'</button>'; }).join('')+'</div>'
         +'<p class="cj-pq" style="--d:5s">Alors, <b>quel est ton profil ?</b> Touche ta carte 👆</p></div></div>';
     }
@@ -18923,7 +19262,7 @@ window.cpSheetArrows=function(sc,host){
     else m.push(PUB[(new Date().getDate())%PUB.length]);
     if(!isT() && dow()===0) extra=evaLink(EV.quiz[0],'Lundi : on s\'échauffe avec EVA','Quiz et mises en situation pour bien démarrer ta semaine');
     else if(!isT() && dow()===4) extra=evaLink(EV.itw[0],'Vendredi : simulation d\'entretien','Entraîne-toi avec EVA pour tes prochains rendez-vous');
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span>'+(S.st.profil?'<span class="cj-pf">'+esc(PROFS[S.st.profil])+'</span>':'')+(S.st.profil==='dem'&&S.st.dmode?'<button type="button" class="cj-pf cj-dmv" data-cj="dmedit">'+(reconv()?'Ma version : Reconversion':'Ma version : Recherche d\'emploi')+' · modifier</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante IA CareerPulse</span>'+(S.st.profil?'<span class="cj-pf">'+esc(PROFS[S.st.profil])+'</span>':'')+(S.st.profil==='dem'&&S.st.dmode?'<button type="button" class="cj-pf cj-dmv" data-cj="dmedit">'+(reconv()?'Ma version : Reconversion':'Ma version : Recherche d\'emploi')+' · modifier</button>':'')+'</div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'+m.map(function(x){ return '<p>'+x+'</p>'; }).join('')
       +(act?'<button type="button" class="cj-btn" data-cj="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')+(extra?(isT()?extra:'<div class="cj-coach-eva">'+extra+'</div>'):'')+'</div></div>';
   }
 
@@ -19101,10 +19440,10 @@ window.cpSheetArrows=function(sc,host){
   function pcardHtml(c){ var cur=chosen()&&(S.st.profil==='rec'?'dem':S.st.profil)===c[0];
     return '<button type="button" class="cj-pcard pc-'+c[0]+'" data-cj="pf" data-p="'+c[0]+'"><i>'+I(PFI[c[0]],22)+'</i><span><b>'+c[1]+'</b><small>'+c[2]+'</small>'+(cur?'<em class="cj-pcur">Ton profil actuel</em>':'')+'</span>'+I(P.chev,18)+'</button>'; }
   function introHtml(){ var n=first();
-    return '<div class="cj-intro"><div class="cj-intro-hd">'+av()+'<div><b>Lisa</b><span>Ton assistante CareerPulse · en direct</span></div><button type="button" class="cj-iskip" data-cj="iskip">'+I('<path d="m5 4 10 8-10 8z"/><path d="M19 5v14"/>',14)+'Tout afficher</button></div><div class="cj-intro-log"></div>'
+    return '<div class="cj-intro"><div class="cj-intro-hd">'+av()+'<div><b>Lisa</b><span>Ton assistante IA CareerPulse · en direct</span></div><button type="button" class="cj-iskip" data-cj="iskip">'+I('<path d="m5 4 10 8-10 8z"/><path d="M19 5v14"/>',14)+'Tout afficher</button></div><div class="cj-intro-log"></div>'
       +'</div>'; }
   function runIntro(box){ if(!box) return; clearTimeout(ITMR); var log=box.querySelector('.cj-intro-log'), n=first();
-    var Q=[['b','Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Voici les <b>4 profils</b> de ton espace :']];
+    var Q=[['b','Bonjour'+(n?' '+esc(n):'')+' 👋 Je suis <b>Lisa</b>, ton assistante IA CareerPulse. Voici les <b>4 profils</b> de ton espace :']];
     PCARD.forEach(function(c){ Q.push(['b',PSAY[c[0]]]); Q.push(['c',c]); });
     Q.push(['b','Alors, <b>quel est ton profil ?</b> Touche ta carte 👆']);
     var reduce=window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -19388,7 +19727,7 @@ window.cpSheetArrows=function(sc,host){
     var d=pendingBilan()||curDefi(); if(!d){ openDefi(); return; }
     openDefi(); if(DEFO){ DEFO.bil=d; DEFO.render(); if(DEFO.sc) DEFO.sc.scrollTo(0,0); } return;
     if(DEFO){ DEFO.close(); }
-    var o=sheet('Bilan de la semaine','Avec Lisa, ton assistante CareerPulse',''), A={ fait:done(d) }, info=DEFIS[d.type].slice(); info[0]=dlab(d);
+    var o=sheet('Bilan de la semaine','Avec Lisa, ton assistante IA CareerPulse',''), A={ fait:done(d) }, info=DEFIS[d.type].slice(); info[0]=dlab(d);
     o.body.innerHTML='<div class="cpw-log cj-log"></div><div class="cpw-input cj-in"></div>';
     var log=o.body.querySelector('.cj-log'), inp=o.body.querySelector('.cj-in');
     function down(){ setTimeout(function(){ o.sc.scrollTo({ top:o.sc.scrollHeight, behavior:'smooth' }); },60); }
@@ -19442,7 +19781,7 @@ window.cpSheetArrows=function(sc,host){
     function close(){ if(UNSUB){ UNSUB(); UNSUB=null; } sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); loadConvs().then(drawAll); }
     sh.querySelector('.cpw-x').onclick=close;
     sh.querySelector('.cpw-send').onclick=function(){ var ta=sh.querySelector('.cpw-in'), t=ta.value.trim(); if(!t) return; var now=new Date().toISOString(); ta.value='';
-      ref.update({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:now }), lastAt:now, lastFrom:'cand', unreadEmp:true, updatedAt:now }).catch(function(){ ta.value=t; say('Envoi impossible pour le moment'); }); };
+      ref.update({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:now }), lastAt:now, lastFrom:'cand', unreadEmp:true, updatedAt:now }).catch(function(){ ta.value=t; say('Envoi impossible pour le moment'); }); if(window.cpTTL) cpTTL(ref,730); };
     if(window.cpSheetArrows) cpSheetArrows(sh.querySelector('.cpw-scroll'),sh.querySelector('.cpw-box'));
   }
 
@@ -19717,7 +20056,7 @@ window.cpSheetArrows=function(sc,host){
     if(!o.contactNom||!o.contactFonction){ er.textContent='Indiquez le nom et la fonction du contact.'; return false; }
     return true;
   }
-  var ENG='<label style="display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.78rem;line-height:1.5;color:#334155;font-weight:600"><input type="checkbox" id="pe-eng" style="margin-top:3px;accent-color:#1e3a8a;width:16px;height:16px;flex-shrink:0">Je certifie l\'exactitude de ces informations et je m\'engage à proposer de vraies offres d\'emploi, sans frais pour les candidats, dans le respect de la non-discrimination à l\'embauche (art. L1132-1 du Code du travail).</label>';
+  var ENG='<label style="display:flex;gap:9px;align-items:flex-start;margin:4px 0 12px;font-size:.78rem;line-height:1.5;color:#334155;font-weight:600"><input type="checkbox" id="pe-eng" style="margin-top:3px;accent-color:#1e3a8a;width:16px;height:16px;flex-shrink:0">Je certifie l\'exactitude de ces informations et je m\'engage à proposer de vraies offres d\'emploi, sans frais pour les candidats, dans le respect de la non-discrimination à l\'embauche (art. L1132-1 du Code du travail). J\'accepte les <a href="index.html#cgu-employeurs" target="_blank" rel="noopener" style="color:#1e3a8a">CGU employeurs (v1.0)</a> et la <a href="index.html#confidentialite" target="_blank" rel="noopener" style="color:#1e3a8a">politique de confidentialité</a>.</label>';
   function signupHtml(){
     return '<div class="pcard">'+head('Créer mon compte employeur','Votre compte est vérifié par CareerPulse avant activation')
       +empFields()
@@ -19763,6 +20102,7 @@ window.cpSheetArrows=function(sc,host){
       go_.disabled=true; go_.textContent='Création du compte…'; if(window.cpBusy) cpBusy(true); setHash('pro-employeur');
       A.createUserWithEmailAndPassword(em,pw).then(function(cred){
         var u=cred.user, t=now(); o.email=em; o.statutDemande='en_attente'; o.demandeAt=t; o.engagement=t;
+        try{ db().collection('consentements').add({ uid:u.uid, type:'cgu_employeurs', valeur:true, texte:'CGU employeurs v1.0 + engagement offres réelles et non-discrimination', at:t }).catch(function(){}); }catch(x){}
         return db().collection('employeurs').doc(u.uid).set(o).then(function(){ return u.sendEmailVerification({ url:location.origin+location.pathname+'#pro-employeur' }).catch(function(){}); });
       }).then(function(){ if(window.cpBusy) cpBusy(false); toast('Compte créé : confirmez votre e-mail'); if(window.cpDraftClear) cpDraftClear('emp_signup'); rendering=false; render(); })
       .catch(function(e){ if(window.cpBusy) cpBusy(false); go_.disabled=false; go_.textContent='Créer mon compte employeur'; var c=(e&&e.code)||'';
@@ -20011,7 +20351,7 @@ window.cpSheetArrows=function(sc,host){
           mission:{ titre:mt, budget:q('mb')?Math.max(0,Math.round(+q('mb'))):'', duree:q('md'), debut:q('mdeb'), lieu:q('ml'), desc:md.slice(0,1500) }, missionStatut:'attente',
           messages:[{ from:'emp', text:mm.slice(0,1000), at:tm }], statut:'ouverte', lastAt:tm, lastFrom:'emp', unreadCand:true, unreadEmp:false, createdAt:tm, updatedAt:tm };
         b.disabled=true;
-        db().collection('emploi_conversations').add(dm).then(function(r){ dm.id=r.id; ST.convs.unshift(dm); toast('Mission proposée à '+dm.candLabel); var l=$('emp-clist'); if(l) l.innerHTML=candList(); })
+        db().collection('emploi_conversations').add(dm).then(function(r){ if(window.cpTTL) cpTTL(r,730); dm.id=r.id; ST.convs.unshift(dm); toast('Mission proposée à '+dm.candLabel); var l=$('emp-clist'); if(l) l.innerHTML=candList(); })
           .catch(function(x){ b.disabled=false; toast((x&&x.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
         return; }
       var sv=bx2.querySelector('[data-psel]').value, f=ST.offres.filter(function(x){ return x.id===sv; })[0];
@@ -20022,7 +20362,7 @@ window.cpSheetArrows=function(sc,host){
         offre:f?{ titre:f.titre, contrat:f.contrat||'', ville:f.ville||'', teletravail:f.teletravail||'', salaire:f.salaire||'', description:String(f.description||'').slice(0,1500) }:null,
         messages:[{ from:'emp', text:msg.slice(0,1000), at:t0 }], statut:'ouverte', lastAt:t0, lastFrom:'emp', unreadCand:true, unreadEmp:false, createdAt:t0, updatedAt:t0 };
       b.disabled=true;
-      db().collection('emploi_conversations').add(d).then(function(r){ d.id=r.id; ST.convs.unshift(d); toast('Proposition envoyée à '+d.candLabel); var l=$('emp-clist'); if(l) l.innerHTML=candList(); })
+      db().collection('emploi_conversations').add(d).then(function(r){ if(window.cpTTL) cpTTL(r,730); d.id=r.id; ST.convs.unshift(d); toast('Proposition envoyée à '+d.candLabel); var l=$('emp-clist'); if(l) l.innerHTML=candList(); })
         .catch(function(x){ b.disabled=false; toast((x&&x.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
       return;
     }
@@ -20110,6 +20450,7 @@ window.cpSheetArrows=function(sc,host){
       var n=now(); ta.value='';
       ref.update({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'emp', text:t, at:n }), updatedAt:n, lastAt:n, lastFrom:'emp', unreadCand:true })
         .catch(function(e){ ta.value=t; toast((e&&e.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
+      if(window.cpTTL) cpTTL(ref,730);
     };
   }
 
@@ -21023,11 +21364,11 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
       +'</div></div>';
     /* 3. Salaire & avantages */
     h+='<div class="cpo-step" data-s="2"><div class="cpo-h">Salaire & avantages</div><p class="cpo-sub">Le salaire est l\'information la plus recherchée par les candidats.</p><div class="cpo-g">'
-      +fld('Salaire minimum (brut)',inp('cpo-smin',f.salMin,'Ex : 1 900',' inputmode="decimal" maxlength="10"'))
-      +fld('Salaire maximum (brut)',inp('cpo-smax',f.salMax,'Ex : 2 300',' inputmode="decimal" maxlength="10"'))
+      +fld('Salaire minimum (brut) *',inp('cpo-smin',f.salMin,'Ex : 1 900',' inputmode="decimal" maxlength="10"'))
+      +fld('Salaire maximum (brut) *',inp('cpo-smax',f.salMax,'Ex : 2 300',' inputmode="decimal" maxlength="10"'))
       +'<div class="cpo-f full">Période'+chips('cpo-unite',L.unite,f.salUnite||'par mois')+'</div>'
       +'<div class="cpo-f full">Avantages'+chips('cpo-av',L.avantages,f.avantages,true)+autre('cpo-av-autre',f.avantagesAutre,arr(f.avantages).indexOf('Autre')>-1,'Ex : salle de sport, crèche (séparés par des virgules)')+'</div>'
-      +'</div><div class="cpo-info">💡 Bientôt obligatoire : le projet de loi sur la transparence des salaires prévoit d\'indiquer la rémunération ou une fourchette dès l\'offre (entrée en vigueur envisagée en 2028).</div></div>';
+      +'</div><div class="cpo-info">💡 Obligatoire sur CareerPulse : indiquez une fourchette de salaire. Le projet de loi sur la transparence des salaires prévoit de l\'imposer dans toutes les offres d\'emploi. N\'interrogez pas non plus le candidat sur son salaire actuel ou passé.</div></div>';
     /* 4. Description */
     h+='<div class="cpo-step" data-s="3"><div class="cpo-h">Description du poste</div><p class="cpo-sub">Des paragraphes courts et des listes : une ligne par mission ou par exigence.</p><div class="cpo-g">'
       +fld('Présentation de l\'entreprise',ta('cpo-pres',f.entreprisePres,'Qui êtes-vous ? Activité, équipe, valeurs…',1200),'full')
@@ -21075,7 +21416,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
   window.cpOffreCheck=function(f){
     if(!f.titre) return [0,'Indiquez l\'intitulé du poste.']; if(!f.ville) return [0,'Indiquez la ville du poste.'];
     if(!f.contrat) return [1,'Choisissez le type de contrat.']; if(f.contrat==='Autre' && !f.contratAutre) return [1,'Précisez le type de contrat.'];
-    var a=parseFloat(f.salMin), b=parseFloat(f.salMax); if(a>0 && b>0 && b<a) return [2,'Le salaire maximum doit être supérieur au minimum.'];
+    var a=parseFloat(f.salMin), b=parseFloat(f.salMax); if(!(a>0) || !(b>0)) return [2,'Indiquez une fourchette de salaire : un minimum et un maximum.']; if(b<a) return [2,'Le salaire maximum doit être supérieur au minimum.'];
     if(!f.missions) return [3,'Décrivez au moins les missions principales.'];
     return null;
   };
@@ -21216,9 +21557,9 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
         offre:{ titre:f.titre, contrat:contratTxt(f), ville:f.ville||'', teletravail:f.teletravail||'', salaire:salTxt(f), description:String(f.missions||f.description||'').slice(0,1500) },
         reponses:rep, pieces:{ cv:false, lm:false }, messages:[{ from:'cand', text:msg.slice(0,1500), at:t }], statut:'ouverte', lastAt:t, lastFrom:'cand', unreadEmp:true, unreadCand:false, createdAt:t, updatedAt:t };
       function src(k){ if(es) return es.src(k).catch(function(){ return null; }); var me=B.collection('profils').doc(u.uid).collection('partage').doc(k); return me.get().then(function(x){ if(x.exists && (x.data()||{}).data || (x.exists && (x.data()||{}).text)) return x.data(); return B.collection('users').doc(u.uid).collection('docs').doc(k).get().then(function(y){ return y.exists?y.data():null; }); }).catch(function(){ return null; }); }
-      conv.set(d).then(function(){
+      conv.set(d).then(function(){ if(window.cpTTL) cpTTL(conv,730);
         var jobs=[], PC={ cv:false, lm:false }; [['cv',wcv],['lm',wlm]].forEach(function(p){ if(!p[1]) return; jobs.push(src(p[0]).then(function(x){ if(!x || !(x.data||x.text)) return; var o={ name:x.name||'', at:t }; if(x.data){ o.data=x.data; o.type=x.type||'application/pdf'; } if(x.gen){ o.gen=true; o.text=x.text; }
-          return conv.collection('pieces').doc(p[0]).set(o).then(function(){ PC[p[0]]=true; }); }).catch(function(){})); });
+          return conv.collection('pieces').doc(p[0]).set(o).then(function(){ PC[p[0]]=true; if(window.cpTTL) cpTTL(conv.collection('pieces').doc(p[0]),730); }); }).catch(function(){})); });
         return Promise.all(jobs).then(function(){ if(PC.cv||PC.lm) return conv.update({ pieces:PC }).catch(function(){}); });
       }).then(function(){
         sh.querySelector('.cpo-apb').innerHTML='<div class="cpo-ok"><i>'+S(IC.check)+'</i><h3>Candidature envoyée</h3><p style="margin:0 auto 16px;max-width:380px;font-size:.88rem;line-height:1.55;color:#475569">'+esc(f.empNom||'L\'employeur')+' a bien reçu ta candidature. Sa réponse arrivera dans « Mon espace », rubrique '+(es?'Messages':'Recruteurs & messages')+'.</p><div class="cpo-nav" style="justify-content:center"><button type="button" class="pri" data-x>Fermer</button></div></div>';
@@ -21301,7 +21642,7 @@ html.cpo-lock-scroll, html.cpo-lock-scroll body{ overflow:hidden !important; }
     var cr=db().collection('emploi_conversations').doc(id), u0=user();
     cr.get().then(function(d){ var c=d.exists?d.data():{}; if(!u0||c.empUid!==u0.uid||!c.candUid) throw { code:'permission-denied' };
       return db().collection('avis_freelance').doc(id).set({ frlUid:c.candUid, empUid:u0.uid, empNom:c.empNom||'', mission:c.poste||'', note:note, texte:tx.slice(0,500), at:now() })
-        .then(function(){ return cr.update({ avis:{ note:note, texte:tx.slice(0,500), at:now() }, updatedAt:now() }); }); }).then(function(){ toast('Merci, votre avis est publié sur le profil du freelance');
+        .then(function(){ if(window.cpTTL) cpTTL(db().collection('avis_freelance').doc(id),730); return cr.update({ avis:{ note:note, texte:tx.slice(0,500), at:now() }, updatedAt:now() }); }); }).then(function(){ toast('Merci, votre avis est publié sur le profil du freelance');
       document.querySelectorAll('[data-avis="'+id+'"]').forEach(function(z){ z.removeAttribute('data-avis'); z.innerHTML='<b>Votre avis</b><span class="frl-stars">'+[1,2,3,4,5].map(function(i){ return '<i class="'+(i<=note?'on':'')+'">★</i>'; }).join('')+'</span>'+(tx?'<p>« '+esc(tx)+' »</p>':''); }); })
       .catch(function(x){ sb.disabled=false; toast((x&&x.code)==='permission-denied'?'Envoi refusé : règles Firestore à mettre à jour':'Envoi impossible pour le moment'); });
   });
@@ -21740,7 +22081,7 @@ window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salari�
   function open(){
     if(document.querySelector('.evp-sheet')) return;
     var sh=document.createElement('div'); sh.className='evp-sheet evp-emp';
-    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo cpp">'+LG+'<i></i></span><div class="evp-ht"><b>Assistante CareerPulse Pro</b><span>L\'aide des employeurs ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
+    sh.innerHTML='<div class="evp-box"><div class="evp-hd"><button type="button" class="evp-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><span class="evp-logo cpp">'+LG+'<i></i></span><div class="evp-ht"><b>Assistante IA CareerPulse Pro</b><span>L\'aide des employeurs ✨</span></div><em class="evp-on"><i></i>En ligne</em></div>'
       +'<div class="evp-scroll"><div class="evp-wrap">'
       +'<div class="evp-hero"><div class="evp-hero-k">💬 '+total()+' réponses vérifiées</div><h3>Bonjour 👋 Je suis l\'assistante CareerPulse Pro.</h3><p>Je vous explique comment fonctionne votre espace employeur : publier une offre, trouver des candidats, lire les CV, gérer les candidatures et la messagerie, et les règles à respecter. Choisissez un thème, puis ouvrez une question : la réponse arrive juste en dessous.</p>'
       +'<label class="evp-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="Rechercher une question… (ex : SIRET, CV, SMIC, logo)"></label></div>'
@@ -21901,9 +22242,9 @@ window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salari�
       +'</div><div class="lsx-pick-slot">'+pickHtml(k)+'</div><div class="lsx-crit">'+S('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'<span>'+R.crit+'</span></div></div>'; }
   /* Chaque page : un hero, puis des « moments » de Lisa placés entre les sections de la page */
   var PAGES={
-    cvlettre:{ eyebrow:'✦ CV & Lettre de motivation', title:'Crée et importe<br><em>tes documents.</em>', sub:'CV et lettres de motivation de qualité, directement chez nos partenaires sélectionnés.',
+    cvlettre:{ eyebrow:'✦ CV & Lettre de motivation', title:'Crée et importe<br><em>tes documents.</em>', sub:'CV et lettres de motivation de qualité, directement sur les sites recommandés par Lisa.',
       slots:{
-        top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton profil : je te montre le <b>site idéal pour créer ton CV</b> et pourquoi je le recommande.'],
+        top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante IA CareerPulse. Choisis ton profil : je te montre le <b>site idéal pour créer ton CV</b> et pourquoi je le recommande.'],
               ['r'] ],
         plat:[],
         end:[ ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
@@ -21913,7 +22254,7 @@ window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salari�
               ['cta'], ['g'] ] } },
     emploi:{ eyebrow:'✦ Offres d\'emploi', title:'Trouve et postule<br><em>aux meilleures offres.</em>', sub:'Des milliers d\'offres en France, directement sur les plateformes de référence.',
       slots:{
-        top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante CareerPulse. Choisis ton profil : je te montre la <b>plateforme idéale pour trouver un emploi</b> et pourquoi je la recommande.'],
+        top:[ ['b','Bonjour 👋 Je suis <b>Lisa</b>, ton assistante IA CareerPulse. Choisis ton profil : je te montre la <b>plateforme idéale pour trouver un emploi</b> et pourquoi je la recommande.'],
               ['r'] ],
         plat:[],
         end:[ ['c',function(){ return '<h4>Avec ton compte CareerPulse <em>'+S(IC.crown)+'Membres</em></h4>'
@@ -21924,12 +22265,12 @@ window.cpCatLab={ dem:'Demandeur d\'emploi', reconv:'Reconversion', sal:'Salari�
   };
   var PLAY={}; /* état de lecture par page */
   function find(sc){ var w=sc.querySelector('.wrap'); if(!w) return null; var kids=[].slice.call(w.children);
-    return { w:w, title:kids.filter(function(x){ return /Cormorant/.test(x.innerHTML) && x.style.marginBottom==='6px'; })[0], plat:kids.filter(function(x){ return x.style && x.style.textAlign==='left' && /Partenaires|Plateformes/.test(x.textContent||''); })[0], vision:kids.filter(function(x){ return /go\('vision-/.test(x.getAttribute('onclick')||''); })[0] }; }
+    return { w:w, title:kids.filter(function(x){ return /Cormorant/.test(x.innerHTML) && x.style.marginBottom==='6px'; })[0], plat:kids.filter(function(x){ return x.style && x.style.textAlign==='left' && /Partenaires|Plateformes|Sites recommandés/.test(x.textContent||''); })[0], vision:kids.filter(function(x){ return /go\('vision-/.test(x.getAttribute('onclick')||''); })[0] }; }
   function build(key){
     var sc=$('s-'+key), P=PAGES[key]; if(!sc||!P||sc.querySelector('.lsx-hero')) return !!(sc&&sc.querySelector('.lsx-hero'));
     var f=find(sc); if(!f||!f.plat) return false;
     var hero=document.createElement('div'); hero.className='lsx-hero';
-    hero.innerHTML='<div class="lsx-ph" role="img" aria-label="Lisa, ton assistante CareerPulse"></div><div class="lsx-hero-in"><span class="lsx-k">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'Lisa · ton assistante CareerPulse <i></i></span><div class="lsx-eyebrow">'+P.eyebrow+'</div><h1 class="lsx-h">'+P.title+'</h1><p class="lsx-sub">'+P.sub+'</p></div>';
+    hero.innerHTML='<div class="lsx-ph" role="img" aria-label="Lisa, ton assistante IA CareerPulse"></div><div class="lsx-hero-in"><span class="lsx-k">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'Lisa · ton assistante IA CareerPulse <i></i></span><div class="lsx-eyebrow">'+P.eyebrow+'</div><h1 class="lsx-h">'+P.title+'</h1><p class="lsx-sub">'+P.sub+'</p></div>';
     var bar=document.createElement('div'); bar.className='lsx-bar'; bar.innerHTML='<span class="lsx-live"><i></i>Lisa te présente la page</span><button type="button" data-lsx="pause">Pause</button><button type="button" data-lsx="all">Tout afficher</button><button type="button" class="pri" data-lsx="replay">Rejouer</button>';
     var top=document.createElement('div'); top.className='lsx-slot'; top.setAttribute('data-slot','top');
     var mid=document.createElement('div'); mid.className='lsx-slot'; mid.setAttribute('data-slot','plat');
@@ -22213,7 +22554,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
   function shuf(a){ a=a.slice(); for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
   function lisa(){ return window.CP_LISA_IMG||''; }
   function member(){ try{ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return !!(u&&(u.emailVerified||(u.providerData||[]).some(function(p){ return p.providerId==='google.com'; }))); }catch(e){ return false; } }
-  function head(k){ var C=CFG[k]; return '<div class="lsxg-hd">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'<div><b>'+C.title+'</b><span>Avec Lisa · '+C.sub+'</span></div><button type="button" class="lsxg-x" data-g="close" aria-label="Fermer">'+S('<path d="M6 6l12 12M18 6 6 18"/>')+'</button></div>'; }
+  function head(k){ var C=CFG[k]; return '<div class="lsxg-hd">'+(lisa()?'<img alt="Lisa" src="'+lisa()+'">':'')+'<div><b>'+C.title+'</b><span>Avec Lisa (IA) · '+C.sub+'</span></div><button type="button" class="lsxg-x" data-g="close" aria-label="Fermer">'+S('<path d="M6 6l12 12M18 6 6 18"/>')+'</button></div>'; }
   function startView(k){ var C=CFG[k];
     return '<p class="lsxg-say">'+C.intro+'</p>'+'<div class="lsxg-trust">'+S('<path d="M12 3 5 6v6c0 4.5 3 8 7 9 4-1 7-4.5 7-9V6z"/><path d="m9 12 2 2 4-4"/>')+'<span><b>Réponses officielles et vérifiées.</b> Chaque réponse s\'appuie sur un texte de loi ou un site officiel, cité en source. Les lois évoluent : si une règle change, la source te permet de vérifier la version à jour en un clic.</span></div><div class="lsxg-chips">'+[['<circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/>','Demandeur d\'emploi'],['<path d="M2.5 9 12 4.5 21.5 9 12 13.5z"/><path d="M6.5 11v4.5c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4V11"/><path d="M21.5 9v5.5"/>','Étudiant'],['<path d="M4 12a8 8 0 0 1 13.7-5.6L20 8.5"/><path d="M20 4v4.5h-4.5"/><path d="M20 12a8 8 0 0 1-13.7 5.6L4 15.5"/><path d="M4 20v-4.5h4.5"/>','Reconversion'],['<rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m9.5 9.5-2 1.5 2 1.5M14.5 9.5l2 1.5-2 1.5"/>','Freelance']].map(function(z){ return '<span><i>'+S(z[0])+'</i>'+z[1]+'</span>'; }).join('')+'</div>'
       +'<button type="button" class="lsxg-btn" data-g="start">'+S('<path d="M8 5v14l11-7z" fill="currentColor"/>')+C.start+'</button>'; }
@@ -22535,7 +22876,7 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
     else if(at){ m.push('Tu as <b>'+at+' mission'+(at>1?'s':'')+' terminée'+(at>1?'s':'')+'</b> pas encore payée'+(at>1?'s':'')+'. Pense à vérifier que ton client a bien tout reçu.'); act=['Voir mes missions','frl-miss']; }
     else if(!objs().some(function(o){ return oState(o)!=='past'; })){ m.push('Fixe-toi un <b>objectif simple</b> : augmenter ton chiffre d\'affaires de 2 %, trouver de nouveaux clients, décrocher un partenariat… Je le suis avec toi.'); act=['Fixer mon objectif','frl-defi']; }
     else { var oc=objs().filter(function(o){ return oState(o)==='cur'; })[0]; m.push(oc?'Ton objectif '+oLine(oc):'Ton prochain objectif est prêt : '+oLine(objs().filter(function(o){ return oState(o)==='next'; })[0])); act=['Voir mes objectifs','frl-defi']; }
-    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante CareerPulse</span><span class="cj-pf">Freelance</span></div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
+    return '<div class="cj-coach">'+av()+'<div class="cj-coach-b"><div class="cj-coach-n"><b>Lisa</b><span>Ton assistante IA CareerPulse</span><span class="cj-pf">Freelance</span></div>'+'<p class="cj-coach-d" data-hclock="1">'+(window.cpHClock?cpHClock():'')+'</p>'
       +m.map(function(x){ return '<p>'+x+'</p>'; }).join('')+(act?'<button type="button" class="cj-btn" data-frl="'+act[1]+'">'+act[0]+I(P.chev,16)+'</button>':'')
       +(window.cpStream&&cpStream.pres?cpStream.pres('frl',['<b>Mon activité & mes objectifs</b> : ce que tu proposes, ton tarif et tes objectifs (chiffre d\'affaires, clients, partenariats).','<b>Profil & portfolio</b> : ton profil freelance, tes réalisations et les avis de tes clients.','<b>Missions & clients</b> : chaque mission, du premier contact jusqu\'au paiement.','<b>Clients & messages</b> : les entreprises qui te proposent une mission.']):'')+'</div></div>';
   }
@@ -22958,7 +23299,7 @@ button.frl-cv:hover{ border-color:#fdba74; box-shadow:0 18px 30px -24px rgba(234
       sh.querySelector('.cpw-ft').style.display=c.statut==='close'?'none':''; sc.scrollTop=sc.scrollHeight;
       if(c.unreadCand){ c.unreadCand=false; cref.update({ unreadCand:false }).catch(function(){}); } }
     function send(t,extra){ var n=nowI(), up=Object.assign({ messages:firebase.firestore.FieldValue.arrayUnion({ from:'cand', text:t, at:n }), lastAt:n, lastFrom:'cand', unreadEmp:true, updatedAt:n },extra||{});
-      return cref.update(up).then(function(){ var loc2=Object.assign({},c,extra||{}); loc2.messages=(c.messages||[]).concat([{ from:'cand', text:t, at:n }]); loc2.lastAt=n; render(loc2); }); }
+      return cref.update(up).then(function(){ if(window.cpTTL) cpTTL(cref,730); var loc2=Object.assign({},c,extra||{}); loc2.messages=(c.messages||[]).concat([{ from:'cand', text:t, at:n }]); loc2.lastAt=n; render(loc2); }); }
     render(c); CUNSUB=cref.onSnapshot(function(d){ if(d.exists) render(d.data()); },function(){});
     function close(){ if(CUNSUB){ CUNSUB(); CUNSUB=null; } CONV=null; sh.remove(); if(!document.querySelector('.cpw-sheet')) document.documentElement.classList.remove('ofcm-lock'); if(MSGS&&document.body.contains(MSGS.sh)) MSGS.render(); redraw(); }
     sh.querySelector('.cpw-x').onclick=close;
@@ -25680,7 +26021,7 @@ window.CP_PAY = window.CP_PAY || {
   function chk(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg>'; }
   function lois(k){ var x=P[k];
     return [
-      ['Prix','Prix indiqués hors taxes (HT). La TVA est appliquée selon le régime fiscal de CareerPulse au moment de la facturation et figure sur chaque facture.'],
+      ['Prix','Prix indiqués hors taxes (HT). CareerPulse est édité par un micro-entrepreneur : TVA non applicable, art. 293 B du CGI. Le prix affiché est donc le prix payé, et chaque facture porte cette mention.'],
       ['Essai gratuit',x.essai+' jours offerts à la validation de votre compte, sans carte bancaire et sans engagement. Aucun prélèvement n\'a lieu à la fin de l\'essai si vous ne souscrivez pas.'],
       ['Durée et renouvellement','Abonnement mensuel ou annuel, reconduit automatiquement à chaque échéance. Pour la formule annuelle, un e-mail vous rappelle la date de renouvellement avant chaque échéance.'],
       ['Résiliation','Résiliable à tout moment depuis « Mon abonnement », en quelques clics, aussi simplement que la souscription. La résiliation prend effet à la fin de la période déjà payée ; la période en cours n\'est pas remboursée au prorata.'],
@@ -25699,6 +26040,7 @@ window.CP_PAY = window.CP_PAY || {
       +'<div class="cpab-me '+e.c+'"><span>Mon abonnement · '+x.nom+'</span><b>'+esc(e.t)+'</b><small>'+esc(e.d)+'</small>'+((DOC[k].abo||{}).statut==='actif'?'<button type="button" class="cpab-mg">Gérer mon abonnement et mes factures</button>':'')+'</div>'
       +'<div class="cpab-tg" role="tablist"><button type="button" class="on" data-pl="mois">Mensuel</button><button type="button" data-pl="an">Annuel<i>2 mois offerts</i></button></div>'
       +'<div class="cpab-card"><div class="cpab-pr"></div><ul>'+x.f.map(function(t){ return '<li>'+chk()+t+'</li>'; }).join('')+'</ul>'
+      +'<label class="cpab-ok"><input type="checkbox" class="cpab-cgv"><span>J\'accepte les <a href="index.html#cgv-pro" target="_blank" rel="noopener">Conditions générales de vente Pro (v1.0)</a> et les <a href="index.html#'+(k==='emp'?'cgu-employeurs':'cgu-centres')+'" target="_blank" rel="noopener">CGU '+(k==='emp'?'employeurs':'centres de formation')+'</a>.</span></label>'
       +'<button type="button" class="cpab-cta"></button><div class="cpab-msg" hidden></div>'
       +'<div class="cpab-tr"><span>🔒 Paiement sécurisé Stripe</span><span>Sans engagement</span><span>Résiliable à tout moment</span></div></div>'
       +'<h3 class="cpab-lt">Conditions d\'abonnement</h3>'+lois(k)
@@ -25721,6 +26063,8 @@ window.CP_PAY = window.CP_PAY || {
     var mg=sh.querySelector('.cpab-mg'); if(mg) mg.onclick=function(){ if(CP_PAY.portail) window.open(CP_PAY.portail,'_blank','noopener'); else location.href='mailto:contact@careerpulse.fr?subject='+encodeURIComponent('Mon abonnement CareerPulse Pro'); };
     sh.querySelector('.cpab-cta').onclick=function(){
       var url=((CP_PAY[k]||{})[plan])||'', u=window._fbUser||(window.fbAuth&&fbAuth.currentUser), m=sh.querySelector('.cpab-msg');
+      var okc=sh.querySelector('.cpab-cgv'); if(okc && !okc.checked){ m.hidden=false; m.innerHTML='<b>Cochez la case</b> pour accepter les conditions générales de vente avant de continuer.'; return; }
+      try{ if(u && window.fbDb) fbDb.collection('consentements').add({ uid:u.uid, type:'cgv_pro', valeur:true, texte:'CGV Pro v1.0 + CGU '+(k==='emp'?'employeurs':'centres')+' v1.0 · formule '+(plan==='an'?'annuelle':'mensuelle'), at:new Date().toISOString() }).catch(function(){}); }catch(x){}
       if(url){ location.href=url+(url.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(u?u.uid:''); return; }
       m.hidden=false; m.innerHTML=e.c==='wait'?'<b>Votre compte est en cours de vérification.</b> Votre essai gratuit de '+x.essai+' jours démarrera automatiquement dès sa validation : rien à payer d\'ici là.'
         :'<b>Le paiement en ligne ouvre très bientôt.</b> Votre tarif de lancement vous est réservé. Pour souscrire dès maintenant, écrivez-nous : <a href="mailto:contact@careerpulse.fr?subject='+encodeURIComponent('Abonnement CareerPulse Pro · '+x.nom+' · '+(plan==='an'?'annuel':'mensuel'))+'">contact@careerpulse.fr</a>';
@@ -25788,6 +26132,8 @@ html.cpab-lock{ overflow:hidden; }
 .cpab-card li{ display:flex; align-items:flex-start; gap:10px; font-size:.88rem; line-height:1.4; color:#1e293b; } .cpab-card li svg{ width:18px; height:18px; flex-shrink:0; padding:3px; border-radius:50%; background:#d1fae5; color:#047857; box-sizing:content-box; }
 .cpab-cta{ width:100%; margin-top:18px; padding:15px 16px; border:none; border-radius:14px; cursor:pointer; color:#fff; font:800 .98rem/1.2 'DM Sans',sans-serif; background:linear-gradient(120deg,#1e3a8a,#1d4ed8 45%,#059669); box-shadow:0 14px 28px -14px rgba(30,64,175,.8); }
 .cpab-cta:disabled{ opacity:.6; cursor:default; }
+.cpab-ok input[type="checkbox"]{ -webkit-appearance:checkbox !important; appearance:auto !important; width:16px !important; height:16px !important; min-width:16px !important; min-height:0 !important; padding:0 !important; margin:2px 0 0 !important; border:none !important; border-radius:3px !important; background:none !important; box-shadow:none !important; flex:0 0 16px !important; }
+.cpab-ok{ display:flex; gap:9px; align-items:flex-start; margin-top:16px; font-size:.78rem; line-height:1.5; color:#334155; cursor:pointer; } .cpab-ok input{ width:16px; height:16px; margin-top:2px; flex-shrink:0; accent-color:#1e3a8a; } .cpab-ok a{ color:#1d4ed8; font-weight:700; }
 .cpab-msg{ margin-top:12px; padding:12px 14px; border-radius:12px; background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; font-size:.82rem; line-height:1.5; } .cpab-msg a{ color:#1d4ed8; font-weight:700; }
 .cpab-tr{ display:flex; flex-wrap:wrap; justify-content:center; gap:6px 14px; margin-top:12px; font-size:.72rem; font-weight:700; color:#64748b; }
 .cpab-lt{ margin:22px 2px 8px; font-size:.95rem; font-weight:800; color:#0f172a; }
@@ -26173,5 +26519,21 @@ a.cptx-l:hover{ border-color:#93c5fd; background:#eff6ff; } a.cptx-l b{ display:
 .lsx-tabs .lsx-tab:focus-visible{ outline:2px solid #93c5fd; outline-offset:2px; }
 .lsx-pick-slot .lsx-pick{ animation:none !important; }
 </style>
+
+<script id="cp-ttl">
+/* ═══ Durées de conservation (politique de confidentialité) ═══
+   Champ « expireAt » lu par les règles TTL de Firestore (suppression automatique).
+   Écritures « au mieux » : si une règle les refuse, rien d'autre n'est bloqué. */
+(function(){
+  function ts(days){ try{ return firebase.firestore.Timestamp.fromDate(new Date(Date.now()+days*864e5)); }catch(e){ return null; } }
+  window.cpTTL=window.cpTTL||function(ref,days){ try{ var t=ts(days); if(ref && t) ref.update({ expireAt:t }).catch(function(){}); }catch(e){} };
+  /* Compte : 3 ans sans connexion → données du profil supprimées */
+  var done={};
+  function touch(u){ if(!u || done[u.uid] || !window.fbDb) return; done[u.uid]=1; var t=ts(1095); if(!t) return;
+    ['users','profils'].forEach(function(c){ try{ fbDb.collection(c).doc(u.uid).update({ expireAt:t }).catch(function(){}); }catch(e){} }); }
+  function init(){ if(!window.fbAuth || !window.fbDb){ setTimeout(init,400); return; } try{ fbAuth.onAuthStateChanged(touch); }catch(e){} }
+  init();
+})();
+</script>
 </body>
 </html>
