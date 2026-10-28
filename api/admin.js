@@ -260,6 +260,7 @@ async function handler(req, res) {
       const q = query(req);
       if (q.vue === 'fiche') { const f = await fiche(q.col, q.uid); return f ? envoyer(res, 200, f) : envoyer(res, 404, { erreur: 'Compte introuvable' }); }
       if (q.vue === 'conversations') return envoyer(res, 200, await conversations(q.col, q.apres || ''));
+      if (q.vue === 'registre') return envoyer(res, 200, require('./_registre.js'));
       return envoyer(res, 200, await donnees(admin));
     }
 
