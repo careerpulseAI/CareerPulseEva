@@ -18,7 +18,7 @@ module.exports = {
     { n: 3, nom: 'Documents des membres', fin: 'Ranger et partager CV, lettres, diplômes', base: 'Contrat', pers: 'Membres', don: 'Fichiers déposés', dest: 'CareerPulse, Google (Firebase), pros choisis par le membre', hors: 'Oui', duree: 'Jusqu\'à suppression par le membre ou du compte' },
     { n: 4, nom: 'Messagerie et candidatures', fin: 'Échanger avec les pros, postuler', base: 'Contrat', pers: 'Membres, contacts des pros', don: 'Messages, poste, coordonnées partagées, pièces jointes', dest: 'Le pro concerné, CareerPulse (modération)', hors: 'Oui', duree: '6 mois après le dernier message (centres), 2 ans (employeurs), suppression automatique' },
     { n: 5, nom: 'Recommandations (% de correspondance)', fin: 'Proposer des offres et formations adaptées', base: 'Intérêt légitime', pers: 'Membres', don: 'Profil et critères des offres et formations', dest: 'Aucun (calcul à l\'affichage)', hors: 'Non', duree: 'Non conservé' },
-    { n: 6, nom: 'Assistantes IA EVA et Lisa', fin: 'Répondre aux questions', base: 'Contrat', pers: 'Membres et visiteurs', don: 'Questions posées, profil choisi', dest: 'Vercel, Groq, OpenRouter et le modèle appelé', hors: 'Oui', duree: 'Pas d\'historique conservé par CareerPulse' },
+    { n: 6, nom: 'Assistantes virtuelles EVA et Lisa', fin: 'Répondre aux questions (réponses préparées à l\'avance, sans intelligence artificielle)', base: 'Contrat', pers: 'Membres et visiteurs', don: 'Sujet choisi, profil choisi', dest: 'Aucun destinataire externe', hors: 'Non', duree: 'Pas d\'historique conservé par CareerPulse' },
     { n: 7, nom: 'Portfolio EVA', fin: 'Agenda, documents, contacts, tâches', base: 'Contrat', pers: 'Membres', don: 'Ce que le membre saisit', dest: 'Google (Firebase)', hors: 'Oui', duree: 'Jusqu\'à suppression (« Supprimer mes infos ») ou du compte' },
     { n: 8, nom: 'Comptes employeurs et centres', fin: 'Ouvrir et vérifier les espaces Pro', base: 'Contrat', pers: 'Contacts des entreprises et organismes', don: 'Nom, e-mail, téléphone, SIRET, NDA, Qualiopi', dest: 'CareerPulse, Google (Firebase)', hors: 'Oui', duree: 'Durée du compte + 5 ans' },
     { n: 9, nom: 'Abonnements et facturation', fin: 'Encaisser et facturer les abonnements Pro', base: 'Obligation légale', pers: 'Clients pros', don: 'Identité pro, montants, dates', dest: 'Stripe, comptabilité', hors: 'Oui', duree: '10 ans (pièces comptables)' },
@@ -31,7 +31,6 @@ module.exports = {
     ['Google (Firebase : Auth, Firestore, Storage)', 'Comptes, base de données, fichiers', 'UE et États-Unis', 'Conditions de traitement des données Google Cloud'],
     ['Vercel', 'Hébergement, fonctions serveur', 'États-Unis', 'DPA Vercel'],
     ['Stripe', 'Paiement des abonnements Pro', 'UE et États-Unis', 'Inclus dans les conditions Stripe'],
-    ['Groq, OpenRouter (et le modèle appelé)', 'Réponses d\'EVA et de Lisa', 'États-Unis', 'DPA OpenRouter, refus d\'entraînement à activer'],
     ['Hostinger', 'Nom de domaine et messagerie e-mail', 'Union européenne', 'Conditions Hostinger']
   ],
   securite: [
@@ -46,9 +45,7 @@ module.exports = {
   ],
   fuite: 'En cas de fuite de données : prévenir la CNIL sous 72 heures (notifications.cnil.fr), puis les personnes concernées si le risque est élevé.',
   todo: [
-    'Accepter les conditions de traitement des données dans la console Google Cloud (Firebase)',
-    'Activer le refus d\'entraînement dans les réglages OpenRouter',
-    'Vérifier la certification Data Privacy Framework de Google, Vercel, Stripe et OpenRouter sur dataprivacyframework.gov',
+        'Vérifier la certification Data Privacy Framework de Google, Vercel et Stripe sur dataprivacyframework.gov',
     'Relire ce registre tous les 6 mois'
   ]
 };
