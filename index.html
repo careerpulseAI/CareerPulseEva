@@ -58,7 +58,7 @@ html.cp-auth-wait #s-profil > *, html.cp-auth-wait #emp-root, html.cp-auth-wait 
 {"prerender":[{"source":"list","urls":["eva.html"],"eagerness":"eager"}],"prefetch":[{"source":"list","urls":["eva.html"],"eagerness":"eager"}]}
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>CareerPulse — Coach Carrière virtuelle</title>
+<title>CareerPulse — Préparation à l'emploi, offres et formations</title>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <style>
 <style>
@@ -3007,6 +3007,23 @@ details.plh-dr > *:not(summary){ animation:ciDr .22s ease; }
 #s-home .cta-ico .cp-pi{ width:27px !important; height:27px !important; }
 #s-home .cp-hero-ico .cp-pi{ width:24px !important; height:24px !important; }
 </style>
+<link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+<!-- Référencement et aperçu de partage -->
+<meta name="description" content="CV, lettre de motivation, entretiens, droits du travail, offres d'emploi et formations : CareerPulse t'accompagne gratuitement avec Lisa et EVA, tes assistantes virtuelles.">
+<link rel="canonical" href="https://careerpulse.fr/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#059669">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="CareerPulse">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="CareerPulse — Préparation à l'emploi, offres et formations">
+<meta property="og:description" content="CV, lettre de motivation, entretiens, droits du travail, offres d'emploi et formations : CareerPulse t'accompagne gratuitement avec Lisa et EVA, tes assistantes virtuelles.">
+<meta property="og:url" content="https://careerpulse.fr/">
+<meta property="og:image" content="https://careerpulse.fr/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 <body>
 <!-- Notification "compte requis" pour sauvegarder des infos personnelles — toujours au niveau racine -->
@@ -7999,7 +8016,7 @@ async function ecSend(){
         method:'POST',
         headers:{'Content-Type':'application/json',
           ...(window.EC_GROQ_KEY?{'Authorization':'Bearer '+window.EC_GROQ_KEY}:{}),
-          ...(window.EC_OR_KEY?{'Authorization':'Bearer '+window.EC_OR_KEY,'HTTP-Referer':'https://careerpulseia.com'}:{})
+          ...(window.EC_OR_KEY?{'Authorization':'Bearer '+window.EC_OR_KEY,'HTTP-Referer':'https://careerpulse.fr'}:{})
         },
         body:EC_API_BODY
       }),
@@ -8378,7 +8395,7 @@ function ecShowDirections(dirs, isProfilSelect){
     var shareLbl=document.createElement('span');
     shareLbl.style.cssText='font-size:.55rem;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;flex-shrink:0;';
     shareLbl.textContent='Partager EVA';
-    var shareUrl='https://careerpulseia.com';
+    var shareUrl='https://careerpulse.fr';
     var shareText=encodeURIComponent('Je viens de découvrir EVA, la coach carrière virtuelle ! Droits, emploi, CPF... Elle répond à tout 🚀 '+shareUrl);
     var btnWA=document.createElement('a');
     btnWA.href='https://wa.me/?text='+shareText;
@@ -9148,7 +9165,7 @@ function sv(k,v){localStorage.setItem(k,JSON.stringify(v));}
 
 // ── Partage CareerPulse ──
 function shareCareerPulse(platform){
-  var url = 'https://careerpulseia.com';
+  var url = 'https://careerpulse.fr';
   var msg = '🎯 Viens toi aussi tester nos quiz et profiter des services de notre site — bientôt encore plus ! 👉 ' + url;
   if(platform==='whatsapp'){
     window.location.href = 'whatsapp://send?text=' + encodeURIComponent(msg);
@@ -9595,7 +9612,7 @@ function toggleFpVis(){
       updatedAt: new Date().toISOString()
     }, {merge:true}).then(function(){
       if(_fpVis){
-        toast('✅ Profil visible ! URL : career-pulse-eva.vercel.app/profil/' + user.uid.substring(0,8));
+        toast('✅ Profil visible ! URL : careerpulse.fr/profil/' + user.uid.substring(0,8));
       } else {
         toast('Profil masqué');
       }
@@ -10977,7 +10994,7 @@ function evaShowEvaCallToAction(uid){
       ?'✨ **'+_pr+', Eva est là pour toi.**\n\nTu as des questions sur tes droits, ton contrat, ta carrière ? Je t\'attends — parle-moi directement. 💬'
       :'✨ **Eva est disponible pour toi, maintenant.**\n\nTu as une question sur tes droits, ton contrat, ta carrière ? Parle-moi directement. 💬';
     evaStream(uid,_ctaMsg,function(){
-      var enc=encodeURIComponent('🎯 Je viens de passer un quiz sur CareerPulse — diagnostic offert par Eva !\nTeste-toi aussi 👉 https://careerpulseia.com');
+      var enc=encodeURIComponent('🎯 Je viens de passer un quiz sur CareerPulse — diagnostic offert par Eva !\nTeste-toi aussi 👉 https://careerpulse.fr');
       evaCard(uid,
         '<div style="padding-left:31px">'
         +'<button onclick="go(\'eva\')" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;background:linear-gradient(135deg,#0f766e,#1e40af);border:none;border-radius:13px;padding:14px 18px;font-family:inherit;font-size:.8rem;font-weight:800;color:#fff;cursor:pointer;box-shadow:0 6px 22px rgba(15,118,110,.4);margin-bottom:10px;letter-spacing:.01em">'
@@ -11480,7 +11497,7 @@ function buildQuizResult(answers, quizName, total){
   html += '<div id="eva-ai-plan-'+_evaPlanUid+'" style="margin-bottom:14px"></div>';
 
   // ── Partage : carte lien + boutons réseaux ──
-  var urlSite = 'https://careerpulseia.com';
+  var urlSite = 'https://careerpulse.fr';
   var msgTxt  = '🎯 J\'ai fait '+score+'/'+total+' au quiz "'+quizName+'" sur CareerPulse !\n\nViens toi aussi tester nos quiz et profiter des services de notre site — bientôt encore plus ! 👉 '+urlSite;
   var msgEnc  = encodeURIComponent(msgTxt);
   var msgFlat = msgTxt.replace(/\n/g,' ');
@@ -12161,7 +12178,7 @@ function openQuizPDF(type){
   }
 
   function shareQuiz(platform){
-    var url='https://careerpulseia.com';
+    var url='https://careerpulse.fr';
     var txt='🎯 J\'ai fait '+pdfQ.score+'/'+d.questions.length+' au quiz "'+d.title+'" sur CareerPulse ! Viens toi aussi tester nos quiz et profiter des services de notre site — bientôt encore plus ! 👉 '+url;
     var enc=encodeURIComponent(txt);
     if(platform==='whatsapp'){ window.location.href='whatsapp://send?text='+enc; }
@@ -12178,7 +12195,7 @@ function openQuizPDF(type){
 
   function showPDFResult(){
     var s=pdfQ.score; var tot=d.questions.length;
-    var url='https://careerpulseia.com';
+    var url='https://careerpulse.fr';
     var txt='🎯 J\'ai fait '+s+'/'+tot+' au quiz "'+d.title+'" sur CareerPulse ! Viens toi aussi tester nos quiz et profiter des services de notre site — bientôt encore plus ! 👉 '+url;
     var enc=encodeURIComponent(txt);
 
@@ -12392,7 +12409,7 @@ function pick10(bank){ var n=(window._QSession&&_QSession.nb)||25; return shuffl
 
 // ── Partage WhatsApp + Telegram ──
 function shareQCM(platform, quizName, score){
-  var url='https://careerpulseia.com';
+  var url='https://careerpulse.fr';
   var txt='🎯 '+score+'/10 sur le quiz "'+quizName+'" — CareerPulse !\n\nDécouvre tes qualités et tes points à améliorer avec des conseils adaptés à tes réponses. Faites pour toi. 👉 '+url;
   var enc=encodeURIComponent(txt);
   if(platform==='whatsapp'){ window.location.href='whatsapp://send?text='+enc; }
@@ -22672,7 +22689,7 @@ html.lsxg-lock, html.lsxg-lock body{ overflow:hidden !important; }
     var ov=document.createElement('div'); ov.className='lsxg-ov'; ov.setAttribute('role','dialog'); ov.setAttribute('aria-modal','true'); ov.innerHTML='<div class="lsxg-ov-in"></div>'; ov.firstChild.appendChild(card); document.body.appendChild(ov); document.documentElement.classList.add('lsxg-lock'); card.classList.add('fs'); FS[k]=ov; }
   function closeFs(k){ var ov=FS[k]; if(!ov) return; stopT(ST[k]); ST[k]=null; var card=ov.querySelector('.lsxg'), ph=document.querySelector('.lsxg-hold[data-hold="'+k+'"]'); card.classList.remove('fs'); if(ph){ ph.parentNode.replaceChild(card,ph); render(card); } else card.remove(); ov.remove(); FS[k]=null; if(!document.querySelector('.lsxg-ov')) document.documentElement.classList.remove('lsxg-lock'); }
   window.cpLsxGame=function(k){ if(!CFG[k]) return ''; if(FS[k]) return '<div class="lsxg-hold" data-hold="'+k+'"></div>'; var s0=ST[k]; if(s0&&s0.cd!==null&&s0.cd!==undefined){ stopT(s0); s0.cd=null; s0.qs=null; } return '<div class="lsxg" data-game="'+k+'">'+head(k)+'<div class="lsxg-bd">'+body(k)+'</div></div>'; };
-  function shareUrl(k){ var base=/^https:/.test(location.protocol)?location.origin+location.pathname:'https://career-pulse-eva.vercel.app/'; return base+'#'+k; }
+  function shareUrl(k){ var base='https://careerpulse.fr'+(location.pathname||'/'); return base+'#'+k; }
   function toast(t){ var d=document.createElement('div'); d.className='lsxg-toast'; d.textContent=t; document.body.appendChild(d); setTimeout(function(){ d.remove(); },2200); }
   function share(k,how){ var C=CFG[k], s=ST[k], url=shareUrl(k), txt='J\'ai eu '+s.score+'/'+s.qs.length+' au '+C.name+' 🎯 Et toi, tu fais combien ?', E=encodeURIComponent;
     var map={ wa:'https://wa.me/?text='+E(txt+' '+url), fb:'https://www.facebook.com/sharer/sharer.php?u='+E(url), li:'https://www.linkedin.com/sharing/share-offsite/?url='+E(url), x:'https://twitter.com/intent/tweet?text='+E(txt)+'&url='+E(url), mail:'mailto:?subject='+E('Mon résultat sur CareerPulse')+'&body='+E(txt+'\n\n'+url) };
