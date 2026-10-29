@@ -14276,5 +14276,53 @@ html body #ec-pf-overlay #ev-arrows, html body #ec-pf-overlay #ev-arrows-m{ flex
   init();
 })();
 </script>
+<style id="cp-hd-fix">
+/* ═══ En-têtes EVA : titres, mentions et sous-titres jamais coupés (ordinateur et mobile) ═══ */
+html body .evad-hd, html body .eva-sub-header, html body .ew-hdr, html body .eb-hdr, html body .jnl-hdr, html body .nova-hd{ height:auto !important; min-height:0 !important; }
+html body .evad-hd-title, html body .eva-sub-title, html body .ew-hdr-ttl, html body .eb-hdr-title, html body .jnl-hdr-title, html body .nova-hd-name,
+html body .eb-hdr-info, html body .jnl-hdr-info, html body .nova-hd-info{ flex:1 1 auto !important; min-width:0 !important; white-space:normal !important; overflow:visible !important; text-overflow:clip !important; }
+html body .evad-hd .ev-sub, html body .ew-hdr .ev-sub, html body .jnl-hdr .ev-sub, html body .eva-sub-header .ev-sub, html body .eb-hdr-sub, html body .jnl-hdr-sub, html body .nova-hd-sub{ display:block !important; white-space:normal !important; overflow:visible !important; text-overflow:clip !important; -webkit-line-clamp:unset !important; max-height:none !important; }
+html body [data-evt] [data-eb]::before{ white-space:normal !important; width:fit-content !important; max-width:100% !important; box-sizing:border-box; line-height:1.25; }
+/* Header trop chargé (mobile) : les boutons sur la 1re ligne, le titre en entier sur la 2e ligne */
+html body .cp-hdw{ flex-wrap:wrap !important; row-gap:10px !important; }
+html body .cp-hdw > .evad-hd-title, html body .cp-hdw > .eva-sub-title, html body .cp-hdw > .ew-hdr-ttl, html body .cp-hdw > .eb-hdr-info, html body .cp-hdw > .jnl-hdr-info, html body .cp-hdw > .nova-hd-info{ order:10 !important; flex:1 0 100% !important; max-width:100% !important; margin:0 !important; }
+html body .cp-hdw > .evt-ico, html body .cp-hdw > .nova-hd-avatar{ margin-right:auto !important; }
+</style>
+<script id="cp-hd-fit">
+/* Si le titre d'un header n'a pas la place (moins de 170 px), il passe sur sa propre ligne : jamais coupé */
+(function(){
+  var HD='.evad-hd,.eva-sub-header,.ew-hdr,.eb-hdr,.jnl-hdr,.nova-hd', TT='.evad-hd-title,.eva-sub-title,.ew-hdr-ttl,.eb-hdr-info,.jnl-hdr-info,.nova-hd-info';
+  function fit(){ [].forEach.call(document.querySelectorAll(HD),function(h){ if(!h.offsetParent) return; h.classList.remove('cp-hdw'); var t=h.querySelector(TT); if(t && t.getBoundingClientRect().width<170) h.classList.add('cp-hdw'); }); }
+  var tm=null; function soon(){ clearTimeout(tm); tm=setTimeout(fit,60); }
+  window.addEventListener('resize',soon);
+  function init(){ fit(); try{ new MutationObserver(soon).observe(document.body,{ subtree:true, childList:true, attributes:true, attributeFilter:['class'] }); }catch(e){} }
+  if(document.readyState!=='loading') setTimeout(init,0); else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<style id="cp-qcm-fix">
+/* ═══ QCM et mises en situation (ordinateur et mobile) : la question et toutes les réponses toujours visibles en entier ═══
+   La page défile d'un bloc (question puis réponses) au lieu de compresser la zone de la question. Le header reste en haut. */
+html body .nova-screen.active{ overflow-y:auto !important; overflow-x:hidden !important; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+html body .nova-screen .nova-hd{ position:sticky !important; top:0 !important; z-index:30 !important; }
+html body .nova-screen .nova-feed{ flex:0 0 auto !important; height:auto !important; max-height:none !important; overflow:visible !important; }
+html body .nova-screen .nova-choices{ flex:0 0 auto !important; max-height:none !important; overflow:visible !important; }
+</style>
+<script id="cp-qcm-scroll">
+/* Quand les réponses s'affichent, la page se place sur la question : on lit la question, puis les réponses juste en dessous */
+(function(){
+  function place(sc){
+    var f=sc.querySelector('.nova-feed'), hd=sc.querySelector('.nova-hd'); if(!f || !f.lastElementChild) return;
+    var q=f.lastElementChild, top=q.getBoundingClientRect().top - sc.getBoundingClientRect().top + sc.scrollTop - (hd?hd.offsetHeight:0) - 10;
+    sc.scrollTo({ top:Math.max(0,top), behavior:'smooth' });
+  }
+  function watch(){
+    [].forEach.call(document.querySelectorAll('.nova-screen .nova-choices'),function(c){
+      if(c._cpQ) return; c._cpQ=1; var t=null;
+      new MutationObserver(function(){ if(!c.children.length) return; clearTimeout(t); t=setTimeout(function(){ var sc=c.closest('.nova-screen'); if(sc && sc.classList.contains('active')) place(sc); },120); }).observe(c,{ childList:true });
+    });
+  }
+  if(document.readyState!=='loading') setTimeout(watch,0); else document.addEventListener('DOMContentLoaded',watch);
+})();
+</script>
 </body>
 </html>
