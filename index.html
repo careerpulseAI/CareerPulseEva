@@ -26081,6 +26081,8 @@ window.CP_PAY = window.CP_PAY || {
       f:['Formations publiées en illimité','Recommandées aux membres dont le profil correspond','Demandes reçues dans une messagerie protégée','Conforme à l\'interdiction du démarchage CPF','Tarif de lancement garanti à vie'] }
   };
   var DOC={};
+  function mail(){ var u=window._fbUser||(window.fbAuth&&fbAuth.currentUser); return (u&&u.email)||''; }
+  function portail(){ var m=mail(); return CP_PAY.portail+(m?(CP_PAY.portail.indexOf('?')>-1?'&':'?')+'prefilled_email='+encodeURIComponent(m):''); }
   function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function eur(n){ return String(n).replace('.',','); }
   function fdate(iso){ try{ return new Date(iso).toLocaleDateString('fr-FR',{ day:'numeric', month:'long', year:'numeric' }); }catch(e){ return ''; } }
@@ -26141,13 +26143,13 @@ window.CP_PAY = window.CP_PAY || {
     sh.querySelector('.cpab-tg').onclick=function(ev){ var b=ev.target.closest('button'); if(!b) return; plan=b.getAttribute('data-pl'); sh.querySelector('.cpab-msg').hidden=true; paint(); };
     sh.querySelector('.cpab-x').onclick=close;
     sh.addEventListener('click',function(ev){ if(ev.target===sh) close(); });
-    var mg=sh.querySelector('.cpab-mg'); if(mg) mg.onclick=function(){ if(CP_PAY.portail) window.open(CP_PAY.portail,'_blank','noopener'); else location.href='mailto:contact@careerpulse.fr?subject='+encodeURIComponent('Mon abonnement CareerPulse Pro'); };
+    var mg=sh.querySelector('.cpab-mg'); if(mg) mg.onclick=function(){ if(CP_PAY.portail) window.open(portail(),'_blank','noopener'); else location.href='mailto:contact@careerpulse.fr?subject='+encodeURIComponent('Mon abonnement CareerPulse Pro'); };
     sh.querySelector('.cpab-cta').onclick=function(){
-      if(e.t==='Paiement à régulariser'){ if(CP_PAY.portail) window.open(CP_PAY.portail,'_blank','noopener'); return; }
+      if(e.t==='Paiement à régulariser'){ if(CP_PAY.portail) window.open(portail(),'_blank','noopener'); return; }
       var url=((CP_PAY[k]||{})[plan])||'', u=window._fbUser||(window.fbAuth&&fbAuth.currentUser), m=sh.querySelector('.cpab-msg');
       var okc=sh.querySelector('.cpab-cgv'); if(okc && !okc.checked){ m.hidden=false; m.innerHTML='<b>Cochez la case</b> pour accepter les conditions générales de vente avant de continuer.'; return; }
       try{ if(u && window.fbDb) fbDb.collection('consentements').add({ uid:u.uid, type:'cgv_pro', valeur:true, texte:'CGV Pro v1.1 + CGU '+(k==='emp'?'employeurs':'centres')+' v1.0 · formule '+(plan==='an'?'annuelle':'mensuelle'), at:new Date().toISOString() }).catch(function(){}); }catch(x){}
-      if(url){ location.href=url+(url.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(u?u.uid:''); return; }
+      if(url){ location.href=url+(url.indexOf('?')>-1?'&':'?')+'client_reference_id='+encodeURIComponent(u?u.uid:'')+(mail()?'&prefilled_email='+encodeURIComponent(mail()):''); return; }
       m.hidden=false; m.innerHTML=e.c==='wait'?'<b>Votre compte est en cours de vérification.</b> Votre essai gratuit de '+x.essai+' jours démarrera automatiquement dès sa validation : rien à payer d\'ici là.'
         :'<b>Le paiement en ligne ouvre très bientôt.</b> Votre tarif de lancement vous est réservé. Pour souscrire dès maintenant, écrivez-nous : <a href="mailto:contact@careerpulse.fr?subject='+encodeURIComponent('Abonnement CareerPulse Pro · '+x.nom+' · '+(plan==='an'?'annuel':'mensuel'))+'">contact@careerpulse.fr</a>';
     };
