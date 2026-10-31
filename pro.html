@@ -1147,16 +1147,8 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
       +(A.situation||A.metier?'Profil du membre : '+[A.situation,A.objectif,A.metier].filter(Boolean).join(', ')+'.\n':'')
       +'Réponds UNIQUEMENT en JSON : {"reply":"…","next":["…","…","…"]}. **gras** autorisé. "next" = 3 sujets choisis EXACTEMENT dans cette liste : '+JSON.stringify(list);
     var fb={ reply:ref, next:[] };
-    return Promise.race([
-      fetch('/api/eva',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:350, system:sys, messages:[{ role:'user', content:topic }] }) })
-        .then(function(r){ return r.json(); }).then(function(d){
-          var raw=(d && d.content && d.content[0] && d.content[0].text)||'', m=raw.replace(/```json|```/g,'').match(/\{[\s\S]*\}/); if(!m) return fb;
-          var p=JSON.parse(m[0]); if(!p.reply || String(p.reply).length<20) return fb;
-          if(/mot de passe|garanti[es]? (ton|votre|le) financement/i.test(p.reply) && !/jamais|ne garanti/i.test(p.reply)) return fb;
-          return { reply:String(p.reply).slice(0,600), next:(p.next||[]).filter(function(x){ return list.indexOf(x)>-1; }) };
-        }),
-      new Promise(function(r){ setTimeout(function(){ r(fb); },8000); })
-    ]).catch(function(){ return fb; });
+    /* Réponse de référence uniquement (sans IA) */
+    return Promise.resolve(fb);
   }
   function val(id){ var e=document.getElementById(id); return e ? e.value.trim() : ''; }
 
