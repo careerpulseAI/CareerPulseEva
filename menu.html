@@ -2,29 +2,6 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<script id="cp-ai-guard">
-/* ═══ Cadre juridique des assistantes virtuelles (EVA, Lisa) ═══
-   Ajoute la même règle à toutes les consignes envoyées aux modèles d'IA :
-   information juridique générale + source officielle, jamais d'avis personnalisé (consultation juridique réservée aux avocats). */
-(function(){
-  if(window._cpAiGuard) return; window._cpAiGuard=true;
-  var GUARD='\n\nRÈGLE OBLIGATOIRE (cadre juridique) : tu donnes uniquement de l\'information juridique générale : la règle, ses conditions et la source officielle (Code du travail, service-public.fr, France Travail, URSSAF, Légifrance), avec son lien quand tu l\'as. Tu ne donnes jamais d\'avis personnalisé sur la situation précise de la personne : pas de « dans ton cas, tu dois… », pas de pronostic sur l\'issue d\'un litige, pas de stratégie contre un employeur. Pour une situation personnelle, un litige ou une décision importante, oriente vers un professionnel : avocat, point-justice ou Maison de justice et du droit (accès au droit gratuit), inspection du travail, conseiller France Travail. Ne demande jamais de données sensibles (santé, numéro de sécurité sociale, religion, opinions).';
-  var AI=/\/api\/eva|api\.groq\.com|openrouter\.ai/;
-  var of=window.fetch; if(typeof of!=='function') return;
-  window.fetch=function(input,init){
-    try{
-      var url=typeof input==='string'?input:(input&&input.url)||'';
-      if(AI.test(url) && init && typeof init.body==='string'){
-        var b=JSON.parse(init.body), done=false;
-        if(typeof b.system==='string' && b.system.indexOf('RÈGLE OBLIGATOIRE (cadre juridique)')<0){ b.system+=GUARD; done=true; }
-        if(Array.isArray(b.messages)){ b.messages.forEach(function(m){ if(m && m.role==='system' && typeof m.content==='string' && m.content.indexOf('RÈGLE OBLIGATOIRE (cadre juridique)')<0){ m.content+=GUARD; done=true; } }); }
-        if(done) init=Object.assign({},init,{ body:JSON.stringify(b) });
-      }
-    }catch(e){}
-    return of.call(this,input,init);
-  };
-})();
-</script>
 
 <!-- ═══ Transitions fluides entre les pages (navigateurs récents) ═══ -->
 <link rel="expect" href="#cp-end" blocking="render">
@@ -2836,20 +2813,9 @@ function evaBotReply(msg){
   var profil = S.profil ? DB[S.profil].label : 'non défini';
   var ctx = S.context ? ' Institution consultée: '+S.context+'.' : '';
   var sys = 'Tu es Eva, assistante virtuelle CareerPulse, experte des institutions françaises du travail. Profil utilisateur: '+profil+'.'+ctx+' Réponds en français, de manière concise (max 130 mots), précise, chaleureuse et professionnelle. Tu connais: France Travail, URSSAF, CPF, CAF, APEC, OPCO, CEP, VAE, PTP, CROUS, Mission Locale, BPI France, INPI, Parcoursup, DARES, CCI, ACRE, RSA, ARE, Pro-A.';
-  fetch('/api/eva',{method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514', max_tokens:1000, system:sys,
-      messages: S.msgs.slice(-8).map(function(m){return{role:m.role==='user'?'user':'assistant',content:m.text};}).concat([{role:'user',content:msg}])
-    })
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    evaTypingHide();
-    evaAddMsg('eva', (data.content&&data.content[0]&&data.content[0].text)||'Désolée, une erreur est survenue.');
-    evaSuggestions();
-  })
-  .catch(function(){ evaTypingHide(); evaAddMsg('eva','Désolée, je ne peux pas répondre pour le moment.'); });
+  /* Réponses préparées uniquement (sans IA) */
+  var rep=(function(m){ try{ return (window.EVA_BRAIN&&EVA_BRAIN.repond)?EVA_BRAIN.repond(m,[],''):''; }catch(e){ return ''; } })(msg);
+  setTimeout(function(){ evaTypingHide(); evaAddMsg('eva', rep||'Choisis un sujet ci-dessous, je t\'explique.'); evaSuggestions(); }, 500);
 }
 window.evaResizeInput = function(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,80)+'px'; };
 
@@ -3389,22 +3355,15 @@ function esEvaBotReply(msg){
   var sys='Tu es Eva, assistante virtuelle CareerPulse spécialisée dans les institutions françaises du travail.'
     +(surnom?' Prénom utilisateur: '+surnom+'.':'')+' Profil: '+profil+'.'
     +' Réponds en français, concis (max 120 mots), précis, bienveillant. Tu connais: France Travail, URSSAF, CPF, CAF, APEC, OPCO, CEP, VAE, PTP, CROUS, Mission Locale, BPI France, INPI, Parcoursup, DARES, CCI, ACRE, RSA, ARE.';
-  fetch('/api/eva',{method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',max_tokens:1000,system:sys,
-      messages:esMsgs.slice(-6).map(function(m){return{role:m.role==='user'?'user':'assistant',content:m.text};}).concat([{role:'user',content:msg}])
-    })
-  }).then(function(r){return r.json();}).then(function(data){
+  /* Réponses préparées uniquement (sans IA) */
+  var rep=(function(m){ try{ return (window.EVA_BRAIN&&EVA_BRAIN.repond)?EVA_BRAIN.repond(m,[],''):''; }catch(e){ return ''; } })(msg);
+  setTimeout(function(){
     esEvaTypingHide();
-    esEvaAdd('eva',(data.content&&data.content[0]&&data.content[0].text)||'Désolée, une erreur est survenue.');
+    esEvaAdd('eva', rep||'Choisis un sujet ci-dessous, je t\'explique.');
     esEvaChips();
     var n=document.getElementById('es-eva-bubble-notif');
     if(document.getElementById('es-eva-panel').style.display==='none'){n.style.display='flex';n.textContent='1';}
-  }).catch(function(){
-    esEvaTypingHide();
-    esEvaAdd('eva','Désolée, je ne peux pas répondre pour le moment.');
-  });
+  }, 500);
 }
 window.esEvaResize=function(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,72)+'px';};
 function esEvaChips(){
@@ -3763,16 +3722,14 @@ window.cpEvaSend=function(){
 function cpEvaBotReply(msg){
   cpEvaShowTyping();
   const profil=cpState.profile?CP_DB[cpState.profile].label:'non défini';
-  fetch('/api/eva',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
-      system:`Tu es Eva, assistante virtuelle CareerPulse spécialisée dans les institutions françaises du travail. Profil: ${profil}. Réponds en français, concis (max 120 mots), précis, bienveillant. Institutions connues: France Travail, URSSAF, CPF, CAF, APEC, OPCO, CEP, VAE, PTP, CROUS, Mission Locale, BPI France, INPI, Parcoursup, DARES.`,
-      messages:[...cpState.evaMessages.slice(-6).map(m=>({role:m.role==='user'?'user':'assistant',content:m.text})),{role:'user',content:msg}]})
-  }).then(r=>r.json()).then(data=>{
+  /* Réponses préparées uniquement (sans IA) */
+  const rep=(function(m){ try{ return (window.EVA_BRAIN&&EVA_BRAIN.repond)?EVA_BRAIN.repond(m,[],''):''; }catch(e){ return ''; } })(msg);
+  setTimeout(()=>{
     cpEvaHideTyping();
-    cpEvaAddMsg('eva',data.content?.[0]?.text||'Désolée, une erreur est survenue.');
+    cpEvaAddMsg('eva',rep||'Choisis un sujet ci-dessous, je t\'explique.');
     cpRenderEvaChips();
     if(!cpState.evaOpen){const n=document.getElementById('cp-eva-bubble-notif');n.style.display='flex';n.textContent='1';}
-  }).catch(()=>{cpEvaHideTyping();cpEvaAddMsg('eva','Désolée, je ne peux pas répondre pour le moment.');});
+  },500);
 }
 window.cpEvaResize=function(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,80)+'px';};
 
@@ -5147,11 +5104,7 @@ async function ecSend(){
   var localReply=EVA_BRAIN.repond(txt,ecHistory,ecUserName);
   ecSurveyCount++;
 
-  // ── API CASCADE : Groq → OpenRouter → fallback local ──
   // Injecter ici ta clé selon l'environnement (variable ou backend)
-  var EC_API_KEY = window.EC_GROQ_KEY || window.EC_OR_KEY || null;
-  var EC_API_URL = null;
-  var EC_API_BODY = null;
 
   var _profil = window._evaCurrentProfil || 'general';
   var _profilCtx = {
@@ -5200,70 +5153,9 @@ async function ecSend(){
     +'Les "directions" sont EXACTEMENT 5 OPTIONS COHÉRENTES avec ta réponse — si tu poses une question ouverte, les directions doivent être des réponses possibles à cette question (ex: si tu demandes "dans quel domaine ?", propose des domaines). Si tu donnes une info, propose des approfondissements liés. Jamais de sujets génériques déconnectés de ce que tu viens de dire. Titres courts max 6 mots.\n'
     +'Prénom : '+(ecUserName||'inconnu');
 
-  if(window.EC_GROQ_KEY){
-    EC_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
-    EC_API_BODY = JSON.stringify({
-      model:'llama-3.3-70b-versatile',
-      max_tokens:600,
-      messages:[{role:'system',content:systemPrompt}].concat(
-        ecHistory.map(function(m){return{role:m.role==='assistant'?'assistant':'user',content:m.content};})
-      )
-    });
-  } else if(window.EC_OR_KEY){
-    EC_API_URL = 'https://openrouter.ai/api/v1/chat/completions';
-    EC_API_BODY = JSON.stringify({
-      model:'anthropic/claude-haiku',
-      max_tokens:600,
-      messages:[{role:'system',content:systemPrompt}].concat(
-        ecHistory.map(function(m){return{role:m.role==='assistant'?'assistant':'user',content:m.content};})
-      )
-    });
-  } else {
-    // Tenter Anthropic sans clé (fonctionne dans Claude.ai artifacts)
-    EC_API_URL = '/api/eva';
-    EC_API_BODY = JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:600,
-      system:systemPrompt,
-      messages:ecHistory
-    });
-  }
-
+  /* Réponses préparées uniquement (sans IA) : plus d'appel Groq, OpenRouter ni Anthropic */
   var apiReply = null;
   var apiDirections = [];
-  try{
-    var res=await Promise.race([
-      fetch(EC_API_URL,{
-        method:'POST',
-        headers:{'Content-Type':'application/json',
-          ...(window.EC_GROQ_KEY?{'Authorization':'Bearer '+window.EC_GROQ_KEY}:{}),
-          ...(window.EC_OR_KEY?{'Authorization':'Bearer '+window.EC_OR_KEY,'HTTP-Referer':'https://careerpulse.fr'}:{})
-        },
-        body:EC_API_BODY
-      }),
-      new Promise(function(_,rej){setTimeout(function(){rej(new Error('timeout'));},9000);})
-    ]);
-    var data=await res.json();
-    var rawText='';
-    if(data.content&&data.content[0]&&data.content[0].text){
-      rawText=data.content[0].text;
-    } else if(data.choices&&data.choices[0]&&data.choices[0].message){
-      rawText=data.choices[0].message.content;
-    }
-    // Parser le JSON renvoyé par EVA
-    var cleaned=rawText.replace(/```json|```/g,'').trim();
-    var jm=cleaned.match(/\{[\s\S]*\}/);
-    if(jm){
-      try{
-        var parsed=JSON.parse(jm[0]);
-        if(parsed.reply) apiReply=parsed.reply;
-        if(parsed.directions&&Array.isArray(parsed.directions)) apiDirections=parsed.directions;
-      }catch(pe){ apiReply=rawText; }
-    } else if(rawText.length>5){ apiReply=rawText; }
-    if(!apiReply||apiReply.length<5) throw new Error('empty');
-  }catch(e){
-    apiReply=null;
-  }
 
   var finalReply = apiReply || localReply;
   var finalDirs = apiDirections.length ? apiDirections : ecFallbackDirs(txt);
@@ -6165,21 +6057,8 @@ async function _ecApiCall(userMsg){
     +'{"reply":"réponse ici (\\n=saut de ligne, **gras** autorisé, [texte](url) pour liens)","directions":["Sujet 1","Sujet 2","Sujet 3","Sujet 4","Sujet 5"]}\n'
     +'5 SUJETS à explorer — formule-les comme des titres intrigants ou actions concrètes (max 6 mots). Pas de questions. Pas de "💬 autre chose".\n'
     +'Prénom : '+(ecUserName||'inconnu');
-  var url='/api/eva';
-  var body=JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:900,system:sys,messages:ecHistory});
+  /* Réponses préparées uniquement (sans IA) */
   var apiReply=null, apiDirs=[];
-  try{
-    var res=await Promise.race([
-      fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:body}),
-      new Promise(function(_,rej){setTimeout(function(){rej(new Error('t'));},9000);})
-    ]);
-    var d=await res.json();
-    var raw=(d.content&&d.content[0]&&d.content[0].text)||'';
-    var cleaned=raw.replace(/```json|```/g,'').trim();
-    var jm=cleaned.match(/[{][\s\S]*[}]/);
-    if(jm){ var p=JSON.parse(jm[0]); if(p.reply) apiReply=p.reply; if(p.directions&&Array.isArray(p.directions)) apiDirs=p.directions; }
-    else if(raw.length>5) apiReply=raw;
-  }catch(e){}
   var finalReply=apiReply||EVA_BRAIN.repond(userMsg,ecHistory,ecUserName);
   var finalDirs=apiDirs.length?apiDirs:ecFallbackDirs(userMsg);
   ecHideTyping();
