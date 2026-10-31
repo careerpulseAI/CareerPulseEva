@@ -1380,7 +1380,6 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
 <!-- ══ FIREBASE AUTH ══ -->
 <!-- Firebase compat (accès global sans module) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
@@ -1395,8 +1394,6 @@ select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='ht
   };
 
   firebase.initializeApp(firebaseConfig);
-  /* App Check (reCAPTCHA v3) : mode surveillance. Ne pas activer « Enforce » tant que « Verified » n'est pas à 95-100 % */
-  try{ firebase.appCheck().activate(new firebase.appCheck.ReCaptchaV3Provider('6LfIYAouAAAAANigpWZ1NdoDneWM06jQ5wJs8VkN'), true); }catch(e){ console.warn('[AppCheck]', e && e.message); }
 
   var fbAuth = firebase.auth();
   // Sécurité : la connexion dure tant que le site est ouvert (même en arrière-plan) et se ferme quand on quitte vraiment le site
