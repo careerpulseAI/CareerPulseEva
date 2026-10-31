@@ -520,7 +520,6 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
 <div id="ptoast" role="status" aria-live="polite"></div>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-check-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script>
@@ -534,8 +533,6 @@ textarea.ofw-inp{ min-height:70px; resize:vertical; }
     appId: "1:692255216052:web:3810690c41e9c1810862e1"
   };
   firebase.initializeApp(firebaseConfig);
-  /* App Check (reCAPTCHA v3) : mode surveillance. Ne pas activer « Enforce » tant que « Verified » n'est pas à 95-100 % */
-  try{ firebase.appCheck().activate(new firebase.appCheck.ReCaptchaV3Provider('6LfIYAouAAAAANigpWZ1NdoDneWM06jQ5wJs8VkN'), true); }catch(e){ console.warn('[AppCheck]', e && e.message); }
 
   var fbAuth = firebase.auth();
   fbAuth.languageCode = 'fr';
