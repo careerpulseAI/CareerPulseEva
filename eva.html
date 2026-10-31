@@ -7844,6 +7844,14 @@ html.ofm-lock, html.ofm-lock body{ overflow:hidden !important; }
 .ofx-back-ic{ color:#fff; background:linear-gradient(135deg,#92400e,#f59e0b); box-shadow:0 10px 20px -12px rgba(180,83,9,.8); }
 .ofx-back-av{ background:#fff7e6; border:1px solid #f6e3bd; color:#b45309; }
 .ofx-back svg{ width:18px !important; height:18px !important; }
+/* Bouton « Retour à ton profil » : taille normale (ordinateur et mobile), centré, style premium */
+.ofx-back{ display:flex !important; width:fit-content !important; max-width:100%; margin:18px auto 6px !important; padding:7px 18px 7px 7px !important; gap:10px !important; border-radius:999px !important; border:1px solid #f1e3c4 !important; background:linear-gradient(135deg,#fffaf0,#ffffff) !important; box-shadow:0 1px 0 #fff inset, 0 10px 24px -16px rgba(180,83,9,.55) !important; transition:transform .18s ease, box-shadow .18s ease; }
+.ofx-back > span:nth-child(2){ flex:0 0 auto !important; font-size:.86rem !important; white-space:nowrap; letter-spacing:.01em; }
+.ofx-back-ic{ width:32px !important; height:32px !important; border-radius:50% !important; flex:0 0 32px !important; }
+.ofx-back-av{ display:none !important; }
+.ofx-back svg{ width:16px !important; height:16px !important; }
+.ofx-back:hover{ transform:translateY(-1px); box-shadow:0 1px 0 #fff inset, 0 14px 28px -16px rgba(180,83,9,.7) !important; }
+.ofx-back:active{ transform:translateY(0); }
 /* ── Pleine page : présentation de formation et messagerie (membre) ── */
 .ofx-sheet, .ofm-sheet{ align-items:stretch !important; padding:0 !important; }
 .ofx-box, .ofm-box{ max-width:none !important; width:100vw !important; height:100vh !important; height:100dvh !important; border-radius:0 !important; position:relative; }
