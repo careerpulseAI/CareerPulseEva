@@ -17016,7 +17016,8 @@ go=function(page){
     else if(e.data==='cp-menu-close'){ frame.style.display='none'; }
     else if(e.data && e.data.cpGo){ frame.style.display='none'; _lastUserAct=Date.now(); go(e.data.cpGo); }
   });
-  window.toggleGridMenu=toggleGridMenu=function(){ openMenu(); };
+  /* Dans un profil de Mon espace : le menu burger est bloqué comme la maison, sortie uniquement par Déconnexion */
+  window.toggleGridMenu=toggleGridMenu=function(){ if(window.cpInPf && cpInPf()){ if(window.cpOutMsg) cpOutMsg(); return; } openMenu(); };
   // Pré-chargement discret du menu pour une ouverture instantanée
   window.addEventListener('load',function(){ setTimeout(ensureFrame,1200); });
 
